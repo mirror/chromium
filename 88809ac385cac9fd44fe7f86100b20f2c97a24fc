@@ -1,0 +1,763 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236cd70b_9fa60ceb",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Just use TestURLRequestContext instead?",
+      "range": {
+        "startLine": 280,
+        "startChar": 25,
+        "endLine": 280,
+        "endChar": 32
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467f8350_56af13da",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "One problem here is that, unlike how this class is actually being used, the DnsTransactionFactory is not part of the URLRequestContext.  We should fix that by making request_context_\u0027s HostResolver use a DnsClient that returns it as the HostResolver.  To avoid any other issues, we should also use a ScopedDefaultHostResolverProc that maps test server DNS addresses to localhost, and fails for everything else.  Yaks, all the way down.\n\nThe two cases I\u0027m concerned about are where we have one server with a non-numeric hostname, and two servers with non-numeric hostnames (Which we should also test for).  In the second case, if we try to use the second server to resolver the first server\u0027s address, and the first server to resolve the second server\u0027s, we could end up with infinite recursion.  I\u0027m not seeing why that wouldn\u0027t happen, with the current code.  We should have tests for both cases.",
+      "range": {
+        "startLine": 283,
+        "startChar": 18,
+        "endLine": 283,
+        "endChar": 36
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8a259c_5202dc71",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Each RunLoop can only spin once.  If you want to spin it again, you need a new RunLoop.  In particular, note that RunLoop::quit_called_ is never set to false (See https://cs.chromium.org/chromium/src/base/run_loop.cc?type\u003dcs\u0026l\u003d161)",
+      "range": {
+        "startLine": 343,
+        "startChar": 6,
+        "endLine": 343,
+        "endChar": 19
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b33c03_85d0467f",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "This is considered a testing anti-pattern to be avoided if possible.  Suggest per earlier comment, we just wait until the transaction has completed by providing a callback.",
+      "range": {
+        "startLine": 345,
+        "startChar": 26,
+        "endLine": 345,
+        "endChar": 0
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85eb01d_c955d7b5",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Should document these callbacks.  Also, prefer const refs for inputs that aren\u0027t modified and can\u0027t be nullptr.",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 31
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f4ce00_2ba09c1c",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Suggest names that make it clearer these are callbacks, rather than \"normal\" objects - either end them with Callback (something like ModifyResponseCallback / DohJobMakerCallback) or use a verb phrase (something like ModifyResponse / MakeDohJob).",
+      "range": {
+        "startLine": 375,
+        "startChar": 21,
+        "endLine": 375,
+        "endChar": 0
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd40558_61432230",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "optional nit:  Suggest a blank line between these two typedefs, just because they\u0027re difficult to visually parse.",
+      "range": {
+        "startLine": 376,
+        "startChar": 14,
+        "endLine": 376,
+        "endChar": 31
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcb9c10_948f27b9",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Should document this class.",
+      "range": {
+        "startLine": 382,
+        "startChar": 6,
+        "endLine": 382,
+        "endChar": 27
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7218de43_c27d1989",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "DoH -\u003e Doh (since when we lower case it, we\u0027re using *_doh_, instead of _do_h_, it\u0027s best to be consistent - URL is often capitalized in names, but per current Google style, it shouldn\u0027t be -\n \"Prefer to capitalize acronyms as single words\").",
+      "range": {
+        "startLine": 382,
+        "startChar": 20,
+        "endLine": 382,
+        "endChar": 23
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9622d211_3b73b6e8",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  \"net\" not needed (x2)",
+      "range": {
+        "startLine": 383,
+        "startChar": 52,
+        "endLine": 383,
+        "endChar": 53
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55dfb071_c62e6f48",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  Add to initializer list.  And even better, add a default parameter to the next constructor and get rid of this one.  We don\u0027t use it much, but initializer lists are allowed, per google style guide.",
+      "range": {
+        "startLine": 390,
+        "startChar": 25,
+        "endLine": 390,
+        "endChar": 42
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd37ec6_136044c8",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  blank line between methods.",
+      "range": {
+        "startLine": 403,
+        "startChar": 3,
+        "endLine": 403,
+        "endChar": 0
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597542b6_dc62bd6c",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "document this method.",
+      "range": {
+        "startLine": 405,
+        "startChar": 29,
+        "endLine": 405,
+        "endChar": 47
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd46f27_8563ab15",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:\n\n// URLRequestJob implementation:\n\nvoid Start() ....",
+      "range": {
+        "startLine": 438,
+        "startChar": 6,
+        "endLine": 438,
+        "endChar": 7
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d6abed_e0d9c7f4",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  Private.  Or could just inline this method - I don\u0027t think I\u0027ve seen this pattern in Chrome before.  I assume this exists just to make sure / make it clear this is a const method?  I\u0027m fine, either way, just shouldn\u0027t be public.",
+      "range": {
+        "startLine": 498,
+        "startChar": 7,
+        "endLine": 498,
+        "endChar": 27
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71e44cd_12146c15",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  Use braces when the body of an if spans 2+ lines.",
+      "range": {
+        "startLine": 506,
+        "startChar": 27,
+        "endLine": 506,
+        "endChar": 44
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7cd641_a35c5303",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "I think there\u0027s a base::MakeRefCounted\u003cHttpResponseHeaders\u003e(...) method you can use here?  Makes the ownership model clearer.",
+      "range": {
+        "startLine": 507,
+        "startChar": 24,
+        "endLine": 507,
+        "endChar": 43
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa217ae_f7b8351f",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Again, this should be private.",
+      "range": {
+        "startLine": 513,
+        "startChar": 7,
+        "endLine": 513,
+        "endChar": 17
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f61e8ac_7194236c",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  \"// AsyncSocket implementation:\"",
+      "range": {
+        "startLine": 521,
+        "startChar": 27,
+        "endLine": 521,
+        "endChar": 28
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c8afe5_94778d24",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  data_length_ -\u003e content_length_.  Also, it can be const.",
+      "range": {
+        "startLine": 527,
+        "startChar": 19,
+        "endLine": 527,
+        "endChar": 0
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9b334e_59eb031d",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "const?  Labelling everything that is const as const isn\u0027t that important, but think it makes usage a little clearer.",
+      "range": {
+        "startLine": 531,
+        "startChar": 19,
+        "endLine": 531,
+        "endChar": 37
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a7d8a5_8698c7bd",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  WeakPtrFactory generally has a blank line above it, to draw attention to the fact that it must be last.",
+      "range": {
+        "startLine": 532,
+        "startChar": 23,
+        "endLine": 532,
+        "endChar": 43
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac4776b_0b3fe7f0",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(URLRequestMockDoHJob);",
+      "range": {
+        "startLine": 532,
+        "startChar": 45,
+        "endLine": 532,
+        "endChar": 58
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc3b724_d90c7808",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  |clear_udp|",
+      "range": {
+        "startLine": 561,
+        "startChar": 56,
+        "endLine": 561,
+        "endChar": 66
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1548c5e_0f2d4037",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "If this is a redirect, the method should still be a GET or POST, depending on the server setting, so no need for this to be initialized based on path.",
+      "range": {
+        "startLine": 583,
+        "startChar": 31,
+        "endLine": 583,
+        "endChar": 32
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9336293d_48a9e4b7",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Per above comment, I\u0027d rename method_match to \"server_found\" and replace this with:\n\nif (server_url \u003d\u003d url) {\n  EXPECT_EQ(request-\u003emethod(), server.use_post ? \"POST\" : \"GET\");\n  server_found \u003d true;\n  break;\n}\n\nA bit more verbose, but I think it\u0027s easier to read.  It doesn\u0027t support the case where we use both GETs and POSTs to the same server URL, but I don\u0027t think we test that?  (And I don\u0027t think that\u0027s a case that\u0027s important to test, though I\u0027m certainly fine with testing it)",
+      "range": {
+        "startLine": 593,
+        "startChar": 29,
+        "endLine": 593,
+        "endChar": 38
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8316c51c_c2f18560",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "optional nit:  Suggest moving the EXPECT_TRUE up a line, and a break below, just to make it clear that it\u0027s part of the above sanity check, and not the the logic below.",
+      "range": {
+        "startLine": 596,
+        "startChar": 30,
+        "endLine": 596,
+        "endChar": 0
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13196114_3c279858",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nit:  Can move this into protected.  Doesn\u0027t really matter in terms of reducing scope that can access this, since TEST_F\u0027s make subclasses, so can access protected members, but just to indicate this isn\u0027t used by them.",
+      "range": {
+        "startLine": 617,
+        "startChar": 28,
+        "endLine": 617,
+        "endChar": 35
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce910a65_c58bfca4",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 619,
+        "startChar": 42,
+        "endLine": 619,
+        "endChar": 46
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59728e0c_34e8560d",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "nitty nit:  Per earlier comment, Https is now preferred.",
+      "range": {
+        "startLine": 1246,
+        "startChar": 27,
+        "endLine": 1246,
+        "endChar": 41
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49082f85_fec96693",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed?  Just use ASYNC instead of SYNCHRONOUS in the AddQueryAndResponse call in all the tests that use this, and you get the same behavior, right?  Looks like URLRequestMockDoHJob::ReadRawData fully respects ASYNC mock reads.",
+      "range": {
+        "startLine": 1325,
+        "startChar": 25,
+        "endLine": 1325,
+        "endChar": 41
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2c4c97_4a4de5c8",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "Just add an empty SocketDataProvider, since this is never used?",
+      "range": {
+        "startLine": 1383,
+        "startChar": 22,
+        "endLine": 1383,
+        "endChar": 31
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13396a10_8c70bc37",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T21:31:02Z",
+      "side": 1,
+      "message": "I think we can just cut the data into pieces (Borrowing from the guts of DnsSocketData\u0027s constructor), rather than adding more complexity here.  Using common data types generally makes it easier to debug new tests.",
+      "range": {
+        "startLine": 1423,
+        "startChar": 6,
+        "endLine": 1423,
+        "endChar": 36
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
