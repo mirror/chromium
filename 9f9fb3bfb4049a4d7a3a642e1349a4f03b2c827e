@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69efe419_b37f744a",
+        "filename": "base/android/jni_generator/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-31T21:38:27Z",
+      "side": 1,
+      "message": "nit: drop (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "9f9fb3bfb4049a4d7a3a642e1349a4f03b2c827e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
