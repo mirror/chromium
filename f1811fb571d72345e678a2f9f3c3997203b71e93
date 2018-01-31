@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd65d048_36c21610",
+        "filename": "content/browser/service_worker/payment_handler_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "does",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295720b4_d0a9d8c5",
+        "filename": "content/browser/service_worker/payment_handler_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "since it\u0027s an arbitrary function passed in here we don\u0027t know for sure what it\u0027s falling back to.\n\n\"invokes |fallback| (which e.g. opens a normal window)\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 71,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05430e37_2ee39a1b",
+        "filename": "content/browser/service_worker/payment_handler_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "just scoped_refptr\u003c\u003e",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d560c45_257c6eaa",
+        "filename": "content/browser/service_worker/payment_handler_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "This could use some comment like \"Support for Payment Handler \u003clink to spec\u003e.\"",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d8b77f_73ab71db",
+        "filename": "content/browser/service_worker/payment_handler_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "I think it might be unclear what \"Content\" is here. how about, \"the //content embedder\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e69087d_718c00c7",
+        "filename": "content/browser/service_worker/payment_handler_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "split up this long sentence:\n\n// Tries to open a Payment Handler window. The //content embedder may or may not support this operation. If the embedder supports it, |callback| is called with |response_callback| passed to it. Otherwise, |fallback| is called with |response_callback| passed to it. A typical fallback is to open a normal window.",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452cfffa_75d28113",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "I forget, is there a plan to get rid of this eventually, and some reason we still need this? The \"[chrome-mojo] Some questions about error handling in Mojo\" thread suggested closing the binding ? Can we do binding.ReportBadMessage()?",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b22d18_e750abeb",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "I think it\u0027d be more typical for |client| to be first and |error_msg| second, as |client| is the real result.",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed11928_a9cc44d9",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:28:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
