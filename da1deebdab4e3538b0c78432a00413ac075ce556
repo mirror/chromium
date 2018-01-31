@@ -22,6 +22,30 @@
       "revId": "da1deebdab4e3538b0c78432a00413ac075ce556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec160d18_3176cb29",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 0,
+      "message": "Good idea; I\u0027ve retained the test and now expect an error (no last focused window)",
+      "parentUuid": "77a7cefa_944f4c74",
+      "range": {
+        "startLine": 1085,
+        "startChar": 12,
+        "endLine": 1085,
+        "endChar": 41
+      },
+      "revId": "da1deebdab4e3538b0c78432a00413ac075ce556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

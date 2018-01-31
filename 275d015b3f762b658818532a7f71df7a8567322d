@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61800acd_967a02cb",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc96e09_7fb29882",
+      "range": {
+        "startLine": 932,
+        "startChar": 25,
+        "endLine": 932,
+        "endChar": 30
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56f47bad_a7f0f96c",
         "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "275d015b3f762b658818532a7f71df7a8567322d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6484b8_015ea0e0",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "Yep, it should.  It was wrong before, but now\u0027s a good time to fix it!",
+      "parentUuid": "56f47bad_a7f0f96c",
+      "range": {
+        "startLine": 308,
+        "startChar": 63,
+        "endLine": 309,
+        "endChar": 17
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "411ff20f_37a6d41c",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff6503ad_2073dd16",
+      "range": {
+        "startLine": 377,
+        "startChar": 48,
+        "endLine": 377,
+        "endChar": 55
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd087a0_f016799b",
         "filename": "chrome/browser/extensions/api/tabs/windows_event_router.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-31T22:44:56Z",
       "side": 1,
       "message": "Not sure what this is eventually used for, but since this can\u0027t be false anymore, this should probably not be a Optional anymore. Just a simple bool may suffice.",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39eb59f_e8bb69b1",
+        "filename": "chrome/browser/extensions/api/tabs/windows_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "Agreed, but I\u0027d like to save that for a followup (I think that we can actually just remove this altogether).",
+      "parentUuid": "abd087a0_f016799b",
       "range": {
         "startLine": 81,
         "startChar": 23,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "573d9776_4d5ba7f3",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "Technically, this could be called by webui, in which case the extension value would be null.  I\u0027m not sure if there are other cases, but given we had the guard in before, I\u0027d prefer to not change the behavior here (since I\u0027m hoping to merge this).",
+      "parentUuid": "66004177_e3f660e3",
+      "range": {
+        "startLine": 340,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 21
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6019f445_95a3a070",
         "filename": "chrome/browser/extensions/window_controller.h",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c71fee9d_29424b65",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "I wanted the rename, because to me it\u0027s not obvious what \"visible\" means, or where this would be applied.  Given we have a lot of different access methods, I think have specificity (when they are only intended to be used in a certain capacity) is helpful.\n\nAs an example, it\u0027s not necessarily clear whether IsVisibleToExtension() is the right method to call for, say, querying if an extension can use the pageCapture API (if it\u0027s \"visible\", does that mean the extension can capture it?), but it\u0027s very obvious that IsVisibleToTabsAPIForExtension() is not the right method.\n\nYou\u0027re right that this is still applicable to the windows api, but the tabs and windows are actually implemented together in api/tabs, and even share a permission.  And IsVisibleToTabsOrWindowsAPIForExtension seemed a bit too long :)  But if you\u0027d prefer it, I can rename to be even more specific.",
+      "parentUuid": "6019f445_95a3a070",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0609a7e6_5966e0e9",
         "filename": "chrome/browser/extensions/window_controller.h",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-31T22:44:56Z",
       "side": 1,
       "message": "Can\u0027t this be taken care of at call-sites when checking the filter. At the call-sites, when the filter is not specified, we can default the filter to \u003d app | normal | panel | popup (have a constant on WindowController class) which should make the code more coherent.\n\nWe might even want to have type filter specified as an arg to IsVisibleToExtension, it should make the code at call sites more cleaner.",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607da4fb_7ee8dad7",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T23:40:30Z",
+      "side": 1,
+      "message": "I don\u0027t think that visibility (i.e., whether or not an extension can \"see\" a window) should be based on a passed-in filter that the extension specifies.  It so happens that it currently *is*, but I think that\u0027s largely a bug, and I hope to eventually remove this, if possible.  In the meantime, I\u0027d prefer callers to explicitly know whether they are allowing the extension to see dev tools windows, rather than adding/subtracting them through a default value, and I\u0027d prefer to not further conflate an optional filter with privilege.  I also don\u0027t quite think that we should have a filter arg here, since it would greatly ambiguate the difference between this and MatchesFilter() below.",
+      "parentUuid": "0609a7e6_5966e0e9",
       "range": {
         "startLine": 108,
         "startChar": 11,
