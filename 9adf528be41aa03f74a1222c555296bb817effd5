@@ -151,6 +151,30 @@
       "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77aa7a6_0e966e96",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T21:53:52Z",
+      "side": 1,
+      "message": "I don\u0027t think that catches issues with OOPIF: as constructed, it seems like the test is all same-origin frames, while this is only hit for the cross-origin local root case.",
+      "parentUuid": "01d11f02_7bfb99c2",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 3
+      },
+      "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
