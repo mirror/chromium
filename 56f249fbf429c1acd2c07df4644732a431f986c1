@@ -16,6 +16,24 @@
       "revId": "56f249fbf429c1acd2c07df4644732a431f986c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842f8d8d_c1b7a5be",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-31T20:01:25Z",
+      "side": 1,
+      "message": "I believe that it is to handle the case where use_lld is explicitly set to true in args.gn.",
+      "parentUuid": "070ebbc3_05f4aa1a",
+      "revId": "56f249fbf429c1acd2c07df4644732a431f986c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
