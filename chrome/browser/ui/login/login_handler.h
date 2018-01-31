@@ -30,6 +30,7 @@ namespace net {
 class AuthChallengeInfo;
 class HttpNetworkSession;
 class URLRequest;
+class URLRequestContext;
 }  // namespace net
 
 // This is the base implementation for the OS-specific classes that route
@@ -56,10 +57,19 @@ class LoginHandler : public content::ResourceDispatcherHostLoginDelegate,
 
   LoginHandler(net::AuthChallengeInfo* auth_info, net::URLRequest* request);
 
+  LoginHandler(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter);
+
   // Builds the platform specific LoginHandler. Used from within
   // CreateLoginPrompt() which creates tasks.
   static LoginHandler* Create(net::AuthChallengeInfo* auth_info,
                               net::URLRequest* request);
+  static LoginHandler* Create(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter);
 
   void SetInterstitialDelegate(
       const base::WeakPtr<LoginInterstitialDelegate> delegate) {
@@ -138,6 +148,12 @@ class LoginHandler : public content::ResourceDispatcherHostLoginDelegate,
  private:
   friend LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                          net::URLRequest* request);
+  friend LoginHandler* CreateLoginPrompt(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      int load_flags,
+      const GURL& url);
   FRIEND_TEST_ALL_PREFIXES(LoginHandlerTest, DialogStringsAndRealm);
 
   // Starts observing notifications from other LoginHandlers.
@@ -302,5 +318,11 @@ class AuthSuppliedLoginNotificationDetails : public LoginNotificationDetails {
 // destroying the net::URLRequest.
 LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                 net::URLRequest* request);
+LoginHandler* CreateLoginPrompt(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequestContext* context,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    int load_flags,
+    const GURL& url);
 
 #endif  // CHROME_BROWSER_UI_LOGIN_LOGIN_HANDLER_H_

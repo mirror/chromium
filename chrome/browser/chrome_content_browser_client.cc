@@ -109,6 +109,7 @@
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
+#include "chrome/browser/ui/login/login_handler.h"
 #include "chrome/browser/ui/sync/sync_promo_ui.h"
 #include "chrome/browser/ui/tab_contents/chrome_web_contents_view_delegate.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
@@ -3834,6 +3835,17 @@ ChromeContentBrowserClient::CreateClientCertStore(
     return nullptr;
   return ProfileIOData::FromResourceContext(resource_context)
       ->CreateClientCertStore();
+}
+
+content::ResourceDispatcherHostLoginDelegate*
+ChromeContentBrowserClient::CreateLoginDelegate(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequestContext* context,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    int load_flags,
+    const GURL& url) {
+  return CreateLoginPrompt(auth_info, context, web_contents_getter, load_flags,
+                           url);
 }
 
 // Static; handles rewriting Web UI URLs.
