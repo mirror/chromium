@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2a8aff0_96eab4c4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-31T22:53:40Z",
+      "side": 1,
+      "message": "You will notice that two tests from credentialscontainer-create-from-nested-frame.html aren\u0027t here. They can\u0027t be run here because they don\u0027t use the mock; they call all the way down to the device layer and time out. (Unlike the way we return from authenticator_impl in makeCredential calls by giving an invalid algorithm, there isn\u0027t a way to return from authenticator_impl prior to reaching device/ for getAssertion calls.)",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
