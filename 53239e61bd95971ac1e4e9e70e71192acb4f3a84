@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c727b26_5c1549e5",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T17:22:33Z",
+      "side": 1,
+      "message": "We also don\u0027t let small things occlude right, can you add a test for that, so we know we\u0027re not doing any work that way too?",
+      "revId": "53239e61bd95971ac1e4e9e70e71192acb4f3a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e809bb_c25a1097",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T17:22:33Z",
+      "side": 1,
+      "message": "minimum",
+      "revId": "53239e61bd95971ac1e4e9e70e71192acb4f3a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
