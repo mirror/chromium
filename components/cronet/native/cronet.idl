@@ -36,6 +36,18 @@ interface Buffer {
    */
   [Sync]
   GetData() => (handle data);
+
+  /**
+   * Return position within |data| where read or write operation should start.
+   */
+  [Sync]
+  GetPosition() => (uint64 position);
+
+  /**
+   * Set position within |data| where read or write operation should start.
+   * Must be between 0 and |size|.
+   */
+  SetPosition(uint64 position);
 };
 
 /**
@@ -52,8 +64,8 @@ interface BufferCallback {
   OnDestroy(Buffer buffer);
 };
 
-// Base exception passed to UrlRequestCallback.onFailed().
-struct Exception {
+// Base error passed to UrlRequestCallback.onFailed().
+struct Error {
   enum ERROR_CODE {
     /**
      * Error code indicating the error returned by app callback.
@@ -124,7 +136,13 @@ struct Exception {
   /**
    * Error code, one of ERROR_* values.
    */
-  ERROR_CODE error_code = ERROR_CALLBACK;
+  ERROR_CODE errorCode = ERROR_CALLBACK;
+
+  /**
+   * Message, explaining the error.
+   */
+  string message;
+
   /**
    * Cronet internal error code. This may provide more specific error
    * diagnosis than |error_code|, but the constant values  may change over time.
@@ -132,7 +150,7 @@ struct Exception {
    * <a href=https://chromium.googlesource.com/chromium/src/+/master/net/base/net_error_list.h>
    * here</a> for the lastest list of values.
    */
-  int32 internal_error_code = 0;
+  int32 internalErrorCode = 0;
 
   /**
    * |true| if retrying this request right away might succeed, |false|
@@ -143,14 +161,14 @@ struct Exception {
    * encounter the same failure (instead retrying should be delayed until device regains
    * network connectivity).
    */
-  bool immediately_retryable = false;
+  bool immediatelyRetryable = false;
 
   /**
    * Contains detailed <a href="https://www.chromium.org/quic">QUIC</a> error code from
    * <a href=https://cs.chromium.org/chromium/src/net/quic/quic_protocol.h?type=cs&q=%22enum+QuicErrorCode+%7B%22+file:src/net/quic/quic_protocol.h>
    * QuicErrorCode</a> when the |error_code| code is |ERROR_QUIC_PROTOCOL_FAILED|.
    */
-  int32 quic_detailed_error_code = 0;
+  int32 quicDetailedErrorCode = 0;
 };
 
 /**
@@ -760,7 +778,7 @@ interface UrlRequestCallback {
    *         received.
    * @param error information about error.
    */
-  OnFailed(UrlRequest request, UrlResponseInfo info, Exception error);
+  OnFailed(UrlRequest request, UrlResponseInfo info, Error error);
 
   /**
    * Invoked if request was canceled via UrlRequest.cancel(). Once
@@ -790,7 +808,7 @@ interface UploadDataSink {
    * Called by UploadDataProvider when a read fails.
    * @param error to pass on to UrlRequestCallback.onFailed().
    */
-  OnReadError(Exception error);
+  OnReadError(Error error);
 
   /**
    * Called by UploadDataProvider when a rewind succeeds.
@@ -802,7 +820,7 @@ interface UploadDataSink {
    * uploads is not supported.
    * @param error to pass on to UrlRequestCallback.onFailed().
    */
-  OnRewindError(Exception error);
+  OnRewindError(Error error);
 };
 
 /**

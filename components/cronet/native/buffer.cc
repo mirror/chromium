@@ -44,10 +44,13 @@ class Cronet_BufferImpl : public Cronet_Buffer {
   void InitWithAlloc(uint64_t size) override;
   uint64_t GetSize() override;
   RawDataPtr GetData() override;
+  uint64_t GetPosition() override;
+  void SetPosition(uint64_t position) override;
 
  private:
   RawDataPtr data_ = nullptr;
   uint64_t size_ = 0;
+  uint64_t position_ = 0;
   Cronet_BufferCallbackPtr callback_ = nullptr;
   Cronet_BufferContext context_ = nullptr;
 
@@ -90,6 +93,15 @@ uint64_t Cronet_BufferImpl::GetSize() {
 
 RawDataPtr Cronet_BufferImpl::GetData() {
   return data_;
+}
+
+uint64_t Cronet_BufferImpl::GetPosition() {
+  return position_;
+}
+
+void Cronet_BufferImpl::SetPosition(uint64_t position) {
+  CHECK(position <= size_);
+  position_ = position;
 }
 
 }  // namespace
