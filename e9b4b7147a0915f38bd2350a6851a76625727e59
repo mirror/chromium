@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "273610f9_4b3e2cb1",
+        "filename": "base/memory/shared_memory_mapping.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-31T10:27:15Z",
+      "side": 1,
+      "message": "Do we even need the empty public constructor? Or can we only have them constructed from the private constructor?",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
