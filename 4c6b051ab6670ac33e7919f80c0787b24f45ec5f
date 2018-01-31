@@ -69,6 +69,24 @@
       "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a967da_a991237d",
+        "filename": "components/security_interstitials/core/browser/resources/interstitial_webview_quiet.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T22:26:59Z",
+      "side": 1,
+      "message": "Hmm.. well it already works in the \u003ciframe\u003e case but not the \u003cembed\u003e case. That being said -- it would be convenient if WebViewPlugins could use media queries...\n\nWhat you just said gives me an idea -- let me see if I can modify WebViewPlugin to provide the embed size as the viewport size. There\u0027s no reason for it to need to know the viewport of the outer window.",
+      "parentUuid": "32799552_f2baa614",
+      "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
