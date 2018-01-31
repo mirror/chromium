@@ -23907,6 +23907,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>An extension has been uninstalled.</summary>
 </histogram>
 
+<histogram name="Extensions.ExtensionUpdaterUpdateCalls">
+  <owner>mxnguyen@chromium.org</owner>
+  <summary>
+    The number of extensions each time the extension updater executes. Triggered
+    when the extension updater starts doing update check.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.ExtensionUpdaterUpdateFoundCount">
+  <owner>mxnguyen@chromium.org</owner>
+  <summary>
+    The number of extensions that have updates in an update check sessions.
+    Triggered when the extension updater found an update for an extension.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.ExtensionUpdaterUpdateResults"
+    enum="ExtensionUpdaterUpdateResult">
+  <owner>mxnguyen@chromium.org</owner>
+  <summary>
+    Records the update results of extensions in an extension updater session,
+    grouped by ExtensionUpdaterUpdateResult.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.ExternalExtensionEvent" enum="SideloadUIEvents">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>
