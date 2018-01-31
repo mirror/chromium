@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1875e3a_075d4af2",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbae3112_2ea5a055",
+      "range": {
+        "startLine": 237,
+        "startChar": 59,
+        "endLine": 237,
+        "endChar": 73
+      },
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "715bdcfa_d6e61bbf",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "928d30938930b256da00b1923b65dfc245196753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd8739f_29b1c990",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "715bdcfa_d6e61bbf",
+      "range": {
+        "startLine": 244,
+        "startChar": 17,
+        "endLine": 244,
+        "endChar": 26
+      },
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "cff909d3_fd82c50f",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15b11076_03805cdd",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f243f362_7ea4b6c0",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
@@ -115,6 +181,24 @@
       "revId": "928d30938930b256da00b1923b65dfc245196753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a28d57_36c61d56",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done. I missed this..",
+      "parentUuid": "f243f362_7ea4b6c0",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "61f5fd23_907d5b88",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f01c32a0_0a07ad52",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5e00d44_c28c737b",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 2
@@ -149,6 +251,24 @@
       "revId": "928d30938930b256da00b1923b65dfc245196753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6917ed3_4dfe340a",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5e00d44_c28c737b",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "20578ca8_aafa60a2",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done. I was also confused about the \u0027OpenNewTab\u0027 wording,, but it appears at several places along the code path, I think we can refine later if needed.",
+      "parentUuid": "1a781901_035486c1",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd2e6906_f4e50d72",
         "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
         "patchSetId": 2
@@ -189,6 +333,24 @@
       "revId": "928d30938930b256da00b1923b65dfc245196753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299eb74a_4ebe3e5e",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-31T08:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd2e6906_f4e50d72",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
