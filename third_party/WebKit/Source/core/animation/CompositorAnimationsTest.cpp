@@ -1320,9 +1320,9 @@ TEST_F(AnimationCompositorAnimationsTest, canStartElementOnCompositorEffect) {
   EXPECT_EQ(host->GetMainThreadCompositableAnimationsCountForTesting(), 0u);
   EXPECT_EQ(host->GetCompositedAnimationsCountForTesting(), 1u);
 }
-// TODO(xidachen): test temporary disabled due to crbug.com/781305.
+
 TEST_F(AnimationCompositorAnimationsTest,
-       DISABLED_cannotStartElementOnCompositorEffectWithRuntimeFeature) {
+       cannotStartElementOnCompositorEffectWithRuntimeFeature) {
   ScopedTurnOff2DAndOpacityCompositorAnimationsForTest
       turn_off_2d_and_opacity_compositors_animation(true);
   LoadTestData("transform-animation.html");
