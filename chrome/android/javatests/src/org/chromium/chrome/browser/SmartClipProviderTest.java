@@ -50,7 +50,7 @@ public class SmartClipProviderTest implements Handler.Callback {
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
     private static final String SMART_CLIP_PROVIDER_KEY =
-            "org.chromium.content.browser.SMART_CLIP_PROVIDER";
+            "org.chromium.content_public.browser.SMART_CLIP_PROVIDER";
 
     private static class MyCallbackHelper extends CallbackHelper {
         public String getTitle() {
