@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55107e25_8526865c",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-31T12:28:12Z",
+      "side": 1,
+      "message": "nit: as discussed, let\u0027s add a comment saying why it\u0027s OK for |last_validated| to be the default base::Time() value when none was serialized.",
+      "revId": "00039ac1ba8aaacd9d920e90937e526828306b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
