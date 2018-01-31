@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42050b72_0cebb82c",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-31T11:49:31Z",
+      "side": 1,
+      "message": "Hmm, now that we have to need to make such a distinction here, I wonder if it makes sense to have the CBORValue::Map use CTAPLess as the sorting predicate any longer.",
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6826da9a_67799825",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-31T11:49:31Z",
+      "side": 1,
+      "message": "I would like to make the implementations more consistent across modes here. I see the following options:\n\n -- If serializing to byte arrays per-element is deemed performant enough in the CBOR canonical case, it should be performant enough for the CTAP case too, so we could just unify the implementation here so that the only thing different is the predicate used.\n\n -- If it is not performant enough, we should consider either:\n\n   1) Pre-serializing only keys, but not values.\n\n   2) Implementing CTAP/CBORCanonical comparison operators between CBORValues that can tell the right sort order without serializing the key value. Maybe we can prohibit using compound values (arrays, maps) as keys to simplify things?\n\n   3) Serializing keys + values into the final byte buffer in the wrong order, and then shuffling them around to create the desired order. This will still do some copying, but could help if allocations are expensive (which I suspect is probably not the case with tcmalloc?).\n\nLooks like two-phase serialization won\u0027t help, because we don\u0027t only need the size, but also to be able to lexicographically compare the binary representation of values.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 61
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076537e2_416b3930",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-31T11:49:31Z",
+      "side": 1,
+      "message": "Hang on, this does lexicographical compare only, I think we will need to sort based on key length first.",
+      "range": {
+        "startLine": 216,
+        "startChar": 25,
+        "endLine": 216,
+        "endChar": 38
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
