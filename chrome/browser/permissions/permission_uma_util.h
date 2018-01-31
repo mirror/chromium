@@ -141,6 +141,7 @@ class PermissionUmaUtil {
                                      PermissionSourceUI source_ui,
                                      PermissionRequestGestureType gesture_type,
                                      const GURL& requesting_origin,
+                                     const content::WebContents* web_contents,
                                      Profile* profile);
 
   // Records |count| total prior actions for a prompt of type |permission|
