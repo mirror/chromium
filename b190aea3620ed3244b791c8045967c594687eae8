@@ -87,6 +87,24 @@
       "revId": "b190aea3620ed3244b791c8045967c594687eae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b14e84_48a78805",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-31T00:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262905da_a193929f",
+      "revId": "b190aea3620ed3244b791c8045967c594687eae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
