@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6b04810_e30c057a",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-31T19:27:44Z",
+      "side": 1,
+      "message": "I think there needs to be an explanation why. As it is written now, it\u0027s not clear for me why should I use CreateAllocatorDump(). What happens if I call CreateAllocatorDump() twice - will it generate two dumps with similar names? Is it a problem? Why would I want that?\n\nThere has to be a critical difference, and I would put that into the method name itself.",
+      "range": {
+        "startLine": 111,
+        "startChar": 29,
+        "endLine": 112,
+        "endChar": 27
+      },
+      "revId": "799b05bd5c2ea33195cb0d7b58f773d05d487f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
