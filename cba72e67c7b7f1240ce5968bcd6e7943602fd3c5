@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ec3679f_ee1f4f8b",
+        "filename": "chromeos/components/tether/network_configuration_remover.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-31T00:05:08Z",
+      "side": 1,
+      "message": "Since we are changing the meaning/usage of a string, lets rename this method RemoveNetworkConfigurationByPath() to make sure we catch any existing usage and make it more difficult to accidentally call with a guid in the future.",
+      "revId": "cba72e67c7b7f1240ce5968bcd6e7943602fd3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cc2c0c_7eb3aed3",
+        "filename": "chromeos/components/tether/wifi_hotspot_disconnector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-31T00:05:08Z",
+      "side": 1,
+      "message": "bit: guid in all of these appears to just be used for logging; since the guid is not particularly readable to begin with, maybe just log the path? (Maybe include the guid + path when a tether wifi network is set up so the mapping can be figured out in the log?)",
+      "revId": "cba72e67c7b7f1240ce5968bcd6e7943602fd3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
