@@ -94,6 +94,30 @@
       "revId": "bd086f1fae02b49fd322254f6edfe37bc10441f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0970602a_b2197fe4",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:12:36Z",
+      "side": 1,
+      "message": "I wouldn\u0027t be surprised if it\u0027s no longer necessary since it was added for a particular use of AutofillPopupBaseView, which was in the rAc dialog (native code dialog with form fields; not a web contents). Kill it with fire!",
+      "parentUuid": "37124ed7_6e74c8c4",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "bd086f1fae02b49fd322254f6edfe37bc10441f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
