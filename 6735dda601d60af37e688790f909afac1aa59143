@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b708659_08f9af7d",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/disable-picture-in-picture.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T10:08:52Z",
+      "side": 1,
+      "message": "There is already a TODO in \"DocumentPictureInPicture::exitPictureInPicture\" for triggering leavepictureinpicture event. I was thinking it was better to not clutter tests with things are not yet implemented.",
+      "parentUuid": "002ad23b_878513fa",
+      "revId": "6735dda601d60af37e688790f909afac1aa59143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "148a0872_778df02e",
         "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/disable-picture-in-picture.html",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c73183b3_8035d92c",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/disable-picture-in-picture.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T10:08:52Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "148a0872_778df02e",
+      "revId": "6735dda601d60af37e688790f909afac1aa59143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a54c17f_7ee70845",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "6735dda601d60af37e688790f909afac1aa59143",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6120972_8420f359",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T10:08:52Z",
+      "side": 1,
+      "message": "I\u0027ve split GetStatus into 2 functions: IsElementAllowed and IsDocumentAllowed as discussed offline.",
+      "parentUuid": "3a54c17f_7ee70845",
+      "revId": "6735dda601d60af37e688790f909afac1aa59143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
