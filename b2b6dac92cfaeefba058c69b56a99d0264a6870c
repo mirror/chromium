@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4749372a_90da7b46",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCollection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T05:09:44Z",
+      "side": 0,
+      "message": "Yeah, either of kTreeScope or kNode looks to work for document-level collections.\n\nDo we have performance improvement by this change?",
+      "revId": "b2b6dac92cfaeefba058c69b56a99d0264a6870c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
