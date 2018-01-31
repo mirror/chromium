@@ -286,8 +286,17 @@ void ArcImeService::OnKeyboardAppearanceChanging(
   aura::Window* window = focused_arc_window_;
   gfx::Rect new_bounds = state.occluded_bounds;
   // Multiply by the scale factor. To convert from DPI to physical pixels.
-  gfx::Rect bounds_in_px = gfx::ScaleToEnclosingRect(
-      new_bounds, window->layer()->device_scale_factor());
+  double default_scale_factor = 1.0;
+  if (exo::WMHelper::HasInstance()) {
+    default_scale_factor =
+        exo::WMHelper::GetInstance()->GetDefaultDeviceScaleFactor();
+  }
+  gfx::Rect bounds_in_px =
+      gfx::ScaleToEnclosingRect(new_bounds, default_scale_factor);
+
+  LOG(ERROR) << "new_bounds = " << new_bounds.ToString()
+             << ", bounds_in_px = " << bounds_in_px.ToString()
+             << ", scale_factor = " << window->layer()->device_scale_factor();
 
   ime_bridge_->SendOnKeyboardAppearanceChanging(bounds_in_px,
                                                 state.is_available);
