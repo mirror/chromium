@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d03720_0d10eed4",
+        "filename": "third_party/WebKit/Source/build/scripts/gperf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T06:24:27Z",
+      "side": 1,
+      "message": "Why 3.4?",
+      "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3e3271_b857cec3",
+        "filename": "third_party/WebKit/Source/build/scripts/gperf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T06:24:27Z",
+      "side": 1,
+      "message": "I guess the only thing I\u0027d be worried about is this accidentally colliding with interesting strings in the input. I guess that doesn\u0027t happen in practice... maybe it\u0027s still putting in a word boundary \\b at the beginning to be safe? *shrug*",
+      "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf87ca8_9c3f18c2",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T06:24:27Z",
+      "side": 1,
+      "message": "I guess there\u0027s no way to automatically catch when people forget to do this?",
+      "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
