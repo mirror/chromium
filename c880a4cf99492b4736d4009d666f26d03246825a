@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "176f442e_d0f01433",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 11045,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959c66bc_6a0e2592",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae05763a_da0fb688",
         "filename": "chrome/browser/vr/elements/repositioner.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9a170a80_3b1c9e59",
+        "filename": "chrome/browser/vr/elements/repositioner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae05763a_da0fb688",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff793341_035cddc8",
         "filename": "chrome/browser/vr/elements/repositioner_unittest.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-31T19:50:11Z",
       "side": 1,
       "message": "Can you comment where this sea of numbers comes from?  What if the algo changes and someone needs to replace the values?  Is each casing adding unique value?",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8678062_5cff0354",
+        "filename": "chrome/browser/vr/elements/repositioner_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:02:59Z",
+      "side": 1,
+      "message": "They do not. In fact, we just need one where we move the reticle normally, one where we\u0027re within the snap threshold, and one where we\u0027re not. Updated.",
+      "parentUuid": "ff793341_035cddc8",
       "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4ff681c4_720a490f",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:02:59Z",
+      "side": 1,
+      "message": "I realized I didn\u0027t have a middle mouse button on my trackpad making this annoying to test from home :)",
+      "parentUuid": "e99a1266_1921b87d",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d438564_d307a44a",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 8
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "321655ac_229dbad4",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:02:59Z",
+      "side": 1,
+      "message": "I wanted to consolidate a bit of code, but that required the controller to already exist. This was strange, and didn\u0027t even consolidate everything. So I moved it back.",
+      "parentUuid": "5d438564_d307a44a",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc94dc79_a683f484",
         "filename": "chrome/browser/vr/ui_unittest.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-31T19:50:11Z",
       "side": 1,
       "message": "Is this too hard to parameterize because of the controller model changes?",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4479ad1e_436dc685",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:02:59Z",
+      "side": 1,
+      "message": "I honestly hadn\u0027t considered parameterizing this. Might make things more concise. Happy to clean this up, but I\u0027d like to pitch ideas by you tomorrow.",
+      "parentUuid": "dc94dc79_a683f484",
       "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
