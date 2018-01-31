@@ -11,6 +11,7 @@
 #include "ash/system/tray/tray_popup_utils.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -106,7 +107,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
     MessageCenterView* message_center_view,
     MessageCenter* message_center,
     bool settings_initially_visible,
-    const base::string16& title)
+    bool locked)
     : message_center_view_(message_center_view),
       message_center_(message_center),
       notification_label_(nullptr),
@@ -119,7 +120,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
       views::CreateSolidBackground(message_center_style::kBackgroundColor));
   SetBorder(views::CreateEmptyBorder(kButtonBarBorder));
 
-  notification_label_ = new views::Label(title);
+  notification_label_ = new views::Label(GetTitle(locked));
   notification_label_->SetAutoColorReadabilityEnabled(false);
   notification_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   notification_label_->SetEnabledColor(kTextColor);
@@ -273,10 +274,6 @@ void MessageCenterButtonBar::OnImplicitAnimationsCompleted() {
   button_container_->SetVisible(!collapse_button_visible_);
 }
 
-void MessageCenterButtonBar::SetTitle(const base::string16& title) {
-  notification_label_->SetText(title);
-}
-
 void MessageCenterButtonBar::SetButtonsVisible(bool visible) {
   settings_button_->SetVisible(visible);
   quiet_mode_button_->SetVisible(visible);
@@ -285,6 +282,22 @@ void MessageCenterButtonBar::SetButtonsVisible(bool visible) {
     close_all_button_->SetVisible(visible);
 
   Layout();
+}
+
+void MessageCenterButtonBar::UpdateLabel(bool locked) {
+  notification_label_->SetText(GetTitle(locked));
+  // On lock screen button bar label contains hint for user to unlock device to
+  // view notifications. Making it focusable will invoke ChromeVox spoken
+  // feedback when shown.
+  notification_label_->SetFocusBehavior(locked ? FocusBehavior::ALWAYS
+                                               : FocusBehavior::NEVER);
+}
+
+base::string16 MessageCenterButtonBar::GetTitle(bool locked) const {
+  return locked
+             ? l10n_util::GetStringUTF16(
+                   IDS_ASH_MESSAGE_CENTER_FOOTER_LOCKSCREEN)
+             : l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_FOOTER_TITLE);
 }
 
 void MessageCenterButtonBar::SetQuietModeState(bool is_quiet_mode) {
@@ -319,6 +332,11 @@ gfx::Size MessageCenterButtonBar::CalculatePreferredSize() const {
                collapse_button_->GetPreferredSize().height()) +
       GetInsets().height();
   return gfx::Size(0, preferred_height);
+}
+
+void MessageCenterButtonBar::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->role = ax::mojom::Role::kDialog;
+  node_data->SetName(notification_label_->text());
 }
 
 void MessageCenterButtonBar::ButtonPressed(views::Button* sender,
