@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf29b34_985a18ca",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-31T14:46:50Z",
+      "side": 1,
+      "message": "😆",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 3
+      },
+      "revId": "480824ed0cee7278ca6ee457bc76d8e034270468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38995c8c_6da55c9d",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-31T14:46:50Z",
+      "side": 1,
+      "message": "style: no need for the parenthesis. Also, you could simply do:\n`return GetStatus() \u003d\u003d Status::kEnabled;`",
+      "revId": "480824ed0cee7278ca6ee457bc76d8e034270468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
