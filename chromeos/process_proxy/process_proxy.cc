@@ -19,6 +19,8 @@
 #include "base/process/process.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/user_manager/user.h"
+#include "components/user_manager/user_manager.h"
 #include "third_party/cros_system_api/switches/chrome_switches.h"
 
 namespace {
@@ -232,6 +234,11 @@ int ProcessProxy::LaunchProcess(const std::string& command, int slave_fd) {
       HasSwitch(chromeos::switches::kSystemInDevMode);
   options.ctrl_terminal_fd = slave_fd;
   options.environ["TERM"] = "xterm";
+
+  const user_manager::User* user =
+      user_manager::UserManager::Get()->GetActiveUser();
+  std::string username_hash = user ? user->username_hash() : std::string();
+  options.environ["USER_HASH"] = username_hash;
 
   // Launch the process.
   process_.reset(new base::Process(base::LaunchProcess(
