@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "938d6053_5fa9763b",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T14:51:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f9bc378_79f45b4c",
+      "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "781e06fd_8c6bf3df",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Not exactly, but I did simplify the map above (kAudioPropertyConstraintMap) since it contained information already in this map.\n\nkAudioPropertyConstraintMap had a mapping of AudioProcessingProperties fields to indexes in |bool_sets_| and fields in WebMediaTrackConstraintSet. I removed the latter since kBlinkBoolConstraintFields already has the mapping from |bool_sets_| indexes to fields in WebMediaTrackConstraintSet.",
       "parentUuid": "781e06fd_8c6bf3df",
+      "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07f596ba_5440de1e",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T14:51:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "27cc4eae_5a4ff2b0",
       "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
