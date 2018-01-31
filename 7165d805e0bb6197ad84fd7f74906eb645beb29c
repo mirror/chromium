@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35c1792a_e2bf25b6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-31T01:05:32Z",
+      "side": 1,
+      "message": "Removed, I agree it doesn\u0027t really fit.",
+      "parentUuid": "a8ae6d36_caa06c8e",
+      "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "751b9bf5_ec5705b0",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "01ad96b8_3821e03c",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-31T01:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "751b9bf5_ec5705b0",
+      "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88916398_53369ed6",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6540131_be3c7315",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-31T01:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88916398_53369ed6",
+      "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
