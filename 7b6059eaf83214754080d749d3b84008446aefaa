@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1e116134_93e997f5",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:26:45Z",
+      "side": 1,
+      "message": "what are your thoughts on the second half of the above comment, i.e. changing \n the signature of OnNotificationRemoved?",
+      "parentUuid": "fd40bd1a_2553881c",
+      "range": {
+        "startLine": 369,
+        "startChar": 7,
+        "endLine": 369,
+        "endChar": 23
+      },
+      "revId": "7b6059eaf83214754080d749d3b84008446aefaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5910f220_9ddd8397",
         "filename": "ui/message_center/views/toast_contents_view.h",
         "patchSetId": 5
