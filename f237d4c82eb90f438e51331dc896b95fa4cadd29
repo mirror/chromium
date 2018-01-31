@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3078868_2d48f015",
+        "filename": "third_party/libvpx/source/config/ios/arm-neon/vp9_rtcd.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2018-01-31T20:49:37Z",
+      "side": 0,
+      "message": "weird that these are moving though ... clang-format complained?",
+      "range": {
+        "startLine": 15,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "f237d4c82eb90f438e51331dc896b95fa4cadd29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
