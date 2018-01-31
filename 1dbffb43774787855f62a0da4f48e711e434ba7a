@@ -16,6 +16,24 @@
       "revId": "1dbffb43774787855f62a0da4f48e711e434ba7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21493c95_6f71a138",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4010,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T10:00:32Z",
+      "side": 1,
+      "message": "Ok. Are you going to do it or do you want me to do it?\nI have created crbug.com/807572 to track it.",
+      "parentUuid": "f5231098_0a16af81",
+      "revId": "1dbffb43774787855f62a0da4f48e711e434ba7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
