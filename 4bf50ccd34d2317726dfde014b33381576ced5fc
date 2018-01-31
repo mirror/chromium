@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f7eb4e3a_711b2fb6",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T07:36:00Z",
+      "side": 1,
+      "message": "nit: particularly",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d07fe97_2f990ff3",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 1
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 57,
         "endChar": 48
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7418dd4_bb0c3759",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T07:36:00Z",
+      "side": 1,
+      "message": "nit: Similarly, responses",
+      "range": {
+        "startLine": 78,
+        "startChar": 35,
+        "endLine": 78,
+        "endChar": 56
       },
       "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -42,6 +88,87 @@
         "endLine": 83,
         "endChar": 36
       },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e96f5a_10a858d6",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T07:36:00Z",
+      "side": 1,
+      "message": "\u003e And this is the risky (but probably correct in the long-term) part.\n\nI like where this is headed, if we can pull it off.  It might even argue for a change of name at some point, but I think the document vs resource distinction is still useful for the time being.",
+      "parentUuid": "3f49116c_1a5713a6",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28f5661_011bc46d",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T07:36:00Z",
+      "side": 1,
+      "message": "Might be worth mentioning nosniff earlier in this section as well, since it\u0027s not clear we have an exception for that until after reading all the details.",
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b8d602_aca27b3b",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T07:36:00Z",
+      "side": 1,
+      "message": "Do we need to define what protected origins are?",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc726d1_a5943952",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T07:36:00Z",
+      "side": 1,
+      "message": "Nick considered classifying such responses as documents even if they had a nosniff header and weren\u0027t otherwise labeled as a document (i.e., sniffing for the parser breaker in pretty much everything).  That would protect quite a few more resources, but it would also be a bit more expensive.  I\u0027m not sure if we want to go that far, but maybe the summary here should allow it?",
       "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
