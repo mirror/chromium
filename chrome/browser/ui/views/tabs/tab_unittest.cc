@@ -153,7 +153,7 @@ class TabTest : public views::ViewsTestBase {
       switch (tab.IconCapacity()) {
         case 0:
           EXPECT_FALSE(tab.ShouldShowCloseBox());
-          EXPECT_FALSE(tab.ShouldShowIcon());
+          EXPECT_TRUE(tab.ShouldShowIcon());
           EXPECT_FALSE(tab.ShouldShowAlertIndicator());
           break;
         case 1:
@@ -181,7 +181,12 @@ class TabTest : public views::ViewsTestBase {
     // are fully within the contents bounds.
     const gfx::Rect contents_bounds = tab.GetContentsBounds();
     if (tab.ShouldShowIcon()) {
-      EXPECT_LE(contents_bounds.x(), tab.icon_->x());
+      if (tab.IconCapacity() == 0) {
+        EXPECT_EQ(contents_bounds.CenterPoint().x() - gfx::kFaviconSize / 2,
+                  tab.icon_->x());
+      } else {
+        EXPECT_LE(contents_bounds.x(), tab.icon_->x());
+      }
       if (tab.title_->visible())
         EXPECT_LE(tab.icon_->bounds().right(), tab.title_->x());
       EXPECT_LE(contents_bounds.y(), tab.icon_->y());
