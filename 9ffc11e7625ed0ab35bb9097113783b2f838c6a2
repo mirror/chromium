@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f47086e4_7764c056",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-01-31T17:08:27Z",
+      "side": 1,
+      "message": "Hi Chris, I did try moving the platform-specific code into a separate execution unit but this meant incurring the overhead of an extra function call per row of pixels in the given PNG. This overhead produced a slight regression on Intel so I have moved both the portable and platform-specific versions of SetRGBARawRow() to a header file so that they can be inlined. Applying the latest patchset means that PNGImageDecoder.cpp only contains generic c++ code. I also wrote some unit tests to prove correctness; these can also be used to test SIMD implementations for other platforms should they be written.",
+      "parentUuid": "89c47e37_e971c473",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a0459d_b70b0e97",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 4
