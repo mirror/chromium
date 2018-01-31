@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d936e7_e130ed65",
+        "filename": "content/browser/top_document_isolation_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-31T18:15:44Z",
+      "side": 1,
+      "message": "Reading through this test, IIUC, the expectations here were somehow wrong and didn\u0027t match the comment on line 601 of what should\u0027ve happened.   \n\nThis is actually doing something similar to my own test, but with TDI.  From A(B), the subframe opens a popup to C, then the popup navigates back to B, and the test seems to want that to go back to the opener subframe\u0027s SiteInstance (the TDI SI).  But instead lines 602 and 608 used to check that the popup remains in the C SiteInstance.  With my CL, I think the behavior is now actually correct. Does this make sense?",
+      "revId": "76b5c01ac33232a6fb8c6a1f47c009125089fbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
