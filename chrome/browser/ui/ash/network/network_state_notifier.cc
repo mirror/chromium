@@ -91,6 +91,7 @@ void ShowErrorNotification(const std::string& service_path,
           GetErrorNotificationVectorIcon(network_type),
           message_center::SystemNotificationWarningLevel::CRITICAL_WARNING);
   notification->set_priority(message_center::SYSTEM_PRIORITY);
+  notification->set_never_timeout(true);
   NotificationDisplayService::GetForSystemNotifications()->Display(
       NotificationHandler::Type::TRANSIENT, *notification);
 }
