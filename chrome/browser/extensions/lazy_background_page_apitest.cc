@@ -575,6 +575,10 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, EventDispatchToTab) {
 // Tests that the lazy background page updates the chrome://extensions page
 // when it is destroyed.
 IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, UpdateExtensionsPage) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitWithFeatures(
+      {} /* enabled */, {features::kMaterialDesignExtensions} /* disabled */);
+
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUIExtensionsURL));
   auto* extensions_page = browser()->tab_strip_model()->GetActiveWebContents();
 
@@ -626,10 +630,6 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, UpdateExtensionsPage) {
 
 // TODO(dpapad): Remove the _MD suffix once the non-MD test is deleted.
 IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, UpdateExtensionsPage_MD) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitWithFeatures(
-      {features::kMaterialDesignExtensions} /* enabled */, {} /* disabled */);
-
   // Need to turn on developer mode, otherwise the info to be tested is not
   // displayed in chrome://extensions.
   browser()->profile()->GetPrefs()->SetBoolean(
