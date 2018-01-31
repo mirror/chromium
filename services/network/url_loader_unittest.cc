@@ -42,6 +42,7 @@
 #include "net/url_request/url_request_test_job.h"
 #include "services/network/network_context.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/resource_scheduler_client.h"
 #include "services/network/test/test_data_pipe_getter.h"
 #include "services/network/test/test_url_loader_client.h"
 #include "services/network/url_loader.h"
@@ -179,7 +180,12 @@ class URLLoaderTest : public testing::Test {
   URLLoaderTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        context_(NetworkContext::CreateForTesting()) {
+        context_(NetworkContext::CreateForTesting()),
+        resource_scheduler_client_(
+            base::MakeRefCounted<network::ResourceSchedulerClient>(
+                kProcessId,
+                kRouteId,
+                context_.get())) {
     net::URLRequestFailedJob::AddUrlHandler();
   }
   ~URLLoaderTest() override {
@@ -219,7 +225,8 @@ class URLLoaderTest : public testing::Test {
 
     URLLoader loader_impl(context(), mojo::MakeRequest(&loader), options,
                           request, false, client_.CreateInterfacePtr(),
-                          TRAFFIC_ANNOTATION_FOR_TESTS, 0);
+                          TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                          resource_scheduler_client());
 
     ran_ = true;
 
@@ -317,7 +324,10 @@ class URLLoaderTest : public testing::Test {
   net::EmbeddedTestServer* test_server() { return &test_server_; }
   NetworkContext* context() { return context_.get(); }
   TestURLLoaderClient* client() { return &client_; }
-  void DestroyContext() { context_.reset(); }
+  void DestroyContext() {
+    resource_scheduler_client_ = nullptr;
+    context_.reset();
+  }
 
   // Returns the path of the requested file in the test data directory.
   base::FilePath GetTestFilePath(const std::string& file_name) {
@@ -337,6 +347,10 @@ class URLLoaderTest : public testing::Test {
     base::File file(file_path, open_flags);
     EXPECT_TRUE(file.IsValid());
     return file;
+  }
+
+  scoped_refptr<network::ResourceSchedulerClient> resource_scheduler_client() {
+    return resource_scheduler_client_;
   }
 
   // Configure how Load() works.
@@ -436,6 +450,9 @@ class URLLoaderTest : public testing::Test {
     return sent_request_;
   }
 
+  static constexpr int kProcessId = 4;
+  static constexpr int kRouteId = 8;
+
  private:
   void Monitor(const net::test_server::HttpRequest& request) {
     sent_request_ = request;
@@ -444,6 +461,7 @@ class URLLoaderTest : public testing::Test {
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   net::EmbeddedTestServer test_server_;
   std::unique_ptr<NetworkContext> context_;
+  scoped_refptr<network::ResourceSchedulerClient> resource_scheduler_client_;
 
   // Options applied to the created request in Load().
   bool sniff_ = false;
@@ -458,6 +476,9 @@ class URLLoaderTest : public testing::Test {
   net::test_server::HttpRequest sent_request_;
   TestURLLoaderClient client_;
 };
+
+constexpr int URLLoaderTest::kProcessId;
+constexpr int URLLoaderTest::kRouteId;
 
 TEST_F(URLLoaderTest, Basic) {
   LoadAndCompareFile("simple_page.html");
@@ -567,7 +588,8 @@ TEST_F(URLLoaderTest, DestroyContextWithLiveRequest) {
   base::WeakPtr<URLLoader> loader_impl =
       (new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
                      client()->CreateInterfacePtr(),
-                     TRAFFIC_ANNOTATION_FOR_TESTS, 0))
+                     TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                     resource_scheduler_client()))
           ->GetWeakPtrForTests();
 
   client()->RunUntilResponseReceived();
@@ -723,8 +745,8 @@ TEST_F(URLLoaderTest, CloseResponseBodyConsumerBeforeProducer) {
   mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
-                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
-                0);
+                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                resource_scheduler_client());
 
   client()->RunUntilResponseBodyArrived();
   EXPECT_TRUE(client()->has_received_response());
@@ -764,8 +786,8 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetBeforeRespnoseHeaders) {
   mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
-                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
-                0);
+                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                resource_scheduler_client());
 
   // Pausing reading response body from network stops future reads from the
   // underlying URLRequest. So no data should be sent using the response body
@@ -821,8 +843,8 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetWhenReadIsPending) {
   mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
-                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
-                0);
+                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                resource_scheduler_client());
 
   response_controller.WaitForRequest();
   response_controller.Send(
@@ -867,8 +889,8 @@ TEST_F(URLLoaderTest, ResumeReadingBodyFromNetAfterClosingConsumer) {
   mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
-                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
-                0);
+                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                resource_scheduler_client());
 
   loader->PauseReadingBodyFromNet();
   loader.FlushForTesting();
@@ -907,8 +929,8 @@ TEST_F(URLLoaderTest, MultiplePauseResumeReadingBodyFromNet) {
   mojom::URLLoaderPtr loader;
   // The loader is implicitly owned by the client and the NetworkContext.
   new URLLoader(context(), mojo::MakeRequest(&loader), 0, request, false,
-                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS,
-                0);
+                client()->CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS, 0,
+                resource_scheduler_client());
 
   // It is okay to call ResumeReadingBodyFromNet() even if there is no prior
   // PauseReadingBodyFromNet().
@@ -1229,6 +1251,76 @@ TEST_F(URLLoaderTest, CertStatusOnResponse) {
   EXPECT_EQ(net::OK, Load(GURL("https://example.test/")));
   EXPECT_EQ(net::CERT_STATUS_DATE_INVALID,
             client()->response_head().cert_status);
+}
+
+// Verifies if URLLoader works well with ResourceScheduler.
+TEST_F(URLLoaderTest, ResourceSchedulerIntegration) {
+  // ResourceScheduler limits the number of connections for the same host
+  // by 6.
+  constexpr int kRepeat = 6;
+  constexpr char kPath[] = "/hello.html";
+
+  context()->resource_scheduler()->DeprecatedOnWillInsertBody(kProcessId,
+                                                              kRouteId);
+
+  net::EmbeddedTestServer server;
+  // This is needed to stall all requests to the server.
+  net::test_server::ControllableHttpResponse response_controllers[kRepeat] = {
+      {&server, kPath}, {&server, kPath}, {&server, kPath},
+      {&server, kPath}, {&server, kPath}, {&server, kPath},
+  };
+
+  ASSERT_TRUE(server.Start());
+
+  ResourceRequest request = CreateResourceRequest("GET", server.GetURL(kPath));
+  request.load_flags = net::LOAD_DISABLE_CACHE;
+  request.priority = net::IDLE;
+
+  // Fill up the ResourceScheduler with delayable requests.
+  std::vector<std::pair<base::WeakPtr<URLLoader>, mojom::URLLoaderPtr>> loaders;
+  for (int i = 0; i < kRepeat; ++i) {
+    TestURLLoaderClient client;
+    mojom::URLLoaderPtr loaderInterfacePtr;
+
+    // The loader is implicitly owned by the client and the NetworkContext.
+    auto* loader = new URLLoader(
+        context(), mojo::MakeRequest(&loaderInterfacePtr), 0, request, false,
+        client.CreateInterfacePtr(), TRAFFIC_ANNOTATION_FOR_TESTS, kProcessId,
+        resource_scheduler_client());
+
+    loaders.push_back(std::make_pair(loader->GetWeakPtrForTests(),
+                                     std::move(loaderInterfacePtr)));
+  }
+
+  base::RunLoop().RunUntilIdle();
+  for (const auto& pair : loaders) {
+    URLLoader* loader = pair.first.get();
+    ASSERT_NE(loader, nullptr);
+    EXPECT_EQ(net::LOAD_STATE_WAITING_FOR_RESPONSE,
+              loader->GetLoadStateForTesting());
+  }
+
+  mojom::URLLoaderPtr loaderInterfacePtr;
+  base::WeakPtr<URLLoader> loader =
+      (new URLLoader(context(), mojo::MakeRequest(&loaderInterfacePtr), 0,
+                     request, false, client()->CreateInterfacePtr(),
+                     TRAFFIC_ANNOTATION_FOR_TESTS, kProcessId,
+                     resource_scheduler_client()))
+          ->GetWeakPtrForTests();
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_NE(loader, nullptr);
+  // Make sure that the ResourceScheduler throttles this request.
+  EXPECT_EQ(net::LOAD_STATE_WAITING_FOR_DELEGATE,
+            loader->GetLoadStateForTesting());
+
+  loader->SetPriority(net::HIGHEST, 0 /* intra_priority_value */);
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_NE(loader, nullptr);
+  // Make sure that the ResourceScheduler stops throtting.
+  EXPECT_EQ(net::LOAD_STATE_WAITING_FOR_AVAILABLE_SOCKET,
+            loader->GetLoadStateForTesting());
 }
 
 }  // namespace network

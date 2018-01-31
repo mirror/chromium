@@ -8,16 +8,18 @@
 #include "services/network/network_context.h"
 #include "services/network/network_service_impl.h"
 #include "services/network/public/cpp/resource_request.h"
+#include "services/network/resource_scheduler_client.h"
 #include "services/network/url_loader.h"
 
 namespace network {
 
 NetworkServiceURLLoaderFactory::NetworkServiceURLLoaderFactory(
     NetworkContext* context,
-    uint32_t process_id)
-    : context_(context), process_id_(process_id) {
-  ignore_result(process_id_);
-}
+    uint32_t process_id,
+    scoped_refptr<ResourceSchedulerClient> resource_scheduler_client)
+    : context_(context),
+      process_id_(process_id),
+      resource_scheduler_client_(std::move(resource_scheduler_client)) {}
 
 NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() = default;
 
@@ -40,12 +42,13 @@ void NetworkServiceURLLoaderFactory::CreateLoaderAndStart(
       context_, std::move(request), options, url_request, report_raw_headers,
       std::move(client),
       static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation),
-      process_id_);
+      process_id_, resource_scheduler_client_);
 }
 
 void NetworkServiceURLLoaderFactory::Clone(
     mojom::URLLoaderFactoryRequest request) {
-  context_->CreateURLLoaderFactory(std::move(request), process_id_);
+  context_->CreateURLLoaderFactory(std::move(request), process_id_,
+                                   resource_scheduler_client_);
 }
 
 }  // namespace network

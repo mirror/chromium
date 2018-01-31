@@ -13,9 +13,11 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
+#include "net/base/load_states.h"
 #include "net/http/http_raw_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request.h"
+#include "services/network/public/cpp/resource_scheduler.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 #include "services/network/upload_progress_tracker.h"
@@ -28,6 +30,7 @@ namespace network {
 
 class NetworkContext;
 class NetToMojoPendingBuffer;
+class ResourceSchedulerClient;
 struct ResourceResponse;
 
 class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
@@ -39,7 +42,8 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
             bool report_raw_headers,
             mojom::URLLoaderClientPtr url_loader_client,
             const net::NetworkTrafficAnnotationTag& traffic_annotation,
-            uint32_t process_id);
+            uint32_t process_id,
+            scoped_refptr<ResourceSchedulerClient> resource_scheduler_client);
   ~URLLoader() override;
 
   // Called when the associated NetworkContext is going away.
@@ -67,6 +71,8 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
   void OnResponseStarted(net::URLRequest* url_request, int net_error) override;
   void OnReadCompleted(net::URLRequest* url_request, int bytes_read) override;
 
+  net::LoadState GetLoadStateForTesting() const;
+
   // Returns a WeakPtr so tests can validate that the object was destroyed.
   base::WeakPtr<URLLoader> GetWeakPtrForTests();
 
@@ -93,6 +99,8 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
       mojom::SSLPrivateKeyPtr ssl_private_key,
       bool cancel_certificate_selection);
 
+  void ResumeStart();
+
   NetworkContext* context_;
   int32_t options_;
   int resource_type_;
@@ -117,6 +125,9 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
   scoped_refptr<ResourceResponse> response_;
   mojo::ScopedDataPipeConsumerHandle consumer_handle_;
 
+  std::unique_ptr<ResourceScheduler::ScheduledResourceRequest>
+      resource_scheduler_request_handle_;
+
   bool report_raw_headers_;
   net::HttpRawRequestHeaders raw_request_headers_;
   scoped_refptr<const net::HttpResponseHeaders> raw_response_headers_;
@@ -138,6 +149,8 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
   // -1, we still need to check whether it is from network before reporting it
   // as BodyReadFromNetBeforePaused.
   int64_t body_read_before_paused_ = -1;
+
+  scoped_refptr<ResourceSchedulerClient> resource_scheduler_client_;
 
   mojom::SSLPrivateKeyPtr ssl_private_key_;
 
