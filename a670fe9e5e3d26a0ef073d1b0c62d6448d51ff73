@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "705dce45_1b2cb2a8",
+        "filename": "third_party/WebKit/Source/platform/WebPointerEvent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T02:50:42Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense to me. Why would the ability to scroll be tied to whether the device supports hover or not?",
+      "revId": "a670fe9e5e3d26a0ef073d1b0c62d6448d51ff73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c209fdf5_ec1e6d33",
+        "filename": "third_party/WebKit/public/platform/WebTouchEvent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T02:50:42Z",
+      "side": 1,
+      "message": "(same comment as in event.h)",
+      "revId": "a670fe9e5e3d26a0ef073d1b0c62d6448d51ff73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3d8161_75fcb67e",
+        "filename": "ui/events/event.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T02:50:42Z",
+      "side": 1,
+      "message": "Maybe call it device_supports_hover_ (or source_supports_hover_) or something like that.",
+      "revId": "a670fe9e5e3d26a0ef073d1b0c62d6448d51ff73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
