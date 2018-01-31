@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "129e2837_40243d9a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-31T20:41:14Z",
+      "side": 1,
+      "message": "Actually talking about RenderWidget::Close() being deferred. I\u0027ve clarified, because I agree it was confusing.",
+      "parentUuid": "d4ec142d_095a0f66",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 62
+      },
+      "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e693c4a4_e2348e47",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "79f9f4c7_1de1def1",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-31T20:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e693c4a4_e2348e47",
+      "range": {
+        "startLine": 780,
+        "startChar": 70,
+        "endLine": 780,
+        "endChar": 71
+      },
+      "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5dafa46_dc0ac853",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4cb57f5_84e68f64",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-31T20:41:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5dafa46_dc0ac853",
+      "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
