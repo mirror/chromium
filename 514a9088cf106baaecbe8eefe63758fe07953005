@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "799d8537_38b0c59d",
+        "filename": "ash/ash_layout_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "I implemented the suggestion to add a third mode that gets set whenever we would set mode to hybrid and the Touchable feature is enabled, and I believe it\u0027s going to make things more complex for the following reasons:\n\n- ui::MaterialDesignController::Initialize() gets called **before** base::FeatureList::InitializeInstance(), which means checking if our Touchable feature is enabled there to set the mode appropriately will cause a crash on this CHECK() https://cs.chromium.org/chromium/src/base/feature_list.cc?type\u003dcs\u0026q\u003dFeatureList::InitializeInstance\u0026l\u003d259 that a feature was initialized from the accessor before FeatureList was initialized.\n- To enable the feature whether when running Chrome or in unit/browser tests, we\u0027ll have to enable two things --top-chrome-md\u003dmaterial-hybrid AND --enable-features\u003dTouchOptimizedUi.\n\nI prefer to postpone the decision to do this till later when things get clearer along the way.",
+      "parentUuid": "d22c42a3_66e5e2dc",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b6e4d66_be211d1d",
         "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c66fdc8_c0cdd664",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "Done. Removed the layout provider code as suggested.",
+      "parentUuid": "0b6e4d66_be211d1d",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "247e141f_e17986b7",
+        "filename": "ash/frame/frame_header_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "Yes, you are right. Passing the header height makes sense. Done.",
+      "parentUuid": "770cc900_38e064a0",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f741a9e_cef5571b",
         "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
         "patchSetId": 5
@@ -85,6 +139,24 @@
       "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f157b3a_0ebc7404",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "No, it\u0027s not. reverted.",
+      "parentUuid": "9f741a9e_cef5571b",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a5fec735_634362c3",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7528dd_9ebf183c",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "224c6a78_2e069411",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 5
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "e198c285_853e265a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "224c6a78_2e069411",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac8788a_8ba7a7d2",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 5
@@ -136,6 +244,24 @@
       "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914a8c19_9825981d",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T03:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac8788a_8ba7a7d2",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
