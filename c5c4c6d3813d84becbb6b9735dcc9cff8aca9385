@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bac8e9c_8f799932",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-31T00:12:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e13f748_94346998",
+      "revId": "c5c4c6d3813d84becbb6b9735dcc9cff8aca9385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b66225f2_50da6e1b",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c5c4c6d3813d84becbb6b9735dcc9cff8aca9385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e22bb3_6163fa17",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-31T00:12:39Z",
+      "side": 1,
+      "message": "This is intentional, I\u0027m basically using the entire code block as a quote equivalent instead of trying to nest inside a quote.",
+      "parentUuid": "b66225f2_50da6e1b",
+      "revId": "c5c4c6d3813d84becbb6b9735dcc9cff8aca9385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
