@@ -13,6 +13,7 @@
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/android/vr_shell/gl_browser_interface.h"
 #include "chrome/browser/android/vr_shell/gvr_keyboard_delegate.h"
+#include "chrome/browser/android/vr_shell/vr_dialog.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/text_input_delegate.h"
@@ -55,6 +56,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) override;
+  void DialogSurfaceCreated(jobject surface,
+                            gl::SurfaceTexture* texture) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
@@ -63,6 +66,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   // vr::ContentInputForwarder
   void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                     int content_id) override;
+  void ForwardDialogEvent(std::unique_ptr<blink::WebInputEvent> event) override;
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
@@ -101,6 +105,11 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
   void OnAssetsComponentReady() override;
+  void SetAlertDialogEnabled(bool enabled,
+                             vr::ContentInputDelegate* delegate,
+                             int width,
+                             int height) override;
+  void SetAlertDialogSize(int width, int height) override;
 
  protected:
   void Init() override;
@@ -118,6 +127,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   std::unique_ptr<VrShellGl> vr_shell_gl_;
   std::unique_ptr<GvrKeyboardDelegate> keyboard_delegate_;
   std::unique_ptr<vr::TextInputDelegate> text_input_delegate_;
+  std::unique_ptr<VrDialog> vr_dialog_;
 
   base::WeakPtr<VrShell> weak_vr_shell_;
   base::WeakPtr<vr::BrowserUiInterface> browser_ui_;

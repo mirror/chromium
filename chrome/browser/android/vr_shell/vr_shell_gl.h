@@ -106,6 +106,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void ContentBoundsChanged(int width, int height);
   void BufferBoundsChanged(const gfx::Size& content_buffer_size,
                            const gfx::Size& overlay_buffer_size);
+  void UIBoundsChanged(int width, int height);
+
   base::WeakPtr<VrShellGl> GetWeakPtr();
 
   void SetControllerMesh(std::unique_ptr<vr::ControllerMesh> mesh);
@@ -158,6 +160,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void OnContentFrameAvailable();
   void OnContentOverlayFrameAvailable();
+  void OnUiFrameAvailable();
   void OnWebVRFrameAvailable();
   void ScheduleOrCancelWebVrFrameTimeout();
   void OnWebVrTimeoutImminent();
@@ -199,9 +202,10 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::SurfaceTexture> content_surface_texture_;
   scoped_refptr<gl::SurfaceTexture> content_overlay_surface_texture_;
+  scoped_refptr<gl::SurfaceTexture> ui_surface_texture_;
   scoped_refptr<gl::SurfaceTexture> webvr_surface_texture_;
-
   std::unique_ptr<gl::ScopedJavaSurface> content_surface_;
+  std::unique_ptr<gl::ScopedJavaSurface> ui_surface_;
   std::unique_ptr<gl::ScopedJavaSurface> content_overlay_surface_;
 
   std::unique_ptr<gvr::GvrApi> gvr_api_;

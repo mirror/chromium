@@ -97,10 +97,19 @@ void VrGLThread::ContentSurfaceCreated(jobject surface,
 
 void VrGLThread::ContentOverlaySurfaceCreated(jobject surface,
                                               gl::SurfaceTexture* texture) {
+  DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&VrShell::ContentOverlaySurfaceCreated, weak_vr_shell_,
                      surface, base::Unretained(texture)));
+}
+
+void VrGLThread::DialogSurfaceCreated(jobject surface,
+                                      gl::SurfaceTexture* texture) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::DialogSurfaceCreated, weak_vr_shell_,
+                            surface, base::Unretained(texture)));
 }
 
 void VrGLThread::GvrDelegateReady(
@@ -124,6 +133,14 @@ void VrGLThread::ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ProcessContentGesture, weak_vr_shell_,
                             base::Passed(std::move(event)), content_id));
+}
+
+void VrGLThread::ForwardDialogEvent(
+    std::unique_ptr<blink::WebInputEvent> event) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::ProcessDialogGesture, weak_vr_shell_,
+                            base::Passed(std::move(event))));
 }
 
 void VrGLThread::ForceExitVr() {
@@ -354,6 +371,34 @@ void VrGLThread::SetOmniboxSuggestions(
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetOmniboxSuggestions,
                             browser_ui_, base::Passed(std::move(suggestions))));
+}
+void VrGLThread::SetAlertDialogEnabled(bool enabled,
+                                       vr::ContentInputDelegate* delegate,
+                                       int width,
+                                       int height) {
+  DCHECK(OnMainThread());
+  if (enabled) {
+    vr_dialog_.reset(new VrDialog(width, height));
+    vr_dialog_->SetEventForwarder(this);
+    task_runner()->PostTask(
+        FROM_HERE,
+        base::Bind(&vr::BrowserUiInterface::SetAlertDialogEnabled, browser_ui_,
+                   enabled, vr_dialog_.get(), width, height));
+  } else {
+    task_runner()->PostTask(
+        FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogEnabled,
+                              browser_ui_, enabled, nullptr, width, height));
+    vr_dialog_ = nullptr;
+  }
+}
+
+void VrGLThread::SetAlertDialogSize(int width, int height) {
+  DCHECK(OnMainThread());
+  if (vr_dialog_)
+    vr_dialog_->SetSize(width, height);
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogSize,
+                            browser_ui_, width, height));
 }
 
 void VrGLThread::OnAssetsComponentReady() {
