@@ -75,6 +75,7 @@
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
 #include "third_party/angle/src/image_util/loadimage.h"
 #include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/core/SkSurfaceProps.h"
 #include "third_party/skia/include/core/SkTypeface.h"
@@ -2578,6 +2579,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   // Raster helpers.
   sk_sp<GrContext> gr_context_;
   sk_sp<SkSurface> sk_surface_;
+  SkCanvas* raster_canvas_ = nullptr;
+  std::unique_ptr<SkCanvas> color_transform_canvas_;
 
   base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
 
@@ -20303,23 +20306,48 @@ error::Error GLES2DecoderImpl::HandleLockDiscardableTextureCHROMIUM(
   return error::kNoError;
 }
 
-void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
-                                             GLuint sk_color,
-                                             GLuint msaa_sample_count,
-                                             GLboolean can_use_lcd_text,
-                                             GLboolean use_distance_field_text,
-                                             GLint pixel_config) {
+error::Error GLES2DecoderImpl::HandleBeginRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::BeginRasterCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::BeginRasterCHROMIUM*>(cmd_data);
+
+  GLuint texture_id = c.texture_id;
+  GLuint sk_color = c.sk_color;
+  GLuint msaa_sample_count = c.msaa_sample_count;
+  GLboolean can_use_lcd_text = c.can_use_lcd_text;
+  GLboolean use_distance_field_text = c.use_distance_field_text;
+  GLint pixel_config = c.pixel_config;
+  GLsizei color_space_size = c.color_space_size;
+  gfx::ColorSpace color_space;
+  if (color_space_size != 0u) {
+    const char* data = static_cast<const char*>(
+        GetAddressAndCheckSize(c.shm_id, c.shm_offset, color_space_size));
+    if (!data)
+      return error::kOutOfBounds;
+
+    // Make a copy to reduce the risk of a time of check to time of use attack.
+    std::vector<char> color_space_data(data, data + color_space_size);
+    base::Pickle color_space_pickle(color_space_data.data(), color_space_size);
+    base::PickleIterator iterator(color_space_pickle);
+    if (!IPC::ParamTraits<gfx::ColorSpace>::Read(&color_space_pickle, &iterator,
+                                                 &color_space)) {
+      return error::kOutOfBounds;
+    }
+  }
+
   if (!gr_context_) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "chromium_raster_transport not enabled via attribs");
-    return;
+    return error::kNoError;
   }
   if (sk_surface_) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "BeginRasterCHROMIUM without EndRasterCHROMIUM");
-    return;
+    return error::kNoError;
   }
 
+  DCHECK(!color_transform_canvas_);
   gr_context_->resetContext();
 
   // This function should look identical to
@@ -20329,7 +20357,7 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
   if (!texture_ref) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "unknown texture id");
-    return;
+    return error::kNoError;
   }
   auto* texture = texture_ref->texture();
   int width;
@@ -20338,14 +20366,14 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
   if (!texture->GetLevelSize(texture->target(), 0, &width, &height, &depth)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "missing texture size info");
-    return;
+    return error::kNoError;
   }
   GLenum type;
   GLenum internal_format;
   if (!texture->GetLevelType(texture->target(), 0, &type, &internal_format)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "missing texture type info");
-    return;
+    return error::kNoError;
   }
   texture_info.fID = texture_ref->service_id();
   texture_info.fTarget = texture->target();
@@ -20354,7 +20382,7 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
       texture->target() != GL_TEXTURE_RECTANGLE_ARB) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "invalid texture target");
-    return;
+    return error::kNoError;
   }
 
   switch (pixel_config) {
@@ -20364,7 +20392,7 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
       if (internal_format != GL_RGBA8_OES && internal_format != GL_RGBA) {
         LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                            "pixel config mismatch");
-        return;
+        return error::kNoError;
       }
       break;
     case kBGRA_8888_GrPixelConfig:
@@ -20372,13 +20400,13 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
       if (internal_format != GL_BGRA_EXT && internal_format != GL_BGRA8_EXT) {
         LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                            "pixel config mismatch");
-        return;
+        return error::kNoError;
       }
       break;
     default:
       LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                          "unsupported pixel config");
-      return;
+      return error::kNoError;
   }
 
   GrBackendTexture gr_texture(
@@ -20404,19 +20432,28 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
   if (!sk_surface_) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                        "failed to create surface");
-    return;
+    return error::kNoError;
+  }
+  raster_canvas_ = sk_surface_->getCanvas();
+
+  if (color_space.IsValid()) {
+    color_transform_canvas_ = SkCreateColorSpaceXformCanvas(
+        raster_canvas_, color_space.ToSkColorSpace());
+    DCHECK(color_transform_canvas_);
+    raster_canvas_ = color_transform_canvas_.get();
   }
 
   // All or nothing clearing, as no way to validate the client's input on what
   // is the "used" part of the texture.
   if (texture->IsLevelCleared(texture->target(), 0))
-    return;
+    return error::kNoError;
 
   // TODO(enne): this doesn't handle the case where the background color
   // changes and so any extra pixels outside the raster area that get
   // sampled may be incorrect.
-  sk_surface_->getCanvas()->drawColor(sk_color);
+  raster_canvas_->drawColor(sk_color);
   texture_manager()->SetLevelCleared(texture_ref, texture->target(), 0, true);
+  return error::kNoError;
 }
 
 class TransferCacheDeserializeHelperImpl
@@ -20445,12 +20482,12 @@ void GLES2DecoderImpl::DoRasterCHROMIUM(GLsizeiptr size, const void* list) {
     return;
   }
   DCHECK(transfer_cache_);
+  DCHECK(raster_canvas_);
 
   alignas(
       cc::PaintOpBuffer::PaintOpAlign) char data[sizeof(cc::LargestPaintOp)];
   const char* buffer = static_cast<const char*>(list);
 
-  SkCanvas* canvas = sk_surface_->getCanvas();
   SkMatrix original_ctm;
   cc::PlaybackParams playback_params(nullptr, original_ctm);
   cc::PaintOp::DeserializeOptions options;
@@ -20469,7 +20506,7 @@ void GLES2DecoderImpl::DoRasterCHROMIUM(GLsizeiptr size, const void* list) {
       return;
     }
 
-    deserialized_op->Raster(canvas, playback_params);
+    deserialized_op->Raster(raster_canvas_, playback_params);
     deserialized_op->DestroyThis();
 
     size -= skip;
@@ -20485,6 +20522,8 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
     return;
   }
 
+  color_transform_canvas_.reset();
+  raster_canvas_ = nullptr;
   sk_surface_->prepareForExternalIO();
   sk_surface_.reset();
 

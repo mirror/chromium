@@ -143,7 +143,8 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
                     GLuint msaa_sample_count,
                     GLboolean can_use_lcd_text,
                     GLboolean use_distance_field_text,
-                    GLint pixel_config));
+                    GLint pixel_config,
+                    GLColorSpace color_space));
   MOCK_METHOD2(RasterCHROMIUM, void(GLsizeiptr size, const void* list));
   MOCK_METHOD1(MapRasterCHROMIUM, void*(GLsizeiptr size));
   MOCK_METHOD1(UnmapRasterCHROMIUM, void(GLsizeiptr written));

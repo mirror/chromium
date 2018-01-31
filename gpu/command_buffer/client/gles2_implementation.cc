@@ -7210,6 +7210,35 @@ void GLES2Implementation::Viewport(GLint x,
   CheckGLError();
 }
 
+void GLES2Implementation::BeginRasterCHROMIUM(GLuint texture_id,
+                                              GLuint sk_color,
+                                              GLuint msaa_sample_count,
+                                              GLboolean can_use_lcd_text,
+                                              GLboolean use_distance_field_text,
+                                              GLint pixel_config,
+                                              GLColorSpace color_space) {
+  base::Pickle color_space_data;
+#if !defined(__native_client__)
+  // Including gfx::ColorSpace would bring Skia and a lot of other code into
+  // NaCl's IRT.
+  gfx::ColorSpace* gfx_color_space =
+      reinterpret_cast<gfx::ColorSpace*>(color_space);
+  IPC::ParamTraits<gfx::ColorSpace>::Write(&color_space_data, *gfx_color_space);
+#endif
+
+  ScopedTransferBufferPtr buffer(color_space_data.size(), helper_,
+                                 transfer_buffer_);
+  if (!buffer.valid() || buffer.size() < color_space_data.size()) {
+    SetGLError(GL_OUT_OF_MEMORY, "GLES2::BeginRasterCHROMIUM", "out of memory");
+    return;
+  }
+  memcpy(buffer.address(), color_space_data.data(), color_space_data.size());
+  helper_->BeginRasterCHROMIUM(texture_id, sk_color, msaa_sample_count,
+                               can_use_lcd_text, use_distance_field_text,
+                               pixel_config, buffer.shm_id(), buffer.offset(),
+                               color_space_data.size());
+}
+
 void* GLES2Implementation::MapRasterCHROMIUM(GLsizeiptr size) {
   if (size < 0) {
     SetGLError(GL_INVALID_VALUE, "glMapRasterCHROMIUM", "negative size");
