@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1da8c2_3d2a1235",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T00:02:59Z",
+      "side": 1,
+      "message": "Is it possible to exercise this branch in a test as well? Perhaps an iframe that removes itself and then tries to use decode()?",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 3
+      },
+      "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
