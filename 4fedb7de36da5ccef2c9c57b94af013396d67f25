@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "573b0f19_8b5b3e53",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-31T21:24:00Z",
+      "side": 0,
+      "message": "This was just used for casting safety.",
+      "revId": "4fedb7de36da5ccef2c9c57b94af013396d67f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
