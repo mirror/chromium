@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f255fa92_12da901e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T20:46:31Z",
+      "side": 1,
+      "message": "This is because LayoutTableRow::UpdateLayout() doesn\u0027t do all needed layout. For example, after UpdateLayout(), LogicalWidth and LogicalHeight which are required for correct result LayoutPositionedObject() are not determined yet.",
+      "parentUuid": "ae6bcce2_0c2c60c4",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bb6ed44_2a13999c",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T22:53:02Z",
       "side": 1,
       "message": "Would it be possible for TableBoxComponent to just establish a layout state instead? I think that should cause this code to become unreachable.",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ae3c4e_7a0b8292",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 5617,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T20:46:31Z",
+      "side": 1,
+      "message": "Your suggestion can be achieved by letting LayoutTableRow::UpdateLayout() establish a layout state. The scope of of the layout state must be carefully adjusted because LayoutTableRow::UpdateLayout() calls Section()::UpdateFragmentationInfoForChild(cell) which requires the section\u0027s LayoutState.",
+      "parentUuid": "8bb6ed44_2a13999c",
       "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8f9807a5_c0cfde19",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T20:46:31Z",
+      "side": 1,
+      "message": "There are two reasons:\n1. A LayoutTableBoxComponent without transform is not a containing block for anything though it is a LayoutBlock.\n2. Even for a LayoutTableBoxComponent with transform, it\u0027s the containing block of only the out-of-flow positioned descendants, not the containing block of descendant table components (which always use the containing LayoutTable as the containing block).",
+      "parentUuid": "159c74a6_9dc45979",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c67f66_3f6ccd3f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2130af32_93379435",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T20:46:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49c67f66_3f6ccd3f",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
