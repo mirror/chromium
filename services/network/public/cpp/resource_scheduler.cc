@@ -414,10 +414,15 @@ class ResourceScheduler::Client {
         resource_scheduler_(resource_scheduler),
         weak_ptr_factory_(this) {
     if (base::FeatureList::IsEnabled(
-            features::kRendererSideResourceScheduler)) {
+            features::kRendererSideResourceScheduler) ||
+        base::FeatureList::IsEnabled(features::kNetworkService)) {
       // When kRendererSideResourceScheduler is enabled, "layout blocking"
       // concept is moved to the renderer side, so the shceduler works always
       // with the normal mode.
+      // We are assuming that kRendererSideResourceScheduler will be shipped
+      // when launching Network Service, so let's act as if
+      // kRendererSideResourceScheduler is enabled when kNetworkService is
+      // enabled.
       deprecated_has_html_body_ = true;
     }
   }
@@ -486,10 +491,15 @@ class ResourceScheduler::Client {
   void DeprecatedOnNavigate() {
     deprecated_has_html_body_ = false;
     if (base::FeatureList::IsEnabled(
-            features::kRendererSideResourceScheduler)) {
+            features::kRendererSideResourceScheduler) ||
+        base::FeatureList::IsEnabled(features::kNetworkService)) {
       // When kRendererSideResourceScheduler is enabled, "layout blocking"
       // concept is moved to the renderer side, so the shceduler works always
       // with the normal mode.
+      // We are assuming that kRendererSideResourceScheduler will be shipped
+      // when launching Network Service, so let's act as if
+      // kRendererSideResourceScheduler is enabled when kNetworkService is
+      // enabled.
       deprecated_has_html_body_ = true;
     }
 
