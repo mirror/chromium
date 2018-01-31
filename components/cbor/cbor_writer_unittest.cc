@@ -305,6 +305,38 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
                                         arraysize(kNestedMapTestCase)));
 }
 
+TEST(CBORWriterTest, TestWriteCanonicalMap) {
+  static const uint8_t kCanonicalMapTestCase[] = {
+      // clang-format off
+      0xa4,  // map of 2 pairs
+        0x0a, // 10
+        0x01,
+
+        0x43, 'b', 'a', 'r', // byte string "bar"
+        0x02,
+
+        0x43, 'f', 'o', 'o', // byte string "foo"
+        0x03,
+
+        0x61, 'a',  // text string "a"
+        0x04,
+      // clang-format on
+  };
+  CBORValue::MapValue map;
+  map[CBORValue(10)] = CBORValue(1);
+  map[CBORValue::BytestringFromString("bar")] = CBORValue(2);
+  map[CBORValue::BytestringFromString("foo")] = CBORValue(3);
+  map[CBORValue("a")] = CBORValue(4);
+
+  auto cbor =
+      CBORWriter::Write(CBORValue(map), CBORWriter::kDefaultMaxNestingDepth,
+                        CBORWriter::Mode::CANONICAL);
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(),
+              testing::ElementsAreArray(kCanonicalMapTestCase,
+                                        arraysize(kCanonicalMapTestCase)));
+}
+
 TEST(CBORWriterTest, TestWriteSimpleValue) {
   static const struct {
     CBORValue::SimpleValue simple_value;
