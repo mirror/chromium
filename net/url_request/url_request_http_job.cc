@@ -653,7 +653,8 @@ void URLRequestHttpJob::AddCookieHeaderAndStart() {
       if (!request_->initiator() ||
           registry_controlled_domains::SameDomainOrHost(
               request_->url(), request_->initiator().value().GetURL(),
-              registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+              registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES) ||
+          network_delegate()->CanAttachSameSiteCookies(*request_)) {
         options.set_same_site_cookie_mode(
             CookieOptions::SameSiteCookieMode::INCLUDE_STRICT_AND_LAX);
       } else if (HttpUtil::IsMethodSafe(request_->method())) {

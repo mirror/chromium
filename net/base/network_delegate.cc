@@ -148,6 +148,12 @@ bool NetworkDelegate::CanGetCookies(const URLRequest& request,
   return OnCanGetCookies(request, cookie_list);
 }
 
+bool NetworkDelegate::CanAttachSameSiteCookies(const URLRequest& request) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(!(request.load_flags() & LOAD_DO_NOT_SEND_COOKIES));
+  return OnCanAttachSameSiteCookies(request);
+}
+
 bool NetworkDelegate::CanSetCookie(const URLRequest& request,
                                    const net::CanonicalCookie& cookie,
                                    CookieOptions* options) {

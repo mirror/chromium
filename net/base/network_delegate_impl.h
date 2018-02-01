@@ -84,6 +84,8 @@ class NET_EXPORT NetworkDelegateImpl : public NetworkDelegate {
   bool OnCanGetCookies(const URLRequest& request,
                        const CookieList& cookie_list) override;
 
+  bool OnCanAttachSameSiteCookies(const URLRequest& request) override;
+
   bool OnCanSetCookie(const URLRequest& request,
                       const net::CanonicalCookie& cookie,
                       CookieOptions* options) override;
