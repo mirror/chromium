@@ -983,7 +983,7 @@ LayoutRect FrameSelection::UnclippedBounds() const {
   if (!view || !layout_view)
     return LayoutRect();
 
-  view->UpdateLifecycleToLayoutClean();
+  DCHECK(view->UpdateLifecycleToLayoutClean());
   return LayoutRect(layout_selection_->SelectionBounds());
 }
 
