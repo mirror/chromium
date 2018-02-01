@@ -77,7 +77,8 @@ bool operator==(const AXTreeData& lhs, const AXTreeData& rhs) {
           lhs.sel_anchor_affinity == rhs.sel_anchor_affinity &&
           lhs.sel_focus_object_id == rhs.sel_focus_object_id &&
           lhs.sel_focus_offset == rhs.sel_focus_offset &&
-          lhs.sel_focus_affinity == rhs.sel_focus_affinity);
+          lhs.sel_focus_affinity == rhs.sel_focus_affinity &&
+          lhs.sel_text_granularity == rhs.sel_text_granularity);
 }
 
 bool operator!=(const AXTreeData& lhs, const AXTreeData& rhs) {

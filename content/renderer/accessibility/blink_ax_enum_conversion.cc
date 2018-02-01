@@ -588,4 +588,30 @@ ax::mojom::TextAffinity AXTextAffinityFromBlink(
   return ax::mojom::TextAffinity::kDownstream;
 }
 
+ax::mojom::TextGranularity AXTextGranularityFromBlink(
+    blink::WebAXTextGranularity text_granularity) {
+  switch (text_granularity) {
+    case blink::kWebAXTextGranularityCharacter:
+      return ax::mojom::TextGranularity::kCharacter;
+    case blink::kWebAXTextGranularityWord:
+      return ax::mojom::TextGranularity::kWord;
+    case blink::kWebAXTextGranularitySentence:
+      return ax::mojom::TextGranularity::kSentence;
+    case blink::kWebAXTextGranularityLine:
+      return ax::mojom::TextGranularity::kLine;
+    case blink::kWebAXTextGranularityParagraph:
+      return ax::mojom::TextGranularity::kParagraph;
+    case blink::kWebAXTextGranularitySentenceBoundary:
+      return ax::mojom::TextGranularity::kSentenceBoundary;
+    case blink::kWebAXTextGranularityLineBoundary:
+      return ax::mojom::TextGranularity::kLineBoundary;
+    case blink::kWebAXTextGranularityParagraphBoundary:
+      return ax::mojom::TextGranularity::kParagraphBoundary;
+    case blink::kWebAXTextGranularityDocumentBoundary:
+      return ax::mojom::TextGranularity::kDocumentBoundary;
+  }
+  NOTREACHED();
+  return ax::mojom::TextGranularity::kCharacter;
+}
+
 }  // namespace content.

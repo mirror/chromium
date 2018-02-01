@@ -56,6 +56,9 @@ ax::mojom::DescriptionFrom AXDescriptionFromFromBlink(
 ax::mojom::TextAffinity AXTextAffinityFromBlink(
     blink::WebAXTextAffinity affinity);
 
+ax::mojom::TextGranularity AXTextGranularityFromBlink(
+    blink::WebAXTextGranularity text_granularity);
+
 }  // namespace content
 
 #endif  // CONTENT_RENDERER_ACCESSIBILITY_BLINK_AX_ENUM_CONVERSION_H_
