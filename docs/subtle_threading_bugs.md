@@ -1,19 +1,55 @@
 # Subtle Threading Bugs and Patterns to avoid them
 
+[Revision history](https://sites.google.com/a/chromium.org/dev/system/app/pages/admin/compare?wuid=wuid:gx:866b4baec801740&rev1=2)
+
 [TOC]
 
-## The Problem
+## The Reality (Now)
+base::TaskScheduler and its public API in base/task_scheduler/post_task.h make
+this much harder to get wrong:
+
+* Problems #1/2 are no longer possible: TaskRunners vended from post_task.h are
+  all ref-counted.
+
+* Problem #3 is still theoretically possible because the IO thread is shutdown
+  before the TaskScheduler but PostTaskAndReply semantics are a strong part of
+  the API now and should be the defacto going forward.
+
+* Problem #4 is no longer possible: TaskScheduler is created *very* early (in
+  BrowserMainLoop's constructor). From that point on TaskRunners can be created
+  and tasks can be posted. They will only start running a bit later (in
+  BrowserMainLoop::CreateThreads()) but this is invisible to users of the API.
+  Users that need a global instance can use lazy_task_runner.h and will get a
+  lazily initialized task runner of their liking one first access.
+
+* TaskScheduler also has shutdown semantics (TaskShutdownBehavior) so it is
+  easier to avoid the gotchas mentioned at the end of this document.
+
+* For testing, the recommended approach is now to use
+  base::test::ScopedTaskEnvironment which has much better support for running-
+  until-idle (although we strongly encourage registering a callback to know when
+  the expected event occurs rather than running-until-idle which is a very large
+  hammer). content::TestBrowserThreadBundle is available as a
+  ScopedTaskEnvironment that also supports the remaining BrowserThreads
+  (content::RunAllTasksUntilIdle() is the run-until-idle helper in that case).
+
+The problems outlined below still apply to the remaining BrowserThreads, but
+those only being UI/IO the problem space is now highly constrained (and usage of
+the problematic APIs has highly diminished over time -- especially with the
+migration to TaskScheduler where many of those have even been obliterated).
+
+## The Problem (Then)
 We were using a number of patterns that were problematic:
 
 1. Using `BrowserThread::GetMessageLoop` This isn't safe, since it could return
    a valid pointer, but since the caller isn't holding on to a lock anymore, the
    target MessageLoop could be destructed while it's being used.
-   
+
 1. Caching of MessageLoop pointers in order to use them later for PostTask and friends
 
    * This was more efficient previously (more on that later) since using
      `BrowserThread::GetMessageLoop` involved a lock.
-   
+
    * But it spread logic about the order of thread destruction all over the
      code.  Code that moved from the IO thread to the file thread and back, in
      order to avoid doing disk access on the IO thread, ended up having to do an
@@ -23,7 +59,7 @@ We were using a number of patterns that were problematic:
      updating the code after seeing reliability or user crashes.
 
    * It made the browser shutdown fragile and hence difficult to update.
-   
+
 1. File thread hops using RefCountedThreadSafe objects which have non-trivial
    destructors
 
@@ -47,12 +83,12 @@ We were using a number of patterns that were problematic:
    * This could be either deceptively harmless (i.e. execute synchronously when
      it was normally asynchronous), when in fact it makes shutdown slower
      because disk access is moved to the UI thread.
- 
+
    * It could lead to data loss, if tasks are silently not posted because the
      code assumes this only happens in unit tests, when it could occur on
      browser shutdown as well.
 
-## The Solution
+## The Solution (Then)
 
 * 1+2: Where possible, use `BrowserThread::PostTask`. Everywhere else, use
   `scoped_refptr<MessageLoopProxy>`.
@@ -83,7 +119,7 @@ We were using a number of patterns that were problematic:
   it will be destroyed on the originating thread. You can also use
   `PostTaskAndReplyWithResult()` to return a value from the first task and pass
   it into the second task.
-  
+
   Alternatively, if your object must be destructed on a specific thread, you can
   use a trait from BrowserThread:
 
@@ -100,7 +136,7 @@ We were using a number of patterns that were problematic:
 
   There are plenty of examples now in the tests.
 
-## Gotchas
+## Gotchas (Then)
 Even when using `BrowseThread` or `MessageLoopProxy`, you will still likely have
 messages lost (usually resulting in memory leaks) when the target thread is in
 the process of shutting down: the benefit over `MessageLoop` is primarily one of
