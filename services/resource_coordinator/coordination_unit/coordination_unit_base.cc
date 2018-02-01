@@ -98,6 +98,14 @@ bool CoordinationUnitBase::GetProperty(const mojom::PropertyType property_type,
   return false;
 }
 
+int64_t CoordinationUnitBase::GetPropertyOrDefault(
+    const mojom::PropertyType property_type, int64_t default_value) const {
+  int64_t value = 0;
+  if (GetProperty(property_type, &value))
+    return value;
+  return default_value;
+}
+
 void CoordinationUnitBase::OnEventReceived(mojom::Event event) {
   for (auto& observer : observers())
     observer.OnEventReceived(this, event);
@@ -121,6 +129,22 @@ void CoordinationUnitBase::SetProperty(mojom::PropertyType property_type,
   // before |OnPropertyChanged| is invoked on all of the registered observers.
   properties_[property_type] = value;
   OnPropertyChanged(property_type, value);
+}
+
+bool GetProperty(const CoordinationUnitBase* cu,
+                 const mojom::PropertyType property_type,
+                 int64_t* result) {
+  if (!cu)
+    return false;
+  return cu->GetProperty(property_type, result);
+}
+
+int64_t GetPropertyOrDefault(const CoordinationUnitBase* cu,
+                             const mojom::PropertyType property_type,
+                             int64_t default_value) {
+  if (!cu)
+    return default_value;
+  return cu->GetPropertyOrDefault(property_type, default_value);
 }
 
 }  // namespace resource_coordinator
