@@ -86,6 +86,7 @@ source_set("cronet_native_tests") {
   testonly = true
 
   deps = [
+    ":cronet_native_impl",
     ":cronet_native_testutil",
     "//base",
     "//base/test:test_support",
