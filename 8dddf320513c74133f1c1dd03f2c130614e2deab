@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15272bce_82702036",
+        "filename": "content/common/task_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-01T17:51:54Z",
+      "side": 1,
+      "message": "Can this ever be 1, and if so, is it ok to return 0 from this function?",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "8dddf320513c74133f1c1dd03f2c130614e2deab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
