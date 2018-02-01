@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fd6be693_c4668da1",
+        "filename": "services/assistant/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "you are very qualified :)",
+      "parentUuid": "4d23a183_db4911a3",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfd376fc_374100a9",
         "filename": "services/assistant/assistant_manager_service.h",
         "patchSetId": 5
@@ -106,6 +130,48 @@
     },
     {
       "key": {
+        "uuid": "f5c28b4d_a19763ec",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "added const and dropped \u0026",
+      "parentUuid": "95d51096_36de2778",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "527e1059_5b5ca3ee",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da48c74_72dc1e2f",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 42
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39bbfb3a_359c15c2",
         "filename": "services/assistant/assistant_manager_service_impl.cc",
         "patchSetId": 5
@@ -123,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "ff60d4e0_f23f23c5",
+        "filename": "services/assistant/assistant_manager_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39bbfb3a_359c15c2",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d352084_332c5038",
         "filename": "services/assistant/assistant_manager_service_impl.cc",
         "patchSetId": 5
@@ -137,6 +221,24 @@
       "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45390771_01dc5b8f",
+        "filename": "services/assistant/assistant_manager_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "This is a different user_id than chrome\u0027s.  It\u0027s from libassistant api. I am not sure why they choose string but it is out of our control.",
+      "parentUuid": "4d352084_332c5038",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "8844c1b1_44f848c9",
+        "filename": "services/assistant/platform_api_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae20e90_73223b09",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce5a911_6370e528",
         "filename": "services/assistant/platform_api_impl.h",
         "patchSetId": 5
@@ -195,6 +315,30 @@
       "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d843f0ad_417aaac4",
+        "filename": "services/assistant/platform_api_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T21:46:46Z",
+      "side": 1,
+      "message": "made it a class member.",
+      "parentUuid": "bce5a911_6370e528",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
