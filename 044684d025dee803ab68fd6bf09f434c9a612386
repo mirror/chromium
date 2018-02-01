@@ -16,6 +16,24 @@
       "revId": "044684d025dee803ab68fd6bf09f434c9a612386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8054c2ee_9a143500",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-01T18:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf649668_6c2b1b04",
+      "revId": "044684d025dee803ab68fd6bf09f434c9a612386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
