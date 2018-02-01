@@ -68,12 +68,13 @@ TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
       background_color_(SK_ColorWHITE) {
 #if defined(OS_ANDROID)
   frame_sink_id_ = AllocateFrameSinkId();
-  GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+  GetHostFrameSinkManager()->RegisterFrameSinkId(
+      frame_sink_id_, false /* report_synchronization_events */, this);
 #else
   // Not all tests initialize or need an image transport factory.
   if (ImageTransportFactory::GetInstance()) {
     frame_sink_id_ = AllocateFrameSinkId();
-    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, false, this);
 #if DCHECK_IS_ON()
     GetHostFrameSinkManager()->SetFrameSinkDebugLabel(
         frame_sink_id_, "TestRenderWidgetHostView");
@@ -226,6 +227,9 @@ void TestRenderWidgetHostView::OnFirstSurfaceActivation(
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }
+
+void TestRenderWidgetHostView::OnSynchronizationEvent(
+    base::TimeDelta duration) {}
 
 void TestRenderWidgetHostView::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);

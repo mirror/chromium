@@ -138,6 +138,7 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
 #endif
   // viz::HostFrameSinkClient implementation.
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
+  void OnSynchronizationEvent(base::TimeDelta duration) override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
 
  protected:

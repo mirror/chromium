@@ -58,7 +58,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   void SetLocalClient(mojom::FrameSinkManagerClient* client);
 
   // mojom::FrameSinkManager implementation:
-  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id) override;
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           bool report_synchronization_events) override;
   void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) override;
   void SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                               const std::string& debug_label) override;
@@ -117,7 +118,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // SurfaceObserver implementation.
   void OnSurfaceCreated(const SurfaceId& surface_id) override;
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override;
-  void OnSurfaceActivated(const SurfaceId& surface_id) override;
+  void OnSurfaceActivated(const SurfaceId& surface_id,
+                          base::Optional<base::TimeDelta> duration) override;
   bool OnSurfaceDamaged(const SurfaceId& surface_id,
                         const BeginFrameAck& ack) override;
   void OnSurfaceDiscarded(const SurfaceId& surface_id) override;
@@ -207,6 +209,10 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // [Root]CompositorFrameSinkImpls are owned in this map.
   base::flat_map<FrameSinkId, std::unique_ptr<mojom::CompositorFrameSink>>
       sink_map_;
+
+  // The set of FrameSinkIds that the client wants synchronization event
+  // notifications for.
+  base::flat_set<FrameSinkId> report_synchronization_events_;
 
   PrimaryBeginFrameSource primary_source_;
 
