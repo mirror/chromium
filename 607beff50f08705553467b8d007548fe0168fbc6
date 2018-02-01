@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ff5210_f80140a5",
+        "filename": "testing/trigger_scripts/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-01T01:24:15Z",
+      "side": 1,
+      "message": "Nit: \"trampoline\" seems like the wrong word here. Maybe just something like\n\"Swarming trigger scripts, which can provide finer-grained control of how \ntests are sharded than the default logic in the swarming recipe modules\" instead?",
+      "revId": "607beff50f08705553467b8d007548fe0168fbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
