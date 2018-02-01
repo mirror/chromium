@@ -34,6 +34,9 @@
   if (_dragging == dragging)
     return;
   _dragging = dragging;
+  // When a scroll view is being dragged, its contents are tracking the pan
+  // gesture, and previous deceleration is cancelled.
+  _decelerating = NO;
   [self updateIsScrolling];
 }
 
@@ -85,7 +88,6 @@
 - (void)scrollViewWillBeginDraggingWithGesture:
     (UIPanGestureRecognizer*)panGesture {
   self.state.dragging = YES;
-  self.state.decelerating = NO;
   self.panGesture = panGesture;
 }
 
