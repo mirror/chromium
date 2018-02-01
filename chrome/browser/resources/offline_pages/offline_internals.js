@@ -35,18 +35,28 @@ cr.define('offlineInternals', function() {
 
     var template = $('stored-pages-table-row');
     var td = template.content.querySelectorAll('td');
+    var pageIndex = 0;
     for (let page of pages) {
-      var checkbox = td[0].querySelector('input');
+      pageIndex++;
+      td[0].textContent = pageIndex;
+      var checkbox = td[1].querySelector('input');
       checkbox.setAttribute('value', page.id);
 
-      var link = td[1].querySelector('a');
+      var link = td[2].querySelector('a');
       link.setAttribute('href', page.onlineUrl);
-      link.textContent = page.onlineUrl;
+      var maxUrlCharsPerLine = 50;
+      if (page.onlineUrl.length > maxUrlCharsPerLine) {
+        link.textContent = '';
+        for (var i = 0; i < page.onlineUrl.length; i += maxUrlCharsPerLine) {
+          link.textContent += page.onlineUrl.slice(i, i + maxUrlCharsPerLine);
+          link.textContent += '\r\n';
+        }
+      } else {
+        link.textContent = page.onlineUrl;
+      }
 
-      td[2].textContent = page.namespace;
-      td[3].textContent = Math.round(page.size / 1024);
-      td[4].textContent = page.isExpired;
-      td[5].textContent = page.requestOrigin;
+      td[3].textContent = page.namespace;
+      td[4].textContent = Math.round(page.size / 1024);
 
       var row = document.importNode(template.content, true);
       storedPagesTable.appendChild(row);
