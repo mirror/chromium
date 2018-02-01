@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aed762a_f0a8a3af",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2018-02-01T16:29:06Z",
+      "side": 1,
+      "message": "Haah, I just realized mAwHolder needs to be final (to be thread safe), but for it to be final we need to create it in the ctors of this class - so I believe passing a reference to \u0027this\u0027 at that point is NOT OK? (since \u0027this\u0027 object won\u0027t have been fully initialized at that point).",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "493f6fff5cbccc215455b13bd608b2bfdb677bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
