@@ -2861,11 +2861,12 @@ LayoutUnit LayoutBox::ComputeLogicalWidthUsing(
       FillAvailableMeasure(available_logical_width, margin_start, margin_end);
 
   if (ShrinkToAvoidFloats() && cb->IsLayoutBlockFlow() &&
-      ToLayoutBlockFlow(cb)->ContainsFloats())
+      ToLayoutBlockFlow(cb)->ContainsFloats() && !cb->IsLayoutNGMixin()) {
     logical_width_result =
         std::min(logical_width_result,
                  ShrinkLogicalWidthToAvoidFloats(margin_start, margin_end,
                                                  ToLayoutBlockFlow(cb)));
+  }
 
   if (width_type == kMainOrPreferredSize &&
       SizesLogicalWidthToFitContent(logical_width)) {
@@ -3144,7 +3145,12 @@ void LayoutBox::ComputeLogicalHeight(
 
   Length h;
   if (IsOutOfFlowPositioned()) {
-    ComputePositionedLogicalHeight(computed_values);
+    if (HasOverrideLogicalContentHeight()) {
+      computed_values.extent_ =
+          OverrideLogicalContentHeight() + BorderAndPaddingLogicalHeight();
+    } else {
+      ComputePositionedLogicalHeight(computed_values);
+    }
   } else {
     LayoutBlock* cb = ContainingBlock();
 
