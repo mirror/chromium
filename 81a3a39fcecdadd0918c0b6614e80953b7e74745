@@ -86,6 +86,24 @@
       "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeec818c_e40315ca",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T19:01:44Z",
+      "side": 0,
+      "message": "Thanks! This is for the gpu resources, other types were in other patches so I will have to address them separately. Once this one lands, I\u0027ll be removing all that code from ResourceProvider.",
+      "parentUuid": "a45d587b_7d1dd777",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
