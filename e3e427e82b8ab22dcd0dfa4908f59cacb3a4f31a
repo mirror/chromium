@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aac42ca0_203938d1",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T17:34:07Z",
+      "side": 1,
+      "message": "Done. Kind of ugly because I don\u0027t have a browser message filter so have to proxy off the UI thread.",
+      "parentUuid": "99964917_5cc66495",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669061d6_2cfc53dd",
         "filename": "content/browser/android/synchronous_compositor_host.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T23:23:34Z",
       "side": 1,
       "message": "I have a hard time wrapping my head around under what situation this happens. I don\u0027t know much about mojo integration into the top level content classes like, but this looks like the underlying \"widget\" could change for the same SCHost? That\u0027s like, not supposed to happen?",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ef5cab_edc88a43",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T17:34:07Z",
+      "side": 1,
+      "message": "I\u0027ve adjusted it so it is only called for InitForFrame callback. Basically when the render frame is initialized.",
+      "parentUuid": "669061d6_2cfc53dd",
       "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa22397e_4f695a33",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T17:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15f19a1e_2ab6e6d7",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2602baf_f2061704",
         "filename": "content/browser/android/synchronous_compositor_host.cc",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc124532_f9bbd92a",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T17:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2602baf_f2061704",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6545665f_0453811d",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T17:34:07Z",
+      "side": 1,
+      "message": "Yes state is stored inside the bridge. No problem it getting called multiple times.",
+      "parentUuid": "b79f865b_bba40c34",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "854f96d1_3f85043e",
         "filename": "content/renderer/android/synchronous_compositor_proxy.h",
         "patchSetId": 19
@@ -101,6 +191,24 @@
       "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f47b956_15918e42",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T17:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854f96d1_3f85043e",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
