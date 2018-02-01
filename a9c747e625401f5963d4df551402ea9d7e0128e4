@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5251f8d1_1cd67e1c",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-01T18:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab7e2aa8_83cee346",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 80
+      },
+      "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a4d0269_b639e812",
         "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4c733ec2_163aeeaa",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-01T18:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4d0269_b639e812",
+      "range": {
+        "startLine": 1214,
+        "startChar": 9,
+        "endLine": 1214,
+        "endChar": 13
+      },
+      "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1666eaa4_62dba386",
         "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9efb73f_59d99d4c",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-01T18:20:38Z",
+      "side": 1,
+      "message": "Oops, nice catch, I think I meant to do the latter. Done.",
+      "parentUuid": "1666eaa4_62dba386",
+      "range": {
+        "startLine": 1367,
+        "startChar": 23,
+        "endLine": 1367,
+        "endChar": 72
+      },
+      "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
