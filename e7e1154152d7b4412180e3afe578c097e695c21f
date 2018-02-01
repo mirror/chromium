@@ -16,6 +16,24 @@
       "revId": "e7e1154152d7b4412180e3afe578c097e695c21f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d434fb_f95c5a55",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-02-01T03:39:38Z",
+      "side": 1,
+      "message": "So, the device scale actually doesnt make a difference because we are calling Aggregate without that calculation. I changed the SubmitCompositorFrame to not modify the the device scale to reflect this. It is squashing and stretching because the outer surface is bigger/smaller than the child surface. I added some comments explaining this. Please let me know if that makes sense.",
+      "parentUuid": "49b45728_1269febd",
+      "revId": "e7e1154152d7b4412180e3afe578c097e695c21f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
