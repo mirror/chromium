@@ -110,6 +110,13 @@ public class OfflinePageUtils {
          */
         void showReloadSnackbar(Context context, SnackbarManager snackbarManager,
                 final SnackbarController snackbarController, int tabId);
+
+        /**
+         * Returns whether the tab is showing trusted offline page.
+         * @param tab The current tab.
+         * @return True if the offline page is trusted.
+         */
+        boolean isShowingTrustedOfflinePage(Tab tab);
     }
 
     private static class OfflinePageUtilsImpl implements Internal {
@@ -158,6 +165,13 @@ public class OfflinePageUtils {
                             .setAction(context.getString(R.string.reload), tabId);
             snackbar.setDuration(sSnackbarDurationMs);
             snackbarManager.showSnackbar(snackbar);
+        }
+
+        @Override
+        public boolean isShowingTrustedOfflinePage(Tab tab) {
+            OfflinePageBridge offlinePageBridge = getOfflinePageBridge(tab.getProfile());
+            if (offlinePageBridge == null) return false;
+            return offlinePageBridge.isShowingTrustedOfflinePage(tab.getWebContents());
         }
     }
 
@@ -433,6 +447,15 @@ public class OfflinePageUtils {
         OfflinePageBridge offlinePageBridge = getInstance().getOfflinePageBridge(tab.getProfile());
         if (offlinePageBridge == null) return null;
         return offlinePageBridge.getOfflinePage(webContents);
+    }
+
+    /**
+     * Returns whether the tab is showing trusted offline page.
+     * @param tab The current tab.
+     * @return True if the offline page is trusted.
+     */
+    public static boolean isShowingTrustedOfflinePage(Tab tab) {
+        return isOfflinePage(tab) && getInstance().isShowingTrustedOfflinePage(tab);
     }
 
     /**
