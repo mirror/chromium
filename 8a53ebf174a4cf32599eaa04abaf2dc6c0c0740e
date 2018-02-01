@@ -34,6 +34,24 @@
       "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5979a42_9b199ae4",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-01T18:18:51Z",
+      "side": 1,
+      "message": "1. Makes sense. It might make sense to submits CFs that have a size which corresponds to the HitTestRegionList data too? Not sure if that will be ever be important.\n2. I see. We don\u0027t want to call EvictSurface() to get around those checks. Can you fix the test logic so the LocalSurfaceIds are ordered correctly? Also EvictSurface() is going away soon so this won\u0027t work long term.",
+      "parentUuid": "d16660ca_4adf4431",
+      "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
