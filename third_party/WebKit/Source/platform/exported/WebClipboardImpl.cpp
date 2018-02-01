@@ -53,16 +53,48 @@ DragData BuildDragData(const WebDragData& web_drag_data) {
 };
 
 #if !defined(OS_MACOSX)
+// Escape a single chaacter if required, appending either the escaped or the
+// original character to the supplied output string.
+void AppendEscapedChar(UChar ch, WTF::String* output) {
+  static const struct {
+    UChar key;
+    const StringView replacement;
+  } kCharsToEscape[] = {
+      {'<', "&lt;"},   {'>', "&gt;"},   {'&', "&amp;"},
+      {'"', "&quot;"}, {'\'', "&#39;"},
+  };
+  for (size_t k = 0; k < arraysize(kCharsToEscape); ++k) {
+    if (ch == kCharsToEscape[k].key) {
+      output->append(kCharsToEscape[k].replacement);
+      return;
+    }
+  }
+  output->append(ch);
+}
+
+// Escapes chars that might cause this text to be interpretted as HTML tags.
+// Copied shamelessly from net/base/escape.h, as we need it to work with
+// WTF::String
+WTF::String EscapeForHTML(const WTF::StringView& text) {
+  WTF::String result;
+  // There does not seem to be a way to reserve space in WTF::String,
+  for (size_t i = 0; i < text.length(); ++i) {
+    AppendEscapedChar(text[i], &result);
+  }
+
+  return result;
+}
+
 // TODO(slangley): crbug.com/775830 Remove the implementation of
 // URLToImageMarkup from clipboard_utils.h once we can delete
 // MockWebClipboardImpl.
 WTF::String URLToImageMarkup(const WebURL& url, const WTF::String& title) {
   WTF::String markup("<img src=\"");
-  markup.append(EncodeWithURLEscapeSequences(url.GetString()));
+  markup.append(EscapeForHTML(url.GetString()));
   markup.append("\"");
   if (!title.IsEmpty()) {
     markup.append(" alt=\"");
-    markup.append(EncodeWithURLEscapeSequences(title));
+    markup.append(EscapeForHTML(title));
     markup.append("\"");
   }
   markup.append("/>");
