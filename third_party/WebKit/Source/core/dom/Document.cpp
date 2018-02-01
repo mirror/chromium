@@ -2215,6 +2215,9 @@ void Document::UpdateStyleAndLayoutTree() {
   EvaluateMediaQueryListIfNeeded();
   UpdateUseShadowTreesIfNeeded();
   UpdateDistribution();
+
+  double start = CurrentTimeTicksInMilliseconds();
+
   UpdateActiveStyle();
   UpdateStyleInvalidationIfNeeded();
 
@@ -2229,6 +2232,10 @@ void Document::UpdateStyleAndLayoutTree() {
   // SecurityOrigin.
 
   UpdateStyle();
+
+  double end = CurrentTimeTicksInMilliseconds();
+
+  fprintf(stderr, "%2.1f\n", end - start);
 
   NotifyLayoutTreeOfSubtreeChanges();
 
