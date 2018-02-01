@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "715c5b6e_44321de7",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T06:09:18Z",
+      "side": 1,
+      "message": "After thinking for a bit, I don\u0027t see the harm in allowing renderers to make copy requests. So, please educate me if I\u0027m missing something:\n\nFirst, there\u0027s already precedent for renderer processes doing texture readback into main memory (canvas readback). Actually, we\u0027d really like to get rid of all of that extra GLHelper cruft someday to simplify things. The copy request mojo might be a nice, clean path towards accomplishing that.\n\nSecond, nothing in the mojo interface would allow copy requests to execute on anything outside the renderer\u0027s own layer tree. So, if the concern is about security/privacy, I don\u0027t think anything bad should be possible here.\n\nThird, if we\u0027re worried about abuse; like if a compromised renderer tried to denial-of-service the browser by making excessive copy requests; note that this attack vector is already a possibility by plenty of other existing avenues. That said, if the concern is there, I could add a rate limiter or some such service-side.",
+      "parentUuid": "5e7785f5_235d6f48",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768e7723_c76b181c",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
