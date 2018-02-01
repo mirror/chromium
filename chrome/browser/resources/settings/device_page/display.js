@@ -699,25 +699,18 @@ Polymer({
     // Blur the control so that when the transition animation completes and the
     // UI is focused, the control does not receive focus. crbug.com/785070
     event.target.blur();
-    let id = '';
-    /** @type {!chrome.system.display.DisplayProperties} */
-    const properties = {};
+
+    /** @type {!chrome.system.display.MirrorModeInfo} */
+    let mirrorModeInfo = {};
     if (this.isMirrored_(this.displays)) {
-      id = this.primaryDisplayId;
-      properties.mirroringSourceId = '';
+      // Turns off mirror mode.
+      mirrorModeInfo.mode = chrome.system.display.MirrorMode.OFF;
     } else {
-      // Set the mirroringSourceId of the secondary (first non-primary) display.
-      for (let i = 0; i < this.displays.length; ++i) {
-        const display = this.displays[i];
-        if (display.id != this.primaryDisplayId) {
-          id = display.id;
-          break;
-        }
-      }
-      properties.mirroringSourceId = this.primaryDisplayId;
+      // Turns on normal mirror mode.
+      mirrorModeInfo.mode = chrome.system.display.MirrorMode.NORMAL;
     }
-    settings.display.systemDisplayApi.setDisplayProperties(
-        id, properties, this.setPropertiesCallback_.bind(this));
+    settings.display.systemDisplayApi.setMirrorMode(
+        mirrorModeInfo, this.setMirrorModeCallback_.bind(this));
   },
 
   /** @private */
@@ -777,6 +770,13 @@ Polymer({
     if (chrome.runtime.lastError) {
       console.error(
           'setDisplayProperties Error: ' + chrome.runtime.lastError.message);
+    }
+  },
+
+  /** @private */
+  setMirrorModeCallback_: function() {
+    if (chrome.runtime.lastError) {
+      console.error('setMirrorMode Error: ' + chrome.runtime.lastError.message);
     }
   },
 
