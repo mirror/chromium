@@ -350,6 +350,12 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
                                           const std::string& ip,
                                           net::CertStatus cert_status) {}
 
+  // Notifies to print an out-of-process subframe.
+  virtual void PrintSubframe(const gfx::Rect& rect,
+                             int document_cookie,
+                             int page_number,
+                             RenderFrameHost* render_frame_host) {}
+
  protected:
   virtual ~RenderFrameHostDelegate() {}
 };
