@@ -858,6 +858,12 @@ static bool NeedsCssClip(const LayoutObject& object) {
   return object.HasClip();
 }
 
+FloatRoundedRect ToClipRect(const LayoutRect& rect) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return FloatRoundedRect(FloatRect(PixelSnappedIntRect(rect)));
+  return FloatRoundedRect(FloatRect(rect));
+}
+
 void FragmentPaintPropertyTreeBuilder::UpdateCssClip() {
   DCHECK(properties_);
 
@@ -868,11 +874,10 @@ void FragmentPaintPropertyTreeBuilder::UpdateCssClip() {
       // object must be a container for absolute position descendants, and will
       // copy from in-flow context later at updateOutOfFlowContext() step.
       DCHECK(object_.CanContainAbsolutePositionObjects());
-      LayoutRect clip_rect =
-          ToLayoutBox(object_).ClipRect(context_.current.paint_offset);
       OnUpdateClip(properties_->UpdateCssClip(
           context_.current.clip, context_.current.transform,
-          FloatRoundedRect(FloatRect(clip_rect))));
+          ToClipRect(
+              ToLayoutBox(object_).ClipRect(context_.current.paint_offset))));
     } else {
       OnClearClip(properties_->ClearCssClip());
     }
@@ -977,8 +982,8 @@ void FragmentPaintPropertyTreeBuilder::UpdateOverflowControlsClip() {
     // Clip overflow controls to the border box rect.
     properties_->UpdateOverflowControlsClip(
         context_.current.clip, context_.current.transform,
-        FloatRoundedRect(FloatRect(LayoutRect(context_.current.paint_offset,
-                                              ToLayoutBox(object_).Size()))));
+        ToClipRect(LayoutRect(context_.current.paint_offset,
+                              ToLayoutBox(object_).Size())));
   } else {
     properties_->ClearOverflowControlsClip();
   }
@@ -1027,17 +1032,15 @@ void FragmentPaintPropertyTreeBuilder::UpdateOverflowClip() {
       FloatRoundedRect clip_rect;
       FloatRoundedRect clip_rect_excluding_overlay_scrollbars;
       if (object_.IsSVGForeignObject()) {
-        clip_rect =
-            FloatRoundedRect(FloatRect(ToLayoutBox(object_).FrameRect()));
+        clip_rect = ToClipRect(ToLayoutBox(object_).FrameRect());
         clip_rect_excluding_overlay_scrollbars = clip_rect;
       } else if (object_.IsBox()) {
-        clip_rect =
-            FloatRoundedRect(FloatRect(ToLayoutBox(object_).OverflowClipRect(
-                context_.current.paint_offset)));
+        clip_rect = ToClipRect(ToLayoutBox(object_).OverflowClipRect(
+            context_.current.paint_offset));
         clip_rect_excluding_overlay_scrollbars =
-            FloatRoundedRect(FloatRect(ToLayoutBox(object_).OverflowClipRect(
+            ToClipRect(ToLayoutBox(object_).OverflowClipRect(
                 context_.current.paint_offset,
-                kExcludeOverlayScrollbarSizeForHitTesting)));
+                kExcludeOverlayScrollbarSizeForHitTesting));
       } else {
         DCHECK(object_.IsSVGViewportContainer());
         const auto& viewport_container = ToLayoutSVGViewportContainer(object_);
