@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62fee1a6_86089443",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-01T01:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e69b849_998ecffa",
+      "revId": "aaac2c928c5403d91e03126481721d58767b0604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b24c85c2_c7cb0ac4",
         "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "50f5addf_241f4c57",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-01T01:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b24c85c2_c7cb0ac4",
+      "revId": "aaac2c928c5403d91e03126481721d58767b0604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca193a9_cfbf8fc4",
         "filename": "ui/touch_selection/touch_selection_controller.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "aaac2c928c5403d91e03126481721d58767b0604",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc82f47_c34bcb19",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-01T01:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca193a9_cfbf8fc4",
+      "revId": "aaac2c928c5403d91e03126481721d58767b0604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "48d11bca7c8fa940fdda1498e6dca7ff7088ad19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74ab018_53fa4720",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-01T01:10:07Z",
+      "side": 0,
+      "message": "I am getting a OnDragUpdate right after every SELECTION_HANDLE_DRAG_STARTED even there is no moving.",
+      "parentUuid": "ad17dc8e_3a7b70db",
+      "revId": "48d11bca7c8fa940fdda1498e6dca7ff7088ad19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
