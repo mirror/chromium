@@ -30,6 +30,7 @@
 #include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/context_result.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
+#include "services/ui/common/switches.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "ui/compositor/reflector.h"
 
@@ -509,6 +510,7 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
       std::make_unique<viz::DefaultLocalSurfaceIdProvider>();
   params.enable_surface_synchronization =
       features::IsSurfaceSynchronizationEnabled();
+  params.use_viz_hit_test = features::IsVizHitTestingEnabled();
 
   scoped_refptr<viz::ContextProvider> compositor_context;
   scoped_refptr<viz::RasterContextProvider> worker_context;
