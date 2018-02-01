@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85b8117_a178924a",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T20:52:47Z",
+      "side": 1,
+      "message": "Nit: I feel like these /* */ comments should be inside their #if / #elif.\n\nRight now, it seemed at first that the second comment belonged to the #if.\nThe indentation and context clued me into the opposite.\nBut I think it is easier to put them inside and match the indentation.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
