@@ -111,6 +111,8 @@ void SetAnimationUpdateIfNeeded(StyleResolverState& state, Element& element) {
 
 using namespace HTMLNames;
 
+static WTF::HashMap<String, scoped_refptr<ComputedStyle>>* g_style_map = nullptr;
+
 ComputedStyle* StyleResolver::style_not_yet_available_;
 
 static CSSPropertyValueSet* LeftToRightDeclaration() {
@@ -650,30 +652,57 @@ scoped_refptr<ComputedStyle> StyleResolver::StyleForElement(
   if (!base_computed_style) {
     GetDocument().GetStyleEngine().EnsureUAStyleForElement(*element);
 
-    ElementRuleCollector collector(state.ElementContext(), selector_filter_,
-                                   state.Style());
+    scoped_refptr<ComputedStyle> cached_style;
 
-    MatchAllRules(state, collector,
-                  matching_behavior != kMatchAllRulesExcludingSMIL);
+    String key;
+    key.append(element->tagName());
+    key.append(element->GetClassAttribute());
 
-    // TODO(dominicc): Remove this counter when Issue 590014 is fixed.
-    if (element->HasTagName(HTMLNames::summaryTag)) {
-      MatchedPropertiesRange matched_range =
-          collector.MatchedResult().AuthorRules();
-      for (const auto& matched : matched_range) {
-        const CSSValue* value =
-            matched.properties->GetPropertyCSSValue(CSSPropertyDisplay);
-        if (value && value->IsIdentifierValue() &&
-            ToCSSIdentifierValue(*value).GetValueID() == CSSValueBlock) {
-          UseCounter::Count(
-              element->GetDocument(),
-              WebFeature::kSummaryElementWithDisplayBlockAuthorRule);
-        }
+    if (RuntimeEnabledFeatures::OnlyClassAndTagNameSelectorsEnabled()) {
+      if (!g_style_map)
+        g_style_map = new WTF::HashMap<String, scoped_refptr<ComputedStyle>>;
+
+      cached_style = g_style_map->at(key);
+      if (cached_style) {
+        // fprintf(stderr, "found cached style: %s, %p\n", key.Ascii().data(), cached_style.get());
+        state.SetStyle(cached_style);
       }
     }
 
-    if (tracker_)
-      AddMatchedRulesToTracker(collector);
+    if (!cached_style) {
+      ElementRuleCollector collector(state.ElementContext(), selector_filter_,
+                                     state.Style());
+
+      MatchAllRules(state, collector,
+                    matching_behavior != kMatchAllRulesExcludingSMIL);
+
+      // TODO(dominicc): Remove this counter when Issue 590014 is fixed.
+      if (element->HasTagName(HTMLNames::summaryTag)) {
+        MatchedPropertiesRange matched_range =
+            collector.MatchedResult().AuthorRules();
+        for (const auto& matched : matched_range) {
+          const CSSValue* value =
+              matched.properties->GetPropertyCSSValue(CSSPropertyDisplay);
+          if (value && value->IsIdentifierValue() &&
+              ToCSSIdentifierValue(*value).GetValueID() == CSSValueBlock) {
+            UseCounter::Count(
+                element->GetDocument(),
+                WebFeature::kSummaryElementWithDisplayBlockAuthorRule);
+          }
+        }
+      }
+
+      if (tracker_)
+        AddMatchedRulesToTracker(collector);
+
+      ApplyMatchedPropertiesAndCustomPropertyAnimations(
+          state, collector.MatchedResult(), element);
+      ApplyCallbackSelectors(state);
+
+      if (RuntimeEnabledFeatures::OnlyClassAndTagNameSelectorsEnabled()) {
+        g_style_map->Set(key, ComputedStyle::Clone(*state.Style()));
+      }
+    }
 
     if (element->GetComputedStyle() &&
         element->GetComputedStyle()->TextAutosizingMultiplier() !=
@@ -689,10 +718,6 @@ scoped_refptr<ComputedStyle> StyleResolver::StyleForElement(
 
     if (state.HasDirAutoAttribute())
       state.Style()->SetSelfOrAncestorHasDirAutoAttribute(true);
-
-    ApplyMatchedPropertiesAndCustomPropertyAnimations(
-        state, collector.MatchedResult(), element);
-    ApplyCallbackSelectors(state);
 
     // Cache our original display.
     state.Style()->SetOriginalDisplay(state.Style()->Display());

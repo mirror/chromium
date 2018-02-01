@@ -1,0 +1,31 @@
+<div id="container"></div>
+<script>
+let style = '';
+let numClassNames = 100;
+
+for (let i = 0; i < numClassNames; i++) {
+  style += `.foo${i}{ color : blue; }\n`
+}
+
+let dom = '';
+let numElements = 100000;
+
+for (let i = 0; i < numElements; i++) {
+  dom += `<div class='foo${i % numClassNames}'>foo</div>\n`
+}
+let html = `<style>
+.foo { color: red; }
+${style}</style>
+
+<div class="foo">foo</div>
+${dom}`;
+
+let container = document.getElementById('container');
+container.innerHTML = html;
+
+let start = performance.now();
+
+container.offsetTop;
+
+console.log((performance.now() - start) / 1000);
+</script>
