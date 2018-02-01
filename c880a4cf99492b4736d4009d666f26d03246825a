@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "87b31fe9_30d550af",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T14:55:48Z",
+      "side": 1,
+      "message": "Oh, haha.  That is funny.  :)",
+      "parentUuid": "4ff681c4_720a490f",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d438564_d307a44a",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 8
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "I honestly hadn\u0027t considered parameterizing this. Might make things more concise. Happy to clean this up, but I\u0027d like to pitch ideas by you tomorrow.",
       "parentUuid": "dc94dc79_a683f484",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b5071c_21ac80fb",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T14:55:48Z",
+      "side": 1,
+      "message": "Depends on whether they\u0027re all independent cases, or if the sequence is important.  It looks like *mostly* the former.",
+      "parentUuid": "4479ad1e_436dc685",
       "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
