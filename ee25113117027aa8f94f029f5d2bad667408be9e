@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832c2147_85f3a176",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2374,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-01T17:31:40Z",
+      "side": 1,
+      "message": "add dot",
+      "revId": "ee25113117027aa8f94f029f5d2bad667408be9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
