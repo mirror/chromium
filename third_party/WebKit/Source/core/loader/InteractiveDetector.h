@@ -6,6 +6,7 @@
 #define InteractiveDetector_h
 
 #include "base/macros.h"
+#include "base/time/time.h"
 #include "core/CoreExport.h"
 #include "platform/LongTaskDetector.h"
 #include "platform/PODInterval.h"

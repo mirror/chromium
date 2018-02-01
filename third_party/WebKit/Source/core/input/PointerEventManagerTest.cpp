@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/time/time.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/EventListener.h"
 #include "core/html/HTMLElement.h"
@@ -67,7 +68,8 @@ class PointerEventManagerTest : public SimTest {
   WebMouseEvent CreateTestMouseEvent(WebInputEvent::Type type,
                                      const WebFloatPoint& coordinates) {
     WebMouseEvent event(type, coordinates, coordinates,
-                        WebPointerProperties::Button::kLeft, 0, 0, 0);
+                        WebPointerProperties::Button::kLeft, 0, 0,
+                        WebInputEvent::GetStaticTimeStampForTests());
     event.SetFrameScale(1);
     return event;
   }
