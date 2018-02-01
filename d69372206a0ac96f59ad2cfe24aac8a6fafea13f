@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bb8b343_cda5bd8b",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-02-01T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ab4312a_c69edc2c",
+      "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1badbfe_176fb59c",
         "filename": "content/browser/download/parallel_download_utils.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ddce0953_472fb19f",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-02-01T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1badbfe_176fb59c",
+      "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e309537_e73cfebd",
         "filename": "content/browser/download/parallel_download_utils.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7994021a_79733967",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-02-01T18:56:03Z",
+      "side": 1,
+      "message": "Done, yeah it\u0027s a little bit redundant. I have a test to cover this weird case where bytes written is larger than length, but since it shouldn\u0027t happen so should be ok to remove it.",
+      "parentUuid": "5e309537_e73cfebd",
+      "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
