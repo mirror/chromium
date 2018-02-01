@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31c1e9b2_b8c8ac59",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 27681,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-01T21:54:34Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure this histogram was never populated with data. It seems to have been incorrectly named.",
+      "parentUuid": "833b373c_6796faf9",
+      "range": {
+        "startLine": 27674,
+        "startChar": 0,
+        "endLine": 27681,
+        "endChar": 12
+      },
+      "revId": "3f8a2fe45f0d167c50bb0fc2a4b90f35fa0e9b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52ecb3e5_dca7a6c7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-01T21:51:15Z",
       "side": 0,
       "message": "Were the removed suffixes incorrect, or did they simply become obsolete?  If the latter, please mark them as \u003cobsolete\u003e rather than deleting them.",
+      "range": {
+        "startLine": 104828,
+        "startChar": 0,
+        "endLine": 104830,
+        "endChar": 56
+      },
+      "revId": "3f8a2fe45f0d167c50bb0fc2a4b90f35fa0e9b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8190025b_06159cad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 104830,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-01T21:54:34Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure they were never hooked up to browser-side code correctly. They got so badly out of sync that we couldn\u0027t examine these histograms. Is it OK if I leave things in their new, corrected state rather than adding them back in as obsolete?",
+      "parentUuid": "52ecb3e5_dca7a6c7",
       "range": {
         "startLine": 104828,
         "startChar": 0,
