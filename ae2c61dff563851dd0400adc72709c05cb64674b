@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "99db99ee_e1106c06",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-02-01T21:15:23Z",
+      "side": 1,
+      "message": "Perhaps \", unless explicitly permitted by CORS\" or some such?",
+      "range": {
+        "startLine": 41,
+        "startChar": 57,
+        "endLine": 41,
+        "endChar": 62
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed19865_d138c2f7",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-02-01T21:15:23Z",
+      "side": 1,
+      "message": "perhaps, \", unless the site owner asserts that the response is labelled correctly via X-C-T-O: nosniff\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 61,
+        "endLine": 47,
+        "endChar": 73
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe430280_9625d969",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-02-01T21:15:23Z",
+      "side": 1,
+      "message": "Are set-cookie: headers already elided from the renderer-visible response?",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0608e56_c62fd070",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-02-01T21:15:23Z",
+      "side": 1,
+      "message": "application/json will (should) be blocked.  Do you mean `application\\javascript`?",
+      "range": {
+        "startLine": 154,
+        "startChar": 37,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32a1e25a_2bb582c7",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 4
@@ -18,6 +110,52 @@
         "startChar": 34,
         "endLine": 169,
         "endChar": 45
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aab19de_2f9a0879",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-02-01T21:15:23Z",
+      "side": 1,
+      "message": "triggered",
+      "range": {
+        "startLine": 169,
+        "startChar": 34,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2b6a36_14bc1b52",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-02-01T21:15:23Z",
+      "side": 1,
+      "message": "or X-C-T-O: nosniff is present",
+      "range": {
+        "startLine": 228,
+        "startChar": 61,
+        "endLine": 228,
+        "endChar": 62
       },
       "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
