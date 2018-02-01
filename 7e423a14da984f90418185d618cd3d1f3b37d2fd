@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49359fc2_93eb814c",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-01T23:11:39Z",
+      "side": 1,
+      "message": "If this is true, why does a cc::AnimationPlayer have multiple AnimationTicker objects\ninside it?",
+      "revId": "7e423a14da984f90418185d618cd3d1f3b37d2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04624c3c_6adba430",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-01T23:11:39Z",
+      "side": 1,
+      "message": "Only SVG roots or SVG foreignObecjt can possible paint into their own backing, because only \nthey can have PaintLayers. Animating transform or opacity on an SVG root should work just\nfine on the compositor, right? For foreignObect it cannot, but OTOH is there a way to\ndeclare such an animation on it in the first place?",
+      "revId": "7e423a14da984f90418185d618cd3d1f3b37d2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
