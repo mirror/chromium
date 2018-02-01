@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffcfe7b2_3c18159d",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-01T00:26:20Z",
+      "side": 1,
+      "message": "I think we should have a comment like this:\n\"The response body can be read from |this| as a SourceStream after the ExchangeHeadersCallback is called.\"",
+      "revId": "a99ad0442105349978bcd4ed01941eaeb255cce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d680a3e_9e83ccd3",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-01T00:26:20Z",
+      "side": 1,
+      "message": "nit: strange new line. And please fix others too.\n\n  // Internal IOBuffer used during reading the header.\n  // Note that during parsing the header we don\u0027t really need the output buffer,\n  // but we still need to give some \u003e 0 buffer.",
+      "revId": "a99ad0442105349978bcd4ed01941eaeb255cce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2f444b_67148a0f",
+        "filename": "content/browser/loader/source_stream_to_data_pipe.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-01T00:26:20Z",
+      "side": 1,
+      "message": "nit:\n#include \"base/callback_forward.h\"",
+      "revId": "a99ad0442105349978bcd4ed01941eaeb255cce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
