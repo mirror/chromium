@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ce57bb5_3ed06819",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-01T22:14:11Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "58b600ee_11fdad37",
+      "revId": "aa8b5ec942b21bd3a8786dcfe6e3afa4ddb12912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d910c7dc_a068d695",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T02:46:44Z",
       "side": 1,
       "message": "Do we also need to update highlightDescription in this case?  Or no, because it will be hidden?",
+      "revId": "aa8b5ec942b21bd3a8786dcfe6e3afa4ddb12912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ffd275_d013cd8e",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-01T22:14:11Z",
+      "side": 1,
+      "message": "It will be hidden, but it makes sense to clear it out. Done.",
+      "parentUuid": "d910c7dc_a068d695",
       "revId": "aa8b5ec942b21bd3a8786dcfe6e3afa4ddb12912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
