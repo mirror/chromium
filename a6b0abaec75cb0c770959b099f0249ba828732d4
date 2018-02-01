@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19b570d_805e47c8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T09:45:11Z",
+      "side": 1,
+      "message": "nullptr /* proxy */",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970f0daa_686924ec",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T09:45:11Z",
+      "side": 1,
+      "message": "After hearing that all these are not supposed to be some core-concept worker specific... this comment doesn\u0027t sound quite right to me.  Should this be phrased like \u0027Currently the only owner of this handle is DedicatedWorker\u0027?",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0f86d1_a2c6acb7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T09:45:11Z",
+      "side": 1,
+      "message": "Could we rename proxy_ to state_ or something else throughout the code?",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8501b83_77aacea7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T09:45:11Z",
+      "side": 1,
+      "message": "Hm... thinking about this a bit more, should this be simply named like \u0027SharedSchedulerState\u0027 and document that this is the scheduler state shared by the main thread and non-main thread, in order to propagate the main thread\u0027s scheduler state to other threads?  It looks there\u0027s nothing specific to \u0027worker\u0027 (either in core concept or in scheduler one) in this class and also in the handle one?  I think we keep getting confused by the term \u0027worker\u0027 here and there in general...",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
