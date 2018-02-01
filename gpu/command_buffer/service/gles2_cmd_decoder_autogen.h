@@ -5150,10 +5150,9 @@ error::Error GLES2DecoderImpl::HandleBeginRasterCHROMIUM(
   GLboolean can_use_lcd_text = static_cast<GLboolean>(c.can_use_lcd_text);
   GLboolean use_distance_field_text =
       static_cast<GLboolean>(c.use_distance_field_text);
-  GLint pixel_config = static_cast<GLint>(c.pixel_config);
+  GLint color_type = static_cast<GLint>(c.color_type);
   DoBeginRasterCHROMIUM(texture_id, sk_color, msaa_sample_count,
-                        can_use_lcd_text, use_distance_field_text,
-                        pixel_config);
+                        can_use_lcd_text, use_distance_field_text, color_type);
   return error::kNoError;
 }
 
