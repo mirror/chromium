@@ -10,12 +10,35 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "modules/webaudio/AudioBasicProcessorHandler.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "modules/webaudio/IIRFilterOptions.h"
 #include "platform/Histogram.h"
 
 namespace blink {
+
+IIRFilterHandler::IIRFilterHandler(AudioNode& node,
+                                   float sample_rate,
+                                   size_t number_of_channels,
+                                   const Vector<double>& feedforward_coef,
+                                   const Vector<double>& feedback_coef)
+    : AudioBasicProcessorHandler(
+          kNodeTypeIIRFilter,
+          node,
+          sample_rate,
+          std::make_unique<IIRProcessor>(sample_rate,
+                                         number_of_channels,
+                                         feedforward_coef,
+                                         feedback_coef)) {}
+
+scoped_refptr<IIRFilterHandler> IIRFilterHandler::Create(
+    AudioNode& node,
+    float sample_rate,
+    size_t number_of_channels,
+    const Vector<double>& feedforward_coef,
+    const Vector<double>& feedback_coef) {
+  return base::AdoptRef(new IIRFilterHandler(
+      node, sample_rate, number_of_channels, feedforward_coef, feedback_coef));
+}
 
 // Determine if filter is stable based on the feedback coefficients.
 // We compute the reflection coefficients for the filter.  If, at any
@@ -66,10 +89,8 @@ IIRFilterNode::IIRFilterNode(BaseAudioContext& context,
                              const Vector<double>& feedforward_coef,
                              const Vector<double>& feedback_coef)
     : AudioNode(context) {
-  SetHandler(AudioBasicProcessorHandler::Create(
-      AudioHandler::kNodeTypeIIRFilter, *this, context.sampleRate(),
-      std::make_unique<IIRProcessor>(context.sampleRate(), 1, feedforward_coef,
-                                     feedback_coef)));
+  SetHandler(IIRFilterHandler::Create(*this, context.sampleRate(), 1,
+                                      feedforward_coef, feedback_coef));
 
   // Histogram of the IIRFilter order.  createIIRFilter ensures that the length
   // of |feedbackCoef| is in the range [1, IIRFilter::kMaxOrder + 1].  The order
