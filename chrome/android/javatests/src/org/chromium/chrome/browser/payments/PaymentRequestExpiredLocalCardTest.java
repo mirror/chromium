@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -140,6 +141,7 @@ public class PaymentRequestExpiredLocalCardTest implements MainActivityStartCall
     @MediumTest
     @Feature({"Payments"})
     @Test
+    @DisabledTest(message = "crbug.com/807979")
     public void testPromptErrorMessages()
             throws InterruptedException, ExecutionException, TimeoutException {
         // Click pay to get to the card unmask prompt.
