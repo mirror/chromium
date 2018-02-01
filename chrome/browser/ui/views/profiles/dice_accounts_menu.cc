@@ -23,8 +23,9 @@ gfx::Image SizeAndCircleIcon(const gfx::Image& icon) {
 }  // namespace
 
 DiceAccountsMenu::DiceAccountsMenu(const std::vector<AccountInfo>& accounts,
-                                   const std::vector<gfx::Image>& icons)
-    : menu_(this), accounts_(accounts) {
+                                   const std::vector<gfx::Image>& icons,
+                                   const DiceAccountsMenuCallback& callback)
+    : menu_(this), accounts_(accounts), callback_(callback) {
   DCHECK_EQ(accounts.size(), icons.size());
   gfx::Image default_icon =
       ui::ResourceBundle::GetSharedInstance().GetImageNamed(
@@ -67,5 +68,8 @@ bool DiceAccountsMenu::IsCommandIdEnabled(int command_id) const {
 }
 
 void DiceAccountsMenu::ExecuteCommand(int id, int event_flags) {
-  NOTIMPLEMENTED() << "Selected id: " << id;
+  DCHECK(0 <= id && static_cast<size_t>(id) <= accounts_.size());
+  callback_.Run(static_cast<size_t>(id) != accounts_.size()
+                    ? base::Optional<AccountInfo>(accounts_[id])
+                    : base::nullopt);
 }
