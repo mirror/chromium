@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c254ea5_a4196073",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-01T08:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b62ab820_0fa17b13",
+      "range": {
+        "startLine": 95,
+        "startChar": 54,
+        "endLine": 95,
+        "endChar": 66
+      },
+      "revId": "8ccfb31f0765aea108d21e6002486f5a0cdd2505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cd6e101_cf4e9332",
         "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1468f5a5_aec58b74",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-01T08:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd6e101_cf4e9332",
+      "range": {
+        "startLine": 96,
+        "startChar": 56,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "8ccfb31f0765aea108d21e6002486f5a0cdd2505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "451db972_33a6dcc1",
         "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
         "patchSetId": 8
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "edf3a7d0_11a7bdd8",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-01T08:08:36Z",
+      "side": 1,
+      "message": "Sorry I had this moved to the wrong place it is now in the base class SitePerProcessPolicyBrowserTest so that it can test both the effect of the new policy as well as the lack of effect when the policy is not set.",
+      "parentUuid": "451db972_33a6dcc1",
+      "revId": "8ccfb31f0765aea108d21e6002486f5a0cdd2505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd765e30_427ab0da",
         "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-31T21:29:42Z",
       "side": 1,
       "message": "With respect to your question on chat, there are some test runs that automatically run the tests with --site-per-process (e.g., site_per_process_browser_tests on linux_chromium_rel_ng).  You can usually detect this within the test using AreAllSitesIsolatedForTesting(), which exclusively checks for the command line flag.\n\nSome tests return early in that case if the test doesn\u0027t make sense in Site Isolation.  In this case, I think you might want to vary the test expectations on whether it\u0027s present, to help verify how Chrome behaves in that case?",
+      "revId": "8ccfb31f0765aea108d21e6002486f5a0cdd2505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d34a2c_ca4c415c",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-01T08:08:36Z",
+      "side": 1,
+      "message": "Done that as discussed in chat.",
+      "parentUuid": "dd765e30_427ab0da",
       "revId": "8ccfb31f0765aea108d21e6002486f5a0cdd2505",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
