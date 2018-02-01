@@ -70,6 +70,30 @@
       "revId": "e7d8d5c7cf2769579dc20e237e99c1585175b2c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f217fcaf_eeaf9ca9",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-01T18:02:06Z",
+      "side": 1,
+      "message": "IMO, TakeHandle() is wrong in clearing memory_ without unmapping - we would leak address space.",
+      "parentUuid": "27fa2bdb_950ee4f4",
+      "range": {
+        "startLine": 2350,
+        "startChar": 0,
+        "endLine": 2351,
+        "endChar": 73
+      },
+      "revId": "e7d8d5c7cf2769579dc20e237e99c1585175b2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
