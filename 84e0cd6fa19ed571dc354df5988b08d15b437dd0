@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b09e26bf_46051403",
+        "filename": "ui/touch_selection/touch_selection_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-02-01T01:29:23Z",
+      "side": 1,
+      "message": "This is now private so you will have compile errors.",
+      "revId": "84e0cd6fa19ed571dc354df5988b08d15b437dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
