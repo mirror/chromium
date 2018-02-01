@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2839ec78_be7a054d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-01T20:27:44Z",
+      "side": 1,
+      "message": "That could be the mismatch.\n\nI\u0027d like to just remove this for now since it\u0027s blocking viz development on TOT -- we can discuss how to re-add it for when we enable surface sync and viz.",
+      "parentUuid": "a6231bf3_17773a90",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "6f94882220c77fa7937fa4b00d515921aa785e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d495bfb_b0b02be8",
         "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
         "patchSetId": 1
