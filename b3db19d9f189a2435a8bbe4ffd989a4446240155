@@ -263,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "967452fe_088a758c",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-01T13:01:42Z",
+      "side": 1,
+      "message": "Ah, now I get it. Thanks!",
+      "parentUuid": "8a637033_2fa612de",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b0a0e4_9c5456f1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 3
