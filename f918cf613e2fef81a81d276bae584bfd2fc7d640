@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "bc59af18_13bfa04d",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-02-01T18:57:05Z",
+      "side": 1,
+      "message": "Right, we definitely don\u0027t want to add another JSON library!",
+      "parentUuid": "f62ccb54_2a1429d3",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fba09c3e_cbb4b377",
         "filename": "tools/gn/input_conversion.cc",
         "patchSetId": 5
