@@ -6,14 +6,16 @@
 #include <stdint.h>
 #include <algorithm>
 
-#include "u2f_apdu_command.h"
-#include "u2f_apdu_response.h"
+#include "components/apdu/apdu_command.h"
+#include "components/apdu/apdu_response.h"
+
+namespace apdu {
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   std::vector<uint8_t> input(data, data + size);
-  std::unique_ptr<device::U2fApduCommand> cmd =
-      device::U2fApduCommand::CreateFromMessage(input);
-  std::unique_ptr<device::U2fApduResponse> rsp =
-      device::U2fApduResponse::CreateFromMessage(input);
+  std::unique_ptr<APDUCommand> cmd = APDUCommand::CreateFromMessage(input);
+  std::unique_ptr<APDUResponse> rsp = APDUResponse::CreateFromMessage(input);
   return 0;
 }
+
+}  // namespace apdu

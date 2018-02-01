@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "device/u2f/u2f_apdu_command.h"
+#include "components/apdu/apdu_command.h"
 
 namespace device {
 
@@ -20,8 +20,8 @@ U2FSignParam::U2FSignParam(std::vector<uint8_t> app_parameter,
 U2FSignParam::~U2FSignParam() = default;
 
 base::Optional<std::vector<uint8_t>> U2FSignParam::Encode() const {
-  auto sign_cmd = U2fApduCommand::CreateSign(app_parameter_, challenge_digest_,
-                                             key_handle_, check_only_);
+  auto sign_cmd = apdu::APDUCommand::CreateU2FSign(
+      app_parameter_, challenge_digest_, key_handle_, check_only_);
   if (!sign_cmd) {
     return base::nullopt;
   }

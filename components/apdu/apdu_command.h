@@ -2,16 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef DEVICE_U2F_U2F_APDU_COMMAND_H_
-#define DEVICE_U2F_U2F_APDU_COMMAND_H_
+#ifndef COMPONENTS_APDU_APDU_COMMAND_H_
+#define COMPONENTS_APDU_APDU_COMMAND_H_
 
 #include <cinttypes>
 #include <memory>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
+#include "components/apdu/apdu_export.h"
 
-namespace device {
+namespace apdu {
 
 // APDU commands are defined as part of ISO 7816-4. Commands can be serialized
 // into either short length encodings, where the maximum data length is 256
@@ -21,23 +22,43 @@ namespace device {
 // byte, denoting the instruction code, P1 and P2, each one byte denoting
 // instruction parameters, a length field (Lc), a data field of length Lc, and
 // a maximum expected response length (Le).
-class U2fApduCommand {
+class APDU_EXPORT APDUCommand {
  public:
-  U2fApduCommand();
-  U2fApduCommand(uint8_t cla,
-                 uint8_t ins,
-                 uint8_t p1,
-                 uint8_t p2,
-                 size_t response_length,
-                 std::vector<uint8_t> data,
-                 std::vector<uint8_t> suffix);
-  ~U2fApduCommand();
-
   // Constructs an APDU command from the serialized message data.
-  static std::unique_ptr<U2fApduCommand> CreateFromMessage(
+  static std::unique_ptr<APDUCommand> CreateFromMessage(
       const std::vector<uint8_t>& data);
+
+  static std::unique_ptr<APDUCommand> CreateU2FRegister(
+      const std::vector<uint8_t>& appid_digest,
+      const std::vector<uint8_t>& challenge_digest,
+      bool individual_attestation_ok);
+
+  static std::unique_ptr<APDUCommand> CreateU2FVersion();
+
+  // Early U2F drafts defined a non-ISO 7816-4 conforming layout.
+  static std::unique_ptr<APDUCommand> CreateU2FLegacyVersion();
+
+  // Returns an APDU command for sign(). If optional parameter |check_only| is
+  // set to true, then control byte is set to 0X07.
+  static std::unique_ptr<APDUCommand> CreateU2FSign(
+      const std::vector<uint8_t>& appid_digest,
+      const std::vector<uint8_t>& challenge_digest,
+      const std::vector<uint8_t>& key_handle,
+      bool check_only = false);
+
+  APDUCommand();
+  APDUCommand(uint8_t cla,
+              uint8_t ins,
+              uint8_t p1,
+              uint8_t p2,
+              size_t response_length,
+              std::vector<uint8_t> data,
+              std::vector<uint8_t> suffix);
+  ~APDUCommand();
+
   // Returns serialized message data.
   std::vector<uint8_t> GetEncodedCommand() const;
+
   void set_cla(uint8_t cla) { cla_ = cla; }
   void set_ins(uint8_t ins) { ins_ = ins; }
   void set_p1(uint8_t p1) { p1_ = p1; }
@@ -47,30 +68,15 @@ class U2fApduCommand {
     response_length_ = response_length;
   }
   void set_suffix(const std::vector<uint8_t>& suffix) { suffix_ = suffix; }
-  static std::unique_ptr<U2fApduCommand> CreateRegister(
-      const std::vector<uint8_t>& appid_digest,
-      const std::vector<uint8_t>& challenge_digest,
-      bool individual_attestation_ok);
-  static std::unique_ptr<U2fApduCommand> CreateVersion();
-  // Early U2F drafts defined a non-ISO 7816-4 conforming layout.
-  static std::unique_ptr<U2fApduCommand> CreateLegacyVersion();
-
-  // Returns an APDU command for sign(). If optional parameter |check_only| is
-  // set to true, then control byte is set to 0X07.
-  static std::unique_ptr<U2fApduCommand> CreateSign(
-      const std::vector<uint8_t>& appid_digest,
-      const std::vector<uint8_t>& challenge_digest,
-      const std::vector<uint8_t>& key_handle,
-      bool check_only = false);
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestDeserializeBasic);
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestDeserializeComplex);
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestSerializeEdgeCases);
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestCreateSign);
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestCreateRegister);
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestCreateVersion);
-  FRIEND_TEST_ALL_PREFIXES(U2fApduTest, TestCreateLegacyVersion);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestDeserializeBasic);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestDeserializeComplex);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestSerializeEdgeCases);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestCreateU2FSign);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestCreateU2FRegister);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestCreateU2FVersion);
+  FRIEND_TEST_ALL_PREFIXES(ApduTest, TestCreateU2FLegacyVersion);
 
   static constexpr size_t kApduMinHeader = 4;
   static constexpr size_t kApduMaxHeader = 7;
@@ -113,6 +119,6 @@ class U2fApduCommand {
   std::vector<uint8_t> suffix_;
 };
 
-}  // namespace device
+}  // namespace apdu
 
-#endif  // DEVICE_U2F_U2F_APDU_COMMAND_H_
+#endif  // COMPONENTS_APDU_APDU_COMMAND_H_
