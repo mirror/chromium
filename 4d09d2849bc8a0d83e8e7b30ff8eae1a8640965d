@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc634bfe_1fd6291c",
+        "filename": "components/viz/service/frame_sinks/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-01T19:04:21Z",
+      "side": 1,
+      "message": "This is explicitly disallowed, sorry! If something needs to check flags/features it should be injected into viz.",
+      "revId": "4d09d2849bc8a0d83e8e7b30ff8eae1a8640965d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323d7ce5_9e9771b0",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-01T19:04:21Z",
+      "side": 1,
+      "message": "That\u0027s not exactly accurate. It\u0027s the FrameSinkId of the CFS that owns it.\n\n// The FrameSinkId for the corresponding root CompositorFrameSink.",
+      "revId": "4d09d2849bc8a0d83e8e7b30ff8eae1a8640965d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
