@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c63509cc_63d44258",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T20:56:36Z",
+      "side": 1,
+      "message": "Sorry, iconified and minimized are the same thing.",
+      "parentUuid": "bb7202a2_6f7d14df",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "586e3680_d3fab0a0",
         "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Just that it complicates the call site -- we want to update a member variable and create a temporary.\n\nWe\u0027re starting to prototype inferencing now, where we\u0027ll be using these metrics to make predictions instead of (or in addition to) logging. So I also expect some churn in these structures anyway.",
       "parentUuid": "586e3680_d3fab0a0",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 35
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad066a68_a7db552d",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T20:56:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand. Could you elaborate on what my proposal complicates?",
+      "parentUuid": "ebaa64bf_5479aafb",
       "range": {
         "startLine": 204,
         "startChar": 9,
