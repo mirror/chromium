@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c11cbee_77573748",
+        "filename": "chromeos/assistant/assistant.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:57:54Z",
+      "side": 1,
+      "message": "nit: keep 1 space",
+      "range": {
+        "startLine": 3,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d23a183_db4911a3",
+        "filename": "services/assistant/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:57:54Z",
+      "side": 1,
+      "message": "I am not sure whether I would be a qualified owner. :p",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfd376fc_374100a9",
         "filename": "services/assistant/assistant_manager_service.h",
         "patchSetId": 5
@@ -13,6 +59,47 @@
       "writtenOn": "2018-02-01T18:32:43Z",
       "side": 1,
       "message": "const std::string\u0026",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da48c74_72dc1e2f",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:57:54Z",
+      "side": 1,
+      "message": "Do you need a body somewhere or \"\u003d 0\" to make it pure virtual?",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 42
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d51096_36de2778",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:57:54Z",
+      "side": 1,
+      "message": "I would vote to drop the \"\u0026\". Using a reference implies that the AuthTokenProvider implementation is better to own the token string since it might not be clear how long the caller is going to use it. This may or may not be a problem and could cause tricky crash bugs.",
+      "parentUuid": "dfd376fc_374100a9",
       "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
