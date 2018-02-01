@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd50b1e_d5a04ea1",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T20:53:48Z",
+      "side": 1,
+      "message": "Did you verify we actually end up here when maximized is triggered by the OS?",
+      "range": {
+        "startLine": 341,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 65
+      },
+      "revId": "71971a9df265151a41b78130c889314515f8eda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
