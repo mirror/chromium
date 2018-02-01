@@ -25,6 +25,7 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/raster_interface.h"
+#include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/core/SkMultiPictureDraw.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -62,6 +63,8 @@ static void RasterizeSourceOOP(
                      transform.translation(), recording_to_raster_scale);
   ri->EndRasterCHROMIUM();
 
+  // TODO(ericrk): Handle unpremultiply+dither for 4444 cases.
+
   ri->DeleteTextures(1, &texture_id);
 }
 
@@ -97,19 +100,45 @@ static void RasterizeSource(
     viz::RasterContextProvider* context_provider,
     LayerTreeResourceProvider::ScopedWriteLockRaster* resource_lock,
     bool use_distance_field_text,
-    int msaa_sample_count) {
+    int msaa_sample_count,
+    bool unpremultiply_and_dither) {
   ScopedGrContextAccess gr_context_access(context_provider);
 
   gpu::raster::RasterInterface* ri = context_provider->RasterInterface();
   GLuint texture_id = resource_lock->ConsumeTexture(ri);
 
   {
-    LayerTreeResourceProvider::ScopedSkSurface scoped_surface(
-        context_provider->GrContext(), texture_id, resource_lock->target(),
-        resource_lock->size(), resource_lock->format(), use_distance_field_text,
-        playback_settings.use_lcd_text, msaa_sample_count);
+    base::Optional<LayerTreeResourceProvider::ScopedSkSurface> scoped_surface;
+    sk_sp<SkSurface> surface_ref;
+    SkSurface* surface;
+    if (!unpremultiply_and_dither) {
+      scoped_surface.emplace(context_provider->GrContext(), texture_id,
+                             resource_lock->target(), resource_lock->size(),
+                             resource_lock->format(), use_distance_field_text,
+                             playback_settings.use_lcd_text, msaa_sample_count);
+      surface = scoped_surface->surface();
+    } else {
+      // If we are going to premultiply and dither, allocate a 32-bit surface
+      // for raster and then copy from that into our actual surface.
+      SkImageInfo n32Info = SkImageInfo::MakeN32Premul(
+          resource_lock->size().width(), resource_lock->size().height());
+      uint32_t flags = use_distance_field_text
+                           ? SkSurfaceProps::kUseDistanceFieldFonts_Flag
+                           : 0;
+      // Use unknown pixel geometry to disable LCD text.
+      SkSurfaceProps surface_props(flags, kUnknown_SkPixelGeometry);
+      if (use_distance_field_text) {
+        // LegacyFontHost will get LCD text and skia figures out what type to
+        // use.
+        surface_props =
+            SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
+      }
 
-    SkSurface* surface = scoped_surface.surface();
+      surface_ref = SkSurface::MakeRenderTarget(
+          context_provider->GrContext(), SkBudgeted::kYes, n32Info,
+          msaa_sample_count, kTopLeft_GrSurfaceOrigin, &surface_props);
+      surface = surface_ref.get();
+    }
 
     // Allocating an SkSurface will fail after a lost context.  Pretend we
     // rasterized, as the contents of the resource don't matter anymore.
@@ -127,6 +156,15 @@ static void RasterizeSource(
     raster_source->PlaybackToCanvas(
         canvas, resource_lock->color_space_for_raster(), raster_full_rect,
         playback_rect, transform, playback_settings);
+
+    if (unpremultiply_and_dither) {
+      GrBackendObject handle =
+          surface->getTextureHandle(SkSurface::kFlushRead_BackendHandleAccess);
+      const GrGLTextureInfo* info =
+          skia::GrBackendObjectToGrGLTextureInfo(handle);
+
+      ri->UnpremultiplyAndDitherCopyCHROMIUM(info->fID, texture_id);
+    }
   }
 
   ri->DeleteTextures(1, &texture_id);
@@ -231,6 +269,12 @@ bool GpuRasterBufferProvider::IsResourceSwizzleRequired(
   return false;
 }
 
+bool GpuRasterBufferProvider::IsResourcePremultiplied(
+    bool must_support_alpha) const {
+  return !ShouldUnpremultiplyAndDitherResource(
+      GetResourceFormat(must_support_alpha));
+}
+
 bool GpuRasterBufferProvider::CanPartialRasterIntoProvidedResource() const {
   // Partial raster doesn't support MSAA, as the MSAA resolve is unaware of clip
   // rects.
@@ -326,16 +370,27 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
                        resource_lock, use_distance_field_text_,
                        msaa_sample_count_);
   } else {
-    RasterizeSource(raster_source, resource_has_previous_content,
-                    resource_lock->size(), raster_full_rect, playback_rect,
-                    transform, playback_settings, worker_context_provider_,
-                    resource_lock, use_distance_field_text_,
-                    msaa_sample_count_);
+    RasterizeSource(
+        raster_source, resource_has_previous_content, resource_lock->size(),
+        raster_full_rect, playback_rect, transform, playback_settings,
+        worker_context_provider_, resource_lock, use_distance_field_text_,
+        msaa_sample_count_,
+        ShouldUnpremultiplyAndDitherResource(resource_lock->format()));
   }
 
   // Generate sync token for cross context synchronization.
   resource_lock->set_sync_token(
       LayerTreeResourceProvider::GenerateSyncTokenHelper(ri));
+}
+
+bool GpuRasterBufferProvider::ShouldUnpremultiplyAndDitherResource(
+    viz::ResourceFormat format) const {
+  switch (format) {
+    case viz::RGBA_4444:
+      return true;
+    default:
+      return false;
+  }
 }
 
 }  // namespace cc

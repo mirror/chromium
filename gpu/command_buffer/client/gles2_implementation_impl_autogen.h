@@ -3249,6 +3249,17 @@ void GLES2Implementation::LoseContextCHROMIUM(GLenum current, GLenum other) {
   CheckGLError();
 }
 
+void GLES2Implementation::UnpremultiplyAndDitherCopyCHROMIUM(
+    GLuint src_texture,
+    GLuint dst_texture) {
+  GPU_CLIENT_SINGLE_THREAD_CHECK();
+  GPU_CLIENT_LOG("[" << GetLogPrefix()
+                     << "] glUnpremultiplyAndDitherCopyCHROMIUM(" << src_texture
+                     << ", " << dst_texture << ")");
+  helper_->UnpremultiplyAndDitherCopyCHROMIUM(src_texture, dst_texture);
+  CheckGLError();
+}
+
 void GLES2Implementation::DrawBuffersEXT(GLsizei count, const GLenum* bufs) {
   GPU_CLIENT_SINGLE_THREAD_CHECK();
   GPU_CLIENT_LOG("[" << GetLogPrefix() << "] glDrawBuffersEXT(" << count << ", "

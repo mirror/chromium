@@ -13340,6 +13340,46 @@ static_assert(offsetof(WaitSyncTokenCHROMIUM, release_count_0) == 16,
 static_assert(offsetof(WaitSyncTokenCHROMIUM, release_count_1) == 20,
               "offset of WaitSyncTokenCHROMIUM release_count_1 should be 20");
 
+struct UnpremultiplyAndDitherCopyCHROMIUM {
+  typedef UnpremultiplyAndDitherCopyCHROMIUM ValueType;
+  static const CommandId kCmdId = kUnpremultiplyAndDitherCopyCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint _src_texture, GLuint _dst_texture) {
+    SetHeader();
+    src_texture = _src_texture;
+    dst_texture = _dst_texture;
+  }
+
+  void* Set(void* cmd, GLuint _src_texture, GLuint _dst_texture) {
+    static_cast<ValueType*>(cmd)->Init(_src_texture, _dst_texture);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t src_texture;
+  uint32_t dst_texture;
+};
+
+static_assert(sizeof(UnpremultiplyAndDitherCopyCHROMIUM) == 12,
+              "size of UnpremultiplyAndDitherCopyCHROMIUM should be 12");
+static_assert(
+    offsetof(UnpremultiplyAndDitherCopyCHROMIUM, header) == 0,
+    "offset of UnpremultiplyAndDitherCopyCHROMIUM header should be 0");
+static_assert(
+    offsetof(UnpremultiplyAndDitherCopyCHROMIUM, src_texture) == 4,
+    "offset of UnpremultiplyAndDitherCopyCHROMIUM src_texture should be 4");
+static_assert(
+    offsetof(UnpremultiplyAndDitherCopyCHROMIUM, dst_texture) == 8,
+    "offset of UnpremultiplyAndDitherCopyCHROMIUM dst_texture should be 8");
+
 struct DrawBuffersEXTImmediate {
   typedef DrawBuffersEXTImmediate ValueType;
   static const CommandId kCmdId = kDrawBuffersEXTImmediate;
