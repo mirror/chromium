@@ -22,6 +22,30 @@
       "revId": "cef06987ea856b0a089f6c6138807a816ab127d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455356b6_422d7840",
+        "filename": "chrome/browser/chrome_browser_main_posix.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-01T01:00:05Z",
+      "side": 1,
+      "message": "There are 4 Chrome OS-specific functions in application_lifetime_chromeos. I initially decided not to add them to other platforms to keep code cleaner.\n\nDo you think that it\u0027s better to have the same set of functions for all the platforms?",
+      "parentUuid": "3373d9c1_7488eb58",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 6
+      },
+      "revId": "cef06987ea856b0a089f6c6138807a816ab127d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
