@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisableIf;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.UrlConstants;
@@ -132,6 +133,7 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
+    @DisableIf.Build(sdk_is_greater_than = 24, message = "https://crbug.com/808177")
     public void test2dTo2d() throws InterruptedException, TimeoutException {
         mVrTestFramework.loadUrlAndAwaitInitialization(TEST_PAGE_2D_URL, PAGE_LOAD_TIMEOUT_S);
 
