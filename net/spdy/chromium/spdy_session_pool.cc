@@ -138,9 +138,11 @@ base::WeakPtr<SpdySession> SpdySessionPool::CreateAvailableSessionFromSocket(
 base::WeakPtr<SpdySession> SpdySessionPool::FindAvailableSession(
     const SpdySessionKey& key,
     bool enable_ip_based_pooling,
+    bool is_websocket,
     const NetLogWithSource& net_log) {
   AvailableSessionMap::iterator it = LookupAvailableSessionByKey(key);
-  if (it != available_sessions_.end()) {
+  if (it != available_sessions_.end() &&
+      (!is_websocket || it->second->support_websocket())) {
     if (key == it->second->spdy_session_key()) {
       UMA_HISTOGRAM_ENUMERATION("Net.SpdySessionGet", FOUND_EXISTING,
                                 SPDY_SESSION_GET_MAX);
@@ -215,6 +217,9 @@ base::WeakPtr<SpdySession> SpdySessionPool::FindAvailableSession(
       UMA_HISTOGRAM_ENUMERATION("Net.SpdyIPPoolDomainMatch", 0, 2);
       continue;
     }
+
+    if (is_websocket && !available_session->support_websocket())
+      continue;
 
     UMA_HISTOGRAM_ENUMERATION("Net.SpdyIPPoolDomainMatch", 1, 2);
     UMA_HISTOGRAM_ENUMERATION("Net.SpdySessionGet",
