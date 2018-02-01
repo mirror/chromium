@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6ac8f47_de8dd338",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-01T21:29:19Z",
+      "side": 1,
+      "message": "Assuming you\u0027re getting a warning about unused vars, you should use not_needed([\"inputs\"]) instead.",
+      "revId": "748ab1cd56f7d063bd76b2b53c858cae414f6a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
