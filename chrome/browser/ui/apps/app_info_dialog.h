@@ -7,7 +7,6 @@
 
 #include "base/callback_forward.h"
 #include "chrome/common/features.h"
-#include "ui/gfx/native_widget_types.h"
 
 class Profile;
 
@@ -17,10 +16,6 @@ class WebContents;
 
 namespace extensions {
 class Extension;
-}
-
-namespace gfx {
-class Rect;
 }
 
 // Used for UMA to track where the App Info dialog is launched from.
@@ -38,9 +33,7 @@ bool CanShowAppInfoDialog();
 #if BUILDFLAG(ENABLE_APP_LIST)
 // Shows the chrome app information as a frameless window for the given |app|
 // and |profile| at the given |app_list_bounds|. Appears 'inside' the app list.
-void ShowAppInfoInAppList(gfx::NativeWindow parent,
-                          const gfx::Rect& app_list_bounds,
-                          Profile* profile,
+void ShowAppInfoInAppList(Profile* profile,
                           const extensions::Extension* app,
                           const base::Closure& close_callback);
 #endif

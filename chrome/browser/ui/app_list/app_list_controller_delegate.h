@@ -13,7 +13,6 @@
 #include "extensions/common/constants.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
-#include "ui/gfx/native_widget_types.h"
 
 class Profile;
 
@@ -21,10 +20,6 @@ namespace extensions {
 class Extension;
 class ExtensionSet;
 class InstallTracker;
-}
-
-namespace gfx {
-class Rect;
 }
 
 // Interface to allow the view delegate to call out to whatever is controlling
@@ -55,16 +50,8 @@ class AppListControllerDelegate {
   // Handles the view being closed.
   virtual void ViewClosing();
 
-  // Gets app list window.
-  virtual gfx::NativeWindow GetAppListWindow() = 0;
-
   // Gets display ID of app list window.
-  int64_t GetAppListDisplayId();
-
-  // Gets the content bounds of the app info dialog of the app list in the
-  // screen coordinates. On platforms that do not use views, this returns a 0x0
-  // rectangle.
-  virtual gfx::Rect GetAppInfoDialogBounds();
+  virtual int64_t GetAppListDisplayId() = 0;
 
   // Control of pinning apps.
   virtual bool IsAppPinned(const std::string& app_id) = 0;
