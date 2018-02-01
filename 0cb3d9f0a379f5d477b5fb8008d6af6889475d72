@@ -34,6 +34,24 @@
       "revId": "0cb3d9f0a379f5d477b5fb8008d6af6889475d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec314fe2_d3b2c183",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-01T16:38:54Z",
+      "side": 1,
+      "message": "\u003e Please ignore my question about |navigation_ui_data_| member not being set. (The value is passed to CreateNonNetworkServiceURLLoader.)\n\u003e \n\u003e And it seems reasonable to me to also initialize |new_request| on the following line when features::kNavigationMojoResponse is enabled:\n\nI believe this isn\u0027t used if kNavigationMojoResponse is used (i.e. it\u0027s only used when NS is used).\n\n\u003e https://cs.chromium.org/chromium/src/content/browser/loader/navigation_url_loader_network_service.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d860\n\u003e \n\u003e WDYT? Thanks!",
+      "parentUuid": "9ad23a7b_4629531f",
+      "revId": "0cb3d9f0a379f5d477b5fb8008d6af6889475d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
