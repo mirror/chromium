@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772923_45ce09fb",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T20:07:06Z",
+      "side": 1,
+      "message": "nit: comments aren\u0027t really needed/helpful.",
+      "revId": "6f0f2345900fc1e6897fc5808e323e76c435d2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec57eba_2fcddd8d",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T20:07:06Z",
+      "side": 1,
+      "message": "nit, you can combine any or all of this and the callback:\n\n    settings.display.systemDisplayApi.setMirrorMode({\n          mode: this.isMirrored_(this.displays) ?\n              chrome.system.display.MirrorMode.OFF :\n              chrome.system.display.MirrorMode.NORMAL\n        },\n        () \u003d\u003e {\n          let error \u003d chrome.runtime.lastError;\n          if (error)\n            console.error(\u0027setMirrorMode Error: \u0027 + error.message);\n        });",
+      "revId": "6f0f2345900fc1e6897fc5808e323e76c435d2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
