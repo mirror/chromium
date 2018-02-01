@@ -15,8 +15,11 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_param_associator.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/clock.h"
@@ -41,7 +44,6 @@
 #include "third_party/leveldatabase/leveldb_chrome.h"
 
 namespace gcm {
-
 namespace {
 
 enum LastEvent {
@@ -74,6 +76,9 @@ const char kRawData[] = "example raw data";
 const char kInstanceID[] = "iid_1";
 const char kScope[] = "GCM";
 const char kDeleteTokenResponse[] = "token=foo";
+const int kDefaultInvalidateTokenAfterDays = 5;
+const char kGroupName[] = "Enabled";
+constexpr char kInvalidateTokenTrialName[] = "InvalidateTokenTrial";
 
 // Helper for building arbitrary data messages.
 MCSMessage BuildDownstreamMessage(
@@ -267,6 +272,10 @@ class GCMClientImplTest : public testing::Test,
   ~GCMClientImplTest() override;
 
   void SetUp() override;
+  void TearDown() override;
+
+  void SetFeatureParams(const base::Feature& feature,
+                        std::map<std::string, std::string> params);
 
   void SetUpUrlFetcherFactory();
 
@@ -423,6 +432,9 @@ class GCMClientImplTest : public testing::Test,
 
   // Injected to GCM client.
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context_getter_;
+  base::test::ScopedFeatureList scoped_feature_list_;
+  base::FieldTrialList field_trial_list_;
+  std::map<std::string, base::FieldTrial*> trials_;
 };
 
 GCMClientImplTest::GCMClientImplTest()
@@ -431,8 +443,8 @@ GCMClientImplTest::GCMClientImplTest()
       task_runner_(new base::TestMockTimeTaskRunner),
       task_runner_handle_(task_runner_),
       url_request_context_getter_(
-          new net::TestURLRequestContextGetter(task_runner_)) {
-}
+          new net::TestURLRequestContextGetter(task_runner_)),
+      field_trial_list_(nullptr) {}
 
 GCMClientImplTest::~GCMClientImplTest() {}
 
@@ -443,13 +455,51 @@ void GCMClientImplTest::SetUp() {
   InitializeGCMClient();
   StartGCMClient();
   SetUpUrlFetcherFactory();
+
+  // Set up the InvalidateToken field trial.
+  base::FieldTrial* invalidate_token_trial =
+      base::FieldTrialList::CreateFieldTrial(kInvalidateTokenTrialName,
+                                             kGroupName);
+  trials_[features::kInvalidateTokenFeature.name] = invalidate_token_trial;
+
+  std::unique_ptr<base::FeatureList> feature_list =
+      base::MakeUnique<base::FeatureList>();
+  feature_list->RegisterFieldTrialOverride(
+      features::kInvalidateTokenFeature.name,
+      base::FeatureList::OVERRIDE_ENABLE_FEATURE, invalidate_token_trial);
+  scoped_feature_list_.InitWithFeatureList(std::move(feature_list));
+
+  std::map<std::string, std::string> params;
+  params[features::kParamNameTokenInvalidationPeriodDays] =
+      std::to_string(kDefaultInvalidateTokenAfterDays);
+  SetFeatureParams(features::kInvalidateTokenFeature, params);
+
+  ASSERT_EQ(invalidate_token_trial, base::FeatureList::GetFieldTrial(
+                                        features::kInvalidateTokenFeature));
+
   ASSERT_NO_FATAL_FAILURE(
       CompleteCheckin(kDeviceAndroidId, kDeviceSecurityToken, std::string(),
                       std::map<std::string, std::string>()));
 }
 
+void GCMClientImplTest::TearDown() {
+  base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
+}
+
 void GCMClientImplTest::SetUpUrlFetcherFactory() {
   url_fetcher_factory_.set_remove_fetcher_on_delete(true);
+}
+
+void GCMClientImplTest::SetFeatureParams(
+    const base::Feature& feature,
+    std::map<std::string, std::string> params) {
+  ASSERT_TRUE(
+      base::FieldTrialParamAssociator::GetInstance()->AssociateFieldTrialParams(
+          trials_[feature.name]->trial_name(), kGroupName, params));
+  std::map<std::string, std::string> actualParams;
+  EXPECT_TRUE(base::GetFieldTrialParamsByFeature(
+      features::kInvalidateTokenFeature, &actualParams));
+  EXPECT_EQ(params, actualParams);
 }
 
 void GCMClientImplTest::PumpLoopUntilIdle() {
@@ -870,6 +920,67 @@ TEST_F(GCMClientImplTest, RegisterPreviousSenderAgain) {
   EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
   EXPECT_EQ(kExtensionAppId, last_app_id());
   EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+}
+
+TEST_F(GCMClientImplTest, RegisterAgainWhenTokenIsFresh) {
+  // Register a sender.
+  std::vector<std::string> senders;
+  senders.push_back("sender");
+  Register(kExtensionAppId, senders);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+
+  reset_last_event();
+
+  // Advance time by (kDefaultInvalidateTokenAfterDays)/2
+  clock()->Advance(
+      base::TimeDelta::FromDays(kDefaultInvalidateTokenAfterDays / 2));
+
+  // Register the same sender again. The same registration ID as the
+  // previous one should be returned.
+  Register(kExtensionAppId, senders);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+}
+
+TEST_F(GCMClientImplTest, RegisterAgainWhenTokenIsStale) {
+  // Register a sender.
+  std::vector<std::string> senders;
+  senders.push_back("sender");
+  Register(kExtensionAppId, senders);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+
+  reset_last_event();
+
+  // Advance time by kDefaultInvalidateTokenAfterDays
+  clock()->Advance(base::TimeDelta::FromDays(kDefaultInvalidateTokenAfterDays));
+
+  // Register the same sender again. Different registration ID from the
+  // previous one should be returned.
+  Register(kExtensionAppId, senders);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id2"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id2", last_registration_id());
   EXPECT_EQ(GCMClient::SUCCESS, last_result());
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
 }
