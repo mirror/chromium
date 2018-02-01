@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f1a703b_91dd8581",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-01T04:42:29Z",
+      "side": 1,
+      "message": "We seem to be running more code before the sandbox starts. Why is this OK? I see a similar concern raised in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d785117#c11 .",
+      "revId": "40abb7debc6e2758c6b29187d7adef203540d82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
