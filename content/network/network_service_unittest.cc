@@ -28,7 +28,7 @@ using network::NetworkService;
 
 namespace content {
 
-namespace {
+namespace network_service_unittest {
 
 network::mojom::NetworkContextParamsPtr CreateContextParams() {
   network::mojom::NetworkContextParamsPtr params =
@@ -471,6 +471,6 @@ TEST_F(NetworkServiceNetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
       network::mojom::ConnectionType::CONNECTION_3G);
 }
 
-}  // namespace
+}  // namespace network_service_unittest
 
 }  // namespace content

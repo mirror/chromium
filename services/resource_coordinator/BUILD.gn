@@ -5,12 +5,13 @@
 # There should be only one resource coordinator. It is currently
 # in the browser process. So, only //content/browser should link to this target.
 # Others modules should only need the public targets.
+import("//build/config/jumbo.gni")
 import("//services/catalog/public/tools/catalog.gni")
 import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//services/service_manager/public/tools/test/service_test.gni")
 
-source_set("lib") {
+jumbo_source_set("lib") {
   sources = [
     "coordination_unit/coordination_unit_base.cc",
     "coordination_unit/coordination_unit_base.h",

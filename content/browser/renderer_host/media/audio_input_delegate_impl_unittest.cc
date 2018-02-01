@@ -48,7 +48,7 @@ using ::testing::Return;
 
 namespace content {
 
-namespace {
+namespace audio_input_delegate_impl_unittest {
 
 const int kRenderProcessId = 1;
 const int kRenderFrameId = 5;
@@ -129,8 +129,6 @@ media::AudioInputStream* MakeInputStreamCallback(
   *created = true;
   return stream;
 }
-
-}  // namespace
 
 // These tests are single-threaded.
 // In the real life we have AudioManager living on separate thread (or on the UI
@@ -342,4 +340,5 @@ TEST_F(AudioInputDelegateTest, SetVolume) {
   base::RunLoop().RunUntilIdle();
 }
 
+}  // namespace audio_input_delegate_impl_unittest
 }  // namespace content

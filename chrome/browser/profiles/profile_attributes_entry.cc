@@ -15,16 +15,17 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "ui/base/resource/resource_bundle.h"
 
+const char kAvatarIconKey[] = "avatar_icon";
+const char kBackgroundAppsKey[] = "background_apps";
+const char kProfileIsEphemeral[] = "is_ephemeral";
+const char kUserNameKey[] = "user_name";
+
 namespace {
 
 const char kShortcutNameKey[] = "shortcut_name";
 const char kActiveTimeKey[] = "active_time";
-const char kUserNameKey[] = "user_name";
-const char kAvatarIconKey[] = "avatar_icon";
 const char kAuthCredentialsKey[] = "local_auth_credentials";
 const char kPasswordTokenKey[] = "gaia_password_token";
-const char kBackgroundAppsKey[] = "background_apps";
-const char kProfileIsEphemeral[] = "is_ephemeral";
 const char kIsAuthErrorKey[] = "is_auth_error";
 
 }  // namespace

@@ -3,13 +3,14 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 
 if (is_android) {
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")  # For generate_jni().
 }
 
-component("gamepad") {
+jumbo_component("gamepad") {
   output_name = "device_gamepad"
 
   sources = [
@@ -75,6 +76,13 @@ component("gamepad") {
     "xinput_haptic_gamepad_win.cc",
     "xinput_haptic_gamepad_win.h",
   ]
+
+  if (is_linux) {
+    jumbo_excluded_sources = [
+      # Symbols
+      "udev_gamepad_linux.cc",  # kInputSubsystem
+    ]
+  }
 
   deps = [
     "//base",

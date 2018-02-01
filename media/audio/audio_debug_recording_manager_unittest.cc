@@ -27,7 +27,7 @@ using testing::_;
 
 namespace media {
 
-namespace {
+namespace audio_debug_recording_manager_unittest {
 
 // The filename extension expected to be added.
 const base::FilePath::CharType kFileNameExtension[] =
@@ -49,8 +49,6 @@ struct ScopedExpectEnableAfterCreateHelper {
     g_expect_enable_after_create_helper = false;
   }
 };
-
-}  // namespace
 
 // Mock class to verify enable and disable calls.
 class MockAudioDebugRecordingHelper : public AudioDebugRecordingHelper {
@@ -225,4 +223,5 @@ TEST_F(AudioDebugRecordingManagerTest, EnableRegisterDisable) {
   manager_.DisableDebugRecording();
 }
 
+}  // namespace audio_debug_recording_manager_unittest
 }  // namespace media

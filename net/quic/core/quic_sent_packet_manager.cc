@@ -960,4 +960,6 @@ void QuicSentPacketManager::SetSessionNotifier(
   unacked_packets_.SetSessionNotifier(session_notifier);
 }
 
+#undef ENDPOINT
+
 }  // namespace net

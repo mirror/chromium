@@ -29,8 +29,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-
-namespace {
+namespace render_frame_audio_input_stream_factory_unittest {
 
 using testing::Test;
 
@@ -100,8 +99,6 @@ std::unique_ptr<media::AudioInputDelegate> CreateFakeDelegate(
   return std::make_unique<FakeAudioInputDelegate>();
 }
 
-}  // namespace
-
 class RenderFrameAudioInputStreamFactoryTest : public testing::Test {
  public:
   RenderFrameAudioInputStreamFactoryTest()
@@ -158,4 +155,5 @@ TEST_F(RenderFrameAudioInputStreamFactoryTest, CreateStream) {
   base::RunLoop().RunUntilIdle();
 }
 
+}  // namespace render_frame_audio_input_stream_factory_unittest
 }  // namespace content

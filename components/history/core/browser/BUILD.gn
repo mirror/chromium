@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("browser") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("browser") {
   sources = [
     "browsing_history_driver.h",
     "browsing_history_service.cc",
@@ -97,6 +99,13 @@ static_library("browser") {
     "web_history_service_observer.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "thumbnail_database.cc",
+    "top_sites_database.cc",
+    "typed_url_syncable_service.cc",
+  ]
+
   public_deps = [
     "//components/sync/protocol",
     "//skia",
@@ -144,6 +153,12 @@ static_library("browser") {
       "android/urls_sql_handler.h",
       "android/visit_sql_handler.cc",
       "android/visit_sql_handler.h",
+    ]
+    jumbo_excluded_sources += [
+      # Symbols (kInterestingColumns)
+      "android/favicon_sql_handler.cc",
+      "android/urls_sql_handler.cc",
+      "android/visit_sql_handler.cc",
     ]
   }
 

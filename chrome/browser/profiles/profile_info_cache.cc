@@ -43,17 +43,13 @@ const char kNameKey[] = "name";
 const char kGAIANameKey[] = "gaia_name";
 const char kGAIAGivenNameKey[] = "gaia_given_name";
 const char kGAIAIdKey[] = "gaia_id";
-const char kUserNameKey[] = "user_name";
 const char kIsUsingDefaultNameKey[] = "is_using_default_name";
 const char kIsUsingDefaultAvatarKey[] = "is_using_default_avatar";
-const char kAvatarIconKey[] = "avatar_icon";
 const char kUseGAIAPictureKey[] = "use_gaia_picture";
-const char kBackgroundAppsKey[] = "background_apps";
 const char kGAIAPictureFileNameKey[] = "gaia_picture_file_name";
 const char kIsOmittedFromProfileListKey[] = "is_omitted_from_profile_list";
 const char kSigninRequiredKey[] = "signin_required";
 const char kSupervisedUserId[] = "managed_user_id";
-const char kProfileIsEphemeral[] = "is_ephemeral";
 
 // TODO(dullweber): Remove these constants after the stored data is removed.
 const char kStatsBrowsingHistoryKeyDeprecated[] = "stats_browsing_history";

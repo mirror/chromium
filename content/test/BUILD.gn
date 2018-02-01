@@ -7,6 +7,7 @@ import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
 import("//net/features.gni")
@@ -20,7 +21,7 @@ import("//v8/gni/v8.gni")
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
 
   # See comment at the top of //content/BUILD.gn for why this is disabled in
@@ -674,6 +675,30 @@ if (is_android) {
 }
 
 test("content_browsertests") {
+  deps = [
+    ":content_browsertests_sources",
+  ]
+
+  # See comment at the top of //content/BUILD.gn for why this is disabled in
+  # component builds.
+  if (is_android) {
+    deps += [
+      ":content_browsertests_java",
+      "//content/shell:content_shell_lib",
+      "//content/shell/android:content_shell_assets",
+      "//content/shell/android:content_shell_jni_headers",
+    ]
+    android_manifest =
+        "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
+    android_manifest_dep = ":content_browsertests_manifest"
+    use_default_launcher = false
+  }
+}
+
+jumbo_source_set("content_browsertests_sources") {
+  testonly = true
+  never_build_jumbo = true  # Need to cleanup more
+
   # See comment at the top of //content/BUILD.gn for why this is disabled in
   # component builds.
   if (is_component_build) {
@@ -835,6 +860,14 @@ test("content_browsertests") {
     "../test/content_browser_test_test.cc",
     "../test/url_loader_interceptor_test.cc",
     "../test/webui_resource_browsertest.cc",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "../browser/renderer_host/input/wheel_scroll_latching_browsertest.cc",
+    "../browser/tracing/memory_tracing_browsertest.cc",
+    "../browser/tracing/tracing_controller_browsertest.cc",
+    "../browser/web_contents/web_contents_view_aura_browsertest.cc",
   ]
 
   defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
@@ -1012,17 +1045,9 @@ test("content_browsertests") {
       "../browser/pointer_lock_browsertest.h",
     ]
     deps += [
-      ":content_browsertests_java",
-      "//content/shell:content_shell_lib",
-      "//content/shell/android:content_shell_assets",
-      "//content/shell/android:content_shell_jni_headers",
       "//testing/android/native_test:native_test_support",
       "//ui/android:android",
     ]
-    android_manifest =
-        "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
-    android_manifest_dep = ":content_browsertests_manifest"
-    use_default_launcher = false
   } else {
     # Non-Android.
     sources += [
@@ -1135,6 +1160,8 @@ test("content_browsertests") {
       "../browser/renderer_host/input/touch_selection_controller_client_aura_browsertest.cc",
       "../browser/web_contents/web_contents_view_aura_browsertest.cc",
     ]
+    jumbo_excluded_sources -=
+        [ "../browser/web_contents/web_contents_view_aura_browsertest.cc" ]
   }
 
   if (is_chromecast) {
@@ -1156,6 +1183,29 @@ test("content_browsertests") {
 }
 
 test("content_unittests") {
+  deps = [
+    ":content_unittests_sources",
+  ]
+  if (is_android) {
+    deps += [
+      "//base:base_java_unittest_support",
+      "//content/public/android:content_java",
+      "//device/geolocation:geolocation_java",
+      "//media/capture/content/android",
+      "//media/capture/content/android:screen_capture_java",
+      "//v8:v8_external_startup_data_assets",
+    ]
+  }
+
+  if (is_win) {
+    deps += [ "//third_party/iaccessible2" ]
+    libs = [ "dwrite.lib" ]
+  }
+}
+
+jumbo_source_set("content_unittests_sources") {
+  testonly = true
+
   # See comment at the top of //content/BUILD.gn for why this is disabled in
   # component builds.
   if (is_component_build) {
@@ -1604,12 +1654,45 @@ test("content_unittests") {
     "url_request_context_builder_mojo_unittest.cc",
   ]
 
+  jumbo_excluded_sources = [
+    # IPC: IPC does too much magic with macros to automatically handle
+    # that files are merged and new macros appear.
+    "../browser/service_worker/service_worker_version_unittest.cc",
+
+    # Namespaces
+    "../renderer/indexed_db/webidbcursor_impl_unittest.cc",  # Missing ::
+    "../renderer/indexed_db/webidbdatabase_impl_unittest.cc",  # Missing ::
+
+    # Symbols
+    "../browser/background_fetch/background_fetch_scheduler_unittest.cc",  # kExampleServiceWorkerRegistrationId (9999)
+    "../browser/frame_host/render_widget_host_view_guest_unittest.cc",  # CreateDelegatedFrame
+    "../browser/indexed_db/indexed_db_dispatcher_host_unittest.cc",  # kOrigin (121)
+    "../browser/leveldb_wrapper_impl_unittest.cc",  # GetAllCallback (161)
+    "../browser/loader/temporary_file_stream_unittest.cc",  # kTestData (161)
+    "../browser/media/media_devices_permission_checker_unittest.cc",  # TestWebContentsDelegrate (161)
+    "../browser/notifications/notification_event_dispatcher_impl_unittest.cc",  # kPrimaryUniqueId
+    "../browser/payments/payment_app_content_unittest_base.cc",  # RegisterServiceWorkerCallback/UnregisterServiceWorkerCallback
+    "../browser/renderer_host/media/render_frame_audio_output_stream_factory_unittest.cc",  # kStreamId, kRenderProcessId, kRenderFrameId (121)
+    "../browser/service_worker/service_worker_data_pipe_reader_unittest.cc",  # kTestData (121)
+    "../browser/storage_partition_impl_unittest.cc",  # kTestOrigin1, kTestOrigin2 (507)
+    "../browser/web_contents/web_contents_delegate_unittest.cc",  # MockWebContentsDelegate (507)
+    "../child/memory/child_memory_coordinator_impl_unittest.cc",  # MockMemoryCoordinatorClient
+    "../network/url_loader_unittest.cc",  # CreateResourceRequest, MockHTTPSURLRequestJob (507)
+    "../renderer/input/input_event_filter_unittest.cc",  # ShouldBlockEventStream (507)
+    "../renderer/media/audio_output_ipc_factory_unittest.cc",  # kRenderFrameId (507)
+    "../renderer/media/mojo_audio_input_ipc_unittest.cc",  # kSessionId (9999)
+  ]
+
   # Chromecasts do not have extended attributes enabled; even if it were
   # enabled, the devices use tmpfs which restricts the extended attributes that
   # can be set such that quarantining still would not work. (The platform
   # specific tests include a runtime guard to skip tests that need xattr.)
   if (!is_chromecast) {
     sources += [ "../common/quarantine/quarantine_unittest.cc" ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "../common/quarantine/quarantine_unittest.cc"  # kTestData
+    ]
   }
 
   # ChromeOS also defines linux but their memory-monitors conflict.
@@ -1784,6 +1867,10 @@ test("content_unittests") {
       "../renderer/pepper/plugin_instance_throttler_impl_unittest.cc",
       "../renderer/pepper/v8_var_converter_unittest.cc",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "../browser/renderer_host/pepper/quota_reservation_unittest.cc",  # kOrigin
+    ]
     deps += [
       "//ppapi/host",
       "//ppapi/proxy:test_support",
@@ -1795,6 +1882,11 @@ test("content_unittests") {
     sources += [
       "../browser/media/cdm_storage_impl_unittest.cc",
       "../browser/media/key_system_support_impl_unittest.cc",
+    ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "../browser/media/cdm_storage_impl_unittest.cc",  # kTestFileSystemId
+      "../browser/media/key_system_support_impl_unittest.cc",  # kTestCdmGuid, kTestFileSystemId, kTestPath
     ]
   }
 
@@ -1864,6 +1956,13 @@ test("content_unittests") {
       "../renderer/p2p/filtering_network_manager_unittest.cc",
       "../renderer/p2p/ipc_network_manager_unittest.cc",
     ]
+
+    jumbo_excluded_sources += [
+      # Symbols
+      "../renderer/media/media_stream_video_renderer_sink_unittest.cc",  # RunClosureActionP (121)
+      "../browser/webrtc/webrtc_internals_unittest.cc",  # kUrl (507)
+      "../renderer/media/media_stream_audio_unittest.cc",  # kBufferSize (507)
+    ]
     deps += [
       "//services/device/public/interfaces",
       "//third_party/libyuv",
@@ -1932,8 +2031,10 @@ test("content_unittests") {
     }
   }
   if (is_win) {
-    deps += [ "//third_party/iaccessible2" ]
-    libs = [ "dwrite.lib" ]
+    defines += [
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
+    ]
   }
   if (is_mac) {
     deps += [
@@ -1967,15 +2068,7 @@ test("content_unittests") {
       "../browser/webui/url_data_manager_backend_unittest.cc",
     ]
 
-    deps += [
-      "//base:base_java_unittest_support",
-      "//content/public/android:content_java",
-      "//device/geolocation:geolocation_java",
-      "//media/capture/content/android",
-      "//media/capture/content/android:screen_capture_java",
-      "//ui/android:android",
-      "//v8:v8_external_startup_data_assets",
-    ]
+    deps += [ "//ui/android:android" ]
 
     defines += [ "APPCACHE_USE_SIMPLE_CACHE" ]
   } else {
@@ -1995,6 +2088,10 @@ test("content_unittests") {
   if (!is_linux_without_udev && !is_android) {
     sources += [ "../browser/webauth/authenticator_impl_unittest.cc" ]
     deps += [ "//device/u2f:test_support" ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "../browser/webauth/authenticator_impl_unittest.cc"  # kTestOrigin (237)
+    ]
   }
 
   if (use_aura) {

@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 
 if (is_android) {
@@ -9,7 +10,7 @@ if (is_android) {
   import("//build/config/android/rules.gni")
 }
 
-static_library("ntp_snippets") {
+jumbo_static_library("ntp_snippets") {
   sources = [
     "bookmarks/bookmark_last_visit_utils.cc",
     "bookmarks/bookmark_last_visit_utils.h",
@@ -121,6 +122,13 @@ static_library("ntp_snippets") {
       "breaking_news/breaking_news_gcm_app_handler.h",
     ]
   }
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "contextual/contextual_suggestion.cc",
+    "contextual/contextual_suggestions_fetcher_impl.cc",
+    "remote/remote_suggestions_fetcher_impl.cc",
+  ]
 
   public_deps = [
     "//base",

@@ -2,12 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/util/process_version.gni")
 
 # Variables:
 #   deps: Extra dependencies.
 template("common_tmpl") {
-  static_library(target_name) {
+  jumbo_static_library(target_name) {
     sources = [
       "data_reduction_proxy_bypass_action_list.h",
       "data_reduction_proxy_bypass_type_list.h",

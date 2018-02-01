@@ -158,4 +158,6 @@ void QuicCryptoStream::WritePendingRetransmission() {
   }
 }
 
+#undef ENDPOINT
+
 }  // namespace net

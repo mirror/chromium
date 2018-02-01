@@ -28,8 +28,7 @@ using testing::Mock;
 using testing::StrictMock;
 
 namespace content {
-
-namespace {
+namespace mojo_audio_output_ipc_unittest {
 
 const int kSessionId = 1234;
 const size_t kMemoryLength = 4321;
@@ -196,8 +195,6 @@ class MockDelegate : public media::AudioOutputIPCDelegate {
   MOCK_METHOD0(GotOnStreamCreated, void());
   MOCK_METHOD0(OnIPCClosed, void());
 };
-
-}  // namespace
 
 TEST(MojoAudioOutputIPC, AuthorizeWithoutFactory_CallsAuthorizedWithError) {
   base::MessageLoopForIO message_loop;
@@ -566,4 +563,5 @@ TEST(MojoAudioOutputIPC, SetVolume_SetsVolume) {
   base::RunLoop().RunUntilIdle();
 }
 
+}  // namespace mojo_audio_output_ipc_unittest
 }  // namespace content

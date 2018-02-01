@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/nacl/config.gni")
 import("//testing/test.gni")
 import("../../../mojo/public/tools/bindings/mojom.gni")
@@ -11,7 +12,7 @@ if (is_android) {
   import("//build/config/android/rules.gni")
 }
 
-component("system") {
+jumbo_component("system") {
   output_name = "mojo_system_impl"
 
   sources = [
@@ -61,6 +62,12 @@ component("system") {
     "watcher_dispatcher.h",
     "watcher_set.cc",
     "watcher_set.h",
+  ]
+
+  jumbo_excluded_sources = [
+    "data_pipe_consumer_dispatcher.cc",
+    "data_pipe_producer_dispatcher.cc",
+    "shared_buffer_dispatcher.cc",
   ]
 
   if (is_mac && !is_ios) {

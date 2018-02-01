@@ -3,7 +3,9 @@
 # found in the LICENSE file.
 #
 
-static_library("discovery") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("discovery") {
   inputs = [
     "$root_gen_dir/chrome/grit/generated_resources.h",
   ]
@@ -57,6 +59,12 @@ static_library("discovery") {
     "mdns/dns_sd_registry.h",
     "media_sink_discovery_metrics.cc",
     "media_sink_discovery_metrics.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "mdns/cast_media_sink_service.cc",
+    "dial/dial_app_info_fetcher.cc",  # kMaxRetries (9999)
   ]
 
   if (!is_android) {

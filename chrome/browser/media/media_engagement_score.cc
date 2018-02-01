@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/metrics/field_trial_params.h"
+#include "chrome/browser/engagement/engagement_utils.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
@@ -36,22 +37,6 @@ const int kScoreMinVisitsParamDefault = 20;
 const double kHighScoreLowerThresholdParamDefault = 0.2;
 const double kHighScoreUpperThresholdParamDefault = 0.3;
 
-std::unique_ptr<base::DictionaryValue> GetScoreDictForSettings(
-    const HostContentSettingsMap* settings,
-    const GURL& origin_url) {
-  if (!settings)
-    return std::make_unique<base::DictionaryValue>();
-
-  std::unique_ptr<base::DictionaryValue> value =
-      base::DictionaryValue::From(settings->GetWebsiteSetting(
-          origin_url, origin_url, CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT,
-          content_settings::ResourceIdentifier(), nullptr));
-
-  if (value.get())
-    return value;
-  return std::make_unique<base::DictionaryValue>();
-}
-
 }  // namespace
 
 // static.
@@ -78,9 +63,12 @@ int MediaEngagementScore::GetScoreMinVisits() {
 MediaEngagementScore::MediaEngagementScore(base::Clock* clock,
                                            const GURL& origin,
                                            HostContentSettingsMap* settings)
-    : MediaEngagementScore(clock,
-                           origin,
-                           GetScoreDictForSettings(settings, origin)) {
+    : MediaEngagementScore(
+          clock,
+          origin,
+          GetScoreDictForSettings(settings,
+                                  origin,
+                                  CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT)) {
   settings_map_ = settings;
 }
 

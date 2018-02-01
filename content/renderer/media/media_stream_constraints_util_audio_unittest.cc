@@ -24,7 +24,7 @@
 
 namespace content {
 
-namespace {
+namespace media_stream_constraints_util_audio_unittest {
 
 using BoolSetFunction = void (blink::BooleanConstraint::*)(bool);
 using StringSetFunction =
@@ -55,8 +55,6 @@ static bool Contains(const std::vector<T>& vector, T value) {
   auto it = std::find(vector.begin(), vector.end(), value);
   return it != vector.end();
 }
-
-}  // namespace
 
 class MediaStreamConstraintsUtilAudioTest
     : public testing::TestWithParam<std::string> {
@@ -1243,4 +1241,5 @@ INSTANTIATE_TEST_CASE_P(,
                                         kMediaStreamSourceSystem,
                                         kMediaStreamSourceDesktop));
 
+}  // namespace media_stream_constraints_util_audio_unittest
 }  // namespace content

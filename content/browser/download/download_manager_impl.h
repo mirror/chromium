@@ -39,6 +39,10 @@ class DownloadItemImpl;
 class DownloadRequestHandleInterface;
 class ResourceContext;
 
+namespace download_manager_impl_unittest {
+class DownloadManagerTest;
+}
+
 class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
                                            public UrlDownloadHandler::Delegate,
                                            private DownloadItemImplDelegate {
@@ -158,7 +162,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   using DownloadItemImplVector = std::vector<DownloadItemImpl*>;
 
   // For testing.
-  friend class DownloadManagerTest;
+  friend class download_manager_impl_unittest::DownloadManagerTest;
   friend class DownloadTest;
 
   void StartDownloadWithId(

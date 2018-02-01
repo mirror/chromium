@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 if (is_win) {
@@ -11,7 +12,7 @@ if (is_win) {
     ]
   }
 
-  static_library("browser_watcher") {
+  jumbo_static_library("browser_watcher") {
     # This is a separate lib to minimize the dependencies for its
     # hosting binary "chrome_watcher.dll".
     sources = [
@@ -27,7 +28,7 @@ if (is_win) {
     ]
   }
 
-  static_library("browser_watcher_client") {
+  jumbo_static_library("browser_watcher_client") {
     sources = [
       "watcher_client_win.cc",
       "watcher_client_win.h",
@@ -43,7 +44,7 @@ if (is_win) {
     ]
   }
 
-  static_library("postmortem_stability") {
+  jumbo_static_library("postmortem_stability") {
     sources = [
       "postmortem_minidump_writer.h",
       "postmortem_minidump_writer_win.cc",

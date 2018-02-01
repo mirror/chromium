@@ -5,6 +5,7 @@
 import("//build/buildflag_header.gni")
 import("//build/config/allocator.gni")
 import("//build/config/compiler/compiler.gni")
+import("//build/config/jumbo.gni")
 
 declare_args() {
   # Provide a way to force disable debugallocation in Debug builds,
@@ -67,7 +68,7 @@ config("tcmalloc_flags") {
 
 if (use_allocator == "tcmalloc") {
   # tcmalloc currently won't compile on Android.
-  source_set("tcmalloc") {
+  jumbo_source_set("tcmalloc") {
     tcmalloc_dir = "//third_party/tcmalloc/chromium"
 
     # Don't check tcmalloc's includes. These files include various files like
@@ -173,6 +174,13 @@ if (use_allocator == "tcmalloc") {
       # These are both #included by allocator_shim for maximal linking.
       #"generic_allocators.cc",
       #"win_allocator.cc",
+    ]
+
+    jumbo_excluded_sources = [
+      # Symbols
+      "$tcmalloc_dir/src/malloc_extension.cc",  # InitModule
+      "$tcmalloc_dir/src/memory_region_map.cc",  # kStripFrames
+      "debugallocation_shim.cc",  # RoundUp
     ]
 
     # Disable the heap checker in tcmalloc.

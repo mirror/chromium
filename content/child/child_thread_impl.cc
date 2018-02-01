@@ -86,7 +86,7 @@ namespace {
 const int kConnectionTimeoutS = 15;
 
 base::LazyInstance<base::ThreadLocalPointer<ChildThreadImpl>>::DestructorAtExit
-    g_lazy_tls = LAZY_INSTANCE_INITIALIZER;
+    g_lazy_child_tls = LAZY_INSTANCE_INITIALIZER;
 
 // This isn't needed on Windows because there the sandbox's job object
 // terminates child processes automatically. For unsandboxed processes (i.e.
@@ -430,7 +430,7 @@ void ChildThreadImpl::ConnectChannel(
 
 void ChildThreadImpl::Init(const Options& options) {
   TRACE_EVENT0("startup", "ChildThreadImpl::Init");
-  g_lazy_tls.Pointer()->Set(this);
+  g_lazy_child_tls.Pointer()->Set(this);
   on_channel_error_called_ = false;
   message_loop_ = base::MessageLoop::current();
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
@@ -622,7 +622,7 @@ ChildThreadImpl::~ChildThreadImpl() {
   // automatically.  We used to watch the object handle on Windows to do this,
   // but it wasn't possible to do so on POSIX.
   channel_->ClearIPCTaskRunner();
-  g_lazy_tls.Pointer()->Set(nullptr);
+  g_lazy_child_tls.Pointer()->Set(nullptr);
 }
 
 void ChildThreadImpl::Shutdown() {
@@ -773,7 +773,7 @@ void ChildThreadImpl::OnChildControlRequest(
 }
 
 ChildThreadImpl* ChildThreadImpl::current() {
-  return g_lazy_tls.Pointer()->Get();
+  return g_lazy_child_tls.Pointer()->Get();
 }
 
 #if defined(OS_ANDROID)

@@ -25,6 +25,15 @@ class SingleThreadTaskRunner;
 }
 
 namespace media {
+namespace audio_debug_recording_manager_unittest {
+class AudioDebugRecordingManagerTest;
+FORWARD_DECLARE_TEST(AudioDebugRecordingManagerTest,
+                     RegisterAutomaticUnregisterAtDelete);
+FORWARD_DECLARE_TEST(AudioDebugRecordingManagerTest,
+                     RegisterEnableDisable);
+FORWARD_DECLARE_TEST(AudioDebugRecordingManagerTest,
+                     EnableRegisterDisable);
+}
 
 class AudioDebugRecordingHelper;
 
@@ -87,11 +96,11 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(AudioDebugRecordingManagerTest,
+  FRIEND_TEST_ALL_PREFIXES(audio_debug_recording_manager_unittest::AudioDebugRecordingManagerTest,
                            RegisterAutomaticUnregisterAtDelete);
-  FRIEND_TEST_ALL_PREFIXES(AudioDebugRecordingManagerTest,
+  FRIEND_TEST_ALL_PREFIXES(audio_debug_recording_manager_unittest::AudioDebugRecordingManagerTest,
                            RegisterEnableDisable);
-  FRIEND_TEST_ALL_PREFIXES(AudioDebugRecordingManagerTest,
+  FRIEND_TEST_ALL_PREFIXES(audio_debug_recording_manager_unittest::AudioDebugRecordingManagerTest,
                            EnableRegisterDisable);
 
   // Map type from source id to recorder and its filename extension.

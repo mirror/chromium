@@ -7,6 +7,7 @@ import("//android_webview/webview_repack_locales.gni")
 import("//android_webview/variables.gni")
 import("//build/config/android/config.gni")
 import("//build/config/android/rules.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/locales.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
 import("//tools/grit/repack.gni")
@@ -426,7 +427,7 @@ if (enable_resource_whitelist_generation) {
   }
 }
 
-source_set("common") {
+jumbo_source_set("common") {
   sources = [
     "browser/android_protocol_handler.cc",
     "browser/android_protocol_handler.h",
@@ -671,6 +672,28 @@ source_set("common") {
     "renderer/aw_url_loader_throttle_provider.h",
     "renderer/print_render_frame_observer.cc",
     "renderer/print_render_frame_observer.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "browser/aw_gl_functor.cc",  # g_instance_count
+    "browser/aw_login_delegate.cc",
+    "browser/aw_pdf_exporter.cc",
+
+    # GL
+    "browser/scoped_app_gl_state_restore.cc",
+    "browser/hardware_renderer.cc",
+
+    # IPC
+    "common/android_webview_message_generator.cc",
+    "common/render_view_messages.cc",
+    "renderer/aw_content_renderer_client.cc",
+    "renderer/aw_render_frame_ext.cc",
+    "renderer/aw_render_thread_observer.cc",
+    "renderer/aw_render_view_ext.cc",
+
+    # Using namespace
+    "common/crash_reporter/crash_keys.cc",
   ]
 
   deps = [

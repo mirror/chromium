@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//media/media_options.gni")
 import("//services/catalog/public/tools/catalog.gni")
 import("//services/service_manager/public/cpp/service.gni")
@@ -9,7 +10,7 @@ import("//services/service_manager/public/service_manifest.gni")
 import("//services/service_manager/public/tools/test/service_test.gni")
 import("//testing/test.gni")
 
-component("services") {
+jumbo_component("services") {
   output_name = "media_mojo_services"
   sources = [
     "gpu_mojo_media_client.cc",
@@ -71,6 +72,12 @@ component("services") {
     "watch_time_recorder.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Missing MediaService class(?)
+    "media_service.cc",
+    "media_service_factory.cc",
+  ]
+
   defines = [ "MEDIA_MOJO_IMPLEMENTATION" ]
 
   # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
@@ -110,6 +117,13 @@ component("services") {
       "android_mojo_media_client.h",
       "mojo_media_drm_storage.cc",
       "mojo_media_drm_storage.h",
+    ]
+    jumbo_excluded_sources += [
+      # Macros (gpu/GL macros)
+      "test_mojo_media_client.cc",
+
+      # Symbols
+      "android_mojo_media_client.cc",
     ]
   }
 

@@ -7,6 +7,7 @@ import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//net/features.gni")
 import("//testing/libfuzzer/fuzzer_test.gni")
@@ -99,7 +100,8 @@ source_set("constants") {
   ]
 }
 
-component("net") {
+jumbo_component("net") {
+  target_type = "component"
   sources = [
     "base/address_family.cc",
     "base/address_family.h",
@@ -356,6 +358,112 @@ component("net") {
     "ssl/token_binding.cc",
     "ssl/token_binding.h",
   ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "socket/ssl_client_socket_impl.cc",  # ParseCertificate
+  ]
+  if (!is_nacl) {
+    jumbo_excluded_sources += [
+      # Something with templates and Entry classes.
+      "disk_cache/net_log_parameters.cc",
+
+      # Too many WriteResult enums.
+      "disk_cache/simple/simple_entry_impl.cc",
+
+      # Too many RecordWriteResult.
+      "disk_cache/simple/simple_synchronous_entry.cc",
+
+      # Same UMA macro CACHE_UMA_BACKEND_IMPL_OBJ in both entry_impl.cc
+      # and backend_impl.cc
+      "disk_cache/blockfile/entry_impl.cc",
+      "disk_cache/blockfile/backend_impl.cc",
+      "disk_cache/blockfile/eviction.cc",
+
+      # cubic_bytes.cc, tcp_cubic_sender_base.cc,
+      # tcp_cubic_sender_packets.cc and tcp_cubic_sender_bytes.cc use
+      # the same constants (many)
+      "quic/core/congestion_control/cubic_bytes.cc",
+      "quic/core/congestion_control/tcp_cubic_sender_bytes.cc",
+
+      # Using the same functions, same constants.
+      "quic/core/crypto/aes_128_gcm_12_decrypter.cc",
+      "quic/core/crypto/aes_128_gcm_12_encrypter.cc",
+
+      "quic/core/crypto/aes_128_gcm_encrypter.cc",
+      "quic/core/crypto/aes_128_gcm_decrypter.cc",
+      "quic/core/crypto/aes_256_gcm_decrypter.cc",
+      "quic/core/crypto/aes_256_gcm_encrypter.cc",
+
+      # Using the same constants.
+      "quic/core/crypto/chacha20_poly1305_decrypter.cc",
+      "quic/core/crypto/chacha20_poly1305_encrypter.cc",
+      "quic/core/crypto/chacha20_poly1305_tls_decrypter.cc",
+      "quic/core/crypto/chacha20_poly1305_tls_encrypter.cc",
+      "quic/core/crypto/crypto_secret_boxer.cc",
+
+      # Same RETURN_STRING_LITERAL as quic/core/crypto/crypto_utils.cc
+      "quic/core/quic_error_codes.cc",
+      "quic/core/quic_utils.cc",
+
+      # Too many kReadBufferSize
+      "quic/core/quic_spdy_session.cc",
+      "spdy/chromium/spdy_session.cc",
+
+      # Not C++
+      "http2/hpack/hpack_static_table_entries.inc",
+
+      # Too many (identical) ScopedBoolSaver classes.
+      # Also in quic_chromium_client_stream.cc.
+      "quic/chromium/bidirectional_stream_quic_impl.cc",
+
+      # Too many kExpirationKey and NetLogCallback.
+      "http/http_server_properties_manager.cc",
+
+      # HttpBasicState::read_buf() mising.
+      "http/http_basic_state.cc",
+
+      # Too many kValueSeparator.
+      "cookies/parsed_cookie.cc",
+    ]
+
+    jumbo_excluded_sources += [
+      # Symbols (GetSequenceValue)
+      "cert/x509_certificate.cc",
+    ]
+    if (use_nss_certs) {
+      jumbo_excluded_sources += [
+        # NSS and BoringSSL share header defines
+        "ssl/client_cert_store_nss.cc",
+        "ssl/ssl_platform_key_nss.cc",
+        "third_party/nss/ssl/cmpcert.cc",
+        "third_party/mozilla_security_manager/nsNSSCertificateDB.cpp",
+        "third_party/mozilla_security_manager/nsPKCS12Blob.cpp",
+        "cert/cert_verify_proc.cc",
+        "cert/cert_verify_proc_nss.cc",
+        "cert/ev_root_ca_metadata.cc",
+        "cert/internal/system_trust_store.cc",
+        "cert/internal/trust_store_nss.cc",
+        "cert/known_roots_nss.cc",
+        "cert/nss_cert_database.cc",
+        "cert/test_root_certs.cc",
+        "cert/test_root_certs_nss.cc",
+        "cert/x509_util_nss.cc",
+      ]
+    }
+
+    if (is_posix) {
+      jumbo_excluded_sources += [
+        # Uses <linux/if.h> which has the same defines as <net/if.h>
+        "base/network_interfaces_posix.cc",
+        "base/network_interfaces_linux.cc",
+
+        # IFF_LOWER_UP or IF_OPER_UP?
+        "base/address_tracker_linux.cc",
+      ]
+    }
+  }
+
   net_unfiltered_sources = []
 
   deps = [
@@ -1795,6 +1903,15 @@ component("net") {
       "websockets/websocket_handshake_stream_base.h",
       "websockets/websocket_stream.h",
     ]
+
+    jumbo_excluded_sources += [
+      # Symbols
+      "http/transport_security_persister.cc",
+      "proxy_resolution/multi_threaded_proxy_resolver.cc",
+      "quic/chromium/quic_stream_factory.cc",
+      "quic/http/decoder/payload_decoders/quic_http_ping_payload_decoder.cc",  # kOpaqueSize (9999)
+      "spdy/core/http2_frame_decoder_adapter.cc",  # kHasPriorityFields/kNotHasPriorityFields (110)
+    ]
     deps += [
       "//base/third_party/dynamic_annotations",
       "//third_party/zlib",
@@ -1836,6 +1953,11 @@ component("net") {
         "reporting/reporting_uploader.h",
         "url_request/network_error_logging_delegate.cc",
         "url_request/network_error_logging_delegate.h",
+      ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "reporting/reporting_cache.cc",
+        "reporting/reporting_header_parser.cc",
       ]
     }
 
@@ -2187,6 +2309,9 @@ component("net") {
         "websockets/websocket_stream.cc",
         "websockets/websocket_stream.h",
       ]
+      jumbo_excluded_sources += [
+        "websockets/websocket_basic_stream.cc",  # kTrafficAnnotation
+      ]
     }
 
     # ICU support.
@@ -2219,6 +2344,9 @@ component("net") {
       sources += [
         "filter/brotli_source_stream.cc",
         "filter/brotli_source_stream.h",
+      ]
+      jumbo_excluded_sources += [
+        "filter/brotli_source_stream.cc",
       ]
       deps += [ "//third_party/brotli:dec" ]
     } else {
@@ -2539,7 +2667,7 @@ bundle_data("test_support_bundle_data") {
   ]
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   sources = [
     "base/load_timing_info_test_util.cc",
@@ -2653,6 +2781,16 @@ static_library("test_support") {
     "url_request/url_request_test_util.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Namespaces
+    "dns/mock_mdns_socket_factory.cc",
+    "http/http_transaction_test_util.cc",
+    "test/embedded_test_server/default_handlers.cc",
+    "test/url_request/url_request_failed_job.cc",
+    "test/url_request/url_request_hanging_read_job.cc",
+    "test/url_request/url_request_mock_data_job.cc",
+  ]
+
   configs += [ "//build/config:precompiled_headers" ]
 
   public_deps = [
@@ -2702,6 +2840,9 @@ static_library("test_support") {
       "test/spawned_test_server/remote_test_server_spawner_request.cc",
       "test/spawned_test_server/remote_test_server_spawner_request.h",
     ]
+    jumbo_excluded_sources += [
+      "test/spawned_test_server/remote_test_server_spawner_request.cc",
+    ]
   } else if (!is_ios) {
     sources += [
       "test/spawned_test_server/local_test_server.cc",
@@ -2727,6 +2868,9 @@ static_library("test_support") {
       "dns/mock_mdns_socket_factory.cc",
       "dns/mock_mdns_socket_factory.h",
     ]
+    jumbo_excluded_sources -= [
+      "dns/mock_mdns_socket_factory.cc",
+    ]
   }
 
   if (!use_nss_certs) {
@@ -2739,6 +2883,9 @@ static_library("test_support") {
       "test/url_request/url_request_mock_http_job.h",
       "url_request/test_url_request_interceptor.cc",
       "url_request/test_url_request_interceptor.h",
+    ]
+    jumbo_excluded_sources += [
+      "test/url_request/url_request_mock_http_job.cc",
     ]
   }
 }

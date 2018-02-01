@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("feedback") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("feedback") {
   sources = [
     "anonymizer_tool.cc",
     "anonymizer_tool.h",
@@ -28,6 +30,12 @@ static_library("feedback") {
     "system_logs/system_logs_source.h",
     "tracing_manager.cc",
     "tracing_manager.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Macros (PORT and SCHEME from both anonymizer_tool.cc and
+    # mozilla/url_parse.h")
+    "anonymizer_tool.cc",
   ]
 
   deps = [

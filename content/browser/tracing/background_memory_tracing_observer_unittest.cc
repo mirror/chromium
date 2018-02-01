@@ -24,7 +24,7 @@ using base::trace_event::TraceLog;
 using base::trace_event::InitializeMemoryDumpManagerForInProcessTesting;
 
 namespace content {
-namespace {
+namespace background_memory_tracing_observer_unittest {
 
 std::unique_ptr<BackgroundTracingConfigImpl> ReadFromJSONString(
     const std::string& json_text) {
@@ -40,8 +40,6 @@ std::unique_ptr<BackgroundTracingConfigImpl> ReadFromJSONString(
   CHECK(config);
   return config;
 }
-
-}  // namespace
 
 class BackgroundMemoryTracingObserverTest : public testing::Test {
  public:
@@ -173,4 +171,5 @@ TEST_F(BackgroundMemoryTracingObserverTest, DISABLED_HeapProfilingWithFilters) {
             AllocationContextTracker::capture_mode());
 }
 
+}  // namespace background_memory_tracing_observer_unittest
 }  // namespace content
