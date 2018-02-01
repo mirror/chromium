@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/views/bubble_anchor_util_views.h"
 
+#include "build/buildflag.h"
 #include "chrome/browser/ui/cocoa/bubble_anchor_helper.h"
+#include "ui/base/ui_features.h"
 #include "ui/gfx/geometry/rect.h"
 #import "ui/gfx/mac/coordinate_conversion.h"
 
@@ -13,11 +15,16 @@
 
 namespace bubble_anchor_util {
 
-gfx::Rect GetPageInfoAnchorRect(Browser* browser) {
+gfx::Rect GetPageInfoAnchorRectCocoa(Browser* browser) {
   // Note the Cocoa browser currently only offers anchor points, not rects.
   return gfx::Rect(
       gfx::ScreenPointFromNSPoint(GetPageInfoAnchorPointForBrowser(browser)),
       gfx::Size());
+}
+
+#if !BUILDFLAG(MAC_VIEWS_BROWSER)
+gfx::Rect GetPageInfoAnchorRect(Browser* browser) {
+  return GetPageInfoAnchorRectCocoa(browser);
 }
 
 // Stub implementation for a Cocoa browser window for calls coming from
@@ -26,5 +33,6 @@ gfx::Rect GetPageInfoAnchorRect(Browser* browser) {
 views::View* GetPageInfoAnchorView(Browser* browser) {
   return nullptr;
 }
+#endif
 
 }  // namespace bubble_anchor_util
