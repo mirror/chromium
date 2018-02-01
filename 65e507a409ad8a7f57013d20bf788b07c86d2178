@@ -22,6 +22,30 @@
       "revId": "65e507a409ad8a7f57013d20bf788b07c86d2178",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f57b0b1_b52ab1bf",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1132740
+      },
+      "writtenOn": "2018-02-01T16:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8a3961_2efea0ed",
+      "range": {
+        "startLine": 196,
+        "startChar": 35,
+        "endLine": 196,
+        "endChar": 37
+      },
+      "revId": "65e507a409ad8a7f57013d20bf788b07c86d2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
