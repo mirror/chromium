@@ -174,6 +174,9 @@ TEST_F(NotificationIdGeneratorTest, DetectIdFormat) {
           origin_, "" /* tag */, kNonPersistentNotificationId,
           kRenderProcessId);
 
+  std::string non_persistent_id_using_token =
+      generator_.GenerateForNonPersistentMojoNotification(origin_, "token");
+
   EXPECT_TRUE(NotificationIdGenerator::IsPersistentNotification(persistent_id));
   EXPECT_FALSE(
       NotificationIdGenerator::IsNonPersistentNotification(persistent_id));
@@ -182,6 +185,11 @@ TEST_F(NotificationIdGeneratorTest, DetectIdFormat) {
       NotificationIdGenerator::IsNonPersistentNotification(non_persistent_id));
   EXPECT_FALSE(
       NotificationIdGenerator::IsPersistentNotification(non_persistent_id));
+
+  EXPECT_TRUE(NotificationIdGenerator::IsNonPersistentNotification(
+      non_persistent_id_using_token));
+  EXPECT_FALSE(NotificationIdGenerator::IsPersistentNotification(
+      non_persistent_id_using_token));
 }
 
 // -----------------------------------------------------------------------------
@@ -238,6 +246,41 @@ TEST_F(NotificationIdGeneratorTest, NonPersistentRenderProcessIdAmbiguity) {
       generator_.GenerateForNonPersistentNotification(
           origin_, "" /* tag */, 337 /* non_persistent_notification_id */,
           51 /* render_process_id */));
+}
+
+TEST_F(NotificationIdGeneratorTest, GenerateForNonPersistent_IsDeterministic) {
+  EXPECT_EQ(generator_.GenerateForNonPersistentMojoNotification(
+                origin_, "example-token"),
+            generator_.GenerateForNonPersistentMojoNotification(
+                origin_, "example-token"));
+}
+
+TEST_F(NotificationIdGeneratorTest, GenerateForNonPersistent_DifferentOrigins) {
+  GURL different_origin("https://example2.com");
+
+  EXPECT_NE(generator_.GenerateForNonPersistentMojoNotification(
+                origin_, "example-token"),
+            generator_.GenerateForNonPersistentMojoNotification(
+                different_origin, "example-token"));
+}
+
+TEST_F(NotificationIdGeneratorTest, GenerateForNonPersistent_DifferentTokens) {
+  EXPECT_NE(generator_.GenerateForNonPersistentMojoNotification(
+                origin_, "example-token"),
+            generator_.GenerateForNonPersistentMojoNotification(origin_,
+                                                                "other-token"));
+}
+
+// Use port numbers and a token which, when concatenated, could end up being
+// equal to each other if origins stop ending with slashes.
+TEST_F(NotificationIdGeneratorTest,
+       GenerateForNonPersistent_OriginPortAmbiguity) {
+  GURL origin_805("https://example.com:805");
+  GURL origin_8051("https://example.com:8051");
+
+  EXPECT_NE(
+      generator_.GenerateForNonPersistentMojoNotification(origin_805, "17"),
+      generator_.GenerateForNonPersistentMojoNotification(origin_8051, "7"));
 }
 
 }  // namespace

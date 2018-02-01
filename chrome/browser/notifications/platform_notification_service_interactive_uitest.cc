@@ -996,6 +996,20 @@ class PlatformNotificationServiceMojoEnabledBrowserTest
 };
 
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
+                       DisplayAndCloseNonPersistentNotification) {
+  ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
+
+  std::string script_result;
+  ASSERT_TRUE(RunScript("DisplayAndCloseNonPersistentNotification('')",
+                        &script_result));
+  EXPECT_EQ("ok", script_result);
+
+  std::vector<message_center::Notification> notifications =
+      GetDisplayedNotifications(false /* is_persistent */);
+  EXPECT_EQ(0u, notifications.size());
+}
+
+IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
                        NonPersistentWebNotificationOptionsReflection) {
   ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
 
