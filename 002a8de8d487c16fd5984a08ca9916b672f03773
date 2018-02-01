@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "21ff1e69_aea4194c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T23:23:21Z",
+      "side": 1,
+      "message": "Are you ok with me investigating that separately?",
+      "parentUuid": "5287e8e4_a1bee5c9",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d257f2a_6db50147",
         "filename": "base/deferred_sequenced_task_runner.h",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "writtenOn": "2018-02-01T23:11:47Z",
       "side": 1,
       "message": "Is this TODO still valid, given the ctor below no longer takes a bool?",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194c0e9f_3befaf6d",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T23:23:21Z",
+      "side": 1,
+      "message": "You are right, it no longer makes sense. I\u0027ve removed the TODO.",
+      "parentUuid": "9d257f2a_6db50147",
       "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -95,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "182c1cf9_0a2c416d",
+        "filename": "base/deferred_sequenced_task_runner_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T23:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "432ff6a9_3e321e9c",
+      "range": {
+        "startLine": 180,
+        "startChar": 45,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8da9f1_194bac57",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 2
@@ -106,6 +166,30 @@
       "writtenOn": "2018-02-01T23:11:47Z",
       "side": 1,
       "message": "nit: keep the double-colon together.",
+      "range": {
+        "startLine": 719,
+        "startChar": 78,
+        "endLine": 719,
+        "endChar": 79
+      },
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1165d33_3cb34360",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T23:23:21Z",
+      "side": 1,
+      "message": "git cl format actually did this. I would prefer to leave how \u0027git cl format\u0027 does it so I don\u0027t have to think about it.",
+      "parentUuid": "db8da9f1_194bac57",
       "range": {
         "startLine": 719,
         "startChar": 78,
@@ -132,6 +216,24 @@
       "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c794c984_2346d92f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T23:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a2427f8_bee550b9",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
