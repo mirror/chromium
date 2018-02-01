@@ -61,7 +61,7 @@ void UiPixelTest::MakeUi(const UiInitialState& ui_initial_state,
                              ui_initial_state);
   ui_->OnGlInitialized(content_texture_,
                        vr::UiElementRenderer::kTextureLocationLocal,
-                       content_overlay_texture_,
+                       content_overlay_texture_, 0,
                        vr::UiElementRenderer::kTextureLocationLocal, true);
   ui_->GetBrowserUiWeakPtr()->SetToolbarState(toolbar_state);
 }

@@ -103,6 +103,11 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   // have to worry about this, and if it were told to hide the splash screen
   // like other WebVR phases (e.g. OnWebVrFrameAvailable below).
   bool CanSendWebVrVSync();
+  void SetAlertDialogEnabled(bool enabled,
+                             ContentInputDelegate* delegate,
+                             int width,
+                             int height) override;
+  void SetAlertDialogSize(int width, int height) override;
   bool ShouldRenderWebVr();
 
   void OnGlInitialized(
@@ -110,6 +115,7 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
       UiElementRenderer::TextureLocation content_location,
       unsigned int content_overlay_texture_id,
       UiElementRenderer::TextureLocation content_overlay_location,
+      unsigned int ui_texture_id,
       bool use_ganesh);
 
   void OnAppButtonClicked();
