@@ -636,18 +636,14 @@ void ExtensionPrefs::SetExtensionPrefPermissionSet(
                       CreatePermissionList(new_value.manifest_permissions()));
 
   // Set the explicit host permissions.
-  if (!new_value.explicit_hosts().is_empty()) {
     SetExtensionPrefURLPatternSet(extension_id,
                                   JoinPrefs(pref_key, kPrefExplicitHosts),
                                   new_value.explicit_hosts());
-  }
 
   // Set the scriptable host permissions.
-  if (!new_value.scriptable_hosts().is_empty()) {
     SetExtensionPrefURLPatternSet(extension_id,
                                   JoinPrefs(pref_key, kPrefScriptableHosts),
                                   new_value.scriptable_hosts());
-  }
 }
 
 int ExtensionPrefs::IncrementAcknowledgePromptCount(
