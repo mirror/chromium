@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "d8bca6d9_a23b750a",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-01T10:59:39Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "3ad4e878_c01afbf7",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51e09a6_676d4071",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs.html",
         "patchSetId": 3
@@ -118,6 +136,24 @@
       "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c0ac2b_f6a8363d",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-01T10:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c51e09a6_676d4071",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "69fcb07d_6d45a711",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-01T10:59:39Z",
+      "side": 1,
+      "message": "rtp_senders_ is a map, so find() is O(1). This is O(web_rtp_senders.size()).\n\nAnd if you add a stream with two tracks, (up to) two senders will be created - we have to loop through all lower layer senders to find out which ones don\u0027t have a corresponding blink sender.",
+      "parentUuid": "257cd0bb_dcef398f",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8caf4845_9aa720f7",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 3
@@ -155,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "8b46531e_5144932a",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-01T10:59:39Z",
+      "side": 1,
+      "message": "All APIs are responsible for keeping the rtp_senders_ up-to-date, including addTransceiver. The only time the rtp_senders_ is not up-to-date is between lower layer AddStream() and friends and calling this method. When this method is used properly, any senders created must belong to the stream, so the DCHECK is appropriate.\n\nAdded DCHECK(stream-\u003egetTracks().Contains(track)) too.\n\nThis will go away in the follow-up CL that use AddTrack which returns the new sender.",
+      "parentUuid": "8caf4845_9aa720f7",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b0a0e4_9c5456f1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 3
@@ -169,6 +241,24 @@
       "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdefa52_0efa08bc",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-01T10:59:39Z",
+      "side": 1,
+      "message": "The expected number of senders are so small that the square-runtime would most likely be faster, but I improved this by using std::sets just in case and for readability. I don\u0027t dare to remove-while-iterating because I see no way of getting an iterator valid-after-removal when using HeapHashMap and erase, so I still use a temporary set of unused sender IDs. Comment added.\n\nIn any case, this will be removed in the follow-up CL.",
+      "parentUuid": "38b0a0e4_9c5456f1",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
