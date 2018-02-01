@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "762974fb_4cc0eb1d",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-01T16:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1551d4da_7bdaa907",
+      "range": {
+        "startLine": 372,
+        "startChar": 38,
+        "endLine": 372,
+        "endChar": 39
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eef3f0f5_53cce5f1",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17eb0cf_c997b067",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-01T16:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef3f0f5_53cce5f1",
+      "range": {
+        "startLine": 380,
+        "startChar": 51,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "44f5a61e_b83cb7f7",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-01T16:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "412152c3_d39b1a52",
+      "range": {
+        "startLine": 392,
+        "startChar": 12,
+        "endLine": 392,
+        "endChar": 14
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28abab81_17017571",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9ad032_b3a0a5b4",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-01T16:40:11Z",
+      "side": 1,
+      "message": "BufferRegion is a struct without constructor.  To get emplace_back() to work as suggested we\u0027d need to add a constructor (rather not do that for a single case).  A modification that gets emplace_back() to work is to be explicit and use:\n\n  BufferRegion{new_image.size(), 0}\n\nDoing that instead.",
+      "parentUuid": "28abab81_17017571",
+      "range": {
+        "startLine": 440,
+        "startChar": 24,
+        "endLine": 440,
+        "endChar": 33
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
