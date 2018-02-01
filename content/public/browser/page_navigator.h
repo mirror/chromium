@@ -72,7 +72,12 @@ struct CONTENT_EXPORT OpenURLParams {
   // is terminated by \r\n.  May be empty if no extra headers are needed.
   std::string extra_headers;
 
-  // The browser-global FrameTreeNode ID or -1 to indicate the main frame.
+  // Should only be used to indicate that the URL should be opened in the main
+  // frame. It is not the browser-global FrameTreeNode ID for main frames.
+  enum { kMainFrameTreeNodeId = -1 };
+
+  // The browser-global FrameTreeNode ID or kMainFrameTreeNodeId to
+  // indicate the main frame.
   int frame_tree_node_id;
 
   // Routing id of the source RenderFrameHost.

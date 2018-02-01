@@ -17,6 +17,7 @@
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
+#include "content/public/browser/page_navigator.h"
 #include "content/public/browser/reload_type.h"
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/session_storage_namespace.h"
@@ -115,7 +116,12 @@ class NavigationController {
     // Note the default value in constructor below.
     ui::PageTransition transition_type;
 
-    // The FrameTreeNode ID for the frame to navigate, or -1 for the main frame.
+    // Should only be used to indicate that the URL should be opened in the main
+    // frame. It is not the browser-global FrameTreeNode ID for main frames.
+    enum { kMainFrameTreeNodeId = OpenURLParams::kMainFrameTreeNodeId };
+
+    // The browser-global FrameTreeNode ID for the frame to navigate, or
+    // kMainFrameTreeNodeId for the main frame.
     int frame_tree_node_id;
 
     // Referrer for this load. Empty if none.
