@@ -42,7 +42,7 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
     DisplayProvider* display_provider)
     : display_provider_(display_provider),
       surface_manager_(number_of_frames_to_activation_deadline),
-      hit_test_manager_(this),
+      hit_test_manager_(surface_manager()),
       binding_(this) {
   surface_manager_.AddObserver(&hit_test_manager_);
   surface_manager_.AddObserver(this);
@@ -433,11 +433,6 @@ void FrameSinkManagerImpl::SubmitHitTestRegionList(
     mojom::HitTestRegionListPtr hit_test_region_list) {
   hit_test_manager_.SubmitHitTestRegionList(surface_id, frame_index,
                                             std::move(hit_test_region_list));
-}
-
-uint64_t FrameSinkManagerImpl::GetActiveFrameIndex(
-    const SurfaceId& surface_id) {
-  return surface_manager_.GetSurfaceForId(surface_id)->GetActiveFrameIndex();
 }
 
 void FrameSinkManagerImpl::OnFrameTokenChanged(const FrameSinkId& frame_sink_id,

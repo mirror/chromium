@@ -11,8 +11,10 @@
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
+#include "components/viz/test/compositor_frame_helpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace viz {
@@ -31,7 +33,7 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t parent_id) {
 
 class TestHitTestAggregator final : public HitTestAggregator {
  public:
-  TestHitTestAggregator(HitTestManager* manager,
+  TestHitTestAggregator(const HitTestManager* manager,
                         HitTestAggregatorDelegate* delegate)
       : HitTestAggregator(manager, delegate) {}
   ~TestHitTestAggregator() = default;
@@ -65,33 +67,11 @@ class TestFrameSinkManagerImpl;
 
 }  // namespace
 
-class TestHitTestManager : public HitTestManager {
- public:
-  explicit TestHitTestManager(TestFrameSinkManagerImpl* frame_sink_manager);
-  ~TestHitTestManager() override = default;
-
-  void CallOnSurfaceActivated(const SurfaceId surface_id) {
-    OnSurfaceActivated(surface_id);
-  }
-  void CallOnSurfaceDiscarded(const SurfaceId surface_id) {
-    OnSurfaceDiscarded(surface_id);
-  }
-  void Reset() { hit_test_region_lists_.clear(); }
-
-  int GetRegionCount() {
-    int count = 0;
-    for (auto& i : hit_test_region_lists_) {
-      count += i.second.size();
-    }
-    return count;
-  }
-};
-
 namespace {
 
 class TestGpuRootCompositorFrameSink : public HitTestAggregatorDelegate {
  public:
-  TestGpuRootCompositorFrameSink(TestHitTestManager* hit_test_manager,
+  TestGpuRootCompositorFrameSink(const HitTestManager* hit_test_manager,
                                  TestFrameSinkManagerImpl* frame_sink_manager,
                                  const FrameSinkId& frame_sink_id)
       : frame_sink_manager_(frame_sink_manager),
@@ -190,8 +170,9 @@ class TestFrameSinkManagerImpl : public FrameSinkManagerImpl {
     }
   }
 
-  void CreateRootCompositorFrameSinkLocal(TestHitTestManager* hit_test_manager,
-                                          const FrameSinkId& frame_sink_id) {
+  void CreateRootCompositorFrameSinkLocal(
+      const HitTestManager* hit_test_manager,
+      const FrameSinkId& frame_sink_id) {
     compositor_frame_sinks_[frame_sink_id] =
         std::make_unique<TestGpuRootCompositorFrameSink>(hit_test_manager, this,
                                                          frame_sink_id);
@@ -200,10 +181,6 @@ class TestFrameSinkManagerImpl : public FrameSinkManagerImpl {
   const std::map<FrameSinkId, std::unique_ptr<TestGpuRootCompositorFrameSink>>&
   compositor_frame_sinks() {
     return compositor_frame_sinks_;
-  }
-
-  uint64_t GetActiveFrameIndex(const SurfaceId& surface_id) override {
-    return 0;
   }
 
  private:
@@ -232,10 +209,6 @@ void TestGpuRootCompositorFrameSink::SwitchActiveAggregatedHitTestRegionList(
 
 }  // namespace
 
-TestHitTestManager::TestHitTestManager(
-    TestFrameSinkManagerImpl* frame_sink_manager)
-    : HitTestManager(frame_sink_manager) {}
-
 class HitTestAggregatorTest : public testing::Test {
  public:
   HitTestAggregatorTest() = default;
@@ -245,16 +218,22 @@ class HitTestAggregatorTest : public testing::Test {
   void SetUp() override {
     frame_sink_manager_ = std::make_unique<TestFrameSinkManagerImpl>();
     host_frame_sink_manager_ = std::make_unique<TestHostFrameSinkManager>();
-    hit_test_manager_ =
-        std::make_unique<TestHitTestManager>(frame_sink_manager_.get());
     frame_sink_manager_->SetLocalClient(host_frame_sink_manager_.get());
-    frame_sink_manager_->CreateRootCompositorFrameSinkLocal(
-        hit_test_manager_.get(), kDisplayFrameSink);
+    frame_sink_manager_->CreateRootCompositorFrameSinkLocal(hit_test_manager(),
+                                                            kDisplayFrameSink);
+    support_ = std::make_unique<CompositorFrameSinkSupport>(
+        nullptr /* client */, frame_sink_manager_.get(), kDisplayFrameSink,
+        true /* is_root */, false /* needs_sync_points */);
   }
   void TearDown() override {
+    GarbageCollectSurfaces();
+    support_.reset();
     frame_sink_manager_.reset();
     host_frame_sink_manager_.reset();
-    hit_test_manager_.reset();
+  }
+
+  void GarbageCollectSurfaces() {
+    frame_sink_manager_->surface_manager()->GarbageCollectSurfaces();
   }
 
   // Creates a hit test data element with 8 children recursively to
@@ -284,8 +263,11 @@ class HitTestAggregatorTest : public testing::Test {
       hit_test_region_list->regions.push_back(std::move(hit_test_region));
     }
 
-    hit_test_manager()->SubmitHitTestRegionList(
-        surface_id, 0, std::move(hit_test_region_list));
+    support()->SubmitCompositorFrame(surface_id.local_surface_id(),
+                                     MakeDefaultCompositorFrame(),
+                                     std::move(hit_test_region_list));
+    support()->EvictCurrentSurface();
+
     return id;
   }
 
@@ -305,12 +287,16 @@ class HitTestAggregatorTest : public testing::Test {
     return host_frame_sink_manager_->buffer_frame_sink_id();
   }
 
-  TestHitTestManager* hit_test_manager() { return hit_test_manager_.get(); }
+  const HitTestManager* hit_test_manager() {
+    return frame_sink_manager_->hit_test_manager();
+  }
+
+  CompositorFrameSinkSupport* support() { return support_.get(); }
 
  private:
-  std::unique_ptr<TestHitTestManager> hit_test_manager_;
   std::unique_ptr<TestFrameSinkManagerImpl> frame_sink_manager_;
   std::unique_ptr<TestHostFrameSinkManager> host_frame_sink_manager_;
+  std::unique_ptr<CompositorFrameSinkSupport> support_;
 
   DISALLOW_COPY_AND_ASSIGN(HitTestAggregatorTest);
 };
@@ -336,8 +322,10 @@ TEST_F(HitTestAggregatorTest, OneSurface) {
   hit_test_region_list->flags = mojom::kHitTestMine;
   hit_test_region_list->bounds.SetRect(0, 0, 1024, 768);
 
-  hit_test_manager()->SubmitHitTestRegionList(display_surface_id, 0,
-                                              std::move(hit_test_region_list));
+  support()->SubmitCompositorFrame(display_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(hit_test_region_list));
+  support()->EvictCurrentSurface();
   aggregator->Aggregate(display_surface_id);
   aggregator->SwapHandles();
 
@@ -390,10 +378,10 @@ TEST_F(HitTestAggregatorTest, OneEmbedderTwoRegions) {
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_r1));
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_r2));
 
-  // Submit in unexpected order.
-
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -465,12 +453,18 @@ TEST_F(HitTestAggregatorTest, OneEmbedderTwoChildren) {
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      c1_surface_id, 0, std::move(c1_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      c2_surface_id, 0, std::move(c2_hit_test_region_list));
+  support()->SubmitCompositorFrame(c1_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c1_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(c2_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c2_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -544,10 +538,14 @@ TEST_F(HitTestAggregatorTest, OccludedChildFrame) {
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      c_surface_id, 0, std::move(c_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
+  support()->SubmitCompositorFrame(c_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -622,10 +620,14 @@ TEST_F(HitTestAggregatorTest, ForegroundChildFrame) {
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      c_surface_id, 0, std::move(c_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
+  support()->SubmitCompositorFrame(c_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -719,14 +721,22 @@ TEST_F(HitTestAggregatorTest, ClippedChildWithTabAndTransparentBackground) {
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      c_surface_id, 0, std::move(c_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      a_surface_id, 0, std::move(a_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      b_surface_id, 0, std::move(b_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
+  support()->SubmitCompositorFrame(c_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(a_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(a_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(b_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(b_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -832,14 +842,22 @@ TEST_F(HitTestAggregatorTest, ThreeChildrenDeep) {
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      c1_surface_id, 0, std::move(c1_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      c3_surface_id, 0, std::move(c3_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      c2_surface_id, 0, std::move(c2_hit_test_region_list));
+  support()->SubmitCompositorFrame(c1_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c1_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(c3_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c3_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(c2_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c2_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -919,8 +937,10 @@ TEST_F(HitTestAggregatorTest, MissingChildFrame) {
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
+  support()->EvictCurrentSurface();
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
@@ -1008,7 +1028,6 @@ TEST_F(HitTestAggregatorTest, ExceedLimits) {
 
 TEST_F(HitTestAggregatorTest, DiscardedSurfaces) {
   TestHitTestAggregator* aggregator = GetAggregator(kDisplayFrameSink);
-  EXPECT_EQ(hit_test_manager()->GetRegionCount(), 0);
 
   SurfaceId e_surface_id = MakeSurfaceId(kDisplayFrameSink, 1);
   SurfaceId c_surface_id = MakeSurfaceId(kDisplayFrameSink, 2);
@@ -1036,27 +1055,36 @@ TEST_F(HitTestAggregatorTest, DiscardedSurfaces) {
   c_hit_test_region_list->flags = mojom::kHitTestMine;
   c_hit_test_region_list->bounds.SetRect(0, 0, 200, 500);
 
-  EXPECT_EQ(hit_test_manager()->GetRegionCount(), 0);
+  EXPECT_FALSE(hit_test_manager()->GetActiveHitTestRegionList(e_surface_id));
+  EXPECT_FALSE(hit_test_manager()->GetActiveHitTestRegionList(c_surface_id));
 
   // Submit in unexpected order.
 
-  hit_test_manager()->SubmitHitTestRegionList(
-      c_surface_id, 0, std::move(c_hit_test_region_list));
-  hit_test_manager()->SubmitHitTestRegionList(
-      e_surface_id, 0, std::move(e_hit_test_region_list));
+  support()->SubmitCompositorFrame(c_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(c_hit_test_region_list));
+  support()->EvictCurrentSurface();
+  support()->SubmitCompositorFrame(e_surface_id.local_surface_id(),
+                                   MakeDefaultCompositorFrame(),
+                                   std::move(e_hit_test_region_list));
 
   aggregator->Aggregate(e_surface_id);
   aggregator->SwapHandles();
 
-  EXPECT_EQ(hit_test_manager()->GetRegionCount(), 2);
+  EXPECT_TRUE(hit_test_manager()->GetActiveHitTestRegionList(e_surface_id));
+  EXPECT_TRUE(hit_test_manager()->GetActiveHitTestRegionList(c_surface_id));
 
-  // Discard Surface and ensure active count goes down.
+  // Discard Surface and ensure active count goes down. At this point, only
+  // surface c has been evicted.
+  GarbageCollectSurfaces();
+  EXPECT_TRUE(hit_test_manager()->GetActiveHitTestRegionList(e_surface_id));
+  EXPECT_FALSE(hit_test_manager()->GetActiveHitTestRegionList(c_surface_id));
 
-  hit_test_manager()->CallOnSurfaceDiscarded(c_surface_id);
-  EXPECT_EQ(hit_test_manager()->GetRegionCount(), 1);
-
-  hit_test_manager()->CallOnSurfaceDiscarded(e_surface_id);
-  EXPECT_EQ(hit_test_manager()->GetRegionCount(), 0);
+  // Evict current surface e and garbage collect surfaces.
+  support()->EvictCurrentSurface();
+  GarbageCollectSurfaces();
+  EXPECT_FALSE(hit_test_manager()->GetActiveHitTestRegionList(e_surface_id));
+  EXPECT_FALSE(hit_test_manager()->GetActiveHitTestRegionList(c_surface_id));
 }
 
 }  // namespace viz
