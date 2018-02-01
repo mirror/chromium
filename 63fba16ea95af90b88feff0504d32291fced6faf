@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb89775_4d00a15b",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:45:38Z",
+      "side": 1,
+      "message": "does it work if we just remove this file from all mac builds?\n\nthen the views_mode_controller::IsViewsBrowserCocoa() check moves into PermissionPrompt::Create() in permission_prompt_impl_views_mac.mm  i.e. something like\n\nstd::unique_ptr\u003cPermissionPrompt\u003e PermissionPrompt::Create(\n    content::WebContents* web_contents,\n    Delegate* delegate) {\n#if BUILDFLAG(MAC_VIEWS_BROWSER)\n  if (!views_mode_controller::IsViewsBrowserCocoa())) {\n    return base::WrapUnique(new PermissionPromptImpl(\n        chrome::FindBrowserWithWebContents(web_contents), delegate));\n  }\n#endif\n  /* create for cocoa window */\n}\n\n\nI\u0027m pretty sure this will work... then we are just modifying one file and don\u0027t have to \"undo\" changes to permission_prompt_impl_views.cc later on (just move it in .gn)",
+      "revId": "63fba16ea95af90b88feff0504d32291fced6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
