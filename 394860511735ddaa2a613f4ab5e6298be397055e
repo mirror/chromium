@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d557cf4f_f756bad7",
+        "filename": "chrome/android/java/res/layout/location_bar_base.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-01T18:58:21Z",
+      "side": 1,
+      "message": "tabs? remove",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 57,
+        "endChar": 4
+      },
+      "revId": "394860511735ddaa2a613f4ab5e6298be397055e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9312f3f2_b86f4d55",
+        "filename": "chrome/android/java/res/layout/location_bar_base.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-01T18:58:21Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 7
+      },
+      "revId": "394860511735ddaa2a613f4ab5e6298be397055e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a66554_b144b813",
+        "filename": "chrome/android/java/res/layout/url_action_container.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-01T18:58:21Z",
+      "side": 1,
+      "message": "welcome to 2018 ;)",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "394860511735ddaa2a613f4ab5e6298be397055e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76a08c6_e9a0c349",
+        "filename": "chrome/android/java/res/layout/url_action_container.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-01T18:58:21Z",
+      "side": 1,
+      "message": "extra whitespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 2
+      },
+      "revId": "394860511735ddaa2a613f4ab5e6298be397055e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
