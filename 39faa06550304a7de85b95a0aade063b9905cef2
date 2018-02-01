@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "397f8979_c7dab945",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T01:49:15Z",
+      "side": 1,
+      "message": "IMO this should be removed because there is already test coverage for null clientId in fetch-event.https.html, so the explicit check in client-navigate-worker.js is not needed.",
+      "revId": "39faa06550304a7de85b95a0aade063b9905cef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4554dec_a75b7b3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T01:49:15Z",
+      "side": 1,
+      "message": "Also we could link to the github discussion here too",
+      "revId": "39faa06550304a7de85b95a0aade063b9905cef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
