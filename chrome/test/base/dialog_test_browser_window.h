@@ -27,6 +27,8 @@ class DialogTestBrowserWindow : public TestBrowserWindow,
   // BrowserWindow overrides
   web_modal::WebContentsModalDialogHost* GetWebContentsModalDialogHost()
       override;
+  void AddObserver(BrowserWindowObserver* observer) override;
+  void RemoveObserver(BrowserWindowObserver* observer) override;
 
   // web_modal::WebContentsModalDialogHost overrides
   gfx::NativeView GetHostView() const override;
