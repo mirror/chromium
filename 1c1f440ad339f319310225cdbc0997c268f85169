@@ -22,6 +22,30 @@
       "revId": "1c1f440ad339f319310225cdbc0997c268f85169",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65daacce_2974bcb7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8639,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-02-01T00:14:48Z",
+      "side": 1,
+      "message": "done, but this will likely be called multiple times per client, it won\u0027t just be 1 or 0 in the bucket, it\u0027ll be \u003cnumber\u003e in the \u00271\u0027 bucket.",
+      "parentUuid": "15529938_814c52c5",
+      "range": {
+        "startLine": 8639,
+        "startChar": 57,
+        "endLine": 8639,
+        "endChar": 58
+      },
+      "revId": "1c1f440ad339f319310225cdbc0997c268f85169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
