@@ -34,6 +34,24 @@
       "revId": "b4414979c410d190183c3beb05952e24844e8baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fbb246_ca0f507f",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-01T23:30:14Z",
+      "side": 1,
+      "message": "Hi,\n\nBecause both spellcheck and safebrowsing are chrome-level (or more accurately, embedder-level) concepts, instead of content-level concepts. Content doesn\u0027t know anything about them. So it is layer violation to register those features under \"content_browser\".\n\nI am fine with this as a short-term solution (well, I was the one who registered safebrowsing under content_browser :P). But eventually we should put them in the right service.",
+      "parentUuid": "187bb480_117351f3",
+      "revId": "b4414979c410d190183c3beb05952e24844e8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
