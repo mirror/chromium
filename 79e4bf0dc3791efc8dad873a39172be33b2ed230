@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7ff4872_a4dd8545",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T06:07:15Z",
+      "side": 1,
+      "message": "I agree this is strictly worse. However, I\u0027m pretty sure the reason for the revert is that the JS setup script method is flaky.\n\nSee https://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Fchromium.memory%2FLinux_Chromium_OS_ASan_LSan_Tests__1_%2F25937%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests%2F0%2Flogs%2FAppBannerManagerBrowserTest.ExperimentalFlowWebAppBannerReprompt%2F0 - where it throws the event not previously stashed error. The only way that happens when this test passes elsewhere is that the setup script isn\u0027t getting run before the banner pipeline hits the callStashedPrompt() triggered by the test. That means that the IPC for the first ExecuteScript (and the resulting execution) needs to happen earlier, and the best way I could come up with was this - passing the setup in the URL so that it gets run as soon as the load event is dispatched.\n\nAnother option I considered was artificially pausing the banner pipeline so that the setup could run, but that makes the test less real and doesn\u0027t solve the setup issues.",
+      "parentUuid": "e237c5d8_7e14ea5e",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "084e0ddc_95b88944",
         "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8399a280_0432378a",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T06:07:15Z",
+      "side": 1,
+      "message": ".......... clearly my grep foo is insufficient. In my defense, ./content/browser/browsing_data/clear_site_data_throttle_browsertest.cc does this exact thing too, and I looked in url/url_utils........",
+      "parentUuid": "084e0ddc_95b88944",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3758c9c_192232a1",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T06:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "990b4a74_2321f187",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9adc225_b6d9d4ab",
         "filename": "chrome/test/data/banners/main.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc68da0_bcfed642",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T06:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9adc225_b6d9d4ab",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca8c7e4_3f2ed55e",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T06:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f92ff81_402757f4",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
