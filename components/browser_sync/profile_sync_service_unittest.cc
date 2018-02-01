@@ -407,8 +407,12 @@ TEST_F(ProfileSyncServiceTest, NeedsConfirmation) {
   base::Time now = base::Time::Now();
   sync_prefs.SetLastSyncedTime(now);
   sync_prefs.SetKeepEverythingSynced(true);
+  if (switches::IsAutosyncEnabled()) {
+    ExpectDataTypeManagerCreation(1, GetDefaultConfigureCalledCallback());
+    ExpectSyncEngineCreation(1);
+  }
   service()->Initialize();
-  EXPECT_FALSE(service()->IsSyncActive());
+  EXPECT_EQ(switches::IsAutosyncEnabled(), service()->IsSyncActive());
   EXPECT_TRUE(service()->IsSyncConfirmationNeeded());
 
   // The last sync time shouldn't be cleared.
@@ -486,11 +490,12 @@ TEST_F(ProfileSyncServiceTest, EarlyRequestStop) {
 
   service()->RequestStop(ProfileSyncService::KEEP_DATA);
   EXPECT_FALSE(service()->IsSyncRequested());
+  EXPECT_FALSE(service()->IsSyncActive());
 
-  // Because sync is not requested, this should fail.
+  // Sync is not requested. Unless autosync is enabled, sync should not start.
   InitializeForNthSync();
   EXPECT_FALSE(service()->IsSyncRequested());
-  EXPECT_FALSE(service()->IsSyncActive());
+  EXPECT_EQ(switches::IsAutosyncEnabled(), service()->IsSyncActive());
 
   // Request start. This should be enough to allow init to happen.
   service()->RequestStart();
@@ -960,11 +965,14 @@ TEST_F(ProfileSyncServiceTest, LocalBackendDisabledByPolicy) {
   EXPECT_TRUE(service()->IsManaged());
   EXPECT_FALSE(service()->IsSyncActive());
 
-  prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(false));
-
+  // Note: If autosync is enabled, then setting kSyncManaged to false will
+  // immediately start up the engine. Otherwise, the RequestStart call below
+  // will trigger it.
   ExpectDataTypeManagerCreation(1, GetDefaultConfigureCalledCallback());
   ExpectSyncEngineCreation(1);
+
+  prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
+                          std::make_unique<base::Value>(false));
 
   service()->RequestStart();
   EXPECT_FALSE(service()->IsManaged());

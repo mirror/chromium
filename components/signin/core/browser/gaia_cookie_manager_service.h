@@ -190,6 +190,10 @@ class GaiaCookieManagerService : public KeyedService,
                     std::vector<gaia::ListedAccount>* signed_out_accounts,
                     const std::string& source);
 
+  bool MaybeGetCachedAccounts(
+      std::vector<gaia::ListedAccount>* accounts,
+      std::vector<gaia::ListedAccount>* signed_out_accounts) const;
+
   // Triggers a ListAccounts fetch. This is public so that callers that know
   // that a check which GAIA should be done can force it.
   void TriggerListAccounts(const std::string& source);

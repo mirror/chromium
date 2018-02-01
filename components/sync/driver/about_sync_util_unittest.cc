@@ -35,7 +35,7 @@ TEST(SyncUIUtilTestAbout, ConstructAboutInformationWithUnrecoverableErrorTest) {
   SyncServiceMock service;
 
   std::unique_ptr<base::DictionaryValue> strings(ConstructAboutInformation(
-      &service, AccountInfo(), version_info::Channel::UNKNOWN));
+      &service, std::string(), version_info::Channel::UNKNOWN));
 
   EXPECT_TRUE(strings->HasKey("unrecoverable_error_detected"));
 }

@@ -92,7 +92,10 @@ TEST_F(StartupControllerTest, NoSetupComplete) {
 
   SetCanStart(true);
   controller()->TryStart();
-  ExpectNotStarted();
+  if (switches::IsAutosyncEnabled())
+    ExpectStartDeferred();
+  else
+    ExpectNotStarted();
 }
 
 // Test that sync defers if first setup is complete.

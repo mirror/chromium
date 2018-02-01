@@ -19,6 +19,7 @@
 #include "components/sync/driver/data_type_manager_mock.h"
 #include "components/sync/driver/fake_data_type_controller.h"
 #include "components/sync/driver/sync_api_component_factory_mock.h"
+#include "components/sync/driver/sync_driver_switches.h"
 #include "components/sync/driver/sync_service_observer.h"
 #include "components/sync/engine/fake_sync_engine.h"
 #include "components/sync_preferences/pref_service_syncable.h"
@@ -185,7 +186,6 @@ TEST_F(ProfileSyncServiceStartupTest, StartFirstTime) {
   Mock::VerifyAndClearExpectations(data_type_manager);
 
   // Then start things up.
-  EXPECT_CALL(*data_type_manager, Configure(_, _)).Times(1);
   EXPECT_CALL(*data_type_manager, state())
       .WillOnce(Return(DataTypeManager::CONFIGURED))
       .WillOnce(Return(DataTypeManager::CONFIGURED));
@@ -198,13 +198,18 @@ TEST_F(ProfileSyncServiceStartupTest, StartFirstTime) {
   EXPECT_FALSE(sync_service_->IsSyncConfirmationNeeded());
 
   // Simulate successful signin as test_user.
+  if (switches::IsAutosyncEnabled())
+    EXPECT_CALL(*data_type_manager, Configure(_, _)).Times(1);
   std::string account_id = SimulateTestUserSignin(sync_service_.get());
   ON_CALL(*data_type_manager, IsNigoriEnabled()).WillByDefault(Return(true));
   // Create some tokens in the token service.
   IssueTestTokens(account_id);
 
   // Simulate the UI telling sync it has finished setting up.
+  if (switches::IsAutosyncEnabled())
+    EXPECT_CALL(*data_type_manager, Configure(_, _)).Times(1);
   sync_blocker.reset();
+  EXPECT_CALL(*data_type_manager, Configure(_, _)).Times(1);
   sync_service_->SetFirstSetupComplete();
   EXPECT_TRUE(sync_service_->IsSyncActive());
 }
@@ -432,10 +437,16 @@ TEST_F(ProfileSyncServiceStartupTest, SwitchManaged) {
   // not start automatically because IsFirstSetupComplete() will be false.
   // A new DataTypeManager should not be created.
   Mock::VerifyAndClearExpectations(data_type_manager);
-  EXPECT_CALL(*component_factory_, CreateDataTypeManager(_, _, _, _, _, _))
-      .Times(0);
+  if (switches::IsAutosyncEnabled()) {
+    SetUpSyncEngine();
+    SetUpDataTypeManager();
+  } else {
+    EXPECT_CALL(*component_factory_, CreateDataTypeManager(_, _, _, _, _, _))
+        .Times(0);
+  }
   pref_service()->ClearPref(syncer::prefs::kSyncManaged);
-  EXPECT_FALSE(sync_service_->IsEngineInitialized());
+  EXPECT_EQ(switches::IsAutosyncEnabled(),
+            sync_service_->IsEngineInitialized());
   EXPECT_FALSE(sync_service_->IsSyncActive());
 }
 

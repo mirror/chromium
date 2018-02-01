@@ -87,7 +87,7 @@ void AutofillWalletDataTypeController::StopModels() {
   // data type indicates if wallet sync data/metadata is enabled, and
   // currently_enabled_ indicates if the other prefs are enabled. All of these
   // have to be enabled to sync wallet data/metadata.
-  if (!service->CanSyncStart() ||
+  if (!service->CanSyncStart() || !service->IsFirstSetupComplete() ||
       !service->GetPreferredDataTypes().Has(type()) || !currently_enabled_) {
     autofill::PersonalDataManager* pdm = sync_client_->GetPersonalDataManager();
     if (pdm)

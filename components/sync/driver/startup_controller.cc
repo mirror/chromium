@@ -125,7 +125,8 @@ bool StartupController::TryStart() {
   // in progress, unless told to otherwise.
   if (setup_in_progress_) {
     return StartUp(STARTUP_IMMEDIATE);
-  } else if (sync_prefs_->IsFirstSetupComplete() || bypass_setup_complete_) {
+  } else if (sync_prefs_->IsFirstSetupComplete() || bypass_setup_complete_ ||
+             switches::IsAutosyncEnabled()) {
     return StartUp(received_start_request_ ? STARTUP_IMMEDIATE
                                            : STARTUP_DEFERRED);
   } else {

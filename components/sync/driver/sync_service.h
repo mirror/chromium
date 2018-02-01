@@ -112,6 +112,8 @@ class SyncService : public DataTypeEncryptionHandler, public KeyedService {
 
   ~SyncService() override {}
 
+  virtual std::string GetSyncingUsername() const = 0;
+
   // Whether sync is enabled by user or not. This does not necessarily mean
   // that sync is currently running (due to delayed startup, unrecoverable
   // errors, or shutdown). See IsSyncActive below for checking whether sync
