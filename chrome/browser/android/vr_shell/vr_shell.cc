@@ -624,9 +624,57 @@ void VrShell::LogUnsupportedModeUserMetric(JNIEnv* env,
   LogUnsupportedModeUserMetric((vr::UiUnsupportedMode)mode);
 }
 
-void VrShell::OnWebInputEdited(const vr::TextInputInfo info) {}
+void VrShell::ShowSoftInput(JNIEnv* env,
+                            const base::android::JavaParamRef<jobject>& obj) {
+  ui_->ShowSoftInput();
+}
 
-void VrShell::OnWebInputCommitted(const vr::TextInputInfo info) {}
+void VrShell::HideSoftInput(JNIEnv* env,
+                            const base::android::JavaParamRef<jobject>& obj) {
+  ui_->HideSoftInput();
+}
+
+void VrShell::UpdateWebInputSelectionIndices(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    int selection_start,
+    int selection_end) {
+  ui_->UpdateWebInputSelectionIndices(selection_start, selection_end);
+}
+
+void VrShell::UpdateWebInputCompositionIndices(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    int composition_start,
+    int composition_end) {
+  ui_->UpdateWebInputCompositionIndices(composition_start, composition_end);
+}
+
+void VrShell::UpdateWebInputText(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    jstring jtext) {
+  std::string text;
+  base::android::ConvertJavaStringToUTF8(env, jtext, &text);
+  ui_->UpdateWebInputText(base::UTF8ToUTF16(text));
+}
+
+void VrShell::OnWebInputEdited(const vr::TextInputInfo info) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_VrShellImpl_onWebInputEdited(
+      env, j_vr_shell_,
+      base::android::ConvertUTF8ToJavaString(env, base::UTF16ToUTF8(info.text)),
+      info.selection_start, info.selection_end, info.composition_start,
+      info.composition_end);
+}
+
+void VrShell::OnWebInputCommitted(const vr::TextInputInfo info) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_VrShellImpl_onWebInputCommitted(
+      env, j_vr_shell_,
+      base::android::ConvertUTF8ToJavaString(env, base::UTF16ToUTF8(info.text)),
+      info.selection_start, info.selection_end, -1, -1);
+}
 
 void VrShell::LogUnsupportedModeUserMetric(vr::UiUnsupportedMode mode) {
   UMA_HISTOGRAM_ENUMERATION("VR.Shell.EncounteredUnsupportedMode", mode,

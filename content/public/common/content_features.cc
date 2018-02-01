@@ -495,6 +495,10 @@ const base::Feature kWebXr{"WebXR", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kWebXrOrientationSensorDevice{
     "WebXROrientationSensorDevice", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Controls whether editing web input fields is enabled in VR.
+const base::Feature kVrWebInputEditing{"VrWebInputEditing",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(OS_ANDROID)
 // Controls whether an override for the WebXR presentation render path is
 // enabled. The param value specifies the requested specific render path. This

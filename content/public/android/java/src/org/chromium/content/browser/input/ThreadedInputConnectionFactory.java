@@ -11,6 +11,9 @@ import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.content_public.browser.ChromiumBaseInputConnection;
+import org.chromium.content_public.browser.ChromiumInputMethodManagerWrapper;
+import org.chromium.content_public.browser.ImeAdapter;
 
 /**
  * A factory class for {@link ThreadedInputConnection}. The class also includes triggering
@@ -30,7 +33,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     // UI message loop until View#hasWindowFocus() is aligned with what IMMS sees.
     private static final int CHECK_REGISTER_RETRY = 1;
 
-    private final InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private final ChromiumInputMethodManagerWrapper mInputMethodManagerWrapper;
     private final InputMethodUma mInputMethodUma;
     private ThreadedInputConnectionProxyView mProxyView;
     private ThreadedInputConnection mThreadedInputConnection;
@@ -65,7 +68,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
         }
     }
 
-    ThreadedInputConnectionFactory(InputMethodManagerWrapper inputMethodManagerWrapper) {
+    ThreadedInputConnectionFactory(ChromiumInputMethodManagerWrapper inputMethodManagerWrapper) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
         mInputMethodUma = createInputMethodUma();
     }
@@ -107,8 +110,8 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     }
 
     @Override
-    public ThreadedInputConnection initializeAndGet(View view, ImeAdapterImpl imeAdapter,
-            int inputType, int inputFlags, int inputMode, int selectionStart, int selectionEnd,
+    public ThreadedInputConnection initializeAndGet(View view, ImeAdapter imeAdapter, int inputType,
+            int inputFlags, int inputMode, int selectionStart, int selectionEnd,
             EditorInfo outAttrs) {
         ImeUtils.checkOnUiThread();
 
