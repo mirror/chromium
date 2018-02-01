@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9020a52_0b57ad46",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-02-01T00:04:25Z",
+      "side": 1,
+      "message": "Do you mind fixing the typo in |frame_resources| and change |done| to |frame_ready_cb| while you\u0027re touching this?",
+      "revId": "62379ce95301fba1a5c7c2e85bbe242edd014d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c72ba3_1470f7d8",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-02-01T00:04:25Z",
+      "side": 1,
+      "message": "If this can be *const, it can probably be *const in the constructor parameter as well.\nAdditionally, this can probably be \"const GVAF* const\"",
+      "revId": "62379ce95301fba1a5c7c2e85bbe242edd014d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
