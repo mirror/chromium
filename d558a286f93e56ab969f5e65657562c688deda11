@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55e35dd7_6031284e",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T23:24:11Z",
+      "side": 1,
+      "message": "nit: I liked \"directly to the ShelfController.\"",
+      "revId": "d558a286f93e56ab969f5e65657562c688deda11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

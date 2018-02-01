@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "004308e1_5ab229fc",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T23:24:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a02b96a2_6a3399ca",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b50ad721_4be9f1b9",
         "filename": "chrome/browser/ui/test/test_app_window_icon_observer.cc",
         "patchSetId": 3
