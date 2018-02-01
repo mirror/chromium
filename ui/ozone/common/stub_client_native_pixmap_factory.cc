@@ -34,6 +34,7 @@ class StubClientNativePixmapFactory : public gfx::ClientNativePixmapFactory {
 }  // namespace
 
 gfx::ClientNativePixmapFactory* CreateStubClientNativePixmapFactory() {
+  LOG(ERROR) << "JAMES CreateStubClientNativePixmapFactory";
   return new StubClientNativePixmapFactory;
 }
 

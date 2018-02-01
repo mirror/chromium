@@ -23,6 +23,7 @@
 #include "ui/aura/window_port_for_shutdown.h"
 #include "ui/events/event_target_iterator.h"
 #include "ui/events/platform/platform_event_source.h"
+#include "ui/gfx/client_native_pixmap_factory.h"
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
@@ -67,6 +68,7 @@ Env::~Env() {
 
 // static
 std::unique_ptr<Env> Env::CreateInstance(Mode mode) {
+  LOG(ERROR) << "JAMES CreateInstance " << int(mode);
   DCHECK(!lazy_tls_ptr.Pointer()->Get());
   std::unique_ptr<Env> env(new Env(mode));
   env->Init();
@@ -164,9 +166,9 @@ Env::Env(Mode mode)
       is_touch_down_(false),
       get_last_mouse_location_from_mus_(mode_ == Mode::MUS),
       input_state_lookup_(InputStateLookup::Create()),
-#if defined(USE_OZONE)
-      native_pixmap_factory_(ui::CreateClientNativePixmapFactoryOzone()),
-#endif
+// #if defined(USE_OZONE)
+//       native_pixmap_factory_(ui::CreateClientNativePixmapFactoryOzone()),
+// #endif
       context_factory_(nullptr),
       context_factory_private_(nullptr) {
   DCHECK(lazy_tls_ptr.Pointer()->Get() == NULL);
@@ -174,13 +176,18 @@ Env::Env(Mode mode)
 }
 
 void Env::Init() {
+#if defined(USE_OZONE)
+  ui::CreateClientNativePixmapFactoryOzone();
+  DCHECK(gfx::ClientNativePixmapFactory::GetInstance());
+#endif
   if (mode_ == Mode::MUS) {
     EnableMusOSExchangeDataProvider();
     EnableMusOverrideInputInjector();
-#if defined(USE_OZONE)
-    // Required by all Aura-using clients of services/ui
-    gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
-#endif
+// #if defined(USE_OZONE)
+//     LOG(ERROR) << "JAMES made for mus";
+//     // Required by all Aura-using clients of services/ui
+//     gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
+// #endif
     return;
   }
 
@@ -197,7 +204,8 @@ void Env::Init() {
   params.using_mojo = command_line->HasSwitch(switches::kEnableDrmMojo);
 
   ui::OzonePlatform::InitializeForUI(params);
-  gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
+  //   LOG(ERROR) << "JAMES made for non-mus";
+  // gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
 #endif
   if (!ui::PlatformEventSource::GetInstance())
     event_source_ = ui::PlatformEventSource::CreateDefault();

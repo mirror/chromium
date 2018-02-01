@@ -4,6 +4,8 @@
 
 #include "ui/gfx/client_native_pixmap_factory.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace gfx {
 
 namespace {
@@ -19,6 +21,7 @@ ClientNativePixmapFactory* ClientNativePixmapFactory::GetInstance() {
 
 // static
 void ClientNativePixmapFactory::ResetInstance() {
+  LOG(ERROR) << "JAMES ResetInstance " << g_instance;
   g_instance = nullptr;
 }
 
@@ -27,6 +30,8 @@ void ClientNativePixmapFactory::SetInstance(
     ClientNativePixmapFactory* instance) {
   DCHECK(!g_instance);
   DCHECK(instance);
+  LOG(ERROR) << "JAMES SetInstance " << instance;
+  // base::debug::StackTrace().Print();
   g_instance = instance;
 }
 
