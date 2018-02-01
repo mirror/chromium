@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "c6b5c5d3_4db0eeff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "Please update the return comment.",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffebd46_ce75cb9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "Please add comment that the offline page could be either trusted or untrusted.\n\nPlease go over all places that call OfflinePageUtils.isOfflinePage to find out if they need to be replaced by isShowingTrustedOfflinePage.",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab107e2_437a452d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "This function will return false if an untrusted offline page is shown. So better update the comment to: True if a trusted offline page is shown.",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d071e434_6e48c159",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "nit: group this declaration with isOfflinePage",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e011bb1_9fc6cf29",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "Please add the checks for null tab and WebContents as what we did for isOfflinePage.",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54a68c1_5f4caaa5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "No need to call isOfflinePage(tab).",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2d4fe56_626fe5f4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 1
@@ -76,6 +178,23 @@
         "endLine": 1977,
         "endChar": 199
       },
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059f0966_94fa5531",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-01T22:04:40Z",
+      "side": 1,
+      "message": "Normally we don\u0027t try to refer to OfflinePageTabHelper directly. Please expose a method IsShowingTrustedOfflinePage in OfflinePageUtils.",
       "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
