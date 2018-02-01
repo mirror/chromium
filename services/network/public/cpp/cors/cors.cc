@@ -4,6 +4,11 @@
 
 #include "services/network/public/cpp/cors/cors.h"
 
+#include <algorithm>
+#include <vector>
+
+#include "base/feature_list.h"
+#include "services/network/public/cpp/features.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 #include "url/url_util.h"
