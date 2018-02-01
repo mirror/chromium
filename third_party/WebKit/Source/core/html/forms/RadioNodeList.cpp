@@ -44,8 +44,9 @@ RadioNodeList::RadioNodeList(ContainerNode& root_node,
     : LiveNodeList(root_node,
                    type,
                    kInvalidateForFormControls,
-                   IsHTMLFormElement(root_node) ? NodeListRootType::kTreeScope
-                                                : NodeListRootType::kNode),
+                   IsHTMLFormElement(root_node)
+                       ? NodeListItemsRelationWithOwner::kAny
+                       : NodeListItemsRelationWithOwner::kDescendants),
       name_(name) {}
 
 RadioNodeList::~RadioNodeList() = default;

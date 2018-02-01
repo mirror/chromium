@@ -82,8 +82,9 @@ static bool ShouldTypeOnlyIncludeDirectChildren(CollectionType type) {
   return false;
 }
 
-static NodeListRootType RootTypeFromCollectionType(const ContainerNode& owner,
-                                                   CollectionType type) {
+static NodeListItemsRelationWithOwner ItemsRelationWithOwnerForCollectionType(
+    const ContainerNode& owner,
+    CollectionType type) {
   switch (type) {
     case kDocImages:
     case kDocApplets:
@@ -109,12 +110,12 @@ static NodeListRootType RootTypeFromCollectionType(const ContainerNode& owner,
     case kSelectedOptions:
     case kDataListOptions:
     case kMapAreas:
-      return NodeListRootType::kNode;
+      return NodeListItemsRelationWithOwner::kDescendants;
     case kFormControls:
       if (IsHTMLFieldSetElement(owner))
-        return NodeListRootType::kNode;
+        return NodeListItemsRelationWithOwner::kDescendants;
       DCHECK(IsHTMLFormElement(owner));
-      return NodeListRootType::kTreeScope;
+      return NodeListItemsRelationWithOwner::kAny;
     case kNameNodeListType:
     case kRadioNodeListType:
     case kRadioImgNodeListType:
@@ -122,7 +123,7 @@ static NodeListRootType RootTypeFromCollectionType(const ContainerNode& owner,
       break;
   }
   NOTREACHED();
-  return NodeListRootType::kNode;
+  return NodeListItemsRelationWithOwner::kDescendants;
 }
 
 static NodeListInvalidationType InvalidationTypeExcludingIdAndNameAttributes(
@@ -176,10 +177,11 @@ static NodeListInvalidationType InvalidationTypeExcludingIdAndNameAttributes(
 HTMLCollection::HTMLCollection(ContainerNode& owner_node,
                                CollectionType type,
                                ItemAfterOverrideType item_after_override_type)
-    : LiveNodeListBase(owner_node,
-                       RootTypeFromCollectionType(owner_node, type),
-                       InvalidationTypeExcludingIdAndNameAttributes(type),
-                       type),
+    : LiveNodeListBase(
+          owner_node,
+          ItemsRelationWithOwnerForCollectionType(owner_node, type),
+          InvalidationTypeExcludingIdAndNameAttributes(type),
+          type),
       overrides_item_after_(item_after_override_type == kOverridesItemAfter),
       should_only_include_direct_children_(
           ShouldTypeOnlyIncludeDirectChildren(type)) {
