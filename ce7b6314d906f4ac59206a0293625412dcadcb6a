@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c87277_4895fcbf",
+        "filename": "chrome/browser/chromeos/login/lock/views_screen_locker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-01T02:31:03Z",
+      "side": 1,
+      "message": "thanks for the detailed comment here!",
+      "revId": "ce7b6314d906f4ac59206a0293625412dcadcb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0127ecf6_913111c0",
+        "filename": "chrome/browser/chromeos/login/lock/views_screen_locker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-01T02:31:03Z",
+      "side": 1,
+      "message": "nit: s/do/to/",
+      "range": {
+        "startLine": 162,
+        "startChar": 50,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "ce7b6314d906f4ac59206a0293625412dcadcb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
