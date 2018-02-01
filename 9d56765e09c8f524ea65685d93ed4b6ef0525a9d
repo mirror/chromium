@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea044e0_7210ddeb",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T22:03:14Z",
+      "side": 1,
+      "message": "This guid is actually always empty, cuz we Close() the SharedMemory to free up the fd. So we should just use the GetSharedBitmapGUIDForTracing() here instead.",
+      "revId": "9d56765e09c8f524ea65685d93ed4b6ef0525a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
