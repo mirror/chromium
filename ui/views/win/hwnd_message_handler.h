@@ -31,12 +31,15 @@
 #include "ui/views/views_export.h"
 #include "ui/views/win/pen_event_processor.h"
 
-namespace gfx {
-class ImageSkia;
-class Insets;
+namespace base {
 namespace win {
 class DirectManipulationHelper;
 }  // namespace win
+}  // namespace base
+
+namespace gfx {
+class ImageSkia;
+class Insets;
 }  // namespace gfx
 
 namespace ui  {
@@ -737,7 +740,7 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // This class provides functionality to register the legacy window as a
   // Direct Manipulation consumer. This allows us to support smooth scroll
   // in Chrome on Windows 10.
-  std::unique_ptr<gfx::win::DirectManipulationHelper>
+  std::unique_ptr<base::win::DirectManipulationHelper>
       direct_manipulation_helper_;
 
   // The location where the user clicked on the caption. We cache this when we
