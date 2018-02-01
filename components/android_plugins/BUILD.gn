@@ -1,0 +1,51 @@
+import("//build/config/android/config.gni")
+import("//build/config/android/rules.gni")
+import("//components/android_plugins/rules.gni")
+
+_component_interface_source_files =
+    [ "java/src/org/chromium/android_plugins/PluginAPI.java" ]
+
+java_stable_api("plugin_api") {
+  sources = _component_interface_source_files
+  output = "$target_gen_dir/api.txt"
+  compare = "//components/android_plugins/api.txt"
+}
+
+android_library("plugin_api_java") {
+  deps = [
+    ":check_plugin_api",
+    "//base:base_java",
+  ]
+  proguard_configs = [ "keep_interface.flags" ]
+  java_files = _component_interface_source_files
+}
+
+# Files ending with .apk aren't copied to the device's test data folder (see
+# build/android/pylib/utils/device_dependencies.py _BLACKLIST). Renaming the
+# plugin APK allows it to be copied to the device and so made available to the
+# test.
+copy("plugin_apk_renamed") {
+  deps = [ "//components/android_plugins/example_plugin_a:example_plugin_a_apk" ]
+  sources = [ "$root_build_dir/apks/ExamplePluginA.apk" ]
+  outputs = [ "$root_build_dir/apks/example_plugin_a_apk" ]
+}
+
+android_library("android_plugins_javatests") {
+  testonly = true
+
+  java_files =
+      [ "javatests/src/org/chromium/android_plugins/LoaderTest.java" ]
+
+  deps = [
+    ":plugin_api_java",
+    "//components/android_plugins/example_plugin_a:example_plugin_a_interface_java",
+    "//base:base_java",
+    "//base:base_java_test_support",
+    "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
+  ]
+
+  data_deps = [
+    ":plugin_apk_renamed",
+  ]
+}

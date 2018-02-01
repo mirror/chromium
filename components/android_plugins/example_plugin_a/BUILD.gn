@@ -1,0 +1,9 @@
+import("//components/android_plugins/rules.gni")
+
+android_plugin("example_plugin_a") {
+  apk_name = "ExamplePluginA"
+  api_file = "example_plugin_a_api.txt"
+  java_interface_files =
+      [ "public/java/src/org/chromium/example_plugin_a/ExamplePluginAInterface.java" ]
+  java_files = [ "plugin/java/src/org/chromium/example_plugin_a/ExamplePluginA.java" ]
+}
