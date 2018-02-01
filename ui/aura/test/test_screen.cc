@@ -40,7 +40,12 @@ TestScreen* TestScreen::Create(const gfx::Size& size,
                         window_tree_client);
 }
 
-TestScreen::~TestScreen() {}
+TestScreen::~TestScreen() {
+  if (host_) {
+    host_->window()->RemoveObserver(this);
+    delete host_;
+  }
+}
 
 WindowTreeHost* TestScreen::CreateHostForPrimaryDisplay() {
   DCHECK(!host_);
@@ -148,8 +153,10 @@ void TestScreen::OnWindowBoundsChanged(Window* window,
 }
 
 void TestScreen::OnWindowDestroying(Window* window) {
-  if (host_->window() == window)
+  if (host_->window() == window) {
+    host_->window()->RemoveObserver(this);
     host_ = NULL;
+  }
 }
 
 gfx::Point TestScreen::GetCursorScreenPoint() {
