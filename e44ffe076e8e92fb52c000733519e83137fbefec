@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e35911c_727f153d",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-01T15:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "914f6fb6_2a02284d",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "249c3268_74996b7e",
         "filename": "chrome/browser/vr/elements/procedural_controller.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35b8c33_5e9825d6",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-01T15:27:45Z",
+      "side": 1,
+      "message": "I put them there so that the array is formatted in pairs. Removed as discussed offline.",
+      "parentUuid": "249c3268_74996b7e",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f314cc2d_6206db14",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-01T15:27:45Z",
+      "side": 1,
+      "message": "Removed as discussed offline.",
+      "parentUuid": "66949a72_228a72fd",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d8a1dfe_8ef522c3",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "df231c2e_a4fed98c",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-01T15:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d8a1dfe_8ef522c3",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de84ede_accd948d",
         "filename": "chrome/browser/vr/ui_scene_constants.h",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0538bb9_2364f4b5",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-01T15:27:45Z",
+      "side": 1,
+      "message": "You should be able to independently change the width, height and length and get the expected result. I.e. the controller would just be a bit flatter but not break otherwise.",
+      "parentUuid": "3de84ede_accd948d",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
