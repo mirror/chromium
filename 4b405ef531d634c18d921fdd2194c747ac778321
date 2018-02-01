@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0395059e_fd274ffd",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-01T04:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630613ed_7a7b2f62",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ccfdfc8_be643cdc",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T18:50:08Z",
       "side": 1,
       "message": "For outline painting, I also need to find \"All inline descendants painted by this container\". I think this is first_fragment_map_.keys(). Could we add a method for this?",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5fb753_5efdae4f",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-01T04:38:24Z",
+      "side": 1,
+      "message": "With the parent link, traverse is now easy, either by DFS or BFS, whichever you need. See NodeTraversal or FlatTreeTraversal for the example interfaces for DOM trees. Probably we can add a similar traversal class for NGPaintFragment?\n\nI might need it too for the culled inline box case.",
+      "parentUuid": "1ccfdfc8_be643cdc",
       "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ae2b3740_1db07cdc",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-01T04:38:24Z",
+      "side": 1,
+      "message": "Means this is a root. Added comments:\n  // The parent NGPaintFragment. This is nullptr for a root; i.e., when parent                                                     \n  // is not for NGPaint. In the first phase, this means that this is a root of                                                     \n  // an inline formatting context.",
+      "parentUuid": "9877104d_131b3eca",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448fe7a0_25090a80",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60896776_9308dc16",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-01T04:38:24Z",
+      "side": 1,
+      "message": ";)",
+      "parentUuid": "448fe7a0_25090a80",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
