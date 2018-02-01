@@ -29,6 +29,8 @@ PRINTING_EXPORT base::string16 FormatDocumentTitleWithOwnerAndLength(
     const base::string16& title,
     size_t length);
 
+PRINTING_EXPORT uint64_t GenFrameGuid(int process_id, int frame_id);
+
 }  // namespace printing
 
 #endif  // PRINTING_PRINTING_UTILS_H_
