@@ -16,6 +16,24 @@
       "revId": "4e5a754ff691d5a1342a2f80562d2806fbdc41ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb977cf_eeb8f7c4",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T14:04:49Z",
+      "side": 1,
+      "message": "Ah, no. The build products are identical. Removed.",
+      "parentUuid": "dad9b038_5fbec55b",
+      "revId": "4e5a754ff691d5a1342a2f80562d2806fbdc41ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
