@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d22b817_9fb71465",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Spoke to you about this offline. It\u0027s brittle, but we don\u0027t really have a better solution. Added a TODO to hunt for a better solution.",
+      "parentUuid": "34396005_1f02bcdb",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "420c81c2_bf143ff4",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9545a78c_62bb8413",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "420c81c2_bf143ff4",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b699dc63_c2828f0d",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071cfbf8_a8007b7b",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b699dc63_c2828f0d",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "3bd80373_134f3f22",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Oops, I was in java land when I wrote this :P.\nDone.",
+      "parentUuid": "3107fd6a_bd963944",
+      "range": {
+        "startLine": 47,
+        "startChar": 50,
+        "endLine": 47,
+        "endChar": 64
+      },
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1540cc_bdeabe97",
         "filename": "chrome/browser/vr/content_element_unittest.cc",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a32fe0c_c9a369be",
+        "filename": "chrome/browser/vr/content_element_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Not at all intentional. Just copied from another test.",
+      "parentUuid": "9e1540cc_bdeabe97",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "2b0cd606_56cfc294",
+        "filename": "chrome/browser/vr/elements/content_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Today when the keyboard is disabled (e.g via the flag), we just don\u0027t set the delegates. In that case, JS can call \"show keyboard\" in which case we\u0027ll call RequestFocus, but shouldn\u0027t do anything. We should probably handle \"keyboard disabled\" differently so that none of this happens, but that\u0027s probably work for a follow-up CL.",
+      "parentUuid": "e779ef4f_49a7664e",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af8e0c60_88bf25ec",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -124,6 +238,24 @@
       "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f767048_317d1198",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-01T17:06:59Z",
+      "side": 1,
+      "message": "Good catch. The field shouldn\u0027t lose its content on loss of focus. I modified a test in TextInputUnittest to catch this.",
+      "parentUuid": "af8e0c60_88bf25ec",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
