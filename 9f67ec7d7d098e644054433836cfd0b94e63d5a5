@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1423683b_3363ec8a",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba4b3c73_f936fef2",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b87bcf_e0843048",
         "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8bf060_8e91a6d2",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23b87bcf_e0843048",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "92b00cda_5cfc077a",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done (though I needed something similar to createExceptionList() for the default settings as well, so I made createObjectWithContentSettingType()).",
+      "parentUuid": "312093f5_120fa878",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c53c8b_d8856696",
         "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bc0bae1a_fbf21d2a",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04c53c8b_d8856696",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bc2f5dd_ccf84056",
         "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762ba79d_f8e0c66a",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc2f5dd_ccf84056",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "93e409ef_00f14977",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Yeah, I think I started off by using it and then continued on absent mindedly passing null after the first time and carried on setting it in |override| instead. I got rid of it instead since places still need to pass a |override| anyway.",
+      "parentUuid": "b0b10c19_af22e4f0",
+      "range": {
+        "startLine": 85,
+        "startChar": 32,
+        "endLine": 85,
+        "endChar": 38
+      },
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53acced1_4cfd2931",
         "filename": "chrome/test/data/webui/settings/site_list_tests.js",
         "patchSetId": 7
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "83b30efa_b360a694",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "N/A (see above comment)",
+      "parentUuid": "53acced1_4cfd2931",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4700d6a2_913495aa",
         "filename": "chrome/test/data/webui/settings/site_list_tests.js",
         "patchSetId": 7
@@ -138,6 +270,24 @@
       "writtenOn": "2018-01-29T03:38:50Z",
       "side": 1,
       "message": "What do you think of:\n\nbrowserProxy.setPrefs(createSiteSettingsPrefs({\n  defaults : [\n    createDefaultContentSetting(settings.ContentSettingsTypes.CAMERA,\n                                settings.ContentSetting.ASK),\n  ],\n  exceptions : [\n    createRawSiteExceptionList(settings.ContentSettingsTypes.JAVASCRIPT,\n                               [\n                                 createRawSiteException({\n                                   origin : \u0027http://foo.com\u0027,\n                                   embeddingOrigin : \u0027http://foo.com\u0027,\n                                   setting : settings.ContentSetting.ALLOW,\n                                   incognito : true,\n                                 }),\n                                 createRawSiteException({\n                                   origin : \u0027http://foo.com\u0027,\n                                   embeddingOrigin : \u0027\u0027,\n                                   setting : settings.ContentSetting.ALLOW,\n                                   incognito : true,\n                                 }),\n                               ]),\n  ],\n}));\n\ninstead? The Map management here is getting messy.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425aa1e9_efabf4d4",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "I copied your suggestion with createExceptionList() in a previous comment (but named differently). Let me know which one you prefer.",
+      "parentUuid": "4700d6a2_913495aa",
       "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "ae589b99_461143c1",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d313cb07_517f056d",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b211a312_cdc8bef8",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 7
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "5af737f7_7bfbbed8",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b211a312_cdc8bef8",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12cae5e7_a9646c0e",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 7
@@ -192,6 +378,24 @@
       "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03cb842_d88d1ee6",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T02:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12cae5e7_a9646c0e",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
