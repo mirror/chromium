@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9ee529_65ade988",
+        "filename": "media/capture/mojo/image_capture_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-01T00:09:49Z",
+      "side": 1,
+      "message": "The empty lines appear to be in inconsistent places.\nWe may also want to do \n} // namespace mojo",
+      "revId": "9dac449576bce26e0b1e55748c5e677f65a190cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed14eb7_376c3c9f",
+        "filename": "media/capture/video/file_video_capture_device_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-01T00:09:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t currently seem to be needed (maybe for the TakePhoto test case you are still working on?).\n\nAlso, in case you want to avoid having to define a custom gmock action, you can consider using testing::Invoke or testing::InvokeWithoutArgs and pass it a lambda that then invokes your closure. Note, that opposed to lambdas passed into base::Bind() which disallows the use of capturing variables in the [] brackets, lambdas passed into testing::Invoke do not have this limitation.",
+      "revId": "9dac449576bce26e0b1e55748c5e677f65a190cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
