@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7255bbd2_527d381a",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-01T21:50:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9b7783_d6a1db37",
+      "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07119942_65f0b638",
         "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317c03e8_adf4d207",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-01T21:50:23Z",
+      "side": 1,
+      "message": "Good point about replacing the existing dictionary. I changed the logic a little so that ClearPref() is always called if before_first_idle_, even if it\u0027s going to be updated. Hopefully that isn\u0027t too wasteful because the code looks a lot clearer.",
+      "parentUuid": "07119942_65f0b638",
+      "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
