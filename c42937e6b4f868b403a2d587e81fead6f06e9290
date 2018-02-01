@@ -16,6 +16,24 @@
       "revId": "c42937e6b4f868b403a2d587e81fead6f06e9290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d701374e_a1c4a3d9",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/thai-word-at-document-end.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-01T03:17:34Z",
+      "side": 1,
+      "message": "Good idea!\nUpdated.",
+      "parentUuid": "18b83050_bafd0e34",
+      "revId": "c42937e6b4f868b403a2d587e81fead6f06e9290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
