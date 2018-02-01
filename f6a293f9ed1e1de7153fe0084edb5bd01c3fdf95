@@ -59,6 +59,64 @@
     },
     {
       "key": {
+        "uuid": "34b76c73_db51fc45",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:41:10Z",
+      "side": 1,
+      "message": "Ah, sorry, I just realized that you haven\u0027t actually made changes to the sorting order of value types we had already supported, so there is no reason for the test to start failing now.\n\nStill, the request stand: could you please update TestOutOfOrderKeyError to have a test case to require that \"b\" is sorted before \"aa\".",
+      "parentUuid": "6f55cabb_f5133cfb",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8704fdd2_99291478",
+        "filename": "components/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:41:10Z",
+      "side": 1,
+      "message": "nit: The name `TestWriteMapWithMapValue` makes no sense. There are no nested maps as values here. Can you please rename this to `TestWriteMap`.",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27214c9_8f74e056",
+        "filename": "components/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:41:10Z",
+      "side": 1,
+      "message": "nit: Already 22, and will be even more once you add the test cases for byte string keys.",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15b9100e_92f5af76",
         "filename": "components/cbor/cbor_writer_unittest.cc",
         "patchSetId": 5
@@ -70,6 +128,24 @@
       "writtenOn": "2018-02-01T13:11:12Z",
       "side": 1,
       "message": "For good measure, could you please add a similar test that exercises the example input in Jeffrey\u0027s pull request. More precisely, the subset of values that we currently support, and add comments indicating which type of values are not yet supported.\n\n+  1. 10, encoded as 0x0a.\n+  1. 100, encoded as 0x1864.\n+  1. -1, encoded as 0x20.\n+  1. \"z\", encoded as 0x617a.\n+  1. \"aa\", encoded as 0x626161.\n+  1. \\[100], encoded as 0x811864.\n+  1. \\[-1], encoded as 0x8120.\n+  1. false, encoded as 0xf4.",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97add819_2cd9d008",
+        "filename": "components/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:41:10Z",
+      "side": 1,
+      "message": "Actually, can you just *replace* this test to use the example above, and instead extend TestWriteMapWithMapValue with byte string keys?",
+      "parentUuid": "15b9100e_92f5af76",
       "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
