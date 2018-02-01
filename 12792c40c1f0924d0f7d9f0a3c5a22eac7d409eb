@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c62953_d29f483b",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-01T16:46:27Z",
+      "side": 1,
+      "message": "Random selection with 1/N probability is preferred to choosing every Nth renderer. Otherwise we risk introducing sampling bias if renderers are created in a pattern that happens to align with multiples of N.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "12792c40c1f0924d0f7d9f0a3c5a22eac7d409eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
