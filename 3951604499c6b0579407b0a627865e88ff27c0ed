@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b56390f9_177eb441",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T06:34:35Z",
+      "side": 1,
+      "message": "One main issue is that VCC is currently private content code that can\u0027t easily be factored out into a more-common location, like src/media/capture. It has internal-to-content dependencies. Also, a public interface for a \"library class\" isn\u0027t appropriate since, generally, content/public/browser is supposed to just be an embedder interface.\n\nI think what\u0027s happened here is that we\u0027ve started re-using just enough of the video capture code (i.e., the mojo interfaces and VCBufferContext) to open up discussion about more re-use of other things. However, based on my personal experience, refactoring and setting everything up for that might add so much complexity as to negate the benefits of sharing the code in the first place. In other words, VCC is a lot of controller logic centered around juggling multiple consumers from one video capture device and tracking that they\u0027ve all seen and finished with each video frame (in any random order). But here, we don\u0027t need a \"controller\" at all because it\u0027s just one device\u0027s frames going to one consumer only. What we have here is just a simple \"adapter\" between two APIs.",
+      "parentUuid": "5932f301_47909289",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "552b510c_0d8388be",
         "filename": "chrome/browser/media/single_client_video_capture_host.h",
         "patchSetId": 6
