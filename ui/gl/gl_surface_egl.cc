@@ -1369,9 +1369,11 @@ bool NativeViewGLSurfaceEGL::CommitAndClearPendingOverlays() {
     return true;
 
   bool success = true;
+#if !defined(OS_MACOSX)
   for (const auto& overlay : pending_overlays_)
     success &= overlay.ScheduleOverlayPlane(window_);
   pending_overlays_.clear();
+#endif
   return success;
 }
 

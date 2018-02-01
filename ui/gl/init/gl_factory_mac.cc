@@ -18,6 +18,11 @@
 #include "ui/gl/gl_surface_stub.h"
 #include "ui/gl/gl_switches.h"
 
+#if defined(USE_EGL_ON_MAC)
+#include "ui/gl/gl_context_egl.h"
+#include "ui/gl/gl_surface_egl.h"
+#endif  // defined(USE_EGL_ON_MAC)
+
 namespace gl {
 namespace init {
 
@@ -59,6 +64,9 @@ class NoOpGLSurface : public GLSurface {
 std::vector<GLImplementation> GetAllowedGLImplementations() {
   std::vector<GLImplementation> impls;
   impls.push_back(kGLImplementationDesktopGLCoreProfile);
+#if defined(USE_EGL_ON_MAC)
+  impls.push_back(kGLImplementationEGLGLES2);
+#endif  // defined(USE_EGL_ON_MAC)
   impls.push_back(kGLImplementationDesktopGL);
   impls.push_back(kGLImplementationAppleGL);
   impls.push_back(kGLImplementationOSMesaGL);
@@ -83,6 +91,11 @@ scoped_refptr<GLContext> CreateGLContext(GLShareGroup* share_group,
       DCHECK(compatible_surface->IsOffscreen());
       return InitializeGLContext(new GLContextCGL(share_group),
                                  compatible_surface, attribs);
+#if defined(USE_EGL_ON_MAC)
+    case kGLImplementationEGLGLES2:
+      return InitializeGLContext(new GLContextEGL(share_group),
+                                 compatible_surface, attribs);
+#endif  // defined(USE_EGL_ON_MAC)
     case kGLImplementationOSMesaGL:
       return InitializeGLContext(new GLContextOSMesa(share_group),
                                  compatible_surface, attribs);
@@ -105,7 +118,8 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
   switch (GetGLImplementation()) {
     case kGLImplementationDesktopGL:
     case kGLImplementationDesktopGLCoreProfile:
-    case kGLImplementationAppleGL: {
+    case kGLImplementationAppleGL:
+    case kGLImplementationEGLGLES2: {
       NOTIMPLEMENTED() << "No onscreen support on Mac.";
       return nullptr;
     }
@@ -134,6 +148,16 @@ scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(
     case kGLImplementationAppleGL:
       return InitializeGLSurfaceWithFormat(
           new NoOpGLSurface(size), format);
+#if defined(USE_EGL_ON_MAC)
+    case kGLImplementationEGLGLES2:
+      if (GLSurfaceEGL::IsEGLSurfacelessContextSupported() &&
+          size.width() == 0 && size.height() == 0) {
+        return InitializeGLSurfaceWithFormat(new SurfacelessEGL(size), format);
+      } else {
+        return InitializeGLSurfaceWithFormat(new PbufferGLSurfaceEGL(size),
+                                             format);
+      }
+#endif  // defined(USE_EGL_ON_MAC)
     case kGLImplementationMockGL:
     case kGLImplementationStubGL:
       return new GLSurfaceStub;
