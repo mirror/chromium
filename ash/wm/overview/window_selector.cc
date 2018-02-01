@@ -451,6 +451,8 @@ void WindowSelector::SelectWindow(WindowSelectorItem* item) {
     }
   }
   item->EnsureVisible();
+  if (wm::GetWindowState(window)->IsMinimized())
+    window->Show();
   wm::GetWindowState(window)->Activate();
 }
 
