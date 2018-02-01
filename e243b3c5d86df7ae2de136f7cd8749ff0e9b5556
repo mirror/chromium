@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c0339854_2147f895",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T12:11:19Z",
+      "side": 1,
+      "message": "what about \"payload\" or \"message\" or \"log_message\"?",
+      "parentUuid": "d1b45fa2_7b84eacb",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9db37ab_f79f5903",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
         "patchSetId": 5
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I think it\u0027s correct - it\u0027s meant to protect against overflow.\nThis current CL moves this code from WebRtcLocalEventLogManager, and I try to affect the least amount of changes to the code while moving it. In this other CL that I\u0027ve pushed for review today, I changed the behavior in this case, and also took the opportunity to restructure the code in a way that I hope makes it clearer:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/895744/1/content/browser/webrtc/webrtc_event_log_manager_common.cc",
       "parentUuid": "f9db37ab_f79f5903",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccdf97e_d11cfda2",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T12:11:19Z",
+      "side": 1,
+      "message": "Ack. I recommend assigning the result of the first comparison to a bool variable called |overflow| and the final code will look like \n   if (overflow || ...)\nand intent will be clear.",
+      "parentUuid": "2467b935_491c5fce",
       "range": {
         "startLine": 22,
         "startChar": 8,
@@ -425,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "a9d92bed_acf01d75",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T12:11:19Z",
+      "side": 1,
+      "message": "See http://chromium-cpp.appspot.com/",
+      "parentUuid": "2b1a1c81_653aaffb",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80c35bd3_dc9bb0d8",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
         "patchSetId": 5
@@ -613,6 +685,30 @@
     },
     {
       "key": {
+        "uuid": "71234bed_6fae5e77",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T12:11:19Z",
+      "side": 1,
+      "message": "I think it\u0027s acceptable.",
+      "parentUuid": "1750cc48_4f267e05",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25e3382c_df1bc094",
         "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
         "patchSetId": 5
@@ -648,6 +744,30 @@
       "side": 1,
       "message": "1. I don\u0027t want to make this CL too big. It seems natural to me to factor the extra constraint into a separate CL, seeing as it does not really concern the way we implement the feature for non-blocked devices.\n2. It\u0027s an open question whether we would block the JS hooks, block this in WebRtcEventLogManager, or avoid instantiating the remote-bound part of the manager altogether.",
       "parentUuid": "25e3382c_df1bc094",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d58e65_5122fac3",
+        "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T12:11:19Z",
+      "side": 1,
+      "message": "OK. Do you plan to provide the CL to do that as a follow-up in a series or is it intended as future work?",
+      "parentUuid": "21f5c222_e3340049",
       "range": {
         "startLine": 20,
         "startChar": 16,
