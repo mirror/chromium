@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "9259116d_33a5c871",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T18:35:40Z",
+      "side": 1,
+      "message": "You can leave this out. I have a WIP CL to refactor PaintPropertyTreePrinter. I\u0027ll rebase that CL onto this CL.",
+      "parentUuid": "611e5ff3_b7eea883",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60488016_fae44254",
         "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
         "patchSetId": 2
