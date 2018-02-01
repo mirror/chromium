@@ -46,6 +46,30 @@
       "revId": "cef06987ea856b0a089f6c6138807a816ab127d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d4b417_45f1f3db",
+        "filename": "chrome/browser/chrome_browser_main_posix.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T19:10:52Z",
+      "side": 1,
+      "message": "I\u0027m still trying to wrap my head around all this. What I\u0027m hoping is that you have the same functions for all platforms, but (when necessary) they do platform specific behavior. For example, this code calls chrome::AttemptExit() with no ifdefs.  chrome::AttemptExit() for ChromeOS does whatever is appropriate there. Is that possible? This assumes chrome::AttemptExit always wants the chromeos::ExitCleanly() logic on ChromeOS. If that isn\u0027t the case, then I agree we need different functions and I\u0027m ok with having those functions declared in application_lifetime_chromeos.h.",
+      "parentUuid": "455356b6_422d7840",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 6
+      },
+      "revId": "cef06987ea856b0a089f6c6138807a816ab127d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

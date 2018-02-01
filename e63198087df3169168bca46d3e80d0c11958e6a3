@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "860ba02a_0aaedb80",
+        "filename": "chrome/browser/lifetime/application_lifetime_chromeos.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T19:10:52Z",
+      "side": 1,
+      "message": "I don\u0027t see this called anywhere, or even the definition.",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "e63198087df3169168bca46d3e80d0c11958e6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13e2b2f_023eda9d",
+        "filename": "chrome/browser/lifetime/application_lifetime_chromeos.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T19:10:52Z",
+      "side": 1,
+      "message": "Same thing here?",
+      "revId": "e63198087df3169168bca46d3e80d0c11958e6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99320377_d20e36e5",
         "filename": "chrome/browser/lifetime/termination_notification.cc",
         "patchSetId": 23
