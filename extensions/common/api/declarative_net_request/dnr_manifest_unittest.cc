@@ -38,6 +38,11 @@ std::string GetRuleResourcesKey() {
       ".");
 }
 
+std::string GetHostsKey() {
+  return base::JoinString(
+      {keys::kDeclarativeNetRequestKey, keys::kDeclarativeHostsKey}, ".");
+}
+
 // Fixture testing the kDeclarativeNetRequestKey manifest key.
 class DNRManifestTest : public testing::Test {
  public:
@@ -171,6 +176,51 @@ TEST_F(DNRManifestTest, RulesFileInNestedDirectory) {
       CreateManifest(kJSONRulesFilename);
   manifest->SetList(GetRuleResourcesKey(),
                     ToListValue({"dir/rules_file.json"}));
+  SetManifest(std::move(manifest));
+  LoadAndExpectSuccess();
+}
+
+TEST_F(DNRManifestTest, HostsNotSpecified) {
+  std::unique_ptr<base::DictionaryValue> manifest =
+      CreateManifest(kJSONRulesFilename);
+  manifest->Remove(GetHostsKey(), nullptr);
+  SetManifest(std::move(manifest));
+  LoadAndExpectError(ErrorUtils::FormatErrorMessage(
+      errors::kInvalidDeclarativeHostList, keys::kDeclarativeNetRequestKey,
+      keys::kDeclarativeHostsKey));
+}
+
+TEST_F(DNRManifestTest, EmptyHostPermissions) {
+  std::unique_ptr<base::DictionaryValue> manifest =
+      CreateManifest(kJSONRulesFilename, {});
+  SetManifest(std::move(manifest));
+  LoadAndExpectError(ErrorUtils::FormatErrorMessage(
+      errors::kEmptyDeclarativeHosts, keys::kDeclarativeNetRequestKey,
+      keys::kDeclarativeHostsKey));
+}
+
+TEST_F(DNRManifestTest, InvalidHostType) {
+  std::unique_ptr<base::DictionaryValue> manifest =
+      CreateManifest(kJSONRulesFilename);
+  manifest->SetList(GetHostsKey(), ListBuilder().Append(3).Build());
+  SetManifest(std::move(manifest));
+  LoadAndExpectError(ErrorUtils::FormatErrorMessage(
+      errors::kInvalidDeclarativeHostList, keys::kDeclarativeNetRequestKey,
+      keys::kDeclarativeHostsKey));
+}
+
+TEST_F(DNRManifestTest, InvalidHostPermissions) {
+  std::unique_ptr<base::DictionaryValue> manifest = CreateManifest(
+      kJSONRulesFilename, {"http://*/*", "foo://*", "http://*/foo*", "xyz"});
+  SetManifest(std::move(manifest));
+  LoadAndExpectError(ErrorUtils::FormatErrorMessage(
+      errors::kInvalidDeclarativeHost, "foo://*",
+      keys::kDeclarativeNetRequestKey, keys::kDeclarativeHostsKey));
+}
+
+TEST_F(DNRManifestTest, ValidHostPermissions) {
+  std::unique_ptr<base::DictionaryValue> manifest = CreateManifest(
+      kJSONRulesFilename, {"http://*/*", "*://mail.google.com/*"});
   SetManifest(std::move(manifest));
   LoadAndExpectSuccess();
 }
