@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdaee7ea_4e10a193",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-01T18:35:13Z",
+      "side": 1,
+      "message": "Can you make this rect explicitly 100x100 instead of calling a function?",
+      "revId": "a306d8f59b76638d810bcbe242afd95f5275b25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
