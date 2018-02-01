@@ -22,6 +22,47 @@
       "revId": "99e390f40393e0e4d7e2d347aad6ec03f77220e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74ae3f5_ac8fa331",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThread.cpp",
+        "patchSetId": 58
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-02-01T17:06:24Z",
+      "side": 1,
+      "message": ":-) because spaces in names never confused anybody reading logs.  Sigh.  Sure, less code is better code.",
+      "parentUuid": "eb01f3f7_be234114",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "99e390f40393e0e4d7e2d347aad6ec03f77220e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f75fb49_3c9b8c83",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 58
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-02-01T17:06:24Z",
+      "side": 1,
+      "message": "This ref needs to be Adopt-ed.",
+      "revId": "99e390f40393e0e4d7e2d347aad6ec03f77220e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
