@@ -75,7 +75,7 @@ class SynchronousCompositorSyncCallBridge
   void BindFilterOnUIThread();
 
   // Indicatation that the remote is now ready to process requests. Called
-  // on either thread.
+  // on either UI or IO thread.
   void RemoteReady();
 
   // Remote channel is closed signal all waiters.
@@ -101,6 +101,12 @@ class SynchronousCompositorSyncCallBridge
   // Indicate the host is destroyed.
   void HostDestroyedOnUIThread();
 
+  // Return whether the remote side is ready.
+  bool IsRemoteReadyOnUIThread();
+
+  // Terminate the host process.
+  void TerminateProcessOnIOThread();
+
  private:
   friend class base::RefCountedThreadSafe<SynchronousCompositorSyncCallBridge>;
   ~SynchronousCompositorSyncCallBridge();
@@ -121,8 +127,13 @@ class SynchronousCompositorSyncCallBridge
   // be called on either thread but must hold a lock to |lock_|.
   void UnregisterSyncCallBridgeIfNecessary();
 
+  // Terminate host process on UI thread.
+  void TerminateProcessOnUIThread();
+
   using FrameFutureQueue =
       base::circular_deque<scoped_refptr<SynchronousCompositor::FrameFuture>>;
+
+  enum class RemoteState { INIT, READY, CLOSED };
 
   const int routing_id_;
 
@@ -130,6 +141,7 @@ class SynchronousCompositorSyncCallBridge
   ui::WindowAndroid* window_android_in_vsync_ = nullptr;
   SynchronousCompositorHost* host_;
   bool bound_to_filter_ = false;
+  bool mojo_enabled_;
 
   // Shared variables between the IO thread and UI thread.
   base::Lock lock_;
@@ -137,7 +149,7 @@ class SynchronousCompositorSyncCallBridge
   bool begin_frame_response_valid_ = false;
   SyncCompositorCommonRendererParams last_render_params_;
   base::ConditionVariable begin_frame_condition_;
-  bool remote_closed_ = true;
+  RemoteState remote_state_ = RemoteState::INIT;
 
   // IO thread based callback that will unbind this object from
   // the SynchronousCompositorBrowserFilter. Only called once

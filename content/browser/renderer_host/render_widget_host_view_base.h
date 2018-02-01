@@ -510,6 +510,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   virtual void DidNavigate() {}
 
+  // Called when the RenderWidgetHostImpl's frame has be initialized.
+  virtual void InitForFrame() {}
+
  protected:
   // Interface class only, do not construct.
   RenderWidgetHostViewBase();
