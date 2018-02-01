@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "adfe631d_137d5f5d",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-02-01T18:00:19Z",
+      "side": 1,
+      "message": "Thanks for clarifying.\n\nRegarding the fake prefs (which they are in this context, yes), they look to have been added in https://codereview.chromium.org/2684853003 (which you reviewed so you may have more context on why it was done :). Looking back to my original change of this code, it did seem to behave more like you described - the safe_browsing_handler would figure out the value from whichever pref was active at the time. So, are you able to recall why the fake pref was added? I\u0027ll defer to whichever way you\u0027d like to go here.\n\nAs for adding enforcement and controlledby - since this pref has its own custom handler I wasn\u0027t getting the \"office building\" icon for free when this pref was managed by policy. To achieve this I\u0027m basically copying what was done for the metrics reporting pref above (on :314).",
+      "parentUuid": "b20e99e8_08e1494e",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 43
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "944e46f5_b88bdc1b",
         "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
         "patchSetId": 9
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Not exactly what I meant. Patchset 10 simply changed the choice of \\n placement. What I meant is the following\n\n// Nested promises.\ntest(function() {\n  return foo().then(function() {\n    returrn bar().then(function() {\n      assertEquals(...);\n    });\n  });\n});\n\n\n// Chained promises\ntest(function() {\n  return foo().then(function() {\n     return bar();\n  }).then(function() {\n    assertEquals(...);\n  });\n});\n\nChained promises are preferred they reduce the levels of nesting (and indentation), and they are equivalent. In your case here, something like the following:\n\ntest(\u0027test whether extended reporting is enabled/managed\u0027, function() {\n  return testBrowserProxy.whenCalled(...).then(function() {\n     ...\n     return testBrowserProxy.whenCalled(\n            \u0027setSafeBrowsingExtendedReportingEnabled\u0027);\n  }).then(function(enabled) {\n    assertTrue(enabled);\n  });",
       "parentUuid": "05a45bae_e46a8790",
+      "range": {
+        "startLine": 423,
+        "startChar": 55,
+        "endLine": 426,
+        "endChar": 17
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26740c3f_13882ff1",
+        "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-02-01T18:00:19Z",
+      "side": 1,
+      "message": "Thanks, I missed the \"test\"-level function before, hopefully this looks better.",
+      "parentUuid": "9a8a8ad2_728d05cc",
       "range": {
         "startLine": 423,
         "startChar": 55,
