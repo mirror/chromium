@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0bb144f_6266d683",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4251,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-01T23:36:05Z",
+      "side": 1,
+      "message": "A bunch of these will need to be updated to use the constant. Sorry about that :(",
+      "range": {
+        "startLine": 4251,
+        "startChar": 80,
+        "endLine": 4251,
+        "endChar": 0
+      },
+      "revId": "5b5195974f14a7ad3be091f8eb0fa6b54de8d9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
