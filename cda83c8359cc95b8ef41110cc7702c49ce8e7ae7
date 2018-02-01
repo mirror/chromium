@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d018e31_cca4db6f",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T23:19:30Z",
+      "side": 1,
+      "message": "is this necessary, or is there an opaque color we can use instead? This works but it disables subpixel AA, which is unfortunate.",
+      "range": {
+        "startLine": 364,
+        "startChar": 21,
+        "endLine": 364,
+        "endChar": 40
+      },
+      "revId": "cda83c8359cc95b8ef41110cc7702c49ce8e7ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
