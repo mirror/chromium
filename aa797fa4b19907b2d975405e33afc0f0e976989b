@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff922b9a_139243d7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:37:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d30e3b5e_7347bf24",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "aa797fa4b19907b2d975405e33afc0f0e976989b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6464e123_7726452d",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-01T12:15:48Z",
       "side": 1,
       "message": "nit: prefer std::string() if this expects an std::string.",
+      "range": {
+        "startLine": 864,
+        "startChar": 39,
+        "endLine": 864,
+        "endChar": 40
+      },
+      "revId": "aa797fa4b19907b2d975405e33afc0f0e976989b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea46ed0_78a70d63",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:37:39Z",
+      "side": 1,
+      "message": "1. Stylistically, I prefer to keep it as is. Especially the default parameter provided to StartRemoteLogging() and ExpectRemoteFileContents() would be a bit uglier if not for using \"\", IMHO. Would you be OK with keeping the code as-is?\n2. In production code (as opposed to unit tests), do you know if the compiler fails to optimize this away?",
+      "parentUuid": "6464e123_7726452d",
       "range": {
         "startLine": 864,
         "startChar": 39,
