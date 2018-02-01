@@ -322,7 +322,10 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   WebUI* GetWebUI() const override;
   WebUI* GetCommittedWebUI() const override;
   void SetUserAgentOverride(const std::string& override) override;
+  void SetUserAgentOverride(const std::string& override,
+                            bool override_for_spawned_navigations) override;
   const std::string& GetUserAgentOverride() const override;
+  bool ShouldOverrideUserAgentForSpawnedNavigations() override;
   void EnableWebContentsOnlyAccessibilityMode() override;
   bool IsWebContentsOnlyAccessibilityModeForTesting() const override;
   bool IsFullAccessibilityModeForTesting() const override;
@@ -1663,6 +1666,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   bool has_persistent_video_ = false;
 
   bool was_ever_audible_ = false;
+
+  bool should_override_user_agent_for_spawned_navigations_ = false;
 
   base::WeakPtrFactory<WebContentsImpl> loading_weak_factory_;
   base::WeakPtrFactory<WebContentsImpl> weak_factory_;

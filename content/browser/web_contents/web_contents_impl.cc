@@ -1186,8 +1186,17 @@ WebUI* WebContentsImpl::GetCommittedWebUI() const {
 }
 
 void WebContentsImpl::SetUserAgentOverride(const std::string& override) {
+  SetUserAgentOverride(override, false);
+}
+
+void WebContentsImpl::SetUserAgentOverride(
+    const std::string& override,
+    bool override_for_spawned_navigations) {
   if (GetUserAgentOverride() == override)
     return;
+
+  should_override_user_agent_for_spawned_navigations_ =
+      override_for_spawned_navigations;
 
   renderer_preferences_.user_agent_override = override;
 
@@ -1208,6 +1217,10 @@ void WebContentsImpl::SetUserAgentOverride(const std::string& override) {
 
 const std::string& WebContentsImpl::GetUserAgentOverride() const {
   return renderer_preferences_.user_agent_override;
+}
+
+bool WebContentsImpl::ShouldOverrideUserAgentForSpawnedNavigations() {
+  return should_override_user_agent_for_spawned_navigations_;
 }
 
 void WebContentsImpl::EnableWebContentsOnlyAccessibilityMode() {

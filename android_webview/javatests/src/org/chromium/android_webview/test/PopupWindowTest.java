@@ -112,7 +112,7 @@ public class PopupWindowTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
                 () -> popupContents.addJavascriptInterface(obj, "dummy"));
 
-        mActivityTestRule.loadPopupContents(mParentContents, popupInfo);
+        mActivityTestRule.loadPopupContents(mParentContents, popupInfo, null);
 
         AwActivityTestRule.pollInstrumentationThread(() -> {
             String ans = mActivityTestRule.executeJavaScriptAndWaitForResult(
@@ -120,6 +120,43 @@ public class PopupWindowTest {
 
             return ans.equals("42");
         });
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testOverrideUserAgentInOnCreateWindow() throws Throwable {
+        final String popupPath = "/popup.html";
+        final String myUserAgentString = "myUserAgent";
+        final String parentPageHtml = CommonResources.makeHtmlPageFrom("",
+                "<script>"
+                        + "function tryOpenWindow() {"
+                        + "  var newWindow = window.open('" + popupPath + "');"
+                        + "}</script>");
+
+        final String popupPageHtml = "<html><head><script>"
+                + "document.title = navigator.userAgent;"
+                + "</script><body><div id='a'></div></body></html>";
+
+        mActivityTestRule.triggerPopup(mParentContents, mParentContentsClient, mWebServer,
+                parentPageHtml, popupPageHtml, popupPath, "tryOpenWindow()");
+
+        PopupInfo popupInfo = mActivityTestRule.createPopupContents(mParentContents);
+        TestAwContentsClient popupContentsClient = popupInfo.popupContentsClient;
+        final AwContents popupContents = popupInfo.popupContents;
+
+        // Override the user agent string for the popup window.
+        mActivityTestRule.loadPopupContents(
+                mParentContents, popupInfo, new AwActivityTestRule.OnCreateWindowHandler() {
+                    @Override
+                    public boolean onCreateWindow(AwContents awContents) {
+                        awContents.getSettings().setUserAgentString(myUserAgentString);
+                        return true;
+                    }
+                });
+
+        CriteriaHelper.pollUiThread(Criteria.equals(
+                myUserAgentString, () -> mActivityTestRule.getTitleOnUiThread(popupContents)));
     }
 
     @Test

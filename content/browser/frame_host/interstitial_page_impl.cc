@@ -547,6 +547,10 @@ const std::string& InterstitialPageImpl::GetUserAgentOverride() const {
   return base::EmptyString();
 }
 
+bool InterstitialPageImpl::ShouldOverrideUserAgentForSpawnedNavigations() {
+  return false;
+}
+
 bool InterstitialPageImpl::ShowingInterstitialPage() const {
   // An interstitial page never shows a second interstitial.
   return false;

@@ -321,6 +321,8 @@ class WebContents : public PageNavigator,
 
   // Allows overriding the user agent used for NavigationEntries it owns.
   virtual void SetUserAgentOverride(const std::string& override) = 0;
+  virtual void SetUserAgentOverride(const std::string& override,
+                                    bool override_for_spawned_navigations) = 0;
   virtual const std::string& GetUserAgentOverride() const = 0;
 
   // Set the accessibility mode so that accessibility events are forwarded
