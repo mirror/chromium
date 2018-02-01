@@ -28,12 +28,14 @@ void PrintCompositeClient::DoCompositePageToPdf(
     int document_cookie,
     uint64_t frame_guid,
     int page_num,
+    bool is_draft,
     base::SharedMemoryHandle handle,
     uint32_t data_size,
     const ContentToFrameMap& subframe_content_map,
     mojom::PdfCompositor::CompositePageToPdfCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  auto& compositor = GetCompositeRequest(document_cookie, page_num);
+  auto& compositor = is_draft ? GetCompositeRequestForDraftPage(document_cookie)
+                              : GetCompositeRequest(document_cookie, page_num);
 
   DCHECK(data_size);
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
@@ -46,7 +48,7 @@ void PrintCompositeClient::DoCompositePageToPdf(
       frame_guid, page_num, std::move(buffer_handle), subframe_content_map,
       base::BindOnce(&PrintCompositeClient::OnDidCompositePageToPdf,
                      base::Unretained(this), page_num, document_cookie,
-                     std::move(callback)));
+                     is_draft, std::move(callback)));
 }
 
 void PrintCompositeClient::DoCompositeDocumentToPdf(
@@ -76,10 +78,12 @@ void PrintCompositeClient::DoCompositeDocumentToPdf(
 void PrintCompositeClient::OnDidCompositePageToPdf(
     int page_num,
     int document_cookie,
+    bool is_draft,
     printing::mojom::PdfCompositor::CompositePageToPdfCallback callback,
     printing::mojom::PdfCompositor::Status status,
     mojo::ScopedSharedBufferHandle handle) {
-  RemoveCompositeRequest(document_cookie, page_num);
+  if (!is_draft)
+    RemoveCompositeRequest(document_cookie, page_num);
   std::move(callback).Run(status, std::move(handle));
 }
 
@@ -95,6 +99,7 @@ void PrintCompositeClient::OnDidCompositeDocumentToPdf(
 mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequest(
     int cookie,
     base::Optional<int> page_num) {
+  // When page_num is not provided, it is for the entire document.
   int page_no =
       page_num == base::nullopt ? kPageNumForWholeDoc : page_num.value();
   std::pair<int, int> key = std::make_pair(cookie, page_no);
@@ -104,6 +109,12 @@ mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequest(
 
   auto iterator = compositor_map_.emplace(key, CreateCompositeRequest()).first;
   return iterator->second;
+}
+
+mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequestForDraftPage(
+    int cookie) {
+  // Draft pages always share the same composite request as its document.
+  return GetCompositeRequest(cookie, base::nullopt);
 }
 
 void PrintCompositeClient::RemoveCompositeRequest(
