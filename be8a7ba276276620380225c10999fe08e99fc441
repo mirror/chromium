@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87a145c9_f98b422d",
+        "filename": "base/process/process.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-01T21:53:35Z",
+      "side": 1,
+      "message": "Is this valid on MSVC? Oh man, C++.",
+      "revId": "be8a7ba276276620380225c10999fe08e99fc441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
