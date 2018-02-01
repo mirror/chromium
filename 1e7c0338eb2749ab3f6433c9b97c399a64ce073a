@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95fd0df3_f1034d3a",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T20:38:54Z",
+      "side": 1,
+      "message": "destroy",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159f3f92_a5fc853e",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T20:38:54Z",
+      "side": 1,
+      "message": "How come you moved this up? This may have impacts on browser startup time.",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6751234d_a2da6b87",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T20:38:54Z",
+      "side": 1,
+      "message": "if (auto* bml \u003d BrowserMainLoop::GetInstance()) ?",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474b817b_e67074a1",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T20:38:54Z",
+      "side": 1,
+      "message": "Does { base::BindRepeating(\u0026audio::CreateEmbeddedService, audio_manager), audio_manager-\u003eGetTaskRunner() } work?",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa22e794_225a8bdd",
+        "filename": "services/audio/public/cpp/audio_system_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T20:38:54Z",
+      "side": 1,
+      "message": "Why not just use a base::Feature?",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
