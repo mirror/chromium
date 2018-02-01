@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255c7012_31d1c5a7",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T16:05:14Z",
+      "side": 1,
+      "message": "Maybe we should just add this to base::TimeTicks? Since we already have an equivalent for InNanoseconds() anyway.",
+      "revId": "7a67c718aff0ff70564bf63af65f0f408dde450e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604d8aa6_75ede938",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T16:05:14Z",
+      "side": 1,
+      "message": "How about ticks.since_origin().InNanoseconds()?",
+      "revId": "7a67c718aff0ff70564bf63af65f0f408dde450e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bb0c50_e7835b56",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T16:05:14Z",
+      "side": 1,
+      "message": "Ditto to using since_origin() here if possible.",
+      "revId": "7a67c718aff0ff70564bf63af65f0f408dde450e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e3cbc9_104bd4c2",
+        "filename": "third_party/WebKit/Source/modules/webmidi/MIDIAccessor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T16:05:14Z",
+      "side": 1,
+      "message": "Should we ask people to just include base/time/time.h and write base::Time*?",
+      "revId": "7a67c718aff0ff70564bf63af65f0f408dde450e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
