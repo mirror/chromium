@@ -491,9 +491,9 @@ bool TrafficAnnotationAuditor::CheckIfCallCanBeUnannotated(
     // Check if the file including this function is part of Chrome build.
     const base::CommandLine::CharType* args[] = {
 #if defined(OS_WIN)
-      FILE_PATH_LITERAL("gn.bat"),
+      source_path_.Append(FILE_PATH_LITERAL("gn.bat")),
 #else
-      FILE_PATH_LITERAL("gn"),
+      source_path_.Append(FILE_PATH_LITERAL("gn")).MaybeAsASCII(),
 #endif
       FILE_PATH_LITERAL("refs"),
       FILE_PATH_LITERAL("--all")
