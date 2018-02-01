@@ -39,7 +39,7 @@ static_library("gtest") {
     #    Android. https://codereview.chromium.org/2852613002/#ps20001
     "empty.cc",
   ]
-  deps = [
+  public_deps = [
     "//third_party/googletest:gtest",
   ]
 
