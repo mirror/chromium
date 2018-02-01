@@ -379,6 +379,7 @@ class BrowserView : public BrowserWindow,
   BookmarkBarView* GetBookmarkBarView() const;
   LocationBarView* GetLocationBarView() const;
   views::View* GetTabContentsContainerView() const;
+  views::WebView* GetContentsWebView() { return contents_web_view_; }
 
   // Overridden from TabStripModelObserver:
   void TabInsertedAt(TabStripModel* tab_strip_model,
@@ -482,7 +483,6 @@ class BrowserView : public BrowserWindow,
 
   // Testing interface:
   views::View* GetContentsContainerForTest() { return contents_container_; }
-  views::WebView* GetContentsWebViewForTest() { return contents_web_view_; }
   views::WebView* GetDevToolsWebViewForTest() { return devtools_web_view_; }
 
   // Called by BrowserFrame during theme changes.

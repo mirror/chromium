@@ -39,6 +39,10 @@ SadTabHelper::SadTabHelper(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {
 }
 
+void SadTabHelper::WasMovedToNewBrowser() {
+  sad_tab_->WasMovedToNewBrowser();
+}
+
 void SadTabHelper::RenderViewReady() {
   sad_tab_.reset();
 }
