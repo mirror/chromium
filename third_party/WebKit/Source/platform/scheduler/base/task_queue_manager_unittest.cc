@@ -157,7 +157,7 @@ class TaskQueueManagerTest : public ::testing::Test {
   }
 
   base::TimeTicks next_delayed_do_work_time() const {
-    return manager_->next_delayed_do_work_.run_time();
+    return manager_->main_thread_only().next_delayed_do_work.run_time();
   }
 
   EnqueueOrder GetNextSequenceNumber() const {
@@ -175,7 +175,7 @@ class TaskQueueManagerTest : public ::testing::Test {
   void RunUntilIdle(base::Closure per_run_time_callback) {
     for (;;) {
       // Advance time if we've run out of immediate work to do.
-      if (manager_->selector_.EnabledWorkQueuesEmpty()) {
+      if (manager_->main_thread_only().selector.EnabledWorkQueuesEmpty()) {
         base::TimeTicks run_time;
         if (manager_->real_time_domain()->NextScheduledRunTime(&run_time)) {
           now_src_.SetNowTicks(run_time);
@@ -3475,6 +3475,34 @@ TEST_F(TaskQueueManagerTest, DefaultTaskRunnerSupport) {
     DCHECK_EQ(custom_task_runner, message_loop.task_runner());
   }
   DCHECK_EQ(original_task_runner, message_loop.task_runner());
+}
+
+TEST_F(TaskQueueManagerTest, CanceledTasksInQueueCantMakeOtherTasksSkipAhead) {
+  Initialize(2u);
+
+  CancelableTask task1(&now_src_);
+  CancelableTask task2(&now_src_);
+  std::vector<base::TimeTicks> run_times;
+
+  runners_[0]->PostTask(
+      FROM_HERE, base::BindOnce(&CancelableTask::RecordTimeTask,
+                                task1.weak_factory_.GetWeakPtr(), &run_times));
+  runners_[0]->PostTask(
+      FROM_HERE, base::BindOnce(&CancelableTask::RecordTimeTask,
+                                task2.weak_factory_.GetWeakPtr(), &run_times));
+
+  std::vector<EnqueueOrder> run_order;
+  runners_[1]->PostTask(FROM_HERE,
+                        base::BindRepeating(&TestTask, 1, &run_order));
+
+  runners_[0]->PostTask(FROM_HERE,
+                        base::BindRepeating(&TestTask, 2, &run_order));
+
+  task1.weak_factory_.InvalidateWeakPtrs();
+  task2.weak_factory_.InvalidateWeakPtrs();
+  test_task_runner_->RunUntilIdle();
+
+  EXPECT_THAT(run_order, ElementsAre(1, 2));
 }
 
 }  // namespace task_queue_manager_unittest
