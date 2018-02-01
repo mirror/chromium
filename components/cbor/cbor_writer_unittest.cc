@@ -305,6 +305,91 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
                                         arraysize(kNestedMapTestCase)));
 }
 
+TEST(CBORWriterTest, TestWriteCanonicalMap) {
+  static const uint8_t kCanonicalMapTestCase[] = {
+      // clang-format off
+      0xa6, // map of 6 pairs
+        0x0a, // 10
+        0x01,
+
+        0x41, 'a', // byte string "a"
+        0x02,
+
+        0x43, 'b', 'a', 'r', // byte string "bar"
+        0x03,
+
+        0x43, 'f', 'o', 'o', // byte string "foo"
+        0x04,
+
+        0x61, 'b', // text string "b"
+        0x05,
+
+        0x63, 'c', 'a', 't', // text string "cat"
+        0x06,
+      // clang-format on
+  };
+  CBORValue::MapValue map;
+  map[CBORValue(10)] = CBORValue(1);
+  map[CBORValue(CBORValue::BinaryValue{'a'})] = CBORValue(2);
+  map[CBORValue(CBORValue::BinaryValue{'b', 'a', 'r'})] = CBORValue(3);
+  map[CBORValue(CBORValue::BinaryValue{'f', 'o', 'o'})] = CBORValue(4);
+  map[CBORValue("b")] = CBORValue(5);
+  map[CBORValue("cat")] = CBORValue(6);
+
+  auto cbor = CBORWriter::Write(CBORValue(map));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(),
+              testing::ElementsAreArray(kCanonicalMapTestCase,
+                                        arraysize(kCanonicalMapTestCase)));
+}
+
+TEST(CBORWriterTest, TestSignedExchangeExample) {
+  // Example adopted from:
+  // https://wicg.github.io/webpackage/draft-yasskin-http-origin-signed-responses.html
+  static const uint8_t kSignedExchangeExample[] = {
+      // clang-format off
+      0xa5, // map of 5 pairs
+        0x0a, // 10
+        0x01,
+
+        0x18, 0x64, // 100
+        0x02,
+
+        0x20, // -1
+        0x03,
+
+        0x61, 'z', // text string "z"
+        0x04,
+
+        0x62, 'a', 'a', // text string "aa"
+        0x05,
+
+      /*
+        0x81, 0x18, 0x64, // [100] (array as map key is not yet supported)
+        0x06,
+
+        0x81, 0x20,  // [-1] (array as map key is not yet supported)
+        0x07,
+
+        0xf4, // false (boolean  as map key is not yet supported)
+        0x08,
+      */
+      // clang-format on
+  };
+  CBORValue::MapValue map;
+  map[CBORValue(10)] = CBORValue(1);
+  map[CBORValue(100)] = CBORValue(2);
+  map[CBORValue(-1)] = CBORValue(3);
+  map[CBORValue("z")] = CBORValue(4);
+  map[CBORValue("aa")] = CBORValue(5);
+
+  auto cbor = CBORWriter::Write(CBORValue(map));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(),
+              testing::ElementsAreArray(kSignedExchangeExample,
+                                        arraysize(kSignedExchangeExample)));
+}
+
 TEST(CBORWriterTest, TestWriteSimpleValue) {
   static const struct {
     CBORValue::SimpleValue simple_value;
