@@ -249,6 +249,7 @@ URLLoader::URLLoader(NetworkContext* context,
       process_id_(process_id),
       render_frame_id_(request.render_frame_id),
       connected_(true),
+      keepalive_(request.keepalive),
       binding_(this, std::move(url_loader_request)),
       url_loader_client_(std::move(url_loader_client)),
       writable_handle_watcher_(FROM_HERE,
@@ -302,11 +303,17 @@ URLLoader::URLLoader(NetworkContext* context,
         base::Bind(&URLLoader::SetRawResponseHeaders, base::Unretained(this)));
   }
 
+  if (keepalive_)
+    context_->keepalive_statistics_recorder()->OnLoadStarted(process_id_);
+
   url_request_->Start();
 }
 
 URLLoader::~URLLoader() {
   context_->DeregisterURLLoader(this);
+
+  if (keepalive_)
+    context_->keepalive_statistics_recorder()->OnLoadStarted(process_id_);
 
   if (update_body_read_before_paused_)
     UpdateBodyReadBeforePaused();

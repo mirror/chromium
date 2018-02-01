@@ -12,6 +12,8 @@ component("cpp") {
     "cors/cors.h",
     "features.cc",
     "features.h",
+    "keepalive_statistics_recorder.cc",
+    "keepalive_statistics_recorder.h",
     "mutable_network_traffic_annotation_tag_struct_traits.h",
     "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "net_adapters.cc",
@@ -95,6 +97,7 @@ source_set("tests") {
 
   sources = [
     "cors/cors_unittest.cc",
+    "keepalive_statistics_recorder_unittest.cc",
     "mutable_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "mutable_partial_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "network_struct_traits_unittest.cc",

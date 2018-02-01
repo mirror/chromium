@@ -404,6 +404,10 @@ void ResourceDispatcherHostImpl::CancelRequestsForContext(
     if (loader->GetRequestInfo()->GetContext() == context) {
       loaders_to_cancel.push_back(std::move(i->second));
       IncrementOutstandingRequestsMemory(-1, *loader->GetRequestInfo());
+      if (loader->GetRequestInfo()->keepalive()) {
+        keepalive_statistics_recorder_.OnLoadFinished(
+            loader->GetRequestInfo()->GetChildID());
+      }
       pending_loaders_.erase(i++);
     } else {
       ++i;
@@ -700,6 +704,8 @@ void ResourceDispatcherHostImpl::OnShutdown() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 
   is_shutdown_ = true;
+  keepalive_statistics_recorder_.Shutdown();
+
   pending_loaders_.clear();
 
   // Make sure we shutdown the timers now, otherwise by the time our destructor
@@ -1190,6 +1196,12 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     }
   }
 
+  if (request_data.keepalive) {
+    const auto& map = keepalive_statistics_recorder_.per_process_records();
+    if (child_id != 0 && map.find(child_id) == map.end())
+      keepalive_statistics_recorder_.Register(child_id);
+  }
+
   new_request->SetLoadFlags(load_flags);
 
   // Make extra info and read footer (contains request ID).
@@ -1661,6 +1673,9 @@ void ResourceDispatcherHostImpl::RemovePendingRequest(int child_id,
 void ResourceDispatcherHostImpl::RemovePendingLoader(
     const LoaderMap::iterator& iter) {
   ResourceRequestInfoImpl* info = iter->second->GetRequestInfo();
+
+  if (info->keepalive())
+    keepalive_statistics_recorder_.OnLoadFinished(info->GetChildID());
 
   // Remove the memory credit that we added when pushing the request onto
   // the pending list.
@@ -2219,6 +2234,8 @@ void ResourceDispatcherHostImpl::StartLoading(
   ResourceLoader* loader_ptr = loader.get();
   DCHECK(pending_loaders_[info->GetGlobalRequestID()] == nullptr);
   pending_loaders_[info->GetGlobalRequestID()] = std::move(loader);
+  if (info->keepalive())
+    keepalive_statistics_recorder_.OnLoadStarted(info->GetChildID());
 
   loader_ptr->StartRequest();
 }
