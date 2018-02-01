@@ -4107,6 +4107,8 @@ void LocalFrameView::FrameRectsChanged() {
   ForAllChildViewsAndPlugins([](EmbeddedContentView& embedded_content_view) {
     embedded_content_view.FrameRectsChanged();
   });
+
+  GetFrame().Client()->FrameRectsChanged(FrameRect());
 }
 
 void LocalFrameView::SetLayoutSizeInternal(const IntSize& size) {
