@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ee3a065_4849b2d9",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Nit: Move this include to the .cc file.",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d77d20_69b4cd9e",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Here or in a followup, let\u0027s clarify when a print compositor can be reused: my current understanding is it can be reused between print preview and the actual print, but the details are a bit murky.",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fac6850_2d5af91e",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure, but perhaps this could happen if there was a race between printing and this entire frame (the one sending the content map) being removed.",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efa1ce7_b8adeb01",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Nit: render_frame_host to be consistent.",
+      "range": {
+        "startLine": 50,
+        "startChar": 47,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747837ca_89e2b0ca",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "This is the output page that this print message is returning content for, right?",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09751d6_6d8dd823",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "DLOG here please, errors like this usually aren\u0027t actionable or useful to users.",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51747652_6eb2976f",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "I think we should be consistent with our terminology throughout: some places call this dst_rfh, others call it target_rfh. Personally I\u0027d just call it render_frame_host, since there\u0027s no need to disambiguate between multiple RFHs.",
+      "range": {
+        "startLine": 354,
+        "startChar": 46,
+        "endLine": 354,
+        "endChar": 56
+      },
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a668c8_6cad4e0c",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Nit: rendered in page number \u003d\u003e page to print\n\nMaybe?",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea7737f_fd89009e",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Nit: usually this is just rfh or render_frame_host. I don\u0027t think it\u0027s necessary to add \"dst\" here since there\u0027s no distinct source.",
+      "range": {
+        "startLine": 548,
+        "startChar": 6,
+        "endLine": 548,
+        "endChar": 14
+      },
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612ca003_3a07145b",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Nit: make it clearer what circumstances the data would already be set here. And how come it isn\u0027t important to clear subframe content info in this case?",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26294281_a4ca50cb",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Why does this need to clear the subframe content info? Is to avoid potentially buggy subsequent calls to get the subframe content info?",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf3efcf_280c8168",
+        "filename": "printing/printing_utils.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T17:02:49Z",
+      "side": 1,
+      "message": "Nit: remove this, it doesn\u0027t seem used here",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
