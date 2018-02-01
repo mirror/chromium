@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34396005_1f02bcdb",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "Initial thought:\n\nIsn\u0027t UpdateInput optional?  I thought it\u0027s only necessary to call that if an element actually needs to change the state of the keyboard.  With this, it looks like any missing \"ack\" will freeze the keyboard.\n\nThis feels like a sequencing problem, where updates happen in a sequence, and acks may come in a sequence, but if we see an ack with an old sequence number, we can ignore it, or something.\n\nAlso, what does this do to the visuals when backspacing?  Does it look smooth?  Just curious.",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420c81c2_bf143ff4",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "Same comment - ShowSoftInput(bool show) saves an interface method.  This isn\u0027t a big deal, but less code is nice.",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b699dc63_c2828f0d",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "Suggestion:  OnWebInputEdited(info, bool commit)?  Avoids plumbing two near-identical calls through the various interfaces.",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3107fd6a_bd963944",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "selection_start (here and others)",
+      "range": {
+        "startLine": 47,
+        "startChar": 50,
+        "endLine": 47,
+        "endChar": 64
+      },
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1540cc_bdeabe97",
+        "filename": "chrome/browser/vr/content_element_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "No need for expect true in most cases.  This is only needed where you\u0027re ensuring that a scene change happened (ie. in specific tests), but it\u0027s getting copied everywhere.  Is that intentional?",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e779ef4f_49a7664e",
+        "filename": "chrome/browser/vr/elements/content_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "Will this ever fire?  Should it be a DCHECK?",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8e0c60_88bf25ec",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T02:24:22Z",
+      "side": 1,
+      "message": "Does this affect the case where the omnibox loses focus entering voice input mode?  It looks like the loss of focus would purge the fields contents, which is supposed to be preserved.  And more generally, why would a field lose its contents on loss of focus?  I could be misinterpreting this...",
+      "revId": "4d1dc9d5791472cafe7f9b260ec52c64f8c040fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
