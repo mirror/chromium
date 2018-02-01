@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb305c0_b903948e",
+        "filename": "content/test/data/download/download-attribute-blob.html",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-01T22:29:28Z",
+      "side": 0,
+      "message": "Why oh why did this remove this part of the test, when the comment above clearly explains why the test is calling revokeObjectURL... (I know why, because this refactoring broke this test... but that\u0027s no reason to remove the test, that\u0027s exactly why we have tests...)",
+      "revId": "cbce1149c9ae08297b816effbf456c02f97df8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
