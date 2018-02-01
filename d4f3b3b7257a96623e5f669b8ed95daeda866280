@@ -16,6 +16,24 @@
       "revId": "d4f3b3b7257a96623e5f669b8ed95daeda866280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009a2af0_08abdc1f",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T22:26:03Z",
+      "side": 1,
+      "message": "1. I can combine SetButtonsVisible() and UpdateLabel() and then I still multiple calls on button_bar_:\n\n  button_bar_-\u003eSetBackArrowVisible(mode_ \u003d\u003d Mode::SETTINGS);\n  button_bar_-\u003eSetIsLocked(is_locked_);\n\nI don\u0027t see much benefit out of it.\n\n2. To combine more of those calls I would need to pass more parameters, for example:\n\n  button_bar_-\u003eSetIsLocked(is_locked, hide_arrow, clear_notification);\n\nIt would consolidate lines 611 to 619\n \nDoes any of those option look appealing to you?",
+      "parentUuid": "5d613c92_31fa9bde",
+      "revId": "d4f3b3b7257a96623e5f669b8ed95daeda866280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
