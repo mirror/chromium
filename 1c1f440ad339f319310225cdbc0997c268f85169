@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15529938_814c52c5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8639,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-01T00:05:31Z",
+      "side": 1,
+      "message": "nit: Please add enum\u003d\"BooleanHit\"",
+      "range": {
+        "startLine": 8639,
+        "startChar": 57,
+        "endLine": 8639,
+        "endChar": 58
+      },
+      "revId": "1c1f440ad339f319310225cdbc0997c268f85169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
