@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf6911b_6b50a7f4",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-01T22:48:16Z",
+      "side": 1,
+      "message": "Call in didfinishnavigate too",
+      "range": {
+        "startLine": 367,
+        "startChar": 6,
+        "endLine": 367,
+        "endChar": 24
+      },
+      "revId": "8504a0a87dd3d1a8ba895804c159cee60061aff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993cdefb_16d1e297",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-01T22:48:16Z",
+      "side": 1,
+      "message": "unordered_set",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 16
+      },
+      "revId": "8504a0a87dd3d1a8ba895804c159cee60061aff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
