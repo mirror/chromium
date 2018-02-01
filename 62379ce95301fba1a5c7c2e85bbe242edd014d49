@@ -69,6 +69,24 @@
       "revId": "62379ce95301fba1a5c7c2e85bbe242edd014d49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b319d975_aeb9f2dc",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-01T20:07:49Z",
+      "side": 1,
+      "message": "Post-landing comment: Almost had a CL doing this but it got out\nof control because it needed marking many methods as const in\nGpuVideoAcceleratorFactories, e.g.:\nImageTextureTarget()\nVideoFrameOutputFormat()\nGetGLContextLock()\nGetGLES2Interface()\nCreateGpuMemoryBuffer()\n\nand, from the POV of the abstract base class, it cannot be \nenforced on the derived classes that these methods stay const.\n:-(",
+      "parentUuid": "25e5acba_f2513319",
+      "revId": "62379ce95301fba1a5c7c2e85bbe242edd014d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
