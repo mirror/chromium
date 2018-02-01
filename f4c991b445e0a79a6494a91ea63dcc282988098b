@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a44280d4_dd456de6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T19:42:14Z",
+      "side": 1,
+      "message": "Add \u0027static\u0027.",
+      "revId": "f4c991b445e0a79a6494a91ea63dcc282988098b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
