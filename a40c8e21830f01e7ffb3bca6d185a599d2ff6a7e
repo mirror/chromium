@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a07e5d60_6b58dd40",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2018-02-01T19:29:30Z",
+      "side": 1,
+      "message": "Once this lands, I will change the chromium config to be able to specify isolate_map.",
+      "parentUuid": "5d4f1e7b_dac79e64",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffdad408_0584aff6",
         "filename": "tools/mb/mb_unittest.py",
         "patchSetId": 2
