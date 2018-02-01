@@ -80,13 +80,20 @@ TEST(UnguessableTokenTest, VerifyValueSerialization) {
 
 TEST(UnguessableTokenTest, VerifyToString) {
   UnguessableToken token = UnguessableToken::Deserialize(0x123, 0xABC);
-  std::string expected = "0000012300000ABC";
 
-  EXPECT_EQ(expected, token.ToString());
+  std::string expected, expected_stream;
 
-  std::string expected_stream = "(0000012300000ABC)";
   std::stringstream stream;
   stream << token;
+
+  if (VLOG_IS_ON(1)) {
+    expected = "0000012300000ABC";
+    expected_stream = "(0000012300000ABC)";
+  } else {
+    expected = "0123..0ABC";
+    expected_stream = "(0123..0ABC)";
+  }
+  EXPECT_EQ(expected, token.ToString());
   EXPECT_EQ(expected_stream, stream.str());
 }
 
