@@ -5,14 +5,17 @@
 #ifndef CHROMEOS_NETWORK_ONC_ONC_CERTIFICATE_IMPORTER_H_
 #define CHROMEOS_NETWORK_ONC_ONC_CERTIFICATE_IMPORTER_H_
 
+#include <vector>
+
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
+#include "chromeos/network/onc/onc_parsed_certificates.h"
 #include "components/onc/onc_constants.h"
 #include "net/cert/scoped_nss_types.h"
 
-namespace base {
-class ListValue;
+namespace net {
+class NSSCertDatabase;
 }
 
 namespace chromeos {
@@ -20,26 +23,40 @@ namespace onc {
 
 class CHROMEOS_EXPORT CertificateImporter {
  public:
-  typedef base::Callback<void(
-      bool success,
-      net::ScopedCERTCertificateList onc_trusted_certificates)>
-      DoneCallback;
+  class Factory {
+   public:
+    virtual ~Factory() {}
+
+    // Creates a CertificateImporter for the specified |database|.
+    virtual std::unique_ptr<chromeos::onc::CertificateImporter>
+    CreateCertificateImporter(net::NSSCertDatabase* database) = 0;
+  };
+
+  typedef base::OnceCallback<void(bool success)> DoneCallback;
 
   CertificateImporter() {}
   virtual ~CertificateImporter() {}
 
-  // Import |certificates|, which must be a list of ONC Certificate objects.
-  // Certificates are only imported with web trust for user imports. If the
-  // "Remove" field of a certificate is enabled, then removes the certificate
-  // from the store instead of importing.
+  // Permanently imports server, authority and client certificates from
+  // |certificates|. |source| must be ONC_SOURCE_USER_IMPORT, as policy-set
+  // server and authority certs are not permanently imported. Certificates will
+  // be given web trust if requested. If the "Remove" field of a certificate is
+  // enabled, then removes the certificate from the store instead of importing.
   // When the import is completed, |done_callback| will be called with |success|
   // equal to true if all certificates were imported successfully.
-  // |onc_trusted_certificates| will contain the list of certificates that
-  // were imported and requested the TrustBit "Web".
   // Never calls |done_callback| after this importer is destructed.
-  virtual void ImportCertificates(const base::ListValue& certificates,
+  virtual void ImportCertificates(const OncParsedCertificates& certificates,
                                   ::onc::ONCSource source,
-                                  const DoneCallback& done_callback) = 0;
+                                  DoneCallback done_callback) = 0;
+
+  // Import client certificates only from |certificates|.
+  // When the import is completed, |done_callback| will be called with |success|
+  // equal to true if all certificates were imported successfully.
+  // Never calls |done_callback| after this importer is destructed.
+  virtual void ImportClientCertificates(
+      const OncParsedCertificates& certificates,
+      ::onc::ONCSource source,
+      DoneCallback done_callback) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CertificateImporter);
