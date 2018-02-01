@@ -47,6 +47,31 @@ class ComputedAccessibleNode : public ScriptWrappable {
   int32_t rowSpan(bool& is_null) const;
   int32_t setSize(bool& is_null) const;
 
+  /*
+  readonly attribute boolean? atomic;
+    readonly attribute boolean? busy;
+    readonly attribute boolean? disabled;
+    readonly attribute boolean? expanded;
+    readonly attribute boolean? hidden;
+    readonly attribute boolean? modal;
+    readonly attribute boolean? multiline;
+    readonly attribute boolean? multiselectable;
+    readonly attribute boolean? readOnly;
+    readonly attribute boolean? required;
+    readonly attribute boolean? selected;
+  */
+
+  bool atomic(bool& is_null) const;
+  bool busy(bool& is_null) const;
+  bool modal(bool& is_null) const;
+  // bool expanded(bool& is_null) const;
+  // bool hidden(bool& is_null) const;
+  // bool multiline(bool& is_null) const;
+  // bool multiselectable(bool& is_null) const;
+  // bool readOnly(bool& is_null) const;
+  // bool required(bool& is_null) const;
+  // bool selected(bool& is_null) const;
+
  private:
   explicit ComputedAccessibleNode(Element*);
 
@@ -55,6 +80,7 @@ class ComputedAccessibleNode : public ScriptWrappable {
 
   int32_t GetIntAttribute(WebAOMIntAttribute, bool& is_null) const;
   const String GetStringAttribute(WebAOMStringAttribute) const;
+  bool GetBoolAttribute(WebAOMBoolAttribute, bool& is_null) const;
 
   Member<Element> element_;
   Member<AXObjectCache> cache_;

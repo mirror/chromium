@@ -24,4 +24,17 @@
     readonly attribute unsigned long? rowIndex;
     readonly attribute unsigned long? rowSpan;
     readonly attribute long? setSize;
+
+    readonly attribute boolean? atomic;
+    readonly attribute boolean? busy;
+    readonly attribute boolean? modal;
+
+    // readonly attribute boolean? disabled;
+    // readonly attribute boolean? expanded;
+    // readonly attribute boolean? hidden;
+    // readonly attribute boolean? multiline;
+    // readonly attribute boolean? multiselectable;
+    // readonly attribute boolean? readOnly;
+    // readonly attribute boolean? required;
+    // readonly attribute boolean? selected;
 };

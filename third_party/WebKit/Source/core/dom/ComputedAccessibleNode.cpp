@@ -70,6 +70,16 @@ const String ComputedAccessibleNode::GetStringAttribute(
   return String();
 }
 
+bool ComputedAccessibleNode::GetBoolAttribute(WebAOMBoolAttribute attr,
+                                              bool& is_null) const {
+  bool out;
+  is_null = true;
+  if (tree_->GetBoolAttributeForAXNode(cache_->GetAXID(element_), attr, &out)) {
+    is_null = false;
+  }
+  return out;
+}
+
 const String ComputedAccessibleNode::keyShortcuts() const {
   return GetStringAttribute(WebAOMStringAttribute::AOM_ATTR_KEY_SHORTCUTS);
 }
@@ -79,6 +89,7 @@ const String ComputedAccessibleNode::name() const {
 const String ComputedAccessibleNode::placeholder() const {
   return GetStringAttribute(WebAOMStringAttribute::AOM_ATTR_PLACEHOLDER);
 }
+
 const String ComputedAccessibleNode::role() const {
   WebString out;
   if (tree_->GetRoleForAXNode(cache_->GetAXID(element_), &out)) {
@@ -130,6 +141,18 @@ int32_t ComputedAccessibleNode::rowSpan(bool& is_null) const {
 
 int32_t ComputedAccessibleNode::setSize(bool& is_null) const {
   return GetIntAttribute(WebAOMIntAttribute::AOM_ATTR_SET_SIZE, is_null);
+}
+
+bool ComputedAccessibleNode::atomic(bool& is_null) const {
+  return GetBoolAttribute(WebAOMBoolAttribute::AOM_ATTR_ATOMIC, is_null);
+}
+
+bool ComputedAccessibleNode::busy(bool& is_null) const {
+  return GetBoolAttribute(WebAOMBoolAttribute::AOM_ATTR_BUSY, is_null);
+}
+
+bool ComputedAccessibleNode::modal(bool& is_null) const {
+  return GetBoolAttribute(WebAOMBoolAttribute::AOM_ATTR_MODAL, is_null);
 }
 
 void ComputedAccessibleNode::OnSnapshotResponse(
