@@ -22,6 +22,11 @@
 #include "ui/gl/extension_set.h"
 #include "ui/gl/gl_switches.h"
 
+#if defined(OS_ANDROID)
+#include "base/no_destructor.h"
+#include "base/synchronization/lock.h"
+#endif  // OS_ANDROID
+
 namespace gpu {
 
 namespace {
@@ -163,6 +168,22 @@ void AdjustGpuFeatureStatusToWorkarounds(GpuFeatureInfo* gpu_feature_info) {
   }
 }
 
+#if defined(OS_ANDROID)
+base::Lock* GetGLBindingsInitializationLock() {
+  static base::NoDestructor<base::Lock> gl_bindings_initialization_lock;
+  return gl_bindings_initialization_lock.get();
+}
+
+void AcquireGLBindingsInitializationLock() {
+  GetGLBindingsInitializationLock()->Acquire();
+}
+
+void ReleaseGLBindingsInitializationLock() {
+  GetGLBindingsInitializationLock()->AssertAcquired();
+  GetGLBindingsInitializationLock()->Release();
+}
+#endif  // OS_ANDROID
+
 GPUInfo* g_gpu_info_cache = nullptr;
 GpuFeatureInfo* g_gpu_feature_info_cache = nullptr;
 
@@ -245,7 +266,8 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
 
   GpuFeatureInfo gpu_feature_info;
   std::set<int> blacklisted_features;
-  if (!ignore_gpu_blacklist) {
+  if (!ignore_gpu_blacklist &&
+      !command_line->HasSwitch(switches::kUseGpuInTests)) {
     std::unique_ptr<GpuBlacklist> list(GpuBlacklist::Create());
     if (log_gpu_control_list_decisions)
       list->EnableControlListLogging("gpu_blacklist");
@@ -391,5 +413,15 @@ bool PopGpuFeatureInfoCache(GpuFeatureInfo* gpu_feature_info) {
   g_gpu_feature_info_cache = nullptr;
   return true;
 }
+
+#if defined(OS_ANDROID)
+GLBindingsInitializationAutoLock::GLBindingsInitializationAutoLock() {
+  AcquireGLBindingsInitializationLock();
+}
+
+GLBindingsInitializationAutoLock::~GLBindingsInitializationAutoLock() {
+  ReleaseGLBindingsInitializationLock();
+}
+#endif  // OS_ANDROID
 
 }  // namespace gpu

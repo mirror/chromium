@@ -44,7 +44,6 @@ class DeferredGpuCommandService
     : public gpu::InProcessCommandBuffer::Service,
       public base::RefCountedThreadSafe<DeferredGpuCommandService> {
  public:
-  static void SetInstance();
   static DeferredGpuCommandService* GetInstance();
 
   void ScheduleTask(const base::Closure& task) override;
