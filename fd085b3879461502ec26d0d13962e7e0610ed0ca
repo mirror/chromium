@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3660bdf9_098b204e",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-01T02:39:17Z",
+      "side": 1,
+      "message": "I think it\u0027s OK. My knowledge of compilers is not enough here, but maybe we don\u0027t need the #if because the compiler might strip it away anyway?",
+      "parentUuid": "27556163_dadb0dff",
+      "range": {
+        "startLine": 549,
+        "startChar": 0,
+        "endLine": 549,
+        "endChar": 45
+      },
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01727906_8a5f2d1a",
         "filename": "device/bluetooth/bluetooth_adapter_android.cc",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "I think your suggestion is similar to what Conley meant, right? [1]\nThe problem I see with this is that storing pending callbacks doesn\u0027t really make sense for BlueZ and Windows. In order to avoid allocating space we don\u0027t need on those platforms we could wrap the specific field and logic in a #if defined .... #endif block, but that doesn\u0027t really feel clean to me. Do you have another idea?\n\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/875922/1/device/bluetooth/bluetooth_adapter_android.cc#109",
       "parentUuid": "01727906_8a5f2d1a",
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb0a114_4d8bc426",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-01T02:39:17Z",
+      "side": 1,
+      "message": "BlueZ and Windows can continue to override the SetPowered() method (the same way BlueZ overrides CreateGattConnection and doesn\u0027t implement CreateGattConnectionImpl), so we wouldn\u0027t unnecessarily save the callbacks on those platforms.\n\nWe are storing a unique_ptr right? There is only one adapter per chrome instance so I don\u0027t think an extra unique_ptr would be too bad. There is also a chance that the compiler might strip away the unused code.",
+      "parentUuid": "470cf9eb_6bd3d17e",
       "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
