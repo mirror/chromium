@@ -39,6 +39,30 @@
       "revId": "ce7b6314d906f4ac59206a0293625412dcadcb6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34fd9b8_c5303eca",
+        "filename": "chrome/browser/chromeos/login/lock/views_screen_locker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-01T04:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0127ecf6_913111c0",
+      "range": {
+        "startLine": 162,
+        "startChar": 50,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "ce7b6314d906f4ac59206a0293625412dcadcb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
