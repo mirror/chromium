@@ -38,7 +38,7 @@ class CastDeviceProvider
       bool added,
       const local_discovery::ServiceDescription& service_description) override;
   void OnDeviceRemoved(const std::string& service_name) override;
-  void OnDeviceCacheFlushed() override;
+  void OnDeviceCacheFlushed(const std::string& service_type) override;
 
  private:
   class DeviceListerDelegate;

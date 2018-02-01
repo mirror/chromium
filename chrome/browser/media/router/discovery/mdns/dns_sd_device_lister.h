@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_MDNS_DNS_SD_DEVICE_LISTER_H_
 #define CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_MDNS_DNS_SD_DEVICE_LISTER_H_
 
+#include <memory>
 #include <string>
 
 #include "base/macros.h"
@@ -35,12 +36,12 @@ class DnsSdDeviceLister
       bool added,
       const local_discovery::ServiceDescription& service_description) override;
   void OnDeviceRemoved(const std::string& service_name) override;
-  void OnDeviceCacheFlushed() override;
+  void OnDeviceCacheFlushed(const std::string& service_type) override;
 
  private:
   // The delegate to notify of changes to services.
   DnsSdDelegate* const delegate_;
-  local_discovery::ServiceDiscoveryDeviceLister device_lister_;
+  std::unique_ptr<local_discovery::ServiceDiscoveryDeviceLister> device_lister_;
   bool started_;
 
   DISALLOW_COPY_AND_ASSIGN(DnsSdDeviceLister);

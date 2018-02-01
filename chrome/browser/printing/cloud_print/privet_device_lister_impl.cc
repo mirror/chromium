@@ -14,18 +14,20 @@ PrivetDeviceListerImpl::PrivetDeviceListerImpl(
     local_discovery::ServiceDiscoveryClient* service_discovery_client,
     PrivetDeviceLister::Delegate* delegate)
     : delegate_(delegate),
-      device_lister_(this, service_discovery_client, kPrivetDefaultDeviceType) {
-}
+      device_lister_(local_discovery::ServiceDiscoveryDeviceLister::Create(
+          this,
+          service_discovery_client,
+          kPrivetDefaultDeviceType)) {}
 
 PrivetDeviceListerImpl::~PrivetDeviceListerImpl() {
 }
 
 void PrivetDeviceListerImpl::Start() {
-  device_lister_.Start();
+  device_lister_->Start();
 }
 
 void PrivetDeviceListerImpl::DiscoverNewDevices() {
-  device_lister_.DiscoverNewDevices();
+  device_lister_->DiscoverNewDevices();
 }
 
 void PrivetDeviceListerImpl::OnDeviceChanged(
@@ -43,7 +45,8 @@ void PrivetDeviceListerImpl::OnDeviceRemoved(const std::string& service_name) {
     delegate_->DeviceRemoved(service_name);
 }
 
-void PrivetDeviceListerImpl::OnDeviceCacheFlushed() {
+void PrivetDeviceListerImpl::OnDeviceCacheFlushed(
+    const std::string& service_type) {
   if (delegate_)
     delegate_->DeviceCacheFlushed();
 }

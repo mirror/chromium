@@ -102,8 +102,8 @@ class CastDeviceProvider::DeviceListerDelegate
     if (device_lister_)
       return;
     service_discovery_client_ = ServiceDiscoverySharedClient::GetInstance();
-    device_lister_.reset(new ServiceDiscoveryDeviceLister(
-        this, service_discovery_client_.get(), kCastServiceType));
+    device_lister_ = ServiceDiscoveryDeviceLister::Create(
+        this, service_discovery_client_.get(), kCastServiceType);
     device_lister_->Start();
     device_lister_->DiscoverNewDevices();
   }
@@ -122,10 +122,10 @@ class CastDeviceProvider::DeviceListerDelegate
                                      provider_, service_name));
   }
 
-  void OnDeviceCacheFlushed() override {
-    runner_->PostTask(
-        FROM_HERE,
-        base::BindOnce(&CastDeviceProvider::OnDeviceCacheFlushed, provider_));
+  void OnDeviceCacheFlushed(const std::string& service_type) override {
+    runner_->PostTask(FROM_HERE,
+                      base::BindOnce(&CastDeviceProvider::OnDeviceCacheFlushed,
+                                     provider_, service_type));
   }
 
  private:
@@ -200,7 +200,7 @@ void CastDeviceProvider::OnDeviceRemoved(const std::string& service_name) {
   service_hostname_map_.erase(it);
 }
 
-void CastDeviceProvider::OnDeviceCacheFlushed() {
+void CastDeviceProvider::OnDeviceCacheFlushed(const std::string& service_type) {
   VLOG(1) << "Device cache flushed";
   service_hostname_map_.clear();
   device_info_map_.clear();

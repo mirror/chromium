@@ -226,9 +226,8 @@ class ZeroconfPrinterDetectorImpl
     // Since we start the discoverers immediately, this must come last in the
     // constructor.
     for (const char* service : services) {
-      device_listers_.emplace_back(
-          std::make_unique<ServiceDiscoveryDeviceLister>(
-              this, discovery_client_.get(), service));
+      device_listers_.emplace_back(ServiceDiscoveryDeviceLister::Create(
+          this, discovery_client_.get(), service));
       device_listers_.back()->Start();
       device_listers_.back()->DiscoverNewDevices();
     }
@@ -285,7 +284,7 @@ class ZeroconfPrinterDetectorImpl
   }
 
   // Don't need to do anything here.
-  void OnDeviceCacheFlushed() override {}
+  void OnDeviceCacheFlushed(const std::string& service_type) override {}
 
  private:
   // Requires that printers_lock_ be held.
