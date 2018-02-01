@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "040dfc96_6c9d32cc",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-01T05:10:20Z",
+      "side": 1,
+      "message": "OK. Changed to follow the pattern in SpellCheckProvider that callers do not proceed if there\u0027s no |embedder_provider_|.",
+      "parentUuid": "4b09913e_57dd0d50",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a977ea_74c5ec93",
         "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
         "patchSetId": 47
@@ -543,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "d1210d0e_9f241c4a",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-01T05:10:20Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "8ece8087_65d1799a",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c33732b_3a686b82",
         "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
         "patchSetId": 47
@@ -587,6 +635,30 @@
       "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca62bbb_8d3107d3",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-01T05:10:20Z",
+      "side": 1,
+      "message": "Done in crrev.com/c/894475",
+      "parentUuid": "fc301de5_a1ab4fcb",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 49
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
