@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10014b2c_84bf67e6",
+        "filename": "third_party/WebKit/Source/platform/wtf/TypeTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T13:14:46Z",
+      "side": 1,
+      "message": "I renamed the flags to be a bit more generic so that we can reuse the flag if we need some distinction somewhere outside of collections.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "3d14bf84ea3c97a4d4965976b542cf3f8d3c0240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

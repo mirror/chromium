@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043eee65_14b1bfe8",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T13:14:46Z",
+      "side": 0,
+      "message": "The flags differed here but I don\u0027t see how that could\u0027ve had any impact.",
+      "range": {
+        "startLine": 274,
+        "startChar": 50,
+        "endLine": 274,
+        "endChar": 70
+      },
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
