@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac274064_13e47329",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-01T15:33:02Z",
+      "side": 1,
+      "message": "1. Why change to through CFSS::SubmitCompositorFrame()?\n2. Why immediately evict the surface each time?",
+      "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
