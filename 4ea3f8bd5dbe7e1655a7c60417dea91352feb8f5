@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1fa8c2_e778f47e",
+        "filename": "media/gpu/windows/d3d11_video_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T18:13:13Z",
+      "side": 1,
+      "message": "Isn\u0027t this handled automatically by the destination task runner? I.e. MessageLoop will do nothing if the WeakPtr has been nuked?",
+      "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
