@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3d48ccf5_90174d10",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T23:11:52Z",
+      "side": 1,
+      "message": "Yeah that makes sense.",
+      "parentUuid": "2ceacc4d_bb7fa23e",
+      "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "580707ba_79ca2a46",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 17
@@ -50,6 +68,24 @@
       "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6313458b_c48f2b44",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T23:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "580707ba_79ca2a46",
+      "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
