@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6b6d4185_82718bdd",
+        "filename": "content/browser/download/download_file_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-02-01T22:14:04Z",
+      "side": 1,
+      "message": "This somehow generates compiling error on a windows trybot. So changed this back.\n\nCompiler error link:\nhttps://msdn.microsoft.com/en-us/library/7hw7c1he.aspx",
+      "parentUuid": "06262bf6_1a529563",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88dc64e_5ee07e35",
         "filename": "content/browser/download/download_file_impl.cc",
         "patchSetId": 5
