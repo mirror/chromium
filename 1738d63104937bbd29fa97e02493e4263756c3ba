@@ -46,6 +46,30 @@
       "revId": "1738d63104937bbd29fa97e02493e4263756c3ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd03cb4_a0240726",
+        "filename": "chromeos/process_proxy/process_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-01T01:12:25Z",
+      "side": 1,
+      "message": "yes, there is:\n\n#include \"extensions/browser/extensions_browser_client.h\"\nExtensionsBrowserClient::Get()-\u003eGetUserIdHashFromContext(browser_context());\n\n(or alternatively: \n#include \"chrome/browser/chromeos/profiles/profile_helper.h\"\nchromeos::ProfileHelper::GetUserIdHashFromProfile(GetProfile());\n)\n\n(note that this will not necessarily return the active profile, but the profile associated with the context in which the crosh app is running, which *is* what you actually want here)",
+      "parentUuid": "dcbca2d8_d40a9d4a",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "1738d63104937bbd29fa97e02493e4263756c3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
