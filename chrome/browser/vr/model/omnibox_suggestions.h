@@ -12,6 +12,8 @@
 namespace vr {
 
 struct OmniboxSuggestion {
+  OmniboxSuggestion();
+
   OmniboxSuggestion(const base::string16& new_contents,
                     const base::string16& new_description,
                     const AutocompleteMatch::ACMatchClassifications&
@@ -19,16 +21,23 @@ struct OmniboxSuggestion {
                     const AutocompleteMatch::ACMatchClassifications&
                         new_description_classifications,
                     AutocompleteMatch::Type new_type,
-                    GURL new_destination);
+                    GURL new_destination,
+                    const base::string16& new_inline_autocompletion);
   OmniboxSuggestion(const OmniboxSuggestion& other);
   ~OmniboxSuggestion();
+
+  bool operator==(const OmniboxSuggestion& other) const;
+  bool operator!=(const OmniboxSuggestion& other) const {
+    return !(*this == other);
+  }
 
   base::string16 contents;
   base::string16 description;
   AutocompleteMatch::ACMatchClassifications contents_classifications;
   AutocompleteMatch::ACMatchClassifications description_classifications;
-  AutocompleteMatch::Type type;
+  AutocompleteMatch::Type type = AutocompleteMatchType::URL_WHAT_YOU_TYPED;
   GURL destination;
+  base::string16 inline_autocompletion;
 };
 
 struct OmniboxSuggestions {
@@ -39,16 +48,17 @@ struct OmniboxSuggestions {
 };
 
 // This struct represents the current request to the AutocompleteController.
-struct AutocompleteStatus {
-  bool active = false;
-  base::string16 input;
+struct AutocompleteRequest {
+  base::string16 text;
+  size_t cursor_position;
+  bool prevent_inline_autocomplete;
 
-  bool operator==(const AutocompleteStatus& other) const {
-    return active == other.active && input == other.input;
-  }
-  bool operator!=(const AutocompleteStatus& other) const {
-    return !(*this == other);
-  }
+  // bool operator==(const AutocompleteStatus& other) const {
+  // return active == other.active && input == other.input;
+  //}
+  // bool operator!=(const AutocompleteStatus& other) const {
+  // return !(*this == other);
+  //}
 };
 
 }  // namespace vr
