@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67351c2_f07acb99",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T00:14:44Z",
+      "side": 1,
+      "message": "Made one more change here re: GMB allocation failing.\n\nIf the allocation failed once, then we will have a texture id, but no image_id. So splitting it into a separate if/else block here in case we have a texture id already.",
+      "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
