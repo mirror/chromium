@@ -487,9 +487,10 @@ void Cronet_UrlRequestCallback_OnReadCompleted(
     Cronet_UrlRequestCallbackPtr self,
     Cronet_UrlRequestPtr request,
     Cronet_UrlResponseInfoPtr info,
-    Cronet_BufferPtr buffer) {
+    Cronet_BufferPtr buffer,
+    uint64_t bytesRead) {
   DCHECK(self);
-  self->OnReadCompleted(request, info, buffer);
+  self->OnReadCompleted(request, info, buffer, bytesRead);
 }
 
 void Cronet_UrlRequestCallback_OnSucceeded(Cronet_UrlRequestCallbackPtr self,
@@ -502,7 +503,7 @@ void Cronet_UrlRequestCallback_OnSucceeded(Cronet_UrlRequestCallbackPtr self,
 void Cronet_UrlRequestCallback_OnFailed(Cronet_UrlRequestCallbackPtr self,
                                         Cronet_UrlRequestPtr request,
                                         Cronet_UrlResponseInfoPtr info,
-                                        Cronet_ExceptionPtr error) {
+                                        Cronet_ErrorPtr error) {
   DCHECK(self);
   self->OnFailed(request, info, error);
 }
@@ -554,8 +555,9 @@ class Cronet_UrlRequestCallbackStub : public Cronet_UrlRequestCallback {
 
   void OnReadCompleted(Cronet_UrlRequestPtr request,
                        Cronet_UrlResponseInfoPtr info,
-                       Cronet_BufferPtr buffer) override {
-    OnReadCompletedFunc_(this, request, info, buffer);
+                       Cronet_BufferPtr buffer,
+                       uint64_t bytesRead) override {
+    OnReadCompletedFunc_(this, request, info, buffer, bytesRead);
   }
 
   void OnSucceeded(Cronet_UrlRequestPtr request,
@@ -565,7 +567,7 @@ class Cronet_UrlRequestCallbackStub : public Cronet_UrlRequestCallback {
 
   void OnFailed(Cronet_UrlRequestPtr request,
                 Cronet_UrlResponseInfoPtr info,
-                Cronet_ExceptionPtr error) override {
+                Cronet_ErrorPtr error) override {
     OnFailedFunc_(this, request, info, error);
   }
 
@@ -625,7 +627,7 @@ void Cronet_UploadDataSink_OnReadSucceeded(Cronet_UploadDataSinkPtr self,
 }
 
 void Cronet_UploadDataSink_OnReadError(Cronet_UploadDataSinkPtr self,
-                                       Cronet_ExceptionPtr error) {
+                                       Cronet_ErrorPtr error) {
   DCHECK(self);
   self->OnReadError(error);
 }
@@ -636,7 +638,7 @@ void Cronet_UploadDataSink_OnRewindSucceded(Cronet_UploadDataSinkPtr self) {
 }
 
 void Cronet_UploadDataSink_OnRewindError(Cronet_UploadDataSinkPtr self,
-                                         Cronet_ExceptionPtr error) {
+                                         Cronet_ErrorPtr error) {
   DCHECK(self);
   self->OnRewindError(error);
 }
@@ -668,13 +670,13 @@ class Cronet_UploadDataSinkStub : public Cronet_UploadDataSink {
     OnReadSucceededFunc_(this, finalChunk);
   }
 
-  void OnReadError(Cronet_ExceptionPtr error) override {
+  void OnReadError(Cronet_ErrorPtr error) override {
     OnReadErrorFunc_(this, error);
   }
 
   void OnRewindSucceded() override { OnRewindSuccededFunc_(this); }
 
-  void OnRewindError(Cronet_ExceptionPtr error) override {
+  void OnRewindError(Cronet_ErrorPtr error) override {
     OnRewindErrorFunc_(this, error);
   }
 

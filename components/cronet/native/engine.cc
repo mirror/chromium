@@ -23,6 +23,7 @@
 #include "net/base/hash_value.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace {
 
@@ -85,7 +86,10 @@ Cronet_EngineImpl::Cronet_EngineImpl()
     : init_completed_(base::WaitableEvent::ResetPolicy::MANUAL,
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
       stop_netlog_completed_(base::WaitableEvent::ResetPolicy::MANUAL,
-                             base::WaitableEvent::InitialState::NOT_SIGNALED) {}
+                             base::WaitableEvent::InitialState::NOT_SIGNALED) {
+  stream_engine_.obj = nullptr;
+  stream_engine_.annotation = nullptr;
+}
 
 Cronet_EngineImpl::~Cronet_EngineImpl() {
   Shutdown();
@@ -145,6 +149,8 @@ Cronet_RESULT Cronet_EngineImpl::StartWithParams(
   context_config_builder.bypass_public_key_pinning_for_local_trust_anchors =
       params->enablePublicKeyPinningBypassForLocalTrustAnchors;
 
+  // MockCertVerifier to use for testing purposes.
+  context_config_builder.mock_cert_verifier = std::move(mock_cert_verifier_);
   std::unique_ptr<URLRequestContextConfig> config =
       context_config_builder.Build();
 
@@ -282,6 +288,8 @@ class Cronet_EngineImpl::Callback : public CronetURLRequestContext::Callback {
   void OnStopNetLogCompleted() override;
 
  private:
+  scoped_refptr<net::URLRequestContextGetter> context_getter_;
+
   // The engine which owns context that owns |this| callback.
   Cronet_EngineImpl* const engine_;
 
@@ -303,6 +311,9 @@ void Cronet_EngineImpl::Callback::OnInitNetworkThread() {
   // being intialized on network thread.
   base::AutoLock lock(engine_->lock_);
   if (engine_->context_) {
+    // Initialize bidirectional stream engine for grpc on the network thread.
+    context_getter_ = engine_->context_->GetURLRequestContextGetter();
+    engine_->stream_engine_.obj = context_getter_.get();
     engine_->init_completed_.Signal();
   }
 }
@@ -353,8 +364,36 @@ void Cronet_EngineImpl::Callback::OnStopNetLogCompleted() {
   engine_->stop_netlog_completed_.Signal();
 }
 
+void Cronet_EngineImpl::SetMockCertVerifierForTesting(
+    std::unique_ptr<net::CertVerifier> mock_cert_verifier) {
+  CHECK(!context_);
+  mock_cert_verifier_ = std::move(mock_cert_verifier);
+}
+
+stream_engine* Cronet_EngineImpl::GetBidirectionalStreamEngine() {
+  init_completed_.Wait();
+  return &stream_engine_;
+}
+
 };  // namespace cronet
 
 CRONET_EXPORT Cronet_EnginePtr Cronet_Engine_Create() {
   return new cronet::Cronet_EngineImpl();
+}
+
+CRONET_EXPORT void Cronet_Engine_SetMockCertVerifierForTesting(
+    Cronet_EnginePtr engine,
+    void* raw_mock_cert_verifier) {
+  cronet::Cronet_EngineImpl* engine_impl =
+      static_cast<cronet::Cronet_EngineImpl*>(engine);
+  std::unique_ptr<net::CertVerifier> cert_verifier;
+  cert_verifier.reset(static_cast<net::CertVerifier*>(raw_mock_cert_verifier));
+  engine_impl->SetMockCertVerifierForTesting(std::move(cert_verifier));
+}
+
+CRONET_EXPORT stream_engine* Cronet_Engine_GetStreamEngine(
+    Cronet_EnginePtr engine) {
+  cronet::Cronet_EngineImpl* engine_impl =
+      static_cast<cronet::Cronet_EngineImpl*>(engine);
+  return engine_impl->GetBidirectionalStreamEngine();
 }
