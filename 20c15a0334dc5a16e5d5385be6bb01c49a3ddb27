@@ -16,6 +16,24 @@
       "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1374d66b_7eb702dd",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-02-01T12:43:13Z",
+      "side": 1,
+      "message": "\u003e Really sorry about this that I didn\u0027t see this before, but this seems different from how Vmaxmgv behaved before.\n\nNo problem, as this is in fact the same behaviour for this part of the code as before (even though it may seem different). I created unittests for VectorMath functions before making any modifications to the functions for the very reason that we could be sure that the behaviour does not change (and it has not changed).\n\n\u003e I checked a version from 3 months ago, and *max_p was assigned source_max, not max(*max_p, source_max).\n\nI assume you checked the full blink::VectorMath::Vmaxmgv function from 3 months ago instead of checking the second while loop within that function which is now replaced by this blink::VectorMath::SSE::Vmaxmgv.",
+      "parentUuid": "16c8a466_50473ac0",
+      "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
