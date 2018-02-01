@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "673593a4_7e20b609",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-01T16:58:47Z",
+      "side": 1,
+      "message": "I added a link to a bug. It\u0027s not easily explained in a comment, so I did a small writeup in the bug (I\u0027ve also pasted the same text below):\ncrbug.com/808061\nSuppose we have event a, which updates node a, fololowed by event b, which updates node b.\nFurthermore, let node a have a relationship with node b. For example, node a has an active descendant node b.\nEvent a and event b occur within the same event loop message.\n\nCurrently, if a client, such as BrowserAccessibility or automation, examine the tree after event a gets applied and fired, but before event b, node b will be out of date. In the above example, if the active descendant b changes an attribute via event b, the client won\u0027t see it when event a triggers.\n\nAs a consequence, events like active descendant changed cause problems if the page author happens to set attributes after setting active descendant. This isn\u0027t limited to just active descendants, but to all relations (including relations of relations).",
+      "parentUuid": "dc24fc65_5563c89a",
+      "revId": "ea45c09f7fb5a8116798ef09eb2a01ddb2c91d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24167cc5_d95a5632",
         "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T00:06:32Z",
       "side": 1,
       "message": "Sorry, I feel there is something not correctly phrased in this part of the comment.\n\"A client expects an update to date\"",
+      "revId": "ea45c09f7fb5a8116798ef09eb2a01ddb2c91d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c33b1a8_9f5191ae",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-01T16:58:47Z",
+      "side": 1,
+      "message": "Yup; typoed. Removed.",
+      "parentUuid": "24167cc5_d95a5632",
       "revId": "ea45c09f7fb5a8116798ef09eb2a01ddb2c91d53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
