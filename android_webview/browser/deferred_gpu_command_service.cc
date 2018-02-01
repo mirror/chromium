@@ -8,6 +8,7 @@
 #include "android_webview/browser/render_thread_manager.h"
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "base/no_destructor.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/synchronization/lock.h"
 #include "base/trace_event/trace_event.h"
@@ -17,12 +18,10 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/sync_point_manager.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
-#include "gpu/config/gpu_info_collector.h"
-#include "gpu/config/gpu_switches.h"
 #include "gpu/config/gpu_util.h"
 #include "ui/gl/gl_share_group.h"
-#include "ui/gl/gl_switches.h"
 
 namespace android_webview {
 
@@ -61,28 +60,24 @@ ScopedAllowGL::~ScopedAllowGL() {
 }
 
 // static
-void DeferredGpuCommandService::SetInstance() {
+DeferredGpuCommandService* DeferredGpuCommandService::GetInstance() {
+  static base::NoDestructor<base::Lock> lock;
+  base::AutoLock auto_lock(*lock);
   if (!g_service.Get().get()) {
     gpu::GPUInfo gpu_info;
-    // TODO(zmo): Instead of using CollectBasicGraphicsInfo(), we
-    // should potentially initialize GL bindings properly here, and
-    // call CollectContextGraphicsInfo() and get rid of
-    // CollectBasicGraphicsInfo(). That is, if GPU thread doesn't
-    // initialize the bindings first.
-    gpu::CollectBasicGraphicsInfo(&gpu_info);
+    gpu::GpuFeatureInfo gpu_feature_info;
     DCHECK(base::CommandLine::InitializedForCurrentProcess());
-    gpu::GpuFeatureInfo gpu_feature_info = gpu::ComputeGpuFeatureInfo(
-        gpu_info,
+    bool success = gpu::InitializeGLThreadSafe(
+        base::CommandLine::ForCurrentProcess(),
         false,  // ignore_gpu_blacklist
         false,  // disable_gpu_driver_bug_workarounds
-        false,  // log_gpu_control_list_decisions
-        base::CommandLine::ForCurrentProcess(), nullptr);
+        false,  // log_gpu_control_list_decisions,
+        &gpu_info, &gpu_feature_info);
+    if (!success) {
+      LOG(FATAL) << "gpu::InitializeGLThreadSafe() failed.";
+    }
     g_service.Get() = new DeferredGpuCommandService(gpu_info, gpu_feature_info);
   }
-}
-
-// static
-DeferredGpuCommandService* DeferredGpuCommandService::GetInstance() {
   DCHECK(g_service.Get().get());
   return g_service.Get().get();
 }
