@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "084e19ad_40d9ccd4",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-02-01T18:51:05Z",
+      "side": 1,
+      "message": "crbug.com/806394 also mentions safe browsing, so how is safe_browsing different here? (and why not use the same solution as safebrowsing here whatever that is?)",
+      "revId": "b4414979c410d190183c3beb05952e24844e8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
