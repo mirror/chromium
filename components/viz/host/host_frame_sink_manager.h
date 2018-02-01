@@ -73,6 +73,7 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // Registers |frame_sink_id| will be used. This must be called before
   // CreateCompositorFrameSink(Support) is called.
   void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           bool report_synchronization_events,
                            HostFrameSinkClient* client);
 
   // Invalidates |frame_sink_id| which cleans up any unsatisified surface
@@ -157,6 +158,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     // The client to be notified of changes to this FrameSink.
     HostFrameSinkClient* client = nullptr;
 
+    // If the HostFrameSinkClient would like to be notified of synchronization
+    // events pertaining to the FrameSink.
+    bool report_synchronization_events = false;
+
     // The name of the HostFrameSinkClient used for debug purposes.
     std::string debug_label;
 
@@ -195,6 +200,8 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const SurfaceId& surface_id) override;
+  void OnSynchronizationEvent(const FrameSinkId& frame_sink_id,
+                              base::TimeDelta duration) override;
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override;
   void OnClientConnectionClosed(const FrameSinkId& frame_sink_id) override;
   void OnAggregatedHitTestRegionListUpdated(

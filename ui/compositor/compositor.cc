@@ -76,7 +76,8 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   if (context_factory_private) {
     auto* host_frame_sink_manager =
         context_factory_private_->GetHostFrameSinkManager();
-    host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+    host_frame_sink_manager->RegisterFrameSinkId(
+        frame_sink_id_, false /* report_synchronization_events */, this);
 #if DCHECK_IS_ON()
     host_frame_sink_manager->SetFrameSinkDebugLabel(frame_sink_id_,
                                                     "Compositor");
@@ -604,6 +605,8 @@ void Compositor::OnFirstSurfaceActivation(
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }
+
+void Compositor::OnSynchronizationEvent(base::TimeDelta duration) {}
 
 void Compositor::OnFrameTokenChanged(uint32_t frame_token) {
   // TODO(yiyix, fsamuel): Implement frame token propagation for Compositor.

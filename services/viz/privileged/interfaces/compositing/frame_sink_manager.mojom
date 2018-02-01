@@ -51,8 +51,12 @@ interface FrameSinkManager {
   // Starts the scope of temporary references tied to this |frame_sink_id|.
   // Temporary references tied to this |frame_sink_id| will be dropped on
   // InvalidateFrameSinkId.This must be called before Create(Root)
-  // CompositorFrameSink() is called.
-  RegisterFrameSinkId(FrameSinkId frame_sink_id);
+  // CompositorFrameSink() is called. If |report_synchronization_events| is
+  // true, then FrameSinkManger will report when a synchronization event
+  // happens for this client along with its duration (a CompositorFrame from
+  // |frame_sink_id| is blocked on dependencies).
+  RegisterFrameSinkId(FrameSinkId frame_sink_id,
+                      bool report_synchronization_events);
 
   // Invalidates |frame_sink_id| which cleans up any unsatisified surface
   // sequences or dangling temporary references assigned to it. If there is a
@@ -125,6 +129,12 @@ interface FrameSinkManager {
 interface FrameSinkManagerClient {
   // Called by the frame sink manager when a new Surface is created.
   OnSurfaceCreated(SurfaceId surface_id);
+
+  // Called by the frame sink manager when a CompositorFrame with dependencies
+  // activates. It may have activated due to the resolution of its dependencies
+  // or because a deadline passed.
+  OnSynchronizationEvent(FrameSinkId frame_sink_id,
+                         mojo.common.mojom.TimeDelta duration);
 
   // Called by the frame sink manager when a CompositorFrame with a new
   // SurfaceId activates for the first time.

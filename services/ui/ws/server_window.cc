@@ -507,6 +507,8 @@ void ServerWindow::OnFirstSurfaceActivation(
   delegate_->OnFirstSurfaceActivation(surface_info, this);
 }
 
+void ServerWindow::OnSynchronizationEvent(base::TimeDelta duration) {}
+
 void ServerWindow::OnFrameTokenChanged(uint32_t frame_token) {
   // TODO(yiyix, fsamuel): Implement frame token propagation for Mus. See
   // crbug.com/771331
