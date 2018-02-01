@@ -183,5 +183,25 @@ TEST_F(CallbackTest, CallbackHasLastRefOnContainingObject) {
   ASSERT_TRUE(deleted);
 }
 
+TEST_F(CallbackTest, NullCallback) {
+  OnceCallback<void(int, int)> cb1(null_callback);
+  EXPECT_FALSE(cb1);
+
+  RepeatingCallback<void(int, int)> cb2(null_callback);
+  EXPECT_FALSE(cb2);
+}
+
+TEST_F(CallbackTest, NoopCallback) {
+  OnceCallback<void(int, int)> cb1(noop_callback);
+  EXPECT_TRUE(cb1);
+  EXPECT_TRUE(cb1.IsCancelled());
+  std::move(cb1).Run(1, 2);
+
+  RepeatingCallback<void(int, int)> cb2(noop_callback);
+  EXPECT_TRUE(cb2);
+  EXPECT_TRUE(cb2.IsCancelled());
+  cb2.Run(1, 2);
+}
+
 }  // namespace
 }  // namespace base

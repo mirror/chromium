@@ -65,6 +65,16 @@ class BASE_EXPORT BindStateBase
 
   using InvokeFuncStorage = void(*)();
 
+  // Creates a BindState instance for No-op callback, that does nothing on
+  // its invocation, and its IsCancelled() always returns true.
+  template <typename... Args>
+  static BindStateBase* MakeNoopBindState() {
+    using PolymorphicInvoke = void (*)(BindStateBase*, Args...);
+    PolymorphicInvoke invoker = [](BindStateBase*, Args...) {};
+    return MakeNoopBindStateInternal(
+        reinterpret_cast<BindStateBase::InvokeFuncStorage>(invoker));
+  }
+
  private:
   BindStateBase(InvokeFuncStorage polymorphic_invoke,
                 void (*destructor)(const BindStateBase*));
@@ -73,6 +83,8 @@ class BASE_EXPORT BindStateBase
                 bool (*is_cancelled)(const BindStateBase*));
 
   ~BindStateBase() = default;
+
+  friend void DestroyForNoopBindState(const BindStateBase*);
 
   friend struct BindStateBaseRefCountTraits;
   friend class RefCountedThreadSafe<BindStateBase, BindStateBaseRefCountTraits>;
@@ -88,6 +100,8 @@ class BASE_EXPORT BindStateBase
   bool IsCancelled() const {
     return is_cancelled_(this);
   }
+
+  static BindStateBase* MakeNoopBindStateInternal(InvokeFuncStorage);
 
   // In C++, it is safe to cast function pointers to function pointers of
   // another type. It is not okay to use void*. We create a InvokeFuncStorage
@@ -137,6 +151,7 @@ class BASE_EXPORT CallbackBase {
   // Allow initializing of |bind_state_| via the constructor to avoid default
   // initialization of the scoped_refptr.
   explicit CallbackBase(BindStateBase* bind_state);
+  CallbackBase();
 
   InvokeFuncStorage polymorphic_invoke() const {
     return bind_state_->polymorphic_invoke_;
@@ -161,6 +176,7 @@ class BASE_EXPORT CallbackBaseCopyable : public CallbackBase {
  protected:
   explicit CallbackBaseCopyable(BindStateBase* bind_state)
       : CallbackBase(bind_state) {}
+  CallbackBaseCopyable() = default;
   ~CallbackBaseCopyable() = default;
 };
 
