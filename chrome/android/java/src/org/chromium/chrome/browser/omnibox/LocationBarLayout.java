@@ -59,6 +59,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
@@ -240,6 +241,9 @@ public class LocationBarLayout extends FrameLayout
     private DeferredOnSelectionRunnable mDeferredOnSelection;
 
     private WebContentsObserver mVoiceSearchWebContentsObserver;
+
+    private boolean mOmniboxVoiceSearchAlwaysVisible;
+    private float mLastUrlFocusPercent;
 
     private static abstract class DeferredOnSelectionRunnable implements Runnable {
         protected final OmniboxSuggestion mSuggestion;
@@ -890,6 +894,10 @@ public class LocationBarLayout extends FrameLayout
         mDeferredNativeRunnables.clear();
 
         updateVisualsForState();
+
+        mOmniboxVoiceSearchAlwaysVisible =
+                ChromeFeatureList.isEnabled(ChromeFeatureList.OMNIBOX_VOICE_SEARCH_ALWAYS_VISIBLE);
+        updateMicButtonVisibility(mLastUrlFocusPercent);
     }
 
     /**
@@ -1537,10 +1545,11 @@ public class LocationBarLayout extends FrameLayout
             for (int i = urlContainerChildIndex + 1; i < getChildCount(); i++) {
                 View childView = getChildAt(i);
                 if (childView.getVisibility() != GONE) {
-                    LayoutParams childLayoutParams = (LayoutParams) childView.getLayoutParams();
+                    MarginLayoutParams childLayoutParams =
+                            (MarginLayoutParams) childView.getLayoutParams();
+                    int childWidth = Math.max(childLayoutParams.width, childView.getWidth());
                     urlContainerMarginEnd = Math.max(urlContainerMarginEnd,
-                            childLayoutParams.width
-                                    + ApiCompatibilityUtils.getMarginStart(childLayoutParams)
+                            childWidth + ApiCompatibilityUtils.getMarginStart(childLayoutParams)
                                     + ApiCompatibilityUtils.getMarginEnd(childLayoutParams));
                 }
             }
@@ -2522,14 +2531,24 @@ public class LocationBarLayout extends FrameLayout
 
     /**
      * Updates the display of the mic button.
-     * @param urlFocusChangePercent The completeion percentage of the URL focus change animation.
+     *
+     * @param urlFocusChangePercent The completion percentage of the URL focus change animation.
      */
     protected void updateMicButtonVisibility(float urlFocusChangePercent) {
-        boolean visible = !shouldShowDeleteButton();
-        boolean showMicButton = mVoiceSearchEnabled && visible
-                && (mUrlBar.hasFocus() || mUrlFocusChangeInProgress
-                        || urlFocusChangePercent > 0f);
-        mMicButton.setVisibility(showMicButton ? VISIBLE : GONE);
+        // We cache the URL focus animation's completion percentage in the case of a race condition
+        // between a call to this before native is loaded, and the call to this once it is loaded,
+        // to avoid displaying the mic button based on a stale value.
+        mLastUrlFocusPercent = urlFocusChangePercent;
+
+        if (mNativeInitialized) {
+            boolean visible = mOmniboxVoiceSearchAlwaysVisible || !shouldShowDeleteButton();
+            boolean showMicButton = mVoiceSearchEnabled && visible
+                    && (mUrlBar.hasFocus() || mUrlFocusChangeInProgress
+                               || mLastUrlFocusPercent > 0f);
+            mMicButton.setVisibility(showMicButton ? VISIBLE : GONE);
+        } else {
+            mMicButton.setVisibility(GONE);
+        }
     }
 
     /**
