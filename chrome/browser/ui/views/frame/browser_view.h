@@ -13,6 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
@@ -109,6 +110,9 @@ class BrowserView : public BrowserWindow,
 
   void set_frame(BrowserFrame* frame) { frame_ = frame; }
   BrowserFrame* frame() const { return frame_; }
+
+  // Notifies observers that the current show state may have changed.
+  void NotifyShowStateChanged();
 
   // Returns a pointer to the BrowserView* interface implementation (an
   // instance of this object, typically) for a given native window, or null if
@@ -375,6 +379,8 @@ class BrowserView : public BrowserWindow,
           callback) override;
   std::string GetWorkspace() const override;
   bool IsVisibleOnAllWorkspaces() const override;
+  void AddObserver(BrowserWindowObserver* observer) override;
+  void RemoveObserver(BrowserWindowObserver* observer) override;
 
   BookmarkBarView* GetBookmarkBarView() const;
   LocationBarView* GetLocationBarView() const;
@@ -729,6 +735,8 @@ class BrowserView : public BrowserWindow,
   std::unique_ptr<BrowserWindowHistogramHelper> histogram_helper_;
 
   std::unique_ptr<FullscreenControlHost> fullscreen_control_host_;
+
+  base::ObserverList<BrowserWindowObserver> observers_;
 
   mutable base::WeakPtrFactory<BrowserView> activate_modal_dialog_factory_{
       this};

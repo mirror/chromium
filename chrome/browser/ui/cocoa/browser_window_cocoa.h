@@ -6,7 +6,9 @@
 #define CHROME_BROWSER_UI_COCOA_BROWSER_WINDOW_COCOA_H_
 
 #include "base/mac/scoped_nsobject.h"
+#include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "chrome/browser/extensions/extension_keybinding_registry.h"
 #include "chrome/browser/signin/chrome_signin_helper.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -145,6 +147,8 @@ class BrowserWindowCocoa
       const extensions::Extension* extension,
       const base::Callback<void(ImeWarningBubblePermissionStatus status)>&
           callback) override;
+  void AddObserver(BrowserWindowObserver* observer) override;
+  void RemoveObserver(BrowserWindowObserver* observer) override;
 
   // Overridden from ExtensionKeybindingRegistry::Delegate:
   extensions::ActiveTabPermissionGranter* GetActiveTabPermissionGranter()
@@ -157,6 +161,10 @@ class BrowserWindowCocoa
   // TabAlertState::AUDIO_PLAYING or TabAlertState::AUDIO_MUTING then sets
   // the window's title to reflect that.
   void UpdateAlertState(TabAlertState alert_state);
+
+  // Called by the BrowserWindowController when the window show state changes.
+  // TODO(michaelpg): Not currently called for entering/exiting fullscreen.
+  void ShowStateChanged();
 
   // Returns the cocoa-world BrowserWindowController
   BrowserWindowController* cocoa_controller() const { return controller_; }
@@ -185,6 +193,10 @@ class BrowserWindowCocoa
   // which can be audio playing, muting or none (determined by alert state of
   // tabs.
   TabAlertState alert_state_;
+
+  base::ObserverList<BrowserWindowObserver> observers_;
+
+  DISALLOW_COPY_AND_ASSIGN(BrowserWindowCocoa);
 };
 
 #endif  // CHROME_BROWSER_UI_COCOA_BROWSER_WINDOW_COCOA_H_
