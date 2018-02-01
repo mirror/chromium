@@ -209,7 +209,7 @@ void CrossProcessFrameConnector::BubbleScrollEvent(
   auto* event_router =
       parent_view->GetRenderWidgetHostImpl()->delegate()->GetInputEventRouter();
 
-  gfx::Vector2d offset_from_parent = frame_rect_in_dip_.OffsetFromOrigin();
+  gfx::Vector2d offset_from_parent = frame_rects_->in_dip_.OffsetFromOrigin();
   blink::WebGestureEvent resent_gesture_event(event);
   // TODO(kenrb, wjmaclean): Do we need to account for transforms here?
   // See https://crbug.com/626020.
@@ -424,19 +424,29 @@ void CrossProcessFrameConnector::SetVisibilityForChildViews(
 
 void CrossProcessFrameConnector::SetRect(
     const gfx::Rect& frame_rect_in_pixels) {
-  gfx::Rect old_rect = frame_rect_in_pixels_;
+  gfx::Rect old_rect;
+  bool frame_rect_changed = false;
+  if (frame_rects_)
+    old_rect = frame_rects_->in_pixels_;
+  else
+    frame_rect_changed = true;
+
   FrameConnectorDelegate::SetRect(frame_rect_in_pixels);
 
+  if (!frame_rect_changed && (old_rect.x() != frame_rects_->in_pixels_.x() ||
+                              old_rect.y() != frame_rects_->in_pixels_.y())) {
+    frame_rect_changed = true;
+  }
+
   if (view_) {
-    view_->SetBounds(frame_rect_in_dip_);
+    view_->SetBounds(frame_rects_->in_dip_);
 
     // Other local root frames nested underneath this one implicitly have their
     // view rects changed when their ancestor is repositioned, and therefore
     // need to have their screen rects updated.
     FrameTreeNode* proxy_node =
         frame_proxy_in_parent_renderer_->frame_tree_node();
-    if (old_rect.x() != frame_rect_in_pixels_.x() ||
-        old_rect.y() != frame_rect_in_pixels_.y()) {
+    if (frame_rect_changed) {
       for (FrameTreeNode* node :
            proxy_node->frame_tree()->SubtreeNodes(proxy_node)) {
         if (node != proxy_node && node->current_frame_host()->is_local_root())
@@ -448,8 +458,7 @@ void CrossProcessFrameConnector::SetRect(
 
 void CrossProcessFrameConnector::ResetFrameRect() {
   local_surface_id_ = viz::LocalSurfaceId();
-  frame_rect_in_pixels_ = gfx::Rect();
-  frame_rect_in_dip_ = gfx::Rect();
+  frame_rects_.reset();
 }
 
 void CrossProcessFrameConnector::OnUpdateRenderThrottlingStatus(

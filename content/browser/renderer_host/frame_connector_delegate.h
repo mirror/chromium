@@ -73,11 +73,11 @@ class CONTENT_EXPORT FrameConnectorDelegate {
 
   // Return the rect in DIP that the RenderWidgetHostViewChildFrame's content
   // will render into.
-  const gfx::Rect& frame_rect_in_dip() { return frame_rect_in_dip_; }
+  const gfx::Rect& frame_rect_in_dip() { return frame_rects_->in_dip_; }
 
   // Return the rect in pixels that the RenderWidgetHostViewChildFrame's content
   // will render into.
-  const gfx::Rect& frame_rect_in_pixels() { return frame_rect_in_pixels_; }
+  const gfx::Rect& frame_rect_in_pixels() { return frame_rects_->in_pixels_; }
 
   // Request that the platform change the mouse cursor when the mouse is
   // positioned over this view's content.
@@ -176,10 +176,6 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   // nested child RWHVCFs inside it.
   virtual void SetVisibilityForChildViews(bool visible) const {}
 
-  // Called to resize the child renderer. |frame_rect| is in pixels if
-  // zoom-for-dsf is enabled, and in DIP if not.
-  virtual void SetRect(const gfx::Rect& frame_rect);
-
 #if defined(USE_AURA)
   // Embeds a WindowTreeClient in the parent. This results in the parent
   // creating a window in the ui server so that this can render to the screen.
@@ -192,21 +188,35 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
                                      uint64_t sequence_number) {}
 
+  bool has_frame_rect() const { return !!frame_rects_; }
+
  protected:
+  // Called to resize the child renderer. |frame_rect| is in pixels if
+  // zoom-for-dsf is enabled, and in DIP if not.
+  virtual void SetRect(const gfx::Rect& frame_rect);
+
   explicit FrameConnectorDelegate(bool use_zoom_for_device_scale_factor);
 
-  virtual ~FrameConnectorDelegate() {}
+  virtual ~FrameConnectorDelegate();
 
   // This is here rather than in the implementation class so that
   // ViewportIntersection() can return a reference.
   gfx::Rect viewport_intersection_rect_;
 
   ScreenInfo screen_info_;
-  gfx::Rect frame_rect_in_dip_;
-  gfx::Rect frame_rect_in_pixels_;
+  struct FrameRects {
+    FrameRects(const gfx::Rect& in_dip, const gfx::Rect& in_pixels)
+        : in_dip_(in_dip), in_pixels_(in_pixels) {}
+    gfx::Rect in_dip_;
+    gfx::Rect in_pixels_;
+  };
+  base::Optional<FrameRects> frame_rects_;
   viz::LocalSurfaceId local_surface_id_;
 
   const bool use_zoom_for_device_scale_factor_;
+
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewChildFrameZoomForDSFTest,
+                           PhysicalBackingSize);
 };
 
 }  // namespace content
