@@ -54,8 +54,10 @@ void HostFrameSinkManager::SetConnectionLostCallback(
   connection_lost_callback_ = std::move(callback);
 }
 
-void HostFrameSinkManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
-                                               HostFrameSinkClient* client) {
+void HostFrameSinkManager::RegisterFrameSinkId(
+    const FrameSinkId& frame_sink_id,
+    bool report_synchronization_events,
+    HostFrameSinkClient* client) {
   DCHECK(frame_sink_id.is_valid());
   DCHECK(client);
 
@@ -63,7 +65,9 @@ void HostFrameSinkManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
   DCHECK(!data.IsFrameSinkRegistered());
   DCHECK(!data.HasCompositorFrameSinkData());
   data.client = client;
-  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+  data.report_synchronization_events = report_synchronization_events;
+  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id,
+                                           report_synchronization_events);
 }
 
 void HostFrameSinkManager::InvalidateFrameSinkId(
@@ -317,8 +321,10 @@ void HostFrameSinkManager::RegisterAfterConnectionLoss() {
   for (auto& map_entry : frame_sink_data_map_) {
     const FrameSinkId& frame_sink_id = map_entry.first;
     FrameSinkData& data = map_entry.second;
-    if (data.client)
-      frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+    if (data.client) {
+      frame_sink_manager_->RegisterFrameSinkId(
+          frame_sink_id, data.report_synchronization_events);
+    }
     if (!data.debug_label.empty()) {
       frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id,
                                                   data.debug_label);
@@ -339,6 +345,21 @@ void HostFrameSinkManager::RegisterAfterConnectionLoss() {
 void HostFrameSinkManager::OnSurfaceCreated(const SurfaceId& surface_id) {
   if (assign_temporary_references_)
     PerformAssignTemporaryReference(surface_id);
+}
+
+void HostFrameSinkManager::OnSynchronizationEvent(
+    const FrameSinkId& frame_sink_id,
+    base::TimeDelta duration) {
+  auto it = frame_sink_data_map_.find(frame_sink_id);
+
+  // If we've received a bogus or stale FrameSinkId from Viz then just ignore
+  // it.
+  if (it == frame_sink_data_map_.end())
+    return;
+
+  FrameSinkData& frame_sink_data = it->second;
+  if (frame_sink_data.client)
+    frame_sink_data.client->OnSynchronizationEvent(duration);
 }
 
 void HostFrameSinkManager::OnFirstSurfaceActivation(

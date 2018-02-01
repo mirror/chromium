@@ -116,7 +116,7 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
     provider_ = std::make_unique<OffscreenCanvasProviderImpl>(
         host_frame_sink_manager_.get(), kRendererClientId);
 
-    host_frame_sink_manager_->RegisterFrameSinkId(kFrameSinkParent,
+    host_frame_sink_manager_->RegisterFrameSinkId(kFrameSinkParent, false,
                                                   &host_frame_sink_client_);
   }
   void TearDown() override {

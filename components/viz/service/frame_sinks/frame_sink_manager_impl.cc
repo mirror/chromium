@@ -86,9 +86,12 @@ void FrameSinkManagerImpl::SetLocalClient(
 }
 
 void FrameSinkManagerImpl::RegisterFrameSinkId(
-    const FrameSinkId& frame_sink_id) {
+    const FrameSinkId& frame_sink_id,
+    bool report_synchronization_events) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_manager_.RegisterFrameSinkId(frame_sink_id);
+  if (report_synchronization_events)
+    report_synchronization_events_.insert(frame_sink_id);
   if (video_detector_)
     video_detector_->OnFrameSinkIdRegistered(frame_sink_id);
 }
@@ -97,6 +100,7 @@ void FrameSinkManagerImpl::InvalidateFrameSinkId(
     const FrameSinkId& frame_sink_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_manager_.InvalidateFrameSinkId(frame_sink_id);
+  report_synchronization_events_.erase(frame_sink_id);
   if (video_detector_)
     video_detector_->OnFrameSinkIdInvalidated(frame_sink_id);
 
@@ -405,7 +409,16 @@ void FrameSinkManagerImpl::OnFirstSurfaceActivation(
     client_->OnFirstSurfaceActivation(surface_info);
 }
 
-void FrameSinkManagerImpl::OnSurfaceActivated(const SurfaceId& surface_id) {}
+void FrameSinkManagerImpl::OnSurfaceActivated(
+    const SurfaceId& surface_id,
+    base::Optional<base::TimeDelta> duration) {
+  // If |duration| is populated then there was a synchronization event prior
+  // to this activation.
+  if (duration && client_ &&
+      report_synchronization_events_.count(surface_id.frame_sink_id())) {
+    client_->OnSynchronizationEvent(surface_id.frame_sink_id(), *duration);
+  }
+}
 
 bool FrameSinkManagerImpl::OnSurfaceDamaged(const SurfaceId& surface_id,
                                             const BeginFrameAck& ack) {

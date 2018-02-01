@@ -249,6 +249,7 @@ class ServerWindow : public viz::HostFrameSinkClient {
  private:
   // viz::HostFrameSinkClient implementation.
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
+  void OnSynchronizationEvent(base::TimeDelta duration) override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
 
   // Implementation of removing a window. Doesn't send any notification.

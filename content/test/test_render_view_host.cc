@@ -73,7 +73,7 @@ TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
   // Not all tests initialize or need an image transport factory.
   if (ImageTransportFactory::GetInstance()) {
     frame_sink_id_ = AllocateFrameSinkId();
-    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, false, this);
 #if DCHECK_IS_ON()
     GetHostFrameSinkManager()->SetFrameSinkDebugLabel(
         frame_sink_id_, "TestRenderWidgetHostView");
@@ -226,6 +226,9 @@ void TestRenderWidgetHostView::OnFirstSurfaceActivation(
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }
+
+void TestRenderWidgetHostView::OnSynchronizationEvent(
+    base::TimeDelta duration) {}
 
 void TestRenderWidgetHostView::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
