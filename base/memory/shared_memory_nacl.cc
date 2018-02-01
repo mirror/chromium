@@ -108,6 +108,14 @@ bool SharedMemory::Unmap() {
   return true;
 }
 
+void* SharedMemory::TakeMemory() {
+  void* memory = memory_;
+  memory_ = nullptr;
+  mapped_size_ = 0;
+  mapped_id_ = UnguessableToken();
+  return memory;
+}
+
 SharedMemoryHandle SharedMemory::handle() const {
   SharedMemoryHandle handle_copy = shm_;
   handle_copy.SetOwnershipPassesToIPC(false);
