@@ -34,6 +34,104 @@
       "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5287e8e4_a1bee5c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:11:47Z",
+      "side": 1,
+      "message": "Not sure if suggestion will help because I don\u0027t know how much test coverage there is for that code, but maybe we can change the #if block to:\n\n#if defined(GOOGLE_CHROME_BUILD)\n  seed \u003d ui::ResourceBundle::GetSharedInstance()\n             .GetRawDataResource(IDR_PREF_HASH_SEED_BIN)\n             .as_string();\n#else\n  DCHECK(!ui::ResourceBundle::GetSharedInstance()\n             .GetRawDataResource(IDR_SOMETHING_UNLIKELY_TO_BE_REMOVED)\n             .as_string().empty());\n#endif",
+      "parentUuid": "e13a9e4a_18f61a8d",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d257f2a_6db50147",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:11:47Z",
+      "side": 1,
+      "message": "Is this TODO still valid, given the ctor below no longer takes a bool?",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432ff6a9_3e321e9c",
+        "filename": "base/deferred_sequenced_task_runner_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:11:47Z",
+      "side": 1,
+      "message": "We lost runner1. ;)",
+      "range": {
+        "startLine": 180,
+        "startChar": 45,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8da9f1_194bac57",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:11:47Z",
+      "side": 1,
+      "message": "nit: keep the double-colon together.",
+      "range": {
+        "startLine": 719,
+        "startChar": 78,
+        "endLine": 719,
+        "endChar": 79
+      },
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2427f8_bee550b9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:11:47Z",
+      "side": 1,
+      "message": "Since |lock_| is now mutable, this can be a const method.",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
