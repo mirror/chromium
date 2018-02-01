@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30490c50_0ae6cdb3",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4287e73_a084e8cf",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf0ee99_bf742d21",
         "filename": "chrome/browser/ui/browser_window_observer.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770b8b4e_c5070949",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf0ee99_bf742d21",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "3cd32627_057648ae",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:22:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb995419_41831930",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbc62a84_70730413",
         "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.h",
         "patchSetId": 2
@@ -186,6 +258,30 @@
       "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8097c7a_66f00e7d",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbc62a84_70730413",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 2
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +391,30 @@
       "side": 1,
       "message": "That\u0027s a bummer!\nWindows and Linux use DesktopNativeWidgetAura, with platform implementations in DesktopWindowTreeHostWin and DesktopWindowTreeHostLinux. I think you\u0027ll need to add some logic to both places. If you only care about ChromeOS you can file bugs for the other implementations and add TODOs.",
       "parentUuid": "31bc4029_00198dcc",
+      "range": {
+        "startLine": 844,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 1
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfa7bc6_b29adab0",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:22:35Z",
+      "side": 1,
+      "message": "Okay, in PS3, I make a couple DesktopWindowTreeHosts start calling their NativeWidgetDelegate\u0027s OnNativeWidgetWindowShowStateChanged() method, which ultimately calls through to the BrowserFrame widget. This way the widget tells the BrowserView when its state changes.\n\nI may need to make similar changes to DesktopWindowTreeHostMus, I\u0027m not sure.\n\nThe Cocoa stuff is sort of guesswork and observing fullscreen changes looks tricky, but if we can resolve the rest of the CL, I might leave that as a TODO.\n\nThese changes really need to be tested so I\u0027ll add browser tests, too.",
+      "parentUuid": "affedad7_fc2c1f79",
       "range": {
         "startLine": 844,
         "startChar": 0,
