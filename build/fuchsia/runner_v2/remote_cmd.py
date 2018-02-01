@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 _SSH = ['ssh']
-_SCP = ['scp']
+_SFTP = ['sftp']
 
 COPY_TO_TARGET = 0
 COPY_FROM_TARGET = 1
@@ -78,18 +78,25 @@ def RunScp(config_path, host, port, source, dest, direction):
 
   Function will raise an assertion if a failure occurred."""
 
-  scp_command = _SCP[:]
+  sftp = _SFTP[:]
   if ':' in host:
-    scp_command.append('-6')
+    sftp.append('-6')
     host = '[' + host + ']'
   if logging.getLogger().getEffectiveLevel() == logging.DEBUG:
-    scp_command.append('-v')
+    sftp.append('-v')
+
+  sftp.extend(['-B', '240000'])
+  sftp.extend(['-F', config_path, '-P', str(port), host])
 
   if direction == COPY_TO_TARGET:
-    dest = "%s:%s" % (host, dest)
+    sftp_command = "put %s %s" % (source, dest)
   else:
-    source = "%s:%s" % (host, source)
-  scp_command += ['-F', config_path, '-P', str(port), source, dest]
+    sftp_command = "get %s %s" % (source, dest)
 
-  logging.debug(' '.join(scp_command))
-  subprocess.check_call(scp_command, stdout=open(os.devnull, 'w'))
+  logging.debug('%s (SFTP commands: %s)' % (' '.join(sftp), sftp_command))
+  proc = subprocess.Popen(sftp, stdout=open(os.devnull, 'w'),
+                          stdin=subprocess.PIPE)
+  proc.stdin.write(sftp_command + '\n')
+  proc.stdin.close()
+  proc.wait()
+
