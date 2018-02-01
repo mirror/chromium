@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feefc593_6654675d",
+        "filename": "ui/touch_selection/touch_selection_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-02-01T06:49:54Z",
+      "side": 1,
+      "message": "Could you use this function to test OnDragUpdate() directly instead of going through GetActiveHandleBoundPoint()? That way you could also test that the y-coordinate comes from the SelectionBound and not the drag position. It would also mean you wouldn\u0027t need to modify TouchSelectionControllerTestApi.",
+      "revId": "d4068a5f3e8633a8f788a1ca8ec50b57e23f1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
