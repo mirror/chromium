@@ -22,6 +22,30 @@
       "revId": "0970adc03bd3589eec4ef3f08e33231444ea37bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba0b2aa_efaf3197",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T23:19:18Z",
+      "side": 1,
+      "message": "Hmm... I think I\u0027d prefer we just modify TestExtensionRegistryObserver to have a WaitForExtensionInstalled() method.  It\u0027s pretty easy to add it in, and it would make these less subtle - and I can imagine that other tests would benefit in the future, too, rather than needing WillBeInstalled + RunUntilIdle.  WDYT?",
+      "parentUuid": "4dbcdebb_8115cbb5",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 34
+      },
+      "revId": "0970adc03bd3589eec4ef3f08e33231444ea37bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
