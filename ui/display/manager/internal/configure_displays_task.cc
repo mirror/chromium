@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/display/manager/chromeos/configure_displays_task.h"
+#include "ui/display/manager/internal/configure_displays_task.h"
 
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/containers/queue.h"
-#include "ui/display/manager/chromeos/display_util.h"
+#include "ui/display/manager/internal/display_util.h"
 #include "ui/display/types/display_snapshot.h"
 #include "ui/display/types/native_display_delegate.h"
 

@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "third_party/cros_system_api/dbus/service_constants.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/display/manager/internal/display_configurator.h"
 #include "ui/display/types/display_constants.h"
 
 namespace display {

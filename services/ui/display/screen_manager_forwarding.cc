@@ -7,7 +7,9 @@
 #include <utility>
 
 #include "base/bind.h"
+#if defined(OS_CHROMEOS)
 #include "chromeos/system/devicemode.h"
+#endif
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "ui/display/screen_base.h"
 #include "ui/display/types/display_constants.h"
@@ -104,10 +106,12 @@ void ScreenManagerForwarding::Initialize(
   native_display_delegate_->Initialize();
 
   // FakeDisplayController is only applicable when not running on a CrOS device.
+#if defined(OS_CHROMEOS)
   if (!chromeos::IsRunningAsSystemCompositor()) {
     fake_display_controller_ =
         native_display_delegate_->GetFakeDisplayController();
   }
+#endif
 
   // Provide the list of display snapshots initially. ForwardingDisplayDelegate
   // will wait synchronously for this.
