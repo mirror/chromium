@@ -46,6 +46,30 @@
       "revId": "052a09014b2018e2a1e3b7f046ea9ad3355b831e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008571c5_f1fdc667",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-02-01T18:04:57Z",
+      "side": 1,
+      "message": "I\u0027ll put together a CL to fix this (the import and the use of win32file) and add a \"with\" statement to wrap the output_file handle.",
+      "parentUuid": "b933cbed_198df6a4",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "052a09014b2018e2a1e3b7f046ea9ad3355b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
