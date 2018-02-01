@@ -239,6 +239,9 @@ class PageAllocator : public v8::PageAllocator {
   }
 };
 
+base::LazyInstance<PageAllocator>::Leaky g_page_allocator =
+    LAZY_INSTANCE_INITIALIZER;
+
 #endif  // BUILDFLAG(USE_PARTITION_ALLOC)
 
 }  // namespace
@@ -313,8 +316,7 @@ V8Platform::~V8Platform() = default;
 
 #if BUILDFLAG(USE_PARTITION_ALLOC)
 v8::PageAllocator* V8Platform::GetPageAllocator() {
-  static base::NoDestructor<PageAllocator> page_allocator;
-  return page_allocator.get();
+  return g_page_allocator.Pointer();
 }
 
 void V8Platform::OnCriticalMemoryPressure() {
