@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<body>
+<script>
+document.body.appendChild(document.createTextNode("FAIL: external sync script should not be run"));
+</script>
+<script src="/feature-policy/experimental-features/resources/unreachable-script.js"></script>
+<script async src="feature-policy/experimental-features/resources/reachable-script.js"></script>
+<script defer src="feature-policy/experimental-features/resources/reachable-script.js"></script>
+</body>

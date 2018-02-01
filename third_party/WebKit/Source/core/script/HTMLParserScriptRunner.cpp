@@ -32,6 +32,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/html/parser/HTMLInputStream.h"
 #include "core/html/parser/NestingLevelIncrementer.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/script/HTMLParserScriptRunnerHost.h"
 #include "core/script/IgnoreDestructiveWriteCountIncrementer.h"
 #include "core/script/ScriptLoader.h"
@@ -39,6 +40,7 @@
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "public/platform/Platform.h"
@@ -512,6 +514,16 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
     // A part of Step 23 of https://html.spec.whatwg.org/#prepare-a-script:
     if (!script_loader->WillBeParserExecuted())
       return;
+
+    if (!script_loader->WillExecuteWhenDocumentFinishedParsing() &&
+        IsSupportedInFeaturePolicy(FeaturePolicyFeature::kSyncScript) &&
+        !document_->GetFeaturePolicy()->IsFeatureEnabled(
+            FeaturePolicyFeature::kSyncScript)) {
+      document_->AddConsoleMessage(ConsoleMessage::Create(
+          kJSMessageSource, kErrorMessageLevel,
+          "Synchronous script execution is disabled by Feature Policy"));
+      return;
+    }
 
     if (script_loader->WillExecuteWhenDocumentFinishedParsing()) {
       // 1st Clause of Step 23.
