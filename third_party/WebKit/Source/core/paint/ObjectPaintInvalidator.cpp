@@ -647,6 +647,7 @@ ObjectPaintInvalidatorWithContext::InvalidatePaintWithComputedReason(
         FullyInvalidatePaint(reason, context_.old_visual_rect,
                              context_.fragment_data->VisualRect());
       }
+      object_.GetMutableForPainting().InvalidateClipPathCache();
   }
 
   context_.painting_layer->SetNeedsRepaint();

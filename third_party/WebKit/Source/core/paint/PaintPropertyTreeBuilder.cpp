@@ -23,6 +23,7 @@
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/paint/CSSMaskPainter.h"
+#include "core/paint/ClipPathClipper.h"
 #include "core/paint/FindPaintOffsetAndVisualRectNeedingUpdate.h"
 #include "core/paint/FindPropertiesNeedingUpdate.h"
 #include "core/paint/ObjectPaintProperties.h"
@@ -316,6 +317,7 @@ class FragmentPaintPropertyTreeBuilder {
   ALWAYS_INLINE void UpdateFilter();
   ALWAYS_INLINE void UpdateFragmentClip(const PaintLayer&);
   ALWAYS_INLINE void UpdateCssClip();
+  ALWAYS_INLINE void UpdateClipPathClip(bool spv1_compositing_specific_pass);
   ALWAYS_INLINE void UpdateLocalBorderBoxContext();
   ALWAYS_INLINE void UpdateOverflowControlsClip();
   ALWAYS_INLINE void UpdateInnerBorderRadiusClip();
@@ -628,6 +630,13 @@ void FragmentPaintPropertyTreeBuilder::UpdateTransform() {
   }
 }
 
+static bool NeedsClipPathClip(const LayoutObject& object) {
+  if (!object.StyleRef().ClipPath())
+    return false;
+
+  return object.FirstFragment().LocalClipPath();
+}
+
 static bool NeedsEffect(const LayoutObject& object) {
   const ComputedStyle& style = object.StyleRef();
 
@@ -675,6 +684,26 @@ static bool NeedsEffect(const LayoutObject& object) {
   if (object.StyleRef().HasMask())
     return true;
 
+  if (object.HasLayer() &&
+      ToLayoutBoxModelObject(object).Layer()->GetCompositedLayerMapping() &&
+      ToLayoutBoxModelObject(object)
+          .Layer()
+          ->GetCompositedLayerMapping()
+          ->MaskLayer()) {
+    // In SPv1* a mask layer can be created for clip-path in absence of mask,
+    // and a mask effect node must be created whether the clip-path is
+    // path-based or not.
+    return true;
+  }
+
+  if (object.StyleRef().ClipPath() &&
+      object.FirstFragment().LocalClipPathBoundingBox() &&
+      !object.FirstFragment().LocalClipPath()) {
+    // If the object has a valid clip-path but can't use path-based clip-path,
+    // a clip-path effect node must be created.
+    return true;
+  }
+
   return false;
 }
 
@@ -697,15 +726,32 @@ void FragmentPaintPropertyTreeBuilder::UpdateEffect() {
 
       Optional<IntRect> mask_clip = CSSMaskPainter::MaskBoundingBox(
           object_, context_.current.paint_offset);
-      ColorFilter mask_color_filter = CSSMaskPainter::MaskColorFilter(object_);
-      if (mask_clip &&
+      bool has_clip_path = style.ClipPath() &&
+                           object_.FirstFragment().LocalClipPathBoundingBox();
+      bool has_spv1_composited_clip_path =
+          has_clip_path && object_.HasLayer() &&
+          ToLayoutBoxModelObject(object_).Layer()->GetCompositedLayerMapping();
+      bool has_mask_based_clip_path =
+          has_clip_path && !object_.FirstFragment().LocalClipPath();
+      Optional<IntRect> clip_path_clip;
+      if (has_spv1_composited_clip_path || has_mask_based_clip_path) {
+        FloatRect bounding_box =
+            *object_.FirstFragment().LocalClipPathBoundingBox();
+        bounding_box.MoveBy(FloatPoint(context_.current.paint_offset));
+        clip_path_clip = EnclosingIntRect(bounding_box);
+      }
+      if ((mask_clip || clip_path_clip) &&
           // TODO(crbug.com/768691): Remove the following condition after mask
           // clip doesn't fail fast/borders/inline-mask-overlay-image-outset-
           // vertical-rl.html.
           RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-        OnUpdateClip(properties_->UpdateMaskClip(context_.current.clip,
-                                                 context_.current.transform,
-                                                 FloatRoundedRect(*mask_clip)));
+        IntRect combined_clip = mask_clip ? *mask_clip : *clip_path_clip;
+        if (mask_clip && clip_path_clip)
+          combined_clip.Intersect(*clip_path_clip);
+
+        OnUpdateClip(properties_->UpdateMaskClip(
+            context_.current.clip, context_.current.transform,
+            FloatRoundedRect(combined_clip)));
         output_clip = properties_->MaskClip();
       } else {
         OnClearClip(properties_->ClearMaskClip());
@@ -723,16 +769,31 @@ void FragmentPaintPropertyTreeBuilder::UpdateEffect() {
           blend_mode, compositing_reasons,
           CompositorElementIdFromUniqueObjectId(
               object_.UniqueId(), CompositorElementIdNamespace::kPrimary)));
-      if (mask_clip) {
+      if (mask_clip || has_spv1_composited_clip_path) {
         OnUpdate(properties_->UpdateMask(
             properties_->Effect(), context_.current.transform, output_clip,
-            mask_color_filter, CompositorFilterOperations(), 1.f,
-            SkBlendMode::kDstIn, CompositingReason::kNone,
+            CSSMaskPainter::MaskColorFilter(object_),
+            CompositorFilterOperations(), 1.f, SkBlendMode::kDstIn,
+            CompositingReason::kNone,
             CompositorElementIdFromUniqueObjectId(
                 object_.UniqueId(),
                 CompositorElementIdNamespace::kEffectMask)));
       } else {
         OnClear(properties_->ClearMask());
+      }
+      if (has_mask_based_clip_path) {
+        const EffectPaintPropertyNode* parent = has_spv1_composited_clip_path
+                                                    ? properties_->Mask()
+                                                    : properties_->Effect();
+        OnUpdate(properties_->UpdateClipPath(
+            parent, context_.current.transform, output_clip, kColorFilterNone,
+            CompositorFilterOperations(), 1.f, SkBlendMode::kDstIn,
+            CompositingReason::kNone,
+            CompositorElementIdFromUniqueObjectId(
+                object_.UniqueId(),
+                CompositorElementIdNamespace::kEffectClipPath)));
+      } else {
+        OnClear(properties_->ClearClipPath());
       }
     } else {
       OnClear(properties_->ClearEffect());
@@ -880,6 +941,48 @@ void FragmentPaintPropertyTreeBuilder::UpdateCssClip() {
 
   if (properties_->CssClip())
     context_.current.clip = properties_->CssClip();
+}
+
+void FragmentPaintPropertyTreeBuilder::UpdateClipPathClip(
+    bool spv1_compositing_specific_pass) {
+  if (!NeedsPaintPropertyUpdate())
+    return;
+
+  // In SPv1*, composited path-based clip-path applies to a mask paint chunk
+  // instead of actual contents. We have to delay until mask clip node has been
+  // created first so we can parent under it.
+  bool is_spv1_composited =
+      object_.HasLayer() &&
+      ToLayoutBoxModelObject(object_).Layer()->GetCompositedLayerMapping();
+  if (is_spv1_composited != spv1_compositing_specific_pass)
+    return;
+
+  if (!NeedsClipPathClip(object_)) {
+    OnClearClip(properties_->ClearClipPathClip());
+  } else {
+    FloatRect bounding_box =
+        *object_.FirstFragment().LocalClipPathBoundingBox();
+    bounding_box.MoveBy(FloatPoint(context_.current.paint_offset));
+    scoped_refptr<const RefCountedPath> path =
+        fragment_data_.ClipPathForFragment();
+    if (!path) {
+      RefCountedPath* new_path =
+          new RefCountedPath(*object_.FirstFragment().LocalClipPath());
+      new_path->Translate(
+          ToFloatSize(FloatPoint(context_.current.paint_offset)));
+      path = base::AdoptRef(new_path);
+      fragment_data_.SetClipPathForFragment(path);
+    }
+    OnUpdateClip(properties_->UpdateClipPathClip(
+        context_.current.clip, context_.current.transform,
+        FloatRoundedRect(FloatRect(EnclosingIntRect(bounding_box))), nullptr,
+        std::move(path)));
+  }
+
+  if (properties_->ClipPathClip() && !spv1_compositing_specific_pass) {
+    context_.current.clip = context_.absolute_position.clip =
+        context_.fixed_position.clip = properties_->ClipPathClip();
+  }
 }
 
 void FragmentPaintPropertyTreeBuilder::UpdateLocalBorderBoxContext() {
@@ -1600,6 +1703,7 @@ void FragmentPaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
           PaintInvalidationReason::kGeometry);
     }
     fragment_data_.SetPaintOffset(context_.current.paint_offset);
+    fragment_data_.SetClipPathForFragment(nullptr);
   }
 
   if (paint_offset_translation)
@@ -1628,8 +1732,10 @@ void FragmentPaintPropertyTreeBuilder::UpdateForSelf() {
   if (properties_) {
     UpdateTransform();
     UpdateCssClip();
+    UpdateClipPathClip(false);
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
       UpdateEffect();
+    UpdateClipPathClip(true);  // Special pass for SPv1 composited clip-path.
     UpdateFilter();
     UpdateOverflowControlsClip();
   }
@@ -1881,16 +1987,42 @@ void ObjectPaintPropertyTreeBuilder::
   }
 }
 
+void ObjectPaintPropertyTreeBuilder::UpdateClipPathCache() {
+  if (!object_.StyleRef().ClipPath())
+    return;
+
+  auto& fragment_data = object_.GetMutableForPainting().FirstFragment();
+  if (fragment_data.IsClipPathCacheValid())
+    return;
+
+  Optional<FloatRect> bounding_box =
+      ClipPathClipper::LocalClipPathBoundingBox(object_);
+  if (!bounding_box) {
+    fragment_data.SetClipPathCache(WTF::nullopt, nullptr);
+    return;
+  }
+
+  bool is_valid = false;
+  Optional<Path> path = ClipPathClipper::PathBasedClip(
+      object_, object_.IsSVGChild(),
+      ClipPathClipper::LocalReferenceBox(object_), is_valid);
+  DCHECK(is_valid);
+  fragment_data.SetClipPathCache(
+      bounding_box,
+      path ? WTF::WrapUnique(new Path(std::move(*path))) : nullptr);
+}
+
 // Limit the maximum number of fragments, to avoid pathological situations.
 static const int kMaxNumFragments = 500;
 
 void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
   bool needs_paint_properties =
       NeedsPaintOffsetTranslation(object_) || NeedsTransform(object_) ||
-      NeedsEffect(object_) || NeedsTransformForNonRootSVG(object_) ||
-      NeedsFilter(object_) || NeedsCssClip(object_) ||
-      NeedsInnerBorderRadiusClip(object_) || NeedsOverflowClip(object_) ||
-      NeedsPerspective(object_) || NeedsSVGLocalToBorderBoxTransform(object_) ||
+      NeedsClipPathClip(object_) || NeedsEffect(object_) ||
+      NeedsTransformForNonRootSVG(object_) || NeedsFilter(object_) ||
+      NeedsCssClip(object_) || NeedsInnerBorderRadiusClip(object_) ||
+      NeedsOverflowClip(object_) || NeedsPerspective(object_) ||
+      NeedsSVGLocalToBorderBoxTransform(object_) ||
       NeedsScrollOrScrollTranslation(object_) ||
       NeedsFragmentationClip(object_, *context_.painting_layer) ||
       NeedsOverflowControlsClip(object_);
@@ -2034,6 +2166,7 @@ void ObjectPaintPropertyTreeBuilder::UpdatePaintingLayer() {
 
 void ObjectPaintPropertyTreeBuilder::UpdateForSelf() {
   UpdatePaintingLayer();
+  UpdateClipPathCache();
 
   if (ObjectTypeMightNeedPaintProperties(object_))
     UpdateFragments();

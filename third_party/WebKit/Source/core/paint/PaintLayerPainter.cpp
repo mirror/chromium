@@ -665,6 +665,22 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     // for just CSS clip-path but without a CSS mask. In that case we need to
     // paint a fully filled mask (which will subsequently clipped by the
     // clip-path), otherwise the mask layer will be empty.
+    Optional<ScopedPaintChunkProperties> path_based_clip_path_scope;
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      const auto& fragment_data =
+          paint_layer_.GetLayoutObject().FirstFragment();
+      auto state = *fragment_data.LocalBorderBoxProperties();
+      const auto* properties = fragment_data.PaintProperties();
+      DCHECK(properties && properties->Mask());
+      state.SetEffect(properties->Mask());
+      if (properties && properties->ClipPathClip() &&
+          properties->ClipPathClip()->Parent() == properties->MaskClip())
+        state.SetClip(properties->ClipPathClip());
+      path_based_clip_path_scope.emplace(
+          context.GetPaintController(), state,
+          *paint_layer_.GetCompositedLayerMapping()->MaskLayer(),
+          DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
+    }
     FillMaskingFragment(context, layer_fragments[0].background_rect,
                         *paint_layer_.GetCompositedLayerMapping()->MaskLayer());
   }
