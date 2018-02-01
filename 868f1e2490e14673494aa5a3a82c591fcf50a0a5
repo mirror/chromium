@@ -16,6 +16,24 @@
       "revId": "868f1e2490e14673494aa5a3a82c591fcf50a0a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8d676b_c269b3b3",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2018-02-01T18:32:51Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I forgot to remove this when trying to fix a CQ failure.\nI\u0027ve removed these two inclusions here.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/896687",
+      "parentUuid": "f00a12e6_3f055475",
+      "revId": "868f1e2490e14673494aa5a3a82c591fcf50a0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
