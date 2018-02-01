@@ -9,6 +9,7 @@
 namespace ui {
 
 gfx::ClientNativePixmapFactory* CreateClientNativePixmapFactoryX11() {
+  LOG(ERROR) << "JAMES CreateClientNativePixmapFactoryX11 making stub";
   return CreateStubClientNativePixmapFactory();
 }
 
