@@ -106,6 +106,27 @@ void MessageCenterController::SetNotifierSettingsListener(
   }
 }
 
+void MessageCenterController::UpdateNotifierIdAndAddNotification(
+    const std::string& package_name,
+    std::unique_ptr<message_center::Notification> notification) {
+  // |client_| may not be bound in unit tests.
+  if (client_.is_bound()) {
+    client_->GetAppId(
+        package_name,
+        base::BindOnce(&MessageCenterController::OnGotAppId,
+                       base::Unretained(this), std::move(notification)));
+  } else {
+    MessageCenter::Get()->AddNotification(std::move(notification));
+  }
+}
+
+void MessageCenterController::OnGotAppId(
+    std::unique_ptr<message_center::Notification> notification,
+    const std::string& app_id) {
+  notification->set_app_id(app_id);
+  MessageCenter::Get()->AddNotification(std::move(notification));
+}
+
 void MessageCenterController::OnGotNotifierList(
     std::vector<mojom::NotifierUiDataPtr> ui_data) {
   if (notifier_id_)

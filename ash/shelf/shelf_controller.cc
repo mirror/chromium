@@ -36,6 +36,8 @@ namespace ash {
 
 namespace {
 
+constexpr char kARCDefaultNotifierId[] = "ARC_NOTIFICATION";
+
 // Returns the Shelf instance for the display with the given |display_id|.
 Shelf* GetShelfForDisplay(int64_t display_id) {
   // The controller may be null for invalid ids or for displays being removed.
@@ -391,9 +393,12 @@ void ShelfController::OnNotificationAdded(const std::string& notification_id) {
       message_center::MessageCenter::Get()->FindVisibleNotificationById(
           notification_id);
 
-  // TODO(newcomer): Support ARC app notifications.
-  if (!notification || notification->notifier_id().type !=
-                           message_center::NotifierId::APPLICATION)
+  if (!notification ||
+      (notification->notifier_id().type !=
+           message_center::NotifierId::APPLICATION &&
+       notification->notifier_id().type !=
+           message_center::NotifierId::ARC_APPLICATION) ||
+      notification->notifier_id().id == kARCDefaultNotifierId)
     return;
 
   model_.AddNotificationRecord(notification->notifier_id().id, notification_id);
