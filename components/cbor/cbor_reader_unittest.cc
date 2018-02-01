@@ -383,6 +383,57 @@ TEST(CBORReaderTest, TestReadMapWithArray) {
   }
 }
 
+TEST(CBORReaderTest, TestReadMapWithBinaryTextKeys) {
+  static const std::vector<uint8_t> kMapTestCase{
+      // clang-format off
+      0xa4,  // map of 4 pairs
+        0x41, 'k', // byte string "k"
+        0x41, 'v',
+
+        0x43, 'f', 'o', 'o', // byte string "foo"
+        0x43, 'b', 'a', 'r',
+
+        0x61, 'a', // text string "a"
+        0x01,
+
+        0x62, 'x', 'y', // text string "xy"
+        0x02,
+      // clang-format on
+  };
+
+  CBORReader::DecoderError error_code;
+  base::Optional<CBORValue> cbor = CBORReader::Read(kMapTestCase, &error_code);
+  ASSERT_TRUE(cbor.has_value());
+  ASSERT_EQ(cbor->type(), CBORValue::Type::MAP);
+  ASSERT_EQ(cbor->GetMap().size(), 4u);
+
+  const CBORValue key_k(std::vector<uint8_t>{'k'});
+  ASSERT_EQ(cbor->GetMap().count(key_k), 1u);
+  ASSERT_EQ(cbor->GetMap().find(key_k)->second.type(),
+            CBORValue::Type::BYTE_STRING);
+  EXPECT_EQ(cbor->GetMap().find(key_k)->second.GetBytestring(),
+            std::vector<uint8_t>{'v'});
+
+  const CBORValue key_foo(std::vector<uint8_t>{'f', 'o', 'o'});
+  ASSERT_EQ(cbor->GetMap().count(key_foo), 1u);
+  ASSERT_EQ(cbor->GetMap().find(key_foo)->second.type(),
+            CBORValue::Type::BYTE_STRING);
+  static const std::vector<uint8_t> kBarBytes{'b', 'a', 'r'};
+  EXPECT_EQ(cbor->GetMap().find(key_foo)->second.GetBytestring(), kBarBytes);
+
+  const CBORValue key_a("a");
+  ASSERT_EQ(cbor->GetMap().count(key_a), 1u);
+  ASSERT_EQ(cbor->GetMap().find(key_a)->second.type(),
+            CBORValue::Type::UNSIGNED);
+  EXPECT_EQ(cbor->GetMap().find(key_a)->second.GetInteger(), 1);
+
+  const CBORValue key_xy("xy");
+  ASSERT_EQ(cbor->GetMap().count(key_xy), 1u);
+  ASSERT_EQ(cbor->GetMap().find(key_xy)->second.type(),
+            CBORValue::Type::UNSIGNED);
+  EXPECT_EQ(cbor->GetMap().find(key_xy)->second.GetInteger(), 2);
+}
+
 TEST(CBORReaderTest, TestReadNestedMap) {
   static const std::vector<uint8_t> kNestedMapTestCase = {
       // clang-format off
