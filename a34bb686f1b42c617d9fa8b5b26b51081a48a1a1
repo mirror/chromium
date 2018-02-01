@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b894b62f_1b89ec9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T18:44:50Z",
+      "side": 1,
+      "message": "What does \"per-frame task runner\" mean? As far as I can tell the same task runner is used for all video frames that pass through the MediaStreamVideoWebRtcSink. Does this refer to a different type of frames?",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91432324_b1e90c20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T18:44:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure this CL changes the task runner that\u0027s being used. It just avoids changes how the task runner is passed to the class (through the constructor instead of ThreadTaskRunnerHandle).",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5ea012_177eec80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T18:44:50Z",
+      "side": 1,
+      "message": "this bug doesn\u0027t provide any useful information about why this is necessary. Can you please update bug description to make it clear?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bb8462_6c8c788b",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T18:44:50Z",
+      "side": 1,
+      "message": "No longer needed",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0796264e_a07faedf",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T18:44:50Z",
+      "side": 1,
+      "message": "// namespace base",
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5ce6d2_804c3b8a",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T18:44:50Z",
+      "side": 1,
+      "message": "add a comment or rename this parameter to make it clear how this task runner is used. E.g. renaming it to render_task_runner.",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 61
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
