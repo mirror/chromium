@@ -18,8 +18,17 @@
     </style>
   </head>
   <body>
+    <!--
+      For all UI elements that are part of the text the user reads before
+      consenting to the Sync data collection, use the 'consent-description'
+      attribute to store the string resource name. Similarly, use
+      'consent-confirmation' on UI elements on which user clicks to indicate
+      consent.
+    -->
     <div class="container">
-      <div class="top-title-bar">$i18n{syncConfirmationTitle}</div>
+      <div class="top-title-bar" consent-description="syncConfirmationTitle">
+        $i18n{syncConfirmationTitle}
+      </div>
       <div class="details" id="syncConfirmationDetails">
         <div id="picture-container">
           <div id="illustration">
@@ -55,8 +64,14 @@
           -->
           <div id="chrome-logo" class="logo"></div>
           <div>
-            <div class="title">$i18n{syncConfirmationChromeSyncTitle}</div>
-            <div class="body text">$i18n{syncConfirmationChromeSyncBody}</div>
+            <div class="title"
+                consent-description="syncConfirmationChromeSyncTitle">
+              $i18n{syncConfirmationChromeSyncTitle}
+            </div>
+            <div class="body text"
+                consent-description="syncConfirmationChromeSyncBody">
+              $i18n{syncConfirmationChromeSyncBody}
+            </div>
           </div>
         </div>
         <div class="message-container">
@@ -66,23 +81,29 @@
           -->
           <div id="googleg-logo" class="logo"></div>
           <div>
-            <div class="title">
+            <div class="title"
+                consent-description="syncConfirmationPersonalizeServicesTitle">
               $i18n{syncConfirmationPersonalizeServicesTitle}
             </div>
-            <div class="body text">
+            <div class="body text"
+                consent-description="syncConfirmationPersonalizeServicesBody">
               $i18n{syncConfirmationPersonalizeServicesBody}
             </div>
           </div>
         </div>
-        <div class="message-container">
+        <div class="message-container"
+            consent-description="syncConfirmationSyncSettingsLinkBody"
+            consent-confirmation="syncConfirmationSyncSettingsLinkBody">
           <div class="body">$i18nRaw{syncConfirmationSyncSettingsLinkBody}</div>
         </div>
       </div>
-      <div class="details" id="syncDisabledDetails">
+      <div class="details" id="syncDisabledDetails"
+          consent-description="syncDisabledConfirmationDetails">
         <div class="body text">$i18n{syncDisabledConfirmationDetails}</div>
       </div>
       <div class="action-container">
-        <paper-button class="primary-action" id="confirmButton">
+        <paper-button class="primary-action" id="confirmButton"
+            consent-confirmation="syncConfirmationConfirmLabel">
           $i18n{syncConfirmationConfirmLabel}
         </paper-button>
         <paper-button class="secondary-action" id="undoButton">
