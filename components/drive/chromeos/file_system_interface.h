@@ -438,6 +438,7 @@ class FileSystemInterface {
 
   // Marks the cached file as mounted, and runs |callback| upon completion.
   // If succeeded, the cached file path will be passed to the |callback|.
+  // When the file is already marked as mounted, it is treated as success.
   // |callback| must not be null.
   virtual void MarkCacheFileAsMounted(const base::FilePath& drive_file_path,
                                       const MarkMountedCallback& callback) = 0;
