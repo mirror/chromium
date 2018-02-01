@@ -33,6 +33,24 @@
       "revId": "948323a22b10b889cc9b8b450b65f6c6fa06a057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a393cc4c_1102712f",
+        "filename": "ui/message_center/views/bounded_label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T21:38:56Z",
+      "side": 1,
+      "message": "OK sure, I will explain. The background color for a label isn\u0027t actually drawn, it\u0027s only used as a hint to the auto color readability code, which automatically changes the foreground color (\"enabled color\") to something that\u0027s readable on top of the passed-in background color. See Label::RecalculateColors(). It\u0027s always been sort of weird to me that the default is to mess with the colors that you\u0027ve explicitly set, but I gather that\u0027s designed for the case of themes where we can\u0027t be sure the colors are readable. Most of the time you don\u0027t need to worry about it because the text is dark and the assumed bg is light.\n\nThe person who wrote this code either didn\u0027t fully understand this, or it was written before SetAutoColorReadability() existed, so instead of just disabling the functionality they explicitly set the bg color. But even then, there must have been some different coloration in the past because the code was explicitly setting a white bg, which should have no effect since a white bg is what Label assumes.\n\nThe last time this code was touched was in 2013 and even then it was just a refactor, so this shall remain an unsolved historical curiosity.",
+      "parentUuid": "3287a412_c8393e08",
+      "revId": "948323a22b10b889cc9b8b450b65f6c6fa06a057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
