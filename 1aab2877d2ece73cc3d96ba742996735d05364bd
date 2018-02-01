@@ -22,6 +22,30 @@
       "revId": "1aab2877d2ece73cc3d96ba742996735d05364bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b4695b_23e51f39",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/distance/pathLength-zero-percentage.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-02-01T15:17:10Z",
+      "side": 1,
+      "message": "My interpretation here is that since the author requested that the path should be considered to be of length zero (for whatever reason...), and percentages will be resolved against that path length (0), and then the resolved value (still 0) gets scaled by the \"infinite scaling\" factor - yielding 0 again (per spec.)\n\nBut since \u0027pathLength\u0027 and startOffset\u003d\u003cpercentage\u003e has quite significant overlap in what they achieve I was a bit puzzled by this myself, so I raised an issue on the spec [1] hoping someone would chime in a possible opinion. I didn\u0027t feel that necessitated waiting for a resolution though (this is fairly edge-casey after all), so here we are. If it\u0027s decided/concluded that \u0027pathLength\u0027 doesn\u0027t apply here (for instance) we can adjust. (Doing it that way makes the implementation a little bit easier.)\n\n[1] https://github.com/w3c/svgwg/issues/383",
+      "parentUuid": "321babd2_bcae29c8",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "1aab2877d2ece73cc3d96ba742996735d05364bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
