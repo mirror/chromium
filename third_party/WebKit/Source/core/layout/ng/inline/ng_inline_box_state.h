@@ -79,17 +79,17 @@ struct NGInlineBoxState {
   }
 
   // Compute text metrics for a box. All text in a box share the same
-  // metrics.  When line_height_quirk is set, text metrics won't
-  // influence box height until ActivateTextMetrics() is called.
+  // metrics.
+  // The computed metrics is included into the line height of the current box.
   void ComputeTextMetrics(const ComputedStyle& style,
-                          FontBaseline baseline_type,
-                          bool line_height_quirk);
-  void AccumulateUsedFonts(const ShapeResult*, FontBaseline);
+                          FontBaseline baseline_type);
+  void EnsureTextMetrics(const ComputedStyle& style,
+                         FontBaseline baseline_type) {
+    if (text_metrics.IsEmpty())
+      ComputeTextMetrics(style, baseline_type);
+  }
 
-  // Activate text metrics.  Used by the line height quirk when the
-  // box gets text content or has border, padding or margin in the
-  // inline layout direction.
-  void ActivateTextMetrics() { metrics.Unite(text_metrics); }
+  void AccumulateUsedFonts(const ShapeResult*, FontBaseline);
 
   // Create a box fragment for this box.
   void SetNeedsBoxFragment(bool when_empty);

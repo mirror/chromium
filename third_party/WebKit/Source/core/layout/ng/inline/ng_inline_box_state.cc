@@ -16,15 +16,14 @@
 namespace blink {
 
 void NGInlineBoxState::ComputeTextMetrics(const ComputedStyle& style,
-                                          FontBaseline baseline_type,
-                                          bool line_height_quirk) {
+                                          FontBaseline baseline_type) {
+  DCHECK(text_metrics.IsEmpty());
   text_metrics = NGLineHeightMetrics(style, baseline_type);
   text_top = -text_metrics.ascent;
   text_height = text_metrics.LineHeight();
   text_metrics.AddLeading(style.ComputedLineHeightAsFixed());
 
-  if (!line_height_quirk)
-    metrics.Unite(text_metrics);
+  metrics.Unite(text_metrics);
 
   include_used_fonts = style.LineHeight().IsNegative();
 }
@@ -104,7 +103,8 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
   // Use a "strut" (a zero-width inline box with the element's font and
   // line height properties) as the initial metrics for the line box.
   // https://drafts.csswg.org/css2/visudet.html#strut
-  line_box.ComputeTextMetrics(*line_style, baseline_type, line_height_quirk);
+  if (!line_height_quirk)
+    line_box.ComputeTextMetrics(*line_style, baseline_type);
 
   return &stack_.back();
 }
