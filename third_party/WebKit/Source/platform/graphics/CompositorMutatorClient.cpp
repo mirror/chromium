@@ -9,12 +9,12 @@
 #include "base/callback.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/trees/layer_tree_impl.h"
-#include "platform/graphics/CompositorMutator.h"
+#include "platform/graphics/CompositorMutatorImpl.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-CompositorMutatorClient::CompositorMutatorClient(CompositorMutator* mutator)
+CompositorMutatorClient::CompositorMutatorClient(CompositorMutatorImpl* mutator)
     : mutator_(mutator) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc"),
                "CompositorMutatorClient::CompositorMutatorClient");
@@ -42,8 +42,9 @@ void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
   client_ = client;
 }
 
-bool CompositorMutatorClient::HasAnimators() {
-  return mutator_->HasAnimators();
+// We need to know how to cast from one to the other to do this correctly.
+CompositorMutator* CompositorMutatorClient::Mutator() {
+  return static_cast<CompositorMutator*>(mutator_.get());
 }
 
 }  // namespace blink
