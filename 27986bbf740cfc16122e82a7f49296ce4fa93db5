@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0938efb2_376f442a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-01T18:38:34Z",
+      "side": 1,
+      "message": "You don\u0027t need the default if the value is computed.",
+      "range": {
+        "startLine": 298,
+        "startChar": 6,
+        "endLine": 298,
+        "endChar": 18
+      },
+      "revId": "27986bbf740cfc16122e82a7f49296ce4fa93db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bab145_f0bfaeec",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-01T18:38:34Z",
+      "side": 1,
+      "message": "is there a chance that \u0027showExportPasswords\u0027 can change while the page is open?",
+      "range": {
+        "startLine": 586,
+        "startChar": 11,
+        "endLine": 586,
+        "endChar": 58
+      },
+      "revId": "27986bbf740cfc16122e82a7f49296ce4fa93db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
