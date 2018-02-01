@@ -1415,9 +1415,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // Typically on PAGE_TRANSITION_CLIENT_REDIRECT.
     // Don't update if request is a placeholder entry because the pending item
     // should have the original target URL.
-    if (!IsPlaceholderUrl(requestURL)) {
-      self.navigationManagerImpl->UpdatePendingItemUrl(requestURL);
-    }
+//     if (!IsPlaceholderUrl(requestURL) &&
+//         self.navigationManagerImpl->GetPendingItemIndex() == -1) {
+//       self.navigationManagerImpl->UpdatePendingItemUrl(requestURL);
+//     }
   } else {
     self.navigationManagerImpl->AddPendingItem(
         requestURL, referrer, transition,
