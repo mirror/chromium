@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d71ff7c1_9defc751",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-01T00:11:00Z",
+      "side": 1,
+      "message": "Is it possible to add a unit test which would have detected this error? Please do that if that\u0027s easy enough.",
+      "revId": "575ee555e280df3324aa71d63a894ca5b33d98fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
