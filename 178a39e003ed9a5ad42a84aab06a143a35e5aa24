@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6442c0_48a55150",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "I strongly think we need to use a variable that we can identify as being the other accounts. Something like:\nconst kOtherAccountMenuId \u003d std::numeric_limits\u003cint\u003e::max();",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe83b4f9_be941408",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "DCHECK_LE(0, id);\nDCHECK_LE(id, accounts_.size());",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288089aa_5657930f",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "Is this cast needed?",
+      "range": {
+        "startLine": 72,
+        "startChar": 43,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2c0af8_0e9c38bd",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "Personal pref (I would find this easier to read):\nsize_t idx \u003d static_cast\u003csize_t\u003e(id);\nbase::Optional\u003cAccountInfo\u003e account;\nif (idx \u003c accounts_size())\n  account.value() \u003d accounts_[idx];\nbase::move(callback_).Run(account);",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03038359_864f8c5e",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "This is already define in DiceAccoutsMenu. Let\u0027s rename it to:\ns/DiceAccountsMenuCallback/Callback",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0878f1f9_18f8bf17",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "I think a OnceCallback is better that a repeating one (we only call it once, right?).",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ceb9812_100b070a",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "Naming a variable of type Callback |callback| is too generic (what is tomorrow we need a second callback?). Let\u0027s rename this to account_selected_callback_",
+      "range": {
+        "startLine": 52,
+        "startChar": 33,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05586c9_1bd54493",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "Should be BindOnce",
+      "range": {
+        "startLine": 677,
+        "startChar": 14,
+        "endLine": 677,
+        "endChar": 27
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a819ccc_837b0e7f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "s/SigninAccountForDiceAccountsMenu/EnableSync",
+      "range": {
+        "startLine": 181,
+        "startChar": 7,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c73092_6e04b9b2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T15:33:31Z",
+      "side": 1,
+      "message": "s/base::Optional\u003cAccountInfo\u003e/base::Optional\u003cAccountInfo\u003e\u0026",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 39
+      },
+      "revId": "178a39e003ed9a5ad42a84aab06a143a35e5aa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
