@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "123b437c_84a68b7c",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done and combined with the AdjustViewsPosition inline.",
+      "parentUuid": "2c5cc2fb_3e8c6589",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a6ca3e_dfd67074",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acded5b_c321e0eb",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "80a6ca3e_dfd67074",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "29ea4884_9d67818a",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Does it make sense to put the helper function in gfx::text_utils?\nDone.",
+      "parentUuid": "59ece8f3_2844c57f",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da04d8e4_7ff5142a",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c78f65b_6db412eb",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Thanks, put DCHECK here and TODO.\n\nIn Label.cc, it does not handle ALIGN_TO_HEAD. The underlining render_text will handle the ALIGN_TO_HEAD:\nGetDisplayTextDirection() \u003d\u003d base::i18n::RIGHT_TO_LEFT ? ALIGN_RIGHT : ALIGN_LEFT;\n\nThis is exact base::i18n::ICUIsRTL() checking: return g_icu_text_direction \u003d\u003d RIGHT_TO_LEFT;\n\nhttps://cs.chromium.org/chromium/src/ui/gfx/render_text.cc?l\u003d1217\u0026rcl\u003d8920def2f6aeb0ee97c9ea73ba5233287af95cc1",
+      "parentUuid": "da04d8e4_7ff5142a",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6231bf16_d4f5bbbf",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done. Yes. I see example with ScheduledPaint in SetHorizontalAlignment if we want to change layout immediately.",
+      "parentUuid": "3a2c2270_f49826a7",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f2c1a4_d28f4756",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6eb2fa_98d8c29c",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "I will look HarfBuzzLineBreaker code and try it in follow up cls.",
+      "parentUuid": "b4f2c1a4_d28f4756",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a2851b5a_3e82590a",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee1c925_ba048394",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab56d723_7be08906",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63131a27_5cd8c55f",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Here wants to check: if current range is not custom_view, then we use ElideRectangleText to determine line wrap.\nIt is really this: !(current_range-\u003estyle_info.has_custom_view \u0026\u0026 position \u003d\u003d range.start()).\nWhen it is custom_view, the position should equals range.start() because we consider the custom_view a one unit.\nAdd comments.",
+      "parentUuid": "ab56d723_7be08906",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9a486190_71c40d68",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done. The only concern was there were too many parameters.",
+      "parentUuid": "784f57be_f5d4f6e2",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66453c11_156455c6",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09689d02_a208a484",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Right! Done.",
+      "parentUuid": "66453c11_156455c6",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1b8fa6d2_56e91ef7",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Not. New changes will not do this increment.",
+      "parentUuid": "b1b14436_12d3674d",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f7b4c1_bef54c61",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 1
@@ -203,6 +401,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7af747_4db7d5cf",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Good suggestion!",
+      "parentUuid": "30f7b4c1_bef54c61",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "b6ed29d0_1746c917",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1b2832_021f87e6",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19a310d_7a35373b",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 1
@@ -237,6 +471,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdabda3_84438f1d",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19a310d_7a35373b",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "da4f53e4_727d4c4e",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12564e23_f1e29649",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f351ebc5_7e0700b1",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 1
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "d6ee62ac_c8de0020",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Moved to CalculateAndDoLayout.",
+      "parentUuid": "f351ebc5_7e0700b1",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c4757d_98c1701f",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 1
@@ -288,6 +576,24 @@
       "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950c3173_1d919dce",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T02:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c4757d_98c1701f",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
