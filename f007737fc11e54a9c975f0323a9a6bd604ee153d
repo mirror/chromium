@@ -34,6 +34,24 @@
       "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117b3711_7cc54b80",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2018-02-01T18:35:43Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any particular reason to have it in content/ rather than in, say, chromeos/ (or chrome/browser/chromeos) other than being consistently co-located with the first platform-specific tracing agent that got added prior to the ARC one (i.e. etw_tracing_agent which is Windows-specific). There\u0027s also cros_tracing_agent, cast_tracing_agent and power_tracing_agent (BattOr) now; it feels odd to just specifically move the ARC one somewhere else, but maybe they should all be moved to chrome/?",
+      "parentUuid": "bad18ef4_47803107",
+      "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
