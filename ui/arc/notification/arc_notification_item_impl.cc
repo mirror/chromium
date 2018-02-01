@@ -7,6 +7,8 @@
 #include <utility>
 #include <vector>
 
+#include "ash/message_center/message_center_controller.h"
+#include "ash/shell.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -94,22 +96,22 @@ void ArcNotificationItemImpl::OnUpdatedFromAndroid(
       message_center::NotifierId::ARC_APPLICATION, kNotifierId);
   notifier_id.profile_id = profile_id_.GetUserEmail();
 
-  auto notification = std::make_unique<message_center::Notification>(
+  notification_.reset(new message_center::Notification(
       message_center::NOTIFICATION_TYPE_CUSTOM, notification_id_,
       base::UTF8ToUTF16(data->title), base::UTF8ToUTF16(data->message),
       gfx::Image(),
       base::UTF8ToUTF16("arc"),  // display source
       GURL(),                    // empty origin url, for system component
       notifier_id, rich_data,
-      new ArcNotificationDelegate(weak_ptr_factory_.GetWeakPtr()));
-  notification->set_timestamp(base::Time::FromJavaTime(data->time));
+      new ArcNotificationDelegate(weak_ptr_factory_.GetWeakPtr())));
+  notification_->set_timestamp(base::Time::FromJavaTime(data->time));
 
   expand_state_ = data->expand_state;
   shown_contents_ = data->shown_contents;
   swipe_input_rect_ =
       data->swipe_input_rect ? *data->swipe_input_rect : gfx::Rect();
 
-  notification->set_never_timeout(
+  notification_->set_never_timeout(
       data->remote_input_state ==
       mojom::ArcNotificationRemoteInputState::OPENED);
 
@@ -123,7 +125,11 @@ void ArcNotificationItemImpl::OnUpdatedFromAndroid(
   for (auto& observer : observers_)
     observer.OnItemUpdated();
 
-  message_center_->AddNotification(std::move(notification));
+  // update app id and add notification.
+  ash::Shell::Get()->message_center_controller()->UpdateNotificationAppId(
+      data->package_name.value(), std::move(notification_));
+
+  // message_center_->AddNotification(std::move(notification_));
 }
 
 void ArcNotificationItemImpl::OnClosedFromAndroid() {

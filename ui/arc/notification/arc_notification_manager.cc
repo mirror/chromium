@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/shell.h"
 #include "ash/system/toast/toast_manager.h"
 #include "base/memory/ptr_util.h"
@@ -130,7 +131,8 @@ void ArcNotificationManager::OnNotificationPosted(
   const std::string& key = data->key;
   auto it = items_.find(key);
   if (it == items_.end()) {
-    // Show a notification on the primary logged-in user's desktop.
+    // Show a notification on the primary logged-in user's desktop and badge app
+    // icons in the shelf.
     // TODO(yoshiki): Reconsider when ARC supports multi-user.
     auto item = std::make_unique<ArcNotificationItemImpl>(
         this, message_center_, key, main_profile_id_);
@@ -139,6 +141,7 @@ void ArcNotificationManager::OnNotificationPosted(
     DCHECK(result.second);
     it = result.first;
   }
+
   it->second->OnUpdatedFromAndroid(std::move(data));
 }
 

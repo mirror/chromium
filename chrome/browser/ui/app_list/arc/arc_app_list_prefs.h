@@ -177,6 +177,10 @@ class ArcAppListPrefs : public KeyedService,
   // id is safe to use at file paths and as preference keys.
   static std::string GetAppId(const std::string& package_name,
                               const std::string& activity);
+  // Constructs a unique id based on package name and activity name. This id is
+  // safe to use at file paths and as preference keys. This is less efficent
+  // than GetAppId because it has to find the activity name.
+  std::string GetAppIdWithoutActivityName(const std::string& package_name);
 
   // It is called from chrome/browser/prefs/browser_prefs.cc.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);

@@ -57,6 +57,8 @@ class ArcNotificationItemImpl : public ArcNotificationItem {
   ArcNotificationManager* const manager_;
   message_center::MessageCenter* const message_center_;
 
+  std::unique_ptr<message_center::Notification> notification_;
+
   // The snapshot of the latest notification.
   gfx::ImageSkia snapshot_;
   // The expand state of the latest notification.

@@ -4,6 +4,7 @@
 
 #include "ash/message_center/message_center_controller.h"
 
+#include "ui/arc/notification/arc_notification_manager.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notifier_id.h"
@@ -104,6 +105,44 @@ void MessageCenterController::SetNotifierSettingsListener(
     client_->GetNotifierList(base::BindOnce(
         &MessageCenterController::OnGotNotifierList, base::Unretained(this)));
   }
+}
+
+void MessageCenterController::UpdateNotificationAppId(
+    const std::string& package_name,
+    std::unique_ptr<message_center::Notification> notification) {
+  // |client_| may not be bound in unit tests.
+  if (client_.is_bound()) {
+    // Look at mojo examples.
+    // The issue is that the current implementation is a hack.
+    // The solution is to get the app id, and build the notification with it.
+    // 1.  Can I pass a ptr over mojo?
+    // 2. Can I return a value over mojo instead of using a callback?
+    // If so, I should just return the app id, and construct the notification
+    // with the proper id.
+    // Reason why I haven't returned an app id directly to
+    // ArcNotificationManager: Unable to call ArcNotificationManager as is. 3.
+    // Is there a sneaky way to call ArcNotificationManager here?
+
+    // and finally... tests!!!!!
+    client_->GetAppId(
+        package_name,
+        base::BindOnce(&MessageCenterController::OnGotAppId,
+                       base::Unretained(this), std::move(notification)));
+  } else {
+    message_center::MessageCenter::Get()->AddNotification(
+        std::move(notification));
+  }
+}
+
+void MessageCenterController::OnGotAppId(
+    std::unique_ptr<message_center::Notification> notification,
+    const std::string& app_id) {
+  notification->set_app_id(app_id);
+  message_center::MessageCenter::Get()->AddNotification(
+      std::move(notification));
+  LOG(ERROR) << "Setting App Id: " << app_id;
+  // message_center::MessageCenter::Get()->SetNotificationAppId(notification_id,
+  //                                                           app_id);
 }
 
 void MessageCenterController::OnGotNotifierList(
