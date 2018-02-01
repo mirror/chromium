@@ -8,13 +8,15 @@
 #include <string>
 
 #include "base/component_export.h"
+#include "base/containers/linked_list.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/cookies/canonical_cookie.h"
+#include "net/cookies/cookie_store.h"
 #include "services/network/public/interfaces/restricted_cookie_manager.mojom.h"
+#include "services/network/restricted_cookie_change_nexus.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -50,7 +52,15 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) RestrictedCookieManager
                           const GURL& site_for_cookies,
                           SetCanonicalCookieCallback callback) override;
 
+  void AddChangeListener(
+      const GURL& url,
+      const GURL& site_for_cookies,
+      network::mojom::RestrictedCookieChangeListenerPtr listener) override;
+
  private:
+  // base::LinkedList container for a RestrictedCookieChangeNexus listener.
+  class NexusListenerReferenceNode;
+
   // Feeds a net::CookieList to a GetAllForUrl() callback.
   void CookieListToGetAllForUrlCallback(
       const GURL& url,
@@ -59,9 +69,22 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) RestrictedCookieManager
       GetAllForUrlCallback callback,
       const net::CookieList& cookie_list);
 
-  net::CookieStore* cookie_store_;
+  // Called when the Mojo pipe associated with a listener is closed.
+  void RemoveChangeListener(
+      base::LinkNode<NexusListenerReferenceNode>* listener_node);
+
+  // Callback for net::CookieStore::AddCallbackForAllChanges().
+  void OnCookieChange(
+      const network::mojom::RestrictedCookieChangeListenerPtr& listener,
+      const net::CanonicalCookie& cookie,
+      net::CookieStore::ChangeCause change_cause);
+
+  net::CookieStore* const cookie_store_;
   const int render_process_id_;
   const int render_frame_id_;
+
+  RestrictedCookieChangeNexus* const cookie_change_nexus_;
+  base::LinkedList<NexusListenerReferenceNode> listeners_;
 
   base::WeakPtrFactory<RestrictedCookieManager> weak_ptr_factory_;
 
