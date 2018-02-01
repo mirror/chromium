@@ -22,6 +22,159 @@
       "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5296782_507fba56",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "It could be useful to have a brief comment here about what this test does.\n\n// This test sets up a service worker that can be used to try to respond to same-origin requests with cross-origin responses.",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dba7fb_93bd1ead",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "Thanks for these kinds of comments!",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b1005d_f4a99c30",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "nit: may be easier to read if you use a consistent style with function() vs. arrow operator. Modern service worker test code tends to use arrow operator. So:\n\n.then(response \u003d\u003e response.text())\n.then(responseText \u003d\u003e {\n  domAutomation...\n})\n.catch(e \u003d\u003e {\n  var errorMessage...\n});",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a736ffbf_6ab3452d",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "nit: prefer single-quotes in the JS code for consistency (also it would make gerrit code highlighting better, apparently :))",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd8b59d_ec786050",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "ditto about arrow operators and single-quotes (and maybe in more tests below, I\u0027ll stop making this comment here)",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7584b7_7e69ab3c",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "super nit: The previous two sentences kind of imply this already. You could make it more concise with something like:\n\n// This enum backs a histogram so do not change the order of entries or remove entries. Put new entries before |kCount| and update enums.xml (see the SiteIsolationResponseAction enum).",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b738f6_5945b958",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "It may be good to have a brief high-level comment about what this worker is doing, the previousResponse stuff does not have a very obvious purpose. It might be sufficient to just add a pointer to CrossSiteDocumentBlockingServiceWorkerTest.NetworkAndOpaqueResponse which has nice comments, or reuse some of those comments here.",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566d905e_19fd8841",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "Yes, it seems to me the tests are doing the setup to register a service worker in one frame, wait for activation, and then using that same frame to do the tests. In that case claim() is needed.\n\nIf the tests instead registered in one frame, wait for activation, and then made a new frame (or reloaded) to run the tests in, this would not be needed.\n\nI think either is fine but I would tend to do the latter since I know the claim() implementation is a bit tricky.",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3400e5_c8b1f2de",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T00:28:14Z",
+      "side": 1,
+      "message": "nit: it\u0027s up to you but using early return tends to be easier to read and save indentation:\n\nif (event.request.url.endsWith...) {\n  event.respondWith(...)\n  return;\n}\n\nif (previousUrl \u003d\u003d ...) {\n  event.respondWith(...)\n  return;\n}\n\nevent.respondWith(....);",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
