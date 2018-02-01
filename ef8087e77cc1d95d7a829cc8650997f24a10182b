@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "742dd5a5_024a1109",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-02-01T21:47:21Z",
+      "side": 1,
+      "message": "It\u0027s done in order to use the FIXED width column style without creating a new subclass of views::View to override CalculatePreferredSize().\n\nThis is only a DialogDelegate, not a DialogDelegateView... DownloadDangerPromptViews isn\u0027t a View.  I suppose, it could be a DialogDelegateView which returns \"this\" from GetContentsView(). However, I was trying to minimize the changes to minimize potential problems.\n\nI can change it to subclass DialogDelegateView if you think it\u0027s a better approach. It is a little more consistent with most of the other dialogs to use DialogDelegateView as the base.",
+      "parentUuid": "c4b36984_8280e846",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "ef8087e77cc1d95d7a829cc8650997f24a10182b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9a992ff_b1128a6e",
         "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ef8087e77cc1d95d7a829cc8650997f24a10182b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e29287e_a7432b27",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-02-01T21:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9a992ff_b1128a6e",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "ef8087e77cc1d95d7a829cc8650997f24a10182b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
