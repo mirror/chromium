@@ -42,6 +42,7 @@
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
+#include "ui/compositor/clip_recorder.h"
 #include "ui/gfx/animation/animation_container.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/canvas.h"
@@ -542,15 +543,25 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
   PaintTab(canvas, clip);
 }
 
+void Tab::PaintChildren(const views::PaintInfo& info) {
+  // Clip children because icon can be larger than tab's fill when we don't
+  // have enough space.
+  ui::ClipRecorder clip_recorder(info.context());
+  clip_recorder.ClipPath(
+      GetFillPath(1 /* scale */, size(), GetTabEndcapWidth()));
+  View::PaintChildren(info);
+}
+
 void Tab::Layout() {
   const gfx::Rect lb = GetContentsBounds();
   const bool was_showing_icon = showing_icon_;
   showing_icon_ = ShouldShowIcon();
 
   // See comments in IconCapacity().
+  const int icon_capacity = IconCapacity();
   const int extra_padding =
       (controller_->ShouldHideCloseButtonForInactiveTabs() ||
-       (IconCapacity() < 3)) ? 0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
+       (icon_capacity < 3)) ? 0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
   const int start = lb.x() + extra_padding;
 
   // The bounds for the favicon will include extra width for the attention
@@ -562,8 +573,21 @@ void Tab::Layout() {
     favicon_bounds.set_y(lb.y() + (lb.height() - gfx::kFaviconSize + 1) / 2);
     favicon_bounds.set_size(gfx::Size(icon_->GetPreferredSize().width(),
                                       lb.height() - favicon_bounds.y()));
-    MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    if (icon_capacity >= 1) {
+      MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    } else {
+      // Align center when we don't have enough space.
+      favicon_bounds.set_x(
+          GetContentsBounds().CenterPoint().x() - gfx::kFaviconSize/ 2);
+    }
+
+    int fade_offset = lb.x() - favicon_bounds.x();
+    if (fade_offset >= 0)
+      icon_->SetFadeOffset(fade_offset);
+    else
+      icon_->SetFadeOffset(0);
   }
+
   icon_->SetBoundsRect(favicon_bounds);
   icon_->SetVisible(showing_icon_);
 

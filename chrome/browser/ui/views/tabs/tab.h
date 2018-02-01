@@ -190,6 +190,7 @@ class Tab : public gfx::AnimationDelegate,
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
   void OnPaint(gfx::Canvas* canvas) override;
+  void PaintChildren(const views::PaintInfo& info) override;
   void Layout() override;
   void OnThemeChanged() override;
   const char* GetClassName() const override;

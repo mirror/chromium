@@ -44,6 +44,10 @@ class TabIcon : public views::View {
   // Sets the icon. Depending on the URL the icon may be automatically themed.
   void SetIcon(const GURL& url, const gfx::ImageSkia& favicon);
 
+  // |offset| mustn't be negative. If |offset| is positive, both side of
+  // favicon will be faded.
+  void SetFadeOffset(int offset);
+
   // For certain types of tabs the loading animation is not desired so the
   // caller can set inhibit_loading_animation to true. When false, the loading
   // animation state will be derived from the network state.
@@ -132,6 +136,8 @@ class TabIcon : public views::View {
   std::unique_ptr<CrashAnimation> crash_animation_;
 
   bool can_paint_to_layer_ = false;
+
+  int fade_offset_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TabIcon);
 };
