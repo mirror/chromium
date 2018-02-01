@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "914f6fb6_2a02284d",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T01:49:40Z",
+      "side": 1,
+      "message": "optional nit: procedural_ could probably be dropped.  The new controller is much more like our other elements (implicitly procedural).  Then the name doesn\u0027t look weird when the GLTF variant disappears.",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249c3268_74996b7e",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T01:49:40Z",
+      "side": 1,
+      "message": "Why the 1. 2. 3. comments?  Those aren\u0027t adding anything on top of the good explanation above.",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66949a72_228a72fd",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T01:49:40Z",
+      "side": 1,
+      "message": "Are these two constants necessary?  They look painfully cumbersome to compute and maintain, and for the number of vertices involved, it\u0027s probably negligible isn\u0027t it?  It\u0027s not like you need to pre-alloc megs of space.  Personally I\u0027d just let std::vector grow naturally.",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8a1dfe_8ef522c3",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T01:49:40Z",
+      "side": 1,
+      "message": "Usually \"TODO(crbug.com/799606): \" I think.",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de84ede_accd948d",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-01T01:49:40Z",
+      "side": 1,
+      "message": "These constants seem very closely tied to the procedural code.  If you happened to adjust width here, for example, would the controller distort?  I was going to suggest specifying only the length, and pulling width and height from static methods on the controller class, but maybe that\u0027s more trouble than it\u0027s worth.  Just food for thought.",
+      "revId": "e44ffe076e8e92fb52c000733519e83137fbefec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
