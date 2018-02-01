@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a7c9dbd3_33572f1e",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-01T18:30:11Z",
+      "side": 1,
+      "message": "To avoid misunderstanding, what I was envisioning was not to make VideoCaptureController reusable in content/public/browser but rather to reuse most of SingleClientVideoCaptureHost in VideoCaptureController. Ideally the buffer context management logic from SingleClientVideoCaptureHost could be reused in VideoCaptureController simply by having VideoCaptureController register itself at SingleClientVideoCaptureHost as the single |observer_|. Then VideoCaptureController would add the fan out logic to multiple observers on top of that.\n\nI can\u0027t tell if there is anything preventing it from being that simple without actually trying it, but I though it\u0027d be worth exploring.",
+      "parentUuid": "b56390f9_177eb441",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "552b510c_0d8388be",
         "filename": "chrome/browser/media/single_client_video_capture_host.h",
         "patchSetId": 6
