@@ -1,0 +1,21 @@
+This is a testharness.js-based test.
+PASS CSSNumericArray interface: existence and properties of interface object
+PASS CSSNumericArray interface object length
+PASS CSSNumericArray interface object name
+PASS CSSNumericArray interface: existence and properties of interface prototype object
+PASS CSSNumericArray interface: existence and properties of interface prototype object's "constructor" property
+PASS Testing Symbol.iterator property of iterable interface CSSNumericArray
+FAIL Testing value iterable interface CSSNumericArray assert_equals: values function is not the same as Array one expected (undefined) undefined but got (function) function "function values() { [native code] }"
+PASS CSSNumericArray interface: attribute length
+FAIL CSSNumericArray interface: operation entries() assert_throws: calling operation with this = {} didn't throw TypeError function "function() {
+            fn.apply(obj, args);
+        }" did not throw
+FAIL CSSNumericArray interface: operation keys() assert_throws: calling operation with this = {} didn't throw TypeError function "function() {
+            fn.apply(obj, args);
+        }" did not throw
+FAIL CSSNumericArray interface: operation values() assert_throws: calling operation with this = {} didn't throw TypeError function "function() {
+            fn.apply(obj, args);
+        }" did not throw
+PASS CSSNumericArray interface: operation forEach(function, any)
+Harness: the test ran to completion.
+
