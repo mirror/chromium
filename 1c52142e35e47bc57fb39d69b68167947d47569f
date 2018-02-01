@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00d6015c_3ef4800b",
+        "filename": "components/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:44:27Z",
+      "side": 1,
+      "message": "nit: the current",
+      "range": {
+        "startLine": 39,
+        "startChar": 48,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "1c52142e35e47bc57fb39d69b68167947d47569f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8876ddac_b79a0683",
+        "filename": "components/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:44:27Z",
+      "side": 1,
+      "message": "nit: ByteStringAndTextString",
+      "range": {
+        "startLine": 386,
+        "startChar": 36,
+        "endLine": 386,
+        "endChar": 46
+      },
+      "revId": "1c52142e35e47bc57fb39d69b68167947d47569f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c304836e_96265f90",
+        "filename": "components/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:44:27Z",
+      "side": 1,
+      "message": "It seems like we don\u0027t have tests for negative integers either -- could you please add a TEST() method specifically for those; plus one that has all the four supported types? So we would have 5 tests:\n\n 1. in-depth tests for non-negative integers\n 2. in-depth tests for negative integers\n 3. in-depth tests for text strings\n 4. in-depth tests for byte strings\n 5. high-level tests with all four types to verify their ordering compared to each other",
+      "revId": "1c52142e35e47bc57fb39d69b68167947d47569f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10dc111e_091d699c",
+        "filename": "components/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:44:27Z",
+      "side": 1,
+      "message": "For the test that has all four value types, maybe we could use the supported subset of the example in Jeffrey\u0027s pull request as\n input:\n\n+  1. 10, encoded as 0x0a.\n+  1. 100, encoded as 0x1864.\n+  1. -1, encoded as 0x20.\n+  1. \"z\", encoded as 0x617a.\n+  1. \"aa\", encoded as 0x626161.\n+  1. \\[100], encoded as 0x811864.\n+  1. \\[-1], encoded as 0x8120.\n+  1. false, encoded as 0xf4.",
+      "revId": "1c52142e35e47bc57fb39d69b68167947d47569f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
