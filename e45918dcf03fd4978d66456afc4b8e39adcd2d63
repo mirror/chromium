@@ -281,6 +281,30 @@
       "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54df70c4_c42ef258",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T23:34:25Z",
+      "side": 1,
+      "message": "Eric helped me understand what he meant offline. The latest patch should be what he was thinking if I understood correctly.",
+      "parentUuid": "6f12a4b2_0a57df0d",
+      "range": {
+        "startLine": 166,
+        "startChar": 37,
+        "endLine": 166,
+        "endChar": 62
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
