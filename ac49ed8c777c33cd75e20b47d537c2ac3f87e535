@@ -22,6 +22,30 @@
       "revId": "ac49ed8c777c33cd75e20b47d537c2ac3f87e535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8010caa9_00cabd69",
+        "filename": "ios/chrome/browser/ui/orchestrator/omnibox_focus_orchestrator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T15:32:37Z",
+      "side": 1,
+      "message": "Changed to \"transitionToStateFocused:animated:\"",
+      "parentUuid": "6f0a93af_1d69688e",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "ac49ed8c777c33cd75e20b47d537c2ac3f87e535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
