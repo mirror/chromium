@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5dee60f_d661a1c7",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-01T23:58:21Z",
+      "side": 1,
+      "message": "You added only Document, LayoutObject, Node and Frame to PMD. Do you need to whitelist other counters here?",
+      "revId": "ce4d703b13c67951a71e2e574c119300dec2442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
