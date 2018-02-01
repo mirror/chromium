@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87520b10_2245cd9c",
+        "filename": "ios/chrome/browser/web/browsing_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T01:47:13Z",
+      "side": 1,
+      "message": "Can we also keep the assert for omnibox content? Like do both things: wait and assert...",
+      "revId": "dc40ac3a0a8d4b6478c172f77daacfc60bc91cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
