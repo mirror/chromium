@@ -20,13 +20,19 @@ namespace viz {
 // child when the parent needs to change surface parameters, for example.
 class VIZ_COMMON_EXPORT ParentLocalSurfaceIdAllocator {
  public:
-  ParentLocalSurfaceIdAllocator();
-  ~ParentLocalSurfaceIdAllocator();
+  ParentLocalSurfaceIdAllocator() = default;
+  ;
+  ~ParentLocalSurfaceIdAllocator() = default;
+
+  void set_child_sequence_number(uint32_t child_sequence_number) {
+    child_sequence_number_ = child_sequence_number;
+  }
 
   LocalSurfaceId GenerateId();
 
  private:
-  uint32_t next_id_;
+  uint32_t next_parent_id_ = 1;
+  uint32_t child_sequence_number_ = 1;
 
   DISALLOW_COPY_AND_ASSIGN(ParentLocalSurfaceIdAllocator);
 };

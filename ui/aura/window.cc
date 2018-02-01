@@ -1090,6 +1090,14 @@ const viz::LocalSurfaceId& Window::GetLocalSurfaceId() const {
   return port_->GetLocalSurfaceId();
 }
 
+void Window::SetLocalSurfaceId(const viz::LocalSurfaceId& local_surface_id) {
+  port_->SetLocalSurfaceId(local_surface_id);
+}
+void Window::SetLocalSurfaceIdChildSequenceNumber(
+    uint32_t child_sequence_number) {
+  port_->SetLocalSurfaceIdChildSequenceNumber(child_sequence_number);
+}
+
 viz::FrameSinkId Window::GetFrameSinkId() const {
   if (IsRootWindow()) {
     DCHECK(host_);
@@ -1116,7 +1124,10 @@ void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds,
 
   // Use |bounds_| as that is the bounds before any animations, which is what
   // mus wants.
-  port_->OnDidChangeBounds(old_bounds, bounds_);
+  viz::LocalSurfaceId id_for_autoresize;
+  if (delegate_)
+    delegate_->GetLocalSurfaceIdForAutoResize(&id_for_autoresize);
+  port_->OnDidChangeBounds(old_bounds, bounds_, id_for_autoresize);
 
   if (layout_manager_)
     layout_manager_->OnWindowResized();

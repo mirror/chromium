@@ -265,6 +265,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnWindowTargetVisibilityChanged(bool visible) override;
   bool HasHitTestMask() const override;
   void GetHitTestMask(gfx::Path* mask) const override;
+  void GetLocalSurfaceIdForAutoResize(
+      viz::LocalSurfaceId* surface_id) const override;
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
@@ -375,6 +377,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                            SkippedDelegatedFrames);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
                            ResizeAfterReceivingFrame);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           ChildGeneratedResizeRoutesLocalSurfaceId);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, MissingFramesDontLock);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, OutputSurfaceIdChange);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
