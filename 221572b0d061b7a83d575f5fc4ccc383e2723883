@@ -589,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "7448d745_58c75d19",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T17:57:30Z",
+      "side": 1,
+      "message": "Let\u0027s figure out why. You can\u0027t simply assign ::CreateToolhelp32Snapshot. The handle is accepted through the constructor.",
+      "parentUuid": "3ec2793d_f84ff4e8",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f729ba5_a0244bca",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 60
@@ -671,6 +695,30 @@
       "side": 1,
       "message": "Is just shows:\n\nYou added one or more #includes that violate checkdeps rules.\n  notification_helper\\com_server_module.h\n      Illegal include: \"wrl/client.h\"\n    Because of no rule applying.\n\nIs it because this unit test is in a top-level directory?",
       "parentUuid": "f3b8dac4_f72faf17",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837af482_fd9edde3",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T17:57:30Z",
+      "side": 1,
+      "message": "Was this with \"wrl/client.h\" or \u003cwrl/client.h\u003e?",
+      "parentUuid": "c519498e_954ac91c",
       "range": {
         "startLine": 57,
         "startChar": 0,

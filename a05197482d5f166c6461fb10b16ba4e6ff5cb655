@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaea8576_ebb41b5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 66
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T17:57:30Z",
+      "side": 1,
+      "message": "+1 to this.",
+      "parentUuid": "16a1a824_aa01d532",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4b17f01_9bcc3c7a",
         "filename": "BUILD.gn",
         "patchSetId": 66
@@ -64,6 +82,30 @@
       "writtenOn": "2018-02-01T10:16:34Z",
       "side": 1,
       "message": "\"generally\"? the |size| of the string is fixed at kGuidLengthFull on the line above. the capacity (which is being used below) could be anything. since std::basic_string::operator[] doesn\u0027t say that any position between 0 and capacity() is valid, i would say that the use of capactity() below is incorrect. since the size of the string is set to kGuidLengthFull above, i suggest you get rid of the cast and simply use kGuidLengthFull below. then you can remove this comment, as there\u0027s nothing peculiar to explain.",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b365866a_1af6c2b5",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T17:57:30Z",
+      "side": 1,
+      "message": "This was done at my request. path.capacity() is more robust as it\u0027s always right.",
+      "parentUuid": "82a8b49a_067fa799",
       "range": {
         "startLine": 867,
         "startChar": 59,
