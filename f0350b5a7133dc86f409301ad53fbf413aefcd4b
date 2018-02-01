@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9559de61_479177df",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-01T16:27:11Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "f0350b5a7133dc86f409301ad53fbf413aefcd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78358cd_dd684b41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-01T16:27:11Z",
+      "side": 1,
+      "message": "you need to use your supplier",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "f0350b5a7133dc86f409301ad53fbf413aefcd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
