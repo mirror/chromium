@@ -13,6 +13,8 @@ namespace features {
 
 #if defined(OS_WIN)
 UI_BASE_EXPORT extern const base::Feature kDirectManipulationStylus;
+
+UI_BASE_EXPORT extern const base::Feature kPrecisionTouchpad;
 #endif  // defined(OS_WIN)
 
 UI_BASE_EXPORT extern const base::Feature kSecondaryUiMd;
