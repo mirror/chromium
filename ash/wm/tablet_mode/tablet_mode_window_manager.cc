@@ -95,7 +95,8 @@ void TabletModeWindowManager::OnOverviewModeEnded() {
 }
 
 void TabletModeWindowManager::OnSplitViewModeEnded() {
-  // Maximize all snapped windows upon exiting split view mode.
+  // Maximize all snapped windows upon exiting split view mode. Note: Snapped
+  // Arc app window will be resumed its state by Arc side window manager.
   for (auto& pair : window_state_map_) {
     if (pair.second->GetType() == mojom::WindowStateType::LEFT_SNAPPED ||
         pair.second->GetType() == mojom::WindowStateType::RIGHT_SNAPPED) {
