@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1642748e_ad8c628c",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:12:03Z",
+      "side": 1,
+      "message": "If the context is off the records (incognito), we don\u0027t want to log, because it\u0027s a potential breach of privacy. Would a comment not be stating the obvious (from the code) in that case?",
+      "parentUuid": "3139da07_143022a9",
+      "range": {
+        "startLine": 516,
+        "startChar": 6,
+        "endLine": 516,
+        "endChar": 7
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3ca863_cc35968b",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503f6264_84a23b8e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c3ca863_cc35968b",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 9
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "70114256_ea177551",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:12:03Z",
+      "side": 1,
+      "message": "Done.\nThis relic indicates to me that I indeed must have treated error (\u003c0) differently than unexpected truncation (!\u003d output_len) at some point.",
+      "parentUuid": "e76b7840_e6737c6a",
+      "range": {
+        "startLine": 30,
+        "startChar": 33,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "976bddf5_8461f02e",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "749d0739_36843206",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "976bddf5_8461f02e",
+      "range": {
+        "startLine": 128,
+        "startChar": 37,
+        "endLine": 128,
+        "endChar": 46
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6920950_b820b0a0",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6574c53c_56cf94de",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T14:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6920950_b820b0a0",
+      "range": {
+        "startLine": 282,
+        "startChar": 17,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
