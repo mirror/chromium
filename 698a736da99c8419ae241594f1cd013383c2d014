@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8e8e33_0985ef10",
+        "filename": "content/common/content_param_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:31:12Z",
+      "side": 1,
+      "message": "I guess it\u0027s not easy to add a ParamTraits for mojo::SerializedBlobPtr since we need to destructively take the value; hence the reason we don\u0027t use WriteParam() on p-\u003edata.blobs directly?",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 53
+      },
+      "revId": "698a736da99c8419ae241594f1cd013383c2d014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09483c31_41fa5370",
+        "filename": "content/common/content_param_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:31:12Z",
+      "side": 1,
+      "message": "Is it possible to just write WriteParams(m, p-\u003edata.ports) here",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 3
+      },
+      "revId": "698a736da99c8419ae241594f1cd013383c2d014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

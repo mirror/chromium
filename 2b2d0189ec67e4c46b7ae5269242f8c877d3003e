@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fd0b6891_792ed379",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:31:12Z",
+      "side": 1,
+      "message": "That seems fairly reasonable.",
+      "parentUuid": "9aa1b00e_63432ed9",
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bb105ca_71c70f7e",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 12
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "\u003e Nit: base::Value value(data);\n\nDone\n\n\u003e If possible, it\u0027d be nice to reduce the copies even further by creating it out of a StringPiece16 directly rather than having an intermediate base::string16.\n\nDon\u0027t think that\u0027s possible, since encoded_message is not guaranteed to have correct alignment for 16 bit chars. So simply reinterpret_casting would invoke undefined behavior.",
       "parentUuid": "5bb105ca_71c70f7e",
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1d6492c_acad164a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2475,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:31:12Z",
+      "side": 1,
+      "message": "Fair enough. I talked with yzshen: Mojo does guarantee alignment, while legacy IPC pickle guarantees alignment to only 4 bytes. That does seem like a bit of a dangerous detail to depend on, so this is fine (since we\u0027re eventually going to migrate this to Mojo anyway...)",
+      "parentUuid": "6cf55cef_cf15c77e",
       "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -154,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "dc8cc37f_8ce6f381",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:31:12Z",
+      "side": 1,
+      "message": "I see. I mistakenly thought these were the Mojo types: there\u0027s a lot of similarly named types here.\n\nI think it\u0027s a bit confusing to have these conversion helpers in core rather than in common (analogous types in public/platform and public/web, the conversion generally happens in the (former) web layer or in platform/exported), but I guess it can\u0027t currently be helped. I guess this is OK.",
+      "parentUuid": "bf89e479_fb25d2d1",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edf84f67_384c98ef",
         "filename": "third_party/WebKit/common/message_port/cloneable_message_struct_traits.cc",
         "patchSetId": 12
@@ -189,6 +249,30 @@
       "side": 1,
       "message": "Because the array traits for base::span treat a span with data() \u003d\u003d nullptr as a null array, which will then fail validation at serialize or deserialize time since the mojom interface does not allow null arrays for this field.\n\nNot sure if anybody is actually relying on this behavior with null base::span\u0027s though? I found it rather counter-intuitive that a base::span made out of an empty vector was treated as null by mojom.",
       "parentUuid": "edf84f67_384c98ef",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e053793_d11ae5f7",
+        "filename": "third_party/WebKit/common/message_port/cloneable_message_struct_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:31:12Z",
+      "side": 1,
+      "message": "Yeah, sounds like we should change the span traits. Sorry, I\u0027m probably responsible for this bug \u003d(",
+      "parentUuid": "809c09e0_1ea11baa",
       "range": {
         "startLine": 14,
         "startChar": 0,
