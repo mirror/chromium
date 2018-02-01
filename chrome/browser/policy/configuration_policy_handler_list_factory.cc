@@ -408,6 +408,10 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kDisableSafeBrowsingProceedAnyway,
     prefs::kSafeBrowsingProceedAnywayDisabled,
     base::Value::Type::BOOLEAN },
+  { key::kSafeBrowsingExtendedReportingEnabled,
+    prefs::kSafeBrowsingScoutReportingEnabled,
+    base::Value::Type::BOOLEAN },
+  // Note: SBEROptInAllowed is being deprecated.
   { key::kSafeBrowsingExtendedReportingOptInAllowed,
     prefs::kSafeBrowsingExtendedReportingOptInAllowed,
     base::Value::Type::BOOLEAN },
