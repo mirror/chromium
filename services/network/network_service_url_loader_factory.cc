@@ -16,10 +16,12 @@ NetworkServiceURLLoaderFactory::NetworkServiceURLLoaderFactory(
     NetworkContext* context,
     uint32_t process_id)
     : context_(context), process_id_(process_id) {
-  ignore_result(process_id_);
+  context->keepalive_statistics_recorder()->Register(process_id_);
 }
 
-NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() = default;
+NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() {
+  context_->keepalive_statistics_recorder()->Unregister(process_id_);
+}
 
 void NetworkServiceURLLoaderFactory::CreateLoaderAndStart(
     mojom::URLLoaderRequest request,
