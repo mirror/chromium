@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0287e575_8a4090de",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-01T13:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76871a6_83399ae1",
+      "revId": "3a5792e143be374d9f91e9846692163855f473b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8155fd9_d3df31d4",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b81f10f3_02d06833",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-01T13:12:48Z",
+      "side": 1,
+      "message": "I\u0027ll do this for all of them in a follow-up CL.",
+      "parentUuid": "e8155fd9_d3df31d4",
+      "revId": "3a5792e143be374d9f91e9846692163855f473b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d644b2bf_610aa9d1",
         "filename": "third_party/WebKit/public/platform/web_feature.mojom",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "3a5792e143be374d9f91e9846692163855f473b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5868fb57_68303ebb",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-01T13:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d644b2bf_610aa9d1",
+      "revId": "3a5792e143be374d9f91e9846692163855f473b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
