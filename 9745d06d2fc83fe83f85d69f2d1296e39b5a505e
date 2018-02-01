@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76015bf_6c02fd3e",
+        "filename": "net/disk_cache/blockfile/rankings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-01T18:26:03Z",
+      "side": 1,
+      "message": "without the noreturn, clang doesn\u0027t know that TerminateSelf() can\u0027t return and complains that there\u0027s an implicit fallthrough here.",
+      "revId": "9745d06d2fc83fe83f85d69f2d1296e39b5a505e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
