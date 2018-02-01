@@ -207,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "3808550b_c6c13ed6",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-01T13:49:52Z",
+      "side": 1,
+      "message": "It\u0027s true that unit tests guarantee refactoring will happen correctly if it\u0027s attempted, but in this case I suspect the next person will come and look at this code and just decide not to do anything at all for fear of its complexity.  This patch is much more complex than the task it\u0027s trying to solve merits.  This is is just about the simplest thing you\u0027d ever try to use NEON to do, so we should strive to make it read simply too.  Complex #define logic, extra files, templates all impose a real \"WTF?\" tax on the next reader.\n\nThere is no reason that vectorized code cannot be just as clear and maintainable as any other normal scalar code, especially NEON with its strong typing and thorough support for the math operators everyone is already familiar with.  I think we can make the NEON parts of this code much less intimidating, perhaps even less intimidating than the scalar code.\n\nThis is an area that we can rely on existing larger-scale integration tests to catch problems.  If you swizzle the color channels wrong, the existing tests will look _very_ wrong.",
+      "parentUuid": "84c90291_1b975226",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25d5eeb1_693b6d18",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
