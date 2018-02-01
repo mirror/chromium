@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047441fc_12ed28e2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-02-01T22:40:06Z",
+      "side": 1,
+      "message": "Is this supposed to say \"no visible fakebox\"?",
+      "revId": "9b8b9d3a541e4e7712aa9be71687b62f81d049c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc9fe71_631e392e",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-02-01T22:40:06Z",
+      "side": 1,
+      "message": "This method smells a little funny to me. It\u0027s basically saying, \"I\u0027m about to focus the omnibox, here\u0027s a hint about the source of the thing I\u0027m about to do.\" I can\u0027t figure out where the focusOmnibox method below is defined, but would it be possible to just pass an optional source parameter to that method?\n\nJust a thought, though. It\u0027s your code, so whatever you want to do is fine.",
+      "revId": "9b8b9d3a541e4e7712aa9be71687b62f81d049c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
