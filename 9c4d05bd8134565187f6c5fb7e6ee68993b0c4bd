@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f7b70a_f17a6d1e",
+        "filename": "services/network/public/cpp/resource_response_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-01T07:23:16Z",
+      "side": 1,
+      "message": "Can you add some comments here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07018f96_35df9cd8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-01T07:23:16Z",
+      "side": 1,
+      "message": "Please have an include directive (and a DEPS entry) for this enum as you are using it here. Using a net:: enum is allowed in platform/loader/fetch, so it may be good to store the enum directly in this class, and have a boolean predicate something like CompliesCTPolicy() for customers living in core/.\n\nYou can, instead, remove net::ct::CTPolicyCompliance from here, and move the conversion logic to WebURLResponse.cpp. That way you don\u0027t have to include the header.",
+      "range": {
+        "startLine": 254,
+        "startChar": 38,
+        "endLine": 254,
+        "endChar": 56
+      },
+      "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ea56ca_8b444f13",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-01T07:23:16Z",
+      "side": 1,
+      "message": "Please maintain CrossThreadResourceResponseData for this additional member.",
+      "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
