@@ -395,8 +395,17 @@ void URLLoader::OnReceivedRedirect(net::URLRequest* url_request,
 
 void URLLoader::OnAuthRequired(net::URLRequest* unused,
                                net::AuthChallengeInfo* auth_info) {
-  NOTIMPLEMENTED() << "http://crbug.com/756654";
-  net::URLRequest::Delegate::OnAuthRequired(unused, auth_info);
+  DCHECK_EQ(url_request_.get(), unused);
+  if (!network_service_client_) {
+    net::AuthCredentials credentials;
+    OnAuthRequiredResponse(credentials);
+    return;
+  }
+
+  network_service_client_->OnAuthRequired(
+      process_id_, render_frame_id_, url_request_->url(), auth_info,
+      base::BindOnce(&URLLoader::OnAuthRequiredResponse,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 void URLLoader::OnCertificateRequested(net::URLRequest* unused,
@@ -736,6 +745,15 @@ void URLLoader::OnCertificateRequestedResponse(
     } else {
       url_request_->ContinueWithCertificate(nullptr, nullptr);
     }
+  }
+}
+
+void URLLoader::OnAuthRequiredResponse(
+    const net::AuthCredentials& credentials) {
+  if (credentials.Empty()) {
+    url_request_->CancelAuth();
+  } else {
+    url_request_->SetAuth(credentials);
   }
 }
 

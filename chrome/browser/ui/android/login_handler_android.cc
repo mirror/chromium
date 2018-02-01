@@ -28,6 +28,11 @@ class LoginHandlerAndroid : public LoginHandler {
       : LoginHandler(auth_info, request) {
   }
 
+  LoginHandlerAndroid(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter)
+      : LoginHandler(auth_info, web_contents_getter) {}
+
   // LoginHandler methods:
 
   void OnAutofillDataAvailableInternal(
@@ -93,4 +98,11 @@ class LoginHandlerAndroid : public LoginHandler {
 LoginHandler* LoginHandler::Create(net::AuthChallengeInfo* auth_info,
                                    net::URLRequest* request) {
   return new LoginHandlerAndroid(auth_info, request);
+}
+
+// static
+LoginHandler* LoginHandler::Create(
+    net::AuthChallengeInfo* auth_info,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter) {
+  return new LoginHandlerAndroid(auth_info, web_contents_getter);
 }

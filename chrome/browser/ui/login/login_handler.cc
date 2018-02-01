@@ -28,6 +28,7 @@
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
@@ -104,8 +105,6 @@ LoginHandler::LoginHandler(net::AuthChallengeInfo* auth_info,
     : handled_auth_(false),
       auth_info_(auth_info),
       request_(request),
-      http_network_session_(
-          request_->context()->http_transaction_factory()->GetSession()),
       password_manager_(NULL),
       login_model_(NULL) {
   // This constructor is called on the I/O thread, so we cannot load the nib
@@ -120,6 +119,34 @@ LoginHandler::LoginHandler(net::AuthChallengeInfo* auth_info,
       ResourceRequestInfo::ForRequest(request);
   DCHECK(info);
   web_contents_getter_ = info->GetWebContentsGetterForRequest();
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&LoginHandler::GetStoragePartition, this));
+
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(&LoginHandler::AddObservers, this));
+}
+
+LoginHandler::LoginHandler(
+    net::AuthChallengeInfo* auth_info,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter)
+    : handled_auth_(false),
+      auth_info_(auth_info),
+      request_(nullptr),
+      password_manager_(NULL),
+      web_contents_getter_(web_contents_getter),
+      login_model_(NULL) {
+  // This constructor is called on the I/O thread, so we cannot load the nib
+  // here. BuildViewImpl() will be invoked on the UI thread later, so wait with
+  // loading the nib until then.
+  DCHECK(auth_info_.get()) << "LoginHandler constructed with NULL auth info";
+
+  AddRef();  // matched by LoginHandler::ReleaseSoon().
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&LoginHandler::GetStoragePartition, this));
 
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(&LoginHandler::AddObservers, this));
@@ -249,9 +276,9 @@ void LoginHandler::Observe(int type,
     return;
 
   // Ignore login notification events from other profiles.
-  if (login_details->handler()->http_network_session_ !=
-      http_network_session_)
+  if (login_details->handler()->storage_partition_ != storage_partition_) {
     return;
+  }
 
   // Set or cancel the auth in this handler.
   if (type == chrome::NOTIFICATION_AUTH_SUPPLIED) {
@@ -406,6 +433,9 @@ void LoginHandler::SetAuthDeferred(const base::string16& username,
   if (request_) {
     request_->SetAuth(net::AuthCredentials(username, password));
     ResetLoginHandlerForRequest(request_);
+  } else if (!auth_required_callback_.is_null()) {
+    std::move(auth_required_callback_)
+        .Run(net::AuthCredentials(username, password));
   }
 }
 
@@ -439,6 +469,8 @@ void LoginHandler::CancelAuthDeferred() {
     // Verify that CancelAuth doesn't destroy the request via our delegate.
     DCHECK(request_ != NULL);
     ResetLoginHandlerForRequest(request_);
+  } else if (!auth_required_callback_.is_null()) {
+    std::move(auth_required_callback_).Run(net::AuthCredentials());
   }
 }
 
@@ -451,6 +483,14 @@ void LoginHandler::CloseContentsDeferred() {
 #if !defined(OS_ANDROID)
   popunder_preventer_.reset();
 #endif
+}
+
+void LoginHandler::GetStoragePartition() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  WebContents* web_contents = web_contents_getter_.Run();
+  storage_partition_ =
+      web_contents->GetMainFrame()->GetProcess()->GetStoragePartition();
 }
 
 // static
@@ -667,6 +707,20 @@ LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&LoginHandler::LoginDialogCallback, request->url(),
+                     base::RetainedRef(auth_info), base::RetainedRef(handler),
+                     is_main_frame));
+  return handler;
+}
+
+LoginHandler* CreateLoginPrompt(
+    net::AuthChallengeInfo* auth_info,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool is_main_frame,
+    const GURL& url) {
+  LoginHandler* handler = LoginHandler::Create(auth_info, web_contents_getter);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&LoginHandler::LoginDialogCallback, url,
                      base::RetainedRef(auth_info), base::RetainedRef(handler),
                      is_main_frame));
   return handler;
