@@ -36,6 +36,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.DualControlLayout;
 import org.chromium.chrome.browser.widget.TintedDrawable;
+import org.chromium.chrome.browser.widget.prefeditor.EditableOption;
 import org.chromium.ui.UiUtils;
 
 import java.util.ArrayList;
@@ -80,15 +81,15 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
          * Called when the user selects a radio button option from an {@link OptionSection}.
          *
          * @param section Section that was changed.
-         * @param option  {@link PaymentOption} that was selected.
+         * @param option  {@link EditableOption} that was selected.
          */
-        void onPaymentOptionChanged(PaymentRequestSection section, PaymentOption option);
+        void onEditableOptionChanged(PaymentRequestSection section, EditableOption option);
 
-        /** Called when the user clicks the edit icon of the selected PaymentOption. */
-        void onEditPaymentOption(PaymentRequestSection section, PaymentOption option);
+        /** Called when the user clicks the edit icon of the selected EditableOption. */
+        void onEditEditableOption(PaymentRequestSection section, EditableOption option);
 
-        /** Called when the user requests adding a new PaymentOption to a given section. */
-        void onAddPaymentOption(PaymentRequestSection section);
+        /** Called when the user requests adding a new EditableOption to a given section. */
+        void onAddEditableOption(PaymentRequestSection section);
 
         /** Checks whether or not the text should be formatted with a bold label. */
         boolean isBoldLabelNeeded(PaymentRequestSection section);
@@ -223,7 +224,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
         // Handle clicking on "ADD" or "CHOOSE".
         if (v == mEditButtonView) {
             if (getEditButtonState() == EDIT_BUTTON_ADD) {
-                mDelegate.onAddPaymentOption(this);
+                mDelegate.onAddEditableOption(this);
             } else {
                 mDelegate.onSectionClicked(this);
             }
@@ -810,14 +811,15 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             private static final int OPTION_ROW_TYPE_WARNING = 3;
 
             private final int mRowType;
-            @Nullable private final PaymentOption mOption;
+            @Nullable
+            private final EditableOption mOption;
             private final View mButton;
             private final TextView mLabel;
             private final View mOptionIcon;
             private final View mEditIcon;
 
             public OptionRow(GridLayout parent, int rowIndex, int rowType,
-                    @Nullable PaymentOption item, boolean isSelected) {
+                    @Nullable EditableOption item, boolean isSelected) {
                 assert item != null || rowType != OPTION_ROW_TYPE_OPTION;
                 boolean optionIconExists = item != null && item.getDrawableIcon() != null;
                 boolean editIconExists = item != null && item.isEditable() && isSelected;
@@ -838,7 +840,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
                 ((RadioButton) mButton).setChecked(isChecked);
                 if (isChecked) {
                     updateSelectedItem(mOption);
-                    mDelegate.onPaymentOptionChanged(OptionSection.this, mOption);
+                    mDelegate.onEditableOptionChanged(OptionSection.this, mOption);
                 }
             }
 
@@ -876,7 +878,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
                 View view;
 
                 if (mRowType == OPTION_ROW_TYPE_OPTION) {
-                    // Show a radio button indicating whether the PaymentOption is selected.
+                    // Show a radio button indicating whether the EditableOption is selected.
                     RadioButton button = new RadioButton(context);
                     button.setChecked(isSelected && isEnabled);
                     button.setEnabled(isEnabled);
@@ -932,7 +934,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
 
                 TextView labelView = new TextView(context);
                 if (mRowType == OPTION_ROW_TYPE_OPTION) {
-                    // Show the string representing the PaymentOption.
+                    // Show the string representing the EditableOption.
                     ApiCompatibilityUtils.setTextAppearance(labelView, isEnabled
                             ? R.style.PaymentsUiSectionDefaultText
                             : R.style.PaymentsUiSectionDisabledText);
@@ -1034,7 +1036,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
         /** Top and bottom margins for each item. */
         private final int mVerticalMargin;
 
-        /** All the possible PaymentOptions in Layout form, then one row for adding new options. */
+        /** All the possible EditableOptions in Layout form, then one row for adding new options. */
         private final ArrayList<OptionRow> mOptionRows = new ArrayList<>();
 
         /** Width that the editable option icon takes. */
@@ -1106,13 +1108,13 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
                 boolean clickedSelect = row.mButton == v || row.mLabel == v || row.mOptionIcon == v;
                 // Handle click on the "ADD THING" button.
                 if (row.mOption == null && clickedSelect) {
-                    mDelegate.onAddPaymentOption(this);
+                    mDelegate.onAddEditableOption(this);
                     return;
                 }
 
                 // Handle click on the edit icon.
                 if (row.mOption != null && row.mEditIcon == v) {
-                    mDelegate.onEditPaymentOption(this, row.mOption);
+                    mDelegate.onEditEditableOption(this, row.mOption);
                     return;
                 }
             }
@@ -1194,7 +1196,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
         /** Updates the View to account for the new {@link SectionInformation} being passed in. */
         public void update(SectionInformation information) {
             mSectionInformation = information;
-            PaymentOption selectedItem = information.getSelectedItem();
+            EditableOption selectedItem = information.getSelectedItem();
             updateSelectedItem(selectedItem);
             updateOptionList(information, selectedItem);
             updateControlLayout();
@@ -1259,17 +1261,18 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             if (mSectionInformation == null) return EDIT_BUTTON_GONE;
 
             if (mSectionInformation.getSize() == 0 && mCanAddItems) {
-                // There aren't any PaymentOptions.  Ask the user to add a new one.
+                // There aren't any EditableOptions.  Ask the user to add a new one.
                 return EDIT_BUTTON_ADD;
             } else if (mSectionInformation.getSelectedItem() == null) {
-                // The user hasn't selected any available PaymentOptions.  Ask the user to pick one.
+                // The user hasn't selected any available EditableOptions.  Ask the user to pick
+                // one.
                 return EDIT_BUTTON_CHOOSE;
             } else {
                 return EDIT_BUTTON_GONE;
             }
         }
 
-        private void updateSelectedItem(PaymentOption selectedItem) {
+        private void updateSelectedItem(EditableOption selectedItem) {
             // Only left TextView in the summary section is used in this section.
             // Summary is displayed in multiple lines by default unless:
             // 1. nothing is selected or
@@ -1327,7 +1330,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             updateControlLayout();
         }
 
-        private void updateOptionList(SectionInformation information, PaymentOption selectedItem) {
+        private void updateOptionList(SectionInformation information, EditableOption selectedItem) {
             mOptionLayout.removeAllViews();
             mOptionRows.clear();
             mLabelsForTest.clear();
@@ -1351,7 +1354,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
                 int currentRow = mOptionRows.size();
                 if (firstOptionIndex == INVALID_OPTION_INDEX) firstOptionIndex = currentRow;
 
-                PaymentOption item = information.getItem(i);
+                EditableOption item = information.getItem(i);
                 OptionRow currentOptionRow = new OptionRow(mOptionLayout, currentRow,
                         OptionRow.OPTION_ROW_TYPE_OPTION, item, item == selectedItem);
                 mOptionRows.add(currentOptionRow);
@@ -1376,7 +1379,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             }
         }
 
-        private CharSequence convertOptionToString(PaymentOption item, boolean excludeMainLabel,
+        private CharSequence convertOptionToString(EditableOption item, boolean excludeMainLabel,
                 boolean useBoldLabel, boolean singleLine) {
             SpannableStringBuilder builder = new SpannableStringBuilder();
             if (!excludeMainLabel) {
