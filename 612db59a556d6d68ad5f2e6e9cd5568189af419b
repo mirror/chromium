@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83cd6057_b8788d42",
+        "filename": "chrome/browser/ui/views/accelerator_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-01T21:16:10Z",
+      "side": 1,
+      "message": "the bug is just labeled OS\u003dWindows, but this looks like it affects all platforms.",
+      "revId": "612db59a556d6d68ad5f2e6e9cd5568189af419b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7ce529_9ff77a3e",
+        "filename": "chrome/browser/ui/views/accelerator_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-01T21:16:10Z",
+      "side": 1,
+      "message": "unrelated, but i think that this comment should be !OS_MACOSX. that was it\u0027s actually useful and matches what we do on e.g. L164.",
+      "range": {
+        "startLine": 259,
+        "startChar": 11,
+        "endLine": 259,
+        "endChar": 20
+      },
+      "revId": "612db59a556d6d68ad5f2e6e9cd5568189af419b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
