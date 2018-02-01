@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fd3c806_a1bbd973",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7eb4e3a_711b2fb6",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1b1448_15812877",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bbd2be7_62752fa2",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e1b1448_15812877",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,30 @@
       "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de234702_730ff1da",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7418dd4_bb0c3759",
+      "range": {
+        "startLine": 78,
+        "startChar": 35,
+        "endLine": 78,
+        "endChar": 56
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "e2dc14f8_5723c25e",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e28f5661_011bc46d",
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06b8d602_aca27b3b",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 1
@@ -169,6 +259,30 @@
       "writtenOn": "2018-01-31T07:36:00Z",
       "side": 1,
       "message": "Do we need to define what protected origins are?",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c692ca11_e8312767",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T00:25:47Z",
+      "side": 1,
+      "message": "Maybe.  Let\u0027s hold off with precisely defining the terms we use until we decide we want to spec the XSDB behavior.\n\nOTOH, maybe I should use a different section header instead of \"protected origins\"?  FWIW, I\u0027ve tried splitting the requirements into \"protected origins\", \"initiator origins\", \"iteroperability\", \"classification\", \"sniffing\" to avoid having a long, unstructured list of requirements.",
+      "parentUuid": "06b8d602_aca27b3b",
       "range": {
         "startLine": 130,
         "startChar": 2,
@@ -195,6 +309,24 @@
       "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be86c4d5_0ae5b47b",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc726d1_a5943952",
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
