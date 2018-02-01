@@ -22,6 +22,30 @@
       "revId": "c08dc3fe9bb5c07eaa200b4674a9d55e54d91b35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17b4667_58a090d4",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-02-01T15:37:31Z",
+      "side": 1,
+      "message": "Done. I chose \"Alert\" because the dialog is presented by UIAlertController in both cases.",
+      "parentUuid": "2b6e82d0_e0135572",
+      "range": {
+        "startLine": 298,
+        "startChar": 13,
+        "endLine": 298,
+        "endChar": 65
+      },
+      "revId": "c08dc3fe9bb5c07eaa200b4674a9d55e54d91b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
