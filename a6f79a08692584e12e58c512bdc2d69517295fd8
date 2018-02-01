@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "859da582_cbe52167",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-02-01T17:34:10Z",
+      "side": 1,
+      "message": "That\u0027s a fair point. Updated this function so that it invoked GetLoadPolicy if the cache does not contain the element.",
+      "parentUuid": "efb6a039_1398c3d3",
+      "revId": "a6f79a08692584e12e58c512bdc2d69517295fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1769048d_b916893d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "a6f79a08692584e12e58c512bdc2d69517295fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5999024c_add0e545",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-02-01T17:34:10Z",
+      "side": 1,
+      "message": "Removed from here since it is not Dev tools related and doesn\u0027t have any side effect. Thanks for pointing out it was a no-op.",
+      "parentUuid": "1769048d_b916893d",
+      "revId": "a6f79a08692584e12e58c512bdc2d69517295fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
