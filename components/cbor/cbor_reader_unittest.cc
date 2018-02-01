@@ -675,6 +675,22 @@ TEST(CBORReaderTest, TestOutOfOrderKeyError) {
 
          0x0a,              // key 10
          0x61, 0x62},       // value "b"
+      {0xa2,  // map with 2 text string keys
+         0x62, 'a', 'a', // key text string "aa"
+                         // (out of order due to longer length)
+         0x02,
+
+         0x61, 'b',   // key "b"
+         0x01,
+      },
+      {0xa2,  // map with 2 byte string keys
+         0x42, 'x', 'x', // key byte string "xx"
+                         // (out of order due to longer length)
+         0x02,
+
+         0x41, 'y',  // key byte string "y"
+         0x01,
+      },
       //clang-format on
   };
 
