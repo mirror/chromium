@@ -47,7 +47,7 @@ class ConsentAuditor : public KeyedService {
   // |consent_grd_ids|. Strings put into placeholders are passed as
   // |placeholder_replacements|.
   // Whether the consent was GIVEN or REVOKED is passed as |status|.
-  void RecordGaiaConsent(
+  virtual void RecordGaiaConsent(
       const std::string& feature,
       const std::vector<int>& consent_grd_ids,
       const std::vector<std::string>& placeholder_replacements,
