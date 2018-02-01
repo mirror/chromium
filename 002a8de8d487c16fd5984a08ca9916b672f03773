@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "6ae6e755_d680309b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:36:43Z",
+      "side": 1,
+      "message": "Of course. Just thinking out loud.",
+      "parentUuid": "21ff1e69_aea4194c",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d257f2a_6db50147",
         "filename": "base/deferred_sequenced_task_runner.h",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "You are right, it no longer makes sense. I\u0027ve removed the TODO.",
       "parentUuid": "9d257f2a_6db50147",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6d82e6_0a19a83f",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:36:43Z",
+      "side": 1,
+      "message": "In that case, we should tighten up the code here, since there\u0027s no longer a TODO to revisit this later. To be verbose:\n\n- This ctor should DCHECK(target_runner_).\n- The new ctor then can\u0027t defer to this ctor. Needs to initialize |created_thread_id_| itself.\n- Start() as originally written becomes private StartImpl().\n- Start() should DCHECK(target_runner_) and call StartImpl().\n- Add a new StartWithTaskRunner(scoped_refptr\u003cSequencedTaskRunner\u003e target_runner) that DCHECK(target_runner) and DCHECK(!target_runner_), set |target_runner_| and call StartImpl().\n- Adjust callers accordingly.",
+      "parentUuid": "194c0e9f_3befaf6d",
       "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -199,6 +235,30 @@
       "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0180bc2_f7ecc890",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T23:36:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1165d33_3cb34360",
+      "range": {
+        "startLine": 719,
+        "startChar": 78,
+        "endLine": 719,
+        "endChar": 79
+      },
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
