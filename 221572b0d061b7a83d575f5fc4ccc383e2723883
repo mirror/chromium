@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39529057_84351239",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "This may not necessarily be true in the future. A more appropriate comment might be\n// The static_cast is safe because our string sizes will generally fit into an int.",
+      "range": {
+        "startLine": 867,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 21
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e076d7a9_e651fd05",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 60
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Rudimentary code searching suggests we generally omit these banners in BUILD.gn files. This banner can certainly be removed as it\u0027s obvious from the path and the executable.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494753e7_390b52b4",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 60
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Similarly, this can be removed as you only have one test target.",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ca78ff_e89632d5",
+        "filename": "notification_helper/README.md",
+        "patchSetId": 60
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Nit: Insert \u0027the\u0027",
+      "range": {
+        "startLine": 6,
+        "startChar": 59,
+        "endLine": 6,
+        "endChar": 60
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e13c13_ef34cd6e",
+        "filename": "notification_helper/README.md",
+        "patchSetId": 60
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Maybe:\nA NotificationActivator\u0027s CLSID depends on its Chrome channel, allowing different NotificationActivators to be created per Chrome channel.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801c8db6_d8a77488",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Nit: No linebreak between the HRESULT generating statement and the HRESULT check, here and below.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca8c8a4_c7e2ce5f",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Nit: Remove",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26badc2a_b3d67498",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "I think we\u0027ve we\u0027re already going to give cookies_ and array, we might as well go all the way and give the IClassFactory an array too.",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 79
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408250ba_4531921c",
+        "filename": "notification_helper/notification_activator.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "It is customary to use IFACEMETHODIMP only in the class definition. HRESULT should be directly used here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b96682_a688305b",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Nit: WinRT",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 45
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfe2f76_46ccd70e",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "sizeof(entry)",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020804ac_b47e2bd3",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Can we use ScopedHandle here?\nhttps://cs.chromium.org/chromium/src/base/win/scoped_handle.h",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e88bb4_d971c7d3",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Check if |snapshot| is INVALID_HANDLE_VALUE before proceeding.",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f729ba5_a0244bca",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "ASSERT_TRUE. This test should fail fast if this fails.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 8
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b8dac4_f72faf17",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "What rules are violated here? We have \u003cwrl/client.h\u003e in all kinds of unit tests.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615e9c21_1ff27e75",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "IID_PPV_ARGS(\u0026notification_activator)",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 55
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6937e441_1c881fde",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Early return and remove the else.",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57cfd6f_b3b7b547",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(SUCCEEDED(hr))",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a20989a_0991c206",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Since we\u0027ve got the pid of the process a la PROCESSENTRY32, we might want to go all the way and use OpenProcess(SYNCHRONIZE, FALSE, pid) and WaitForSingleObject(hProcessHandle) at the end.",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 58
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

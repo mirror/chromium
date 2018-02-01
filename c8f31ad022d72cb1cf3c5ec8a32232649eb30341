@@ -851,6 +851,30 @@
     },
     {
       "key": {
+        "uuid": "4a859c49_6edd713b",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Would OutputDebugString be sufficient then? This means we can avoid atltrace.\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/aa363362(v\u003dvs.85).aspx",
+      "parentUuid": "139c64ef_19c0de57",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338b9cf8_dea60283",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
@@ -943,6 +967,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "750344f8_0e737c00",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Huh, interesting. Even Microsoft\u0027s doesn\u0027t do this. (Generate a sample project in Visual Studio for example or search in GitHub: https://github.com/Microsoft/Windows-classic-samples/search?utf8\u003d%E2%9C%93\u0026q\u003dwWinMain\u0026type\u003d).",
+      "parentUuid": "fa80d663_b489e7b8",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -1413,6 +1461,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93442a1_b64e6062",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T01:31:27Z",
+      "side": 1,
+      "message": "Gerrit sure makes it hard to find these comment threads.\n\nI can buy the static_assert. sgtm.",
+      "parentUuid": "e75a895f_dcdb4acd",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
