@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4e6f71b4_939506f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T22:02:03Z",
+      "side": 1,
+      "message": "I see. Looking at the code it seems like each task runner is created with a \"task type\", which means that there can be multiple task runners for each frame, i.e. there is no single \"per-frame task runner\". If proper task prioritization is a goal here then it may be better to call them \"prioritized task runners\".",
+      "parentUuid": "a6d2df82_2e2ae40f",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91432324_b1e90c20",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "This CL makes the code use the task_runner_, which originates here [1] and is associated with a particular Document (i.e. a frame). ThreadTaskRunnerHandle returns a reference to a process-wide default task runner, which is bad for scheduling.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp?type\u003dcs\u0026l\u003d556",
       "parentUuid": "91432324_b1e90c20",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3730c3fa_3ad64abc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T22:02:03Z",
+      "side": 1,
+      "message": "\u003e This CL makes the code use the task_runner_, which originates here [1] and is associated with a particular Document (i.e. a frame). ThreadTaskRunnerHandle returns a reference to a process-wide default task runner, which is bad for scheduling.\n\nThis is not correct. ThreadTaskRunnerHandle::Get() returns main task runner for the _current_ _thread_. There is no such thing as \"process-wide default task runner\".  With multiple per-frame rendering threads ThreadTaskRunnerHandle::Get() will return render task runner for the corresponding thread. \n\nOverall design is still not clear to me. A link to design doc would be useful, but at very least add more details in the bug please. There are no comments for Document::GetTaskRunner(), which also doesn\u0027t help.\n\nWhich of the following 3 approaches is the end goal?\n 1. All frames share a single thread, but use per-frame TaskRunner instances to control priorities for different classes of tasks.\n 2. Each frame get it\u0027s own thread.\n 3. Frames share a pool of threads managed by TaskScheduler.\n\nIf I\u0027m guessing correctly, (1) is the goal. In that case this change looks reasonable. OTOH if you are taking time to convert all code to avoid ThreadTaskRunnerHandle::Get() then you should consider updating it to use SequencedTaskRunner instead of SingleThreadTaskRunner, which will make it easier to migrate to (3) longer term. Has this been considered?\n\n\u003e \n\u003e https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp?type\u003dcs\u0026l\u003d556",
+      "parentUuid": "70122e8f_f41ffff2",
       "range": {
         "startLine": 10,
         "startChar": 37,
@@ -135,6 +183,52 @@
         "startChar": 0,
         "endLine": 17,
         "endChar": 53
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099783b1_19125a98",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T22:02:03Z",
+      "side": 1,
+      "message": "maybe rename this to render_task_runner_?",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 32
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae45d72_4076f4e8",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T22:02:03Z",
+      "side": 1,
+      "message": "add DCHECK(render_thread_task_runner_-\u003eRunsTasksInCurrentSequence()) here.",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 51
       },
       "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
