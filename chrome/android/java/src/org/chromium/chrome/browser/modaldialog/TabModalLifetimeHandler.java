@@ -11,6 +11,7 @@ import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
+import org.chromium.ui.UiUtils;
 
 /**
  * Class responsible for handling dismissal of a tab modal dialog on user actions outside the tab
@@ -37,6 +38,7 @@ public class TabModalLifetimeHandler {
         }
     };
 
+    private final ChromeActivity mChromeActivity;
     private final ModalDialogManager mManager;
     private final TabModalPresenter mPresenter;
     private final TabModelSelectorTabModelObserver mTabModelObserver;
@@ -49,6 +51,7 @@ public class TabModalLifetimeHandler {
      * @param manager The {@link ModalDialogManager} that this handler handles.
      */
     public TabModalLifetimeHandler(ChromeActivity activity, ModalDialogManager manager) {
+        mChromeActivity = activity;
         mManager = manager;
         mPresenter = new TabModalPresenter(activity);
         mManager.registerPresenter(mPresenter, ModalDialogManager.TAB_MODAL);
@@ -81,6 +84,9 @@ public class TabModalLifetimeHandler {
     public void onOmniboxFocusChanged(boolean hasFocus) {
         // If has bottom controls, the view hierarchy will be updated by mBottomSheetObserver.
         if (mPresenter.getModalDialog() != null && !mHasBottomControls) {
+            // Calling show keyboard to make sure the url bar is active on input method
+            // manager before hierarchy changes.
+            if (hasFocus) UiUtils.showKeyboard(mChromeActivity.getCurrentFocus());
             mPresenter.updateContainerHierarchy(!hasFocus);
         }
     }

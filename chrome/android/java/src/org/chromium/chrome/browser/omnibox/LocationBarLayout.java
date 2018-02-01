@@ -2021,6 +2021,7 @@ public class LocationBarLayout extends FrameLayout
 
     @Override
     public void backKeyPressed() {
+        setUrlBarFocus(false);
         hideSuggestions();
         UiUtils.hideKeyboard(mUrlBar);
         // Revert the URL to match the current page.

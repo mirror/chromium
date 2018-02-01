@@ -94,11 +94,14 @@ public class TabModalPresenter extends ModalDialogManager.Presenter {
                 MarginLayoutParams.MATCH_PARENT, MarginLayoutParams.WRAP_CONTENT, Gravity.CENTER);
         mDialogContainer.addView(dialogView, params);
         mChromeActivity.addViewObscuringAllTabs(mDialogContainer);
+        updateContainerHierarchy(true);
     }
 
     @Override
     protected void removeDialogView(View dialogView) {
         setBrowserControlsAccess(false);
+        // Clear focus so that keyboard can hide accordingly while entering tab switcher.
+        dialogView.clearFocus();
         mDialogContainer.removeView(dialogView);
         mDialogContainer.setVisibility(View.GONE);
         mChromeActivity.removeViewObscuringAllTabs(mDialogContainer);
@@ -110,6 +113,17 @@ public class TabModalPresenter extends ModalDialogManager.Presenter {
      * @param toFront Whether the dialog container should be brought to the front.
      */
     void updateContainerHierarchy(boolean toFront) {
+        View dialogView = getModalDialog().getView();
+        if (toFront) {
+            dialogView.announceForAccessibility(getModalDialog().getContentDescription());
+            dialogView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            dialogView.requestFocus();
+        } else {
+            dialogView.clearFocus();
+            dialogView.setImportantForAccessibility(
+                    View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+        }
+
         if (toFront == mContainerIsAtFront) return;
         mContainerIsAtFront = toFront;
         if (toFront) {
@@ -206,7 +220,6 @@ public class TabModalPresenter extends ModalDialogManager.Presenter {
                 mChromeActivity.getToolbarManager().setUrlBarFocus(false);
             }
             menuButton.setEnabled(false);
-            updateContainerHierarchy(true);
         } else {
             // Show the action bar back if it was dismissed when the dialogs were showing.
             ContentViewCore contentViewCore = mActiveTab.getContentViewCore();
