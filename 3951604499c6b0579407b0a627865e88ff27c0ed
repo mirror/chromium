@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "b9e87e3b_bb4bc2b0",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-01T00:24:25Z",
+      "side": 1,
+      "message": "Done. Changed to using base:RunLoop::Run() and base::RunLoop::Quit() to explicitly wait for an event.",
+      "parentUuid": "ea54891a_3ac3b942",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229a527a_303be55b",
         "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
         "patchSetId": 6
