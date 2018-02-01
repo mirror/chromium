@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b57e8f9_d5937e38",
+        "filename": "net/disk_cache/blockfile/rankings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-01T21:42:26Z",
+      "side": 1,
+      "message": "FYI, implemented these as break rather than FALLTHROUGH, since there\u0027s no actual logic to fall-through to.",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "2417ab8eb1f00e7333640946e6384bcb9055d188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
