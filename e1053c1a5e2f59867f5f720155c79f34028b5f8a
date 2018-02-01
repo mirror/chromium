@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6867ca2_7a24711c",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T18:59:20Z",
+      "side": 1,
+      "message": "It should be equivalent. This metrics are not split between lock and login, so does it matter which state do I set for testing (LOCKED or LOGIN_PRIMARY)?",
+      "parentUuid": "695040de_7d23182b",
+      "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f1a6cac_d97a730f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4997201f_27d6bdb5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3388,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T18:59:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1a6cac_d97a730f",
+      "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
