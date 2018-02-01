@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753d8a78_609bb92e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:11:12Z",
+      "side": 1,
+      "message": "Could you please link to the errata and Jeffrey\u0027s pull request both here and in the header file?",
+      "range": {
+        "startLine": 11,
+        "startChar": 63,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a137d0_b8083d44",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:11:12Z",
+      "side": 1,
+      "message": "Please link to the errata and Jeffrey\u0027s pull request here as well, and explain that / why the two are equivalent.",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b9100e_92f5af76",
+        "filename": "components/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:11:12Z",
+      "side": 1,
+      "message": "For good measure, could you please add a similar test that exercises the example input in Jeffrey\u0027s pull request. More precisely, the subset of values that we currently support, and add comments indicating which type of values are not yet supported.\n\n+  1. 10, encoded as 0x0a.\n+  1. 100, encoded as 0x1864.\n+  1. -1, encoded as 0x20.\n+  1. \"z\", encoded as 0x617a.\n+  1. \"aa\", encoded as 0x626161.\n+  1. \\[100], encoded as 0x811864.\n+  1. \\[-1], encoded as 0x8120.\n+  1. false, encoded as 0xf4.",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
