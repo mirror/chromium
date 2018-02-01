@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f31c2a3_5c4b759b",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-01T19:48:51Z",
+      "side": 1,
+      "message": "Done. Also unified the variable names in all other places.",
+      "parentUuid": "02264af0_0e96ab94",
+      "range": {
+        "startLine": 44,
+        "startChar": 60,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bbe23d_4c8e6940",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 21
@@ -36,6 +60,24 @@
       "writtenOn": "2018-02-01T11:55:19Z",
       "side": 1,
       "message": "please use same naming as protocol. either change this to SnapToLeft or update protocol.",
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e6d9f8_c2685a12",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-01T19:48:51Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "80bbe23d_4c8e6940",
       "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1070d09b_7422f756",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-01T19:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0e7379_cbbac0c9",
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "923410cb_ffa005da",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 21
@@ -70,6 +130,30 @@
       "writtenOn": "2018-02-01T11:55:19Z",
       "side": 1,
       "message": "what\u0027s the difference between current_state and new_state? can we make this less confusing somehow?",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 64
+      },
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5026d7e_81a86415",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-01T19:48:51Z",
+      "side": 1,
+      "message": "Sorry! I unified all the variable name to |requested_state|. The bounds change event can come from a state change, and currently it can only be a snapped state. |current_state| is the window\u0027s current window state, and |requested_state| is the state that was causing the bounds change.",
+      "parentUuid": "923410cb_ffa005da",
       "range": {
         "startLine": 142,
         "startChar": 27,
