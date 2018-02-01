@@ -1271,13 +1271,11 @@ HeapSnapshotWorker.HeapSnapshot = class {
 
   /**
    * @param {function(!HeapSnapshotWorker.HeapSnapshotNode)} action
-   * @param {boolean=} userRootsOnly
    */
-  forEachRoot(action, userRootsOnly) {
+  forEachRoot(action) {
     for (var iter = this.rootNode().edges(); iter.hasNext(); iter.next()) {
       var node = iter.edge.node();
-      if (!userRootsOnly || this.isUserRoot(node))
-        action(node);
+      action(node);
     }
   }
 
@@ -1306,12 +1304,7 @@ HeapSnapshotWorker.HeapSnapshot = class {
       nodesToVisit[nodesToVisitLength++] = node.nodeIndex;
     }
 
-    this.forEachRoot(enqueueNode.bind(null, 1), true);
-    this._bfs(nodesToVisit, nodesToVisitLength, distances, filter);
-
-    // bfs for the rest of objects
-    nodesToVisitLength = 0;
-    this.forEachRoot(enqueueNode.bind(null, HeapSnapshotModel.baseSystemDistance), false);
+    this.forEachRoot(enqueueNode.bind(null, 1));
     this._bfs(nodesToVisit, nodesToVisitLength, distances, filter);
   }
 
@@ -2480,7 +2473,8 @@ HeapSnapshotWorker.JSHeapSnapshot = class extends HeapSnapshotWorker.HeapSnapsho
   retainingEdgesFilter() {
     var containmentEdgesFilter = this.containmentEdgesFilter();
     function filter(edge) {
-      return containmentEdgesFilter(edge) && !edge.node().isRoot() && !edge.isWeak();
+      return containmentEdgesFilter(edge) && !edge.node().isRoot() && !edge.isWeak() &&
+          edge.node().distance() < edge._edge().node().distance();
     }
     return filter;
   }
@@ -2544,23 +2538,8 @@ HeapSnapshotWorker.JSHeapSnapshot = class extends HeapSnapshotWorker.HeapSnapsho
   /**
    * @override
    * @param {function(!HeapSnapshotWorker.HeapSnapshotNode)} action
-   * @param {boolean=} userRootsOnly
    */
-  forEachRoot(action, userRootsOnly) {
-    /**
-     * @param {!HeapSnapshotWorker.HeapSnapshotNode} node
-     * @param {string} name
-     * @return {?HeapSnapshotWorker.HeapSnapshotNode}
-     */
-    function getChildNodeByName(node, name) {
-      for (var iter = node.edges(); iter.hasNext(); iter.next()) {
-        var child = iter.edge.node();
-        if (child.name() === name)
-          return child;
-      }
-      return null;
-    }
-
+  forEachRoot(action) {
     var visitedNodes = {};
     /**
      * @param {!HeapSnapshotWorker.HeapSnapshotNode} node
@@ -2573,26 +2552,8 @@ HeapSnapshotWorker.JSHeapSnapshot = class extends HeapSnapshotWorker.HeapSnapsho
       }
     }
 
-    var gcRoots = getChildNodeByName(this.rootNode(), '(GC roots)');
-    if (!gcRoots)
-      return;
-
-    if (userRootsOnly) {
-      for (var iter = this.rootNode().edges(); iter.hasNext(); iter.next()) {
-        var node = iter.edge.node();
-        if (this.isUserRoot(node))
-          doAction(node);
-      }
-    } else {
-      for (var iter = gcRoots.edges(); iter.hasNext(); iter.next()) {
-        var subRoot = iter.edge.node();
-        for (var iter2 = subRoot.edges(); iter2.hasNext(); iter2.next())
-          doAction(iter2.edge.node());
-        doAction(subRoot);
-      }
-      for (var iter = this.rootNode().edges(); iter.hasNext(); iter.next())
-        doAction(iter.edge.node());
-    }
+    for (var iter = this.rootNode().edges(); iter.hasNext(); iter.next())
+      doAction(iter.edge.node());
   }
 
   /**
