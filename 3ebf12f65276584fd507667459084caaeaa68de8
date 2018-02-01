@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "6c0f20c8_a1bc788a",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T07:15:46Z",
+      "side": 1,
+      "message": "Thanks I finally managed to do this. Tests for range requests are in https://chromium-review.googlesource.com/c/chromium/src/+/897165\n\nIt turns out tricky to actually exercise this code path. Chrome already disallows responses  from multiple origins. So the only way is to get multiple responses from the same (cross-)origin, and have some responses be opaque and some be non-opaque. But we can\u0027t easily get opaque responses for Range requests, since the Range request header is disallowed in no-cors mode. But there is one way to do it, where the first Request is no-cors, and the other ones are cors. That test breaks if this is part of the code is removed.",
+      "parentUuid": "08d96f38_f940c435",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e9a283_d21296ea",
         "filename": "media/blink/url_index.h",
         "patchSetId": 4
@@ -131,6 +149,24 @@
       "side": 1,
       "message": "Yes I think you\u0027re right. We could just do a bool.",
       "parentUuid": "89e9a283_d21296ea",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d000bc78_47e1c001",
+        "filename": "media/blink/url_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T07:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc7d299_3f79f517",
       "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

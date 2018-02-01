@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b19dee46_f0c4462c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-canvas-tainting-video-cache.https-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T07:15:46Z",
+      "side": 1,
+      "message": "This is the basic test fixed by this CL.",
+      "revId": "c8c72bdfe936d7cb8ac857029cb94f1555134358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fca2e97_15ab3717",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-canvas-tainting-video-with-range-request.https-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-01T07:15:46Z",
+      "side": 1,
+      "message": "This test passes because the opaque bit isn\u0027t cleared by subsequent requests.",
+      "revId": "c8c72bdfe936d7cb8ac857029cb94f1555134358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
