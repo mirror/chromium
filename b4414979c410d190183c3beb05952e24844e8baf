@@ -16,6 +16,24 @@
       "revId": "b4414979c410d190183c3beb05952e24844e8baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187bb480_117351f3",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-01T19:07:34Z",
+      "side": 1,
+      "message": "Spellchecker binds the interface via:\n\nSpellCheck[Provider]::GetSpellCheckHost()\n-\u003e calls LocalInterfaceProvider::GetInterface()\n-\u003e overridden by ContentRendererClient::GetInterface()\n-\u003e overridden by {Chrome,Aw}ContentRendererClient::GetInterface(), depending on the platform\n\nSo that\u0027s why we are modifying this part.\n\nSafe browsing binds the interface in its own way, which can\u0027t be shared with spellchecker:\n\nURLLoaderThrottleProviderImpl::URLLoaderThrottleProviderImpl(\n    content::URLLoaderThrottleProviderType type,\n    ChromeContentRendererClient* chrome_content_renderer_client)\n    : type_(type),\n      chrome_content_renderer_client_(chrome_content_renderer_client) {\n  DETACH_FROM_THREAD(thread_checker_);\n  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {\n    content::RenderThread::Get()-\u003eGetConnector()-\u003eBindInterface(\n        content::mojom::kBrowserServiceName,\n        mojo::MakeRequest(\u0026safe_browsing_info_));\n  }\n}\n\nIn either case, using content_browser service on WebView isn\u0027t correct, as suggested by @yzshen.\n\n@yzshen: Could you kindly provide some more context of this issue? Thanks!",
+      "parentUuid": "084e19ad_40d9ccd4",
+      "revId": "b4414979c410d190183c3beb05952e24844e8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
