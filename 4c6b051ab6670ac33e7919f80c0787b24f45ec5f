@@ -105,6 +105,24 @@
       "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87d69b20_5e44fe8b",
+        "filename": "components/security_interstitials/core/browser/resources/interstitial_webview_quiet.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2018-02-01T18:56:06Z",
+      "side": 1,
+      "message": "From my testing this seems work in the embed mode too.",
+      "parentUuid": "3660e5d5_f988431e",
+      "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
