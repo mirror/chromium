@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844444fb_b01712c6",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:20:23Z",
+      "side": 1,
+      "message": "Hang on, won\u0027t this make AuthenticatorImplTest.TestSerializedRegisterClientData [1] flake with a probability of 10% :-)? Would be great to not only make the test deterministic, but also have a unittest to verify that we actually inject stuff occassionally. \n\n[1]: https://cs.chromium.org/chromium/src/content/browser/webauth/authenticator_impl_unittest.cc?rcl\u003dae1e8023bd48be9fd2c9546b7140e7e535c64884\u0026l\u003d377-385",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c91aa1_832b026c",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:20:23Z",
+      "side": 1,
+      "message": "Is there an URL we can reference here so that people have an easier time to figure out what this is? The current text is probably too generic to be easily searched for.",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
