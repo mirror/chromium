@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "857c89a8_d6bc5508",
+        "filename": "android_webview/browser/deferred_gpu_command_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T00:05:19Z",
+      "side": 1,
+      "message": "This might cause a minor webview startup perf regression, but I will address it in the next CL. This seems the only way not to get this CL over complicated.\n\nThe next CL will implement the InitializeGLBindings with a lock..",
+      "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
