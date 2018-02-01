@@ -20,7 +20,9 @@ class NetworkTimeTracker;
 }  // namespace network_time
 
 namespace net {
+class CertVerifyResult;
 class SSLInfo;
+class X509Certificate;
 }  // namespace net
 
 namespace certificate_reporting {
@@ -55,6 +57,15 @@ class ErrorReport {
   // Constructs a report for the given |hostname| using the SSL
   // properties in |ssl_info|.
   ErrorReport(const std::string& hostname, const net::SSLInfo& ssl_info);
+
+  // Constructs a dual verification trial report for the given |hostname|, the
+  // cert and chain sent by the server, the result from the primary verifier,
+  // and the result from the trial verifier.
+  // TODO(mattm): remove this when the trial is done.
+  ErrorReport(const std::string& hostname,
+	      const net::X509Certificate& unverified_cert,
+              const net::CertVerifyResult& primary_result,
+              const net::CertVerifyResult& trial_result);
 
   ~ErrorReport();
 

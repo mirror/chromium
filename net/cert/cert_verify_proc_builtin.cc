@@ -544,6 +544,9 @@ int CertVerifyProcBuiltin::VerifyInternal(
     CertVerifyResult* verify_result) {
   CertErrors parsing_errors;
 
+  // XXX
+  verify_result->cert_status |= CERT_STATUS_FOO;
+
   // VerifyInternal() is expected to carry out verifications using the current
   // time stamp.
   base::Time verification_time = base::Time::Now();

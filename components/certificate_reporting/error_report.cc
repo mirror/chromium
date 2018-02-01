@@ -19,18 +19,21 @@
 #include "net/cert/cert_verify_proc_android.h"
 #endif
 
+#include "net/cert/cert_verify_result.h"
+
 using network_time::NetworkTimeTracker;
 
 namespace certificate_reporting {
 
 namespace {
 
-void AddCertStatusToReportErrors(net::CertStatus cert_status,
-                                 CertLoggerRequest* report) {
+void AddCertStatusToReportErrors(
+    net::CertStatus cert_status,
+    ::google::protobuf::RepeatedField<int>* cert_errors) {
 #define COPY_CERT_STATUS(error) RENAME_CERT_STATUS(error, CERT_##error)
 #define RENAME_CERT_STATUS(status_error, logger_error) \
   if (cert_status & net::CERT_STATUS_##status_error)   \
-    report->add_cert_error(CertLoggerRequest::ERR_##logger_error);
+    cert_errors->Add(CertLoggerRequest::ERR_##logger_error);
 
   COPY_CERT_STATUS(REVOKED)
   COPY_CERT_STATUS(INVALID)
@@ -52,10 +55,10 @@ void AddCertStatusToReportErrors(net::CertStatus cert_status,
 #undef COPY_CERT_STATUS
 }
 
-bool CertificateChainToString(scoped_refptr<net::X509Certificate> cert,
+bool CertificateChainToString(const net::X509Certificate& cert,
                               std::string* result) {
   std::vector<std::string> pem_encoded_chain;
-  if (!cert->GetPEMEncodedChain(&pem_encoded_chain))
+  if (!cert.GetPEMEncodedChain(&pem_encoded_chain))
     return false;
 
   *result = base::StrCat(pem_encoded_chain);
@@ -73,14 +76,14 @@ ErrorReport::ErrorReport(const std::string& hostname,
   cert_report_->set_time_usec(now.ToInternalValue());
   cert_report_->set_hostname(hostname);
 
-  if (!CertificateChainToString(ssl_info.cert,
+  if (!CertificateChainToString(*ssl_info.cert,
                                 cert_report_->mutable_cert_chain())) {
     LOG(ERROR) << "Could not get PEM encoded chain.";
   }
 
   if (ssl_info.unverified_cert &&
       !CertificateChainToString(
-          ssl_info.unverified_cert,
+          *ssl_info.unverified_cert,
           cert_report_->mutable_unverified_cert_chain())) {
     LOG(ERROR) << "Could not get PEM encoded unverified certificate chain.";
   }
@@ -88,7 +91,48 @@ ErrorReport::ErrorReport(const std::string& hostname,
   cert_report_->add_pin(ssl_info.pinning_failure_log);
   cert_report_->set_is_issued_by_known_root(ssl_info.is_issued_by_known_root);
 
-  AddCertStatusToReportErrors(ssl_info.cert_status, cert_report_.get());
+  AddCertStatusToReportErrors(ssl_info.cert_status,
+                              cert_report_->mutable_cert_error());
+
+#if defined(OS_ANDROID)
+  CertLoggerFeaturesInfo* features_info = cert_report_->mutable_features_info();
+  features_info->set_android_aia_fetching_status(
+      CertLoggerFeaturesInfo::ANDROID_AIA_FETCHING_ENABLED);
+#endif
+}
+
+ErrorReport::ErrorReport(const std::string& hostname,
+	      const net::X509Certificate& unverified_cert,
+              const net::CertVerifyResult& primary_result,
+              const net::CertVerifyResult& trial_result) 
+    : cert_report_(new CertLoggerRequest()) {
+  base::Time now = base::Time::Now();
+  cert_report_->set_time_usec(now.ToInternalValue());
+  cert_report_->set_hostname(hostname);
+  if (!CertificateChainToString(
+          unverified_cert, cert_report_->mutable_unverified_cert_chain())) {
+    LOG(ERROR) << "Could not get PEM encoded unverified certificate chain.";
+  }
+
+  if (!CertificateChainToString(*primary_result.verified_cert,
+                                cert_report_->mutable_cert_chain())) {
+    LOG(ERROR) << "Could not get PEM encoded chain.";
+  }
+  cert_report_->set_is_issued_by_known_root(
+      primary_result.is_issued_by_known_root);
+  AddCertStatusToReportErrors(primary_result.cert_status,
+                              cert_report_->mutable_cert_error());
+
+  TrialVerificationInfo* trial_report =
+      cert_report_->mutable_trial_verification_info();
+  if (!CertificateChainToString(*trial_result.verified_cert,
+                                trial_report->mutable_cert_chain())) {
+    LOG(ERROR) << "Could not get PEM encoded chain.";
+  }
+  trial_report->set_is_issued_by_known_root(
+      trial_result.is_issued_by_known_root);
+  AddCertStatusToReportErrors(trial_result.cert_status,
+                              trial_report->mutable_cert_error());
 
 #if defined(OS_ANDROID)
   CertLoggerFeaturesInfo* features_info = cert_report_->mutable_features_info();

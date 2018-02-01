@@ -818,6 +818,8 @@ split_static_library("browser") {
     "net/system_network_context_manager.h",
     "net/timed_cache.cc",
     "net/timed_cache.h",
+    "net/trial_comparison_cert_verifier.cc",
+    "net/trial_comparison_cert_verifier.h",
     "net/url_info.cc",
     "net/url_info.h",
     "net_benchmarking.cc",

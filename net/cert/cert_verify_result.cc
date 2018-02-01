@@ -46,4 +46,8 @@ bool CertVerifyResult::operator==(const CertVerifyResult& other) const {
                       other.ocsp_result);
 }
 
+bool CertVerifyResult::operator!=(const CertVerifyResult& other) const {
+    return !(*this == other);
+}
+
 }  // namespace net

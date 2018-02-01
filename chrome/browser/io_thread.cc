@@ -65,6 +65,7 @@
 #include "content/public/common/user_agent.h"
 #include "extensions/features/features.h"
 #include "net/cert/caching_cert_verifier.h"
+#include "net/cert/cert_net_fetcher.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/cert_verify_proc.h"
 #include "net/cert/ct_known_logs.h"
@@ -74,6 +75,7 @@
 #include "net/cert/multi_threaded_cert_verifier.h"
 #include "net/cert/sth_distributor.h"
 #include "net/cert/sth_observer.h"
+#include "net/cert_net/cert_net_fetcher_impl.h"
 #include "net/dns/host_cache.h"
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
@@ -592,7 +594,7 @@ void IOThread::CleanUp() {
   net::SetURLRequestContextForNSSHttpIO(nullptr);
 #endif
 
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA) || defined(OS_LINUX)
   net::ShutdownGlobalCertNetFetcher();
 #endif
 
@@ -836,7 +838,8 @@ void IOThread::ConstructSystemRequestContext() {
 #if defined(USE_NSS_CERTS)
   net::SetURLRequestContextForNSSHttpIO(globals_->system_request_context);
 #endif
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+// XXX macos too?
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA) || defined(OS_LINUX)
   net::SetGlobalCertNetFetcher(
       net::CreateCertNetFetcher(globals_->system_request_context));
 #endif

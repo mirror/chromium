@@ -233,7 +233,7 @@ class CertVerifierJob {
                        key_.hostname(), key_.ocsp_response(), key_.flags(),
                        crl_set, key_.additional_trust_anchors()),
         base::BindOnce(&CertVerifierJob::OnJobCompleted,
-                       weak_ptr_factory_.GetWeakPtr()));
+                       weak_ptr_factory_.GetWeakPtr(), crl_set));
   }
 
   ~CertVerifierJob() {
@@ -291,12 +291,21 @@ class CertVerifierJob {
     }
   }
 
-  void OnJobCompleted(std::unique_ptr<ResultHelper> verify_result) {
+  void OnJobCompleted(scoped_refptr<CRLSet> crl_set,
+                      std::unique_ptr<ResultHelper> verify_result) {
     TRACE_EVENT0(kNetTracingCategory, "CertVerifierJob::OnJobCompleted");
     std::unique_ptr<CertVerifierJob> keep_alive =
         cert_verifier_->RemoveJob(this);
 
     LogMetrics(*verify_result);
+    if (cert_verifier_->verify_complete_callback_) {
+      cert_verifier_->verify_complete_callback_.Run(
+          // base::ConstRef(key_), crl_set.get(), base::ConstRef(net_log_),
+          key_, std::move(crl_set), net_log_,
+          // verify_result->error, base::ConstRef(verify_result->result),
+          verify_result->error, verify_result->result,
+          base::TimeTicks::Now() - start_time_);
+    }
     cert_verifier_ = nullptr;
 
     // TODO(eroman): If the cert_verifier_ is deleted from within one of the
@@ -326,6 +335,14 @@ class CertVerifierJob {
 MultiThreadedCertVerifier::MultiThreadedCertVerifier(
     scoped_refptr<CertVerifyProc> verify_proc)
     : requests_(0), inflight_joins_(0), verify_proc_(verify_proc) {}
+
+MultiThreadedCertVerifier::MultiThreadedCertVerifier(
+    scoped_refptr<CertVerifyProc> verify_proc,
+    const VerifyCompleteCallback& verify_complete_callback)
+    : requests_(0),
+      inflight_joins_(0),
+      verify_proc_(verify_proc),
+      verify_complete_callback_(verify_complete_callback) {}
 
 MultiThreadedCertVerifier::~MultiThreadedCertVerifier() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

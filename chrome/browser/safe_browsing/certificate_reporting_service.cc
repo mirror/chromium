@@ -22,7 +22,10 @@ namespace {
 // a client seeing an invalid cert might not be able to make an HTTPS connection
 // to report it.
 const char kExtendedReportingUploadUrl[] =
-    "http://safebrowsing.googleusercontent.com/safebrowsing/clientreport/"
+    //XXX "http://safebrowsing.googleusercontent.com/safebrowsing/clientreport/"
+    //"http://localhost"
+    "http://127.0.0.1:43701"
+    "/safebrowsing/clientreport/"
     "chrome-certs";
 
 // Compare function that orders Reports in reverse chronological order (i.e.

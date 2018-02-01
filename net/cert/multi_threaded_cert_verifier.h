@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/cert/cert_verifier.h"
@@ -31,7 +32,21 @@ class CertVerifyProc;
 // synchronous CertVerifier implementations on worker threads.
 class NET_EXPORT_PRIVATE MultiThreadedCertVerifier : public CertVerifier {
  public:
+  using VerifyCompleteCallback =
+      base::RepeatingCallback<void(const RequestParams&,
+                                   scoped_refptr<CRLSet> crl_set,
+                                   const NetLogWithSource&,
+                                   int,
+                                   const CertVerifyResult&,
+				   base::TimeDelta)>;
+
   explicit MultiThreadedCertVerifier(scoped_refptr<CertVerifyProc> verify_proc);
+
+  // XXX docs
+  // TODO(mattm): remove this once the trial is complete.
+  MultiThreadedCertVerifier(
+      scoped_refptr<CertVerifyProc> verify_proc,
+      const VerifyCompleteCallback& verify_complete_callback);
 
   // When the verifier is destroyed, all certificate verifications requests are
   // canceled, and their completion callbacks will not be called.
@@ -84,6 +99,7 @@ class NET_EXPORT_PRIVATE MultiThreadedCertVerifier : public CertVerifier {
   uint64_t inflight_joins_;
 
   scoped_refptr<CertVerifyProc> verify_proc_;
+  VerifyCompleteCallback verify_complete_callback_;
 
   THREAD_CHECKER(thread_checker_);
 

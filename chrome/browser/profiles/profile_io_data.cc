@@ -39,6 +39,7 @@
 #include "chrome/browser/net/loading_predictor_observer.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/profile_network_context_service_factory.h"
+#include "chrome/browser/net/trial_comparison_cert_verifier.h"
 #include "chrome/browser/policy/cloud/policy_header_service_factory.h"
 #include "chrome/browser/policy/policy_helpers.h"
 #include "chrome/browser/predictors/loading_predictor.h"
@@ -83,6 +84,7 @@
 #include "net/cert/caching_cert_verifier.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/cert_verify_proc.h"
+#include "net/cert/cert_verify_proc_builtin.h"
 #include "net/cert/ct_log_verifier.h"
 #include "net/cert/ct_policy_enforcer.h"
 #include "net/cert/multi_log_ct_verifier.h"
@@ -1167,8 +1169,9 @@ void ProfileIOData::Init(
     }
 #else
     cert_verifier = std::make_unique<net::CachingCertVerifier>(
-        std::make_unique<net::MultiThreadedCertVerifier>(
-            net::CertVerifyProc::CreateDefault()));
+        std::make_unique<TrialComparisonCertVerifier>(
+            profile_params_->profile, net::CertVerifyProc::CreateDefault(),
+            net::CreateCertVerifyProcBuiltin()));
 #endif
     const base::CommandLine& command_line =
         *base::CommandLine::ForCurrentProcess();

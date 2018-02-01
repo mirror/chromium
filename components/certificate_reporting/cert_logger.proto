@@ -166,4 +166,24 @@ message CertLoggerRequest {
   // True if the machine is enterprise managed. Currently only available for
   // Windows and ChromeOS clients.
   optional bool is_enterprise_managed = 13;
+
+  // Tags 14, 15 are available.
+
+  // XXX
+  optional TrialVerificationInfo trial_verification_info = 16;
 };
+
+// Contains the results of verifification by the trial verifier. All fields
+// have the same meaning as those of the same name in CertLoggerRequest.
+message TrialVerificationInfo {
+  required string cert_chain = 2;
+
+  repeated string public_key_hash = 4;
+
+  repeated CertLoggerRequest.CertError cert_error = 6;
+
+  optional bool is_issued_by_known_root = 9;
+}
+
+// XXX serialize verify flags?
+// XXX serialize IS_EV
