@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73a3d0a9_82825abb",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-02-01T11:01:20Z",
+      "side": 1,
+      "message": "can you make this a static method then as well? I think it would be better if there was only one pattern for constructing a CBORValue from a StringPiece.\n\nSo either StringFromStringPiece and BytestringFromStringPiece or a ctor with an additional Type parameter, but not a mix of a static method and a ctor",
+      "revId": "535c18198c8602333f806b36e8d92d5ee316bf81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
