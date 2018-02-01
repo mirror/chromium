@@ -1103,6 +1103,10 @@ void ShowAppMenu(Browser* browser) {
   browser->window()->ShowAppMenu();
 }
 
+void ShowBookmarkMenu(Browser* browser) {
+  browser->window()->ShowBookmarkMenu();
+}
+
 void ShowAvatarMenu(Browser* browser) {
   browser->window()->ShowAvatarBubbleFromAvatarButton(
       BrowserWindow::AVATAR_BUBBLE_MODE_DEFAULT, signin::ManageAccountsParams(),

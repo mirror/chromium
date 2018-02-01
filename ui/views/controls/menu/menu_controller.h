@@ -212,18 +212,22 @@ class VIEWS_EXPORT MenuController
 
   // Values supplied to SetSelection.
   enum SetSelectionTypes {
-    SELECTION_DEFAULT               = 0,
+    SELECTION_DEFAULT = 0,
 
     // If set submenus are opened immediately, otherwise submenus are only
     // openned after a timer fires.
-    SELECTION_UPDATE_IMMEDIATELY    = 1 << 0,
+    SELECTION_UPDATE_IMMEDIATELY = 1 << 0,
 
     // If set and the menu_item has a submenu, the submenu is shown.
-    SELECTION_OPEN_SUBMENU          = 1 << 1,
+    SELECTION_OPEN_SUBMENU = 1 << 1,
 
     // SetSelection is being invoked as the result exiting or cancelling the
     // menu. This is used for debugging.
-    SELECTION_EXIT                  = 1 << 2,
+    SELECTION_EXIT = 1 << 2,
+
+    // If set, pressing Escape will exit all menus rather than only exiting
+    // the outermost menu.
+    SELECTION_EXIT_ALL_ON_ESCAPE = 1 << 3,
   };
 
   // Direction for IncrementSelection and FindInitialSelectableMenuItem.
@@ -629,6 +633,10 @@ class VIEWS_EXPORT MenuController
   // MenuController for a child MenuItemView (as opposed to initiated separately
   // by a child View).
   bool did_initiate_drag_ = false;
+
+  // If true, pressing Escape will exit all menus, rather than the outermost
+  // menu. This is used when a shortcut is used to open a submenu directly.
+  bool exit_all_on_escape_ = false;
 
   // Location the mouse was pressed at. Used to detect d&d.
   gfx::Point press_pt_;

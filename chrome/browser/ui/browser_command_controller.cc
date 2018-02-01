@@ -601,6 +601,10 @@ bool BrowserCommandController::ExecuteCommandWithDisposition(
       base::RecordAction(base::UserMetricsAction("Accel_Show_App_Menu"));
       ShowAppMenu(browser_);
       break;
+    case IDC_SHOW_BOOKMARK_MENU:
+      base::RecordAction(base::UserMetricsAction("Accel_Show_Bookmark_Menu"));
+      ShowBookmarkMenu(browser_);
+      break;
     case IDC_SHOW_AVATAR_MENU:
       ShowAvatarMenu(browser_);
       break;
@@ -1157,6 +1161,7 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
   command_updater_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_ABOUT, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_SHOW_APP_MENU, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_MENU, show_main_ui);
 
   if (base::debug::IsProfilingSupported())
     command_updater_.UpdateCommandEnabled(IDC_PROFILING_ENABLED, show_main_ui);

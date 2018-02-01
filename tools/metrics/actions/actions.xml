@@ -875,6 +875,11 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="Accel_Show_Bookmark_Menu">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Accelerator was pressed to show the bookmark menu.</description>
+</action>
+
 <action name="Accel_Show_Ime_Menu_Bubble">
   <owner>azurewei@chromium.org</owner>
   <description>

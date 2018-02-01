@@ -244,6 +244,7 @@ const AcceleratorMapping kAcceleratorMap[] = {
     {ui::VKEY_HOME, ui::EF_ALT_DOWN, IDC_HOME},
     {ui::VKEY_E, ui::EF_ALT_DOWN, IDC_SHOW_APP_MENU},
     {ui::VKEY_F, ui::EF_ALT_DOWN, IDC_SHOW_APP_MENU},
+    {ui::VKEY_B, ui::EF_ALT_DOWN, IDC_SHOW_BOOKMARK_MENU},
     {ui::VKEY_O, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN,
      IDC_SHOW_BOOKMARK_MANAGER},
     {ui::VKEY_J, ui::EF_CONTROL_DOWN, IDC_SHOW_DOWNLOADS},
