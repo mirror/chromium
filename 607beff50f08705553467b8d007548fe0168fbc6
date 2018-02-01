@@ -16,6 +16,24 @@
       "revId": "607beff50f08705553467b8d007548fe0168fbc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f99498_6962ee39",
+        "filename": "testing/trigger_scripts/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-01T02:50:20Z",
+      "side": 1,
+      "message": "Acknowledged. Let me do that documentation change in a follow-up CL to avoid invalidating my tryjobs, and to get this in sooner rather than later.",
+      "parentUuid": "47ff5210_f80140a5",
+      "revId": "607beff50f08705553467b8d007548fe0168fbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
