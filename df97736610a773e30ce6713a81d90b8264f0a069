@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2569749_999812fc",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbb9a4de_4cf4ec58",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b281d4_b5896ace",
         "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57faa44_33d0359f",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34b281d4_b5896ace",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "971f2a1e_b36495c0",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2743beb3_e1f3b842",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 19
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba22120_d25b04cc",
         "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6ee823_94059ac5",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eba22120_d25b04cc",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 3
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "add0f14c_80a943e3",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "It\u0027s not *quite* so simple, as I need to check the validity of main_frame_cu to go look up process_cu, but adding a new GetPropertyOrDefault member function still significantly cleans things up.",
+      "parentUuid": "11b4a161_90bb7134",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 19
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ae642d_e053286b",
         "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a23613_590bfbcf",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "16ae642d_e053286b",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 4
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e8f71bd9_02d58f77",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "384f88a8_4248568f",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49bfa372_3acf4723",
         "filename": "services/resource_coordinator/observers/page_signal_generator_impl_unittest.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c369fa_0a4732fd",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Actually, went with a using statement.",
+      "parentUuid": "49bfa372_3acf4723",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa088817_3f0dcb4e",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Oops, indeed not meant to be kept. Am using the function above.",
+      "parentUuid": "73711164_83eb0508",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 52
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "993b9e8f_97bf707d",
         "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf058454_6c5c07c1",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "993b9e8f_97bf707d",
+      "range": {
+        "startLine": 184,
+        "startChar": 37,
+        "endLine": 184,
+        "endChar": 45
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5d95ab47_a8d87563",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e04f45_4cbce19e",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b28740_d386cc24",
         "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "df13afea_82ac05c4",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b28740_d386cc24",
+      "range": {
+        "startLine": 253,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 61
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a2c3f54_e0c18625",
         "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-29T17:36:33Z",
       "side": 1,
       "message": "We want to avoid putting map into observers, unless these properties can\u0027t be private in CU. In the past we have removed all maps and put properties as private properties into the PageCU.\n\nis it possible to consider these as private properties and put them into PageCU?",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca646cb_d116dcc6",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "There\u0027s nothing wrong with using a map, as long as the lifetime management is correct. The previous problem with maps was that we were never cleaning them up, leading to a slow memory leak. As long as we handle both Created and Destroyed messages, there\u0027s no potential for a leak here.\n\nIt doesn\u0027t make sense for the CU to become a clearing house where a bunch of properties are stored that are unrelated to the CU itself. Moving the maps (private implementation details of an observer) into the CUs (who don\u0027t care about the work being done or state being tracked by the observer) is an anti-pattern, IMO.",
+      "parentUuid": "1a2c3f54_e0c18625",
       "range": {
         "startLine": 124,
         "startChar": 2,
@@ -137,6 +257,30 @@
       "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb7bc54_dce107b8",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-01T20:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc4b513_bbcfd130",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 43
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
