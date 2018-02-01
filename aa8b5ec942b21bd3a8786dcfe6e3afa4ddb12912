@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b600ee_11fdad37",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T02:46:44Z",
+      "side": 1,
+      "message": "Given the rest of this file uses hyphenated-id-style, let\u0027s do the same here (i.e., highlight-description)",
+      "revId": "aa8b5ec942b21bd3a8786dcfe6e3afa4ddb12912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d910c7dc_a068d695",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T02:46:44Z",
+      "side": 1,
+      "message": "Do we also need to update highlightDescription in this case?  Or no, because it will be hidden?",
+      "revId": "aa8b5ec942b21bd3a8786dcfe6e3afa4ddb12912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
