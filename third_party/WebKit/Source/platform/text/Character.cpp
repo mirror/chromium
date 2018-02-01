@@ -211,6 +211,10 @@ bool Character::CanTextDecorationSkipInk(UChar32 codepoint) {
   if (Character::IsCJKIdeographOrSymbol(codepoint))
     return false;
 
+  if (codepoint == kSolidusCharacter || codepoint == kReverseSolidusCharacter ||
+      codepoint == kLowLineCharacter)
+    return false;
+
   UBlockCode block = ublock_getCode(codepoint);
   switch (block) {
     // These blocks contain CJK characters we don't want to skip ink, but are
