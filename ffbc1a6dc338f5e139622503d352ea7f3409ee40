@@ -16,6 +16,24 @@
       "revId": "ffbc1a6dc338f5e139622503d352ea7f3409ee40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f780e2a_d31907f0",
+        "filename": "extensions/renderer/module_system.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:07:31Z",
+      "side": 1,
+      "message": "Ah, good to know!  Thanks for the tip.  I was just using DefineOwnProperty here since it was what SetProperty() was using before; happy to update it.  Done.",
+      "parentUuid": "d5355309_03fe9a86",
+      "revId": "ffbc1a6dc338f5e139622503d352ea7f3409ee40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
