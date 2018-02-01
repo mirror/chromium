@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b520cb_25034617",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T10:52:24Z",
+      "side": 1,
+      "message": "Optional: What about:\n\n// Returns the background color of the location bar, with a |visibilityFactor|.\n// The |visibilityFactor| is here to alter the alpha value of the background\n// color. Even with a |visibilityFactor| of 1, the final color could still be translucent.\n- (UIColor*)locationBarBackgroundColorWithVisibility:(CGFloat)visibilityFactor;",
+      "revId": "e3731a4c833bad1b6a616cdd5942f3f66ac6a012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba2a35e_c5fede3d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T10:52:24Z",
+      "side": 1,
+      "message": "already has",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "e3731a4c833bad1b6a616cdd5942f3f66ac6a012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
