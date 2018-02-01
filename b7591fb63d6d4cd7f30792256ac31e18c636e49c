@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5bdb4c5_f2c5762b",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-01T04:02:52Z",
+      "side": 0,
+      "message": "Do we want to keep this #if?",
+      "revId": "b7591fb63d6d4cd7f30792256ac31e18c636e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
