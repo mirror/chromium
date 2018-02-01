@@ -18,7 +18,16 @@ namespace chromeos {
 // nothing.
 class FakeUpdateEngineClient : public UpdateEngineClient {
  public:
-  FakeUpdateEngineClient();
+  enum FakeUpdateEngineClientOptions {
+    NONE = 0,
+    USE_FAKE_UPDATE_RESULT = 1 << 0,
+    USE_FAKE_UPDATE_STATUS = 1 << 1,
+  };
+
+  FakeUpdateEngineClient(
+      uint32_t options /* bitwise or of FakeUpdateEngineClientOptions */);
+  FakeUpdateEngineClient(
+      /* options default to USE_FAKE_UPDATE_RESULT | USE_FAKE_UPDATE_STATUS */);
   ~FakeUpdateEngineClient() override;
 
   // UpdateEngineClient overrides
@@ -46,6 +55,7 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   // GetLastStatus() returns the status set by this method in FIFO order.
   // See set_default_status().
   void PushLastStatus(const UpdateEngineClient::Status& status) {
+    DCHECK(options_ & USE_FAKE_UPDATE_STATUS);
     status_queue_.push(status);
   }
 
@@ -85,6 +95,10 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   int can_rollback_call_count() const { return can_rollback_call_count_; }
 
  private:
+  void StateTransition();
+
+  Status last_status_;
+
   base::ObserverList<Observer> observers_;
   base::queue<UpdateEngineClient::Status> status_queue_;
   UpdateEngineClient::Status default_status_;
@@ -94,6 +108,13 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   int request_update_check_call_count_;
   int rollback_call_count_;
   int can_rollback_call_count_;
+
+  std::string current_channel_;
+  std::string target_channel_;
+
+  uint32_t options_;
+
+  base::WeakPtrFactory<FakeUpdateEngineClient> weak_factory_;
 };
 
 }  // namespace chromeos
