@@ -9,6 +9,7 @@ import logging
 import os
 import posixpath
 import re
+import stat
 import sys
 import time
 
@@ -321,22 +322,33 @@ class LocalDeviceInstrumentationTestRun(
 
       valgrind_tools.SetChromeTimeoutScale(dev, None)
 
-      if self._test_instance.ui_screenshot_dir:
-        pull_ui_screen_captures(dev)
+#      if self._test_instance.ui_screenshot_dir:
+      pull_ui_screen_captures(dev)
 
       if self._replace_package_contextmanager:
         self._replace_package_contextmanager.__exit__(*sys.exc_info())
 
     @trace_event.traced
     def pull_ui_screen_captures(dev):
-      file_names = dev.ListDirectory(self._ui_capture_dir[dev])
-      target_path = self._test_instance.ui_screenshot_dir
-      if not os.path.exists(target_path):
-        os.makedirs(target_path)
+      pull_ui_screen_captures_from_dir(dev, self._ui_capture_dir[dev],
+                                       'ui_capture')
 
-      for file_name in file_names:
-        dev.PullFile(posixpath.join(self._ui_capture_dir[dev], file_name),
-                     target_path)
+    def pull_ui_screen_captures_from_dir(dev, directory, target_path):
+      file_stats = dev.StatDirectory(directory)
+      for file_stat in file_stats:
+        print file_stat
+        device_file_path = posixpath.join(directory, file_stat['filename'])
+        if stat.S_ISDIR(file_stat['st_mode']):
+          new_target_path = posixpath.join(target_path, file_stat['filename'])
+          pull_ui_screen_captures_from_dir(dev, device_file_path,
+                                           new_target_path)
+        else:
+          with self._env.output_manager.ArchivedTempfile(
+            file_stat['filename'], target_path, output_manager.Datatype.IMAGE
+          ) as screenshot_file:
+            print 'Pulling ' + device_file_path + ' to ' + screenshot_file.name
+            dev.PullFile(device_file_path, screenshot_file.name)
+          print 'Link: ' + screenshot_file.Link()
 
     self._env.parallel_devices.pMap(individual_device_tear_down)
 
