@@ -91,8 +91,8 @@ void ValidationMessageClientImpl::ShowValidationMessage(
       sub_message_dir);
   overlay_delegate_ = delegate.get();
   overlay_ = PageOverlay::Create(target_frame, std::move(delegate));
-  target_frame->GetFrameView()
-      ->UpdateLifecycleToCompositingCleanPlusScrolling();
+  DCHECK(target_frame->GetFrameView()
+             ->UpdateLifecycleToCompositingCleanPlusScrolling());
   LayoutOverlay();
 }
 
