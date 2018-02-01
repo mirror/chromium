@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a959c8_9727fffb",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "I don\u0027t understand. It seems this function only returns i18n strings for some modifier keys, nothing else. What am I missing?",
+      "range": {
+        "startLine": 47,
+        "startChar": 60,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ff62a2_56de2d7b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "That\u0027s not what I meant. I meant base::Optional\u003cbase::string16\u003e. The idea is to use the optional to return a value conditionally simulating a bool return + a by-reference return parameter.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535125d3_a7e302fa",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "Maybe return and empty base::string16 here?",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 19
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d8ff52_94d29164",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "Move all of these above the call to ui::DomCodeToUsLayoutDomKey(). Declare variables only right before you need them.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1718af_400aac29",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": ".. , 0 /* flags */, ...",
+      "range": {
+        "startLine": 116,
+        "startChar": 44,
+        "endLine": 116,
+        "endChar": 45
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b2ddb7_44afc0ee",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "For this comment and this function, I would like +kpschoedel@ to take a look.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 80
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e03bc3_2f88c4c4",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "Nit Descriptions should usually be more informative so that translators have better context. For example in the case of SEARCH and LAUNCHER, it may not be clear for a translator what they are and how they should be translated.",
+      "range": {
+        "startLine": 24,
+        "startChar": 49,
+        "endLine": 24,
+        "endChar": 82
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5f4321_941356f3",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "Did UX specify that these strings will be displayed like this in \"ALL CAPS\"?",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 12
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97628b20_24b47fa9",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "Nit: (Might be better if:) \"The width of the |shortcut_label_view_| as a ratio of its parent view\u0027s width.\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 73
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772e5b8d_7b47ca1c",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T20:07:05Z",
+      "side": 1,
+      "message": "Nit: How about ditching these two variables?\n\n  const int shortcut_view_height \u003d\n      shortcut_label_view_-\u003eGetHeightForWidth(w * kShortcutViewWitdhRatio);\n  const int description_view_height \u003d\n      description_label_view_-\u003eGetHeightForWidth(w * (1 - kShortcutViewWitdhRatio));\n  return std::max(shortcut_view_height, description_view_height);",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "578b8a5a0e7cf87daf6a007b002d75ac0e14b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
