@@ -742,7 +742,9 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     network::mojom::URLLoaderRequest mojo_request,
     network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsStandalone());
   BeginRequest(requester_info, request_id, request_data, is_sync_load,
                routing_id, std::move(mojo_request),
                std::move(url_loader_client), traffic_annotation);
@@ -897,7 +899,9 @@ void ResourceDispatcherHostImpl::BeginRequest(
     network::mojom::URLLoaderRequest mojo_request,
     network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsStandalone());
   int child_id = requester_info->child_id();
 
   // Reject request id that's currently in use.
@@ -1037,7 +1041,9 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     BlobHandles blob_handles,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HeaderInterceptorResult interceptor_result) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsStandalone());
   if (interceptor_result != HeaderInterceptorResult::CONTINUE) {
     if (requester_info->IsRenderer() &&
         interceptor_result == HeaderInterceptorResult::KILL) {
@@ -1287,12 +1293,18 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     ResourceContext* resource_context,
     network::mojom::URLLoaderRequest mojo_request,
     network::mojom::URLLoaderClientPtr url_loader_client) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsStandalone());
   // Construct the IPC resource handler.
   std::unique_ptr<ResourceHandler> handler;
-  handler = CreateBaseResourceHandler(
-      request, std::move(mojo_request), std::move(url_loader_client),
-      static_cast<ResourceType>(request_data.resource_type));
+  // Standalone requests start detached, and don't have a handler, since they
+  // will never receive events.
+  if (!requester_info->IsStandalone()) {
+    handler = CreateBaseResourceHandler(
+        request, std::move(mojo_request), std::move(url_loader_client),
+        static_cast<ResourceType>(request_data.resource_type));
+  }
 
   // The RedirectToFileResourceHandler depends on being next in the chain.
   if (request_data.download_to_file) {
@@ -2042,7 +2054,7 @@ void ResourceDispatcherHostImpl::OnRequestResourceWithMojo(
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK_EQ(network::mojom::kURLLoadOptionNone,
             options & ~network::mojom::kURLLoadOptionSynchronous);
-  if (!url_loader_client) {
+  if (!url_loader_client && !requester_info->IsStandalone()) {
     VLOG(1) << "Killed renderer for null client";
     bad_message::ReceivedBadMessage(requester_info->filter(),
                                     bad_message::RDH_NULL_CLIENT);
@@ -2471,7 +2483,7 @@ bool ResourceDispatcherHostImpl::ShouldServiceRequest(
   // renderer is fetching the stream URL. Checking the original URL doesn't work
   // in case of redirects across schemes, since the original URL might not be
   // granted to the final URL's renderer.
-  if (!is_navigation_stream_request &&
+  if (!is_navigation_stream_request && !requester_info->IsStandalone() &&
       !policy->CanRequestURL(child_id, request_data.url)) {
     VLOG(1) << "Denied unauthorized request for "
             << request_data.url.possibly_invalid_spec();

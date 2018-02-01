@@ -29,12 +29,14 @@ class ResourceMessageFilter;
 class ServiceWorkerContextWrapper;
 
 // This class represents the type of resource requester.
-// Currently there are four types:
+// Currently there are five types:
 // - Requesters that request resources from renderer processes.
 // - Requesters that request resources within the browser process for browser
 //   side navigation (aka PlzNavigate).
 // - Requesters that request resources for download or page save.
 // - Requesters that request service worker navigation preload requests.
+// - Requesters that request resources from the browser process, without a
+//   renderer.
 class CONTENT_EXPORT ResourceRequesterInfo
     : public base::RefCountedThreadSafe<ResourceRequesterInfo> {
  public:
@@ -74,6 +76,11 @@ class CONTENT_EXPORT ResourceRequesterInfo
   static scoped_refptr<ResourceRequesterInfo> CreateForNavigationPreload(
       ResourceRequesterInfo* original_request_info);
 
+  // Creates a ResourceRequesterInfo for a detached request initiating from the
+  // browser process.
+  static scoped_refptr<ResourceRequesterInfo> CreateForStandaloneRequest(
+      const GetContextsCallback& get_contexts_callback);
+
   bool IsRenderer() const { return type_ == RequesterType::RENDERER; }
   bool IsBrowserSideNavigation() const {
     return type_ == RequesterType::BROWSER_SIDE_NAVIGATION;
@@ -81,6 +88,7 @@ class CONTENT_EXPORT ResourceRequesterInfo
   bool IsNavigationPreload() const {
     return type_ == RequesterType::NAVIGATION_PRELOAD;
   }
+  bool IsStandalone() const { return type_ == RequesterType::STANDALONE; }
 
   // Returns the renderer process ID associated with the requester. Returns -1
   // for browser side navigation requester. Even if the ResourceMessageFilter
@@ -134,7 +142,8 @@ class CONTENT_EXPORT ResourceRequesterInfo
     RENDERER,
     BROWSER_SIDE_NAVIGATION,
     DOWNLOAD_OR_PAGE_SAVE,
-    NAVIGATION_PRELOAD
+    NAVIGATION_PRELOAD,
+    STANDALONE
   };
 
   ResourceRequesterInfo(RequesterType type,
