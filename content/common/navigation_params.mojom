@@ -5,6 +5,7 @@
 module content.mojom;
 
 import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
+import "services/network/public/interfaces/url_loader_factory.mojom";
 import "url/mojo/origin.mojom";
 import "url/mojo/url.mojom";
 
@@ -55,5 +56,9 @@ struct BeginNavigationParams {
   // If the transition type is a client side redirect, then this holds the URL
   // of the page that had the client side redirect.
   url.mojom.Url client_side_redirect_url;
+
+  // If the navigation is to a blob URL, this holds the URLLoaderFactory to use
+  // to fetch the blob.
+  network.mojom.URLLoaderFactory? blob_url_loader_factory;
 };
 

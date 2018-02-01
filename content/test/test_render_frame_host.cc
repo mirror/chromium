@@ -507,7 +507,8 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
             blink::WebMixedContentContextType::kBlockable,
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */, url::Origin(),
-            GURL() /* client_side_redirect_url */);
+            GURL() /* client_side_redirect_url */,
+            nullptr /* blob_url_loader_factory */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);
