@@ -16,7 +16,7 @@ class ChromeBrowserState;
 
 @protocol ApplicationCommands;
 @protocol RecentTabsHandsetViewControllerCommand;
-@class RecentTabsTableViewController;
+@class LegacyRecentTabsTableViewController;
 @protocol UrlLoader;
 
 // RecentTabsTableCoordinator controls the RecentTabTableViewDataSource, based
@@ -38,7 +38,8 @@ class ChromeBrowserState;
                     dispatcher:(id<ApplicationCommands>)dispatcher;
 
 // Private initializer, exposed for testing.
-- (instancetype)initWithController:(RecentTabsTableViewController*)controller
+- (instancetype)initWithController:
+                    (LegacyRecentTabsTableViewController*)controller
                       browserState:(ios::ChromeBrowserState*)browserState
     NS_DESIGNATED_INITIALIZER;
 
