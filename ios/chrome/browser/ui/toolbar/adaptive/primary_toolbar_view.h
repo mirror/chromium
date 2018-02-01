@@ -31,6 +31,7 @@
 @property(nonatomic, strong, readonly) UIView* locationBarContainer;
 // The height of the container for the location bar.
 @property(nonatomic, strong, readonly) NSLayoutConstraint* locationBarHeight;
+//@property(nonatomic,strong, readonly)UIView*locationBarBlurr
 
 // StackView containing the leading buttons (relative to the location bar).
 // It should only contain ToolbarButtons.

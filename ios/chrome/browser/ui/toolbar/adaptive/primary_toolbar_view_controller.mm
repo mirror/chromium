@@ -133,8 +133,8 @@
                         (kToolbarHeight - kToolbarHeightFullscreen) * progress -
                         2 * kLocationBarVerticalMargin);
   self.view.locationBarContainer.backgroundColor =
-      [self.buttonFactory.toolbarConfiguration.omniboxBackgroundColor
-          colorWithAlphaComponent:alphaValue];
+      [self.buttonFactory.toolbarConfiguration
+          locationBarBackgroundColorWithVisibility:alphaValue];
 }
 
 - (void)updateForFullscreenEnabled:(BOOL)enabled {
