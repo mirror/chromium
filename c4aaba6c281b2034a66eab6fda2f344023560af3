@@ -16,6 +16,24 @@
       "revId": "c4aaba6c281b2034a66eab6fda2f344023560af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f549d47_dd22f38e",
+        "filename": "chrome/browser/ui/views/dropdown_bar_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-02-01T14:23:34Z",
+      "side": 1,
+      "message": "When I tested it, it certainly looked like it just reversed the animation. I initially tried something similar to this and the visible state still got out of sync.",
+      "parentUuid": "e87d70a6_71d8956a",
+      "revId": "c4aaba6c281b2034a66eab6fda2f344023560af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
