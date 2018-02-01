@@ -142,6 +142,8 @@ class PageHandler : public DevToolsDomainHandler,
 
   Response SetDownloadBehavior(const std::string& behavior,
                                Maybe<std::string> download_path) override;
+  void OnDownloadStarted(content::DownloadItem* item,
+                         content::DownloadInterruptReason interrupt_reason);
 
   void GetAppManifest(
       std::unique_ptr<GetAppManifestCallback> callback) override;

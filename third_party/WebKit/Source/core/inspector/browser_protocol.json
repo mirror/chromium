@@ -10379,6 +10379,7 @@
                             "enum": [
                                 "deny",
                                 "allow",
+                                "stream",
                                 "default"
                             ]
                         },
@@ -10782,6 +10783,28 @@
                             "name": "userGesture",
                             "description": "Whether or not it was triggered by user gesture.",
                             "type": "boolean"
+                        }
+                    ]
+                },
+                {
+                    "name": "downloadStarted",
+                    "description": "Fired when download behavior has been overriden and anew download has started, if\ndownload behavior is STREAM a stream handle will be provided .",
+                    "experimental": true,
+                    "parameters": [
+                        {
+                            "name": "stream",
+                            "description": "A handle of the stream that holds the download object on base64 encoding.",
+                            "$ref": "IO.StreamHandle"
+                        },
+                        {
+                            "name": "fileName",
+                            "description": "Suggested file name as determined by the browser.",
+                            "type": "string"
+                        },
+                        {
+                            "name": "mimeType",
+                            "description": "Resource mimeType as determined by the browser.",
+                            "type": "string"
                         }
                     ]
                 }
