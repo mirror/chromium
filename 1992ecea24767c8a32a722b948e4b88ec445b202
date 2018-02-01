@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2106ffa1_c6334dec",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-01T23:55:22Z",
+      "side": 1,
+      "message": "I want to find out how much OOPIFs are costing us in terms of main page CompositorFrame activation delay.",
+      "parentUuid": "087b68c1_cb6ae98b",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "205360c2_20b236d4",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 6
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "e00da673_402c000d",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-01T23:55:22Z",
+      "side": 1,
+      "message": "Well, I want to track a particular client\u0027s synchronization time, not all clients.\n\nFrom Viz\u0027s perspective, all clients are the same. The Viz host should tell viz which client it wishes a report for.\n\nIt could make sense to introduce a separate reporting method yes. I don\u0027t feel strongly about it.\n\nI see us maybe wanting reporting for UI separate from main web frame reporting. I don\u0027t know of a use case other than reporting for UMA/tracing at the moment.",
+      "parentUuid": "df5120e6_b9a7fc9e",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d93d20c2_b43f4e6d",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 6
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "83490166_578dacb7",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-01T23:55:22Z",
+      "side": 1,
+      "message": "Nope, if the dependencies are late, then we don\u0027t report again. SurfaceAggregator will swap in fallbacks for the primaries without having to go back to the client. A frame isn\u0027t reactivated or anything like that.",
+      "parentUuid": "d93d20c2_b43f4e6d",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127497f0_8bdef551",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -98,6 +152,24 @@
       "writtenOn": "2018-02-01T23:46:48Z",
       "side": 1,
       "message": "What is \u0027main frame\u0027? \u0027toplevel\u0027/\u0027root\u0027 frame? Or something else?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527b2c81_df05e4f8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 10731,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-01T23:55:22Z",
+      "side": 1,
+      "message": "Is top level frame more descriptive?",
+      "parentUuid": "127497f0_8bdef551",
       "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
