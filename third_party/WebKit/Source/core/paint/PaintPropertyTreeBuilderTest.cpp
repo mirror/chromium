@@ -300,6 +300,34 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollExcludeScrollbars) {
             overflow_clip->ClipRectExcludingOverlayScrollbars());
 }
 
+TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollExcludeScrollbarsSubpixel) {
+  SetBodyInnerHTML(R"HTML(
+    <div id='scroller'
+         style='width: 100.5px; height: 100px; overflow: scroll;
+                 border: 10px solid blue'>
+      <div style='width: 400px; height: 400px'></div>
+    </div>
+  )HTML");
+  CHECK(GetDocument().GetPage()->GetScrollbarTheme().UsesOverlayScrollbars());
+
+  const auto* properties = PaintPropertiesForElement("scroller");
+  const auto* overflow_clip = properties->OverflowClip();
+
+  EXPECT_EQ(FrameContentClip(), overflow_clip->Parent());
+  EXPECT_EQ(properties->PaintOffsetTranslation(),
+            overflow_clip->LocalTransformSpace());
+  EXPECT_EQ(FloatRoundedRect(10, 10, 101, 100), overflow_clip->ClipRect());
+
+  PaintLayer* paint_layer =
+      ToLayoutBoxModelObject(GetLayoutObjectByElementId("scroller"))->Layer();
+  EXPECT_TRUE(paint_layer->GetScrollableArea()
+                  ->VerticalScrollbar()
+                  ->IsOverlayScrollbar());
+
+  EXPECT_EQ(FloatRoundedRect(10, 10, 94, 93),
+            overflow_clip->ClipRectExcludingOverlayScrollbars());
+}
+
 TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollVerticalRL) {
   SetBodyInnerHTML(R"HTML(
     <style>::-webkit-scrollbar {width: 15px; height: 15px}</style>
@@ -1879,6 +1907,43 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipAbsPositionDescendant) {
                     // descendants is broken in
                     // mapToVisualRectInAncestorSpace().
                     LayoutUnit::Max());
+}
+
+TEST_P(PaintPropertyTreeBuilderTest, CSSClipSubpixel) {
+  LOG(ERROR) << "spv175: "
+             << RuntimeEnabledFeatures::SlimmingPaintV175Enabled();
+  // This test verifies that clip tree hierarchy being generated correctly for
+  // a subpixel-positioned element with CSS clip.
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #clip {
+        position: absolute;
+        left: 123.5px;
+        top: 456px;
+        clip: rect(10px, 80px, 70px, 40px);
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+    <div id='clip'></div>
+  )HTML");
+
+  LayoutRect local_clip_rect(40, 10, 40, 60);
+  LayoutRect absolute_clip_rect = local_clip_rect;
+  // Moved by 124 pixels due to pixel-snapping.
+  absolute_clip_rect.Move(124, 456);
+
+  auto* clip = GetLayoutObjectByElementId("clip");
+  const ObjectPaintProperties* clip_properties =
+      clip->FirstFragment().PaintProperties();
+  EXPECT_EQ(FrameContentClip(), clip_properties->CssClip()->Parent());
+  // No scroll translation because the document does not scroll (not enough
+  // content).
+  EXPECT_TRUE(!FrameScrollTranslation());
+  EXPECT_EQ(FramePreTranslation(),
+            clip_properties->CssClip()->LocalTransformSpace());
+  EXPECT_EQ(FloatRoundedRect(FloatRect(absolute_clip_rect)),
+            clip_properties->CssClip()->ClipRect());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
@@ -4322,7 +4387,8 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
 
   EXPECT_EQ(LayoutPoint(FloatPoint(31.5, 20)),
             clipper->FirstFragment().PaintOffset());
-  EXPECT_EQ(FloatRect(31.5, 20, 400, 300),
+  // Result is pixel-snapped.
+  EXPECT_EQ(FloatRect(32, 20, 400, 300),
             clip_properties->OverflowClip()->ClipRect().Rect());
 }
 
@@ -4888,6 +4954,23 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowControlsClip) {
   ASSERT_NE(nullptr, properties1);
   const auto* overflow_controls_clip = properties1->OverflowControlsClip();
   EXPECT_EQ(FloatRect(0, 0, 5, 50), overflow_controls_clip->ClipRect().Rect());
+
+  const auto* properties2 = PaintPropertiesForElement("div2");
+  ASSERT_NE(nullptr, properties2);
+  EXPECT_EQ(nullptr, properties2->OverflowControlsClip());
+}
+
+TEST_P(PaintPropertyTreeBuilderTest, OverflowControlsClipSubpixel) {
+  SetBodyInnerHTML(R"HTML(
+    <style>::-webkit-scrollbar { width: 20px }</style>
+    <div id='div1' style='overflow: scroll; width: 5.5px; height: 50px'></div>
+    <div id='div2' style='overflow: scroll; width: 50px; height: 50px'></div>
+  )HTML");
+
+  const auto* properties1 = PaintPropertiesForElement("div1");
+  ASSERT_NE(nullptr, properties1);
+  const auto* overflow_controls_clip = properties1->OverflowControlsClip();
+  EXPECT_EQ(FloatRect(0, 0, 6, 50), overflow_controls_clip->ClipRect().Rect());
 
   const auto* properties2 = PaintPropertiesForElement("div2");
   ASSERT_NE(nullptr, properties2);
