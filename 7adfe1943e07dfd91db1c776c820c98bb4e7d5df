@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc1f51b_d93db467",
+        "filename": "components/omnibox/browser/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-02-01T23:03:46Z",
+      "side": 1,
+      "message": "There are many instances of this double spacing in the comments in this file. They\u0027re not wrong (it\u0027s a style choice) and not worth introducing a diff just to change them, IMO. Would you mind undoing the change on this line?",
+      "revId": "7adfe1943e07dfd91db1c776c820c98bb4e7d5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
