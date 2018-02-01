@@ -807,7 +807,9 @@ void ForEachMatchingFormFieldCommon(
         (!element->HasAttribute(kValue) ||
          element->GetAttribute(kValue) != element->Value()) &&
         (!element->HasAttribute(kPlaceholder) ||
-         element->GetAttribute(kPlaceholder) != element->Value()))
+         !base::EqualsCaseInsensitiveASCII(
+             element->GetAttribute(kPlaceholder).Utf16(),
+             element->Value().Utf16())))
       continue;
 
     DCHECK(!g_prevent_layout || !(filters & FILTER_NON_FOCUSABLE_ELEMENTS))
