@@ -8,6 +8,10 @@
 #include "base/macros.h"
 #include "ui/touch_selection/touch_selection_controller.h"
 
+namespace gfx {
+class PointF;
+}
+
 namespace ui {
 
 // Test api class to access internals of |ui::TouchSelectionController| in
@@ -24,6 +28,7 @@ class TouchSelectionControllerTestApi {
   float GetEndAlpha() const;
   TouchHandleOrientation GetStartHandleOrientation() const;
   TouchHandleOrientation GetEndHandleOrientation() const;
+  gfx::PointF GetActiveHandleBoundPoint() const;
 
   bool temporarily_hidden() const { return controller_->temporarily_hidden_; }
 

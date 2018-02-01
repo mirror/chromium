@@ -100,8 +100,12 @@ class TouchSelectionControllerTest : public testing::Test,
     last_event_start_ = controller_->GetStartPosition();
     last_event_end_ = controller_->GetEndPosition();
     last_event_bounds_rect_ = controller_->GetRectBetweenBounds();
-    last_event_handle_bound_middle_ = controller_->GetActiveHandleBoundPoint();
+    TouchSelectionControllerTestApi test_controller(&controller());
+    last_event_handle_bound_middle_ =
+        test_controller.GetActiveHandleBoundPoint();
   }
+
+  void OnDragUpdate(const gfx::PointF& position) override {}
 
   std::unique_ptr<TouchHandleDrawable> CreateDrawable() override {
     return std::make_unique<MockTouchHandleDrawable>(&dragging_enabled_);

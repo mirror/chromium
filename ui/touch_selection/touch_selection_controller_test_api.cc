@@ -48,4 +48,8 @@ TouchSelectionControllerTestApi::GetEndHandleOrientation() const {
   return controller_->end_selection_handle_->orientation();
 }
 
+gfx::PointF TouchSelectionControllerTestApi::GetActiveHandleBoundPoint() const {
+  return controller_->GetActiveHandleBoundPoint();
+}
+
 }  // namespace ui
