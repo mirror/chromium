@@ -42,6 +42,7 @@ import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.vr_shell.mock.MockVrDaydreamApi;
 import org.chromium.chrome.browser.vr_shell.mock.MockVrIntentHandler;
 import org.chromium.chrome.browser.vr_shell.rules.VrActivityRestriction;
+import org.chromium.chrome.browser.vr_shell.util.TransitionUtils;
 import org.chromium.chrome.browser.vr_shell.util.VrShellDelegateUtils;
 import org.chromium.chrome.browser.vr_shell.util.VrTestRuleUtils;
 import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
@@ -67,7 +68,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @UseRunnerDelegate(ChromeJUnit4RunnerDelegate.class)
 @CommandLineFlags.
 Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE, "enable-webvr", "enable-gamepad-extensions"})
-@MinAndroidSdkLevel(Build.VERSION_CODES.KITKAT) // WebVR is only supported on K+
+@MinAndroidSdkLevel(Build.VERSION_CODES.KITKAT) // WebVR and WebXR are only supported on K+
 public class WebVrInputTest {
     @ClassParameter
     private static List<ParameterSet> sClassParams =
@@ -77,6 +78,7 @@ public class WebVrInputTest {
 
     private ChromeActivityTestRule mVrTestRule;
     private VrTestFramework mVrTestFramework;
+    private XrTestFramework mXrTestFramework;
 
     public WebVrInputTest(Callable<ChromeActivityTestRule> callable) throws Exception {
         mVrTestRule = callable.call();
@@ -86,6 +88,7 @@ public class WebVrInputTest {
     @Before
     public void setUp() throws Exception {
         mVrTestFramework = new VrTestFramework(mVrTestRule);
+        mXrTestFramework = new XrTestFramework(mVrTestRule);
     }
 
     /**
@@ -97,13 +100,36 @@ public class WebVrInputTest {
             sdk_is_less_than = Build.VERSION_CODES.M)
     @VrActivityRestriction({VrActivityRestriction.SupportedActivity.ALL})
     public void testScreenTapsNotRegistered() throws InterruptedException {
-        mVrTestFramework.loadUrlAndAwaitInitialization(
+        screenTapsNotRegisteredImpl(
                 VrTestFramework.getHtmlTestFile("test_screen_taps_not_registered"),
-                PAGE_LOAD_TIMEOUT_S);
-        VrTestFramework.executeStepAndWait(
-                "stepVerifyNoInitialTaps()", mVrTestFramework.getFirstTabWebContents());
-        VrTransitionUtils.enterPresentationAndWait(
-                mVrTestFramework.getFirstTabCvc(), mVrTestFramework.getFirstTabWebContents());
+                mVrTestFramework);
+    }
+
+    /**
+     * Tests that screen touches are not registered when in an exclusive session.
+     */
+    @Test
+    @MediumTest
+    @DisableIf
+            .Build(message = "Flaky on K/L crbug.com/762126",
+                    sdk_is_less_than = Build.VERSION_CODES.M)
+            @CommandLineFlags
+            .Remove({"enable-webvr"})
+            @CommandLineFlags.Add({"enable-features=WebXR"})
+            @VrActivityRestriction({VrActivityRestriction.SupportedActivity.ALL})
+            public void
+            testScreenTapsNotRegistered_WebXr() throws InterruptedException {
+        screenTapsNotRegisteredImpl(
+                XrTestFramework.getHtmlTestFile("webxr_test_screen_taps_not_registered"),
+                mXrTestFramework);
+    }
+
+    private void screenTapsNotRegisteredImpl(String url, final TestFramework framework)
+            throws InterruptedException {
+        framework.loadUrlAndAwaitInitialization(url, PAGE_LOAD_TIMEOUT_S);
+        TestFramework.executeStepAndWait(
+                "stepVerifyNoInitialTaps()", framework.getFirstTabWebContents());
+        TransitionUtils.enterPresentationOrFail(framework);
         // Wait on VrShellImpl to say that its parent consumed the touch event
         // Set to 2 because there's an ACTION_DOWN followed by ACTION_UP
         final CountDownLatch touchRegisteredLatch = new CountDownLatch(2);
@@ -118,9 +144,9 @@ public class WebVrInputTest {
         TouchCommon.singleClickView(mVrTestRule.getActivity().getWindow().getDecorView());
         Assert.assertTrue("VrShellImpl dispatched touches",
                 touchRegisteredLatch.await(POLL_TIMEOUT_SHORT_MS, TimeUnit.MILLISECONDS));
-        VrTestFramework.executeStepAndWait(
-                "stepVerifyNoAdditionalTaps()", mVrTestFramework.getFirstTabWebContents());
-        VrTestFramework.endTest(mVrTestFramework.getFirstTabWebContents());
+        TestFramework.executeStepAndWait(
+                "stepVerifyNoAdditionalTaps()", framework.getFirstTabWebContents());
+        TestFramework.endTest(framework.getFirstTabWebContents());
     }
 
     /**
