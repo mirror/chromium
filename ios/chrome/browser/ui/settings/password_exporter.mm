@@ -104,16 +104,15 @@ enum class ReauthenticationStatus {
 @property(nonatomic, assign) BOOL serializingFinished;
 // String containing serialized password forms.
 @property(nonatomic, copy) NSString* serializedPasswords;
-// Whether an export operation is ongoing. This is a readwrite property
-// corresponding to the public readonly property.
-@property(nonatomic, assign) BOOL isExporting;
+// The exporter state.
+@property(nonatomic, assign) ExportState exportState;
 
 @end
 
 @implementation PasswordExporter
 
 // Public synthesized properties
-@synthesize isExporting = _isExporting;
+@synthesize exportState = _exportState;
 
 // Private synthesized properties
 @synthesize reauthenticationStatus = _reauthenticationStatus;
@@ -143,12 +142,17 @@ enum class ReauthenticationStatus {
 - (void)startExportFlow:
     (std::vector<std::unique_ptr<autofill::PasswordForm>>)passwords {
   if ([_weakReauthenticationModule canAttemptReauth]) {
-    self.isExporting = YES;
+    self.exportState = ExportState::ONGOING;
+    [_weakDelegate updateExportPasswordsButton];
     [self serializePasswords:std::move(passwords)];
     [self startReauthentication];
   } else {
     [_weakDelegate showSetPasscodeDialog];
   }
+}
+
+- (void)cancelExport {
+  self.exportState = ExportState::CANCELLING;
 }
 
 #pragma mark -  Private methods
@@ -183,6 +187,7 @@ enum class ReauthenticationStatus {
       return;
     if (success) {
       strongSelf.reauthenticationStatus = ReauthenticationStatus::SUCCESSFUL;
+      [strongSelf showPreparingPasswordsAlert];
     } else {
       strongSelf.reauthenticationStatus = ReauthenticationStatus::FAILED;
     }
@@ -194,6 +199,10 @@ enum class ReauthenticationStatus {
                                            IDS_IOS_EXPORT_PASSWORDS)
                   canReusePreviousAuth:NO
                                handler:onReauthenticationFinished];
+}
+
+- (void)showPreparingPasswordsAlert {
+  [_weakDelegate showPreparingPasswordsAlert];
 }
 
 - (void)tryExporting {
@@ -217,10 +226,15 @@ enum class ReauthenticationStatus {
   self.serializingFinished = NO;
   self.serializedPasswords = nil;
   self.reauthenticationStatus = ReauthenticationStatus::PENDING;
-  self.isExporting = NO;
+  self.exportState = ExportState::IDLE;
+  [_weakDelegate updateExportPasswordsButton];
 }
 
 - (void)writePasswordsToFile {
+  if (self.exportState == ExportState::CANCELLING) {
+    [self resetExportState];
+    return;
+  }
   NSURL* tempPasswordsFileURL =
       [[NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES]
           URLByAppendingPathComponent:_tempPasswordsFileName
@@ -237,17 +251,21 @@ enum class ReauthenticationStatus {
         [strongSelf showActivityView];
         break;
       case WriteToURLStatus::OUT_OF_DISK_SPACE_ERROR:
-        [strongSelf
-            showExportErrorAlertWithLocalizedReason:
-                l10n_util::GetNSString(
-                    IDS_IOS_EXPORT_PASSWORDS_OUT_OF_SPACE_ALERT_MESSAGE)];
+        if (strongSelf.exportState != ExportState::CANCELLING) {
+          [strongSelf
+              showExportErrorAlertWithLocalizedReason:
+                  l10n_util::GetNSString(
+                      IDS_IOS_EXPORT_PASSWORDS_OUT_OF_SPACE_ALERT_MESSAGE)];
+        }
         [strongSelf resetExportState];
         break;
       case WriteToURLStatus::UNKNOWN_ERROR:
-        [strongSelf
-            showExportErrorAlertWithLocalizedReason:
-                l10n_util::GetNSString(
-                    IDS_IOS_EXPORT_PASSWORDS_UNKNOWN_ERROR_ALERT_MESSAGE)];
+        if (strongSelf.exportState != ExportState::CANCELLING) {
+          [strongSelf
+              showExportErrorAlertWithLocalizedReason:
+                  l10n_util::GetNSString(
+                      IDS_IOS_EXPORT_PASSWORDS_UNKNOWN_ERROR_ALERT_MESSAGE)];
+        }
         [strongSelf resetExportState];
         break;
       default:
@@ -267,12 +285,14 @@ enum class ReauthenticationStatus {
 
 - (void)deleteTemporaryFile:(NSURL*)passwordsTempFileURL {
   __weak PasswordExporter* weakSelf = self;
-  base::PostTaskWithTraits(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::BindBlockArc(^() {
         base::AssertBlockingAllowed();
         NSFileManager* fileManager = [NSFileManager defaultManager];
         [fileManager removeItemAtURL:passwordsTempFileURL error:nil];
+      }),
+      base::BindBlockArc(^() {
         [weakSelf resetExportState];
       }));
 }
@@ -282,7 +302,12 @@ enum class ReauthenticationStatus {
       [[NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES]
           URLByAppendingPathComponent:_tempPasswordsFileName
                           isDirectory:NO];
-
+  if (self.exportState == ExportState::CANCELLING) {
+    // Initiate cleanup. Once the file is deleted, the export state will be
+    // reset;
+    [self deleteTemporaryFile:passwordsTempFileURL];
+    return;
+  }
   __weak PasswordExporter* weakSelf = self;
   [_weakDelegate
       showActivityViewWithActivityItems:@[ passwordsTempFileURL ]
