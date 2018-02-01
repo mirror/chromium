@@ -760,6 +760,9 @@
     ]
   },
 
+  "EnableSymantecLegacyInfrastructure": {
+  },
+
   "AuthSchemes": {
     "os": ["win", "linux", "mac", "chromeos", "android"],
     "test_policy": { "AuthSchemes": "AuthSchemes" },
