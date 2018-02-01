@@ -57,6 +57,7 @@ class MockJobInterceptor : public URLRequestInterceptor {
         }
       }
     }
+    LOG(INFO) << "starting failed job for " << request->url().spec();
     return new URLRequestFailedJob(request, network_delegate, phase, net_error);
   }
 
