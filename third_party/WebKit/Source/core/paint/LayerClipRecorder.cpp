@@ -30,6 +30,10 @@ LayerClipRecorder::LayerClipRecorder(GraphicsContext& graphics_context,
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return;
   IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
+#if DCHECK_IS_ON
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    DCHECK(FloatRect(snapped_clip_rect) == clip_rect.Rect());
+#endif
   bool painting_masks =
       (paint_flags & kPaintLayerPaintingChildClippingMaskPhase ||
        paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase);
