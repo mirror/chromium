@@ -23,6 +23,7 @@
 #include "gpu/config/gpu_util.h"
 #include "ui/gl/gl_share_group.h"
 #include "ui/gl/gl_switches.h"
+#include "ui/gl/init/gl_factory.h"
 
 namespace android_webview {
 
@@ -61,28 +62,40 @@ ScopedAllowGL::~ScopedAllowGL() {
 }
 
 // static
-void DeferredGpuCommandService::SetInstance() {
+DeferredGpuCommandService* DeferredGpuCommandService::GetInstance() {
   if (!g_service.Get().get()) {
+    gpu::GLBindingsInitializationAutoLock lock;
+
     gpu::GPUInfo gpu_info;
-    // TODO(zmo): Instead of using CollectBasicGraphicsInfo(), we
-    // should potentially initialize GL bindings properly here, and
-    // call CollectContextGraphicsInfo() and get rid of
-    // CollectBasicGraphicsInfo(). That is, if GPU thread doesn't
-    // initialize the bindings first.
-    gpu::CollectBasicGraphicsInfo(&gpu_info);
-    DCHECK(base::CommandLine::InitializedForCurrentProcess());
-    gpu::GpuFeatureInfo gpu_feature_info = gpu::ComputeGpuFeatureInfo(
-        gpu_info,
-        false,  // ignore_gpu_blacklist
-        false,  // disable_gpu_driver_bug_workarounds
-        false,  // log_gpu_control_list_decisions
-        base::CommandLine::ForCurrentProcess(), nullptr);
+    gpu::GpuFeatureInfo gpu_feature_info;
+    if (gl::GetGLImplementation() == gl::kGLImplementationNone) {
+      if (gl::init::InitializeGLNoExtensionsOneOff()) {
+        // TODO(zmo): what should be done if init fails?
+        gpu::CollectContextGraphicsInfo(&gpu_info);
+        DCHECK(base::CommandLine::InitializedForCurrentProcess());
+        gpu_feature_info = gpu::ComputeGpuFeatureInfo(
+            gpu_info,
+            false,  // ignore_gpu_blacklist
+            false,  // disable_gpu_driver_bug_workarounds
+            false,  // log_gpu_control_list_decisions,
+            base::CommandLine::ForCurrentProcess(), nullptr);
+        if (!gpu_feature_info.disabled_extensions.empty()) {
+          gl::init::SetDisabledExtensionsPlatform(
+              gpu_feature_info.disabled_extensions);
+        }
+        gl::init::InitializeExtensionSettingsOneOffPlatform();
+        gpu::CacheGPUInfo(gpu_info);
+        gpu::CacheGpuFeatureInfo(gpu_feature_info);
+      }
+    } else {
+      // GL bindings already initialized in in-process GPU thread.
+      bool gpu_info_cached = gpu::PopGPUInfoCache(&gpu_info);
+      bool gpu_feature_info_cached =
+          gpu::PopGpuFeatureInfoCache(&gpu_feature_info);
+      DCHECK(gpu_info_cached && gpu_feature_info_cached);
+    }
     g_service.Get() = new DeferredGpuCommandService(gpu_info, gpu_feature_info);
   }
-}
-
-// static
-DeferredGpuCommandService* DeferredGpuCommandService::GetInstance() {
   DCHECK(g_service.Get().get());
   return g_service.Get().get();
 }
