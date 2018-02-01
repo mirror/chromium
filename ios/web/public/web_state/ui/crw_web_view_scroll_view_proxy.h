@@ -66,6 +66,8 @@
 // information look at the UIScrollViewDelegate documentation.
 @protocol CRWWebViewScrollViewObserver<NSObject>
 @optional
+- (void)webViewScrollViewFrameDidChange:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
 - (void)webViewScrollViewDidScroll:
     (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
 - (void)webViewScrollViewWillBeginDragging:
@@ -86,6 +88,8 @@
 - (void)webViewScrollViewDidZoom:
     (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
 - (void)webViewScrollViewDidResetContentSize:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
+- (void)webViewScrollViewDidResetContentInset:
     (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
 
 // The equivalent in UIScrollViewDelegate also takes a parameter (UIView*)view,

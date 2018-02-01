@@ -292,7 +292,7 @@
 #pragma mark -
 
 + (NSArray*)scrollViewObserverKeyPaths {
-  return @[ @"contentSize" ];
+  return @[ @"frame", @"contentSize", @"contentInset" ];
 }
 
 - (void)startObservingScrollView:(UIScrollView*)scrollView {
@@ -310,8 +310,12 @@
                         change:(NSDictionary*)change
                        context:(void*)context {
   DCHECK_EQ(object, _scrollView);
+  if ([keyPath isEqualToString:@"frame"])
+    [_observers webViewScrollViewFrameDidChange:self];
   if ([keyPath isEqualToString:@"contentSize"])
     [_observers webViewScrollViewDidResetContentSize:self];
+  if ([keyPath isEqualToString:@"contentInset"])
+    [_observers webViewScrollViewDidResetContentInset:self];
 }
 
 @end

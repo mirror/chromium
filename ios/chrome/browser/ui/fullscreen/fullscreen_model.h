@@ -56,6 +56,19 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   void SetToolbarHeight(CGFloat toolbar_height);
   CGFloat GetToolbarHeight() const;
 
+  // Setter for the height of the scroll view displaying the main content.
+  void SetScrollViewHeight(CGFloat scroll_view_height);
+  CGFloat GetScrollViewHeight() const;
+
+  // Setter for the current height of the rendered paged.
+  void SetContentHeight(CGFloat content_height);
+  CGFloat GetContentHeight() const;
+
+  // Setter for the top cotent inset of the scroll view displaying the main
+  // content.
+  void SetTopContentInset(CGFloat top_inset);
+  CGFloat GetTopContentInset() const;
+
   // Setter for the current vertical content offset.  Setting this will
   // recalculate the progress value.
   void SetYContentOffset(CGFloat y_content_offset);
@@ -65,13 +78,23 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   // and the progress value is not 0.0 or 1.0, the model will round to the
   // nearest value.
   void SetScrollViewIsScrolling(bool scrolling);
-  bool ISScrollViewScrolling() const;
+  bool IsScrollViewScrolling() const;
 
   // Setter for whether the scroll view is being dragged.
   void SetScrollViewIsDragging(bool dragging);
   bool IsScrollViewDragging() const;
 
+  void SetDebugEnabled(bool enabled) { debug_enabled_ = enabled; }
+
  private:
+  // Returns whether a scroll to |y_content_offset| should be ignored by the
+  // model.  Scrolls are ignored when:
+  // - the model is disabled,
+  // - a scroll pushes pas the top or bottom of the page's rendered content,
+  // - or scrolling down when the entire page's rendered content can fit
+  //   beneath the toolbar.
+  bool ShouldIgnoreNewScrollOffset(CGFloat y_content_offset) const;
+
   // Setter for |progress_|.  Notifies observers of the new value if
   // |notify_observers| is true.
   void SetProgress(CGFloat progress);
@@ -81,6 +104,9 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   void UpdateBaseOffset();
 
   // ChromeBroadcastObserverInterface:
+  void OnScrollViewSizeBroadcasted(CGSize scroll_view_size) override;
+  void OnScrollViewContentSizeBroadcasted(CGSize content_size) override;
+  void OnScrollViewContentInsetBroadcasted(UIEdgeInsets content_inset) override;
   void OnContentScrollOffsetBroadcasted(CGFloat offset) override;
   void OnScrollViewIsScrollingBroadcasted(bool scrolling) override;
   void OnScrollViewIsDraggingBroadcasted(bool dragging) override;
@@ -98,6 +124,12 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   CGFloat toolbar_height_ = 0.0;
   // The current vertical content offset of the main content.
   CGFloat y_content_offset_ = 0.0;
+  // The height of the scroll view displaying the current page.
+  CGFloat scroll_view_height_ = 0.0;
+  // The height of the current page's rendered content.
+  CGFloat content_height_ = 0.0;
+  // The top inset of the scroll view displaying the current page.
+  CGFloat top_inset_ = 0.0;
   // How many currently-running features require the toolbar be visible.
   size_t disabled_counter_ = 0;
   // Whether the main content is being scrolled.
@@ -106,6 +138,8 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   bool dragging_ = false;
   // The number of FullscreenModelObserver callbacks currently being executed.
   size_t observer_callback_count_ = 0;
+
+  bool debug_enabled_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenModel);
 };

@@ -596,6 +596,10 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
                         -self.topContentInsetCausedByHeader;
   BOOL ignoreScrollAtContentTop = isContentAtTop && (0.0f < verticalDelta);
 
+  NSLog(@"");
+  NSLog(@"**************************************");
+  NSLog(@"ignore top  bounce : %@", @(ignoreScrollAtContentTop));
+
   // Scroll view is scrolled all the way to the bottom. Ignore the bounce down.
   // Also ignore the scroll up if the page is visible with the toolbar on-screen
   // as the toolbar should not be hidden in that case.
@@ -604,6 +608,7 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
            webViewScrollViewProxy.frame.size.height >=
        webViewScrollViewProxy.contentSize.height) &&
       (verticalDelta < 0.0 || [self contentFitsWithToolbarVisible]);
+  NSLog(@"ignore bottom      : %@", @(ignoreScrollAtContentBottom));
 
   if (ignoreScrollAtContentTop || ignoreScrollAtContentBottom)
     verticalDelta = 0.0;
