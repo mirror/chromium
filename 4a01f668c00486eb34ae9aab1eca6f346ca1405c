@@ -88,6 +88,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2041b7f7_05d50a6c",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-01T15:51:37Z",
+      "side": 1,
+      "message": "However we may never enter tablet mode in the first place: for example, if you resume a sleeping device in tablet mode. This is why the existing logic only discarded events near a lid open event. If we only treat [0, 20], [340, 360] as a single range and keep the last time we entered that range then we could make sure the delay was a maximum of 2 seconds.",
+      "parentUuid": "7a794c81_908d1b2b",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
