@@ -52,6 +52,24 @@
       "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42e6f12_ec5a11ce",
+        "filename": "media/gpu/windows/d3d11_video_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-01T20:54:50Z",
+      "side": 1,
+      "message": "that\u0027s a very good point.  happily done.",
+      "parentUuid": "cac34477_1ec096e5",
+      "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
