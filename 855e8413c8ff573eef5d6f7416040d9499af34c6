@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f6ebf4_fc179ae4",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 6727,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-01T15:57:59Z",
+      "side": 0,
+      "message": "So according to this test the fallback to cross-document load really didn\u0027t work for PlzNavigate. But with this CL it does.",
+      "revId": "855e8413c8ff573eef5d6f7416040d9499af34c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
