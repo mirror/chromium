@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28996bd_fa8949bf",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-01T21:34:54Z",
+      "side": 1,
+      "message": "Looks like this only apply to lock screen at the moment. Maybe we could return when SessionState!\u003dLOCKED.",
+      "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7beb54d_004e1e94",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-01T21:34:54Z",
+      "side": 1,
+      "message": "ditto. this is set when lock state changed:\nhttps://cs.chromium.org/chromium/src/ash/login/ui/lock_contents_view.cc?rcl\u003de1556a021b6c18045834ee362c542290e356a275\u0026l\u003d486\n\nWe can return when SessionState!\u003dLOCKED.",
+      "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8c43b7_ffcdfd7b",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-01T21:34:54Z",
+      "side": 1,
+      "message": "nit: Move this line into ShouldRecordMetrics() and get/check the state inside the helper function.",
+      "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
