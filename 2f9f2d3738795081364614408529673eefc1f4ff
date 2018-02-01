@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ee41127_b3ea15d5",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "Wow! So much better. Thanks ;)",
+      "parentUuid": "6fe17d62_77da7b20",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b612c9c_25b6affe",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2693a725_23f9e548",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "\u003e Am I correct that you\u0027re using fade_tail() \n\nExactly. And I totally agree with what you said. Done.",
+      "parentUuid": "6b612c9c_25b6affe",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a68f6701_a51f2310",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "How kind you are! Thank you for guidance. I\u0027ll try. If I make it, I will upload it as different CL because you seem to wanna compare various versions :)",
+      "parentUuid": "768a6de0_7efd5539",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec81aa42_dd826b4e",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae296501_418be8e2",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec81aa42_dd826b4e",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ffe3697e_c52c9d1e",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "\u003e In the case of pinned or active tabs\n\nYou\u0027re right. I worried about this but active tab and pinned tab are supposed to have icon capacity. Removed.",
+      "parentUuid": "d86788b3_48cb7a26",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd31ee03_687d5730",
         "filename": "chrome/browser/ui/views/tabs/tab_icon.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-31T23:28:46Z",
       "side": 1,
       "message": "Why would we want to save an 0xff alpha layer?  I think just Save() (or better, using a ScopedCanvas) would do this, but honestly I don\u0027t even think you need to save the canvas at all, since you\u0027re not modifying anything about the canvas (its clip, transform, etc.) that would need to be restored on exit.  So I think you can remove this.\n\nThough if we\u0027re nuking fading for now this is kinda moot.",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e031f1cb_94360683",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "IMHO we need this. Without this, clipping will punch a hole, which means tab\u0027s background and frame will be clipped too. Then Desktop or other applications will be visible through that clipped area in Aero mode. In non-aero mode, clipped area will remain black.\nhttps://drive.google.com/file/d/147-dpR5uffcvntbWNF5qX8owOIE3wRV-/view?usp\u003dsharing\n\nI used SaveLayerAlpha in order to avoid this problem and here is comment on it.\n\n\u003e As with Save(), except draws to a layer that is blended with the canvas at the specified alpha once Restore() is called.\n\nThe point here is \"Blend\", I think. This trick seems to be used TabIcon::PaintAttentionIndicatorAndIcon too. (https://cs.chromium.org/chromium/src/chrome/browser/ui/views/tabs/tab_icon.cc?q\u003dTabIcon\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d235)\n\nThat\u0027s also the reason I couldn\u0027t use gfx::ScopedCanvas here.",
+      "parentUuid": "dd31ee03_687d5730",
       "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99f2815_51424eaf",
+        "filename": "chrome/browser/ui/views/tabs/tab_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-01T10:01:43Z",
+      "side": 1,
+      "message": "I see. Changed to EXPECT_LE(tab.icon_-\u003ex(), contents_bounds.x())",
+      "parentUuid": "79a64f83_42c33ac9",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
