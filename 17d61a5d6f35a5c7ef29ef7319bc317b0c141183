@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec91af9f_cfb16b4e",
+        "filename": "third_party/WebKit/LayoutTests/animations/keyframe-effect-options-composite.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T20:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd98a7bc_127f29f2",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1a9881b_2f9b37e5",
         "filename": "third_party/WebKit/LayoutTests/animations/keyframe-effect-options-composite.html",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d8766b_2138bd69",
+        "filename": "third_party/WebKit/LayoutTests/animations/keyframe-effect-options-composite.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T20:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1a9881b_2f9b37e5",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "afa199b3_06eeec5a",
+        "filename": "third_party/WebKit/Source/core/animation/EffectModel.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T20:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e7ab0c_56d4049e",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51702ff4_c8e6b9e3",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.cpp",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a3ebd278_68ebce48",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T20:31:50Z",
+      "side": 1,
+      "message": "It actually should be here already, because KeyframeEffect::Create uses RuntimeEnabledFeatures. I\u0027m going to leave the addition due to that.",
+      "parentUuid": "51702ff4_c8e6b9e3",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add708d2_a20e3e3a",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7641de95_e830723f",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T20:31:50Z",
+      "side": 1,
+      "message": "ditto!",
+      "parentUuid": "add708d2_a20e3e3a",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
