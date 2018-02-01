@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81f255a_cc2b4374",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T21:24:07Z",
+      "side": 1,
+      "message": "The bug actually is that when we had two flags during conservative stack scanning we dispatched to \u003ckWeakHandling, kWeakActAsStrong\u003e we dispatched to TraceInCollection.\n\nWith only one flag we didn\u0027t dispatch to anything for kNoWeakHandling. \n\nAll objects that have Traits::kWeakHandlingFlag \u003d\u003d kWeakHandling have to provide a TraceInCollection method that also accepts the flag to strongify.\n\nWithout using this trick, we would actually need to provide both, a Trace and a TraceInCollection, on anything that can be weak.",
+      "range": {
+        "startLine": 196,
+        "startChar": 14,
+        "endLine": 196,
+        "endChar": 19
+      },
+      "revId": "b30a5feeaf37f08f2b30821675112f88ba0c6ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4668e675_69098b38",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T21:24:07Z",
+      "side": 1,
+      "message": "Same as above: We need to check Traits::kWeakHandlingFlag to know whether we need to call TraceInCollection or Trace.\n\nThis is important as e.g. for WeakMember Trace(weak_member) will do the wrong thing while TraceInCollection will call Trace(weak_member.Get()) which is the strongification.",
+      "range": {
+        "startLine": 533,
+        "startChar": 11,
+        "endLine": 533,
+        "endChar": 48
+      },
+      "revId": "b30a5feeaf37f08f2b30821675112f88ba0c6ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
