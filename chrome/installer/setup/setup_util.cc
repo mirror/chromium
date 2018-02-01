@@ -8,6 +8,7 @@
 
 #include <windows.h>
 
+#include <objbase.h>
 #include <stddef.h>
 #include <wtsapi32.h>
 
@@ -851,6 +852,26 @@ bool OsSupportsDarkTextTiles() {
   auto windows_version = base::win::GetVersion();
   return windows_version == base::win::VERSION_WIN8_1 ||
          windows_version >= base::win::VERSION_WIN10_RS1;
+}
+
+base::string16 GetToastActivatorRegistryPath() {
+  // CLSID has a string format of "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}",
+  // which contains 38 characters.
+  constexpr int kGuidLength = 38;
+
+  // Include space for the string terminator.
+  constexpr int kGuidLengthFull = kGuidLength + 1;
+
+  base::string16 path(kGuidLengthFull, 0);
+
+  // The static_cast is safe because our string sizes will generally fit into an
+  // int.
+  if (::StringFromGUID2(install_static::GetToastActivatorClsid(), &path[0],
+                        static_cast<int>(path.capacity())) != kGuidLengthFull) {
+    return base::string16();
+  }
+  path.resize(kGuidLength);  // Trim off the string terminator.
+  return L"Software\\Classes\\CLSID\\" + path;
 }
 
 }  // namespace installer
