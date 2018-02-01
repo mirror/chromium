@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6f9fa74_19939e24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "nit: This comment needs to be updated",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 53
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec7d0d7_b4cfb156",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "If this conversion is used in multiple places, we should put it in a utility method.",
+      "range": {
+        "startLine": 121,
+        "startChar": 55,
+        "endLine": 121,
+        "endChar": 84
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a00909_cad378ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "Should we remove this debugging log?",
+      "range": {
+        "startLine": 124,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 83
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddd5e52_3084a051",
+        "filename": "ui/android/java/res/values-sw600dp/values.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f6c0d0_0f41a469",
+        "filename": "ui/android/java/res/values-sw600dp/values.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "I like that the two values were collapsed into this one -- fewer values to ship, and easier to reason about!",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "929f220b_88572c23",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "nit: remove extra chars here",
+      "range": {
+        "startLine": 15,
+        "startChar": 54,
+        "endLine": 15,
+        "endChar": 65
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65ba8cb_b509224a",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "Should we distinguish between primary display of the \"application\" and primary display of the provided context.\n\nnit: This JavaDoc needs an @param",
+      "range": {
+        "startLine": 30,
+        "startChar": 58,
+        "endLine": 30,
+        "endChar": 61
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c95719c_56ea1ecb",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "nit: s/ret/isTablet?",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae75852_cd9b7049",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "nit: JavaDoc",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd8abfd_16d1e30f",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "It\u0027s possible this is what Android has done across all versions we support and no OEMs have modified the logic... but I\u0027m a bit hesitant to rely on this.",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 72
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3e984e_91e64300",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 1,
+      "message": "nit: remove \"at\"",
+      "range": {
+        "startLine": 72,
+        "startChar": 72,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "c20f9519de9d1a220fe89fc0b09dea5cefe40ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

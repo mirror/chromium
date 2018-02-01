@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06628b50_bbcf0639",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:36:22Z",
+      "side": 0,
+      "message": "As a sanity check, it\u0027d be good to manually test changing the display size while Chrome is running (e.g. dock Chrome to the top screen and settings to the bottom).",
+      "range": {
+        "startLine": 101,
+        "startChar": 23,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "cef65578e4f83f3681e18fe30512492cb207e9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
