@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2d4fe56_626fe5f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-01T19:09:21Z",
+      "side": 1,
+      "message": "Ideally, I\u0027d like to add less tab references in this class, but this would live in toolbar model itself.\n\nFor example, isOfflinePage is already in ToolbarModelImpl.  We could add another method isShowingUntrustedOfflineContent int he model and have these live there.\n\nThe longer term goal is to remove getTab from the data provider and have all other functionality in there.",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29020602_cde3208f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-01T19:09:21Z",
+      "side": 1,
+      "message": "why do you need this block?  getDisplayText is only used to fill in the text when the URL bar is unfocused.  The only check in onWindowFocusChanged treats is empty as expect.  But we never use this to set the text in the focused stated.",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6cbe097_b0f2067b",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 1
