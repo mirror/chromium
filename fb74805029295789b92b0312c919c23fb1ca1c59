@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea1604e_3128466c",
+        "filename": "ios/chrome/browser/ui/download/download_manager_consumer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-02-01T17:17:53Z",
+      "side": 1,
+      "message": "Typically we have avoided using properties in consumer protocols, since that implies there\u0027s state in the consumer that can be read. Not a blocker, just something to be aware of.",
+      "range": {
+        "startLine": 25,
+        "startChar": 37,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "fb74805029295789b92b0312c919c23fb1ca1c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cee7d62_641d7106",
+        "filename": "ios/chrome/browser/ui/download/download_manager_mediator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-02-01T17:17:53Z",
+      "side": 1,
+      "message": "Maybe StartDowloading(), so it\u0027s not confused with the coordinator\u0027s -start method?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "fb74805029295789b92b0312c919c23fb1ca1c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
