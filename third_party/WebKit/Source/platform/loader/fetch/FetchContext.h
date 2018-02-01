@@ -271,6 +271,13 @@ class PLATFORM_EXPORT FetchContext
     return priority;
   }
 
+  // Returns if the |resource_url| is identified as ad.
+  virtual bool IsAdResource(
+      const KURL& resource_url,
+      WebURLRequest::RequestContext request_context) const {
+    return false;
+  }
+
  protected:
   FetchContext();
 
