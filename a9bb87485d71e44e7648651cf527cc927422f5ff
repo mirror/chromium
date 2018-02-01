@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d90cdf0f_d597d1ff",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done. Sorry copied from udp_socket_posix.h, and didn\u0027t rename it properly.",
+      "parentUuid": "5b2458ea_664b0bcf",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf20bc29_85067746",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a3ce9cb2_69a2786c",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf20bc29_85067746",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37da211_6b815786",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-31T19:45:32Z",
       "side": 1,
       "message": "Willing to put in some words as to what can be done with the socket if an error is returned?  I\u0027m assuming \"nothing\", but it\u0027s probably worthwhile being clear.\n\nRelated: Remind me why we don\u0027t open the socket as part of creating it?  (I.e. fold these arguments and result into the creation routine?)  If we can\u0027t do anything with the socket if Open() fails, it seems like the interface would be simpler if we created it opened.",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68fda11_ab24e972",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done.\n\nSetSendBufferSize(), SetReceiveBufferSize(), and SetBroadcast() can be called after Open() and before Connect()/Bind().\nIf we get rid of Open(), we can make SocketOptions to contain those flags (buffer size, allow broadcast) so caller can set those flags before the socket is bound/connected.\nI agree that getting Open() simplifies the interface. If you think it\u0027s a good idea, I can do it in a follow-up.",
+      "parentUuid": "f37da211_6b815786",
       "range": {
         "startLine": 56,
         "startChar": 22,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "196a4725_2e3c79ca",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "529e140b_5d0ce0c2",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c25e33c_2f272b4e",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "349c38f8_4cc0d568",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 14
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65fc52f7_46efd137",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9495a505_54266476",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fc52f7_46efd137",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 14
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b9fda4e8_7f14c3d9",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07806c1b_769c7833",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 37
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "293028e6_08c793e4",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3becc877_c7bc4afd",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done. Good point. Thanks.\nI\u0027ve reset |wrapped_socket_| when an error occurs.",
+      "parentUuid": "293028e6_08c793e4",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 12
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "8d77d242_1ee43671",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ff7074_a26e218d",
+      "range": {
+        "startLine": 144,
+        "startChar": 15,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbe4cf3_e98630f1",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 8
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "6a874976_5ee0fbbb",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "I agree that if the socket is \"connected\" to one endpoint, it doesn\u0027t make sense for it to join a multicast group. \n\nHowever, udp_socket_posix.cc doesn\u0027t forbid it (https://cs.chromium.org/chromium/src/net/socket/udp_socket_posix.cc?rcl\u003d95f8244c8554200766daa806b36baa620f391445\u0026l\u003d975).",
+      "parentUuid": "0dbe4cf3_e98630f1",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 25
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a7691ab_6663784d",
         "filename": "services/network/udp_socket.h",
         "patchSetId": 8
@@ -243,6 +483,30 @@
       "writtenOn": "2018-01-31T19:45:32Z",
       "side": 1,
       "message": "Why is this part of SocketWrapper?  It seems like it\u0027s unused outside of the implementation classes.  Am I missing something?",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e83061_98af317c",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-01T16:02:27Z",
+      "side": 1,
+      "message": "It\u0027s overriden in udp_socket.cc\u0027s SocketWrapperImpl, so we can parse these options and set them on the underlying net::UDPSocket.",
+      "parentUuid": "0a7691ab_6663784d",
       "range": {
         "startLine": 74,
         "startChar": 16,
