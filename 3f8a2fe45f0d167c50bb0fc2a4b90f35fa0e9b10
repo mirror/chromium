@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833b373c_6796faf9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 27681,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-01T21:51:15Z",
+      "side": 0,
+      "message": "Please mark this as \u003cobsolete\u003e rather than deleting it.",
+      "range": {
+        "startLine": 27674,
+        "startChar": 0,
+        "endLine": 27681,
+        "endChar": 12
+      },
+      "revId": "3f8a2fe45f0d167c50bb0fc2a4b90f35fa0e9b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ecb3e5_dca7a6c7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 104830,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-01T21:51:15Z",
+      "side": 0,
+      "message": "Were the removed suffixes incorrect, or did they simply become obsolete?  If the latter, please mark them as \u003cobsolete\u003e rather than deleting them.",
+      "range": {
+        "startLine": 104828,
+        "startChar": 0,
+        "endLine": 104830,
+        "endChar": 56
+      },
+      "revId": "3f8a2fe45f0d167c50bb0fc2a4b90f35fa0e9b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
