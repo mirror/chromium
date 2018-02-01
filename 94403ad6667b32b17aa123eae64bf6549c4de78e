@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "316f4c2c_aef640e8",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Document this function, explaining what the word \"Process\" means in this context.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc934239_685cdf93",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Let\u0027s think about the right behavior involving mixed mode mirroring. You can add a TODO here until we decide.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43510f7e_7e39a801",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Add a comment \"why\" we don\u0027t store window info if we have one.\n\nAlso it might be better if you flip the conditional and continue;",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 47
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e10e8a9_dd1c7834",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Looks like you meant to create references?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 77
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9535f7_ba5e3f28",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Nit: Please add a comment explaining why we want the display with the biggest intersection.",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 73
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f882ec2b_5c71c015",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Nit: You can remove this, and start with \"Observes ...\".",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a15f720_8d8d77bc",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "I would avoid caching this, and instead get the instance whenever I need it, since it seems can change (e.g. at shutdown ... check CreateScreenForShutdown()).",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1b340c_9c0c79a0",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "This too. You only need it to add/remove observer. There\u0027s no need to cache it.",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16739a7_50733def",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Since this needs |window_tree_host_manager_|, move this declaration after |window_tree_host_manager_|.",
+      "range": {
+        "startLine": 671,
+        "startChar": 2,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b6dfef_b8e62191",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Can this be a hacky_style_setter()?",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 1
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29f2bf0_ea7d4a75",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-01T22:53:34Z",
+      "side": 1,
+      "message": "Nit (optional): I\u0027m generally not a big fan of std::pair\u003c\u003e, since it makes the code less readable. I would create a new struct type for this and document each in member. \n\nAlso document that bounds are in Screen.",
+      "range": {
+        "startLine": 449,
+        "startChar": 17,
+        "endLine": 449,
+        "endChar": 46
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
