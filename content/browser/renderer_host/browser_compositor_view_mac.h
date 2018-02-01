@@ -81,17 +81,14 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   // hidden (e.g, because it is occluded by another window).
   void SetNSViewAttachedToWindow(bool attached);
 
-  // These functions will track the number of outstanding copy requests, and
-  // will not allow the ui::Compositor to be detached until all outstanding
-  // copies have returned.
+  // This function will track the number of outstanding copy requests, and will
+  // not allow the ui::Compositor to be detached until all outstanding copies
+  // have completed.
   void CopyFromCompositingSurface(const gfx::Rect& src_subrect,
                                   const gfx::Size& dst_size,
                                   const ReadbackRequestCallback& callback,
                                   SkColorType preferred_color_type);
-  void CopyFromCompositingSurfaceToVideoFrame(
-      const gfx::Rect& src_subrect,
-      scoped_refptr<media::VideoFrame> target,
-      const base::Callback<void(const gfx::Rect&, bool)>& callback);
+  bool CanCopyFromCompositingSurface() const;
   viz::FrameSinkId GetRootFrameSinkId();
 
   // Indicate that the recyclable compositor should be destroyed, and no future
@@ -165,11 +162,6 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
       const ReadbackRequestCallback& callback,
       const SkBitmap& bitmap,
       ReadbackResponse response);
-  static void CopyToVideoFrameCompleted(
-      base::WeakPtr<BrowserCompositorMac> browser_compositor,
-      const base::Callback<void(const gfx::Rect&, bool)>& callback,
-      const gfx::Rect& rect,
-      bool result);
   uint64_t outstanding_copy_count_ = 0;
 
   bool render_widget_host_is_hidden_ = true;
