@@ -62,11 +62,12 @@ class MODULES_EXPORT AudioBasicProcessorHandler : public AudioHandler {
   unsigned NumberOfChannels();
   AudioProcessor* Processor() { return processor_.get(); }
 
- private:
   AudioBasicProcessorHandler(NodeType,
                              AudioNode&,
                              float sample_rate,
                              std::unique_ptr<AudioProcessor>);
+
+ private:
   double TailTime() const final;
   double LatencyTime() const final;
 
