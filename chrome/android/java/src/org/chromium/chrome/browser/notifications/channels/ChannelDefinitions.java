@@ -187,6 +187,13 @@ public class ChannelDefinitions {
     }
 
     /**
+     * @return Importance for channel initialized on startup.
+     */
+    static int getStartupChannelImportance(String id) {
+        return PredefinedChannels.MAP.get(id).getImportance();
+    }
+
+    /**
      * @return An array of old ChannelIds that may have been returned by
      * {@link #getStartupChannelIds} in the past, but are no longer in use.
      */
@@ -241,6 +248,10 @@ public class ChannelDefinitions {
             NotificationChannel channel = new NotificationChannel(mId, name, mImportance);
             channel.setGroup(mGroupId);
             return channel;
+        }
+
+        int getImportance() {
+            return mImportance;
         }
     }
 

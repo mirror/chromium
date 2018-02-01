@@ -52,8 +52,6 @@ public interface ChromeNotificationBuilder {
 
     ChromeNotificationBuilder setDeleteIntent(PendingIntent intent);
 
-    ChromeNotificationBuilder setPriority(int pri);
-
     ChromeNotificationBuilder setProgress(int max, int percentage, boolean indeterminate);
 
     ChromeNotificationBuilder setSubText(CharSequence text);

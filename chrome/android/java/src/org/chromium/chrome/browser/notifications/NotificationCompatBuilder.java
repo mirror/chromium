@@ -20,8 +20,9 @@ import android.widget.RemoteViews;
 public class NotificationCompatBuilder implements ChromeNotificationBuilder {
     private final NotificationCompat.Builder mBuilder;
 
-    public NotificationCompatBuilder(Context context) {
+    public NotificationCompatBuilder(Context context, int priority) {
         mBuilder = new NotificationCompat.Builder(context);
+        mBuilder.setPriority(priority);
     }
 
     @Override
@@ -122,12 +123,6 @@ public class NotificationCompatBuilder implements ChromeNotificationBuilder {
     @Override
     public ChromeNotificationBuilder setDeleteIntent(PendingIntent intent) {
         mBuilder.setDeleteIntent(intent);
-        return this;
-    }
-
-    @Override
-    public ChromeNotificationBuilder setPriority(int pri) {
-        mBuilder.setPriority(pri);
         return this;
     }
 

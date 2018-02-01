@@ -323,8 +323,9 @@ public class DownloadNotificationService extends Service {
     private static Notification buildSummaryNotificationWithIcon(Context context, int iconId) {
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_DOWNLOADS)
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                ChannelDefinitions.CHANNEL_ID_DOWNLOADS,
+                                NotificationConstants.PRIORITY_IMPORTANCE_HIGH)
                         .setContentTitle(
                                 context.getString(R.string.download_notification_summary_title))
                         .setSubText(context.getString(R.string.menu_downloads))
@@ -777,7 +778,6 @@ public class DownloadNotificationService extends Service {
                                       : android.R.drawable.stat_sys_download;
         ChromeNotificationBuilder builder = buildNotification(resId, fileName, contentText);
         builder.setOngoing(true);
-        builder.setPriority(Notification.PRIORITY_HIGH);
 
         // Avoid animations while the download isn't progressing.
         if (!isDownloadPending) {
@@ -1063,8 +1063,10 @@ public class DownloadNotificationService extends Service {
 
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_DOWNLOADS)
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                ChannelDefinitions.CHANNEL_ID_DOWNLOADS,
+                                NotificationConstants.PRIORITY_IMPORTANCE_HIGH)
+
                         .setContentTitle(
                                 DownloadUtils.getAbbreviatedFileName(title, MAX_FILE_NAME_LENGTH))
                         .setSmallIcon(iconId)

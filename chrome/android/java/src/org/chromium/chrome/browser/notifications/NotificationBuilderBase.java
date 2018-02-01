@@ -123,7 +123,7 @@ public abstract class NotificationBuilderBase {
     protected long[] mVibratePattern;
     protected long mTimestamp;
     protected boolean mRenotify;
-    protected int mPriority;
+    protected int mPriorityImportance;
     private Bitmap mLargeIcon;
 
     public NotificationBuilderBase(Resources resources) {
@@ -308,11 +308,10 @@ public abstract class NotificationBuilderBase {
     }
 
     /**
-     * Sets the priority of the notification (if set to private, overrides |setDefaults| and
-     * |setVibrate|)
+     * Sets the priority/importance of the notification
      */
-    public NotificationBuilderBase setPriority(int priority) {
-        mPriority = priority;
+    public NotificationBuilderBase setPriorityImportance(int newValue) {
+        mPriorityImportance = newValue;
         return this;
     }
 
@@ -379,7 +378,8 @@ public abstract class NotificationBuilderBase {
         // Use a non-compat builder because we want the default small icon behaviour.
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(false /* preferCompat */, mChannelId)
+                        .createChromeNotificationBuilder(
+                                false /* preferCompat */, mChannelId, mPriorityImportance)
                         .setContentText(context.getString(
                                 org.chromium.chrome.R.string.notification_hidden_text))
                         .setSmallIcon(org.chromium.chrome.R.drawable.ic_chrome);

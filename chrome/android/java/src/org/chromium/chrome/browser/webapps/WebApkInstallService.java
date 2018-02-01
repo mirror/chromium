@@ -18,6 +18,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
+import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.webapk.lib.client.WebApkNavigationClient;
@@ -60,8 +61,9 @@ public class WebApkInstallService {
             Bitmap icon, String message, PendingIntent clickPendingIntent) {
         Context context = ContextUtils.getApplicationContext();
         ChromeNotificationBuilder notificationBuilder =
-                NotificationBuilderFactory.createChromeNotificationBuilder(
-                        false /* preferCompat */, ChannelDefinitions.CHANNEL_ID_BROWSER);
+                NotificationBuilderFactory.createChromeNotificationBuilder(false /* preferCompat */,
+                        ChannelDefinitions.CHANNEL_ID_BROWSER,
+                        NotificationConstants.PRIORITY_IMPORTANCE_LOW);
         notificationBuilder.setContentTitle(shortName)
                 .setContentText(message)
                 .setLargeIcon(icon)

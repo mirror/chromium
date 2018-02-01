@@ -287,8 +287,10 @@ public class MediaNotificationManager {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
 
         ChromeNotificationBuilder builder =
-                NotificationBuilderFactory.createChromeNotificationBuilder(
-                        true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_MEDIA);
+                NotificationBuilderFactory.createChromeNotificationBuilder(true /* preferCompat */,
+                        ChannelDefinitions.CHANNEL_ID_MEDIA,
+                        NotificationConstants.PRIORITY_IMPORTANCE_HIGH);
+
         s.startForeground(s.getNotificationId(), builder.build());
     }
 
@@ -939,7 +941,8 @@ public class MediaNotificationManager {
     @VisibleForTesting
     void updateNotificationBuilder() {
         mNotificationBuilder = NotificationBuilderFactory.createChromeNotificationBuilder(
-                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_MEDIA);
+                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_MEDIA,
+                NotificationConstants.PRIORITY_IMPORTANCE_HIGH);
         setMediaStyleLayoutForNotificationBuilder(mNotificationBuilder);
 
         // TODO(zqzhang): It's weird that setShowWhen() doesn't work on K. Calling setWhen() to

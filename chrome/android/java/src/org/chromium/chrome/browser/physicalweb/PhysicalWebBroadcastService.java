@@ -152,8 +152,9 @@ public class PhysicalWebBroadcastService extends Service {
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE));
         ChromeNotificationBuilder notificationBuilder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_BROWSER)
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                ChannelDefinitions.CHANNEL_ID_BROWSER,
+                                NotificationConstants.PRIORITY_IMPORTANCE_MIN)
                         .setSmallIcon(R.drawable.ic_image_white_24dp)
                         .setContentTitle(getString(R.string.physical_web_broadcast_notification))
                         .setContentText(displayUrl)

@@ -79,15 +79,15 @@ class WebappActionsNotificationManager {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         return NotificationBuilderFactory
-                .createChromeNotificationBuilder(
-                        true /* prefer compat */, ChannelDefinitions.CHANNEL_ID_WEBAPP_ACTIONS)
+                .createChromeNotificationBuilder(true /* prefer compat */,
+                        ChannelDefinitions.CHANNEL_ID_WEBAPP_ACTIONS,
+                        NotificationConstants.PRIORITY_IMPORTANCE_MIN)
                 .setSmallIcon(R.drawable.ic_chrome)
                 .setContentTitle(mWebappActivity.getWebappInfo().shortName())
                 .setContentText(mWebappActivity.getString(R.string.webapp_tap_to_copy_url))
                 .setShowWhen(false)
                 .setAutoCancel(false)
                 .setOngoing(true)
-                .setPriority(Notification.PRIORITY_MIN)
                 .setContentIntent(focusIntent)
                 .addAction(R.drawable.ic_share_white_24dp,
                         mWebappActivity.getResources().getString(R.string.share), shareIntent)

@@ -33,7 +33,7 @@ public class ChannelsInitializer {
      */
     void initializeStartupChannels() {
         for (String channelId : ChannelDefinitions.getStartupChannelIds()) {
-            ensureInitialized(channelId);
+            ensureInitialized(channelId, ChannelDefinitions.getStartupChannelImportance(channelId));
         }
     }
 
@@ -55,9 +55,10 @@ public class ChannelsInitializer {
      * Calling this is a (potentially lengthy) no-op if the channel has already been created.
      *
      * @param channelId The ID of the channel to be initialized.
+     * @param importance Channel importance.
      */
-    public void ensureInitialized(String channelId) {
-        ensureInitializedWithEnabledState(channelId, true);
+    public void ensureInitialized(String channelId, int importance) {
+        ensureInitializedWithEnabledState(channelId, importance);
     }
 
     /**
@@ -66,10 +67,10 @@ public class ChannelsInitializer {
      * {@link ChannelDefinitions.PredefinedChannels}.
      */
     public void ensureInitializedAndDisabled(String channelId) {
-        ensureInitializedWithEnabledState(channelId, false);
+        ensureInitializedWithEnabledState(channelId, NotificationManager.IMPORTANCE_NONE);
     }
 
-    private void ensureInitializedWithEnabledState(String channelId, boolean enabled) {
+    private void ensureInitializedWithEnabledState(String channelId, int importance) {
         if (channelId.startsWith(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES)) {
             // If we have a valid site channel ID at this point, it is safe to assume a channel
             // has already been created, since the only way to obtain a site channel ID is by
@@ -88,9 +89,8 @@ public class ChannelsInitializer {
                         .toNotificationChannelGroup(mResources);
         mNotificationManager.createNotificationChannelGroup(channelGroup);
         NotificationChannel channel = predefinedChannel.toNotificationChannel(mResources);
-        if (!enabled) {
-            channel.setImportance(NotificationManager.IMPORTANCE_NONE);
-        }
+        // Importance can be changed only before using notify.
+        channel.setImportance(importance);
         mNotificationManager.createNotificationChannel(channel);
     }
 }

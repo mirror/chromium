@@ -18,10 +18,13 @@ import org.chromium.chrome.browser.webapps.WebApkServiceClient;
 @TargetApi(Build.VERSION_CODES.O)
 public class NotificationBuilderForO extends NotificationBuilder {
     private static final String TAG = "NotifBuilderForO";
+    private ChannelsInitializer mChannelsInitializer;
+    private String mChannelId;
 
-    public NotificationBuilderForO(
-            Context context, String channelId, ChannelsInitializer channelsInitializer) {
-        super(context);
+    public NotificationBuilderForO(Context context, String channelId,
+            ChannelsInitializer channelsInitializer, int importance) {
+        // Importance is ignored in super starting from O
+        super(context, importance);
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         if (channelId == null) {
             // The channelId may be null if the notification will be posted by another app that
@@ -29,10 +32,13 @@ public class NotificationBuilderForO extends NotificationBuilder {
             return;
         }
 
+        mChannelsInitializer = channelsInitializer;
+        mChannelId = channelId;
+
         // If the channel ID matches {@link WebApkServiceClient#CHANNEL_ID_WEBAPKS}, we don't create
         // the channel in Chrome. Instead, the channel will be created in WebAPKs.
         if (!TextUtils.equals(channelId, WebApkServiceClient.CHANNEL_ID_WEBAPKS)) {
-            channelsInitializer.ensureInitialized(channelId);
+            channelsInitializer.ensureInitialized(channelId, importance);
         }
         mBuilder.setChannelId(channelId);
     }

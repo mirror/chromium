@@ -22,9 +22,12 @@ public class NotificationBuilder implements ChromeNotificationBuilder {
     protected final Notification.Builder mBuilder;
     private final Context mContext;
 
-    public NotificationBuilder(Context context) {
+    public NotificationBuilder(Context context, int priority) {
         mContext = context;
         mBuilder = new Notification.Builder(mContext);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            mBuilder.setPriority(priority);
+        }
     }
 
     @Override
@@ -153,11 +156,6 @@ public class NotificationBuilder implements ChromeNotificationBuilder {
         return this;
     }
 
-    @Override
-    public ChromeNotificationBuilder setPriority(int pri) {
-        mBuilder.setPriority(pri);
-        return this;
-    }
 
     @Override
     public ChromeNotificationBuilder setProgress(int max, int percentage, boolean indeterminate) {

@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 
@@ -14,6 +13,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
+import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 
@@ -64,10 +64,10 @@ public class WebApkDisclosureNotificationManager {
         Context context = ContextUtils.getApplicationContext();
 
         ChromeNotificationBuilder builder =
-                NotificationBuilderFactory.createChromeNotificationBuilder(
-                        false /* preferCompat */, ChannelDefinitions.CHANNEL_ID_BROWSER);
+                NotificationBuilderFactory.createChromeNotificationBuilder(false /* preferCompat */,
+                        ChannelDefinitions.CHANNEL_ID_BROWSER,
+                        NotificationConstants.PRIORITY_IMPORTANCE_MIN);
         builder.setContentTitle(webappInfo.name())
-                .setPriority(Notification.PRIORITY_MIN)
                 .setSmallIcon(R.drawable.ic_chrome)
                 .setLargeIcon(webappInfo.icon())
                 .setDeleteIntent(WebApkDisclosureNotificationService.getDeleteIntent(

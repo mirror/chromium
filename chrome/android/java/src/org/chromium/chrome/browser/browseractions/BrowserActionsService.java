@@ -237,8 +237,9 @@ public class BrowserActionsService extends Service {
     private ChromeNotificationBuilder createNotificationBuilder(boolean isUpdate, int tabId) {
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_BROWSER)
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                ChannelDefinitions.CHANNEL_ID_BROWSER,
+                                NotificationConstants.PRIORITY_IMPORTANCE_LOW)
                         .setSmallIcon(R.drawable.infobar_chrome)
                         .setLocalOnly(true)
                         .setAutoCancel(true)

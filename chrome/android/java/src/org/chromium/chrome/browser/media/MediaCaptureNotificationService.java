@@ -19,6 +19,7 @@ import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
+import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.tab.Tab;
@@ -169,7 +170,9 @@ public class MediaCaptureNotificationService extends Service {
 
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(true /* preferCompat */, channelId)
+                        .createChromeNotificationBuilder(true /* preferCompat */, channelId,
+                                NotificationConstants.PRIORITY_IMPORTANCE_HIGH)
+
                         .setAutoCancel(false)
                         .setOngoing(true)
                         .setContentTitle(mContext.getString(R.string.app_name))
@@ -186,7 +189,6 @@ public class MediaCaptureNotificationService extends Service {
             if (mediaType == MEDIATYPE_SCREEN_CAPTURE) {
                 // Add a "Stop" button to the screen capture notification and turn the notification
                 // into a high priority one.
-                builder.setPriority(Notification.PRIORITY_HIGH);
                 builder.setVibrate(new long[0]);
                 builder.addAction(R.drawable.ic_stop_white_36dp,
                         mContext.getResources().getString(R.string.accessibility_stop),

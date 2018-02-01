@@ -4,12 +4,29 @@
 
 package org.chromium.chrome.browser.notifications;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 
 /**
  * Constants used in more than a single Notification class, e.g. intents and extra names.
  */
 public class NotificationConstants {
+    @SuppressWarnings("deprecation")
+    public static final int PRIORITY_IMPORTANCE_MIN =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? NotificationManager.IMPORTANCE_MIN
+                                                           : Notification.PRIORITY_MIN;
+    @SuppressWarnings("deprecation")
+    public static final int PRIORITY_IMPORTANCE_LOW =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? NotificationManager.IMPORTANCE_LOW
+                                                           : Notification.PRIORITY_LOW;
+
+    @SuppressWarnings("deprecation")
+    public static final int PRIORITY_IMPORTANCE_HIGH =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? NotificationManager.IMPORTANCE_HIGH
+                                                           : Notification.PRIORITY_HIGH;
+
     // These actions have to be synchronized with the receiver defined in AndroidManifest.xml.
     static final String ACTION_CLICK_NOTIFICATION =
             "org.chromium.chrome.browser.notifications.CLICK_NOTIFICATION";
