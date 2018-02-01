@@ -200,8 +200,7 @@ class QuicSpdySession::SpdyFramerVisitor
 
     // TODO(mpw): avoid down-conversion and plumb SpdyStreamPrecedence through
     // QuicHeadersStream.
-    SpdyPriority priority =
-        has_priority ? Http2WeightToSpdy3Priority(weight) : 0;
+    SpdyPriority priority = Http2WeightToSpdy3Priority(weight);
     session_->OnHeaders(stream_id, has_priority, priority, fin);
   }
 
@@ -230,8 +229,11 @@ class QuicSpdySession::SpdyFramerVisitor
                   SpdyStreamId parent_id,
                   int weight,
                   bool exclusive) override {
-    CloseConnection("SPDY PRIORITY frame received.",
-                    QUIC_INVALID_HEADERS_STREAM_DATA);
+    if (!session_->IsConnected()) {
+      return;
+    }
+    SpdyPriority priority = Http2WeightToSpdy3Priority(weight);
+    session_->OnStreamHeadersPriority(stream_id, priority);
   }
 
   bool OnUnknownFrame(SpdyStreamId stream_id, uint8_t frame_type) override {
