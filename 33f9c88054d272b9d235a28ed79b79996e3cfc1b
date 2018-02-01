@@ -46,6 +46,47 @@
       "revId": "33f9c88054d272b9d235a28ed79b79996e3cfc1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db2d9fe_756e3d1a",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T00:13:24Z",
+      "side": 1,
+      "message": "\u003e OEMs are supposed to read this meta data, but they might actually be using a hard coded value.\n\ntoo bad for them?",
+      "parentUuid": "e64335c6_1fdfc18f",
+      "range": {
+        "startLine": 1132,
+        "startChar": 40,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "33f9c88054d272b9d235a28ed79b79996e3cfc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a034e59b_32333997",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T00:13:24Z",
+      "side": 1,
+      "message": "since we are here, make this private and static",
+      "revId": "33f9c88054d272b9d235a28ed79b79996e3cfc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
