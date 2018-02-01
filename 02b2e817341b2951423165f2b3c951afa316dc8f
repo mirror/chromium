@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18d5ed6f_3eb33346",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-01T07:51:08Z",
+      "side": 1,
+      "message": "Oops, thank you. Fixed.",
+      "parentUuid": "9986531a_0e96a3f9",
+      "revId": "02b2e817341b2951423165f2b3c951afa316dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11fd783f_812a9bb3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "02b2e817341b2951423165f2b3c951afa316dc8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1fdd40_8e5c9591",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 44734,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-01T07:51:08Z",
+      "side": 1,
+      "message": "As talked offline, the phrase is commonly used.",
+      "parentUuid": "11fd783f_812a9bb3",
+      "revId": "02b2e817341b2951423165f2b3c951afa316dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
