@@ -16,6 +16,24 @@
       "revId": "4276be191a42e12de07a70669391e83c273283ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc10159_6dfd6842",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T14:32:10Z",
+      "side": 1,
+      "message": "I think we should adopt in this CL the flow we\u0027ll want for the future tab switcher. If buttons are attached dispatched commands, then StackViewController and TabSwitcherController should both register for these commands (as well as the new impl when it comes).\n\nWhat about\n\n@protocol TabSwitcherCommands\n- (void)dismissTabSwitcher;\n@end\n\n(Alternative is adding to BrowserCommands, but that looks like a misuse?)",
+      "parentUuid": "4e952fc4_a6665c24",
+      "revId": "4276be191a42e12de07a70669391e83c273283ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
