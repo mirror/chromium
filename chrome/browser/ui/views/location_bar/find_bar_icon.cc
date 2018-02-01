@@ -5,8 +5,11 @@
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 
 #include "components/toolbar/vector_icons.h"
+#include "ui/accessibility/ax_node_data.h"
 
-FindBarIcon::FindBarIcon() : BubbleIconView(nullptr, 0) {}
+FindBarIcon::FindBarIcon() : BubbleIconView(nullptr, 0) {
+  SetFocusBehavior(FocusBehavior::NEVER);
+}
 
 FindBarIcon::~FindBarIcon() {}
 
@@ -23,6 +26,11 @@ void FindBarIcon::SetActive(bool activate, bool should_animate) {
   } else {
     AnimateInkDrop(views::InkDropState::HIDDEN, nullptr);
   }
+}
+
+void FindBarIcon::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  BubbleIconView::GetAccessibleNodeData(node_data);
+  node_data->SetNameFrom(ax::mojom::NameFrom::kAttributeExplicitlyEmpty);
 }
 
 void FindBarIcon::OnExecuting(ExecuteSource execute_source) {}
