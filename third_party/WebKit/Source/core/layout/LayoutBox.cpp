@@ -3813,11 +3813,12 @@ LayoutUnit LayoutBox::ContainingBlockLogicalWidthForPositioned(
   // container rather than any anonymous block created to manage a block-flow
   // ancestor of ours in the rel-pos inline's inline flow.
   if (containing_block->IsAnonymousBlock() &&
-      containing_block->IsRelPositioned())
+      containing_block->IsRelPositioned()) {
     containing_block = ToLayoutBox(containing_block)->Continuation();
-  else if (containing_block->IsBox())
+  } else if (containing_block->IsBox()) {
     return std::max(LayoutUnit(),
                     ToLayoutBox(containing_block)->ClientLogicalWidth());
+  }
 
   DCHECK(containing_block->IsLayoutInline());
   DCHECK(containing_block->CanContainOutOfFlowPositionedElement(
@@ -3872,12 +3873,8 @@ LayoutUnit LayoutBox::ContainingBlockLogicalHeightForPositioned(
   if (HasOverrideContainingBlockLogicalHeight())
     return OverrideContainingBlockContentLogicalHeight();
 
-  if (containing_block->IsBox()) {
-    const LayoutBlock* cb = containing_block->IsLayoutBlock()
-                                ? ToLayoutBlock(containing_block)
-                                : containing_block->ContainingBlock();
-    return cb->ClientLogicalHeight();
-  }
+  if (containing_block->IsBox())
+    return ToLayoutBox(containing_block)->ClientLogicalHeight();
 
   DCHECK(containing_block->IsLayoutInline());
   DCHECK(containing_block->CanContainOutOfFlowPositionedElement(
