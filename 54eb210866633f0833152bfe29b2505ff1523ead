@@ -70,6 +70,30 @@
       "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3adb65_231a3bff",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2018-02-01T21:15:20Z",
+      "side": 1,
+      "message": "That explains the rationale for testing for NEON support instead of plain ARMv7 or !ARMv6 (also given that it is an optional feature in ARMv7).",
+      "parentUuid": "84a80a0e_7a2bc9ab",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
