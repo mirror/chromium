@@ -65,6 +65,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return {location, VisualRect().Size()};
   }
 
+  LayoutRect PartialInvalidationRect() const override;
+
   // Paint all descendant inline box fragments that belong to the specified
   // LayoutObject.
   void PaintInlineBoxForDescendants(const PaintInfo&,
