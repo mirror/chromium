@@ -424,10 +424,11 @@ var onMessageReply = function(message) {
   } else {
     protocol = test_type;
     chrome.test.runTests([
-        testSocketCreation,
+       testSocketCreation,
         testSending,
-        testPendingCallback,
-        testUsingTCPSocketOnUDPMethods]);
+        //testPendingCallback,
+        //testUsingTCPSocketOnUDPMethods
+        ]);
   }
 };
 
