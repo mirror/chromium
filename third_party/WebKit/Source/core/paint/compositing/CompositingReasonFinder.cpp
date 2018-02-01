@@ -188,6 +188,10 @@ CompositingReasons CompositingReasonFinder::CompositingReasonsForAnimation(
     reasons |= CompositingReason::kActiveFilterAnimation;
   if (RequiresCompositingForBackdropFilterAnimation(style))
     reasons |= CompositingReason::kActiveBackdropFilterAnimation;
+  // TODO(xidachen): remove the next two lines when the experiment in
+  // crbug.com/754471 is completed.
+  if (!style.ShouldCompositeForCurrentAnimations())
+    reasons = CompositingReason::kNone;
   return reasons;
 }
 
