@@ -1451,17 +1451,18 @@ config("no_chromium_code") {
       "_CRT_NONSTDC_NO_DEPRECATE",
     ]
   } else {
-    # GCC may emit unsuppressible warnings so don't add -Werror for no chromium
-    # code. crbug.com/589724
-    if (treat_warnings_as_errors && is_clang) {
-      cflags += [ "-Werror" ]
-      ldflags = [ "-Werror" ]
-    }
     if (is_clang && !is_nacl) {
       # TODO(thakis): Remove !is_nacl once
       # https://codereview.webrtc.org/1552863002/ made its way into chromium.
       cflags += [ "-Wall" ]
     }
+  }
+
+  # GCC may emit unsuppressible warnings so don't add -Werror for no chromium
+  # code unless we are compiling with clang. crbug.com/589724
+  if (treat_warnings_as_errors && is_clang) {
+    cflags += [ "-Werror" ]
+    ldflags = [ "-Werror" ]
   }
 
   if (is_clang) {
