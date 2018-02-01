@@ -5,6 +5,7 @@
 #include "ash/metrics/login_metrics_recorder.h"
 
 #include "ash/login/ui/lock_screen.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/memory/ptr_util.h"
@@ -12,12 +13,38 @@
 
 namespace ash {
 
+namespace {
+
+void LogUserClickOnLock(
+    LoginMetricsRecorder::LockScreenUserClickTarget target) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "Ash.Login.Lock.UserClicks", target,
+      LoginMetricsRecorder::LockScreenUserClickTarget::kTargetCount);
+}
+
+void LogUserClickOnLogin(
+    LoginMetricsRecorder::LoginScreenUserClickTarget target) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "Ash.Login.Login.UserClicks", target,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kTargetCount);
+}
+
+bool ShouldRecordMetrics() {
+  session_manager::SessionState session_state =
+      Shell::Get()->session_controller()->GetSessionState();
+  return session_state == session_manager::SessionState::LOGIN_PRIMARY ||
+         session_state == session_manager::SessionState::LOCKED;
+}
+
+}  // namespace
+
 LoginMetricsRecorder::LoginMetricsRecorder() = default;
 LoginMetricsRecorder::~LoginMetricsRecorder() = default;
 
 void LoginMetricsRecorder::SetAuthMethod(AuthMethod method) {
   DCHECK_NE(method, AuthMethod::kMethodCount);
-  if (!ash::LockScreen::IsShown() && !enabled_for_testing_)
+  if (Shell::Get()->session_controller()->GetSessionState() !=
+      session_manager::SessionState::LOCKED)
     return;
 
   // Record usage of PIN / Password / Smartlock in lock screen.
@@ -49,7 +76,8 @@ void LoginMetricsRecorder::Reset() {
 
 void LoginMetricsRecorder::RecordNumLoginAttempts(int num_attempt,
                                                   bool success) {
-  if (!ash::LockScreen::IsShown() && !enabled_for_testing_)
+  if (Shell::Get()->session_controller()->GetSessionState() !=
+      session_manager::SessionState::LOCKED)
     return;
 
   if (success) {
@@ -61,22 +89,89 @@ void LoginMetricsRecorder::RecordNumLoginAttempts(int num_attempt,
   }
 }
 
-void LoginMetricsRecorder::RecordUserClickEventOnLockScreen(
-    LockScreenUserClickTarget target) {
-  // Cancel button from LoginShelfView is converted to kTargetCount because it
-  // is not part of the lock screen.
-  if (target == LockScreenUserClickTarget::kTargetCount)
+void LoginMetricsRecorder::RecordUserTrayClick(TrayClickTarget target) {
+  if (!ShouldRecordMetrics())
     return;
 
-  if (!ash::LockScreen::IsShown() && !enabled_for_testing_)
-    return;
-
-  UMA_HISTOGRAM_ENUMERATION("Ash.Login.Lock.UserClicks", target,
-                            LockScreenUserClickTarget::kTargetCount);
+  bool is_lock = Shell::Get()->session_controller()->GetSessionState() ==
+                 session_manager::SessionState::LOCKED;
+  switch (target) {
+    case TrayClickTarget::kSystemTray:
+      if (is_lock) {
+        LogUserClickOnLock(LockScreenUserClickTarget::kSystemTray);
+      } else {
+        LogUserClickOnLogin(LoginScreenUserClickTarget::kSystemTray);
+      }
+      break;
+    case TrayClickTarget::kVirtualKeyboardTray:
+      if (is_lock) {
+        LogUserClickOnLock(LockScreenUserClickTarget::kVirtualKeyboardTray);
+      } else {
+        LogUserClickOnLogin(LoginScreenUserClickTarget::kVirtualKeyboardTray);
+      }
+      break;
+    case TrayClickTarget::kImeTray:
+      if (is_lock) {
+        LogUserClickOnLock(LockScreenUserClickTarget::kImeTray);
+      } else {
+        LogUserClickOnLogin(LoginScreenUserClickTarget::kImeTray);
+      }
+      break;
+    case TrayClickTarget::kNotificationTray:
+      DCHECK(is_lock);
+      LogUserClickOnLock(LockScreenUserClickTarget::kNotificationTray);
+      break;
+    case TrayClickTarget::kTrayActionNoteButton:
+      DCHECK(is_lock);
+      LogUserClickOnLock(
+          LockScreenUserClickTarget::kLockScreenNoteActionButton);
+      break;
+  }
 }
 
-void LoginMetricsRecorder::EnableForTesting() {
-  enabled_for_testing_ = true;
+void LoginMetricsRecorder::RecordUserShelfButtonClick(
+    ShelfButtonClickTarget target) {
+  if (!ShouldRecordMetrics())
+    return;
+
+  bool is_lock = Shell::Get()->session_controller()->GetSessionState() ==
+                 session_manager::SessionState::LOCKED;
+  switch (target) {
+    case ShelfButtonClickTarget::kShutDownButton:
+      if (is_lock) {
+        LogUserClickOnLock(LockScreenUserClickTarget::kShutDownButton);
+      } else {
+        LogUserClickOnLogin(LoginScreenUserClickTarget::kShutDownButton);
+      }
+      break;
+    case ShelfButtonClickTarget::kRestartButton:
+      if (is_lock) {
+        LogUserClickOnLock(LockScreenUserClickTarget::kRestartButton);
+      } else {
+        LogUserClickOnLogin(LoginScreenUserClickTarget::kRestartButton);
+      }
+      break;
+    case ShelfButtonClickTarget::kSignOutButton:
+      DCHECK(is_lock);
+      LogUserClickOnLock(LockScreenUserClickTarget::kSignOutButton);
+      break;
+    case ShelfButtonClickTarget::kBrowseAsGuestButton:
+      DCHECK(!is_lock);
+      LogUserClickOnLogin(LoginScreenUserClickTarget::kBrowseAsGuestButton);
+      break;
+    case ShelfButtonClickTarget::kAddUserButton:
+      DCHECK(!is_lock);
+      LogUserClickOnLogin(LoginScreenUserClickTarget::kAddUserButton);
+      break;
+    case ShelfButtonClickTarget::kCloseNoteButton:
+      DCHECK(is_lock);
+      LogUserClickOnLock(LockScreenUserClickTarget::kCloseNoteButton);
+      break;
+    case ShelfButtonClickTarget::kCancelButton:
+      // Should not be called in LOCKED nor LOGIN_PRIMARY states.
+      NOTREACHED();
+      break;
+  }
 }
 
 // static
