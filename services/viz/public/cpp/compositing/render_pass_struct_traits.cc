@@ -26,6 +26,7 @@ bool StructTraits<viz::mojom::RenderPassDataView,
       !data.ReadColorSpace(&(*out)->color_space)) {
     return false;
   }
+
   (*out)->id = data.id();
   // RenderPass ids are never zero.
   if (!(*out)->id)
