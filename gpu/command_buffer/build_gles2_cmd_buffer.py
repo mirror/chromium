@@ -4636,6 +4636,14 @@ _FUNCTION_INFO = {
     'extension': 'CHROMIUM_gpu_fence',
     'extension_flag': 'chromium_gpu_fence',
   },
+  'UnpremultiplyAndDitherCopyCHROMIUM': {
+    'decoder_func': 'DoUnpremultiplyAndDitherCopyCHROMIUM',
+    'cmd_args': 'GLuint src_texture, GLuint dst_texture',
+    'impl_func': True,
+    'client_test': False,
+    'unit_test': False,
+    'extension': True,
+  }
 }
 
 

@@ -1016,6 +1016,9 @@ void VerifySyncTokensCHROMIUM(GLbyte** sync_tokens, GLsizei count) override;
 
 void WaitSyncTokenCHROMIUM(const GLbyte* sync_token) override;
 
+void UnpremultiplyAndDitherCopyCHROMIUM(GLuint src_texture,
+                                        GLuint dst_texture) override;
+
 void DrawBuffersEXT(GLsizei count, const GLenum* bufs) override;
 
 void DiscardBackbufferCHROMIUM() override;

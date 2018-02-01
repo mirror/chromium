@@ -744,6 +744,8 @@ virtual void GenSyncTokenCHROMIUM(GLbyte* sync_token) = 0;
 virtual void GenUnverifiedSyncTokenCHROMIUM(GLbyte* sync_token) = 0;
 virtual void VerifySyncTokensCHROMIUM(GLbyte** sync_tokens, GLsizei count) = 0;
 virtual void WaitSyncTokenCHROMIUM(const GLbyte* sync_token) = 0;
+virtual void UnpremultiplyAndDitherCopyCHROMIUM(GLuint src_texture,
+                                                GLuint dst_texture) = 0;
 virtual void DrawBuffersEXT(GLsizei count, const GLenum* bufs) = 0;
 virtual void DiscardBackbufferCHROMIUM() = 0;
 virtual void ScheduleOverlayPlaneCHROMIUM(GLint plane_z_order,
