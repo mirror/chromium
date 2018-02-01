@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccceba41_e4bd2ce2",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "Do we need a button in the debug UI? Since it is always available on the shelf.",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6325e9_06fa7786",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "It\u0027d be good to have this return the same data for both implementations, even if the webui implementation does not use it.",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398dd374_065eb16a",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "if (visible \u003d\u003d dialog_)?",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956c389b_b30fc1cd",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "users_.empty() \u0026\u0026 GetOobeUI()",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6385f94b_e08fe27c",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "File a bug please",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227695e5_806f1971",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "Move {} to cc",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e321c7_822de2b2",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "userCount_?",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a2c871_16c6a2c7",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:32:56Z",
+      "side": 1,
+      "message": "So from the cc it sounded like you can close the dialog if there are no users and that will trigger a refresh, does this conflict with that by hiding the close button or something similar?",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
