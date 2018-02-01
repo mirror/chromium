@@ -16,6 +16,24 @@
       "revId": "940b4b61fa0d4259c0132e980d8f4b05e1dfdd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8cd234_77ec78d6",
+        "filename": "base/files/dir_reader_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2018-02-01T10:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "662e7e20_886ee35d",
+      "revId": "940b4b61fa0d4259c0132e980d8f4b05e1dfdd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
