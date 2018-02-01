@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9135fb2_b18d180e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-01T02:28:44Z",
+      "side": 1,
+      "message": "Can you remind me how this happens today on the browser side?  I know we send CSP over at commit time, but wondering how it\u0027s inherited from the opener initially.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ab67c5_e65f7f73",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-01T02:28:44Z",
+      "side": 1,
+      "message": "nit: Maybe |frame_owner|, which matches the Blink naming (see link below)?",
+      "range": {
+        "startLine": 594,
+        "startChar": 17,
+        "endLine": 594,
+        "endChar": 29
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7869eb7_c85a5614",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-01T02:28:44Z",
+      "side": 1,
+      "message": "If I\u0027m reading https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?l\u003d6243\u0026rcl\u003d3cfda4569058d71b138650ae49b9eef34bbf263a correctly, the Blink-side logic for inheriting CSP favors the parent over the opener.  Same thing for origin inheritance: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?l\u003d680\u0026rcl\u003dbb3933892e1499aafdb25841ca90ff6c5e8ccf94.  Should we do the same here and check parent() first?  (And yes, a subframe can have both a parent() and an opener(), for example if there was a preceding window.open() that targeted that subframe by name.)",
+      "range": {
+        "startLine": 594,
+        "startChar": 32,
+        "endLine": 596,
+        "endChar": 65
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
