@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe86511_ef169ab9",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-02-01T22:14:08Z",
+      "side": 1,
+      "message": "nit:\nadd assert\n\nASSERT_GE(suggestions_container_view()-\u003etile_views().size(), 2);",
+      "range": {
+        "startLine": 1130,
+        "startChar": 6,
+        "endLine": 1130,
+        "endChar": 52
+      },
+      "revId": "d5dfd6e90ce47fd842665ff214d5bcf759c90fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
