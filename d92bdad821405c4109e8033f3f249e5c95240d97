@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "6a1d1c39_ff985aac",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-01T14:49:58Z",
+      "side": 1,
+      "message": "I added an expectation for file_name_suffix content, as we clarified offline.",
+      "parentUuid": "79b9ba0a_80818aef",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e478f8_0aedb884",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 20
@@ -245,6 +263,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43f46b2_07d14671",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-01T14:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f83147_3a7908bd",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

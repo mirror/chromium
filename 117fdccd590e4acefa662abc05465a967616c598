@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e74a3950_ec281f12",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-01T14:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6463cae_cb8a27e7",
+      "revId": "117fdccd590e4acefa662abc05465a967616c598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c6c726d_2fd9383a",
         "filename": "media/audio/audio_debug_recording_manager.h",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "117fdccd590e4acefa662abc05465a967616c598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0331459_2a2f014b",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-01T14:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6c726d_2fd9383a",
+      "revId": "117fdccd590e4acefa662abc05465a967616c598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "75b8db3b_cbea6031",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-01T14:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeae8b7f_bc7f1850",
+      "revId": "117fdccd590e4acefa662abc05465a967616c598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "356de9c3_7cf7cd62",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 23
@@ -67,6 +121,24 @@
       "revId": "117fdccd590e4acefa662abc05465a967616c598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de02f926_bcaf37cd",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-01T14:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "356de9c3_7cf7cd62",
+      "revId": "117fdccd590e4acefa662abc05465a967616c598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
