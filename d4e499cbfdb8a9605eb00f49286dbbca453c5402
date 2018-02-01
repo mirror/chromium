@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f14115_c8d1300f",
+        "filename": "ui/message_center/views/notification_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T23:04:18Z",
+      "side": 1,
+      "message": "nit: Should this RemoveChildView? It\u0027s also not clear to me why we need to destroy and re-create the view if it already exists and |title| is not empty.",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce90338_bfa6f989",
+        "filename": "ui/message_center/views/notification_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T23:04:18Z",
+      "side": 1,
+      "message": "Do these background -\u003e auto-readability changes alter the existing behavior?\nDo any notification views actually use a non-white background?",
+      "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d7e20c_b0fe5ab1",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T23:04:18Z",
+      "side": 1,
+      "message": "Move these to the constants file? (for shared use here and in non-MD)",
+      "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
