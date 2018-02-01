@@ -4639,7 +4639,7 @@ error::Error GLES2DecoderPassthroughImpl::DoBeginRasterCHROMIUM(
     GLuint msaa_sample_count,
     GLboolean can_use_lcd_text,
     GLboolean use_distance_field_text,
-    GLint pixel_config) {
+    GLint color_type) {
   NOTIMPLEMENTED();
   return error::kNoError;
 }
