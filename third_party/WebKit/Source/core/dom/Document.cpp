@@ -4568,8 +4568,10 @@ bool Document::SetFocusedElement(Element* new_focused_element,
     }
   }
 
-  if (new_focused_element)
+  if (new_focused_element) {
     UpdateStyleAndLayoutTreeForNode(new_focused_element);
+   // EnsurePaintLocationDataValidForNode(new_focused_element);
+  }
   if (new_focused_element && new_focused_element->IsFocusable()) {
     if (IsRootEditableElement(*new_focused_element) &&
         !AcceptsEditingFocus(*new_focused_element)) {

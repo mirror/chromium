@@ -111,4 +111,27 @@ TEST_F(FocusControllerTest, SVGFocusableElementInForm) {
       << "SVG Element should be skipped even when focusable in form.";
 }
 
+// This test is for crbug.com/806139
+TEST_F(FocusControllerTest, EnsurePaintLocationDataValidForSetFocusElement) {
+  GetDocument().body()->SetInnerHTMLFromString(R"HTML(
+    <div id='scroller' style='overflow: scroll; height: 100px; width: 100px;'>
+      <select id='select' style='position: sticky; top: 0;'></select>
+      <div style='height: 1000px;'></div>
+    </div>
+  )HTML");
+  EXPECT_EQ(DocumentLifecycle::kStyleClean,
+            GetDocument().Lifecycle().GetState());
+
+  Element* select = GetDocument().getElementById("select");
+  Element* scroller = GetDocument().getElementById("scroller");
+  LOG(INFO) << scroller->scrollTop();
+  scroller->scrollTo(0, 200);
+  LOG(INFO) << scroller->scrollTop();
+
+  FocusParams params;
+  GetFocusController().SetFocusedElement(select, GetDocument().GetFrame(), params);
+
+  LOG(INFO) << scroller->scrollTop();
+}
+
 }  // namespace blink

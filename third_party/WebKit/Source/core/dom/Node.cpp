@@ -702,6 +702,7 @@ LayoutRect Node::BoundingBox() const {
 
 LayoutRect Node::BoundingBoxForScrollIntoView() const {
   if (GetLayoutObject()) {
+    GetDocument().EnsurePaintLocationDataValidForNode(this);
     return LayoutRect(
         GetLayoutObject()->AbsoluteBoundingBoxRectForScrollIntoView());
   }
