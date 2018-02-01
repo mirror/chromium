@@ -3070,6 +3070,12 @@ void RenderFrameHostImpl::BeginNavigation(
     return;
   }
 
+  if (begin_params->blob_url_loader_factory &&
+      !validated_params.url.SchemeIsBlob()) {
+    mojo::ReportBadMessage("Blob URLLoaderFactory but not a blob: URL");
+    return;
+  }
+
   if (waiting_for_init_) {
     pending_navigate_ = std::make_unique<PendingNavigation>(
         validated_params, std::move(begin_params));

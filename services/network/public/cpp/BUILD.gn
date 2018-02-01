@@ -22,6 +22,7 @@ component("cpp") {
     "net_adapters.h",
     "network_switches.cc",
     "network_switches.h",
+    "url_loader_factory_mojom_traits.h",
   ]
 
   public_deps = [
