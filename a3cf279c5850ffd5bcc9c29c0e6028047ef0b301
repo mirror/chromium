@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db8e36d6_55ab3d44",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-01T02:22:38Z",
+      "side": 1,
+      "message": "The test involving animation fails in patch set 5. Layer animation duration will be automatically set to 0 in ash test, but slide animation will not. So this function returns true in the test. A simple fix is changing this function like this, or should I add functions like AppListFolderView::disable_animation_for_test() and is_animation_disabled_for_test(), and set slide animation duration to be 0 for test?",
+      "range": {
+        "startLine": 537,
+        "startChar": 2,
+        "endLine": 537,
+        "endChar": 74
+      },
+      "revId": "a3cf279c5850ffd5bcc9c29c0e6028047ef0b301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
