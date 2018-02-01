@@ -338,7 +338,7 @@ TEST_F(HitTestAggregatorTest, OneSurface) {
 
   hit_test_manager()->SubmitHitTestRegionList(display_surface_id, 0,
                                               std::move(hit_test_region_list));
-  aggregator->Aggregate(display_surface_id);
+  aggregator->Aggregate(display_surface_id, 1.f);
   aggregator->SwapHandles();
 
   // Expect 1 entry routing all events to the one surface (display root).
@@ -395,7 +395,7 @@ TEST_F(HitTestAggregatorTest, OneEmbedderTwoRegions) {
   hit_test_manager()->SubmitHitTestRegionList(
       e_surface_id, 0, std::move(e_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 3);
@@ -472,7 +472,7 @@ TEST_F(HitTestAggregatorTest, OneEmbedderTwoChildren) {
   hit_test_manager()->SubmitHitTestRegionList(
       c2_surface_id, 0, std::move(c2_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 3);
@@ -549,7 +549,7 @@ TEST_F(HitTestAggregatorTest, OccludedChildFrame) {
   hit_test_manager()->SubmitHitTestRegionList(
       e_surface_id, 0, std::move(e_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 3);
@@ -627,7 +627,7 @@ TEST_F(HitTestAggregatorTest, ForegroundChildFrame) {
   hit_test_manager()->SubmitHitTestRegionList(
       e_surface_id, 0, std::move(e_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 3);
@@ -728,7 +728,7 @@ TEST_F(HitTestAggregatorTest, ClippedChildWithTabAndTransparentBackground) {
   hit_test_manager()->SubmitHitTestRegionList(
       e_surface_id, 0, std::move(e_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 4);
@@ -841,7 +841,7 @@ TEST_F(HitTestAggregatorTest, ThreeChildrenDeep) {
   hit_test_manager()->SubmitHitTestRegionList(
       c2_surface_id, 0, std::move(c2_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 4);
@@ -922,7 +922,7 @@ TEST_F(HitTestAggregatorTest, MissingChildFrame) {
   hit_test_manager()->SubmitHitTestRegionList(
       e_surface_id, 0, std::move(e_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(aggregator->GetRegionCount(), 3);
@@ -984,7 +984,7 @@ TEST_F(HitTestAggregatorTest, ExceedLimits) {
 
   CreateAndSubmitHitTestRegionListWith8Children(1, 3);
 
-  aggregator->Aggregate(display_surface_id);
+  aggregator->Aggregate(display_surface_id, 1.f);
   aggregator->SwapHandles();
 
   // Expect 4680 regions:
@@ -1045,7 +1045,7 @@ TEST_F(HitTestAggregatorTest, DiscardedSurfaces) {
   hit_test_manager()->SubmitHitTestRegionList(
       e_surface_id, 0, std::move(e_hit_test_region_list));
 
-  aggregator->Aggregate(e_surface_id);
+  aggregator->Aggregate(e_surface_id, 1.f);
   aggregator->SwapHandles();
 
   EXPECT_EQ(hit_test_manager()->GetRegionCount(), 2);

@@ -819,6 +819,13 @@ gfx::Transform LayerImpl::ScreenSpaceTransform() const {
   return draw_properties().screen_space_transform;
 }
 
+gfx::Transform LayerImpl::RootSpaceTransform() const {
+  gfx::Transform root_space_transform = ScreenSpaceTransform();
+  root_space_transform.Scale(1.f / layer_tree_impl()->device_scale_factor(),
+                             1.f / layer_tree_impl()->device_scale_factor());
+  return root_space_transform;
+}
+
 bool LayerImpl::CanUseLCDText() const {
   if (layer_tree_impl()->settings().layers_always_allowed_lcd_text)
     return true;
@@ -945,6 +952,10 @@ void LayerImpl::EnsureValidPropertyTreeIndices() const {
   DCHECK(GetEffectTree().Node(effect_tree_index()));
   DCHECK(GetClipTree().Node(clip_tree_index()));
   DCHECK(GetScrollTree().Node(scroll_tree_index()));
+}
+
+bool LayerImpl::is_surface_layer() const {
+  return false;
 }
 
 }  // namespace cc

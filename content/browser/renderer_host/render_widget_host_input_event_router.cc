@@ -21,6 +21,7 @@
 #include "content/common/frame_messages.h"
 #include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/gfx/geometry/dip_util.h"
 
 namespace {
 
@@ -310,6 +311,8 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
   }
 
   auto* view = FindViewFromFrameSinkId(frame_sink_id);
+  *transformed_point = gfx::ConvertPointToDIP(
+      root_view->current_device_scale_factor(), *transformed_point);
   return {view ? view : root_view, query_renderer, *transformed_point};
 }
 
