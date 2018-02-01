@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78a85f95_26ca6546",
+        "filename": "ios/chrome/browser/ui/download/download_manager_consumer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T21:53:09Z",
+      "side": 1,
+      "message": "Changed to setters.",
+      "parentUuid": "dea1604e_3128466c",
+      "range": {
+        "startLine": 25,
+        "startChar": 37,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "fb74805029295789b92b0312c919c23fb1ca1c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cee7d62_641d7106",
         "filename": "ios/chrome/browser/ui/download/download_manager_mediator.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "fb74805029295789b92b0312c919c23fb1ca1c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e0b77f_eb72101b",
+        "filename": "ios/chrome/browser/ui/download/download_manager_mediator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T21:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cee7d62_641d7106",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "fb74805029295789b92b0312c919c23fb1ca1c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
