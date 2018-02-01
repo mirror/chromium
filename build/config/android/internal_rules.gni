@@ -2471,6 +2471,9 @@ if (enable_java_templates) {
       build_config = _build_config
       is_prebuilt = _is_prebuilt
       possible_config_deps = _accumulated_deps
+      if (defined(apk_under_test)) {
+        possible_config_deps += [ apk_under_test ]
+      }
       supports_android = _supports_android
       requires_android = _requires_android
       bypass_platform_checks = defined(invoker.bypass_platform_checks) &&
@@ -2502,6 +2505,11 @@ if (enable_java_templates) {
       }
     }
     _accumulated_deps += [ ":$_build_config_target_name" ]
+
+    # Don't need to depend on the apk-under-test to be packaged.
+    if (defined(invoker.apk_under_test)) {
+      _accumulated_deps += [ "${invoker.apk_under_test}__java" ]
+    }
     if (defined(invoker.android_manifest_dep)) {
       _accumulated_deps += [ invoker.android_manifest_dep ]
     }
