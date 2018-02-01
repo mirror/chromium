@@ -46,6 +46,30 @@
       "revId": "1c1f440ad339f319310225cdbc0997c268f85169",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c3853c_4d75e05f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8639,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-01T00:23:46Z",
+      "side": 1,
+      "message": "Correct, that\u0027s how BooleanHit is intended to be used – it counts the number of \"hits\" of a particular code path \u003d)",
+      "parentUuid": "65daacce_2974bcb7",
+      "range": {
+        "startLine": 8639,
+        "startChar": 57,
+        "endLine": 8639,
+        "endChar": 58
+      },
+      "revId": "1c1f440ad339f319310225cdbc0997c268f85169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
