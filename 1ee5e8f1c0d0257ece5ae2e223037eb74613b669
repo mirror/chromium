@@ -1,0 +1,400 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe56d865_def82ebb",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "scopedFeatureList \n\nsame comment for other places",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 51
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9683e72a_e15fece7",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Is this going to work on all screen sizes? Can we do better? Like making the image to fill whole iframe and then getting the rect of that iframe?",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 10
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a889fc92_4762ae62",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Per Style Guide, we should not use underscores in Objective-C method names.",
+      "range": {
+        "startLine": 248,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 60
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290d6805_8dc9fc00",
+        "filename": "ios/web/public/test/web_test_with_web_state.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "We should not expose anything WK web view specific in public web API. WKScriptMessage is an implementation detail of ios/web layer.",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9877fba_ef0c7f9c",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Please no underscores in method names",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e7fce3_62aafe7d",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "These macros print the line number, which is only useful if macros are used in tests, not in helpers. Also this looks like quite a big method for a helper. Can we break it down into smaller methods?",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 17
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717e66f9_67cc16d8",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "How about passing message and handler name instead of a function? Something like sendWebKitMessage(handlerName, message)",
+      "range": {
+        "startLine": 711,
+        "startChar": 18,
+        "endLine": 711,
+        "endChar": 31
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d62338_4c523f70",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "s/Details/Request ?",
+      "range": {
+        "startLine": 329,
+        "startChar": 27,
+        "endLine": 329,
+        "endChar": 39
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581f3209_025b9afb",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "The code below does not validate that sender is not a malicious page. The page can easily steal this identifier.",
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c34e6c3_ab4e5c70",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "s/Details/Request",
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c15e46_4efd4147",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Can we use subscript API here?",
+      "range": {
+        "startLine": 410,
+        "startChar": 34,
+        "endLine": 410,
+        "endChar": 56
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5311141_1dfb4b49",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Can we initialize this at line 405 instead?",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 21
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013ff5c1_d9ea6645",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "From Unit testing best practices : \"Test code using real APIs - don’t define back doors only for tests.\" \n\nhttps://engdoc.corp.google.com/eng/doc/devguide/coding/testing/unit-testing-best-practices.md?cl\u003dhead#public-apis\n\nCan we use ScriptMessageRouter in the tests?",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 31
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b39294d_3093c473",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Can we add tests for this class?",
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3277a017_25336f7f",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Please update",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 70
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f652a908_4ce86446",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Can we update this comment to explain the purpose of this class?",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7da7bd_b7d6b029",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "s/fetchStartTime/creationTime ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6699cb1e_4231fb8c",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "Can we add comments and update the name to reflect the purpose of this method?",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

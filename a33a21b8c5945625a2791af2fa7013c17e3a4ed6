@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "4ad7732d_64b25a51",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T00:10:27Z",
+      "side": 1,
+      "message": "But identifier is not used inside HTMLElementFetchRequest. HTMLElementFetchRequest creates it, but never uses. This looks like the only place which needs identifier, so local variable would work. And local variable has much smaller scope that the property. WDYT?",
+      "parentUuid": "3f4945ea_4024fd13",
+      "range": {
+        "startLine": 405,
+        "startChar": 56,
+        "endLine": 405,
+        "endChar": 66
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29a641e1_09bace3e",
         "filename": "ios/web/web_state/ui/crw_context_menu_element_fetch_details.h",
         "patchSetId": 7
