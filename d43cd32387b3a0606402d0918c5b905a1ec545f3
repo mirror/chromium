@@ -16,6 +16,24 @@
       "revId": "d43cd32387b3a0606402d0918c5b905a1ec545f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f91c64_bd52127f",
+        "filename": "components/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T06:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f5d5f16_47997768",
+      "revId": "d43cd32387b3a0606402d0918c5b905a1ec545f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
