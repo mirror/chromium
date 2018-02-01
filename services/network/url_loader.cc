@@ -251,6 +251,7 @@ URLLoader::URLLoader(
       process_id_(process_id),
       render_frame_id_(request.render_frame_id),
       connected_(true),
+      keepalive_(request.keepalive),
       binding_(this, std::move(url_loader_request)),
       url_loader_client_(std::move(url_loader_client)),
       writable_handle_watcher_(FROM_HERE,
@@ -305,12 +306,18 @@ URLLoader::URLLoader(
         base::Bind(&URLLoader::SetRawResponseHeaders, base::Unretained(this)));
   }
 
+  if (keepalive_)
+    context_->keepalive_statistics_recorder()->OnLoadStarted(process_id_);
+
   url_request_->Start();
 }
 
 URLLoader::~URLLoader() {
   RecordBodyReadFromNetBeforePausedIfNeeded();
   url_request_context_getter_->RemoveObserver(this);
+
+  if (keepalive_)
+    context_->keepalive_statistics_recorder()->OnLoadFinished(process_id_);
 }
 
 void URLLoader::FollowRedirect() {
