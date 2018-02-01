@@ -3381,6 +3381,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Ash.Login.Login.UserClicks" enum="LoginScreenUserClickTarget">
+  <owner>agawronska@google.com</owner>
+  <summary>
+    The numbers of times that users click on the shelf buttons and trays on the
+    ChromeOS login screen.
+  </summary>
+</histogram>
+
 <histogram name="Ash.NightLight.ScheduleType" enum="AshNightLightScheduleType">
   <owner>afakhry@chromium.org</owner>
   <summary>
