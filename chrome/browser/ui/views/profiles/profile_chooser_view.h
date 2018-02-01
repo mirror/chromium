@@ -177,6 +177,10 @@ class ProfileChooserView : public content::WebContentsDelegate,
   // Clean-up done after an action was performed in the ProfileChooser.
   void PostActionPerformed(ProfileMetrics::ProfileDesktopMenu action_performed);
 
+  // Callback for DiceAccountsMenu.
+  void SigninAccountForDiceAccountsMenu(
+      const base::Optional<AccountInfo> account);
+
   std::unique_ptr<AvatarMenu> avatar_menu_;
   Browser* const browser_;
 
