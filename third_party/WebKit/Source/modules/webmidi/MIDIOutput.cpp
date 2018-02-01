@@ -66,7 +66,7 @@ DOMUint8Array* ConvertUnsignedDataToUint8Array(
   return array;
 }
 
-double GetTimeOrigin(ExecutionContext* context) {
+TimeTicks GetTimeOrigin(ExecutionContext* context) {
   DCHECK(context);
   PerformanceBase* performance = nullptr;
   if (LocalDOMWindow* window = context->ExecutingWindow()) {
@@ -78,7 +78,7 @@ double GetTimeOrigin(ExecutionContext* context) {
   }
 
   DCHECK(performance);
-  return performance->timeOrigin();
+  return TimeTicks() + TimeDelta::FromMillisecondsD(performance->timeOrigin());
 }
 
 class MessageValidator {
@@ -257,11 +257,12 @@ void MIDIOutput::send(NotShared<DOMUint8Array> array,
   if (!context)
     return;
 
-  double timestamp;
+  TimeTicks timestamp;
   if (timestamp_in_milliseconds == 0.0) {
-    timestamp = CurrentTimeTicksInMilliseconds();
+    timestamp = TimeTicks::Now();
   } else {
-    timestamp = GetTimeOrigin(context) + timestamp_in_milliseconds;
+    timestamp = GetTimeOrigin(context) +
+                TimeDelta::FromMillisecondsD(timestamp_in_milliseconds);
   }
   SendInternal(array.View(), timestamp, exception_state);
 }
@@ -289,7 +290,7 @@ void MIDIOutput::send(NotShared<DOMUint8Array> data,
     return;
 
   DCHECK(data);
-  SendInternal(data.View(), CurrentTimeTicksInMilliseconds(), exception_state);
+  SendInternal(data.View(), TimeTicks::Now(), exception_state);
 }
 
 void MIDIOutput::send(Vector<unsigned> unsigned_data,
@@ -304,7 +305,7 @@ void MIDIOutput::send(Vector<unsigned> unsigned_data,
     return;
   }
 
-  SendInternal(array, CurrentTimeTicksInMilliseconds(), exception_state);
+  SendInternal(array, TimeTicks::Now(), exception_state);
 }
 
 void MIDIOutput::DidOpen(bool opened) {
@@ -327,11 +328,11 @@ void MIDIOutput::Trace(blink::Visitor* visitor) {
 }
 
 void MIDIOutput::SendInternal(DOMUint8Array* array,
-                              double platform_timestamp,
+                              TimeTicks timestamp,
                               ExceptionState& exception_state) {
   DCHECK(GetExecutionContext());
   DCHECK(array);
-  DCHECK_NE(0.0, platform_timestamp);
+  DCHECK(!timestamp.is_null());
   UseCounter::Count(GetExecutionContext(), WebFeature::kMIDIOutputSend);
 
   // Implicit open. It does nothing if the port is already opened.
@@ -343,10 +344,10 @@ void MIDIOutput::SendInternal(DOMUint8Array* array,
     return;
 
   if (IsOpening()) {
-    pending_data_.emplace_back(array, platform_timestamp);
+    pending_data_.emplace_back(array, timestamp);
   } else {
     midiAccess()->SendMIDIData(port_index_, array->Data(), array->length(),
-                               platform_timestamp);
+                               timestamp);
   }
 }
 

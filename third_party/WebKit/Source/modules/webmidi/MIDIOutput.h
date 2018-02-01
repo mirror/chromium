@@ -74,10 +74,10 @@ class MIDIOutput final : public MIDIPort {
              midi::mojom::PortState);
 
   void DidOpen(bool opened) override;
-  void SendInternal(DOMUint8Array*, double platform_timestamp, ExceptionState&);
+  void SendInternal(DOMUint8Array*, TimeTicks timestamp, ExceptionState&);
 
   unsigned port_index_;
-  HeapDeque<std::pair<Member<DOMUint8Array>, double>> pending_data_;
+  HeapDeque<std::pair<Member<DOMUint8Array>, TimeTicks>> pending_data_;
 };
 
 }  // namespace blink
