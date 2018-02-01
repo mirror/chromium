@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaffb4b2_cb2b8c29",
+        "filename": "chrome/browser/platform_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "maybe GetNativeWindowBounds? There\u0027s also a cross-platform browser()-\u003ewindow()-\u003eGetBounds() ...",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc7e0b4_c204eacf",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "this breaks DEPS -- I don\u0027t think it\u0027s worth an exception. I think we can just put the method below into autofill_popup_view_views.cc, guarded by #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af6fb77_051ee828",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_bridge_views.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "I\u0027m slightly wary of launching this alongside harmony - this isn\u0027t really a \"Dialog\" and we don\u0027t want regressions here to block Harmony on Mac in m66. I think this should be behind a separate base::Feature, but at this point in the milestone we can be optimistic :)",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7ff75e_1db319d8",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "I think failing to add this means that autofill popups won\u0027t dismiss when the browser window is resized. If so, we should record that - TODO/comment/crbug - and fix in a follow-up. A new kind of BubbleAnchorHelper might be what\u0027s needed..",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea6fef3_e47053de",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "params.parent shouldn\u0027t be null on MacViews, but it should be the cocoa window. Setting a parent ensures a childwindow is used, which ensures the popup is always layered above the parent, is moved with the parent, and is destroyed with the parent.\n\nCan this just use container_view()?",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520793de_2f249746",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "this isn\u0027t the same as GetClientAreaBoundsInScreen\n\nOn NSWindow, there is [window contentRectForFrameRect:[window frame]]), but I\u0027m not sure that\u0027s meaningful with the crazy stuff we do to jam a tabstrip into the titlebar on Mac. Perhaps comment here about the tradeoff",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b6d0e1_50567598",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:50:12Z",
+      "side": 1,
+      "message": "comment about this? it would be nice to know under what situation the Widget can\u0027t be found... maybe container_view() is nullptr",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
