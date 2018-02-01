@@ -2382,7 +2382,7 @@ bool RenderViewImpl::DidTapMultipleTargets(
       // responsible for freeing the shared memory when no longer needed.
       Send(new ViewHostMsg_ShowDisambiguationPopup(
           GetRoutingID(), physical_window_zoom_rect, canvas_size,
-          shm->TakeHandle()));
+          shm->handle().Duplicate()));
 
       handled = true;
       break;

@@ -82,7 +82,7 @@ GpuMemoryBufferImplSharedMemory::CreateGpuMemoryBuffer(
   handle.offset = 0;
   handle.stride = static_cast<int32_t>(
       gfx::RowSizeForBufferFormat(size.width(), format, 0));
-  handle.handle = shared_memory.TakeHandle();
+  handle.handle = shared_memory.handle().Duplicate();
   return handle;
 }
 

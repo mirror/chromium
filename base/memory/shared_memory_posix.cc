@@ -333,21 +333,6 @@ SharedMemoryHandle SharedMemory::handle() const {
   return shm_;
 }
 
-SharedMemoryHandle SharedMemory::TakeHandle() {
-  SharedMemoryHandle handle_copy = shm_;
-  handle_copy.SetOwnershipPassesToIPC(true);
-  // TODO(ssid): Find some way to track the shared memory in this case
-  // https://crbug/804399.
-  if (memory_) {
-    SharedMemoryTracker::GetInstance()->DecrementMemoryUsage(*this);
-    mapped_id_ = UnguessableToken();
-  }
-  shm_ = SharedMemoryHandle();
-  memory_ = nullptr;
-  mapped_size_ = 0;
-  return handle_copy;
-}
-
 #if !defined(OS_ANDROID)
 void SharedMemory::Close() {
   if (shm_.IsValid()) {
