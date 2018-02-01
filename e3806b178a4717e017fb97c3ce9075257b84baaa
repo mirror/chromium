@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7e962ef0_4d993d8b",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-02-01T19:41:39Z",
+      "side": 1,
+      "message": "It is a little strange. I can\u0027t think of a better solution though, as this only affects page allocator, which is only used by V8 and Blink (and only V8 team want this feature.)",
+      "parentUuid": "f0df873a_006b8713",
+      "revId": "e3806b178a4717e017fb97c3ce9075257b84baaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc46cb7a_ba83542a",
         "filename": "gin/v8_platform.cc",
         "patchSetId": 8
