@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab4312a_c69edc2c",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T05:33:41Z",
+      "side": 1,
+      "message": "kNoBytesToWrite is not defined in this class, you can just use DCHECK_GE(error_stream-\u003elength, 0);",
+      "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1badbfe_176fb59c",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T05:33:41Z",
+      "side": 1,
+      "message": "this is implied by the if statement above",
+      "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e309537_e73cfebd",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T05:33:41Z",
+      "side": 1,
+      "message": "bytes_written() should be smaller than length(), right? So we only need the first condition",
+      "revId": "d69372206a0ac96f59ad2cfe24aac8a6fafea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
