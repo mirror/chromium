@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "99b9f921_ca5ef26f",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-02-01T00:50:23Z",
+      "side": 1,
+      "message": "Include guards before includes",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1080181b_f5b45248",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-02-01T00:50:23Z",
+      "side": 1,
+      "message": "Put this in a test namespace?",
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "781261a0_ad8d7f7b",
         "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
         "patchSetId": 5
@@ -87,6 +127,29 @@
         "startChar": 17,
         "endLine": 24,
         "endChar": 18
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bc83c0_e7a6bc4c",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-02-01T00:50:23Z",
+      "side": 1,
+      "message": "I suggest making this an anonymous namespace method instead.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 6
       },
       "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
