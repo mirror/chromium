@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b96336f_3b20c75c",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-01T20:38:08Z",
+      "side": 1,
+      "message": "Is this necessary? Could you do the following instead?\n\n#menu .dropdown-item {\n  padding: 12px;\n}\n\nor does it get overriden?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "610fc5e0ee5247eb0e35fde12461bd64b3aeb9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
