@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97bc9e61_e57c791d",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T01:25:21Z",
+      "side": 1,
+      "message": "This isn\u0027t const if you\u0027re changing it. Use \u0027let\u0027.",
+      "revId": "23a8651eb19746d8a3da69d527a26234a3faa9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6de92f_ec022c50",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T01:25:21Z",
+      "side": 1,
+      "message": "chrome.system.display.MirrorMode.OFF",
+      "revId": "23a8651eb19746d8a3da69d527a26234a3faa9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232414f7_20001e0a",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T01:25:21Z",
+      "side": 1,
+      "message": "chrome.system.display.MirrorMode.NORMAL",
+      "revId": "23a8651eb19746d8a3da69d527a26234a3faa9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
