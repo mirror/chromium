@@ -419,6 +419,8 @@ component("chromeos") {
     "network/onc/onc_merger.h",
     "network/onc/onc_normalizer.cc",
     "network/onc/onc_normalizer.h",
+    "network/onc/onc_parsed_certificates.cc",
+    "network/onc/onc_parsed_certificates.h",
     "network/onc/onc_signature.cc",
     "network/onc/onc_signature.h",
     "network/onc/onc_translation_tables.cc",
