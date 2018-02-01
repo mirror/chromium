@@ -16,6 +16,24 @@
       "revId": "1eef41f9af838ec5d3b826124e12222939817a15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b64c11f_6f43ad58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-01T00:03:26Z",
+      "side": 1,
+      "message": "yay, forgot that commit messages are managed differently between chrome and chrome os.",
+      "parentUuid": "11f90fcb_e1014671",
+      "revId": "1eef41f9af838ec5d3b826124e12222939817a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
