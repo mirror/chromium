@@ -4,11 +4,6 @@
 
 import("//build/config/android/rules.gni")
 
-visibility = [
-  ":*",
-  "//third_party/android_tools:*",
-]
-
 lib_version = "27.0.0"
 lib_path = "//third_party/android_tools/sdk/extras/android/m2repository/com/android/support"
 arch_lib_version = "1.0.0"
@@ -19,15 +14,27 @@ build_file_dir = "//build/secondary/third_party/android_tools/support"
 android_library("android_support_chromium_java") {
   testonly = true
   java_files = [ "//third_party/android_tools/sdk/extras/chromium/support/src/org/chromium/android/support/PackageManagerWrapper.java" ]
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_java_prebuilt("android_gcm_java") {
   jar_path = "//third_party/android_tools/sdk/extras/google/gcm/gcm-client/dist/gcm.jar"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_java_prebuilt("emma_device_java") {
   jar_path = "//third_party/android_tools/sdk/tools/lib/emma_device.jar"
   include_java_resources = true
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_design_java") {
@@ -40,6 +47,10 @@ android_aar_prebuilt("android_support_design_java") {
   _lib_name = "design"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_transition_java") {
@@ -49,6 +60,7 @@ android_aar_prebuilt("android_support_transition_java") {
   _lib_name = "transition"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [ ":*" ]
 }
 
 android_aar_prebuilt("android_support_cardview_java") {
@@ -58,11 +70,19 @@ android_aar_prebuilt("android_support_cardview_java") {
   _lib_name = "cardview-v7"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_multidex_java") {
   aar_path = "$lib_path/multidex/1.0.1/multidex-1.0.1.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_arch_lifecycle_runtime_java") {
@@ -73,6 +93,10 @@ android_aar_prebuilt("android_arch_lifecycle_runtime_java") {
     ":android_arch_lifecycle_common_java",
     ":android_support_annotations_java",
   ]
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_java_prebuilt("android_arch_lifecycle_common_java") {
@@ -80,6 +104,10 @@ android_java_prebuilt("android_arch_lifecycle_common_java") {
   jar_path = "$arch_lib_path/lifecycle/common/$arch_lib_version/common-$arch_lib_version.jar"
   deps = [
     ":android_support_annotations_java",
+  ]
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
   ]
 }
 
@@ -89,11 +117,16 @@ android_java_prebuilt("android_arch_core_common_java") {
   deps = [
     ":android_support_annotations_java",
   ]
+  visibility = [ ":*" ]
 }
 
 android_java_prebuilt("android_support_annotations_java") {
   _lib_name = "support-annotations"
   jar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.jar"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 java_group("android_support_v4_java") {
@@ -103,6 +136,10 @@ java_group("android_support_v4_java") {
     ":android_support_core_utils_java",
     ":android_support_fragment_java",
     ":android_support_media_compat_java",
+  ]
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
   ]
 }
 
@@ -115,6 +152,10 @@ android_aar_prebuilt("android_support_compat_java") {
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
   ignore_aidl = true  # We don't appear to need these currently.
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_core_ui_java") {
@@ -124,6 +165,10 @@ android_aar_prebuilt("android_support_core_ui_java") {
   _lib_name = "support-core-ui"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_core_utils_java") {
@@ -133,6 +178,10 @@ android_aar_prebuilt("android_support_core_utils_java") {
   _lib_name = "support-core-utils"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_fragment_java") {
@@ -145,6 +194,7 @@ android_aar_prebuilt("android_support_fragment_java") {
   _lib_name = "support-fragment"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [ ":*" ]
 }
 
 android_aar_prebuilt("android_support_media_compat_java") {
@@ -155,6 +205,7 @@ android_aar_prebuilt("android_support_media_compat_java") {
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
   ignore_aidl = true  # We don't appear to need these currently.
+  visibility = [ ":*" ]
 }
 
 android_aar_prebuilt("android_support_v13_java") {
@@ -164,6 +215,10 @@ android_aar_prebuilt("android_support_v13_java") {
   _lib_name = "support-v13"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_vector_drawable_java") {
@@ -173,6 +228,7 @@ android_aar_prebuilt("android_support_vector_drawable_java") {
   _lib_name = "support-vector-drawable"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [ ":*" ]
 }
 
 android_aar_prebuilt("android_support_animated_vector_drawable_java") {
@@ -183,6 +239,7 @@ android_aar_prebuilt("android_support_animated_vector_drawable_java") {
   _lib_name = "animated-vector-drawable"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [ ":*" ]
 }
 
 android_aar_prebuilt("android_support_v7_appcompat_java_internal") {
@@ -192,6 +249,7 @@ android_aar_prebuilt("android_support_v7_appcompat_java_internal") {
   _lib_name = "appcompat-v7"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [ ":*" ]
 }
 
 java_group("android_support_v7_appcompat_java") {
@@ -200,6 +258,10 @@ java_group("android_support_v7_appcompat_java") {
     ":android_support_v4_java",
     ":android_support_v7_appcompat_java_internal",
     ":android_support_vector_drawable_java",
+  ]
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
   ]
 }
 
@@ -211,6 +273,10 @@ android_aar_prebuilt("android_support_v7_gridlayout_java") {
   _lib_name = "gridlayout-v7"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_v7_mediarouter_java") {
@@ -221,6 +287,10 @@ android_aar_prebuilt("android_support_v7_mediarouter_java") {
   _lib_name = "mediarouter-v7"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_v7_recyclerview_java") {
@@ -232,6 +302,10 @@ android_aar_prebuilt("android_support_v7_recyclerview_java") {
   _lib_name = "recyclerview-v7"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
+  visibility = [
+    ":*",
+    "//third_party/android_tools:*",
+  ]
 }
 
 android_aar_prebuilt("android_support_v7_palette_java") {
@@ -242,51 +316,5 @@ android_aar_prebuilt("android_support_v7_palette_java") {
   _lib_name = "palette-v7"
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
   info_path = "$build_file_dir/$target_name.info"
-}
-
-android_aar_prebuilt("android_support_v7_preference_java") {
-  deps = [
-    ":android_support_v4_java",
-    ":android_support_v7_appcompat_java",
-    ":android_support_v7_recyclerview_java",
-  ]
-  _lib_name = "preference-v7"
-  aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
-  info_path = "$build_file_dir/$target_name.info"
-}
-
-android_aar_prebuilt("android_support_v14_preference_java") {
-  deps = [
-    ":android_support_v4_java",
-    ":android_support_v7_appcompat_java",
-    ":android_support_v7_preference_java",
-    ":android_support_v7_recyclerview_java",
-  ]
-  _lib_name = "preference-v14"
-  aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
-  info_path = "$build_file_dir/$target_name.info"
-}
-
-android_aar_prebuilt("android_support_v17_leanback_java") {
-  deps = [
-    ":android_support_v4_java",
-    ":android_support_v7_recyclerview_java",
-  ]
-  _lib_name = "leanback-v17"
-  aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
-  info_path = "$build_file_dir/$target_name.info"
-}
-
-android_aar_prebuilt("android_support_v17_preference_java") {
-  deps = [
-    ":android_support_v14_preference_java",
-    ":android_support_v17_leanback_java",
-    ":android_support_v4_java",
-    ":android_support_v7_appcompat_java",
-    ":android_support_v7_preference_java",
-    ":android_support_v7_recyclerview_java",
-  ]
-  _lib_name = "preference-leanback-v17"
-  aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
-  info_path = "$build_file_dir/$target_name.info"
+  visibility = [ ":*" ]
 }
