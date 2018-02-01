@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af190fbf_0d27377c",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a926bf2e_464a9ee5",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3530db1f_e5983984",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "74bd03e1_7d50bead",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Sorry, I just read the code where the result\u003c0 is handled, and did not notice the document. Seems that returning failure is okay, but it is still being investigated(TODO in UploadDataStream::Read). I will follow the rule for now.",
+      "parentUuid": "3530db1f_e5983984",
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492c0160_961ef5fa",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127999ac_6815e5f5",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Yes. You give me the similar comments last time, and I checked this situation. According to my test, the NSInputStream will trigger another NSStreamEventHasBytesAvailable if the bytes in the stream is not read out. Besides, the NSInputStream will not trigger NSStreamEventEndEncountered until all bytes in the stream are read out.\n\nI add TEST_F(HttpTest, PostRequestWithLargeBodyStream) to cover the situation you mentioned. In the case, 100k bytes are written once into the stream, and I see many times of NSStreamEventHasBytesAvailable is triggered if I add some debug logs.\n\nTherefore, I think it is okay to use this simple way.",
+      "parentUuid": "492c0160_961ef5fa",
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a5701c74_0562a6ce",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "2a9edbbb_522801a9",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 22
+      },
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c5ae62f_ee21e67c",
         "filename": "ios/net/chunked_data_stream_uploader.h",
         "patchSetId": 8
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "bcedba16_61a81e8a",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c5ae62f_ee21e67c",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f6635e_03533aa5",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 8
@@ -119,6 +227,24 @@
       "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73bff8a_9fb4b90c",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f6635e_03533aa5",
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "352c496a_7cad8725",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c30c38_921fc3be",
+      "range": {
+        "startLine": 743,
+        "startChar": 6,
+        "endLine": 743,
+        "endChar": 10
+      },
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc320fc3_a0c0452e",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 8
@@ -165,6 +315,30 @@
       "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f31c00f_5221ed1b",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-01T07:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc320fc3_a0c0452e",
+      "range": {
+        "startLine": 744,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 47
+      },
+      "revId": "e0b3996f67b9c67baf1d8a9fd39127ced4f6580e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
