@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa70aaed_09301c4c",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T20:47:01Z",
+      "side": 1,
+      "message": "One issue your test cases below brought to mind: how does this handle overlapping keys in the maps? Perhaps we should detect duplicate keys and raise an MBErr on that?",
+      "revId": "0c48526c596f1377e2beb4aa18e59e3137f0164b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed951c0_3884dd48",
+        "filename": "tools/mb/mb_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T20:47:01Z",
+      "side": 1,
+      "message": "nits:\n\n  - make these \u0027type\u0027: \u0027raw\u0027 and remove the \u0027script\u0027\n  - make them two different targets.",
+      "revId": "0c48526c596f1377e2beb4aa18e59e3137f0164b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
