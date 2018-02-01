@@ -160,7 +160,7 @@ class FetcherClient {
   }
 
   void RunTest() {
-    fetcher_->Fetch("adapter name", callback_.callback());
+    fetcher_->Fetch("adapter name", callback_.callback(), NetLogWithSource());
   }
 
   void FinishTestAllowCleanup() {

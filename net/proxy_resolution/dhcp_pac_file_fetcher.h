@@ -10,10 +10,12 @@
 #include "base/strings/string16.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
-#include "net/proxy_resolution/pac_file_fetcher.h"
+#include "net/proxy/proxy_script_fetcher.h"
 #include "url/gurl.h"
 
 namespace net {
+
+class NetLogWithSource;
 
 // Interface for classes that can fetch a proxy script as configured via DHCP.
 //
@@ -57,7 +59,8 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcher {
   //
   // Only one fetch is allowed to be outstanding at a time.
   virtual int Fetch(base::string16* utf16_text,
-                    const CompletionCallback& callback) = 0;
+                    const CompletionCallback& callback,
+                    const NetLogWithSource& net_log) = 0;
 
   // Aborts the in-progress fetch (if any).
   virtual void Cancel() = 0;
@@ -91,7 +94,8 @@ class NET_EXPORT_PRIVATE DoNothingDhcpProxyScriptFetcher
   ~DoNothingDhcpProxyScriptFetcher() override;
 
   int Fetch(base::string16* utf16_text,
-            const CompletionCallback& callback) override;
+            const CompletionCallback& callback,
+            const NetLogWithSource& net_log) override;
   void Cancel() override;
   void OnShutdown() override;
   const GURL& GetPacURL() const override;
