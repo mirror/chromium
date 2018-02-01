@@ -543,28 +543,9 @@ TEST_F(WebMediaPlayerImplTest, ConstructAndDestroy) {
   EXPECT_FALSE(IsSuspended());
 }
 
-TEST_F(WebMediaPlayerImplTest, IdleSuspendBeforeLoadingBegins) {
-  InitializeWebMediaPlayerImpl();
-  EXPECT_FALSE(delegate_.ExpireForTesting());
-}
-
-TEST_F(WebMediaPlayerImplTest,
-       IdleSuspendIsDisabledIfLoadingProgressedRecently) {
-  InitializeWebMediaPlayerImpl();
-  base::SimpleTestTickClock clock;
-  clock.Advance(base::TimeDelta::FromSeconds(1));
-  SetTickClock(&clock);
-  AddBufferedRanges();
-  wmpi_->DidLoadingProgress();
-  // Advance less than the loading timeout.
-  clock.Advance(base::TimeDelta::FromSeconds(1));
-  EXPECT_FALSE(delegate_.ExpireForTesting());
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(IsSuspended());
-}
-
 TEST_F(WebMediaPlayerImplTest, IdleSuspendIsEnabledIfLoadingHasStalled) {
   InitializeWebMediaPlayerImpl();
+  SetReadyState(blink::WebMediaPlayer::kReadyStateHaveMetadata);
   SetNetworkState(blink::WebMediaPlayer::kNetworkStateLoading);
   base::SimpleTestTickClock clock;
   clock.Advance(base::TimeDelta::FromSeconds(1));
@@ -576,23 +557,6 @@ TEST_F(WebMediaPlayerImplTest, IdleSuspendIsEnabledIfLoadingHasStalled) {
   EXPECT_TRUE(delegate_.ExpireForTesting());
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(IsSuspended());
-}
-
-TEST_F(WebMediaPlayerImplTest, DidLoadingProgressTriggersResume) {
-  // Same setup as IdleSuspendIsEnabledBeforeLoadingBegins.
-  InitializeWebMediaPlayerImpl();
-  SetNetworkState(blink::WebMediaPlayer::kNetworkStateLoading);
-  EXPECT_TRUE(delegate_.ExpireForTesting());
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(IsSuspended());
-
-  // Like IdleSuspendIsDisabledIfLoadingProgressedRecently, the idle timeout
-  // should be rejected if it hasn't been long enough.
-  AddBufferedRanges();
-  wmpi_->DidLoadingProgress();
-  EXPECT_FALSE(delegate_.ExpireForTesting());
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(IsSuspended());
 }
 
 TEST_F(WebMediaPlayerImplTest, ComputePlayState_Constructed) {

@@ -430,15 +430,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // paused state after some idle timeout.
   void ScheduleIdlePauseTimer();
 
-  // Returns |true| before HaveFutureData whenever there has been loading
-  // progress and we have not been resumed for at least kLoadingToIdleTimeout
-  // since then.
-  //
-  // This is used to delay suspension long enough for preroll to complete, which
-  // is necessay because play() will not be called before HaveFutureData (and
-  // thus we think we are idle forever).
-  bool IsPrerollAttemptNeeded();
-
   void CreateWatchTimeReporter();
 
   void CreateVideoDecodeStatsReporter();
@@ -781,13 +772,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   // Elapsed time since we've last reached BUFFERING_HAVE_NOTHING.
   std::unique_ptr<base::ElapsedTimer> underflow_timer_;
-
-  // Used to track loading progress, used by IsPrerollAttemptNeeded().
-  // |preroll_attempt_pending_| indicates that the clock has been reset
-  // (awaiting a resume to start), while |preroll_attempt_start_time_| tracks
-  // when a preroll attempt began.
-  bool preroll_attempt_pending_;
-  base::TimeTicks preroll_attempt_start_time_;
 
   // Monitors the player events.
   base::WeakPtr<MediaObserver> observer_;
