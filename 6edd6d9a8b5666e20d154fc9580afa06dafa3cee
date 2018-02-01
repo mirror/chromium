@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9892eded_f5f76b90",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T18:52:11Z",
+      "side": 1,
+      "message": "Should this early out be at the top of the function?",
+      "range": {
+        "startLine": 648,
+        "startChar": 2,
+        "endLine": 651,
+        "endChar": 11
+      },
+      "revId": "6edd6d9a8b5666e20d154fc9580afa06dafa3cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40d08a2_980a54ba",
+        "filename": "ash/root_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T18:52:11Z",
+      "side": 1,
+      "message": "Confusingly we don\u0027t pass around TimeTicks as const ref (because it\u0027s a trivial data structure).",
+      "range": {
+        "startLine": 286,
+        "startChar": 32,
+        "endLine": 286,
+        "endChar": 41
+      },
+      "revId": "6edd6d9a8b5666e20d154fc9580afa06dafa3cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
