@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "781261a0_ad8d7f7b",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:39:43Z",
+      "side": 1,
+      "message": "Please better describe what this is used for. In particular it\u0027s useful for tests to configure on-disk prefs in a particular state for tests.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7aa687_cd3b2491",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:39:43Z",
+      "side": 1,
+      "message": "I would be inclined to have a single function that does the setup and returns the path. Empty path means failure.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e91d03_10b3b624",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:39:43Z",
+      "side": 1,
+      "message": "no need for virtual here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f6c1ba_ab87fc71",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:39:43Z",
+      "side": 1,
+      "message": "trivial getters like this are usually inlined and in unix_hacker_style. That is, \nconst base::FilePath\u0026 local_state_path() const { return local_state_path_; }",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
