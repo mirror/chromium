@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47dac944_d8bf04f6",
+        "filename": "services/network/public/cpp/resource_response_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-01T18:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f7b70a_f17a6d1e",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07018f96_35df9cd8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b2482d5e_5c461250",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-01T18:46:26Z",
+      "side": 1,
+      "message": "Done (the latter)",
+      "parentUuid": "07018f96_35df9cd8",
+      "range": {
+        "startLine": 254,
+        "startChar": 38,
+        "endLine": 254,
+        "endChar": 56
+      },
+      "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ea56ca_8b444f13",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcd7c80_5733732e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-01T18:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32ea56ca_8b444f13",
+      "revId": "9c4d05bd8134565187f6c5fb7e6ee68993b0c4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
