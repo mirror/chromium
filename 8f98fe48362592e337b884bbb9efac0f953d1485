@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "547f35c0_6f29377e",
+        "filename": "content/browser/loader/signed_exchange_header_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-01T07:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b138b8_ca9dd758",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "8f98fe48362592e337b884bbb9efac0f953d1485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb609c74_c835b049",
         "filename": "content/browser/loader/signed_exchange_header_parser.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "8f98fe48362592e337b884bbb9efac0f953d1485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ef8e0f_d2d2a801",
+        "filename": "content/browser/loader/signed_exchange_header_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-01T07:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb609c74_c835b049",
+      "revId": "8f98fe48362592e337b884bbb9efac0f953d1485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fe2f8ecd_d05aa649",
+        "filename": "content/browser/loader/signed_exchange_header_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-01T07:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28636a2a_9face319",
+      "revId": "8f98fe48362592e337b884bbb9efac0f953d1485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b5a805_f5e4873c",
         "filename": "content/test/BUILD.gn",
         "patchSetId": 4
@@ -70,6 +130,30 @@
       "writtenOn": "2018-02-01T04:35:45Z",
       "side": 1,
       "message": "Would you also add a fuzzer for this?\nSomething like:\nhttps://cs.chromium.org/chromium/src/base/base64_decode_fuzzer.cc?type\u003dcs\u0026sq\u003dpackage:chromium",
+      "range": {
+        "startLine": 1317,
+        "startChar": 16,
+        "endLine": 1317,
+        "endChar": 22
+      },
+      "revId": "8f98fe48362592e337b884bbb9efac0f953d1485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b3acca_8354188b",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1317,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-01T07:49:25Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "38b5a805_f5e4873c",
       "range": {
         "startLine": 1317,
         "startChar": 16,
