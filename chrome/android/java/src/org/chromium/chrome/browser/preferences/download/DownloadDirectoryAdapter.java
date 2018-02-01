@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.download.DownloadLocationDialogBridge;
 import org.chromium.chrome.browser.download.ui.DownloadFilter;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -59,10 +60,12 @@ public class DownloadDirectoryAdapter extends BaseAdapter implements View.OnClic
     private List<DownloadDirectoryOption> mAdditionalDirectoryOptions = new ArrayList<>();
 
     private int mSelectedView;
+    private boolean mFromDialog;
 
-    public DownloadDirectoryAdapter(Context context) {
+    DownloadDirectoryAdapter(Context context, boolean fromDialog) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
+        mFromDialog = fromDialog;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mCanonicalDirectoryPairs.add(
@@ -232,6 +235,7 @@ public class DownloadDirectoryAdapter extends BaseAdapter implements View.OnClic
         PrefServiceBridge.getInstance().setDownloadAndSaveFileDefaultDirectory(
                 directoryOption.mLocation.getAbsolutePath());
         updateSelectedView(view);
+        if (mFromDialog) updateAlertDialog(directoryOption.mLocation);
     }
 
     private void updateSelectedView(View newSelectedView) {
@@ -241,5 +245,11 @@ public class DownloadDirectoryAdapter extends BaseAdapter implements View.OnClic
 
         styleViewSelectionAndIcons(newSelectedView, true);
         mSelectedView = (int) newSelectedView.getTag();
+    }
+
+    private void updateAlertDialog(File location) {
+        DownloadLocationDialogBridge bridge = DownloadLocationDialogBridge.getInstance();
+        if (bridge == null) return;
+        bridge.updateFileLocation(location);
     }
 }

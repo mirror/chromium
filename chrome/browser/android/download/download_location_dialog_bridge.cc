@@ -6,6 +6,7 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "chrome/browser/android/download/download_manager_service.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/DownloadLocationDialogBridge_jni.h"
 
@@ -24,9 +25,14 @@ DownloadLocationDialogBridge::~DownloadLocationDialogBridge() {
 }
 
 void DownloadLocationDialogBridge::ShowDialog(
-    content::WebContents* web_contents,
+    content::DownloadItem* download,
     const base::FilePath& suggested_path,
     const DownloadTargetDeterminerDelegate::ConfirmationCallback& callback) {
+  content::WebContents* web_contents = download->GetWebContents();
+  if (!web_contents) {
+    return;
+  }
+
   // If dialog is showing, run the callback to continue without confirmation.
   if (is_dialog_showing_) {
     if (!callback.is_null()) {
@@ -38,6 +44,7 @@ void DownloadLocationDialogBridge::ShowDialog(
 
   is_dialog_showing_ = true;
   dialog_complete_callback_ = callback;
+  download_ = download;
 
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_DownloadLocationDialogBridge_showDialog(
@@ -59,5 +66,22 @@ void DownloadLocationDialogBridge::OnComplete(
              base::FilePath(FILE_PATH_LITERAL(path_string)));
   }
 
+  download_ = nullptr;
+  is_dialog_showing_ = false;
+}
+
+void DownloadLocationDialogBridge::OnCanceled(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  // TODO(jming): Figure out why there's a snackbar that says "download
+  // prevented because file already exists."
+  if (!dialog_complete_callback_.is_null()) {
+    DownloadManagerService::OnDownloadCanceled(
+        download_, DownloadController::CANCEL_REASON_ACTION_BUTTON);
+    base::ResetAndReturn(&dialog_complete_callback_)
+        .Run(DownloadConfirmationResult::CANCELED, base::FilePath());
+  }
+
+  download_ = nullptr;
   is_dialog_showing_ = false;
 }

@@ -10,11 +10,8 @@
 #include "base/callback.h"
 #include "chrome/browser/download/download_confirmation_result.h"
 #include "chrome/browser/download/download_target_determiner_delegate.h"
+#include "content/public/browser/download_item.h"
 #include "ui/gfx/native_widget_types.h"
-
-namespace content {
-class WebContents;
-}  // namespace content
 
 class DownloadLocationDialogBridge {
  public:
@@ -22,7 +19,7 @@ class DownloadLocationDialogBridge {
   ~DownloadLocationDialogBridge();
 
   void ShowDialog(
-      content::WebContents* web_contents,
+      content::DownloadItem* download,
       const base::FilePath& suggested_path,
       const DownloadTargetDeterminerDelegate::ConfirmationCallback& callback);
 
@@ -30,11 +27,14 @@ class DownloadLocationDialogBridge {
                   const base::android::JavaParamRef<jobject>& obj,
                   const base::android::JavaParamRef<jstring>& returned_path);
 
+  void OnCanceled(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
+
  private:
   jboolean is_dialog_showing_;
   base::android::ScopedJavaGlobalRef<jobject> java_obj_;
   DownloadTargetDeterminerDelegate::ConfirmationCallback
       dialog_complete_callback_;
+  content::DownloadItem* download_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadLocationDialogBridge);
 };

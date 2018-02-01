@@ -11,21 +11,41 @@ import org.chromium.content_public.browser.WebContents;
 
 import java.io.File;
 
+import javax.annotation.Nullable;
+
 /**
  * Helper class to handle communication between download location dialog and native.
  */
 public class DownloadLocationDialogBridge
         implements DownloadLocationDialog.DownloadLocationDialogListener {
+    private static DownloadLocationDialogBridge sInstance;
+
     private long mNativeDownloadLocationDialogBridge;
     private DownloadLocationDialog mLocationDialog;
+
+    @Nullable
+    public static DownloadLocationDialogBridge getInstance() {
+        return sInstance;
+    }
 
     private DownloadLocationDialogBridge(long nativeDownloadLocationDialogBridge) {
         mNativeDownloadLocationDialogBridge = nativeDownloadLocationDialogBridge;
     }
 
+    /**
+     * Update the file location that is displayed on the alert dialog.
+     *
+     * @param newLocation Where the user wants to download the file.
+     */
+    public void updateFileLocation(File newLocation) {
+        if (mLocationDialog == null) return;
+        mLocationDialog.setFileLocation(newLocation);
+    }
+
     @CalledByNative
     public static DownloadLocationDialogBridge create(long nativeDownloadLocationDialogBridge) {
-        return new DownloadLocationDialogBridge(nativeDownloadLocationDialogBridge);
+        sInstance = new DownloadLocationDialogBridge(nativeDownloadLocationDialogBridge);
+        return sInstance;
     }
 
     @CalledByNative
@@ -53,6 +73,15 @@ public class DownloadLocationDialogBridge
         mLocationDialog = null;
     }
 
+    @Override
+    public void onCanceled() {
+        if (mNativeDownloadLocationDialogBridge == 0) return;
+
+        nativeOnCanceled(mNativeDownloadLocationDialogBridge);
+        mLocationDialog = null;
+    }
+
     public native void nativeOnComplete(
             long nativeDownloadLocationDialogBridge, String returnedPath);
+    public native void nativeOnCanceled(long nativeDownloadLocationDialogBridge);
 }

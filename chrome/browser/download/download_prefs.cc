@@ -228,7 +228,7 @@ void DownloadPrefs::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kOpenPdfDownloadInSystemReader, false);
 #endif
 #if defined(OS_ANDROID)
-  registry->RegisterBooleanPref(prefs::kPromptForDownloadAndroid, false);
+  registry->RegisterBooleanPref(prefs::kPromptForDownloadAndroid, true);
 #endif
 }
 
