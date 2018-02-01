@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6d2df82_2e2ae40f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T20:00:30Z",
+      "side": 1,
+      "message": "Here \"frame\" means \"web frame\", for example main frame or an iframe.",
+      "parentUuid": "b894b62f_1b89ec9a",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91432324_b1e90c20",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-01T18:44:50Z",
       "side": 1,
       "message": "I\u0027m not sure this CL changes the task runner that\u0027s being used. It just avoids changes how the task runner is passed to the class (through the constructor instead of ThreadTaskRunnerHandle).",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70122e8f_f41ffff2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T20:00:30Z",
+      "side": 1,
+      "message": "This CL makes the code use the task_runner_, which originates here [1] and is associated with a particular Document (i.e. a frame). ThreadTaskRunnerHandle returns a reference to a process-wide default task runner, which is bad for scheduling.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp?type\u003dcs\u0026l\u003d556",
+      "parentUuid": "91432324_b1e90c20",
       "range": {
         "startLine": 10,
         "startChar": 37,
