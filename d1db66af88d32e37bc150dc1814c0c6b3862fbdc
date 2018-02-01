@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec8accd_1b0ad7dd",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T20:26:49Z",
+      "side": 1,
+      "message": "Umm, this doesn\u0027t make a whole lot of sense to me either. Non-global SynchronousCompositor objects are all pretty much owned by a \"widget\".\n\nBut there can be many frames that correspond to the same widget. So having Frame show up here doesn\u0027t make sense to me. Eg is this going to be called every time a new frame is created? I think it might make more sense to bind only on the first InitForFrame?\n\nMaybe I\u0027m not understanding the input mojo pipe here, is that one per frame or per widget?",
+      "revId": "d1db66af88d32e37bc150dc1814c0c6b3862fbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec39356_10055faf",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T20:26:49Z",
+      "side": 1,
+      "message": "this should only be updated by browser?",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 26
+      },
+      "revId": "d1db66af88d32e37bc150dc1814c0c6b3862fbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
