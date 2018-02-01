@@ -391,6 +391,11 @@ void TouchSelectionController::OnDragUpdate(
     client_->MoveCaret(line_position);
   else
     client_->MoveRangeSelectionExtent(line_position);
+  gfx::PointF middle = GetActiveHandleBoundPoint();
+  // We use the bound middle point to restrict the ability to move up and down,
+  // but let user move it more freely in horizontal direction.
+  if (&draggable != &longpress_drag_selector_)
+    client_->OnDragUpdate(gfx::PointF(drag_position.x(), middle.y()));
 }
 
 void TouchSelectionController::OnDragEnd(
