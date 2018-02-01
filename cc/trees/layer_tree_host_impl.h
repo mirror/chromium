@@ -370,7 +370,7 @@ class CC_EXPORT LayerTreeHostImpl
   std::unique_ptr<EvictionTilePriorityQueue> BuildEvictionQueue(
       TreePriority tree_priority) override;
   void SetIsLikelyToRequireADraw(bool is_likely_to_require_a_draw) override;
-  gfx::ColorSpace GetRasterColorSpace() const override;
+  RasterColorSpace GetRasterColorSpace() const override;
   void RequestImplSideInvalidationForCheckerImagedTiles() override;
   size_t GetFrameIndexForImage(const PaintImage& paint_image,
                                WhichTree tree) const override;
@@ -974,6 +974,9 @@ class CC_EXPORT LayerTreeHostImpl
   // If non-zero identifies the presentation-token added to the last CF. Reset
   // to zero when no more presentation tokens are in flight.
   uint32_t last_presentation_token_ = 0u;
+
+  const int default_color_space_id_;
+  const gfx::ColorSpace default_color_space_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHostImpl);
 };

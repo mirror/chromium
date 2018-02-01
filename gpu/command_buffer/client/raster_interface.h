@@ -12,6 +12,7 @@
 namespace cc {
 class DisplayItemList;
 class ImageProvider;
+struct RasterColorSpace;
 }  // namespace cc
 
 namespace gfx {
@@ -141,12 +142,14 @@ class RasterInterface {
   virtual bool LockDiscardableTextureCHROMIUM(GLuint texture_id) = 0;
 
   // OOP-Raster
-  virtual void BeginRasterCHROMIUM(GLuint texture_id,
-                                   GLuint sk_color,
-                                   GLuint msaa_sample_count,
-                                   GLboolean can_use_lcd_text,
-                                   GLboolean use_distance_field_text,
-                                   GLint pixel_config) = 0;
+  virtual void BeginRasterCHROMIUM(
+      GLuint texture_id,
+      GLuint sk_color,
+      GLuint msaa_sample_count,
+      GLboolean can_use_lcd_text,
+      GLboolean use_distance_field_text,
+      GLint pixel_config,
+      const cc::RasterColorSpace& raster_color_space) = 0;
   virtual void RasterCHROMIUM(const cc::DisplayItemList* list,
                               cc::ImageProvider* provider,
                               const gfx::Vector2d& translate,
