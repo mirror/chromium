@@ -31,7 +31,8 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
     public static final long BASE_ANIMATION_DURATION_MS = 218;
 
     /** For detecting scroll and fling events on the bottom sheet. */
-    private final GestureDetector mGestureDetector;
+    private GestureDetector mGestureDetector;
+    private final Context mContext;
 
     /** An interface for retrieving information from a bottom sheet. */
     private final SwipeableBottomSheet mSheetDelegate;
@@ -175,9 +176,7 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
      * @param delegate A SwipeableBottomSheet that processes swipes.
      */
     public BottomSheetSwipeDetector(Context context, SwipeableBottomSheet delegate) {
-        mGestureDetector = new GestureDetector(context, new SwipeGestureListener());
-        mGestureDetector.setIsLongpressEnabled(false);
-
+        mContext = context;
         mSheetDelegate = delegate;
         mVelocityTracker = VelocityTracker.obtain();
     }
@@ -191,6 +190,10 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
         // The incoming motion event may have been adjusted by the view sending it down. Create a
         // motion event with the raw (x, y) coordinates of the original so the gesture detector
         // functions properly.
+        if (mGestureDetector == null) {
+            mGestureDetector = new GestureDetector(mContext, new SwipeGestureListener());
+            mGestureDetector.setIsLongpressEnabled(false);
+        }
         mGestureDetector.onTouchEvent(createRawMotionEvent(e));
 
         return mIsScrolling;
@@ -204,7 +207,7 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
     public boolean onTouchEvent(MotionEvent e) {
         // The down event is interpreted above in onInterceptTouchEvent, it does not need to be
         // interpreted a second time.
-        if (e.getActionMasked() != MotionEvent.ACTION_DOWN) {
+        if (e.getActionMasked() != MotionEvent.ACTION_DOWN && mGestureDetector != null) {
             mGestureDetector.onTouchEvent(createRawMotionEvent(e));
         }
 

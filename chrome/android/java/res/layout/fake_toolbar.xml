@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fake_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height_no_shadow"
+        android:layout_gravity="top|end"
+        android:background="@color/default_primary_color">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingStart="14dp"
+
+            android:background="@drawable/card_single"
+
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textSize="@dimen/location_bar_url_text_size"
+            android:hint="@string/starting"/>
+
+        <ImageView
+            style="@style/ToolbarButton"
+            android:src="@drawable/btn_tabswitcher"
+            android:contentDescription="@null"/>
+
+        <ImageView
+            style="@style/ToolbarMenuButtonPhone"
+            android:src="@drawable/ic_more_vert_black_24dp"
+            android:contentDescription="@null"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/toolbar_shadow_normal"/>
+
+</LinearLayout>
+
+

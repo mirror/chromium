@@ -5154,6 +5154,11 @@ Keep your key file in a safe place. You will need it to create new versions of y
           Search or type URL
         </message>
       </if>
+      <if expr="is_android">
+        <message name="IDS_STARTING" desc="Hint that Chrome is starting. [CHAR-LIMIT=38]" formatter_data="android_java">
+          Starting...
+        </message>
+      </if>
 
       <!--Tooltip strings-->
       <message name="IDS_TOOLTIP_BACK" desc="The tooltip for back button">
