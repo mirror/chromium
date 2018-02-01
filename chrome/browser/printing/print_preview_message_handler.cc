@@ -31,10 +31,10 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
-#include "printing/common/pdf_metafile_utils.h"
 #include "printing/page_size_margins.h"
 #include "printing/print_job_constants.h"
 #include "printing/print_settings.h"
+#include "printing/printing_utils.h"
 
 using content::BrowserThread;
 using content::WebContents;
@@ -150,7 +150,8 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
         GenFrameGuid(render_frame_host->GetProcess()->GetID(),
                      render_frame_host->GetRoutingID()),
         params.page_number, content.metafile_data_handle, content.data_size,
-        ContentToFrameMap(),
+        PrintCompositeClient::ConvertContentInfoMap(
+            web_contents(), render_frame_host, content.subframe_content_info),
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfPageDone,
                        weak_ptr_factory_.GetWeakPtr(), params.page_number,
                        params.preview_request_id));
@@ -185,7 +186,9 @@ void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
         params.document_cookie,
         GenFrameGuid(render_frame_host->GetProcess()->GetID(),
                      render_frame_host->GetRoutingID()),
-        content.metafile_data_handle, content.data_size, ContentToFrameMap(),
+        content.metafile_data_handle, content.data_size,
+        PrintCompositeClient::ConvertContentInfoMap(
+            web_contents(), render_frame_host, content.subframe_content_info),
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfDocumentDone,
                        weak_ptr_factory_.GetWeakPtr(),
                        params.expected_pages_count, params.preview_request_id));
