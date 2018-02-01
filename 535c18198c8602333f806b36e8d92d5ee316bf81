@@ -16,6 +16,24 @@
       "revId": "535c18198c8602333f806b36e8d92d5ee316bf81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23742ee3_a983b040",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T13:01:53Z",
+      "side": 1,
+      "message": "Latest PS features ctor + type parameter. PTAL",
+      "parentUuid": "73a3d0a9_82825abb",
+      "revId": "535c18198c8602333f806b36e8d92d5ee316bf81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
