@@ -16,6 +16,24 @@
       "revId": "52fc70f4dafc7fdc7fc79fcf5f0290cef0b64654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c96ff6_5d2e11be",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/braille_command_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-01T21:01:35Z",
+      "side": 1,
+      "message": "Good question. ChromeVox uses pre order traversal which is not exactly what we want here for forward navigation:\nvar textFieldNode \u003d ...;\ntextFieldNode.firstChild; // the next node in forward direction\n\nInstead, we want the next node but skipping |textFieldNode|\u0027s subtree.\n\nBut, the previous node in pre order traversal is what we want here, so no special casing necessary. I removed \nmoveToBeforeEditText\nto avoid the confusion.",
+      "parentUuid": "a3dabd26_d59f7201",
+      "revId": "52fc70f4dafc7fdc7fc79fcf5f0290cef0b64654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
