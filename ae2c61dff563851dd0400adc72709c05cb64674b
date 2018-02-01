@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b627e58e_d4567735",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99db99ee_e1106c06",
+      "range": {
+        "startLine": 41,
+        "startChar": 57,
+        "endLine": 41,
+        "endChar": 62
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ed19865_d138c2f7",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5c35f0_c4516360",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Done.  I like this change / line of argumentation (i.e. how the new text explicitly says that XSDB should not worry about mislabeled nosniff responses).",
+      "parentUuid": "6ed19865_d138c2f7",
+      "range": {
+        "startLine": 47,
+        "startChar": 61,
+        "endLine": 47,
+        "endChar": 73
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "717c1537_f980d9e7",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Great question that had me worried for a minute or two :-)\n\nAFAICT even without XSDB, Set-Cookie headers are not delivered to a renderer - see the repro steps below.  If there are other concerns, we can discuss on a restricted bug I\u0027ve opened here: https://crbug.com/808205.\n\nRepro steps:\n\n0. Add printf-style debugging to ResourceDispatcher::OnReceivedResponse in the renderer code\n1. Navigate to http://web.evilbit.io/simple.html\n2. Open DevTools\n3. var img \u003d document.createElement(\u0027img\u0027);\n4. img.src \u003d \u0027https://www.chromium.org/\u0027;  // Yes - same-origin.\n5. Observe what happens 1) in DevTools/Network tab, 2) in the renderer\n\nResult from DevTools:\n\nHTTP/1.1 200 OK\nDate: Thu, 01 Feb 2018 22:33:07 GMT\nServer: Apache\nSet-Cookie: no\u003dtrue; path\u003d/cookies\nSet-Cookie: normal\u003dtrue; path\u003d/cookies; HttpOnly\nSet-Cookie: lax\u003dtrue; path\u003d/cookies; samesite\u003dLax; HttpOnly\nSet-Cookie: strict\u003dtrue; path\u003d/cookies; samesite\u003dStrict; HttpOnly\nVary: Accept-Encoding\nContent-Encoding: gzip\nContent-Length: 20\nKeep-Alive: timeout\u003d2, max\u003d100\nConnection: Keep-Alive\nContent-Type: text/html; charset\u003dUTF-8\n\nResult from the renderer:\n[1:1:0201/142537.015594:ERROR:resource_dispatcher.cc(144)] ResourceDispatcher::OnReceivedResponse; raw_headers() \u003d HTTP/1.1 200 OKDate: Thu, 01 Feb 2018 22:25:36 GMTServer: ApacheVary: Accept-EncodingContent-Encoding: gzipContent-Length: 20Keep-Alive: timeout\u003d2, max\u003d100Connection: Keep-AliveContent-Type: text/html; charset\u003dUTF-8\n[1:1:0201/142537.015805:ERROR:resource_dispatcher.cc(146)] ResourceDispatcher::OnReceivedResponse - header list - START\n[1:1:0201/142537.015907:ERROR:resource_dispatcher.cc(151)] ; it \u003d 1; name \u003d Date; value \u003d Thu, 01 Feb 2018 22:25:36 GMT\n[1:1:0201/142537.015999:ERROR:resource_dispatcher.cc(151)] ; it \u003d 2; name \u003d Server; value \u003d Apache\n[1:1:0201/142537.016097:ERROR:resource_dispatcher.cc(151)] ; it \u003d 3; name \u003d Vary; value \u003d Accept-Encoding\n[1:1:0201/142537.016201:ERROR:resource_dispatcher.cc(151)] ; it \u003d 4; name \u003d Content-Encoding; value \u003d gzip\n[1:1:0201/142537.016287:ERROR:resource_dispatcher.cc(151)] ; it \u003d 5; name \u003d Content-Length; value \u003d 20\n[1:1:0201/142537.016364:ERROR:resource_dispatcher.cc(151)] ; it \u003d 7; name \u003d Keep-Alive; value \u003d timeout\u003d2, max\u003d100\n[1:1:0201/142537.016439:ERROR:resource_dispatcher.cc(151)] ; it \u003d 8; name \u003d Connection; value \u003d Keep-Alive\n[1:1:0201/142537.016526:ERROR:resource_dispatcher.cc(151)] ; it \u003d 9; name \u003d Content-Type; value \u003d text/html; charset\u003dUTF-8\n[1:1:0201/142537.016595:ERROR:resource_dispatcher.cc(154)] ResourceDispatcher::OnReceivedResponse - header list - END",
+      "parentUuid": "fe430280_9625d969",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0608e56_c62fd070",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b1aa55_7da6e97e",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Thanks for catching this.  Yes - I meant application/javascript.  Done.",
+      "parentUuid": "a0608e56_c62fd070",
+      "range": {
+        "startLine": 154,
+        "startChar": 37,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "052f6e7e_b6a95c01",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a1e25a_2bb582c7",
+      "range": {
+        "startLine": 169,
+        "startChar": 34,
+        "endLine": 169,
+        "endChar": 45
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c255b873_d27e0465",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aab19de_2f9a0879",
+      "range": {
+        "startLine": 169,
+        "startChar": 34,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b2b6a36_14bc1b52",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c326e083_c504fba0",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T23:08:52Z",
+      "side": 1,
+      "message": "Good point - this should also be mentioned here.  Done",
+      "parentUuid": "0b2b6a36_14bc1b52",
+      "range": {
+        "startLine": 228,
+        "startChar": 61,
+        "endLine": 228,
+        "endChar": 62
+      },
+      "revId": "ae2c61dff563851dd0400adc72709c05cb64674b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
