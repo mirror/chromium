@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8824473d_82a7fe69",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-02-01T22:55:07Z",
+      "side": 1,
+      "message": "I can do that.  My reasoning for doing it in one is just a matter of approvers; each touch of the API means I have to get approval from everyone owning a callsite as well, which is typically slow, so I\u0027m trying to avoid having to do 2 rounds of that.\n\nLet me know what you want here and I\u0027ll do it.",
+      "parentUuid": "eab95d1a_704d34c4",
+      "range": {
+        "startLine": 203,
+        "startChar": 65,
+        "endLine": 203,
+        "endChar": 77
+      },
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1c714d2_06c8c66d",
         "filename": "chrome/browser/devtools/device/cast_device_provider.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b945e444_e0138b04",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-02-01T22:55:07Z",
+      "side": 1,
+      "message": "I wish I knew the answer to this question.  However, the underlying layers that end up triggering this are not easy to understand (to the point that I\u0027m still not completely clear on what the appropriate expectations are for a user of this API hook; the existing users do different things, and I\u0027m reasonably sure some of them are just incorrect).  If I can get canonical answers to these sorts of questions, I\u0027d love to add some comments to the API to help clarify it for future users.\n\nPractically speaking, I believe it\u0027s likely the case that the types of events that cause a cache flush (network change, usually) will not be service-type specific; if we flush one type, we\u0027ll want to flush all service types.\n\nHowever, I\u0027m not sure this is the case 100% of the time, and, even if it is, I see no elegant way of expressing that sort of \"here\u0027s an action common to all extant lister delegates\" in the API without a more substantial refactor.  There is no notion of a \"master\" lister to trigger a global cache flush, and I don\u0027t see much utility in telling each individual lister \"all caches need to be flushed\".\n\nProbably the right way to do that would be to modify the ServiceDiscoveryDeviceLister API to take multiple service types and list them all.  I\u0027d rather not undertake that large a refactor right now.",
+      "parentUuid": "e1c714d2_06c8c66d",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69fc09d1_fbebb91b",
         "filename": "chrome/browser/local_discovery/service_discovery_device_lister.h",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2018-02-01T21:50:37Z",
       "side": 1,
       "message": "If there is 1 delegate per 1 service_type, then there is no need for service_type here (since it must be the same as during Create).\n\nIf there is 1 delegate per multiple service_types, then it might be a good idea to add service_type to all delegate function, so delegate code may track this.",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8d4fae_4058b3b4",
+        "filename": "chrome/browser/local_discovery/service_discovery_device_lister.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-02-01T22:55:07Z",
+      "side": 1,
+      "message": "I\u0027m targeting the latter use case -- 1 delegate managing multiple types.\n\nI went back and forth on adding type to the other hooks.  Happy to add it, but the reason I didn\u0027t is that the information is already encoded in the existing arguments for the other Delegate callbacks in relatively easy-to-extract methods.  In the case of OnDeviceChanged it\u0027s available as service_description.service_type().  In the case of OnDeviceRemoved, it\u0027s slightly more complicated, but can be extracted from service_name, which is just \"$service_type.$instance_name\"\n\nWhat would you think about changing OnDeviceRemoved to use (service_type, instance_name) as arguments instead of (service_type, service_name), and leaving OnDeviceChanged as-is?  That makes service_type easily available in all hooks, and it\u0027s easier to construct service_name from the combination of type and instance than it is to do the reverse.",
+      "parentUuid": "69fc09d1_fbebb91b",
       "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
