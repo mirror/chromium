@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6079a8f_181b50e7",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d29b9d_8b0257a1",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4978a0f_52bd6a53",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "53fb9fa8_e6d54f0f",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4978a0f_52bd6a53",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "586185be_5d102954",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74317a3_cd949671",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Yes, perfect. I didn\u0027t know that this method exists. Done",
+      "parentUuid": "586185be_5d102954",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb62e99c_df6a653f",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b924b6_8d4ecd2c",
+      "range": {
+        "startLine": 82,
+        "startChar": 28,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "681a4608_ae8d1856",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b7435c_2bb63f59",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8508812a_7b33308a",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 5
@@ -146,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "a9f91263_7f9123ca",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Yes, I agree with Mihai. The fetching part shouldn\u0027t be in here.",
+      "parentUuid": "31a1c157_92b3e0da",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93be543_f6ea2dbf",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 5
@@ -163,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "4a2fb6b1_0755ef98",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b93be543_f6ea2dbf",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "576066e1_7aaf8791",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 5
@@ -177,6 +309,24 @@
       "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23db50e4_32d93105",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-01T13:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576066e1_7aaf8791",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
