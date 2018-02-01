@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3ec1f8fa_13057833",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T20:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ebfac4e_311c0393",
+      "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18bc4cf2_69374e0c",
         "filename": "ash/metrics/user_metrics_recorder.cc",
         "patchSetId": 2
