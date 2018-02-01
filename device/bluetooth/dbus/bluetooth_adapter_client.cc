@@ -200,6 +200,48 @@ class BluetoothAdapterClientImpl : public BluetoothAdapterClient,
         object_path, bluetooth_adapter::kBluetoothAdapterInterface));
   }
 
+  void ResumeDiscovery(const dbus::ObjectPath& object_path,
+                       const base::Closure& callback,
+                       const ErrorCallback& error_callback) override {
+    dbus::MethodCall method_call(bluetooth_adapter::kBluetoothAdapterInterface,
+                                 bluetooth_adapter::kResumeDiscovery);
+
+    dbus::ObjectProxy* object_proxy =
+        object_manager_->GetObjectProxy(object_path);
+    if (!object_proxy) {
+      error_callback.Run(kUnknownAdapterError, "");
+      return;
+    }
+
+    object_proxy->CallMethodWithErrorCallback(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::Bind(&BluetoothAdapterClientImpl::OnSuccess,
+                   weak_ptr_factory_.GetWeakPtr(), callback),
+        base::Bind(&BluetoothAdapterClientImpl::OnError,
+                   weak_ptr_factory_.GetWeakPtr(), error_callback));
+  }
+
+  void SuspendDiscovery(const dbus::ObjectPath& object_path,
+                        const base::Closure& callback,
+                        const ErrorCallback& error_callback) override {
+    dbus::MethodCall method_call(bluetooth_adapter::kBluetoothAdapterInterface,
+                                 bluetooth_adapter::kSuspendDiscovery);
+
+    dbus::ObjectProxy* object_proxy =
+        object_manager_->GetObjectProxy(object_path);
+    if (!object_proxy) {
+      error_callback.Run(kUnknownAdapterError, "");
+      return;
+    }
+
+    object_proxy->CallMethodWithErrorCallback(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::Bind(&BluetoothAdapterClientImpl::OnSuccess,
+                   weak_ptr_factory_.GetWeakPtr(), callback),
+        base::Bind(&BluetoothAdapterClientImpl::OnError,
+                   weak_ptr_factory_.GetWeakPtr(), error_callback));
+  }
+
   // BluetoothAdapterClient override.
   void StartDiscovery(const dbus::ObjectPath& object_path,
                       const base::Closure& callback,
