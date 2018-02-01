@@ -52,6 +52,24 @@
       "revId": "0cb3d9f0a379f5d477b5fb8008d6af6889475d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82d8352_57acb83b",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-01T17:57:34Z",
+      "side": 1,
+      "message": "Because we want to use the SafeBrowsing URLLoaderThrottle when kNavigationMojoResponse is enabled (assuming kS13nSafeBrowsingCheckByURLLoaderThrottle is also on), the request is needed to be passed to the throttles. I have changed the code to also init |new_request| when kNavigationMojoResponse is enabled.\n\nThanks!",
+      "parentUuid": "ec314fe2_d3b2c183",
+      "revId": "0cb3d9f0a379f5d477b5fb8008d6af6889475d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
