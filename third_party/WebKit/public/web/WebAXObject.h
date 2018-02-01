@@ -220,7 +220,8 @@ class WebAXObject {
                               WebAXTextAffinity& anchor_affinity,
                               WebAXObject& focus_object,
                               int& focus_offset,
-                              WebAXTextAffinity& focus_affinity) const;
+                              WebAXTextAffinity& focus_affinity,
+                              WebAXTextGranularity&) const;
 
   // The following selection functions return text offsets calculated starting
   // the current object. They only report on a selection that is placed on

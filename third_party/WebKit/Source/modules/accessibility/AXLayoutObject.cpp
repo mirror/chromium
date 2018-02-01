@@ -1783,11 +1783,9 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   if (!GetLayoutObject() || !GetLayoutObject()->GetFrame())
     return AXRange();
 
+  FrameSelection& frame_selection = GetLayoutObject()->GetFrame()->Selection();
   VisibleSelection selection =
-      GetLayoutObject()
-          ->GetFrame()
-          ->Selection()
-          .ComputeVisibleSelectionInDOMTreeDeprecated();
+      frame_selection.ComputeVisibleSelectionInDOMTreeDeprecated();
   if (selection.IsNone())
     return AXRange();
 
@@ -1816,8 +1814,13 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   int anchor_offset = anchor_object->IndexForVisiblePosition(visible_start);
   DCHECK_GE(anchor_offset, 0);
   if (selection.IsCaret()) {
-    return AXRange(anchor_object, anchor_offset, start_affinity, anchor_object,
-                   anchor_offset, start_affinity);
+    return AXRange{anchor_object,
+                   anchor_offset,
+                   start_affinity,
+                   anchor_object,  /* focus_object */
+                   anchor_offset,  /* focus_offset */
+                   start_affinity, /* focus_affinity */
+                   frame_selection.Granularity()};
   }
 
   VisiblePosition visible_end = selection.VisibleEnd();
@@ -1840,8 +1843,13 @@ AXObject::AXRange AXLayoutObject::Selection() const {
     return AXRange();
   int focus_offset = focus_object->IndexForVisiblePosition(visible_end);
   DCHECK_GE(focus_offset, 0);
-  return AXRange(anchor_object, anchor_offset, start_affinity, focus_object,
-                 focus_offset, end_affinity);
+  return AXRange{anchor_object,
+                 anchor_offset,
+                 start_affinity,
+                 focus_object,
+                 focus_offset,
+                 end_affinity,
+                 frame_selection.Granularity()};
 }
 
 // Gets only the start and end offsets of the selection computed using the
@@ -1877,8 +1885,10 @@ AXObject::AXRange AXLayoutObject::SelectionUnderObject() const {
   DCHECK_GE(start, 0);
   int end = IndexForVisiblePosition(selection.VisibleEnd());
   DCHECK_GE(end, 0);
-
-  return AXRange(start, end);
+  AXRange range;
+  range.anchor_offset = start;
+  range.focus_offset = end;
+  return range;
 }
 
 AXObject::AXRange AXLayoutObject::TextControlSelection() const {
@@ -1902,18 +1912,23 @@ AXObject::AXRange AXLayoutObject::TextControlSelection() const {
   if (!ax_object || !ax_object->IsAXLayoutObject())
     return AXRange();
 
+  FrameSelection& frame_selection = layout->GetFrame()->Selection();
   VisibleSelection selection =
-      layout->GetFrame()
-          ->Selection()
-          .ComputeVisibleSelectionInDOMTreeDeprecated();
+      frame_selection.ComputeVisibleSelectionInDOMTreeDeprecated();
   TextControlElement* text_control =
       ToLayoutTextControl(layout)->GetTextControlElement();
   DCHECK(text_control);
   int start = text_control->selectionStart();
   int end = text_control->selectionEnd();
-
-  return AXRange(ax_object, start, selection.VisibleStart().Affinity(),
-                 ax_object, end, selection.VisibleEnd().Affinity());
+  return AXRange{
+      ax_object,                           /* anchor_object */
+      start,                               /* anchor_offset */
+      selection.VisibleStart().Affinity(), /* anchor_affinity */
+      ax_object,                           /* focus_object */
+      end,                                 /* focus_offset */
+      selection.VisibleEnd().Affinity(),   /* focus_affinity */
+      frame_selection.Granularity()
+  };
 }
 
 int AXLayoutObject::IndexForVisiblePosition(

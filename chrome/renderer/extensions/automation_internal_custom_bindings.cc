@@ -492,6 +492,14 @@ void AutomationInternalCustomBindings::AddRoutes() {
             isolate,
             ui::ToString(tree_wrapper->tree()->data().sel_focus_affinity)));
       });
+  RouteTreeIDFunction(
+      "GetTextGranularity",
+      [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
+         AutomationAXTreeWrapper* tree_wrapper) {
+        result.Set(CreateV8String(
+            isolate,
+            ui::ToString(tree_wrapper->tree()->data().sel_text_granularity)));
+      });
 
   // Bindings that take a Tree ID and Node ID and return a property of the node.
 

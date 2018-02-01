@@ -535,6 +535,8 @@
     long? anchorOffset;
     // The affinity of the tree selection anchor, if any.
     DOMString? anchorAffinity;
+    // The text granularity of the tree selection anchor, if any.
+    DOMString? textGranularity;
     // The focus node of the tree selection, if any.
     AutomationNode? focusObject;
     // The focus offset of the tree selection, if any.

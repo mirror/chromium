@@ -1222,8 +1222,10 @@ void AXNodeObject::Markers(Vector<DocumentMarker::MarkerType>& marker_types,
     DocumentMarker* marker = markers[i];
     if (MarkerTypeIsUsedForAccessibility(marker->GetType())) {
       marker_types.push_back(marker->GetType());
-      marker_ranges.push_back(
-          AXRange(marker->StartOffset(), marker->EndOffset()));
+      AXRange range;
+      range.anchor_offset = marker->StartOffset();
+      range.focus_offset = marker->EndOffset();
+      marker_ranges.push_back(range);
     }
   }
 }

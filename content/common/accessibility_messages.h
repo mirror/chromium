@@ -67,6 +67,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::AXContentNodeData)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::AXContentTreeData)
+  // AXTreeData:
   IPC_STRUCT_TRAITS_MEMBER(tree_id)
   IPC_STRUCT_TRAITS_MEMBER(parent_tree_id)
   IPC_STRUCT_TRAITS_MEMBER(focused_tree_id)
@@ -83,6 +84,9 @@ IPC_STRUCT_TRAITS_BEGIN(content::AXContentTreeData)
   IPC_STRUCT_TRAITS_MEMBER(sel_focus_object_id)
   IPC_STRUCT_TRAITS_MEMBER(sel_focus_offset)
   IPC_STRUCT_TRAITS_MEMBER(sel_focus_affinity)
+  IPC_STRUCT_TRAITS_MEMBER(sel_text_granularity)
+
+  // AXContentTreeData:
   IPC_STRUCT_TRAITS_MEMBER(routing_id)
   IPC_STRUCT_TRAITS_MEMBER(parent_routing_id)
 IPC_STRUCT_TRAITS_END()

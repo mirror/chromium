@@ -123,6 +123,10 @@ AX_EXPORT ax::mojom::Gesture ParseGesture(const char* gesture);
 AX_EXPORT const char* ToString(ax::mojom::TextAffinity text_affinity);
 AX_EXPORT ax::mojom::TextAffinity ParseTextAffinity(const char* text_affinity);
 
+// ax::mojom::TextGranularity
+AX_EXPORT const char* ToString(ax::mojom::TextGranularity text_granularity);
+AX_EXPORT ax::mojom::TextAffinity ParseTextAffinity(const char* text_affinity);
+
 // ax::mojom::TreeOrder
 AX_EXPORT const char* ToString(ax::mojom::TreeOrder tree_order);
 AX_EXPORT ax::mojom::TreeOrder ParseTreeOrder(const char* tree_order);
