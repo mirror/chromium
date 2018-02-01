@@ -143,6 +143,54 @@
     },
     {
       "key": {
+        "uuid": "292f72b5_bc61e1d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T15:36:50Z",
+      "side": 1,
+      "message": "Add a TODO so we don\u0027t forget?",
+      "parentUuid": "75771ebd_ab44277d",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25588b58_70bede67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T15:36:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e89c336c_5dda8450",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 68
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e297d29_26dfe454",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrModalPresenter.java",
         "patchSetId": 11
@@ -445,6 +493,30 @@
       "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "242124b2_1f88839c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T15:36:50Z",
+      "side": 1,
+      "message": "It looks like the other dialog presenters don\u0027t remove the dialogs from their parents, so we should figure out why this is going wrong here.",
+      "parentUuid": "9cee705b_461cbc6a",
+      "range": {
+        "startLine": 662,
+        "startChar": 8,
+        "endLine": 662,
+        "endChar": 39
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -961,6 +1033,30 @@
       "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fc4d4d_7da12c80",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T15:36:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18d8c069_6b1feb59",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 33
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

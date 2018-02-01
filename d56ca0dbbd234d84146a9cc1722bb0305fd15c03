@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f740d2_618bbad6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T15:36:50Z",
+      "side": 1,
+      "message": "De-duplicate this code with the code in setDialogView.\n\n(Maybe just move it to the constructor and not worry about it being null anywhere?)",
+      "range": {
+        "startLine": 524,
+        "startChar": 8,
+        "endLine": 524,
+        "endChar": 41
+      },
+      "revId": "d56ca0dbbd234d84146a9cc1722bb0305fd15c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b802ad9_f21670cb",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T15:36:50Z",
+      "side": 1,
+      "message": "Moving the code here hasn\u0027t done anything for thread safety, it\u0027s identical to when you had this in vr_shell.h/cc...\n\nI think this should all be moved into vr_shell_gl, and vr_dialog_ should live there.",
+      "range": {
+        "startLine": 381,
+        "startChar": 4,
+        "endLine": 381,
+        "endChar": 50
+      },
+      "revId": "d56ca0dbbd234d84146a9cc1722bb0305fd15c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
