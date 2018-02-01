@@ -13,6 +13,7 @@ import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.Supplier;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.MainDex;
@@ -26,6 +27,7 @@ import org.chromium.chrome.browser.document.DocumentActivity;
 import org.chromium.chrome.browser.document.IncognitoDocumentActivity;
 import org.chromium.chrome.browser.init.InvalidStartupDialog;
 import org.chromium.chrome.browser.metrics.UmaUtils;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tabmodel.document.ActivityDelegateImpl;
 import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
@@ -54,7 +56,14 @@ public class ChromeApplication extends BaseChromiumApplication {
         if (ContextUtils.isMainProcess()) {
             // Renderers and GPU process have command line passed to them via IPC
             // (see ChildProcessService.java).
-            CommandLineInitUtil.initCommandLine(COMMAND_LINE_FILE);
+            ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
+            Supplier<Boolean> shouldUseDebugFlags = new Supplier<Boolean>() {
+                @Override
+                public Boolean get() {
+                    return manager.getCommandLineOnNonRootedEnabled();
+                }
+            };
+            CommandLineInitUtil.initCommandLine(COMMAND_LINE_FILE, shouldUseDebugFlags);
 
             // Requires command-line flags.
             TraceEvent.maybeEnableEarlyTracing();
