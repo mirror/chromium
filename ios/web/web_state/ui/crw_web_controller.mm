@@ -1415,9 +1415,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // Typically on PAGE_TRANSITION_CLIENT_REDIRECT.
     // Don't update if request is a placeholder entry because the pending item
     // should have the original target URL.
-    if (!IsPlaceholderUrl(requestURL)) {
-      self.navigationManagerImpl->UpdatePendingItemUrl(requestURL);
-    }
+    //     if (!IsPlaceholderUrl(requestURL) &&
+    //         self.navigationManagerImpl->GetPendingItemIndex() == -1) {
+    //       self.navigationManagerImpl->UpdatePendingItemUrl(requestURL);
+    //     }
+    NSLog(@"olf code would update the url");
   } else {
     self.navigationManagerImpl->AddPendingItem(
         requestURL, referrer, transition,
@@ -4409,7 +4411,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
                          referrer:[self currentReferrer]
                        transition:ui::PAGE_TRANSITION_SERVER_REDIRECT
            sameDocumentNavigation:NO];
-  [_navigationStates contextForNavigation:navigation]->SetUrl(webViewURL);
+
+  // Update URL for navigation context and navigation item.
+  web::NavigationContextImpl* context =
+      [_navigationStates contextForNavigation:navigation];
+  context->SetUrl(webViewURL);
+  web::NavigationItem* item = web::GetItemWithUniqueID(
+      self.navigationManagerImpl, context->GetNavigationItemUniqueID());
+  item->SetVirtualURL(webViewURL);
+  item->SetURL(webViewURL);
 }
 
 - (void)webView:(WKWebView*)webView
