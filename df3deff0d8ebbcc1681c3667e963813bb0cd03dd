@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9b7783_d6a1db37",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T09:03:55Z",
+      "side": 1,
+      "message": "before_first_idle_ \u003d false;\nbefore the return?",
+      "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07119942_65f0b638",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T09:03:55Z",
+      "side": 1,
+      "message": "don\u0027t you need to replace the existing dictionary if this is the first time through? to address this and my comment above, you could do something like this at the top of the function:\n{\n  bool replace_preference \u003d before_first_idle_;\n  before_first_idle_ \u003d false;\n\n  ...\n  if (empty) {\n    if (replace_preference)\n      ClearPref();\n    return;\n  }\n  ...\n  if (replace_preference) {\n    Set(...);\n  } else {\n    iterate and add\n  }\n}\n\nthen again, it almost seems like the if(empty) clause above adds complexity rather than reduces it. you could just as well change the logic here to:\n  if (replace_preference) {\n    if (new_programs.empty()) {\n      ClearPref();\n    } else {\n      Set();\n    }\n  } else {\n    iterate and add\n  }",
+      "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
