@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "daa4c97b_916eb26b",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-01T19:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d47c5293_19d5b7fa",
+      "range": {
+        "startLine": 126,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 67
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "342dddb2_113c635a",
         "filename": "build/fuchsia/create_runner_script.py",
         "patchSetId": 14
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6726fb13_7ab10aee",
+        "filename": "build/fuchsia/create_runner_script.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-01T19:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342dddb2_113c635a",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95392bad_becbe30e",
         "filename": "build/fuchsia/runner_v2/symbolizer.py",
         "patchSetId": 14
@@ -91,6 +139,30 @@
       "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc71d73_bbb18735",
+        "filename": "build/fuchsia/runner_v2/symbolizer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-01T19:37:59Z",
+      "side": 1,
+      "message": "I put the existence check in here originally while debugging build deployment issues. I think it\u0027s valuable to keep in here as a guard against accidental regressions when tweaking the script or GN build parameters. I restructured it a little and made it raise an Exception instead of gracefully continue.",
+      "parentUuid": "95392bad_becbe30e",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
