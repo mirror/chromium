@@ -39,6 +39,7 @@
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/page/FrameTree.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
@@ -302,6 +303,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
     should_send_resource_timing_info_to_parent_ = false;
   }
 
+  void HandleForFirstInputDelay(const WebInputEvent&);
+
  private:
   friend class FrameNavigationDisabler;
 
@@ -353,6 +356,11 @@ class CORE_EXPORT LocalFrame final : public Frame,
   float text_zoom_factor_;
 
   bool in_view_source_mode_;
+
+  // The duration between the hardware timestamp and when we received the event
+  // for the previous pointer down. Only non-zero if we've received a pointer
+  // down event, and haven't yet reported the first input delay.
+  base::TimeDelta pending_pointerdown_delay_;
 
   Member<CoreProbeSink> probe_sink_;
   Member<PerformanceMonitor> performance_monitor_;
