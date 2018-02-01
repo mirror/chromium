@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "79b9ba0a_80818aef",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-01T11:18:24Z",
+      "side": 1,
+      "message": "\"I would set an expectation on a function that I wrote for testing\" - not sure what you mean? Isn\u0027t it called by ADR helper which is being tested?",
+      "parentUuid": "eacf188f_ecc2fcb0",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8e478f8_0aedb884",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 20
@@ -209,6 +227,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78f83147_3a7908bd",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-01T11:18:24Z",
+      "side": 1,
+      "message": "Direction is even more confusing :) there is no such a term in audio pipeline code. Maybe |stream_type|?",
+      "parentUuid": "26f35401_e592c6b4",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
