@@ -37,6 +37,8 @@ class Tokenizer {
 
   static bool IsIdentifierContinuingChar(char c);
 
+  static bool IsIdentifier(const base::StringPiece& buffer);
+
  private:
   // InputFile must outlive the tokenizer and all generated tokens.
   Tokenizer(const InputFile* input_file, Err* err);

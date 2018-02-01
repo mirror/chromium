@@ -191,6 +191,17 @@ bool Tokenizer::IsIdentifierContinuingChar(char c) {
   return IsIdentifierFirstChar(c) || base::IsAsciiDigit(c);
 }
 
+// static
+bool Tokenizer::IsIdentifier(const base::StringPiece& buffer) {
+  DCHECK(buffer.size() > 0);
+  if (!Tokenizer::IsIdentifierFirstChar(buffer[0]))
+    return false;
+  for (size_t i = 1; i < buffer.size(); i++)
+    if (!Tokenizer::IsIdentifierContinuingChar(buffer[i]))
+      return false;
+  return true;
+}
+
 void Tokenizer::AdvanceToNextToken() {
   while (!at_end() && IsCurrentWhitespace())
     Advance();
