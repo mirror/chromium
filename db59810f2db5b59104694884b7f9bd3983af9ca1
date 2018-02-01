@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4bb6e42_5f77c70b",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4877,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-01T18:29:14Z",
+      "side": 1,
+      "message": "it seems a little odd to make this target be the one that includes this file as it seems unrelated. can we move the these two files to the test_support_ui target instead?",
+      "revId": "db59810f2db5b59104694884b7f9bd3983af9ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cf0ca6_dadcb21c",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-01T18:29:14Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "db59810f2db5b59104694884b7f9bd3983af9ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181b4bb6_12cb839a",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-01T18:29:14Z",
+      "side": 1,
+      "message": "just curious, why do we need these changes?",
+      "revId": "db59810f2db5b59104694884b7f9bd3983af9ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
