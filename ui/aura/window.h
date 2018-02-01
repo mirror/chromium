@@ -365,6 +365,14 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Gets the current viz::LocalSurfaceId.
   const viz::LocalSurfaceId& GetLocalSurfaceId() const;
 
+  // Sets the current viz::LocalSurfaceId, in cases where the child has
+  // allocated one.
+  void SetLocalSurfaceId(const viz::LocalSurfaceId& local_surface_id);
+
+  // Sets the child sequence number of the viz::LocalSurfaceId, in cases where
+  // the a parent is given the child-allocated one.
+  void SetLocalSurfaceIdChildSequenceNumber(uint32_t child_sequence_number);
+
   // Returns the FrameSinkId. In LOCAL mode, this returns a valid FrameSinkId
   // only if a LayerTreeFrameSink has been created. In MUS mode, this always
   // return a valid FrameSinkId.
