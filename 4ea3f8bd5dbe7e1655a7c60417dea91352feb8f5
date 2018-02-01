@@ -16,6 +16,24 @@
       "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705100be_110fa035",
+        "filename": "media/gpu/windows/d3d11_video_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-01T18:37:54Z",
+      "side": 1,
+      "message": "the problem is that we\u0027re binding a random callback, not one that uses the wp as |this|.  i don\u0027t think that the wp magic works in that case.  if it does, then that would be quite useful.\n\nas an alternative, for |init_cb_| and |output_cb_| and the reset closure, one might use a cancelablecallback.  for |decode_cb|, it\u0027s less clear since it is (potentially) more than one outstanding, non-identical decode cb at a time.",
+      "parentUuid": "2f1fa8c2_e778f47e",
+      "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
