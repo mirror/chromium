@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "46ba9d86_90765a77",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-01T05:11:25Z",
+      "side": 1,
+      "message": "I have the impression that most of SIMD code is written once and never touched again mostly because people are afraid of introducing regressions.\n\nOne very good way to ensure that code will be refactored if there is the need is the presence of unit tests (as if they are well written, they should flag any regression).\n\nIf the template is a major issue, perhaps we could use an easier way to handle the \u0027testability\u0027 of the new code?\n\nWhat if we follow something simpler like (in SetRGBA.h):\n#if defined(INTEL) || defined(RGBA_UTEST_ENABLED)\n// here goes the portable code.\nvoid SetRGBARawRowPortable(...)\n#endif\n#if defined(ARM) || defined(RGBA_UTEST_ENABLED)\nvoid SetRGBARawRowPortable(...)\n#endif\n\nIn such way that to enable both implementations, we just set the macro *before* including the header file in the unit test (i.e. in SetRGBAOptsTest.cpp):\n\n#define RGBA_UTEST_ENABLED\n#include \"SetRGBA.h\"\n// Here goes the test calling both functions...\n\nI agree that the template use here may be a bit too much for what we are really trying to achieve which is:\na) Inlining the function.\nb) Ensure availability of both the NEON + portable implementations in the unit test.",
+      "parentUuid": "fb682b41_2a2f521b",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25d5eeb1_693b6d18",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
