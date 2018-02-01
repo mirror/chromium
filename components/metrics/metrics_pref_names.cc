@@ -193,6 +193,9 @@ const char kStabilityStatsBuildTime[] =
 const char kStabilityStatsVersion[] =
     "user_experience_metrics.stability.stats_version";
 
+const char kStabilitySystemCrashCount[] =
+    "user_experience_metrics.stability.system_crash_count";
+
 // Number of times the version number stored in prefs did not match the
 // serialized system profile version number.
 const char kStabilityVersionMismatchCount[] =

@@ -46,7 +46,7 @@ TEST_F(StabilityMetricsProviderTest, RecordStabilityMetrics) {
   {
     StabilityMetricsProvider recorder(&prefs_);
     recorder.LogLaunch();
-    recorder.LogCrash();
+    recorder.LogCrash(base::Time());
     recorder.MarkSessionEndCompleted(false);
     recorder.CheckLastSessionEndCompleted();
     recorder.RecordBreakpadRegistration(true);
