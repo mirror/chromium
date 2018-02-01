@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8464f8a1_fb5b7404",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T02:46:47Z",
+      "side": 1,
+      "message": "If some /other/ code created the profile and its callback was run first, and that other code\u0027s callback removes the notification, I would go farther than calling that an edge case; I would say it\u0027s probably unintentional/a bug. Because then you could imagine that if the timing were slightly different, say the profile loaded faster and was done loading before Display() was called, then you\u0027d have called Close before Display and wind up with a displayed notification instead of no notification.\n\nI\u0027ve changed it to always remove from pending_notifications_ but added a DCHECK to catch the above insanity because it doesn\u0027t seem like something we should paper over.",
+      "parentUuid": "18591878_eb2d3d27",
+      "revId": "542286d820819572c578d218e587a639b725e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f9dd247_059be4c0",
         "filename": "chrome/browser/notifications/system_notification_helper.h",
         "patchSetId": 5
