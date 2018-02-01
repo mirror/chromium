@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13021e65_b4db90c6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/work_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-01T18:10:21Z",
+      "side": 1,
+      "message": "nit: /the// (other instances too)",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "78009e055445639ce8d6f97380cd3ff9b8102bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
