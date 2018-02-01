@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7be55f78_6d522df5",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Consider adding DCHECK(!observer_) here to make sure Stop() was called before destruction.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 1
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339ed9b9_c28512c6",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "DCHECK(!observer_) before this.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebba86d_b5e0aafe",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Add observer_.Unbind() after this.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 12
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e37239a_9675981e",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Before this, add:\n\n  weak_factory_.InvalidateWeakPtrs();\n\n...because we don\u0027t want a callback from Start() to execute after Stop() returns.",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e2cf53_85308e52",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Do we need to clear all the maps here?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 0
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1d4f75_3a538724",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "It\u0027s not illegal for these methods to be called after a Stop(): There could be stray mojo method calls in a task queue from an earlier point. I suggest just doing a simple null-check, changing Pause(), Resume() and Suspend() to:\n\n  if (launched_device_)\n    launched_device_-\u003eMethodXYZ();",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee96ee7_cc665ead",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED();\n\n(and in a few other places too)",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 15
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def74765_ee7338f0",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "nit: One less look-up if you:\n\n  const auto insert_result \u003d id_map_.insert(std::make_pair(buffer_id, next_buffer_context_id_));\n  DCHECK(insert_result.second);",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 70
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0678952_bb3be67e",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Should this be done here, or just wait for Stop() to be called and let it handle everything?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 29
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffef6c3e_5f53c077",
+        "filename": "chrome/browser/media/single_client_video_capture_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "s/Implements mojom::VideoCaptureHost and communicates/Implements a subset of mojom::VideoCaptureHost to proxy/",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbc950e_55ee3246",
+        "filename": "chrome/browser/media/single_client_video_capture_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "I had a similar problem when I recently wrote FrameSinkVideoCaptureDevice. My solution was to let the ctor set a callback to call for normal production use:\n\nhttps://cs.chromium.org/chromium/src/content/browser/media/capture/frame_sink_video_capture_device.cc?rcl\u003d227b19dc462e19b50a2e2afa36846da9c406351d\u0026l\u003d93\n\n...and then provide override capability for unit testing:\n\nhttps://cs.chromium.org/chromium/src/content/browser/media/capture/frame_sink_video_capture_device.h?rcl\u003d227b19dc462e19b50a2e2afa36846da9c406351d\u0026l\u003d95\n\nThis might help you simplify things by eliminating a ton of code (the factory class) that has only one user.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c58a9fe_5a892b58",
+        "filename": "chrome/browser/media/single_client_video_capture_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Is this needed? Well-behaved devices shouldn\u0027t send frames after calling OnError(), but even if they do: Would that hurt anything?",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e3a3d7_5e91f879",
+        "filename": "content/public/browser/in_process_video_capture_device_launcher_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "IMHO, this is way too much code just to call \"new InProcessVideoCaptureDeviceLauncher()\". The static method solution in PS4 was far superior for its simplicity (and far fewer LOC in the content/public interface). Also, we aren\u0027t allowed to put implementation in content/public; just exported function declarations and pure interfaces.\n\nBTW--The static method is only declared in the header in content/public/browser. The implementation should be defined in content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc. Example:\n\nhttps://cs.chromium.org/chromium/src/content/public/browser/render_widget_host.h?rcl\u003d9b60ddbdbc1239ecf7a0b8630fb602185bb32cb9\u0026l\u003d115\n\nand\n\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_impl.cc?rcl\u003d9b60ddbdbc1239ecf7a0b8630fb602185bb32cb9\u0026l\u003d413",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 85
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d60a76_01da1f80",
+        "filename": "content/public/browser/video_capture_device_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "need CONTENT_EXPORT here too",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "c12cf81c1947a5aace4ab173a04674e590849f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

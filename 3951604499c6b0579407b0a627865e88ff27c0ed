@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "e712e2e0_318d6ca9",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-01T23:44:37Z",
+      "side": 1,
+      "message": "Interesting idea, but there\u0027s still the issue of where would the SingleClientVideoCaptureHost class live? It can\u0027t be put in src/media since it has content dependencies. It can\u0027t be put in src/content/public/browser since it doesn\u0027t qualify as \"embedder interfacing.\"\n\nAlso, note that there are a lot of stubbed-out (NOTREACHED) methods since we are only implementing the necessary parts of the interface here. If this class were to be made usable by VCC, we\u0027d have to implement a lot of things we don\u0027t need.\n\nWhat I was getting at in my original comment is that there really isn\u0027t much code duplication here. This is an \"adapter\" class with mostly one-liner methods (3-liner if you count the DCHECKs). And so, even if we could do more common-shared-code structuring, I don\u0027t really see there is much benefit in doing so, especially when considering the extra amount of work involved.",
+      "parentUuid": "a7c9dbd3_33572f1e",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "552b510c_0d8388be",
         "filename": "chrome/browser/media/single_client_video_capture_host.h",
         "patchSetId": 6
