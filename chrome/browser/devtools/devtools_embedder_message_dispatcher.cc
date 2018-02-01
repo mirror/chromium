@@ -156,6 +156,7 @@ DevToolsEmbedderMessageDispatcher::CreateForDevToolsFrontend(
     Delegate* delegate) {
   DispatcherImpl* d = new DispatcherImpl();
 
+  d->RegisterHandler("activateDebuggee", &Delegate::ActivateDebuggee, delegate);
   d->RegisterHandler("bringToFront", &Delegate::ActivateWindow, delegate);
   d->RegisterHandler("closeWindow", &Delegate::CloseWindow, delegate);
   d->RegisterHandler("loadCompleted", &Delegate::LoadCompleted, delegate);

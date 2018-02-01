@@ -103,6 +103,12 @@ Host.InspectorFrontendHostStub = class {
   /**
    * @override
    */
+  activateDebuggee() {
+  }
+
+  /**
+   * @override
+   */
   bringToFront() {
     this._windowVisible = true;
   }

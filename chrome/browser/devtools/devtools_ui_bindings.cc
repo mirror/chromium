@@ -141,6 +141,7 @@ class DefaultBindingsDelegate : public DevToolsUIBindings::Delegate {
   ~DefaultBindingsDelegate() override {}
 
   void ActivateWindow() override;
+  void ActivateDebuggee() override {}
   void CloseWindow() override {}
   void Inspect(scoped_refptr<content::DevToolsAgentHost> host) override {}
   void SetInspectedPageBounds(const gfx::Rect& rect) override {}
@@ -488,8 +489,8 @@ DevToolsUIBindings* DevToolsUIBindings::ForWebContents(
        it != instances->end(); ++it) {
     if ((*it)->web_contents() == web_contents)
       return *it;
- }
- return NULL;
+  }
+  return NULL;
 }
 
 DevToolsUIBindings::DevToolsUIBindings(content::WebContents* web_contents)
@@ -616,6 +617,10 @@ void DevToolsUIBindings::InnerAttach() {
 
 void DevToolsUIBindings::ActivateWindow() {
   delegate_->ActivateWindow();
+}
+
+void DevToolsUIBindings::ActivateDebuggee() {
+  delegate_->ActivateDebuggee();
 }
 
 void DevToolsUIBindings::CloseWindow() {

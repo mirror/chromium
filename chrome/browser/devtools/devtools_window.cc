@@ -5,6 +5,7 @@
 #include "chrome/browser/devtools/devtools_window.h"
 
 #include <algorithm>
+#include <set>
 #include <utility>
 
 #include "base/base64.h"
@@ -1217,6 +1218,20 @@ void DevToolsWindow::ActivateWindow() {
     main_web_contents_->Focus();
   else if (!is_docked_ && !browser_->window()->IsActive())
     browser_->window()->Activate();
+}
+
+void DevToolsWindow::ActivateDebuggee() {
+  Browser* browser = NULL;
+  int tab;
+  if (!FindInspectedBrowserAndTabIndex(GetInspectedWebContents(), &browser,
+                                       &tab) ||
+      !browser->window()) {
+    return;
+  }
+
+  browser->window()->Activate();
+  TabStripModel* tab_strip_model = browser->tab_strip_model();
+  tab_strip_model->ActivateTabAt(tab, true);
 }
 
 void DevToolsWindow::CloseWindow() {

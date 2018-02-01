@@ -216,6 +216,10 @@ UI.InspectorView = class extends UI.VBox {
     this._drawerSplitWidget.hideSidebar(true);
   }
 
+  _activateDebuggee() {
+    InspectorFrontendHost.activateDebuggee();
+  }
+
   /**
    * @param {boolean} minimized
    */
@@ -352,6 +356,23 @@ UI.InspectorView.DrawerToggleActionDelegate = class {
       UI.inspectorView._closeDrawer();
     else
       UI.inspectorView._showDrawer(true);
+    return true;
+  }
+};
+
+/**
+ * @implements {UI.ActionDelegate}
+ * @unrestricted
+ */
+UI.InspectorView.FocusDebuggeeActionDelegate = class {
+  /**
+   * @override
+   * @param {!UI.Context} context
+   * @param {string} actionId
+   * @return {boolean}
+   */
+  handleAction(context, actionId) {
+    UI.inspectorView._activateDebuggee();
     return true;
   }
 };
