@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d29a40b_1ae1e669",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T22:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e6dc3b2_0ac94343",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8f27ba4_fb95cbf4",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2dc2c9_50c37e31",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T22:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f27ba4_fb95cbf4",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ef439f0_5de57dfc",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T22:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2cd3d5_f02cde2b",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5533336_9675eae7",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb367f2e_62340e37",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T22:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5533336_9675eae7",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8fdbe36f_2ea68a51",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T22:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6faec9e5_d693478d",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2268a66_090906f2",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2626147_06885ea0",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T22:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2268a66_090906f2",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
