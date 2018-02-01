@@ -45,14 +45,19 @@ namespace payments {
 //   // Actual URL downloaded is https://127.0.0.1:9090/webpay.
 //   downloader.DownloadPaymentMethodManifest(
 //       "https://bobpay.com/webpay", callback);
-class TestDownloader : public PaymentMethodManifestDownloaderInterface {
+class TestDownloader : public PaymentManifestDownloaderInterface {
  public:
   explicit TestDownloader(
       const scoped_refptr<net::URLRequestContextGetter>& context);
   ~TestDownloader() override;
 
-  // PaymentMethodManifestDownloaderInterface implementation.
+  // PaymentManifestDownloaderInterface implementation.
   void DownloadPaymentMethodManifest(
+      const GURL& url,
+      PaymentManifestDownloadCallback callback) override;
+
+  // PaymentManifestDownloaderInterface implementation.
+  void DownloadWebAppManifest(
       const GURL& url,
       PaymentManifestDownloadCallback callback) override;
 
