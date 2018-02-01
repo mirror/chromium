@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb734c48_e095f6d5",
+        "filename": "chrome/browser/ui/cocoa/media_picker/desktop_media_picker_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T00:49:13Z",
+      "side": 1,
+      "message": "Perhaps also a note like\n\n // There is no guarantee that -imageBrowserSelectionDidChange: will trigger\n // if the selection is cleared above.",
+      "revId": "1e80a8380a6273e7142712bc729216e7c8f92aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d9b2bc_e8376839",
+        "filename": "chrome/browser/ui/cocoa/media_picker/desktop_media_picker_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T00:49:13Z",
+      "side": 1,
+      "message": "nit: constexpr int kTabToRemove \u003d 0;",
+      "revId": "1e80a8380a6273e7142712bc729216e7c8f92aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
