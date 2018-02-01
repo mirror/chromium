@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cf01c3a_bbd8da2a",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2018-02-01T15:58:55Z",
+      "side": 1,
+      "message": "It causes problem when cross build Chrome/Win on Linux.\n\nTraceback (most recent call last):\n  File \"../../build/toolchain/win/tool_wrapper.py\", line 26, in \u003cmodule\u003e\n    os.environ[\u0027path\u0027] \u003d os.path.dirname(sys.executable) + \u0027;\u0027 + os.environ[\u0027path\u0027]\n  File \"/usr/lib/python2.7/UserDict.py\", line 40, in __getitem__\n    raise KeyError(key)\nKeyError: \u0027path\u0027",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "052a09014b2018e2a1e3b7f046ea9ad3355b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
