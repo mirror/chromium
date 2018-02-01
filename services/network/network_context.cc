@@ -134,12 +134,11 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
 }
 
 NetworkContext::~NetworkContext() {
-  // Call each URLLoader and ask it to release its net::URLRequest, as the
-  // corresponding net::URLRequestContext is going away with this
-  // NetworkContext. The loaders can be deregistering themselves in Cleanup(),
-  // so have to be careful.
-  while (!url_loaders_.empty())
-    (*url_loaders_.begin())->Cleanup();
+  // Call each URLLoaderFactory and ask it to clean itself up.  The loader
+  // factories can be deregistering themselves in Cleanup(), so have to be
+  // careful.
+  while (!url_loader_factories_.empty())
+    (*url_loader_factories_.begin())->Cleanup();
 
   // May be nullptr in tests.
   if (network_service_)
@@ -156,22 +155,24 @@ void NetworkContext::SetCertVerifierForTesting(
   g_cert_verifier_for_testing = cert_verifier;
 }
 
-void NetworkContext::RegisterURLLoader(URLLoader* url_loader) {
-  DCHECK(url_loaders_.count(url_loader) == 0);
-  url_loaders_.insert(url_loader);
+void NetworkContext::RegisterURLLoaderFactory(
+    NetworkServiceURLLoaderFactory* url_loader_factory) {
+  DCHECK(url_loader_factories_.count(url_loader_factory) == 0);
+  url_loader_factories_.insert(url_loader_factory);
 }
 
-void NetworkContext::DeregisterURLLoader(URLLoader* url_loader) {
-  size_t removed_count = url_loaders_.erase(url_loader);
+void NetworkContext::DeregisterURLLoaderFactory(
+    NetworkServiceURLLoaderFactory* url_loader_factory) {
+  size_t removed_count = url_loader_factories_.erase(url_loader_factory);
   DCHECK(removed_count);
 }
 
 void NetworkContext::CreateURLLoaderFactory(
     mojom::URLLoaderFactoryRequest request,
     uint32_t process_id) {
-  loader_factory_bindings_.AddBinding(
-      std::make_unique<NetworkServiceURLLoaderFactory>(this, process_id),
-      std::move(request));
+  // The factories own themselves, and will register themselves with |this| so
+  // that they're informed when this class is destroyed.
+  new NetworkServiceURLLoaderFactory(this, process_id, std::move(request));
 }
 
 void NetworkContext::HandleViewCacheRequest(const GURL& url,

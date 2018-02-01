@@ -24,6 +24,7 @@
 #include "services/network/data_pipe_element_reader.h"
 #include "services/network/network_context.h"
 #include "services/network/network_service_impl.h"
+#include "services/network/network_service_url_loader_factory.h"
 #include "services/network/public/cpp/loader_util.h"
 #include "services/network/public/cpp/net_adapters.h"
 #include "services/network/public/cpp/resource_request.h"
@@ -234,7 +235,7 @@ class SSLPrivateKeyInternal : public net::SSLPrivateKey {
 
 }  // namespace
 
-URLLoader::URLLoader(NetworkContext* context,
+URLLoader::URLLoader(NetworkServiceURLLoaderFactory* url_loader_factory,
                      mojom::URLLoaderRequest url_loader_request,
                      int32_t options,
                      const ResourceRequest& request,
@@ -242,7 +243,7 @@ URLLoader::URLLoader(NetworkContext* context,
                      mojom::URLLoaderClientPtr url_loader_client,
                      const net::NetworkTrafficAnnotationTag& traffic_annotation,
                      uint32_t process_id)
-    : context_(context),
+    : url_loader_factory_(url_loader_factory),
       options_(options),
       resource_type_(request.resource_type),
       is_load_timing_enabled_(request.enable_load_timing),
@@ -257,12 +258,14 @@ URLLoader::URLLoader(NetworkContext* context,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       report_raw_headers_(report_raw_headers),
       weak_ptr_factory_(this) {
-  context_->RegisterURLLoader(this);
+  url_loader_factory_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(
       base::BindOnce(&URLLoader::OnConnectionError, base::Unretained(this)));
 
-  url_request_ = context_->url_request_context()->CreateRequest(
-      GURL(request.url), request.priority, this, traffic_annotation);
+  url_request_ = url_loader_factory_->network_context()
+                     ->url_request_context()
+                     ->CreateRequest(GURL(request.url), request.priority, this,
+                                     traffic_annotation);
   url_request_->set_method(request.method);
   url_request_->set_site_for_cookies(request.site_for_cookies);
   url_request_->SetReferrer(ComputeReferrer(request.referrer));
@@ -306,8 +309,6 @@ URLLoader::URLLoader(NetworkContext* context,
 }
 
 URLLoader::~URLLoader() {
-  context_->DeregisterURLLoader(this);
-
   if (update_body_read_before_paused_)
     UpdateBodyReadBeforePaused();
   if (body_read_before_paused_ != -1) {
@@ -321,6 +322,7 @@ URLLoader::~URLLoader() {
                << "body_read_before_paused_: " << body_read_before_paused_;
     }
   }
+  url_loader_factory_->DeregisterURLLoader(this);
 }
 
 void URLLoader::Cleanup() {
@@ -411,32 +413,26 @@ void URLLoader::OnAuthRequired(net::URLRequest* unused,
 
 void URLLoader::OnCertificateRequested(net::URLRequest* unused,
                                        net::SSLCertRequestInfo* cert_info) {
-  // The network service can be null in tests.
-  if (!context_->network_service()) {
-    OnCertificateRequestedResponse(nullptr, std::vector<uint16_t>(), nullptr,
-                                   true /* cancel_certificate_selection */);
-    return;
+  url_loader_factory_->network_context()
+      ->network_service()
+      ->client()
+      ->OnCertificateRequested(
+          process_id_, render_frame_id_, cert_info,
+          base::BindOnce(&URLLoader::OnCertificateRequestedResponse,
+                         weak_ptr_factory_.GetWeakPtr()));
   }
 
-  context_->network_service()->client()->OnCertificateRequested(
-      process_id_, render_frame_id_, cert_info,
-      base::BindOnce(&URLLoader::OnCertificateRequestedResponse,
-                     weak_ptr_factory_.GetWeakPtr()));
-}
-
-void URLLoader::OnSSLCertificateError(net::URLRequest* request,
-                                      const net::SSLInfo& ssl_info,
-                                      bool fatal) {
-  // The network service can be null in tests.
-  if (!context_->network_service()) {
-    OnSSLCertificateErrorResponse(ssl_info, net::ERR_INSECURE_RESPONSE);
-    return;
-  }
-  context_->network_service()->client()->OnSSLCertificateError(
-      resource_type_, url_request_->url(), process_id_, render_frame_id_,
-      ssl_info, fatal,
-      base::Bind(&URLLoader::OnSSLCertificateErrorResponse,
-                 weak_ptr_factory_.GetWeakPtr(), ssl_info));
+  void URLLoader::OnSSLCertificateError(net::URLRequest* request,
+                                        const net::SSLInfo& ssl_info,
+                                        bool fatal) {
+    url_loader_factory_->network_context()
+        ->network_service()
+        ->client()
+        ->OnSSLCertificateError(
+            resource_type_, url_request_->url(), process_id_, render_frame_id_,
+            ssl_info, fatal,
+            base::Bind(&URLLoader::OnSSLCertificateErrorResponse,
+                       weak_ptr_factory_.GetWeakPtr(), ssl_info));
 }
 
 void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
