@@ -13,7 +13,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/display/manager/internal/display_configurator.h"
 
 namespace display {
 

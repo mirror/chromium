@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/display/manager/internal/display_configurator.h"
 
 #include <stddef.h>
 #include <utility>
@@ -13,13 +13,15 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#if defined(OS_CHROMEOS)
 #include "chromeos/system/devicemode.h"
+#endif
 #include "ui/display/display.h"
 #include "ui/display/display_switches.h"
-#include "ui/display/manager/chromeos/apply_content_protection_task.h"
-#include "ui/display/manager/chromeos/display_layout_manager.h"
-#include "ui/display/manager/chromeos/display_util.h"
-#include "ui/display/manager/chromeos/update_display_configuration_task.h"
+#include "ui/display/manager/internal/apply_content_protection_task.h"
+#include "ui/display/manager/internal/display_layout_manager.h"
+#include "ui/display/manager/internal/display_util.h"
+#include "ui/display/manager/internal/update_display_configuration_task.h"
 #include "ui/display/types/display_mode.h"
 #include "ui/display/types/display_snapshot.h"
 #include "ui/display/types/native_display_delegate.h"
@@ -161,10 +163,12 @@ DisplayConfigurator::DisplayLayoutManagerImpl::ParseDisplays(
     cached_displays.push_back(display_state);
   }
 
+#if defined(OS_CHROMEOS)
   // Hardware mirroring doesn't work on desktop-linux Chrome OS's fake displays.
   // Skip mirror mode setup in that case to fall back on software mirroring.
   if (!chromeos::IsRunningAsSystemCompositor())
     return cached_displays;
+#endif
 
   if (cached_displays.size() <= 1)
     return cached_displays;
@@ -502,7 +506,11 @@ DisplayConfigurator::DisplayConfigurator()
     : state_controller_(NULL),
       mirroring_controller_(NULL),
       is_panel_fitting_enabled_(false),
+#if defined(OS_CHROMEOS)
       configure_display_(chromeos::IsRunningAsSystemCompositor()),
+#else
+      configure_display_(true),
+#endif
       current_display_state_(MULTIPLE_DISPLAY_STATE_INVALID),
       current_power_state_(chromeos::DISPLAY_POWER_ALL_ON),
       requested_display_state_(MULTIPLE_DISPLAY_STATE_INVALID),
