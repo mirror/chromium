@@ -93,6 +93,24 @@
     },
     {
       "key": {
+        "uuid": "13b7435c_2bb63f59",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T09:56:22Z",
+      "side": 1,
+      "message": "I guess I do not understand how the menu ownership works. My understanding from the MenuRunner is that the MenuRunner or the Menu does not take ownership of the MenuModel or of the MenuDelegate. This means that DiceAccountsMenu is not owners by anything and would simply leak (at least in the current implementation).\n\nI think this is potentially solved by Trent\u0027s suggestion to use a unique_ptr\u003cDiceAccountsMenu\u003e in the ProfileChooserView (in that case, DiceAccountsMenu would only leak until the ProfileChooserView is closed).\n\nThomas: Let\u0027s use a unique_ptr\u003cDiceAccountsMenu\u003e (there no need to release if on MenuClosed).",
+      "parentUuid": "3cb65500_dfdb5f4f",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8508812a_7b33308a",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 5
@@ -104,6 +122,24 @@
       "writtenOn": "2018-02-01T02:11:05Z",
       "side": 1,
       "message": "would it make sense to move GetImagesForAccounts() into dice_accounts_menu.cc? the icons need only live in the menu model then",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a1c157_92b3e0da",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T09:56:22Z",
+      "side": 1,
+      "message": "I think we preferred passing down the list of images to avoid having adding a dependency on the profile or on the AccountTrackerService in the DiceAcccountsMenu.",
+      "parentUuid": "8508812a_7b33308a",
       "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
