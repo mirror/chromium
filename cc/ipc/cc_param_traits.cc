@@ -693,6 +693,67 @@ void ParamTraits<viz::LocalSurfaceId>::Log(const param_type& p,
   l->append(")");
 }
 
+void ParamTraits<base::Optional<viz::LocalSurfaceId>>::Write(
+    base::Pickle* m,
+    const param_type& p) {
+  bool has_value = p.has_value();
+  WriteParam(m, has_value);
+  if (has_value) {
+    const viz::LocalSurfaceId& local_surface_id = p.value();
+    DCHECK(local_surface_id.is_valid());
+    WriteParam(m, local_surface_id.parent_sequence_number());
+    WriteParam(m, local_surface_id.child_sequence_number());
+    WriteParam(m, local_surface_id.nonce());
+  }
+}
+
+bool ParamTraits<base::Optional<viz::LocalSurfaceId>>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* p) {
+  bool has_value;
+  if (!ReadParam(m, iter, &has_value))
+    return false;
+
+  if (!has_value) {
+    *p = base::Optional<viz::LocalSurfaceId>();
+    return true;
+  }
+
+  uint32_t parent_sequence_number;
+  if (!ReadParam(m, iter, &parent_sequence_number))
+    return false;
+
+  uint32_t child_sequence_number;
+  if (!ReadParam(m, iter, &child_sequence_number))
+    return false;
+
+  base::UnguessableToken nonce;
+  if (!ReadParam(m, iter, &nonce))
+    return false;
+
+  *p =
+      viz::LocalSurfaceId(parent_sequence_number, child_sequence_number, nonce);
+  return p->value().is_valid();
+}
+
+void ParamTraits<base::Optional<viz::LocalSurfaceId>>::Log(const param_type& p,
+                                                           std::string* l) {
+  l->append("base::Optional<viz::LocalSurfaceId>(");
+  bool has_value = p.has_value();
+  LogParam(has_value, l);
+  if (has_value) {
+    const viz::LocalSurfaceId& local_surface_id = p.value();
+    l->append(", ");
+    LogParam(local_surface_id.parent_sequence_number(), l);
+    l->append(", ");
+    LogParam(local_surface_id.child_sequence_number(), l);
+    l->append(", ");
+    LogParam(local_surface_id.nonce(), l);
+  }
+  l->append(")");
+}
+
 void ParamTraits<viz::SurfaceId>::Write(base::Pickle* m, const param_type& p) {
   WriteParam(m, p.frame_sink_id());
   WriteParam(m, p.local_surface_id());
