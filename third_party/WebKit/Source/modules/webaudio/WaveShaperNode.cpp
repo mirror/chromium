@@ -30,18 +30,34 @@
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "modules/webaudio/AudioBasicProcessorHandler.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "modules/webaudio/WaveShaperOptions.h"
 
 namespace blink {
 
+WaveShaperHandler::WaveShaperHandler(AudioNode& node, float sample_rate)
+    : AudioBasicProcessorHandler(
+          kNodeTypeWaveShaper,
+          node,
+          sample_rate,
+          std::make_unique<WaveShaperProcessor>(sample_rate, 1)) {
+  Initialize();
+}
+
+scoped_refptr<WaveShaperHandler> WaveShaperHandler::Create(AudioNode& node,
+                                                           float sample_rate) {
+  return base::AdoptRef(new WaveShaperHandler(node, sample_rate));
+}
+
 WaveShaperNode::WaveShaperNode(BaseAudioContext& context) : AudioNode(context) {
+#if 0
   SetHandler(AudioBasicProcessorHandler::Create(
       AudioHandler::kNodeTypeWaveShaper, *this, context.sampleRate(),
       std::make_unique<WaveShaperProcessor>(context.sampleRate(), 1)));
-
   Handler().Initialize();
+#else
+  SetHandler(WaveShaperHandler::Create(*this, context.sampleRate()));
+#endif
 }
 
 WaveShaperNode* WaveShaperNode::Create(BaseAudioContext& context,

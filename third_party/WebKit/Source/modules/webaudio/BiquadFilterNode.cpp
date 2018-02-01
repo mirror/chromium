@@ -27,11 +27,40 @@
 
 #include <memory>
 
-#include "modules/webaudio/AudioBasicProcessorHandler.h"
 #include "modules/webaudio/BiquadFilterOptions.h"
 #include "platform/Histogram.h"
 
 namespace blink {
+
+BiquadFilterHandler::BiquadFilterHandler(AudioNode& node,
+                                         float sample_rate,
+                                         AudioParamHandler& frequency,
+                                         AudioParamHandler& q,
+                                         AudioParamHandler& gain,
+                                         AudioParamHandler& detune)
+    : AudioBasicProcessorHandler(kNodeTypeBiquadFilter,
+                                 node,
+                                 sample_rate,
+                                 std::make_unique<BiquadProcessor>(sample_rate,
+                                                                   1,
+                                                                   frequency,
+                                                                   q,
+                                                                   gain,
+                                                                   detune)) {
+  // Initialize the handler so that AudioParams can be processed.
+  Initialize();
+}
+
+scoped_refptr<BiquadFilterHandler> BiquadFilterHandler::Create(
+    AudioNode& node,
+    float sample_rate,
+    AudioParamHandler& frequency,
+    AudioParamHandler& q,
+    AudioParamHandler& gain,
+    AudioParamHandler& detune) {
+  return base::AdoptRef(
+      new BiquadFilterHandler(node, sample_rate, frequency, q, gain, detune));
+}
 
 BiquadFilterNode::BiquadFilterNode(BaseAudioContext& context)
     : AudioNode(context),
@@ -53,16 +82,23 @@ BiquadFilterNode::BiquadFilterNode(BaseAudioContext& context)
                                  kParamTypeBiquadFilterDetune,
                                  "BiquadFilter.detune",
                                  0.0)) {
+#if 0
   SetHandler(AudioBasicProcessorHandler::Create(
       AudioHandler::kNodeTypeBiquadFilter, *this, context.sampleRate(),
       std::make_unique<BiquadProcessor>(context.sampleRate(), 1,
                                         frequency_->Handler(), q_->Handler(),
                                         gain_->Handler(), detune_->Handler())));
-
+#else
+  SetHandler(BiquadFilterHandler::Create(*this, context.sampleRate(),
+                                         frequency_->Handler(), q_->Handler(),
+                                         gain_->Handler(), detune_->Handler()));
+#endif
   setType("lowpass");
 
+#if 0
   // Initialize the handler so that AudioParams can be processed.
   Handler().Initialize();
+#endif
 }
 
 BiquadFilterNode* BiquadFilterNode::Create(BaseAudioContext& context,
