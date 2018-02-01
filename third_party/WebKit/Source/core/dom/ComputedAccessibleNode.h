@@ -30,10 +30,12 @@ class ComputedAccessibleNode : public ScriptWrappable {
   // Starts computation of the accessibility properties of the stored element.
   ScriptPromise ComputeAccessibleProperties(ScriptState*);
 
-  // String attribute accessors. These can return blank strings if the element
-  // has no node in the computed accessible tree, or property does not apply.
-  const String role() const;
+  const String keyShortcuts() const;
   const String name() const;
+  const String placeholder() const;
+  const String role() const;
+  const String roleDescription() const;
+  const String valueText() const;
 
   int32_t colCount(bool& is_null) const;
   int32_t colIndex(bool& is_null) const;
@@ -45,6 +47,12 @@ class ComputedAccessibleNode : public ScriptWrappable {
   int32_t rowSpan(bool& is_null) const;
   int32_t setSize(bool& is_null) const;
 
+  ComputedAccessibleNode* parent() const;
+  ComputedAccessibleNode* firstChild() const;
+  ComputedAccessibleNode* lastChild() const;
+  ComputedAccessibleNode* previousSibling() const;
+  ComputedAccessibleNode* nextSibling() const;
+
  private:
   explicit ComputedAccessibleNode(Element*);
 
@@ -52,6 +60,8 @@ class ComputedAccessibleNode : public ScriptWrappable {
   void OnSnapshotResponse(ScriptPromiseResolver*);
 
   int32_t GetIntAttribute(WebAOMIntAttribute, bool& is_null) const;
+  const String GetStringAttribute(WebAOMStringAttribute) const;
+  ComputedAccessibleNode* GetRelationFromCache(AXID) const;
 
   Member<Element> element_;
   Member<AXObjectCache> cache_;
