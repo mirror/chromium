@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cba475a2_2d12df58",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "s/kNoChromeAccount/kNoChromePrimaryAccount",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d05cba03_db0e4043",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
@@ -42,6 +65,190 @@
         "startChar": 17,
         "endLine": 80,
         "endChar": 30
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76a95d3_d9ef3f1b",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "s/kChromeAccountIsFirstGaiaAccount/kChromePrimaryAccountIsFirstGaiaAccount",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 34
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92ff1d6_42d66730",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "s/kChromeAccountIsOtherGaiaAccount/kChromePrimaryAccountIsSecondaryGaiaAccount",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad6a62a_5328da5b",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "kChromePrimaryAccountIsNotInGaiaAccounts",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df39c2f_85e77b0d",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "s/chrome_primary_account/chrome_primary_account_id",
+      "range": {
+        "startLine": 156,
+        "startChar": 23,
+        "endLine": 156,
+        "endChar": 45
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98150553_79ff2c63",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "I think knowing the state ChromeAccountStateInGaiaCookies here would simplify the code below. Suggested change:\n\nChromeAccountStateInGaiaCookies sign_out_mode \u003d ChromeAccountStateInGaiaCookies(..);\nUMA_HISTOGRAM_ENUMERATION(kChromeAccountStateOnWebSignoutHistogram, sign_out_mode,\n                          kChromeAccountStateInGaiaCookiesCount);\nif (sign_out_mode \u003d\u003d kChromeAccountIsFirstGaiaAccount || kChromeAccountIsOtherGaiaAccount) {\n       RecordDiceResponseHeader(kSignoutPrimary);\n\n      // If Dice migration is not complete, the token for the main account must\n      // not be deleted when signing out of the web.\n      if (!signin::IsDiceEnabledForProfile(signin_client_-\u003eGetPrefs()))\n        continue;\n\n      VLOG(1) \u003c\u003c \"[Dice] Signing out all accounts.\";\n      signin_manager_-\u003eSignOutAndRemoveAllAccounts(\n          signin_metrics::SERVER_FORCED_DISABLE,\n          signin_metrics::SignoutDelete::IGNORE_METRIC);\n  return;\n}\n\n// Just revoke tokens for the secondary accounts.\n...",
+      "range": {
+        "startLine": 385,
+        "startChar": 14,
+        "endLine": 385,
+        "endChar": 29
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c065989e_5f0c7085",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "I do not understand why we need \"signin::IsDiceEnabledForProfile(signin_client_-\u003eGetPrefs())\" in here (sorry for this additional question that has nothing to do with your CL).",
+      "range": {
+        "startLine": 423,
+        "startChar": 6,
+        "endLine": 423,
+        "endChar": 68
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd88a6f1_1a195a74",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4734,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "Add \"Gaia\": \"in Gaia cookies.\"",
+      "range": {
+        "startLine": 4734,
+        "startChar": 63,
+        "endLine": 4734,
+        "endChar": 70
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8f9db0_9084cdce",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4734,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T13:53:06Z",
+      "side": 1,
+      "message": "Add \"primary\": Chrome primary account",
+      "range": {
+        "startLine": 4734,
+        "startChar": 31,
+        "endLine": 4734,
+        "endChar": 38
       },
       "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
