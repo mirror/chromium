@@ -92,6 +92,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   DOMHighResTimeStamp MonotonicTimeToDOMHighResTimeStamp(TimeTicks) const;
   DOMHighResTimeStamp now() const;
 
+  TimeTicks DOMHighResTimeStampToMonotonicTime(DOMHighResTimeStamp) const;
+
   // High Resolution Time Level 3 timeOrigin.
   // (https://www.w3.org/TR/hr-time-3/#dom-performance-timeorigin)
   DOMHighResTimeStamp timeOrigin() const;
