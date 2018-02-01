@@ -62,7 +62,43 @@
 // Updates the UI elements reflect the omnibox unfocused state, |animated| or
 // not.
 - (void)unfocusOmniboxAnimated:(BOOL)animated {
-  // TODO(crbug.com/801082): Implement that.
+  void (^contraction)() = ^{
+    [self.toolbarAnimatee contractLocationBar];
+  };
+
+  void (^hideCancel)() = ^{
+    [self.toolbarAnimatee hideCancelButton];
+  };
+
+  void (^showControls)() = ^{
+    [self.toolbarAnimatee showControlButtons];
+  };
+
+  if (animated) {
+    UIViewPropertyAnimator* slowAnimator = [[UIViewPropertyAnimator alloc]
+        initWithDuration:ios::material::kDuration2
+                   curve:UIViewAnimationCurveEaseInOut
+              animations:^{
+                contraction();
+              }];
+    [slowAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+      hideCancel();
+    }];
+
+    UIViewPropertyAnimator* fastAnimator = [[UIViewPropertyAnimator alloc]
+        initWithDuration:ios::material::kDuration1
+                   curve:UIViewAnimationCurveEaseInOut
+              animations:^{
+                showControls();
+              }];
+
+    [slowAnimator startAnimation];
+    [fastAnimator startAnimation];
+  } else {
+    contraction();
+    showControls();
+    hideCancel();
+  }
 }
 
 @end
