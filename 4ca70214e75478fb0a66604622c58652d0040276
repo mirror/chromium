@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f9cba81_e495ee8a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeFontProviderWin.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2018-02-01T14:49:23Z",
+      "side": 1,
+      "message": "I would prefer to keep default_font_size_ in LayoutThemeProvider as it used here to generate the SystemFont. So, default_font_size_ is not a global default_font_size_ (this one would be in the UA style sheet), but the default_font_size_ for controls that are intended to look like system controls. The second reason is that I would like to avoid FontCache piling up more \"global font things\", if we can avoid it.\n\nCan you create a LayoutThemeProvider for Fuchsia?",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5883239f_eebb0637",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2018-02-01T14:49:23Z",
+      "side": 1,
+      "message": "As mentioned in the LayoutThemeWin file, I\u0027d prefer to keep this out of FontCache.",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e804db_8ca50a11",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPlatformData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2018-02-01T14:49:23Z",
+      "side": 1,
+      "message": "I tried to find the origin for this part, but could not find it. Where is this part about layout test flags moved from?",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a52ccd1_c3961b0d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPlatformData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2018-02-01T14:49:23Z",
+      "side": 1,
+      "message": "If it\u0027s not too much trouble, please file bugs for the TODOs.",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
