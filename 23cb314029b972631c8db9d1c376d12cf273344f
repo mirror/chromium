@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "6bca500b_e107a0b9",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T14:52:17Z",
+      "side": 1,
+      "message": "The comment may not be necessary, but I think the OnBrowserContextInitialized() name is not the best choice.\nLooking at this code here sounds like you are sending |webrtc_event_log_manager| a notification it suscribed to since the name emphasizes under what circumstance the method is called instead of what the method does.\nIf the method name were something like \"EnableUploadForRemoteLogs()\" or something like that, it would be obvious why you don\u0027t call it in incognito mode. With the existing name is not that obvious why you are not sending a notification in incognito mode. \nSee comment below about a possible method rename.",
+      "parentUuid": "1642748e_ad8c628c",
+      "range": {
+        "startLine": 516,
+        "startChar": 6,
+        "endLine": 516,
+        "endChar": 7
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c25cc6_c7358d02",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T14:52:17Z",
+      "side": 1,
+      "message": "Start the comment saying what the function does, and say when it should be called after that.\nAlso, the name is somewhat misleading, since the \"On\" part kind of suggests that this is a callback that you register somewhere to track a \"BrowserContextInitialized\" event.\nPerhaps a better name would be something like MakeRemoteLogsAvailableForUpload().",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3ca863_cc35968b",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 6
