@@ -13,6 +13,7 @@
 #include "ash/app_list/model/search/search_model.h"
 #include "base/macros.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/gfx/shadow_value.h"
 #include "ui/views/controls/button/image_button.h"
@@ -29,7 +30,6 @@ class Textfield;
 namespace app_list {
 
 class AppListView;
-class AppListViewDelegate;
 class SearchBoxModel;
 class SearchBoxViewDelegate;
 class SearchBoxBackground;
@@ -149,7 +149,12 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   void UpdateSearchIcon();
 
   // Gets the wallpaper prominent colors.
-  void GetWallpaperProminentColors(std::vector<SkColor>* colors);
+  void GetWallpaperProminentColors(
+      AppListViewDelegate::GetWallpaperProminentColorsCallback callback);
+
+  // Got the wallpaper prominent colors.
+  void OnGetWallpaperProminentColors(
+      const std::vector<SkColor>& prominent_colors);
 
   // Sets the background color.
   void SetBackgroundColor(SkColor light_vibrant);
@@ -216,6 +221,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   SkColor background_color_ = kSearchBoxBackgroundDefault;
   // The current search box color.
   SkColor search_box_color_ = kDefaultSearchboxColor;
+
+  base::WeakPtrFactory<SearchBoxView> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBoxView);
 };
