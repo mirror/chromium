@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a6fb58_88feaab9",
+        "filename": "services/network/public/cpp/cors/cors_legacy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T08:34:29Z",
+      "side": 1,
+      "message": "Let\u0027s make this just a TODO (to make it clearer that it\u0027s TODO)",
+      "revId": "8ed168beb396ddbeeb48964dd32b80827aa9fcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
