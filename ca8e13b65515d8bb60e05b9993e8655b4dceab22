@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8e9456d_c78950f9",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T14:59:18Z",
+      "side": 1,
+      "message": "Instead of having the #ifdefs, how about replacing this entire block with:\n\n    optional_fields.settings_button_handler \u003d\n        message_center::IsNewStyleNotificationEnabled()\n            ? message_center::SettingsButtonHandler::TRAY\n            : message_center::SettingsButtonHandler::DELEGATE;",
+      "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa4e2d6_bd218653",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T14:59:18Z",
+      "side": 1,
+      "message": "This change quite changes the definition of SettingsButtonHandler::DELEGATE. There\u0027s three options now:\n\n    NONE (no settings button)\n    TRAY (settings button, opens inline settings)\n    DELEGATE (settings button, opens through delegate)\n\nIn this CL we\u0027re mixing these up by adding a \"more settings\" button. It\u0027s not part of the spec so any of such discussion would definitely have to be ran through hwi@ and sgabriel@, but beyond that, it creates the following situation for MD notifications:\n\n    1. No settings button.\n    2. Settings button -\u003e inline settings for allow/block\n    3. Settings button -\u003e inline settings for allow/block + more settings\n\nThere\u0027s a few questions we have to ask ourselves here. Firstly, is the value added by the \"more settings\" button sufficient to justify the cost? Why would a user click on it? Could we simplify by not including it?\n\nThat\u0027d eventually enable us to rename |settings_button_handler| to |enable_inline_settings| and simply make it a boolean.\n\nSecondly, is this sufficient to replace the context menu? I think we can -- I love it, but again, we should run it through UX when we have a more comprehensive picture of where we\u0027d like to go.\n\nFrom a technical point of view, and also in your CL title, the use of \"tray\" is a bit of a misnomer. We use that to refer to the Chrome OS system tray which has nothing to do with inline settings. Replacing TRAY to INLINE in the enum would help significantly.",
+      "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67a49db_ae36085a",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T14:59:18Z",
+      "side": 1,
+      "message": "We\u0027ll want to keep the context menu for the old notifications.",
+      "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
