@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77250459_24d8202d",
+        "filename": "android_webview/browser/deferred_gpu_command_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T23:45:02Z",
+      "side": 1,
+      "message": "Done.\npiman: I can\u0027t think of a way to use base::NoDestructor to create a static instance to serve as a lock. If you know of a way, please share with me.",
+      "parentUuid": "b568e4ea_04aaa5c3",
+      "revId": "e1df2be7b642f0c4c3cc3c69dfc618f790676948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b07db96_f9e6b5b1",
         "filename": "android_webview/browser/deferred_gpu_command_service.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e1df2be7b642f0c4c3cc3c69dfc618f790676948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4665ff_9f347c45",
+        "filename": "android_webview/browser/deferred_gpu_command_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T23:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b07db96_f9e6b5b1",
+      "revId": "e1df2be7b642f0c4c3cc3c69dfc618f790676948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

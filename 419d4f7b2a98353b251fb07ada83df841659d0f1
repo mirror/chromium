@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b47a143_5d5aad89",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T23:45:02Z",
+      "side": 1,
+      "message": "We used the passed in gpu_info and gpu_feature_info to avoid CollectBasicGraphicsInfo on CAST. Since I removed that mechanism, now we need to explicitly avoid doing that for CAST because PCI scan doesn\u0027t work on many CAST devices.",
+      "revId": "419d4f7b2a98353b251fb07ada83df841659d0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
