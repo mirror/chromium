@@ -104,6 +104,24 @@
       "revId": "eba04321214630a364962ec902c4b8dc6f1f6af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89faf2bb_d89079f0",
+        "filename": "chrome/browser/printing/cloud_print/privet_notifications_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T01:21:08Z",
+      "side": 1,
+      "message": "Apparently that rule is out of date now. https://chromium.googlesource.com/chromium/tools/depot_tools/+/e864a3f217501661e71832f5f7ac729e89566a58",
+      "parentUuid": "14388df1_e7158462",
+      "revId": "eba04321214630a364962ec902c4b8dc6f1f6af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
