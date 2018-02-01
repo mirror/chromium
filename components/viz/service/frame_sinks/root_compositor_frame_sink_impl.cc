@@ -140,7 +140,8 @@ void RootCompositorFrameSinkImpl::DisplayOutputSurfaceLost() {
 void RootCompositorFrameSinkImpl::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
     const RenderPassList& render_pass) {
-  hit_test_aggregator_.Aggregate(display_->CurrentSurfaceId());
+  hit_test_aggregator_.Aggregate(display_->CurrentSurfaceId(),
+                                 display_->device_scale_factor());
 }
 
 void RootCompositorFrameSinkImpl::DisplayDidReceiveCALayerParams(

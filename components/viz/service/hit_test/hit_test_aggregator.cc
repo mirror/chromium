@@ -40,8 +40,9 @@ HitTestAggregator::HitTestAggregator(const HitTestManager* hit_test_manager,
 
 HitTestAggregator::~HitTestAggregator() = default;
 
-void HitTestAggregator::Aggregate(const SurfaceId& display_surface_id) {
-  AppendRoot(display_surface_id);
+void HitTestAggregator::Aggregate(const SurfaceId& display_surface_id,
+                                  float device_scale_factor) {
+  AppendRoot(display_surface_id, device_scale_factor);
   Swap();
 }
 
@@ -96,7 +97,8 @@ void HitTestAggregator::SwapHandles() {
   active_handle_index_ = !active_handle_index_;
 }
 
-void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
+void HitTestAggregator::AppendRoot(const SurfaceId& surface_id,
+                                   float device_scale_factor) {
   const mojom::HitTestRegionList* hit_test_region_list =
       hit_test_manager_->GetActiveHitTestRegionList(surface_id);
   if (!hit_test_region_list)
@@ -111,9 +113,10 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
 
   DCHECK_GE(region_index, 1u);
   int32_t child_count = region_index - 1;
+  gfx::Transform scaled_transform = hit_test_region_list->transform;
+  scaled_transform.Scale(device_scale_factor, device_scale_factor);
   SetRegionAt(0, surface_id.frame_sink_id(), hit_test_region_list->flags,
-              hit_test_region_list->bounds, hit_test_region_list->transform,
-              child_count);
+              hit_test_region_list->bounds, scaled_transform, child_count);
   MarkEndAt(region_index);
 }
 

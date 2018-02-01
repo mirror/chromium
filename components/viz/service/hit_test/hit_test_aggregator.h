@@ -34,7 +34,8 @@ class VIZ_SERVICE_EXPORT HitTestAggregator {
   // In this call HitTestRegionList structures received from active surfaces
   // are aggregated into the HitTestRegionList structure in
   // shared memory used for event targetting.
-  void Aggregate(const SurfaceId& display_surface_id);
+  void Aggregate(const SurfaceId& display_surface_id,
+                 float device_scale_factor);
 
   // Called at BeginFrame. Swaps buffers in shared memory and tells its
   // delegate.
@@ -73,7 +74,7 @@ class VIZ_SERVICE_EXPORT HitTestAggregator {
   void SwapHandles();
 
   // Appends the root element to the AggregatedHitTestRegion array.
-  void AppendRoot(const SurfaceId& surface_id);
+  void AppendRoot(const SurfaceId& surface_id, float device_scale_factor);
 
   // Appends a |region| to the HitTestRegionList structure to recursively
   // build the tree.  |region_index| indicates the current index of the end of
