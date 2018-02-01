@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ba17e9_5e312463",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-01T01:42:07Z",
+      "side": 1,
+      "message": "Could you move this change into another patch? This is the bug of\nexisting code. We need to have test case for this.\n\nThanks!",
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b0886f_7574bbdb",
+        "filename": "third_party/WebKit/public/web/WebAXEnums.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-01T01:42:07Z",
+      "side": 1,
+      "message": "Please make this liet to include only following granularities for web\ncompatibility, Firefox \u003d\u003d subset of Blink/WebKit:\n\n\"character\", \"word\", \"sentence\", \"line\", \"paragraph\", \"lineboundary\", \"sentenceboundary\", \"paragraphboundary\", or \"documentboundary\".\n\nExcluding entries in above list are:\n\"sentence\", \"paragraph\", \"sentenceboundary\", \"paragraphboundary\", or \"documentboundary\"\n\nSee https://developer.mozilla.org/en-US/docs/Web/API/Selection/modify\n\nOr adding suffix \"Deprecated\" to them?",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 39
+      },
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
