@@ -94,6 +94,30 @@
       "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08faa0c0_75d1bbd5",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T21:36:05Z",
+      "side": 1,
+      "message": "I think it is okay with out that.\nCurrently, the code reads like this to me:\n\nif neon\n  check_for_neon_support();\n\nIf we instead checked for ARMv7 or \u003eARMv6 or the such, it would read like:\nif \u003eARMv6 // secretly, this means if we\u0027re attempting neon support\n  check_for_neon_support();\n\n\nSo even without the comment, the code seems to clearly show the intention and rational to me. Maybe I\u0027m missing something?",
+      "parentUuid": "5d3adb65_231a3bff",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
