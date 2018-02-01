@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "034eb8b7_02ab1209",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069b2b35_da92c55e",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef287d8d_e6e5d73e",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51b659c_6bb40bd3",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef287d8d_e6e5d73e",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "acb672b5_a412765a",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c52448_f889ac29",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d2a47a5_b36c11f3",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca0a87a_b4302219",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Thanks, fixed.",
+      "parentUuid": "1d2a47a5_b36c11f3",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c78e72fe_fe4538a9",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "In PasswordForm it\u0027s called password_element (no \"current\"). And password_field corresponds to password_element/password_value in PasswordForm. So I\u0027d prefer to stick to our internal names (renaming in PasswordForm would be tricky, since it\u0027s also used in PasswordStore.",
+      "parentUuid": "000975da_ff0fef49",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7c9f83_6667fb3a",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9db492_e5b70e0c",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s leftovers from some intermediate implementaiton.",
+      "parentUuid": "fb7c9f83_6667fb3a",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "fa3464d5_c071585b",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "I think that in so simple cases as this, adding exact type is just adding of additional clutter and unecassary information. What\u0027s the point for the reader to know exact type of |field| if it\u0027s immediately clear what is doing inside this function. Unecassary information just increases mental load during reading (and mental load on reading C++ and especially Obj-C is already high enough).\nI\u0027m trying to add exact type only in cases when knowing the type might be useful (for example I agree that in line 100 in ParseUsingAutocomplete it makes some sense), but lines 75, 84, and 100 no. \nActually even const doesn\u0027t add anything, it\u0027s just extra information, and anyway field is const.\nI tried to write as much as possible readable code, for example I didn\u0027t use here std::any_of with lambda, because for is more straight forward and clear construction.",
+      "parentUuid": "84be8a4a_31ab64bb",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d854aa6_79a4844c",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ff1f44_f08914c4",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Please see comment to line 76.",
+      "parentUuid": "3d854aa6_79a4844c",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "42f575d7_8414985b",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf284350_1d705f96",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a3ad7d_4ff83080",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01113f9b_bbd7b307",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a3ad7d_4ff83080",
+      "range": {
+        "startLine": 92,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 23
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "d67a5098_1cef8109",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472f7b58_3e002fb5",
+      "range": {
+        "startLine": 96,
+        "startChar": 75,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a44e9ee_1bbf2a81",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -275,6 +539,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7d3021_552e3b0a",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a44e9ee_1bbf2a81",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "5ee6327e_c4472ee6",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969ce82d_e69a5382",
+      "range": {
+        "startLine": 124,
+        "startChar": 44,
+        "endLine": 124,
+        "endChar": 48
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246f7421_e49a9242",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -321,6 +633,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5806be10_d46d08e3",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s much better function description.",
+      "parentUuid": "246f7421_e49a9242",
+      "range": {
+        "startLine": 127,
+        "startChar": 26,
+        "endLine": 127,
+        "endChar": 43
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "337bd087_16f674b1",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Please see comment to line 76",
+      "parentUuid": "8c4ac362_099ee51e",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 11
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc605896_017d3f64",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -367,6 +727,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c149ee_40d51334",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc605896_017d3f64",
+      "range": {
+        "startLine": 145,
+        "startChar": 47,
+        "endLine": 145,
+        "endChar": 53
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "def03f02_c392d1c8",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Updated this comment visible -\u003e focusable.\nIn the end of this comment I\u0027ve added \nNote that focusability is the proxy for visibility.\nIn any other places focusability is used, and it\u0027s not needed to talk about visibility",
+      "parentUuid": "6044f216_5cb822af",
+      "range": {
+        "startLine": 146,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 65
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676daad3_63668cf7",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -413,6 +821,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357fcce6_f7cd4437",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Removed this comment and added to function description\nNote that focusability is the proxy for visibility.",
+      "parentUuid": "676daad3_63668cf7",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "62d99d2c_9e96010e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "For such small function, I think it\u0027s too much precaution, I\u0027d prefer to leave just bool, that much cleaner.",
+      "parentUuid": "e3009f17_6b28efd7",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 6
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a3e6fad_89a1b8cb",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -459,6 +915,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d57cb45_d6efb2e5",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "My plan is to use class similar to FormParser on upstream. But I\u0027m not sure whether it will be one class or 2 different (for ios or not-ios), depending on how different would be ios and non-ios. So I have no idea what to write in todo and why do we need to create this todo :)",
+      "parentUuid": "1a3e6fad_89a1b8cb",
+      "range": {
+        "startLine": 161,
+        "startChar": 55,
+        "endLine": 162,
+        "endChar": 79
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -485,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "eef8ec4f_924a8234",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Yeah, it makes sense. That\u0027s all comments from upstream LocateSpecificPasswords. Removed",
+      "parentUuid": "968f3755_59bf9b5e",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 31
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4c97837_5ab1a2c8",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -505,6 +1009,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb8a22d_43c47932",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Not in the current architecture of Password Manager. But we can think about it during big refactoring.",
+      "parentUuid": "d4c97837_5ab1a2c8",
+      "range": {
+        "startLine": 181,
+        "startChar": 56,
+        "endLine": 181,
+        "endChar": 78
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -531,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "f7bbc725_420827fb",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Common example of useless and outdated comments :) (that\u0027s all from upstream function).\nI\u0027ve updated many comments for this function. Please check them again.",
+      "parentUuid": "576adc07_471ce07f",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 20
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c300abae_3f5444cb",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -551,6 +1103,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b63c55_3c43c18c",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c300abae_3f5444cb",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 6
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -577,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "a1e771fc_aae5e8ad",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "2e5c7c32_5fd7807e",
+      "range": {
+        "startLine": 239,
+        "startChar": 19,
+        "endLine": 239,
+        "endChar": 25
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53df628e_dcb6d5bd",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -597,6 +1197,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33da194e_43471e5c",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53df628e_dcb6d5bd",
+      "range": {
+        "startLine": 240,
+        "startChar": 43,
+        "endLine": 240,
+        "endChar": 63
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -623,6 +1247,30 @@
     },
     {
       "key": {
+        "uuid": "38f7d073_23c33753",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2755c7_6be2292c",
+      "range": {
+        "startLine": 269,
+        "startChar": 35,
+        "endLine": 269,
+        "endChar": 38
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07fafdf0_e4888f17",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -643,6 +1291,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a56e362_e445443b",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07fafdf0_e4888f17",
+      "range": {
+        "startLine": 275,
+        "startChar": 56,
+        "endLine": 275,
+        "endChar": 58
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -669,6 +1341,30 @@
     },
     {
       "key": {
+        "uuid": "aeaf5b6f_2da95a0d",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Obj-C doesn\u0027t use namespace because there are no namespace in Obj-C. In C++ part of //ios namespaces are used, see for example https://cs.chromium.org/chromium/src/ios/chrome/browser/browser_state/chrome_browser_state.h?type\u003dcs\u0026q\u003dChromeBrowserState\u0026l\u003d43 \nFormParser is C++ class, so I don\u0027t see reasons not to use namespace in C++ code, where it\u0027s common. But it\u0027s better to call namespace password_manager (I\u0027ve already done it in https://cs.chromium.org/chromium/src/ios/chrome/browser/passwords/account_select_fill_data.h).",
+      "parentUuid": "2dab12bd_23346e03",
+      "range": {
+        "startLine": 300,
+        "startChar": 10,
+        "endLine": 300,
+        "endChar": 19
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c7df205_20cf9aed",
         "filename": "ios/chrome/browser/passwords/form_parser.h",
         "patchSetId": 10
@@ -689,6 +1385,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8d6670_5ec8a2f6",
+        "filename": "ios/chrome/browser/passwords/form_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Thanks, removed.",
+      "parentUuid": "9c7df205_20cf9aed",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -715,6 +1435,30 @@
     },
     {
       "key": {
+        "uuid": "b0d077e8_b00fbb15",
+        "filename": "ios/chrome/browser/passwords/form_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9bc883e_b08b3842",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "771a97e0_d5995d41",
         "filename": "ios/chrome/browser/passwords/form_parser.h",
         "patchSetId": 10
@@ -738,6 +1482,30 @@
     },
     {
       "key": {
+        "uuid": "2cc26975_f44733e4",
+        "filename": "ios/chrome/browser/passwords/form_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "771a97e0_d5995d41",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f7f9cd9_0fa822b6",
         "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
         "patchSetId": 10
@@ -752,6 +1520,24 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a929c549_95cb598e",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T14:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7f9cd9_0fa822b6",
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
