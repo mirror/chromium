@@ -3371,6 +3371,14 @@
           '--jobs=1',
         ],
       },
+      'Win7 Tests (dbg)(1)': {
+        'args': [
+          '--jobs=1',
+        ],
+        'swarming': {
+          'shards': 20,
+        },
+      },
       # chromium.sandbox
       'Linux Tests SANDBOX': {
         'args': [
@@ -3383,7 +3391,6 @@
       'Linux Tests (dbg)(1)(32)',
       'Mac10.9 Tests',
       'Mac10.9 Tests (dbg)',
-      'Win7 Tests (dbg)(1)',
       # client.v8.chromium
       'Linux - Future (dbg)',
     ],
