@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab0be3cb_2e500247",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1967,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-01T05:15:47Z",
+      "side": 1,
+      "message": "Is this similar to what is done for filters? Can you point me to the code for that?",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166d4df0_3389e5cd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-01T05:15:47Z",
+      "side": 1,
+      "message": "loop over all fragments and call InvalidateClipPathCache(), right?\nAlso please move to cpp file.",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a15d22_a4bcbb7d",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-01T05:15:47Z",
+      "side": 1,
+      "message": "Is it necessary to have this method? There is only one callsite, so it looks specialized\nto me.",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
