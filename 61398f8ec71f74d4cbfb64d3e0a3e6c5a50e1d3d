@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6dc3b2_0ac94343",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T19:37:24Z",
+      "side": 1,
+      "message": "nit: s/were_// (\u0027devices were removed\u0027 is probably better tense wise but either way it sounds a little awkwards. Just my 2c.)",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f27ba4_fb95cbf4",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T19:37:24Z",
+      "side": 1,
+      "message": "While we\u0027re refactring, include base/stl_util.h and use:\nif (!base::ContainsValue(device_ids_for_priority, priotizied_id.device_id))",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2cd3d5_f02cde2b",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T19:37:24Z",
+      "side": 1,
+      "message": "ConnectionPriority is just an enum, no neeed to use const\u0026 (which suggests that its something more complicated).",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5533336_9675eae7",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T19:37:24Z",
+      "side": 1,
+      "message": "We can elim DoesVectorContainPrioritizedDeviceId and use:\nconst std::string\u0026 device_id \u003d *device_ids_it;\nif (std::find_if(prioritized_ids.begin(), prioritized_ids.end(),\n    [device_id](prioritized_id) {\n      return prioritized_id.device_id \u003d\u003d device_id;\n    }) {",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faec9e5_d693478d",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T19:37:24Z",
+      "side": 1,
+      "message": "s/device_deque_it/device_it/",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2268a66_090906f2",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T19:37:24Z",
+      "side": 1,
+      "message": "auto device_it \u003d std::find(device_ids_for_priority.begin(), device_ids_for_priority.end(), device_id);",
+      "revId": "61398f8ec71f74d4cbfb64d3e0a3e6c5a50e1d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
