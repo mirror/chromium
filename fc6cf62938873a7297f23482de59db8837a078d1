@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4582fe9_c8d81593",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-01T19:12:58Z",
+      "side": 1,
+      "message": "I think enable_dial_discovery can be removed (in a separate patch).",
+      "revId": "fc6cf62938873a7297f23482de59db8837a078d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b6f54c_63d3e91d",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-01T19:12:58Z",
+      "side": 1,
+      "message": "we can set this to false, and clean up on the extension side.",
+      "revId": "fc6cf62938873a7297f23482de59db8837a078d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
