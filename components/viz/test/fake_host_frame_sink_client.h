@@ -19,6 +19,7 @@ class FakeHostFrameSinkClient : public HostFrameSinkClient {
 
   // HostFrameSinkClient implementation.
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override {}
+  void OnSynchronizationEvent(base::TimeDelta duration) override {}
   void OnFrameTokenChanged(uint32_t frame_token) override;
   uint32_t last_frame_token_seen() const { return last_frame_token_seen_; }
 

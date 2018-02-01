@@ -133,6 +133,7 @@ class CONTENT_EXPORT CompositorImpl
 
   // viz::HostFrameSinkClient implementation.
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
+  void OnSynchronizationEvent(base::TimeDelta duration) override;
   void OnFrameTokenChanged(uint32_t frame_token) override {}
 
   // display::DisplayObserver implementation.

@@ -53,7 +53,8 @@ class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
   ~MockFrameSinkManagerImpl() override = default;
 
   // mojom::FrameSinkManager:
-  MOCK_METHOD1(RegisterFrameSinkId, void(const FrameSinkId& frame_sink_id));
+  MOCK_METHOD2(RegisterFrameSinkId,
+               void(const FrameSinkId& frame_sink_id, bool));
   MOCK_METHOD1(InvalidateFrameSinkId, void(const FrameSinkId& frame_sink_id));
   MOCK_METHOD2(SetFrameSinkDebugLabel,
                void(const FrameSinkId& frame_sink_id,
@@ -200,8 +201,8 @@ TEST_F(HostFrameSinkManagerLocalTest, CreateMojomCompositorFrameSink) {
   FakeHostFrameSinkClient host_client;
 
   // Register then create CompositorFrameSink for child.
-  EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1));
-  host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
+  EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1, false));
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &host_client);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 
   EXPECT_CALL(impl(), MockCreateCompositorFrameSink(kFrameSinkChild1));
@@ -210,7 +211,7 @@ TEST_F(HostFrameSinkManagerLocalTest, CreateMojomCompositorFrameSink) {
   testing::Mock::VerifyAndClearExpectations(&impl());
 
   // Register but don't actually create CompositorFrameSink for parent.
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
 
   // Register should call through to FrameSinkManagerImpl and should work even
   // though |kFrameSinkParent1| was not created yet.
@@ -242,8 +243,8 @@ TEST_F(HostFrameSinkManagerLocalTest, CommunicateFrameToken) {
   FrameSinkId kChildFrameSink1(65563, 0);
   const SurfaceId child_id1 = MakeSurfaceId(kChildFrameSink1, 1);
   const SurfaceId parent_id1 = MakeSurfaceId(kParentFrameSink, 1);
-  host().RegisterFrameSinkId(kParentFrameSink, &host_client_parent);
-  host().RegisterFrameSinkId(kChildFrameSink1, &host_client_child);
+  host().RegisterFrameSinkId(kParentFrameSink, false, &host_client_parent);
+  host().RegisterFrameSinkId(kChildFrameSink1, false, &host_client_child);
   auto support =
       CreateCompositorFrameSinkSupport(kParentFrameSink, true /* is_root */);
 
@@ -263,7 +264,7 @@ TEST_F(HostFrameSinkManagerLocalTest, CommunicateFrameToken) {
   // HostFrameSinkClient.
   EXPECT_EQ(0u, host_client_parent.last_frame_token_seen());
 
-  parent_surface->ActivatePendingFrameForDeadline();
+  parent_surface->ActivatePendingFrameForDeadline(base::TimeDelta());
   EXPECT_FALSE(parent_surface->has_deadline());
   EXPECT_TRUE(parent_surface->HasActiveFrame());
   EXPECT_FALSE(parent_surface->HasPendingFrame());
@@ -276,12 +277,12 @@ TEST_F(HostFrameSinkManagerLocalTest, CommunicateFrameToken) {
 TEST_F(HostFrameSinkManagerLocalTest, CreateCompositorFrameSinkSupport) {
   FakeHostFrameSinkClient host_client;
 
-  host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &host_client);
   auto support_child =
       CreateCompositorFrameSinkSupport(kFrameSinkChild1, true /* is_root */);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
   auto support_parent =
       CreateCompositorFrameSinkSupport(kFrameSinkParent1, true /* is_root */);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkParent1));
@@ -313,10 +314,10 @@ TEST_F(HostFrameSinkManagerLocalTest, CreateCompositorFrameSinkSupport) {
 
 TEST_F(HostFrameSinkManagerLocalTest, AssignTemporaryReference) {
   FakeHostFrameSinkClient host_client;
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkChild1, 1);
-  host().RegisterFrameSinkId(surface_id.frame_sink_id(), &host_client);
+  host().RegisterFrameSinkId(surface_id.frame_sink_id(), false, &host_client);
   auto support = CreateCompositorFrameSinkSupport(surface_id.frame_sink_id(),
                                                   false /* is_root */);
 
@@ -335,7 +336,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReference) {
   FakeHostFrameSinkClient host_client;
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkChild1, 1);
-  host().RegisterFrameSinkId(surface_id.frame_sink_id(), &host_client);
+  host().RegisterFrameSinkId(surface_id.frame_sink_id(), false, &host_client);
   auto support = CreateCompositorFrameSinkSupport(surface_id.frame_sink_id(),
                                                   false /* is_root */);
 
@@ -350,12 +351,12 @@ TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReference) {
 TEST_F(HostFrameSinkManagerLocalTest, DropTemporaryReferenceForStaleClient) {
   FakeHostFrameSinkClient host_client;
 
-  host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &host_client);
   auto support_child =
       CreateCompositorFrameSinkSupport(kFrameSinkChild1, false /* is_root */);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
   auto support_parent =
       CreateCompositorFrameSinkSupport(kFrameSinkParent1, true /* is_root */);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkParent1));
@@ -394,17 +395,17 @@ TEST_F(HostFrameSinkManagerLocalTest, HierarchyMultipleParents) {
 
   // Register two parent and child CompositorFrameSink.
   const FrameSinkId& id_parent1 = kFrameSinkParent1;
-  host().RegisterFrameSinkId(id_parent1, &host_client);
+  host().RegisterFrameSinkId(id_parent1, false, &host_client);
   auto support_parent1 =
       CreateCompositorFrameSinkSupport(id_parent1, true /* is_root */);
 
   const FrameSinkId& id_parent2 = kFrameSinkChild1;
-  host().RegisterFrameSinkId(id_parent2, &host_client);
+  host().RegisterFrameSinkId(id_parent2, false, &host_client);
   auto support_parent2 =
       CreateCompositorFrameSinkSupport(id_parent2, true /* is_root */);
 
   const FrameSinkId& id_child = kFrameSinkParent2;
-  host().RegisterFrameSinkId(id_child, &host_client);
+  host().RegisterFrameSinkId(id_child, false, &host_client);
   auto support_child =
       CreateCompositorFrameSinkSupport(id_child, false /* is_root */);
 
@@ -440,12 +441,12 @@ TEST_F(HostFrameSinkManagerLocalTest,
        DropTemporaryReferenceForInvalidatedParent) {
   FakeHostFrameSinkClient host_client;
 
-  host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &host_client);
   auto support_child =
       CreateCompositorFrameSinkSupport(kFrameSinkChild1, false /* is_root */);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
   auto support_parent =
       CreateCompositorFrameSinkSupport(kFrameSinkParent1, true /* is_root */);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkParent1));
@@ -482,7 +483,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DisplayRootTemporaryReference) {
   FakeHostFrameSinkClient host_client;
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkParent1, 1);
-  host().RegisterFrameSinkId(surface_id.frame_sink_id(), &host_client);
+  host().RegisterFrameSinkId(surface_id.frame_sink_id(), false, &host_client);
   auto support = CreateCompositorFrameSinkSupport(surface_id.frame_sink_id(),
                                                   true /* is_root */);
 
@@ -498,7 +499,7 @@ TEST_F(HostFrameSinkManagerLocalTest, DisplayRootTemporaryReference) {
 TEST_F(HostFrameSinkManagerLocalTest, DisplayHitTestQueryMap) {
   FakeHostFrameSinkClient client;
   EXPECT_FALSE(FrameSinkDataExists(kFrameSinkChild1));
-  host().RegisterFrameSinkId(kFrameSinkChild1, &client);
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &client);
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 
   EXPECT_FALSE(DisplayHitTestQueryExists(kFrameSinkChild1));
@@ -518,8 +519,8 @@ TEST_F(HostFrameSinkManagerRemoteTest, RestartOnGpuCrash) {
 
   // Register two FrameSinkIds, hierarchy between them and create a
   // CompositorFrameSink for one.
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
-  host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &host_client);
   host().RegisterFrameSinkHierarchy(kFrameSinkParent1, kFrameSinkChild1);
 
   MockCompositorFrameSinkClient compositor_frame_sink_client;
@@ -554,8 +555,8 @@ TEST_F(HostFrameSinkManagerRemoteTest, RestartOnGpuCrash) {
   ConnectToGpu();
   {
     base::RunLoop run_loop;
-    EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkParent1));
-    EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1));
+    EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkParent1, false));
+    EXPECT_CALL(impl(), RegisterFrameSinkId(kFrameSinkChild1, false));
     EXPECT_CALL(impl(),
                 RegisterFrameSinkHierarchy(kFrameSinkParent1, kFrameSinkChild1))
         .WillOnce(InvokeClosure(run_loop.QuitClosure()));
@@ -572,7 +573,7 @@ TEST_F(HostFrameSinkManagerRemoteTest, DeletedHitTestQuery) {
 
   // Register a FrameSinkId, and create a RootCompositorFrameSink, which should
   // create a HitTestQuery.
-  host().RegisterFrameSinkId(kFrameSinkChild1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkChild1, false, &host_client);
   mojom::CompositorFrameSinkAssociatedPtrInfo
       compositor_frame_sink_associated_info;
   MockCompositorFrameSinkClient compositor_frame_sink_client;
@@ -617,10 +618,10 @@ TEST_F(HostFrameSinkManagerRemoteTest, DeletedHitTestQuery) {
 // to a remote mojom::FrameSinkManager.
 TEST_F(HostFrameSinkManagerRemoteTest, AssignTemporaryReference) {
   FakeHostFrameSinkClient host_client;
-  host().RegisterFrameSinkId(kFrameSinkParent1, &host_client);
+  host().RegisterFrameSinkId(kFrameSinkParent1, false, &host_client);
 
   const SurfaceId surface_id = MakeSurfaceId(kFrameSinkChild1, 1);
-  host().RegisterFrameSinkId(surface_id.frame_sink_id(), &host_client);
+  host().RegisterFrameSinkId(surface_id.frame_sink_id(), false, &host_client);
   MockCompositorFrameSinkClient compositor_frame_sink_client;
   mojom::CompositorFrameSinkPtr compositor_frame_sink;
   host().CreateCompositorFrameSink(
