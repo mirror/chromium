@@ -340,6 +340,8 @@ source_set("chromeos") {
     "arc/boot_phase_monitor/arc_instance_throttle.h",
     "arc/cast_receiver/arc_cast_receiver_service.cc",
     "arc/cast_receiver/arc_cast_receiver_service.h",
+    "arc/cups_print/arc_cups_print_service.cc",
+    "arc/cups_print/arc_cups_print_service.h",
     "arc/downloads_watcher/arc_downloads_watcher_service.cc",
     "arc/downloads_watcher/arc_downloads_watcher_service.h",
     "arc/enterprise/arc_cert_store_bridge.cc",

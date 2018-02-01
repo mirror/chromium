@@ -34,6 +34,8 @@ class ClipboardHost;
 class ClipboardInstance;
 class CrashCollectorHost;
 class CrashCollectorInstance;
+class CupsPrintHost;
+class CupsPrintInstance;
 class EnterpriseReportingHost;
 class EnterpriseReportingInstance;
 class FileSystemHost;
@@ -132,6 +134,10 @@ class ArcBridgeService {
   ConnectionHolder<mojom::CrashCollectorInstance, mojom::CrashCollectorHost>*
   crash_collector() {
     return &crash_collector_;
+  }
+  ConnectionHolder<mojom::CupsPrintInstance, mojom::CupsPrintHost>*
+  cups_print() {
+    return &cups_print_;
   }
   ConnectionHolder<mojom::EnterpriseReportingInstance,
                    mojom::EnterpriseReportingHost>*
@@ -237,6 +243,7 @@ class ArcBridgeService {
   ConnectionHolder<mojom::ClipboardInstance, mojom::ClipboardHost> clipboard_;
   ConnectionHolder<mojom::CrashCollectorInstance, mojom::CrashCollectorHost>
       crash_collector_;
+  ConnectionHolder<mojom::CupsPrintInstance, mojom::CupsPrintHost> cups_print_;
   ConnectionHolder<mojom::EnterpriseReportingInstance,
                    mojom::EnterpriseReportingHost>
       enterprise_reporting_;

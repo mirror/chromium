@@ -15,6 +15,7 @@ import "cast_receiver.mojom";
 import "cert_store.mojom";
 import "clipboard.mojom";
 import "crash_collector.mojom";
+import "cups_print.mojom";
 import "enterprise_reporting.mojom";
 import "file_system.mojom";
 import "ime.mojom";
@@ -44,9 +45,9 @@ import "voice_interaction_framework.mojom";
 import "volume_mounter.mojom";
 import "wallpaper.mojom";
 
-// Next MinVersion: 37
+// Next MinVersion: 38
 // Deprecated method IDs: 101, 105
-// Next method ID: 142
+// Next method ID: 143
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
@@ -89,6 +90,9 @@ interface ArcBridgeHost {
   // Notifies Chrome that the CrashCollectorInstance interface is ready.
   [MinVersion=7] OnCrashCollectorInstanceReady@112(
       CrashCollectorInstance instance_ptr);
+
+  // Notifies Chrome that the CupsPrint interface is ready.
+  [MinVersion=37] OnCupsPrintInstanceReady@142(CupsPrintInstance instance_ptr);
 
   // Notifies Chrome that the EnterpriseReportingInstance interface is ready.
   [MinVersion=15] OnEnterpriseReportingInstanceReady@122(
