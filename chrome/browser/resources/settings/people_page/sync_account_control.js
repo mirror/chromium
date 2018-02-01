@@ -78,6 +78,23 @@ Polymer({
   },
 
   /**
+   * @param {string} image
+   * @return {!string}
+   * @private
+   */
+  getAccountImageSrc_: function(image) {
+    return image || 'chrome://theme/IDR_PROFILE_AVATAR_PLACEHOLDER_LARGE';
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getSigninClass_: function() {
+    return this.syncStatus.signedIn ? 'syncing' : '';
+  },
+
+  /**
    * @param {!Array<!settings.StoredAccount>} accounts
    * @private
    */
