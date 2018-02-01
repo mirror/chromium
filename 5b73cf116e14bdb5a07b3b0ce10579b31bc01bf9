@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fc939ca_2eebf590",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-01T17:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db564ec9_1369903a",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "5b73cf116e14bdb5a07b3b0ce10579b31bc01bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7b5b03a_0060fa32",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadFilter.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "5b73cf116e14bdb5a07b3b0ce10579b31bc01bf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db5af4d_ef63231b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-01T17:28:45Z",
+      "side": 1,
+      "message": "I made it Type because it\u0027ll be DownloadFilter.Type (instead of DownloadFilter.FilterType which seems redundant).",
+      "parentUuid": "c18c4a4e_02ba61be",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "5b73cf116e14bdb5a07b3b0ce10579b31bc01bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
