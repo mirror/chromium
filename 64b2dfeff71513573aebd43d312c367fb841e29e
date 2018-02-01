@@ -52,6 +52,24 @@
       "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b3012f_b828a4a1",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116849
+      },
+      "writtenOn": "2018-02-01T21:22:52Z",
+      "side": 0,
+      "message": "The problem is that keeping these empty lists will artificially skew averages, which are what we currently alert on for smoothness. It\u0027s true that whether we remove this page or just remove the filtering, averages for this value and/or others will move on a one-time basis, but it\u0027s better for them to move because they reflect reality (a page has been removed) than because of noise (this page adding 0s because it doesn\u0027t fit the mold).",
+      "parentUuid": "967fb399_18c992ac",
+      "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
