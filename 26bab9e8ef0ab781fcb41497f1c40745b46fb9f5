@@ -241,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "60226ef2_d6aa6ca2",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T00:46:04Z",
+      "side": 1,
+      "message": "It does, when the resource is exported to the display compositor. It\u0027s the name we use for the backing on DrawQuads still. See InUsePoolResource::resource_id_for_export().",
+      "parentUuid": "53082500_e8d9438c",
+      "revId": "26bab9e8ef0ab781fcb41497f1c40745b46fb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49148200_95d63649",
         "filename": "cc/resources/resource_pool.cc",
         "patchSetId": 7
@@ -252,6 +270,24 @@
       "writtenOn": "2018-01-31T23:45:10Z",
       "side": 1,
       "message": "nit: Maybe rename MakeGLOverlay to MakeGL or MakeGPU?",
+      "revId": "26bab9e8ef0ab781fcb41497f1c40745b46fb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ffbc0f_100ead6c",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T00:46:04Z",
+      "side": 1,
+      "message": "There is a MakeGL which doesn\u0027t take a size or an overlay bool.",
+      "parentUuid": "49148200_95d63649",
       "revId": "26bab9e8ef0ab781fcb41497f1c40745b46fb9f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
