@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b13ffd6_d976043e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "super nit: relying party",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6573718f_3713a8da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "Could you please clarify what *it* is? Is it the attestation statement or the attestation data, or both?",
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2b9dc8_857fc532",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "Can you please add a DCHECK for this?",
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ea231d_df17d207",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "nit for clarity: AAGUID (in AttestedCredentialData in |authenticator_data_|)",
+      "range": {
+        "startLine": 35,
+        "startChar": 36,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9d6d24_4b718de5",
         "filename": "device/u2f/attestation_object.h",
         "patchSetId": 1
@@ -18,6 +98,29 @@
         "startChar": 22,
         "endLine": 37,
         "endChar": 24
+      },
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39d54b7_49e9cb0b",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "nit: EraseAttestationStatement()",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 23
       },
       "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -64,6 +167,69 @@
         "startChar": 23,
         "endLine": 44,
         "endChar": 25
+      },
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7cec4c_012bb572",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "nit: EraseAttestationStatement",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a270f2c4_2d3297b9",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "Bindings ought to enforce that this never happens, add NOTREACHED().",
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae97a868_50b804a4",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:10:34Z",
+      "side": 1,
+      "message": "super nit: If you are already removing one whitespace below, could you please remove this one here as well? :)",
+      "range": {
+        "startLine": 26,
+        "startChar": 72,
+        "endLine": 26,
+        "endChar": 73
       },
       "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
