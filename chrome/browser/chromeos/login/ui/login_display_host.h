@@ -112,6 +112,17 @@ class LoginDisplayHost {
   // Returns whether current host is for voice interaction OOBE.
   virtual bool IsVoiceInteractionOobe() = 0;
 
+  // Update the visibility of the gaia dialog.
+  virtual void UpdateGaiaDialogVisibility(bool visible) = 0;
+
+  // Update the size of the gaia dialog.
+  virtual void UpdateGaiaDialogSize(int width, int height) = 0;
+
+  // Get users that are visible in the login screen UI.
+  // This is mainly used by views login screen. WebUI login screen will
+  // return an empty list.
+  virtual const user_manager::UserList GetUsers() = 0;
+
   // Confirms sign in by provided credentials in |user_context|.
   // Used for new user login via GAIA extension.
   void CompleteLogin(const UserContext& user_context);
