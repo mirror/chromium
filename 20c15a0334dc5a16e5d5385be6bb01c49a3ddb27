@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d499283_89aa503b",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-02-01T20:21:17Z",
+      "side": 1,
+      "message": "Why not just leave it VECTOR_MATH_SIMD?  We already know it\u0027s a name space.  (I was confused previously on why there was an NS appended.)\n\nAnd also, see https://google.github.io/styleguide/cppguide.html#Namespace_Names",
+      "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16c8a466_50473ac0",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
         "patchSetId": 2
