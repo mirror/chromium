@@ -29,23 +29,13 @@ static bool IsEmptyItem(NGInlineItem::NGInlineItemType type,
   if (type == NGInlineItem::kOpenTag) {
     DCHECK(style && layout_object);
 
-    if (style->BorderStart().NonZero() || !style->PaddingStart().IsZero())
+    if (style->BorderStart().NonZero() || !style->PaddingStart().IsZero() ||
+        style->BorderEnd().NonZero() || !style->PaddingEnd().IsZero())
       return false;
 
     // Non-zero margin can prevent "empty" only in non-quirks mode.
     // https://quirks.spec.whatwg.org/#the-line-height-calculation-quirk
-    if (!style->MarginStart().IsZero() &&
-        !layout_object->GetDocument().InLineHeightQuirksMode())
-      return false;
-  }
-
-  if (type == NGInlineItem::kCloseTag) {
-    DCHECK(style && layout_object);
-
-    if (style->BorderEnd().NonZero() || !style->PaddingEnd().IsZero())
-      return false;
-
-    if (!style->MarginEnd().IsZero() &&
+    if ((!style->MarginStart().IsZero() || !style->MarginEnd().IsZero()) &&
         !layout_object->GetDocument().InLineHeightQuirksMode())
       return false;
   }
