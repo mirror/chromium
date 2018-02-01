@@ -160,6 +160,25 @@ void PopulatePageTransitionMetrics(ukm::builders::TabManager_TabMetrics* entry,
       ui::PageTransitionIsRedirect(page_transition));
 }
 
+// Logs the TabManager.Background.ForegroundedOrClosed event.
+void LogBackgroundTabForegroundedOrClosed(
+    ukm::SourceId ukm_source_id,
+    base::TimeDelta inactive_duration,
+    bool is_foregrounded) {
+  if (!ukm_source_id)
+    return;
+
+  LOG(ERROR) << "Logging for " << ukm_source_id << ": " << is_foregrounded;
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (!ukm_recorder)
+    return;
+  
+  ukm::builders::TabManager_Background_ForegroundedOrClosed(ukm_source_id)
+    .SetTimeFromBackgrounded(inactive_duration.InMilliseconds())
+    .SetIsForegrounded(is_foregrounded)
+    .Record(ukm_recorder);
+}
+
 }  // namespace
 
 TabMetricsLoggerImpl::TabMetricsLoggerImpl() = default;
@@ -229,6 +248,30 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
       .SetNavigationEntryCount(web_contents->GetController().GetEntryCount())
       .SetSequenceId(++sequence_id_)
       .Record(ukm_recorder);
+}
+
+void TabMetricsLoggerImpl::LogBackgroundTabShown(
+    ukm::SourceId ukm_source_id,
+    base::TimeDelta inactive_duration) {
+  LogBackgroundTabForegroundedOrClosed(ukm_source_id, inactive_duration,
+                                       /*is_shown=*/true);
+}
+
+void TabMetricsLoggerImpl::LogBackgroundTabClosed(
+    ukm::SourceId ukm_source_id,
+    base::TimeDelta inactive_duration) {
+  LogBackgroundTabForegroundedOrClosed(ukm_source_id, inactive_duration,
+                                       /*is_shown=*/false);
+}
+
+void TabMetricsLoggerImpl::LogTabLifetime(
+    ukm::SourceId ukm_source_id,
+    base::TimeDelta time_since_navigation) {
+  if (!ukm_source_id)
+    return;
+  ukm::builders::TabManager_TabLifetime(ukm_source_id)
+      .SetTimeSinceNavigation(time_since_navigation.InMilliseconds())
+      .Record(ukm::UkmRecorder::Get());
 }
 
 // static

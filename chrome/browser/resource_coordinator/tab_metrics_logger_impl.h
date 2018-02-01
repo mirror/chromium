@@ -23,6 +23,12 @@ class TabMetricsLoggerImpl : public TabMetricsLogger {
   // TabMetricsLogger:
   void LogBackgroundTab(ukm::SourceId ukm_source_id,
                         const TabMetrics& tab_metrics) override;
+  void LogBackgroundTabShown(ukm::SourceId ukm_source_id,
+                             base::TimeDelta inactive_duration) override;
+  void LogBackgroundTabClosed(ukm::SourceId ukm_source_id,
+                              base::TimeDelta inactive_duration) override;
+  void LogTabLifetime(ukm::SourceId ukm_source_id,
+                      base::TimeDelta time_since_navigation) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(TabMetricsLoggerImplTest, Schemes);

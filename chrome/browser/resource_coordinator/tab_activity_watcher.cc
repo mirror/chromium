@@ -6,7 +6,9 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/tab_metrics_logger_impl.h"
+#include "chrome/browser/resource_coordinator/time.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/window_activity_watcher.h"
 #include "content/public/browser/browser_context.h"
@@ -45,8 +47,11 @@ class TabActivityWatcher::WebContentsData
 
   explicit WebContentsData(content::WebContents* web_contents)
       : WebContentsObserver(web_contents) {
+    DCHECK(!web_contents->GetBrowserContext()->IsOffTheRecord());
     tab_metrics_.web_contents = web_contents;
     web_contents->GetRenderViewHost()->GetWidget()->AddInputEventObserver(this);
+    if (!web_contents->IsVisible())
+      last_inactive_time_ = NowTicks();
   }
 
   // content::WebContentsObserver:
@@ -72,6 +77,9 @@ class TabActivityWatcher::WebContentsData
         << "Expected a unique Source ID for the navigation";
     ukm_source_id_ = new_source_id;
 
+    // Update navigation time for UKM reporting.
+    navigation_time_ = navigation_handle->NavigationStart();
+
     // Reset the per-page data.
     tab_metrics_.page_metrics = {};
 
@@ -84,8 +92,42 @@ class TabActivityWatcher::WebContentsData
     // contents.
     TabActivityWatcher::GetInstance()->OnDidStopLoading(web_contents());
   }
+  void WasShown() override {
+    // Ignore newly created tabs.
+    if (last_inactive_time_.is_null())
+      return;
+
+    // TODO(michaelpg): Closing multiple tabs could cause this WebContents to
+    // become shown, but then be immediately closed. This shouldn't count as a
+    // "foregrounded" event. See https://crbug.com/805775.
+    TabActivityWatcher::GetInstance()
+        ->tab_metrics_logger()
+        ->LogBackgroundTabShown(ukm_source_id_,
+                                NowTicks() - last_inactive_time_);
+  }
   void WasHidden() override {
+    if (web_contents()->IsBeingDestroyed())
+      return;
+    // TODO(michaelpg): If the WebContents becomes hidden while being destroyed,
+    // don't count that as being backgrounded.
+    last_inactive_time_ = NowTicks();
     TabActivityWatcher::GetInstance()->OnWasHidden(web_contents());
+  }
+  void WebContentsDestroyed() override {
+    if (web_contents()->IsVisible())
+      return;
+
+    TabMetricsLogger* tab_metrics_logger =
+        TabActivityWatcher::GetInstance()->tab_metrics_logger();
+    tab_metrics_logger->LogTabLifetime(ukm_source_id_,
+                                       NowTicks() - navigation_time_);
+
+    // TODO(michaelpg): This can be called after the tab is hidden, in which
+    // case it should count as being called from the foreground (thus not
+    // logged).
+    DCHECK(!last_inactive_time_.is_null());
+    tab_metrics_logger->LogBackgroundTabClosed(
+        ukm_source_id_, NowTicks() - last_inactive_time_);
   }
 
   // content::RenderWidgetHost::InputEventObserver:
@@ -100,6 +142,12 @@ class TabActivityWatcher::WebContentsData
 
   // Updated when a navigation is finished.
   ukm::SourceId ukm_source_id_ = 0;
+
+  // The last time the tab became inactive.
+  base::TimeTicks last_inactive_time_;
+
+  // The last navigation time associated with this tab.
+  base::TimeTicks navigation_time_;
 
   // Stores current stats for the tab.
   TabMetricsLogger::TabMetrics tab_metrics_;

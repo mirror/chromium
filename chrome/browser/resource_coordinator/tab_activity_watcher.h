@@ -38,6 +38,8 @@ class TabActivityWatcher : public TabStripModelObserver,
   // when the WebContents is destroyed.
   static void WatchWebContents(content::WebContents* web_contents);
 
+  TabMetricsLogger* tab_metrics_logger() { return tab_metrics_logger_.get(); }
+
  private:
   friend class TabActivityWatcherTest;
 

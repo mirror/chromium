@@ -58,7 +58,6 @@ class TabManager::WebContentsData
       content::NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
-  void WasShown() override;
   void WebContentsDestroyed() override;
 
   // Called by TabManager::ResourceCoordinatorSignalObserver to notify that a
@@ -170,9 +169,6 @@ class TabManager::WebContentsData
     int discard_count;
     // Is the tab playing audio?
     bool is_recently_audible;
-    // The navigation time associated with this tab. Useful as a reference time
-    // from which to measure UKM event timings.
-    base::TimeTicks navigation_time;
     // Last time the tab started or stopped playing audio (we record the
     // transition time).
     base::TimeTicks last_audio_change_time;
@@ -192,9 +188,6 @@ class TabManager::WebContentsData
     // True if the tab was created by session restore and initially foreground.
     bool is_restored_in_foreground;
   };
-
-  void ReportUKMWhenTabIsClosed();
-  void ReportUKMWhenBackgroundTabIsClosedOrForegrounded(bool is_foregrounded);
 
   // Contains all the needed data for the tab.
   Data tab_data_;

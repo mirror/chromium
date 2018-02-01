@@ -9,9 +9,13 @@
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "ui/base/page_transition_types.h"
 
+namespace base {
+class TimeDelta;
+}  // namesmpace base
+
 namespace content {
 class WebContents;
-}
+}  // namespace content
 
 // Logs metrics for a tab and its WebContents when requested.
 // Must be used on the UI thread.
@@ -46,6 +50,22 @@ class TabMetricsLogger {
   // nothing if |ukm_source_id| is zero.
   virtual void LogBackgroundTab(ukm::SourceId ukm_source_id,
                                 const TabMetrics& tab_metrics) = 0;
+
+  // Logs TabManager.Background.ForegroundedOrClosed UKM for a tab that was
+  // shown after being inactive.
+  virtual void LogBackgroundTabShown(
+      ukm::SourceId ukm_source_id,
+      base::TimeDelta inactive_duration) = 0;
+
+  // Logs TabManager.Background.ForegroundedOrClosed UKM for a tab that was
+  // closed after being inactive.
+  virtual void LogBackgroundTabClosed(
+      ukm::SourceId ukm_source_id,
+      base::TimeDelta inactive_duration) = 0;
+
+  // Logs TabManager.TabLifetime UKM for a closed tab.
+  virtual void LogTabLifetime(ukm::SourceId ukm_source_id,
+                              base::TimeDelta time_since_navigation) = 0;
 };
 
 #endif  // CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_METRICS_LOGGER_H_

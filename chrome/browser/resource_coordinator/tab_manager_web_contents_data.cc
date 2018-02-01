@@ -73,15 +73,8 @@ void TabManager::WebContentsData::DidFinishNavigation(
     return;
   }
 
-  tab_data_.navigation_time = navigation_handle->NavigationStart();
   ukm_source_id_ = ukm::ConvertToSourceId(navigation_handle->GetNavigationId(),
                                           ukm::SourceIdType::NAVIGATION_ID);
-}
-
-void TabManager::WebContentsData::WasShown() {
-  if (tab_data_.last_inactive_time.is_null())
-    return;
-  ReportUKMWhenBackgroundTabIsClosedOrForegrounded(true);
 }
 
 void TabManager::WebContentsData::WebContentsDestroyed() {
@@ -99,11 +92,6 @@ void TabManager::WebContentsData::WebContentsDestroyed() {
                                base::TimeDelta::FromSeconds(1),
                                base::TimeDelta::FromDays(1), 100);
   }
-
-  ReportUKMWhenTabIsClosed();
-
-  if (!web_contents()->IsVisible() && !tab_data_.last_inactive_time.is_null())
-    ReportUKMWhenBackgroundTabIsClosedOrForegrounded(false);
 
   SetTabLoadingState(TAB_IS_NOT_LOADING);
   SetIsInSessionRestore(false);
@@ -183,26 +171,6 @@ void TabManager::WebContentsData::CopyState(
     FromWebContents(new_contents)->tab_data_ =
         FromWebContents(old_contents)->tab_data_;
   }
-}
-
-void TabManager::WebContentsData::ReportUKMWhenTabIsClosed() {
-  if (!ukm_source_id_)
-    return;
-  auto duration = NowTicks() - tab_data_.navigation_time;
-  ukm::builders::TabManager_TabLifetime(ukm_source_id_)
-      .SetTimeSinceNavigation(duration.InMilliseconds())
-      .Record(ukm::UkmRecorder::Get());
-}
-
-void TabManager::WebContentsData::
-    ReportUKMWhenBackgroundTabIsClosedOrForegrounded(bool is_foregrounded) {
-  if (!ukm_source_id_)
-    return;
-  auto duration = NowTicks() - tab_data_.last_inactive_time;
-  ukm::builders::TabManager_Background_ForegroundedOrClosed(ukm_source_id_)
-      .SetTimeFromBackgrounded(duration.InMilliseconds())
-      .SetIsForegrounded(is_foregrounded)
-      .Record(ukm::UkmRecorder::Get());
 }
 
 TabManager::WebContentsData::Data::Data()

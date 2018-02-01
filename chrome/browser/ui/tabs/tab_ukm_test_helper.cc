@@ -53,6 +53,7 @@ TestWebContentsObserver::TestWebContentsObserver(
 void TestWebContentsObserver::WebContentsDestroyed() {
   // Simulate the WebContents hiding during destruction. This lets tests
   // validate what is logged when a tab is destroyed.
+  if (web_contents()->IsVisible())
   web_contents()->WasHidden();
 }
 
