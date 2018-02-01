@@ -189,6 +189,7 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
   // Update focus if target is different than the current pointer focus.
   if (target != focus_surface_)
     SetFocus(target, event->location_f(), event->button_flags());
+  LOG(ERROR) << "Focus:" << focus_surface_ << ", loc=" << event->location().ToString();
 
   if (!focus_surface_)
     return;

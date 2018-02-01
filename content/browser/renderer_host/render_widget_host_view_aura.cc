@@ -1596,7 +1596,8 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
   device_scale_factor_ = new_device_scale_factor;
   const display::Display display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window_);
-  DCHECK_EQ(new_device_scale_factor, display.device_scale_factor());
+  //DCHECK_EQ(new_device_scale_factor, display.device_scale_factor());
+
   current_cursor_.SetDisplayInfo(display);
   SnapToPhysicalPixelBoundary();
 }

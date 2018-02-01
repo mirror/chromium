@@ -56,6 +56,7 @@
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/renderer.mojom.h"
@@ -112,6 +113,10 @@
 
 #if defined(USE_AURA)
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
+//#include "ui/aura/window.h"
+//#include "ui/aura/window_tree_host.h"
+//#include "ui/compositor/compositor.h"
+#include "ui/aura/test/test_screen.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -702,6 +707,49 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessHighDPIBrowserTest,
   FrameTreeNode* child = root->child_at(0);
   EXPECT_EQ(expected_dip_scale, GetFrameDeviceScaleFactor(child));
 }
+
+//#if defined(USE_AURA)
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(SitePerProcessHighDPIBrowserTest,
+                       SubframeUpdateToCorrectDeviceScaleFactor) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(b)"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // On Android forcing device scale factor does not woerk for tests, therefore
+  // we ensure that make frame and iframe have the same DIP scale there, but
+  // not necessarily kDeviceScaleFactor.
+  const double expected_dip_scale =
+      SitePerProcessHighDPIBrowserTest::kDeviceScaleFactor;
+
+  EXPECT_EQ(expected_dip_scale, GetFrameDeviceScaleFactor(web_contents()));
+
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  ASSERT_EQ(1U, root->child_count());
+
+  FrameTreeNode* child = root->child_at(0);
+
+  EXPECT_EQ(expected_dip_scale, GetFrameDeviceScaleFactor(child));
+
+  aura::TestScreen* test_screen = static_cast<aura::TestScreen*>(
+      display::Screen::GetScreen());
+  test_screen->CreateHostForPrimaryDisplay();
+  test_screen->SetDeviceScaleFactor(1.0f);
+
+  RenderWidgetHostViewAura* view =
+      static_cast<RenderWidgetHostViewAura*>(web_contents()->GetRenderWidgetHostView());
+
+  view->OnDeviceScaleFactorChanged(2.0f, 1.0f);
+
+  double device_scale_factor;
+  const char kScript[] =
+      "console.log('bar'); window.matchMedia('screen and (max-resolution: 1dppx)').addListener(function(e) { if (e.matches) { window.domAutomationController.send(window.devicePixelRatio);} else { console.log('foo')}})";
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(child, kScript,
+                                            &device_scale_factor));
+  EXPECT_EQ(1.0, device_scale_factor);
+}
+
+#endif
 
 // Ensure that navigating subframes in --site-per-process mode works and the
 // correct documents are committed.

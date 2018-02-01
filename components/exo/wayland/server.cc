@@ -3199,6 +3199,7 @@ class WaylandPointerDelegate : public WaylandInputDelegate,
   }
   void OnPointerMotion(base::TimeTicks time_stamp,
                        const gfx::PointF& location) override {
+    LOG(ERROR) << "OnPointerMotion:" << location.ToString();
     SendTimestamp(time_stamp);
     wl_pointer_send_motion(
         pointer_resource_, TimeTicksToMilliseconds(time_stamp),

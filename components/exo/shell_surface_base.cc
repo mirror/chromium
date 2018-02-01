@@ -206,6 +206,7 @@ class CustomWindowTargeter : public aura::WindowTargeter {
       return true;
 
     Surface* surface = ShellSurfaceBase::GetMainSurface(window);
+    LOG(ERROR) << "HitTest:" << window->GetName() << ", surface=" << surface;
     if (!surface)
       return false;
 
