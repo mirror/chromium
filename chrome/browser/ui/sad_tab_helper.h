@@ -22,6 +22,8 @@ class SadTabHelper : public content::WebContentsObserver,
 
   SadTab* sad_tab() { return sad_tab_.get(); }
 
+  void WasMovedToNewBrowser();
+
  private:
   friend class content::WebContentsUserData<SadTabHelper>;
 
