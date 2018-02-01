@@ -189,10 +189,6 @@
       status: "test",
     },
     {
-      name: "CompositorTouchAction",
-      status: "test",
-    },
-    {
       name: "ComputedAccessibilityInfo",
       status: "experimental",
     },
