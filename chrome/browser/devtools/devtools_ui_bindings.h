@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_DEVTOOLS_DEVTOOLS_UI_BINDINGS_H_
 #define CHROME_BROWSER_DEVTOOLS_DEVTOOLS_UI_BINDINGS_H_
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -45,6 +46,7 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
    public:
     virtual ~Delegate() {}
     virtual void ActivateWindow() = 0;
+    virtual void ActivateDebuggee() = 0;
     virtual void CloseWindow() = 0;
     virtual void Inspect(scoped_refptr<content::DevToolsAgentHost> host) = 0;
     virtual void SetInspectedPageBounds(const gfx::Rect& rect) = 0;
@@ -99,6 +101,7 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
 
   // DevToolsEmbedderMessageDispatcher::Delegate implementation.
   void ActivateWindow() override;
+  void ActivateDebuggee() override;
   void CloseWindow() override;
   void LoadCompleted() override;
   void SetInspectedPageBounds(const gfx::Rect& rect) override;

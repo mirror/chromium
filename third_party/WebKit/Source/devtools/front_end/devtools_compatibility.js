@@ -651,6 +651,13 @@
 
     /**
      * @override
+     */
+    activateDebuggee() {
+      DevToolsAPI.sendMessageToEmbedder('activateDebuggee', [], null);
+    }
+
+    /**
+     * @override
      * @param {!Array<string>} certChain
      */
     showCertificateViewer(certChain) {

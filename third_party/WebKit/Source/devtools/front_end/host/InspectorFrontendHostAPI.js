@@ -193,6 +193,8 @@ InspectorFrontendHostAPI.prototype = {
    */
   stopIndexing(requestId) {},
 
+  activateDebuggee() {},
+
   bringToFront() {},
 
   closeWindow() {},

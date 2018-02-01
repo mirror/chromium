@@ -33,6 +33,7 @@ class DevToolsEmbedderMessageDispatcher {
     virtual ~Delegate() {}
 
     virtual void ActivateWindow() = 0;
+    virtual void ActivateDebuggee() = 0;
     virtual void CloseWindow() = 0;
     virtual void LoadCompleted() = 0;
     virtual void SetInspectedPageBounds(const gfx::Rect& rect) = 0;

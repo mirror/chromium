@@ -656,10 +656,15 @@ Main.Main.MainMenuItem = class {
       contextMenu.discard();
     }
 
+    if (Components.dockController.dockSide() === Components.DockController.State.Undocked) {
+      contextMenu.defaultSection().appendAction('main.focus-debuggee', Common.UIString('Focus debuggee'));
+    }
+
     contextMenu.defaultSection().appendAction(
         'main.toggle-drawer',
         UI.inspectorView.drawerVisible() ? Common.UIString('Hide console drawer') :
                                            Common.UIString('Show console drawer'));
+
     contextMenu.appendItemsAtLocation('mainMenu');
     var moreTools = contextMenu.defaultSection().appendSubMenuItem(Common.UIString('More tools'));
     var extensions = self.runtime.extensions('view', undefined, true);
