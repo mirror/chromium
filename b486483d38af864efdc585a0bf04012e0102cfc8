@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "8ab77d56_06489683",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-01T19:30:11Z",
+      "side": 1,
+      "message": "I ran some tests checking this line:\nhttps://cs.chromium.org/chromium/src/components/signin/core/browser/account_tracker_service.cc?q\u003daccount_tracker_service.cc\u0026sq\u003dpackage:chromium\u0026l\u003d140\n\nAnd it seems to be able to identify toto@ and toto123@ as different emails. Looking at the AreSameEmails code, it seems to only trim spaces and periods, which should be fine.",
+      "parentUuid": "a863bb7c_42a2a238",
+      "range": {
+        "startLine": 482,
+        "startChar": 20,
+        "endLine": 482,
+        "endChar": 26
+      },
+      "revId": "b486483d38af864efdc585a0bf04012e0102cfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ccd016_bbb3d902",
         "filename": "components/signin/core/browser/account_tracker_service.cc",
         "patchSetId": 13
