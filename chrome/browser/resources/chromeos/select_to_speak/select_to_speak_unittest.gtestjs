@@ -17,6 +17,7 @@ SelectToSpeakUnitTest.prototype = {
   /** @override */
   extraLibraries: [
     'test_support.js',
+    'paragraph_utils.js',
     'select_to_speak.js'
   ]
 };
@@ -124,7 +125,9 @@ TEST_F('SelectToSpeakUnitTest', 'getNextWordEndWithoutWordEnds', function() {
 });
 
 TEST_F('SelectToSpeakUnitTest', 'getNextWordStart', function() {
-  let node = {node: {wordStarts: [0, 6]}, startChar: 0};
+  let inlineText = {wordStarts: [0, 6]};
+  let staticText = {children: [inlineText], name: 'kitty cat'};
+  let node = {node: staticText, startChar: 0};
   assertEquals(0, getNextWordStart('kitty cat', 0, node));
   assertEquals(6, getNextWordStart('kitty cat', 5, node));
   assertEquals(6, getNextWordStart('kitty cat', 6, node));
@@ -135,9 +138,12 @@ TEST_F('SelectToSpeakUnitTest', 'getNextWordStart', function() {
 });
 
 TEST_F('SelectToSpeakUnitTest', 'getNextWordEnd', function() {
-  let node = {node: {wordEnds: [5, 9]}, startChar: 0};
+  let inlineText = {wordEnds: [5, 9]};
+  let staticText = {children: [inlineText], name: 'kitty cat'};
+  let node = {node: staticText, startChar: 0};
   assertEquals(5, getNextWordEnd('kitty cat', 0, node));
-  assertEquals(5, getNextWordEnd('kitty cat', 5, node));
+  assertEquals(5, getNextWordEnd('kitty cat', 4, node));
+  assertEquals(9, getNextWordEnd('kitty cat', 5, node));
   assertEquals(9, getNextWordEnd('kitty cat', 6, node));
 
   node.startChar = 10;
