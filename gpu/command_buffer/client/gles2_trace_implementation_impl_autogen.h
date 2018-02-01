@@ -2105,6 +2105,14 @@ void GLES2TraceImplementation::WaitSyncTokenCHROMIUM(const GLbyte* sync_token) {
   gl_->WaitSyncTokenCHROMIUM(sync_token);
 }
 
+void GLES2TraceImplementation::UnpremultiplyAndDitherCopyCHROMIUM(
+    GLuint src_texture,
+    GLuint dst_texture) {
+  TRACE_EVENT_BINARY_EFFICIENT0(
+      "gpu", "GLES2Trace::UnpremultiplyAndDitherCopyCHROMIUM");
+  gl_->UnpremultiplyAndDitherCopyCHROMIUM(src_texture, dst_texture);
+}
+
 void GLES2TraceImplementation::DrawBuffersEXT(GLsizei count,
                                               const GLenum* bufs) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::DrawBuffersEXT");

@@ -982,6 +982,9 @@ void GLES2InterfaceStub::VerifySyncTokensCHROMIUM(GLbyte** /* sync_tokens */,
                                                   GLsizei /* count */) {}
 void GLES2InterfaceStub::WaitSyncTokenCHROMIUM(const GLbyte* /* sync_token */) {
 }
+void GLES2InterfaceStub::UnpremultiplyAndDitherCopyCHROMIUM(
+    GLuint /* src_texture */,
+    GLuint /* dst_texture */) {}
 void GLES2InterfaceStub::DrawBuffersEXT(GLsizei /* count */,
                                         const GLenum* /* bufs */) {}
 void GLES2InterfaceStub::DiscardBackbufferCHROMIUM() {}

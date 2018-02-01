@@ -318,6 +318,12 @@ void RasterImplementationGLES::CompressedTexImage2D(GLenum target,
                             border, imageSize, data);
 }
 
+void RasterImplementationGLES::UnpremultiplyAndDitherCopyCHROMIUM(
+    GLuint src_id,
+    GLuint dst_id) {
+  gl_->UnpremultiplyAndDitherCopyCHROMIUM(src_id, dst_id);
+}
+
 void RasterImplementationGLES::TexStorageForRaster(
     GLenum target,
     viz::ResourceFormat format,

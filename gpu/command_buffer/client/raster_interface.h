@@ -134,6 +134,8 @@ class RasterInterface {
                                       GLboolean unpack_unmultiply_alpha) = 0;
   virtual void CompressedCopyTextureCHROMIUM(GLuint source_id,
                                              GLuint dest_id) = 0;
+  virtual void UnpremultiplyAndDitherCopyCHROMIUM(GLuint src_texture,
+                                                  GLuint dst_texture) = 0;
 
   // Discardable textures.
   virtual void InitializeDiscardableTextureCHROMIUM(GLuint texture_id) = 0;
