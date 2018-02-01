@@ -566,7 +566,9 @@ ContentBrowserClient::GetTaskSchedulerInitParams() {
 
 std::vector<std::unique_ptr<URLLoaderThrottle>>
 ContentBrowserClient::CreateURLLoaderThrottles(
-    const base::Callback<WebContents*()>& wc_getter,
+    const GURL& url,
+    ResourceContext* resource_context,
+    const base::RepeatingCallback<WebContents*()>& wc_getter,
     NavigationUIData* navigation_ui_data) {
   return std::vector<std::unique_ptr<URLLoaderThrottle>>();
 }
