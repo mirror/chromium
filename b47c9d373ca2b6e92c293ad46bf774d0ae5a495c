@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f268bb0e_dab37151",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2018-02-01T21:36:06Z",
+      "side": 1,
+      "message": "The proto *_size() returns an int, so comparison with size_t (unsigned) gives a compiler error. We use ints elsewhere for this, like in the variations seed processor.",
+      "parentUuid": "3882855e_4db398f5",
+      "revId": "b47c9d373ca2b6e92c293ad46bf774d0ae5a495c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f363fb_78c3dbad",
         "filename": "components/metrics/metrics_log.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b47c9d373ca2b6e92c293ad46bf774d0ae5a495c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27002ff_a9c112c6",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2018-02-01T21:36:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f363fb_78c3dbad",
+      "revId": "b47c9d373ca2b6e92c293ad46bf774d0ae5a495c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
