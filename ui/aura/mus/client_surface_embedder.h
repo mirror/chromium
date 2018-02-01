@@ -51,6 +51,8 @@ class ClientSurfaceEmbedder {
 
   ui::Layer* BottomGutterForTesting() { return bottom_gutter_.get(); }
 
+  const viz::SurfaceId& GetPrimarySurfaceIdForTesting() const;
+
  private:
   // The window which embeds the client.
   Window* window_;
