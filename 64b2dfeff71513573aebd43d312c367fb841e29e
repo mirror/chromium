@@ -70,6 +70,24 @@
       "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bee9084_22dc0fd5",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-01T21:55:47Z",
+      "side": 0,
+      "message": "Thanks for clarifying.",
+      "parentUuid": "85b3012f_b828a4a1",
+      "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
