@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "gin/features.h"
 #include "gin/gin_export.h"
 #include "v8/include/v8-platform.h"
 
@@ -19,7 +20,11 @@ class GIN_EXPORT V8Platform : public v8::Platform {
   static V8Platform* Get();
 
   // v8::Platform implementation.
+#if BUILDFLAG(USE_PARTITION_ALLOC)
+  v8::PageAllocator* GetPageAllocator() override;
   void OnCriticalMemoryPressure() override;
+  bool OnCriticalMemoryPressure(size_t length) override;
+#endif
   std::shared_ptr<v8::TaskRunner> GetForegroundTaskRunner(
       v8::Isolate*) override;
   std::shared_ptr<v8::TaskRunner> GetBackgroundTaskRunner(
