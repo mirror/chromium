@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52240b3b_589cf33d",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T01:19:50Z",
+      "side": 1,
+      "message": "Ick... I guess this is unavoidable with legacy IPC because we need to move ownership of the handles out?",
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45797ee2_1a2f80db",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T01:19:50Z",
+      "side": 1,
+      "message": "I wonder if we should just union the message in CloneableMessage so we don\u0027t need to do this sort of arithmetic: it makes me nervous that something, somewhere along the way, is going to accidentally get this wrong. WDYT?",
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb105ca_71c70f7e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2475,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T01:19:50Z",
+      "side": 1,
+      "message": "Nit: base::Value value(data);\n\nIf possible, it\u0027d be nice to reduce the copies even further by creating it out of a StringPiece16 directly rather than having an intermediate base::string16.",
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360cb934_5a8d3d0c",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T01:19:50Z",
+      "side": 1,
+      "message": "Just curious, but how come blob.value-\u003eUuid() doesn\u0027t work here? Shouldn\u0027t this be using the blink variant, where WTF::String should Just Work? (Similar question for lines 30-31)",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf84f67_384c98ef",
+        "filename": "third_party/WebKit/common/message_port/cloneable_message_struct_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T01:19:50Z",
+      "side": 1,
+      "message": "I think I\u0027m missing something subtle here, but why is it important to not return a span where data() \u003d\u003d nullptr?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
