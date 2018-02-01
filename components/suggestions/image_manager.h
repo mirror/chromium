@@ -101,8 +101,9 @@ class ImageManager : public image_fetcher::ImageFetcherDelegate {
   // and returns true. Otherwise just returns false.
   bool GetImageURL(const GURL& url, GURL* image_url);
 
-  void QueueCacheRequest(
-      const GURL& url, const GURL& image_url, ImageCallback callback);
+  bool QueueCacheRequest(const GURL& url,
+                         const GURL& image_url,
+                         ImageCallback callback);
 
   void ServeFromCacheOrNetwork(
       const GURL& url, const GURL& image_url, ImageCallback callback);
