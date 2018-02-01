@@ -873,16 +873,14 @@ size_t QuicChromiumClientSession::WriteHeaders(
     SpdyPriority priority,
     QuicReferenceCountedPointer<QuicAckListenerInterface>
         ack_notifier_delegate) {
+  SpdyStreamId parent_stream_id = 0;
+  bool exclusive = false;
   if (headers_include_h2_stream_dependency_) {
-    SpdyStreamId parent_stream_id = 0;
-    bool exclusive = false;
     priority_dependency_state_.OnStreamCreation(id, priority, &parent_stream_id,
                                                 &exclusive);
-    return QuicSpdySession::WriteHeaders(id, std::move(headers), fin, priority,
-                                         parent_stream_id, exclusive,
-                                         std::move(ack_notifier_delegate));
   }
   return QuicSpdySession::WriteHeaders(id, std::move(headers), fin, priority,
+                                       parent_stream_id, exclusive,
                                        std::move(ack_notifier_delegate));
 }
 
@@ -2631,6 +2629,20 @@ bool QuicChromiumClientSession::HandlePromised(QuicStreamId id,
   net_log_.AddEvent(NetLogEventType::QUIC_SESSION_PUSH_PROMISE_RECEIVED,
                     base::Bind(&NetLogQuicPushPromiseReceivedCallback, &headers,
                                id, promised_id));
+
+  if (headers_include_h2_stream_dependency_) {
+    // Even though the promised stream will not be created until after the push
+    // promise headers are received, send a PRIORITY frame for the promised
+    // stream ID. Send |kDefaultPriority| since that will be the initial
+    // SpdyPriority of the push promise stream when created.
+    const SpdyPriority priority = kDefaultPriority;
+    SpdyStreamId parent_stream_id = 0;
+    bool exclusive = false;
+    priority_dependency_state_.OnStreamCreation(promised_id, priority,
+                                                &parent_stream_id, &exclusive);
+    WritePriority(promised_id, parent_stream_id, priority, exclusive);
+  }
+
   return result;
 }
 
