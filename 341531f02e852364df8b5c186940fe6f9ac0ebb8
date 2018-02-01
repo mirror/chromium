@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a03b39e2_0d9aee26",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-01T19:53:31Z",
+      "side": 1,
+      "message": "nit; bonus spaces here.\n\nOh, I see we\u0027re inconsistent in this file. Welp, either way.",
+      "range": {
+        "startLine": 788,
+        "startChar": 15,
+        "endLine": 788,
+        "endChar": 16
+      },
+      "revId": "341531f02e852364df8b5c186940fe6f9ac0ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
