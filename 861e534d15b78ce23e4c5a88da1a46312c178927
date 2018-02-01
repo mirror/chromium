@@ -715,6 +715,24 @@
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8744cf1e_992bc2d3",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-01T17:43:08Z",
+      "side": 1,
+      "message": "This pattern requires embedding a full copy of Crashpad into this binary, unfortunately. We did this for chrome.exe and for setup.exe (because chrome.exe wouldn\u0027t be available at the point when setup.exe would need it). But it would be better if instead of embedding it yet-again in this binary, notification_helper.exe used chrome.exe --type\u003dcrashpad-handler as its crash handler.\n\nThis would also avoid the (probably minor) worry of outgoing firewalls blocking \"notification_helper.exe\" from connecting to the network, which it would need to do to upload crashes, as the binary that\u0027s doing crash handling would still be chrome.exe, and so would be unlikely to be blocked. This is the reason that Crashpad was embedded into chrome.exe in the first place.",
+      "parentUuid": "de3cd014_ecedf593",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
