@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b209b5_dfd8bcb0",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-01T17:41:02Z",
+      "side": 1,
+      "message": "Maybe we should adjust the divider position before trying to snap the new window as this can avoid one unnecessary resize attempt? (It may be fine for chrome windows but resize is expansive for arc windows.)",
+      "revId": "c808f19c1d7ae27102c3419cbd60ab327a2a0a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
