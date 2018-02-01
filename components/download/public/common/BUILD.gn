@@ -2,15 +2,23 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("public") {
+config("components_download_implementation") {
+  defines = [ "COMPONENTS_DOWNLOAD_IMPLEMENTATION" ]
+}
+
+source_set("public") {
   sources = [
     "download_danger_type.h",
+    "download_interrupt_reason_values.h",
+    "download_interrupt_reasons.h",
     "download_save_info.cc",
     "download_save_info.h",
     "download_source.h",
   ]
 
-  defines = [ "COMPONENTS_DOWNLOAD_IMPLEMENTATION" ]
+  configs += [
+    ":components_download_implementation",
+  ]
 
   public_deps = [
     "//base",
