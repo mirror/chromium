@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f49f4ff2_374bde8b",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:15:37Z",
+      "side": 1,
+      "message": "Why not just LogUserClick(...) and have it compute the value for |is_lock| (or just pass it the value)? That seems significantly less error prone. You could still have the DCHECKs.\n\nie, here is one way\n\n  DCHECK(is_lock);\n  LogUserClick(Foo::Bar, is_lock);\n\nor\n\n  DCHECK(is_lock);\n  LogUserClick(Foo::Bar); // recomputes is_lock",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7935466a_a4a48fd3",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:15:37Z",
+      "side": 1,
+      "message": "IMO the previous code with the case+return is much easier to read. To use it you could just add another helper method\n\n  RecordUserClick(int button_id) {\n    UserMetricsRecorder::RecordUserClickOnShelfButton(MapButtonIdToClickTarget(button_id));\n  }",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
