@@ -52,6 +52,24 @@
       "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c3450e_c9bda015",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-01T21:59:28Z",
+      "side": 1,
+      "message": "cros_tracing_agent and cast_tracing_agent serve a very general purpose, and are useful to the web platform as implemented on those platforms. They collect kernel trace data, including time slice information of work performed by content/. I assume a similar argument can be made for ETW.\n\nAnyway, cast_tracing_agent can\u0027t move to chrome/; it\u0027d have to move to chromecast/ instead.",
+      "parentUuid": "117b3711_7cc54b80",
+      "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
