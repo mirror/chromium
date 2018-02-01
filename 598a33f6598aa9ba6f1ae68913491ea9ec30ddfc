@@ -16,6 +16,24 @@
       "revId": "598a33f6598aa9ba6f1ae68913491ea9ec30ddfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ca2f3a_c2a050eb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/client-navigate-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-01T01:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f36a7c7_71443f04",
+      "revId": "598a33f6598aa9ba6f1ae68913491ea9ec30ddfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
