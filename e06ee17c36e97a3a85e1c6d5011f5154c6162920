@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc4d7b9_a26cef52",
+        "filename": "content/browser/loader/signed_exchange_header_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T08:44:36Z",
+      "side": 1,
+      "message": "The spec seems to say each label must have \"sig\", \"integrity\", \"validtyUrl\", \"date\" and \"expires\", and either \"certUrl\" and \"certSha256\" or \"ed25519Key\" must exist too, should we have the check?",
+      "revId": "e06ee17c36e97a3a85e1c6d5011f5154c6162920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
