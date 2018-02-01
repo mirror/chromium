@@ -22,6 +22,7 @@
 #include "ui/views/controls/styled_label_listener.h"
 #include "ui/views/style/typography.h"
 #include "ui/views/test/test_layout_provider.h"
+#include "ui/views/test/test_views.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/widget/widget.h"
 
@@ -650,6 +651,152 @@ TEST_F(StyledLabelTest, Border) {
   EXPECT_EQ(
       label_preferred_size.width() + 10 /*left border*/ + 20 /*right border*/,
       styled()->GetPreferredSize().width());
+}
+
+TEST_F(StyledLabelTest, LineHeightWithShorterCustomeView) {
+  const std::string text("one ");
+  InitStyledLabel(text);
+  int default_height = styled()->GetHeightForWidth(100);
+
+  const std::string custom_view_text("with custom view");
+  const int less_height = 10;
+  std::unique_ptr<View> custom_view = std::make_unique<StaticSizedView>(
+      gfx::Size(20, default_height - less_height));
+  custom_view->set_owned_by_client();
+  StyledLabel::RangeStyleInfo style_info;
+  style_info.custom_view = custom_view.get();
+  InitStyledLabel(text + custom_view_text);
+  styled()->AddStyleRange(
+      gfx::Range(static_cast<uint32_t>(text.size()),
+                 static_cast<uint32_t>(text.size() + custom_view_text.size())),
+      style_info);
+  styled()->AddCustomView(std::move(custom_view));
+  EXPECT_EQ(default_height, styled()->GetHeightForWidth(100));
+}
+
+TEST_F(StyledLabelTest, LineHeightWithHigherCustomeView) {
+  const std::string text("one ");
+  InitStyledLabel(text);
+  int default_height = styled()->GetHeightForWidth(100);
+
+  const std::string custom_view_text("with custom view");
+  const int more_height = 10;
+  std::unique_ptr<View> custom_view = std::make_unique<StaticSizedView>(
+      gfx::Size(20, default_height + more_height));
+  custom_view->set_owned_by_client();
+  StyledLabel::RangeStyleInfo style_info;
+  style_info.custom_view = custom_view.get();
+  InitStyledLabel(text + custom_view_text);
+  styled()->AddStyleRange(
+      gfx::Range(static_cast<uint32_t>(text.size()),
+                 static_cast<uint32_t>(text.size() + custom_view_text.size())),
+      style_info);
+  styled()->AddCustomView(std::move(custom_view));
+  EXPECT_EQ(default_height + more_height, styled()->GetHeightForWidth(100));
+}
+
+TEST_F(StyledLabelTest, LineWrapperWithCustomeView) {
+  const std::string text_before("one ");
+  InitStyledLabel(text_before);
+  int default_height = styled()->GetHeightForWidth(100);
+  const std::string custom_view_text("two with custom view ");
+  const std::string text_after("three");
+
+  int custom_view_height = 25;
+  std::unique_ptr<View> custom_view =
+      std::make_unique<StaticSizedView>(gfx::Size(200, custom_view_height));
+  custom_view->set_owned_by_client();
+  StyledLabel::RangeStyleInfo style_info;
+  style_info.custom_view = custom_view.get();
+  InitStyledLabel(text_before + custom_view_text + text_after);
+  styled()->AddStyleRange(
+      gfx::Range(
+          static_cast<uint32_t>(text_before.size()),
+          static_cast<uint32_t>(text_before.size() + custom_view_text.size())),
+      style_info);
+  styled()->AddCustomView(std::move(custom_view));
+  EXPECT_EQ(default_height * 2 + custom_view_height,
+            styled()->GetHeightForWidth(100));
+}
+
+TEST_F(StyledLabelTest, LeftAlignment) {
+  const std::string multiline_text("one\ntwo\nthree");
+  InitStyledLabel(multiline_text);
+  styled()->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  styled()->SetBounds(0, 0, 1000, 1000);
+  styled()->Layout();
+  ASSERT_EQ(3, styled()->child_count());
+  EXPECT_EQ(0, styled()->child_at(0)->bounds().x());
+  EXPECT_EQ(0, styled()->child_at(1)->bounds().x());
+  EXPECT_EQ(0, styled()->child_at(2)->bounds().x());
+}
+
+TEST_F(StyledLabelTest, RightAlignment) {
+  const std::string multiline_text("one\ntwo\nthree");
+  InitStyledLabel(multiline_text);
+  styled()->SetHorizontalAlignment(gfx::ALIGN_RIGHT);
+  styled()->SetBounds(0, 0, 1000, 1000);
+  styled()->Layout();
+  ASSERT_EQ(3, styled()->child_count());
+  EXPECT_EQ(1000, styled()->child_at(0)->bounds().right());
+  EXPECT_EQ(1000, styled()->child_at(1)->bounds().right());
+  EXPECT_EQ(1000, styled()->child_at(2)->bounds().right());
+}
+
+TEST_F(StyledLabelTest, CenterAlignment) {
+  const std::string multiline_text("one\ntwo\nthree");
+  InitStyledLabel(multiline_text);
+  styled()->SetHorizontalAlignment(gfx::ALIGN_CENTER);
+  styled()->SetBounds(0, 0, 1000, 1000);
+  styled()->Layout();
+
+  Label label_one(ASCIIToUTF16("one"));
+  Label label_two(ASCIIToUTF16("two"));
+  Label label_three(ASCIIToUTF16("three"));
+
+  ASSERT_EQ(3, styled()->child_count());
+  EXPECT_EQ((1000 - label_one.GetPreferredSize().width()) / 2,
+            styled()->child_at(0)->bounds().x());
+  EXPECT_EQ((1000 - label_two.GetPreferredSize().width()) / 2,
+            styled()->child_at(1)->bounds().x());
+  EXPECT_EQ((1000 - label_three.GetPreferredSize().width()) / 2,
+            styled()->child_at(2)->bounds().x());
+}
+
+TEST_P(MDStyledLabelTest, ViewsCenteredWithLinkAndCustomeView) {
+  const std::string text("This is a test block of text, ");
+  const std::string link_text("and this should be a link");
+  const std::string custom_view_text("And this is a custom view");
+  InitStyledLabel(text + link_text + custom_view_text);
+  styled()->AddStyleRange(
+      gfx::Range(static_cast<uint32_t>(text.size()),
+                 static_cast<uint32_t>(text.size() + link_text.size())),
+      StyledLabel::RangeStyleInfo::CreateForLink());
+
+  int custom_view_height = 25;
+  std::unique_ptr<View> custom_view =
+      std::make_unique<StaticSizedView>(gfx::Size(20, custom_view_height));
+  custom_view->set_owned_by_client();
+  StyledLabel::RangeStyleInfo style_info;
+  style_info.custom_view = custom_view.get();
+  styled()->AddStyleRange(
+      gfx::Range(static_cast<uint32_t>(text.size() + link_text.size()),
+                 static_cast<uint32_t>(text.size() + link_text.size() +
+                                       custom_view_text.size())),
+      style_info);
+  styled()->AddCustomView(std::move(custom_view));
+
+  styled()->SetBounds(0, 0, 1000, 500);
+  styled()->Layout();
+  int height = styled()->GetPreferredSize().height();
+
+  ASSERT_EQ(3, styled()->child_count());
+  EXPECT_EQ((height - styled()->child_at(0)->bounds().height()) / 2,
+            styled()->child_at(0)->bounds().y());
+  EXPECT_EQ((height - styled()->child_at(1)->bounds().height()) / 2,
+            styled()->child_at(1)->bounds().y());
+  EXPECT_EQ((height - styled()->child_at(2)->bounds().height()) / 2,
+            styled()->child_at(2)->bounds().y());
 }
 
 INSTANTIATE_TEST_CASE_P(,
