@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "470cf9eb_6bd3d17e",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-01T01:52:32Z",
+      "side": 1,
+      "message": "I think your suggestion is similar to what Conley meant, right? [1]\nThe problem I see with this is that storing pending callbacks doesn\u0027t really make sense for BlueZ and Windows. In order to avoid allocating space we don\u0027t need on those platforms we could wrap the specific field and logic in a #if defined .... #endif block, but that doesn\u0027t really feel clean to me. Do you have another idea?\n\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/875922/1/device/bluetooth/bluetooth_adapter_android.cc#109",
+      "parentUuid": "01727906_8a5f2d1a",
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dd7823d_3280ad92",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 2
