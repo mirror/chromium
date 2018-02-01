@@ -200,6 +200,16 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
         SecurityViolationReportingPolicy::kSuppressReporting);
   }
 
+  ResourceRequestBlockedReason CanRequestAndVerifyIsAd(bool expect_is_ad) {
+    ResourceRequestBlockedReason reason =
+        CanRequestInternal(SecurityViolationReportingPolicy::kReport);
+    const KURL url("http://example.com/");
+    EXPECT_EQ(expect_is_ad,
+              fetch_context->IsAdResource(
+                  url, WebURLRequest::kRequestContextUnspecified));
+    return reason;
+  }
+
  private:
   ResourceRequestBlockedReason CanRequestInternal(
       SecurityViolationReportingPolicy reporting_policy) {
@@ -1124,24 +1134,28 @@ TEST_F(FrameFetchContextMockedLocalFrameClientTest,
 TEST_F(FrameFetchContextSubresourceFilterTest, Filter) {
   SetFilterPolicy(WebDocumentSubresourceFilter::kDisallow);
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter, CanRequest());
+  EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter,
+            CanRequestAndVerifyIsAd(true));
   EXPECT_EQ(1, GetFilteredLoadCallCount());
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter, CanRequest());
+  EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter,
+            CanRequestAndVerifyIsAd(true));
   EXPECT_EQ(2, GetFilteredLoadCallCount());
 
   EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter,
             CanRequestPreload());
   EXPECT_EQ(2, GetFilteredLoadCallCount());
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter, CanRequest());
+  EXPECT_EQ(ResourceRequestBlockedReason::kSubresourceFilter,
+            CanRequestAndVerifyIsAd(true));
   EXPECT_EQ(3, GetFilteredLoadCallCount());
 }
 
 TEST_F(FrameFetchContextSubresourceFilterTest, Allow) {
   SetFilterPolicy(WebDocumentSubresourceFilter::kAllow);
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequest());
+  EXPECT_EQ(ResourceRequestBlockedReason::kNone,
+            CanRequestAndVerifyIsAd(false));
   EXPECT_EQ(0, GetFilteredLoadCallCount());
 
   EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequestPreload());
@@ -1151,7 +1165,7 @@ TEST_F(FrameFetchContextSubresourceFilterTest, Allow) {
 TEST_F(FrameFetchContextSubresourceFilterTest, WouldDisallow) {
   SetFilterPolicy(WebDocumentSubresourceFilter::kWouldDisallow);
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequest());
+  EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequestAndVerifyIsAd(true));
   EXPECT_EQ(0, GetFilteredLoadCallCount());
 
   EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequestPreload());
