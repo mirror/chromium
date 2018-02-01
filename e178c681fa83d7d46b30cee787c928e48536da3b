@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ec851e6_257e8bf6",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/printing/absolute-position-headers-and-footers-expected.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T23:13:23Z",
+      "side": 1,
+      "message": "Please see WebLocalFrameImpl for the reason of the rebaselines.\n\nThe blue lines are now in pure blue color.",
+      "revId": "e178c681fa83d7d46b30cee787c928e48536da3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0581c82_92900cd8",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T23:13:23Z",
+      "side": 1,
+      "message": "These changes make the output of separation lines deterministic. Previously we used the default stroke thickness causing\n1) the separation lines were drawn 2 pixels in height, and the lower pixels may be covered by contents of the next page, which caused different painting of print-subframe.html and print-subframe-expected.html;\n2) the color of the lines were blended which was a potential reason of flakiness.\n\nNow paint exact 1-pixel line in the 1 pixel seam (which is left by line 364) between two pages.",
+      "revId": "e178c681fa83d7d46b30cee787c928e48536da3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
