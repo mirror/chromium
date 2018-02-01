@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "b46aef94_e99a2b06",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T16:43:18Z",
+      "side": 1,
+      "message": "It would give access to pixels of child surfaces of the renderer. Also there\u0027s no need for it in the renderer, we shouldn\u0027t introduce new attack surfaces without a reason, and what is the reason here?",
+      "parentUuid": "715c5b6e_44321de7",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768e7723_c76b181c",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
