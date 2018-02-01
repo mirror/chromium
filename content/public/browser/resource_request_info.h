@@ -5,7 +5,10 @@
 #ifndef CONTENT_PUBLIC_BROWSER_RESOURCE_REQUEST_INFO_H_
 #define CONTENT_PUBLIC_BROWSER_RESOURCE_REQUEST_INFO_H_
 
+#include <string>
+
 #include "base/callback_forward.h"
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_ui_data.h"
@@ -176,6 +179,8 @@ class ResourceRequestInfo {
 
   // Whether this request was canceled by DevTools.
   virtual bool CanceledByDevTools() const = 0;
+
+  virtual const base::Optional<std::string>& GetCustomCancelReason() const = 0;
 
  protected:
   virtual ~ResourceRequestInfo() {}
