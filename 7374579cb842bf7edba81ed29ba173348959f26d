@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b68287c_5deb6015",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "nullptr?",
+      "range": {
+        "startLine": 93,
+        "startChar": 26,
+        "endLine": 93,
+        "endChar": 43
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80ad33b_41dac34a",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "same here.  Does nullptr work?",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd67986_6f273cf1",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Is there a reason the download item can\u0027t store/manage the blob handle?  I\u0027m not quite sure on the lifecycle of blob handle vs. request bodies.  I\u0027m surprised we can give the request body a blob and then have to hold onto it externally to maintain it.",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 24
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b99ed5_aed77d51",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Should we also consider ourselves active if we\u0027re asking the client for upload data?  How does that impact the stop/start if blocks below?",
+      "range": {
+        "startLine": 896,
+        "startChar": 7,
+        "endLine": 896,
+        "endChar": 13
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8574281a_8ca8573f",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Can you add some comments for why we\u0027re doing this?",
+      "range": {
+        "startLine": 923,
+        "startChar": 6,
+        "endLine": 924,
+        "endChar": 37
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7995f199_917d5191",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "We will still hit this case if resuming after a restart.  I don\u0027t know if the above check on removing if we have upload data will work/be enough.",
+      "range": {
+        "startLine": 960,
+        "startChar": 6,
+        "endLine": 960,
+        "endChar": 35
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed207fad_8faeaac6",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Can we prevent reentrancy here?  E.g. can we prevent the client from immediately calling the callback?  Otherwise won\u0027t it behave a bit weird if we add timeouts below for a callback that already happened?  I think this happens for the current clients that call .Run() now.",
+      "range": {
+        "startLine": 977,
+        "startChar": 10,
+        "endLine": 977,
+        "endChar": 23
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edebbf11_e97a633a",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Should we save the upload data even if the entry is paused/blocked by criteria and just wait?  I wonder if we could bake that in to UpdateDriverState or something.",
+      "range": {
+        "startLine": 989,
+        "startChar": 21,
+        "endLine": 989,
+        "endChar": 43
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad618c71_9384192f",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Do we have to remove the callback as well?  Actually, do our callbacks have to be on a per-guid basis?  Might be easy to do something like:\n\n- Have 1 callback that you start when you begin an upload.\n- If you get another upload, cancel and restart the callback for a new delay.\n- If the callback fires, fail all downloads waiting for an upload response?",
+      "range": {
+        "startLine": 993,
+        "startChar": 2,
+        "endLine": 993,
+        "endChar": 33
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7e659c_74f6f89d",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "This feels redundant with below.  Remove?",
+      "range": {
+        "startLine": 996,
+        "startChar": 12,
+        "endLine": 996,
+        "endChar": 52
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6916b3_4c95ff11",
+        "filename": "components/download/internal/background_service/debugging_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "We should probably post all of these.",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89652076_f424ade5",
+        "filename": "components/download/internal/background_service/entry.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Since this flag is a little weird, should we add some more comments about the behavior of it, when it\u0027s set, and how it\u0027s used?",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 67
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce46efa_752e1c05",
+        "filename": "components/download/internal/background_service/stats.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "+1!",
+      "range": {
+        "startLine": 381,
+        "startChar": 2,
+        "endLine": 381,
+        "endChar": 27
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f314be_82a4e799",
+        "filename": "components/download/internal/background_service/stats.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Add comments and add a COUNT",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 30
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8a35be_9211ddbe",
+        "filename": "components/download/public/background_service/client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "why not null?  Can we mention they need to post to avoid reentrancy?",
+      "range": {
+        "startLine": 129,
+        "startChar": 48,
+        "endLine": 129,
+        "endChar": 60
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42995806_a8707891",
+        "filename": "components/download/public/background_service/download_params.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "Ah so this determines whether or not we call the API.  Ok!\n\nShould the clients that never set this to true have NOTREACHED() in their Client::GetUploadData() code paths too?",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d8dd31_e3bc5063",
+        "filename": "components/download/public/background_service/test/mock_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:28:17Z",
+      "side": 1,
+      "message": "I think we can\u0027t :(, but I don\u0027t remember.  Yeah take a look and see I\u0027m curious!",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
