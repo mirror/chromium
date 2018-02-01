@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df39d115_466f878d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T00:14:57Z",
+      "side": 1,
+      "message": "I think the CL description needs \"reland\" tags (and reference to the original CL). This should happen automatically if you used the Gerrit Reland feature.",
+      "revId": "973ab1e86af482502b535581231293c75ddec25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
