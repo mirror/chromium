@@ -440,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "679a8c4b_c30ca118",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-01T18:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7388c6b8_30a6fc17",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a52d143a_ec04df6d",
         "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
         "patchSetId": 62
@@ -791,6 +809,24 @@
       "side": 1,
       "message": "Ack, but please describe the expected behavior when the bug is resolved.",
       "parentUuid": "a9128d68_205ba954",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84973a57_46b4fb89",
+        "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-01T18:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92aef584_f562caa0",
       "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
