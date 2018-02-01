@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e5e752_7b9d20f4",
+        "filename": "chrome/browser/ui/sad_tab.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T03:14:56Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9016bf5_84f79baa",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T03:14:56Z",
+      "side": 1,
+      "message": "GetContentsWebView -\u003e contents_web_view()? We could also change the return type of GetTabContentsContainerView() to WebView, or just delete the method. The only caller outside browser_view.cc seems to be browser_view_focus_uitest.cc",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1385fc5e_e8f9b1e9",
+        "filename": "chrome/browser/ui/views/sad_tab_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T03:14:56Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33afa25d_304ce343",
+        "filename": "chrome/browser/ui/views/sad_tab_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T03:14:56Z",
+      "side": 1,
+      "message": "initialize?  (although.. I guess none of these are initialized with initializers..)",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d7cdb9_bb649ab0",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T03:14:56Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669c8815_8957d960",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T03:14:56Z",
+      "side": 1,
+      "message": "IIRC this doesn\u0027t destroy |crashed_overlay_view_|. To remove views from the hierarchy, we usually just `delete crashed_overlay_view_;` `crashed_overlay_view_ \u003d nullptr;`",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
