@@ -76,6 +76,10 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream : public QuicStream {
   // for this stream.  This method will only be called for server streams.
   virtual void OnStreamHeadersPriority(SpdyPriority priority);
 
+  // Called by the session when a PRIORITY frame has been been received for this
+  // stream. This method will only be called for server streams.
+  virtual void OnPriorityFrame(SpdyPriority priority);
+
   // Called by the session when decompressed headers have been completely
   // delivered to this stream.  If |fin| is true, then this stream
   // should be closed; no more data will be sent by the peer.

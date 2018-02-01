@@ -57,8 +57,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
   void Initialize() override;
 
   // Called by |headers_stream_| when headers with a priority have been
-  // received for this stream.  This method will only be called for server
-  // streams.
+  // received for a stream.  This method will only be called for server streams.
   virtual void OnStreamHeadersPriority(QuicStreamId stream_id,
                                        SpdyPriority priority);
 
@@ -77,6 +76,10 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
                                    QuicStreamId promised_stream_id,
                                    size_t frame_len,
                                    const QuicHeaderList& header_list);
+
+  // Callbed by |headers_stream_| when a PRIORITY frame has been received for a
+  // stream. This method will only be called for server streams.
+  virtual void OnPriorityFrame(QuicStreamId stream_id, SpdyPriority priority);
 
   // Sends contents of |iov| to hq_deframer_, returns number of bytes processed.
   size_t ProcessHeaderData(const struct iovec& iov, QuicTime timestamp);
@@ -223,6 +226,9 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
   void OnPushPromise(SpdyStreamId stream_id,
                      SpdyStreamId promised_stream_id,
                      bool end);
+
+  // Called when a PRIORITY frame has been received.
+  void OnPriority(SpdyStreamId stream_id, SpdyPriority priority);
 
   // Called when the complete list of headers is available.
   void OnHeaderList(const QuicHeaderList& header_list);

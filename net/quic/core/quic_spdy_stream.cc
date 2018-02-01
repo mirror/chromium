@@ -147,6 +147,11 @@ void QuicSpdyStream::OnStreamHeadersPriority(SpdyPriority priority) {
   SetPriority(priority);
 }
 
+void QuicSpdyStream::OnPriorityFrame(SpdyPriority priority) {
+  DCHECK_EQ(Perspective::IS_SERVER, session()->connection()->perspective());
+  SetPriority(priority);
+}
+
 void QuicSpdyStream::OnStreamHeaderList(bool fin,
                                         size_t frame_len,
                                         const QuicHeaderList& header_list) {
