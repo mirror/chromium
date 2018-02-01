@@ -70,6 +70,17 @@ bool ParseDomainAndOU(const std::string& distinguished_name,
   return true;
 }
 
+struct EncryptionTypes {
+  const char* title;
+  bool pre_selected;
+  authpolicy::KerberosEncryptionTypes kerberos_enc_types;
+};
+
+const EncryptionTypes kEncryptionTypes[] = {
+    {"strong", true, authpolicy::KerberosEncryptionTypes::ENC_TYPES_STRONG},
+    {"all", false, authpolicy::KerberosEncryptionTypes::ENC_TYPES_ALL},
+    {"legacy", false, authpolicy::KerberosEncryptionTypes::ENC_TYPES_LEGACY}};
+
 }  // namespace
 
 AuthPolicyLoginHelper::AuthPolicyLoginHelper() : weak_factory_(this) {}
@@ -93,10 +104,29 @@ void AuthPolicyLoginHelper::Restart() {
       ->RestartAuthPolicyService();
 }
 
+// static
 bool AuthPolicyLoginHelper::IsAdLocked() {
   std::string mode;
   return chromeos::tpm_util::InstallAttributesGet(kAttrMode, &mode) &&
          mode == kDeviceModeEnterpriseAD;
+}
+
+// static
+std::unique_ptr<base::ListValue>
+AuthPolicyLoginHelper::GetEncryptionTypesList() {
+  static_assert(
+      arraysize(kEncryptionTypes) ==
+          authpolicy::KerberosEncryptionTypes_ARRAYSIZE,
+      "Please modify the array to match authpolicy::KerberosEncryptionTypes");
+  auto enc_list = std::make_unique<base::ListValue>();
+  for (size_t i = 0; i < arraysize(kEncryptionTypes); ++i) {
+    auto enc_option = std::make_unique<base::DictionaryValue>();
+    enc_option->SetInteger("value", kEncryptionTypes[i].kerberos_enc_types);
+    enc_option->SetString("title", kEncryptionTypes[i].title);
+    enc_option->SetBoolean("selected", kEncryptionTypes[i].pre_selected);
+    enc_list->Append(std::move(enc_option));
+  }
+  return enc_list;
 }
 
 // static
@@ -110,6 +140,7 @@ bool AuthPolicyLoginHelper::LockDeviceActiveDirectoryForTesting(
 
 void AuthPolicyLoginHelper::JoinAdDomain(const std::string& machine_name,
                                          const std::string& distinguished_name,
+                                         const std::string& encryption_type,
                                          const std::string& username,
                                          const std::string& password,
                                          JoinCallback callback) {
@@ -123,8 +154,13 @@ void AuthPolicyLoginHelper::JoinAdDomain(const std::string& machine_name,
   }
   if (!machine_name.empty())
     request.set_machine_name(machine_name);
+  if (!encryption_type.empty())
+    request.set_kerberos_encryption_types(
+        static_cast<authpolicy::KerberosEncryptionTypes>(
+            std::stoi(encryption_type)));
   if (!username.empty())
     request.set_user_principal_name(username);
+
   chromeos::DBusThreadManager::Get()->GetAuthPolicyClient()->JoinAdDomain(
       request, GetDataReadPipe(password).get(),
       base::BindOnce(&AuthPolicyLoginHelper::OnJoinCallback,
