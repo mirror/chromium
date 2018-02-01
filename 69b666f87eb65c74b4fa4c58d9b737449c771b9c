@@ -22,6 +22,30 @@
       "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb64c21_fa0c20dd",
+        "filename": "services/network/network_context.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-01T09:45:36Z",
+      "side": 1,
+      "message": "I didn\u0027t know that (except for test cases), thank you. NetworkContext::resource_scheduler_ is accessed whenever NetworkContext::CreateURLLoaderFactory is called; Can it be called with kNetworkService disabled?\n\nWe can create a disabled ResourceScheduler in such cases, by the way.",
+      "parentUuid": "1ce2fcaa_8f640fba",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
