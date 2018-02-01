@@ -2312,6 +2312,25 @@
     ]
   },
 
+  "RestartNotification": {
+    "os": ["win", "linux", "mac"],
+    "test_policy": { "RestartNotification": 1},
+    "pref_mappings": [
+      { "pref": "browser.restart_notification",
+        "local_state": true
+      }
+    ]
+  },
+
+  "RestartNotificationPeriod": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "RestartNotificationPeriod": 24},
+    "pref_mappings": [
+      { "pref": "browser.restart_notification_period",
+        "local_state": true
+      }
+    ]
+  },
 
   "----- Chrome OS policies ------------------------------------------------": {},
 
