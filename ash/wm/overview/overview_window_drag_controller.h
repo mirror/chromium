@@ -15,7 +15,6 @@
 
 namespace ash {
 
-class PhantomWindowController;
 class WindowSelector;
 class WindowSelectorItem;
 
@@ -48,18 +47,14 @@ class ASH_EXPORT OverviewWindowDragController {
 
   WindowSelectorItem* item() { return item_; }
 
-  bool IsPhantomWindowShowing() const {
-    return phantom_window_controller_ != nullptr;
-  }
-
  private:
   // Updates visuals for the user while dragging items around.
-  void UpdatePhantomWindowAndWindowGrid(const gfx::Point& location_in_screen);
+  void UpdateOverlayAndWindowGrid(const gfx::Point& location_in_screen);
 
   // Dragged items should not attempt to show the phantom window or snap if
   // the drag started in a snap region and has not been dragged pass the
   // threshold.
-  bool ShouldUpdatePhantomWindowOrSnap(const gfx::Point& event_location);
+  bool ShouldUpdateOverlayOrSnap(const gfx::Point& event_location);
 
   SplitViewController::SnapPosition GetSnapPosition(
       const gfx::Point& location_in_screen) const;
@@ -72,9 +67,6 @@ class ASH_EXPORT OverviewWindowDragController {
   WindowSelector* window_selector_;
 
   SplitViewController* split_view_controller_;
-
-  // Shows a highlight of where the dragged window will end up.
-  std::unique_ptr<PhantomWindowController> phantom_window_controller_;
 
   // The drag target window in the overview mode.
   WindowSelectorItem* item_ = nullptr;

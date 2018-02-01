@@ -16,6 +16,7 @@
 #include "ash/wm/overview/scoped_hide_overview_windows.h"
 #include "ash/wm/splitview/split_view_controller.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "ui/aura/window_observer.h"
 #include "ui/display/display_observer.h"
@@ -41,7 +42,7 @@ class WindowSelectorDelegate;
 class WindowSelectorItem;
 class WindowSelectorTest;
 
-enum class IndicatorType;
+enum class IndicatorState;
 
 // The WindowSelector shows a grid of all of your windows, allowing to select
 // one by clicking or tapping on it.
@@ -96,9 +97,10 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // Called to show or hide the split view overview overlay. This will do
   // nothing if split view is not enabled. |event_location| is used to reparent
   // |split_view_overview_overlays_|'s widget, if necessary.
-  void SetSplitViewOverviewOverlayIndicatorType(
-      IndicatorType indicator_type,
-      const gfx::Point& event_location);
+  void SetSplitViewOverviewOverlayIndicatorState(
+      IndicatorState indicator_state,
+      const gfx::Point& event_location,
+      base::Optional<gfx::Rect> phantom_bounds);
   // Retrieves the window grid whose root window matches |root_window|. Returns
   // nullptr if the window grid is not found.
   WindowGrid* GetGridWithRootWindow(aura::Window* root_window);
