@@ -113,6 +113,10 @@ TimeTicks InteractiveDetector::GetFirstInvalidatingInputTime() const {
   return page_event_times_.first_invalidating_input;
 }
 
+TimeDelta InteractiveDetector::GetFirstInputDelay() const {
+  return page_event_times_.first_input_delay;
+}
+
 void InteractiveDetector::BeginNetworkQuietPeriod(TimeTicks current_time) {
   // Value of 0.0 indicates there is no currently actively network quiet window.
   DCHECK(active_network_quiet_window_start_.is_null());
@@ -216,6 +220,15 @@ void InteractiveDetector::OnInvalidatingInputEvent(
     return;
 
   page_event_times_.first_invalidating_input = invalidation_time;
+  if (GetSupplementable()->Loader())
+    GetSupplementable()->Loader()->DidChangePerformanceTiming();
+}
+
+void InteractiveDetector::OnFirstInputDelay(TimeDelta delay) {
+  if (!page_event_times_.first_input_delay.is_zero())
+    return;
+
+  page_event_times_.first_input_delay = delay;
   if (GetSupplementable()->Loader())
     GetSupplementable()->Loader()->DidChangePerformanceTiming();
 }
