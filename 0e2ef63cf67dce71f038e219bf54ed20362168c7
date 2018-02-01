@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f883fd03_fec718fd",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "you do os.path.dirname(self._output_path) in a bunch of places for os.path.relpath, probably best to store this in \n\nself._output_dir \u003d os.path.dirname(self._output_path)",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733c64d3_0583695b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "nit: add logging.debug for start and end of function",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da68d9c_9539e59f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "nit: Move os.path.join(OUTPUT_DIR, FILE_VIEW_INDEX_FILE) into a local.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544ada38_6bb2e1cc",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "can we just init the arguments to 0 in class __init__. this is no need to call with six zeros.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a4ae4a_391ff459",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "nit: add logging.debug for start and end of function",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cb45e9_c0428410",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "Where would this happen, shouldn\u0027t we assert here ?",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e774b2_c1cc8768",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "same as above, no need to pass 0s, init arguments to 0.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e645c231_d2a500a8",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "I see os.path.abspath in a bunch of places, this is risky to use, why don\u0027t we have the src directory path in self._src_directory and then we should os.join to it. This also allows coverage script to be run from any directory.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f536bb7_be48a19e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "put os.path.dirname(component_html_report_path) in a local and use in both 556, 557.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726aca0c_d26dc4d0",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "Where should this happen, should we assert here ?",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b563ad5_a00346e9",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "I see you use this os.path.relpath pattern a lot\n\nwhy not self._to_relative(a, b) that does os.path.dirname(b) and then return os.path.relpath(a, result)",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce956a8c_3e1e5c24",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "nit: s/_GetCoveragehtmlReportPathForFile/_GetCoverageHtmlReportPathForFile\n\nh should be captial in html",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db32280_8930d18e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "Why + and not os.path.join.\n\nAlso, put os.path.join(os.path.abspath(dir_path), DIRECTORY_COVERAGE_HTML_REPORT_NAME) in a variable for easier reading.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418dac54_4edabfcd",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-01T17:18:09Z",
+      "side": 1,
+      "message": "Should we keep \u003e in filename, it looks weird. may component_name.lower().replace(\u0027\u003e\u0027, \u0027-\u0027)\n\nAlso, s/html_name/html_report_name",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
