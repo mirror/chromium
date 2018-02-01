@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753e7c0a_64ef22f1",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-01T19:28:16Z",
+      "side": 1,
+      "message": "I do not know the view hierarchy here, but if you do the following, you will see the blur.\n\n    bubble_view-\u003elayer()-\u003eSetOpacity(0.5);\n    bubble_view-\u003elayer()-\u003eparent()-\u003eSetBackgroundBlur(30);",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "a4ebad9dbc4830c61d47c8a33dc32f4c67f956b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
