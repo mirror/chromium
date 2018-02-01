@@ -10,6 +10,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
@@ -38,8 +40,19 @@ import org.chromium.testing.local.LocalRobolectricTestRunner;
  * Tests for CastWebContentsComponent.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE, application = CastWebContentsComponentTest.FakeApplication.class)
 public class CastWebContentsComponentTest {
+    /**
+     * Fake application class for test
+     */
+    public static class FakeApplication extends Application {
+        @Override
+        protected void attachBaseContext(Context base) {
+            super.attachBaseContext(base);
+            ContextUtils.initApplicationContextForTests(this);
+        }
+    }
+
     private static final String INSTANCE_ID = "1";
 
     @Mock
@@ -72,17 +85,20 @@ public class CastWebContentsComponentTest {
     @Test
     public void testStopSendsStopSignalToActivity() {
         Assume.assumeFalse(BuildConfig.DISPLAY_WEB_CONTENTS_IN_SERVICE);
+        Assume.assumeFalse(BuildConfig.ENABLE_CAST_FRAGMENT);
 
         BroadcastReceiver receiver = Mockito.mock(BroadcastReceiver.class);
         IntentFilter intentFilter = new IntentFilter(CastIntents.ACTION_ON_WEB_CONTENT_STOPPED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(receiver, intentFilter);
+        LocalBroadcastManager.getInstance(ContextUtils.getApplicationContext())
+                .registerReceiver(receiver, intentFilter);
 
         CastWebContentsComponent component =
                 new CastWebContentsComponent(INSTANCE_ID, null, null, false, false);
-        component.start(mActivity, mWebContents);
-        component.stop(mActivity);
+        component.start(ContextUtils.getApplicationContext(), mWebContents);
+        component.stop(ContextUtils.getApplicationContext());
 
-        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(ContextUtils.getApplicationContext())
+                .unregisterReceiver(receiver);
 
         verify(receiver).onReceive(any(Context.class), any(Intent.class));
     }
@@ -116,21 +132,48 @@ public class CastWebContentsComponentTest {
     }
 
     @Test
-    public void testOnComponentClosedCallsCallback() {
+    public void testOnComponentClosedCallsCallbackWithAcitivity() {
+        Assume.assumeFalse(BuildConfig.ENABLE_CAST_FRAGMENT);
+
+        testOnComponentClosedCallsCallback();
+    }
+
+    @Test
+    public void testOnComponentClosedCallsCallbackWithFragment() {
+        Assume.assumeTrue(BuildConfig.ENABLE_CAST_FRAGMENT);
+
+        testOnComponentClosedCallsCallback();
+    }
+
+    private void testOnComponentClosedCallsCallback() {
         CastWebContentsComponent.OnComponentClosedHandler callback =
                 Mockito.mock(CastWebContentsComponent.OnComponentClosedHandler.class);
 
         CastWebContentsComponent component =
                 new CastWebContentsComponent(INSTANCE_ID, callback, null, false, false);
-        component.start(mActivity, mWebContents);
-        CastWebContentsComponent.onComponentClosed(mActivity, INSTANCE_ID);
+        component.start(ContextUtils.getApplicationContext(), mWebContents);
+        CastWebContentsComponent.onComponentClosed(
+                ContextUtils.getApplicationContext(), INSTANCE_ID);
         verify(callback).onComponentClosed();
 
         component.stop(mActivity);
     }
 
     @Test
-    public void testOnKeyDownCallsCallback() {
+    public void testOnKeyDownCallsCallbackWithActivity() {
+        Assume.assumeFalse(BuildConfig.ENABLE_CAST_FRAGMENT);
+        testOnKeyDownCallsCallback();
+    }
+
+    @Test
+    public void testOnKeyDownCallsCallbackWithFragment() {
+        Assume.assumeTrue(BuildConfig.ENABLE_CAST_FRAGMENT);
+        testOnKeyDownCallsCallback();
+    }
+
+    private void testOnKeyDownCallsCallback() {
+        Assume.assumeFalse(BuildConfig.ENABLE_CAST_FRAGMENT);
+
         CastWebContentsComponent.OnKeyDownHandler callback =
                 Mockito.mock(CastWebContentsComponent.OnKeyDownHandler.class);
 
