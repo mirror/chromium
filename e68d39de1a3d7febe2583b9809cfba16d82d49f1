@@ -16,6 +16,24 @@
       "revId": "e68d39de1a3d7febe2583b9809cfba16d82d49f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d2d0ab_1467fa68",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-01T19:08:34Z",
+      "side": 1,
+      "message": "Foolishness, thanks.\n\nMoved to LocalFrame, as a place to store the state. Does that seem reasonable to you?",
+      "parentUuid": "b772da17_58276941",
+      "revId": "e68d39de1a3d7febe2583b9809cfba16d82d49f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
