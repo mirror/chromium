@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8012a62_d9cc15a7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/url/url-in-tags-revoke.window.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-01T11:18:09Z",
+      "side": 1,
+      "message": "nit: fetching a Blob URL immediately before revoking it works in iframe?\n\nDitto below",
+      "revId": "203b3216ec7264e646849bc94659dd3f53ae5a3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2125a19_7f284a6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/url/url-in-tags-revoke.window.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-01T11:18:09Z",
+      "side": 1,
+      "message": "nit: script_test_result?",
+      "revId": "203b3216ec7264e646849bc94659dd3f53ae5a3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee1aaa5_b7713ef9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/url/url-in-tags-revoke.window.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-01T11:18:09Z",
+      "side": 1,
+      "message": "nit: add a cleanup step that deletes window.test2_result / window.script_test_result?",
+      "revId": "203b3216ec7264e646849bc94659dd3f53ae5a3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
