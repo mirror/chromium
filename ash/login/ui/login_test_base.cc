@@ -41,6 +41,18 @@ LoginTestBase::LoginTestBase() = default;
 
 LoginTestBase::~LoginTestBase() = default;
 
+// static
+mojom::LoginUserInfoPtr LoginTestBase::CreateUser(const std::string& name) {
+  auto user = mojom::LoginUserInfo::New();
+  user->basic_user_info = mojom::UserInfo::New();
+  user->basic_user_info->account_id =
+      AccountId::FromUserEmail(name + "@foo.com");
+  user->basic_user_info->display_name = "User " + name;
+  user->basic_user_info->display_email =
+      user->basic_user_info->account_id.GetUserEmail();
+  return user;
+}
+
 void LoginTestBase::SetWidget(std::unique_ptr<views::Widget> widget) {
   EXPECT_FALSE(widget_) << "SetWidget can only be called once.";
   widget_ = std::move(widget);
@@ -66,18 +78,6 @@ std::unique_ptr<views::Widget> LoginTestBase::CreateWidgetWithContent(
   new_widget->SetContentsView(content);
   new_widget->Show();
   return new_widget;
-}
-
-mojom::LoginUserInfoPtr LoginTestBase::CreateUser(
-    const std::string& name) const {
-  auto user = mojom::LoginUserInfo::New();
-  user->basic_user_info = mojom::UserInfo::New();
-  user->basic_user_info->account_id =
-      AccountId::FromUserEmail(name + "@foo.com");
-  user->basic_user_info->display_name = "User " + name;
-  user->basic_user_info->display_email =
-      user->basic_user_info->account_id.GetUserEmail();
-  return user;
 }
 
 void LoginTestBase::SetUserCount(size_t count) {
