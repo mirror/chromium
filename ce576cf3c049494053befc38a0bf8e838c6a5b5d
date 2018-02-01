@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b3593bb_75c56c8f",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "I think if we do this, the border won\u0027t be guaranteed to snap to the pixel grid. I tried and this seems to be correct - the border looks blurry at 1.5 scale factor. To fix, I just used the old code that floors the inset value - snapping it before insetting seems to be easier than trying to snap the |gfx::RectF| afterwards. Hopefully I wrote a comment that makes sense.\n\nI added screenshots to the CL description, but feel free to post them on the omnibox tracking bug closer to landing (I\u0027m assuming you\u0027ll know better about the timeline since we want to merge your patch and mine).",
+      "parentUuid": "d6dd3156_fc8288fc",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc289e51_15186bb3",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "097be177_9557dfb9",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc289e51_15186bb3",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0023cf1_54557f29",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc909fb1_6df9e181",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Thanks for explaining! I think I didn\u0027t understand the comment in the cc before - it makes sense now.",
+      "parentUuid": "b0023cf1_54557f29",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "c4c8964e_55b87df9",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45cc671_8bfac295",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff9f0d87_b35b404a",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 7
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "f51d3c99_11e2b8e1",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9f0d87_b35b404a",
+      "range": {
+        "startLine": 580,
+        "startChar": 8,
+        "endLine": 580,
+        "endChar": 62
+      },
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8d5d886_e7acfcd4",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47068f6_6e1e39a0",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8d5d886_e7acfcd4",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "2fc763bc_e0fa9c73",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c58c253_e2a20e16",
+      "range": {
+        "startLine": 613,
+        "startChar": 57,
+        "endLine": 613,
+        "endChar": 60
+      },
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2774f123_13ad2608",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 7
@@ -153,6 +297,24 @@
       "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86aac17_75a86ec6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2774f123_13ad2608",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "f2fe5adb_47687ba6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d37be8d0_d7833d95",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84fd9b0e_106cb6e5",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
         "patchSetId": 7
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "7e179e37_c63ed6de",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84fd9b0e_106cb6e5",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0530d192_f89545a8",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
         "patchSetId": 7
@@ -201,6 +399,24 @@
       "writtenOn": "2018-01-31T09:56:44Z",
       "side": 1,
       "message": "so.... since we inset 1 DIP and we actually want height / 2 to be the *outer* radius I think we need a tiny adjustment here to ensure the radius is not too large, since this needs to return an internal radius",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9059a129_321bbc65",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "I hard coded a - 2 here but let me know if you want that in a constant?",
+      "parentUuid": "0530d192_f89545a8",
       "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "f1454877_252fa441",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b5e047_40ab9eb9",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc9cffb_7ef89c76",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
         "patchSetId": 7
@@ -238,6 +472,24 @@
       "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb551902_822b9aec",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Whoops,thanks!",
+      "parentUuid": "2fc9cffb_7ef89c76",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "8f0177b5_93e0aa2a",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d8dc632_14c1d282",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df0a22b1_3dffe4ff",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
         "patchSetId": 7
@@ -272,6 +542,24 @@
       "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3658eb2_2b3342de",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T23:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df0a22b1_3dffe4ff",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
