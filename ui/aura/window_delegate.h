@@ -24,6 +24,7 @@ class PaintContext;
 }
 
 namespace viz {
+class LocalSurfaceId;
 class SurfaceInfo;
 }
 
@@ -107,6 +108,9 @@ class AURA_EXPORT WindowDelegate : public ui::EventHandler {
   // Called when a child submits a CompositorFrame to a surface with the given
   // |surface_info| for the first time.
   virtual void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) {}
+
+  virtual void GetLocalSurfaceIdForAutoResize(
+      viz::LocalSurfaceId* surface_id) const {}
 
  protected:
   ~WindowDelegate() override {}

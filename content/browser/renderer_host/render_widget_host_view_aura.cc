@@ -4,6 +4,7 @@
 
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
 
+#include <iostream>
 #include <set>
 #include <utility>
 
@@ -2048,7 +2049,13 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
 
 void RenderWidgetHostViewAura::WasResized(
     const cc::DeadlinePolicy& deadline_policy) {
-  window_->AllocateLocalSurfaceId();
+  std::cout << "RenderWidgetHostViewAura::WasResized" << std::endl;
+  viz::LocalSurfaceId id_for_auto_resize;
+  GetLocalSurfaceIdForAutoResize(&id_for_auto_resize);
+  if (id_for_auto_resize.is_valid())
+    window_->SetLocalSurfaceId(id_for_auto_resize);
+  else
+    window_->AllocateLocalSurfaceId();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized(deadline_policy);
   if (host_->auto_resize_enabled()) {
@@ -2362,6 +2369,28 @@ viz::FrameSinkId RenderWidgetHostViewAura::GetFrameSinkId() {
 
 viz::LocalSurfaceId RenderWidgetHostViewAura::GetLocalSurfaceId() const {
   return window_->GetLocalSurfaceId();
+}
+
+void RenderWidgetHostViewAura::GetLocalSurfaceIdForAutoResize(
+    viz::LocalSurfaceId* surface_id) const {
+  if (!host_->auto_resize_enabled())
+    return;
+
+  auto id_for_auto_resize = host_->last_auto_resize_surface_id();
+
+  // A new LocalSurfaceId should have increased either the parent or the child
+  // sequence number.
+  // However, this also gets called with identical parent/child sequence numbers
+  // as well.
+  if (id_for_auto_resize.is_valid()) {
+    if (id_for_auto_resize.parent_sequence_number() <
+            GetLocalSurfaceId().parent_sequence_number() &&
+        id_for_auto_resize.child_sequence_number() <
+            GetLocalSurfaceId().child_sequence_number())
+      return;
+  }
+
+  *surface_id = id_for_auto_resize;
 }
 
 void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
