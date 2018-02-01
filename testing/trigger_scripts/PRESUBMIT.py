@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Top-level presubmit script for content/test/gpu.
+"""Top-level presubmit script for testing/trigger_scripts.
 
 See http://dev.chromium.org/developers/how-tos/depottools/presubmit-scripts
 for more details about the presubmit API built into depot_tools.
@@ -11,8 +11,8 @@ for more details about the presubmit API built into depot_tools.
 def CommonChecks(input_api, output_api):
   commands = [
     input_api.Command(
-      name='run_content_test_gpu_unittests', cmd=[
-        input_api.python_executable, 'run_unittests.py', 'gpu_tests'],
+      name='trigger_gpu_test_unittest', cmd=[
+        input_api.python_executable, 'trigger_multiple_dimensions_unittest.py'],
       kwargs={}, message=output_api.PresubmitError),
   ]
   return input_api.RunTests(commands)
@@ -32,6 +32,7 @@ def PostUploadHook(cl, change, output_api):
   against all Chromium commits, but should be run against changes
   likely to affect these tests.
   """
+  del change # for pylint
   return output_api.EnsureCQIncludeTrybotsAreAdded(
     cl,
     [
