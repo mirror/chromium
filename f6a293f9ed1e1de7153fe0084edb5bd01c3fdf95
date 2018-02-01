@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "6f55cabb_f5133cfb",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T13:21:09Z",
+      "side": 1,
+      "message": "I\u0027m saddened that CBORReaderTest.TestOutOfOrderKeyError still passes after this change. Could you please add a test case (in this CL) there as well which verifying if we prioritize shorter length over lexical ordering?",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15b9100e_92f5af76",
         "filename": "components/cbor/cbor_writer_unittest.cc",
         "patchSetId": 5
