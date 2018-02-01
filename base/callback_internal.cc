@@ -33,6 +33,13 @@ BindStateBase::BindStateBase(InvokeFuncStorage polymorphic_invoke,
       destructor_(destructor),
       is_cancelled_(is_cancelled) {}
 
+BindStateBase* BindStateBase::MakeNoopBindStateInternal(
+    InvokeFuncStorage invoker) {
+  return new BindStateBase(
+      invoker, [](const BindStateBase* bind_state) { delete bind_state; },
+      [](const BindStateBase*) { return true; });
+}
+
 CallbackBase::CallbackBase(CallbackBase&& c) = default;
 CallbackBase& CallbackBase::operator=(CallbackBase&& c) = default;
 CallbackBase::CallbackBase(const CallbackBaseCopyable& c)
@@ -71,6 +78,7 @@ CallbackBase::CallbackBase(BindStateBase* bind_state)
   DCHECK(!bind_state_.get() || bind_state_->HasOneRef());
 }
 
+CallbackBase::CallbackBase() = default;
 CallbackBase::~CallbackBase() = default;
 
 CallbackBaseCopyable::CallbackBaseCopyable(const CallbackBaseCopyable& c)

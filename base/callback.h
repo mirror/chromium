@@ -19,6 +19,9 @@
 
 namespace base {
 
+enum null_callback_t { null_callback };
+enum noop_callback_t { noop_callback };
+
 template <typename R, typename... Args>
 class OnceCallback<R(Args...)> : public internal::CallbackBase {
  public:
@@ -26,7 +29,20 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  OnceCallback() : internal::CallbackBase(nullptr) {}
+  using internal::CallbackBase::IsCancelled;
+
+  // Default ctor and null_callback_t ctor make null callback. It causes crash
+  // to call the resulting OnceCallback.
+  OnceCallback() = default;
+  OnceCallback(null_callback_t) {}
+
+  // noop_callback_t ctor is available only on void-return callbacks. The
+  // resulting callback is valid and runnable, but does nothing.
+  // IsCancelled() is true on the resulting callback.
+  template <typename S = R, typename = std::enable_if_t<std::is_void<S>::value>>
+  OnceCallback(noop_callback_t)
+      : internal::CallbackBase(
+            internal::BindStateBase::MakeNoopBindState<Args...>()) {}
 
   explicit OnceCallback(internal::BindStateBase* bind_state)
       : internal::CallbackBase(bind_state) {}
@@ -43,6 +59,16 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
   OnceCallback& operator=(RepeatingCallback<RunType> other) {
     static_cast<internal::CallbackBase&>(*this) = std::move(other);
     return *this;
+  }
+
+  OnceCallback& operator=(null_callback_t) {
+    Reset();
+    return *this;
+  }
+
+  template <typename S = R, typename = std::enable_if_t<std::is_void<S>::value>>
+  OnceCallback& operator=(noop_callback_t) {
+    return *this = OnceCallback(noop_callback);
   }
 
   bool Equals(const OnceCallback& other) const { return EqualsInternal(other); }
@@ -73,7 +99,20 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
+  using internal::CallbackBase::IsCancelled;
+
+  // Default ctor and null_callback_t ctor make null callback. It causes crash
+  // to call the resulting RepeatingCallback.
+  RepeatingCallback() = default;
+  RepeatingCallback(null_callback_t) {}
+
+  // noop_callback_t ctor is available only on void-return callbacks. The
+  // resulting callback is valid and runnable, but does nothing.
+  // IsCancelled() is true on the resulting callback.
+  template <typename S = R, typename = std::enable_if_t<std::is_void<S>::value>>
+  RepeatingCallback(noop_callback_t)
+      : internal::CallbackBaseCopyable(
+            internal::BindStateBase::MakeNoopBindState<Args...>()) {}
 
   explicit RepeatingCallback(internal::BindStateBase* bind_state)
       : internal::CallbackBaseCopyable(bind_state) {}
@@ -81,8 +120,19 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
   // Copyable and movabl.
   RepeatingCallback(const RepeatingCallback&) = default;
   RepeatingCallback& operator=(const RepeatingCallback&) = default;
+
   RepeatingCallback(RepeatingCallback&&) = default;
   RepeatingCallback& operator=(RepeatingCallback&&) = default;
+
+  RepeatingCallback& operator=(null_callback_t) {
+    Reset();
+    return *this;
+  }
+
+  template <typename S = R, typename = std::enable_if_t<std::is_void<S>::value>>
+  RepeatingCallback& operator=(noop_callback_t) {
+    return *this = RepeatingCallback(noop_callback);
+  }
 
   bool Equals(const RepeatingCallback& other) const {
     return EqualsInternal(other);
