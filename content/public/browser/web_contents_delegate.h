@@ -44,7 +44,6 @@ namespace content {
 class ColorChooser;
 class JavaScriptDialogManager;
 class RenderFrameHost;
-class RenderProcessHost;
 class RenderWidgetHost;
 class SessionStorageNamespace;
 class SiteInstance;
@@ -319,11 +318,11 @@ class CONTENT_EXPORT WebContentsDelegate {
 
   // Notification that a process in the WebContents is hung.
   virtual void RendererUnresponsive(WebContents* source,
-                                    RenderProcessHost* render_process_host) {}
+                                    RenderWidgetHost* render_widget_host) {}
 
   // Notification that a process in the WebContents is no longer hung.
   virtual void RendererResponsive(WebContents* source,
-                                  RenderProcessHost* render_process_host) {}
+                                  RenderWidgetHost* render_widget_host) {}
 
   // Invoked when a main fram navigation occurs.
   virtual void DidNavigateMainFramePostCommit(WebContents* source) {}
