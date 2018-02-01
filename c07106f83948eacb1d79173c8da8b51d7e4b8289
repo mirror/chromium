@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b5b6b693_4847fbb6",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-01T18:35:43Z",
+      "side": 1,
+      "message": "+dbeam as FYI\n\nLooking at the past CL you linked, it seems that this was a compromise (per https://codereview.chromium.org/2684853003#msg40), to allow settings that are not backed by a real pref to still leverage a settings-toggle-button such that policy indicators are displayed as necessary.\n\nThere was some discussion about making \"virtual\" prefs either in the C++ or in JS itself, as a potential improvement. But, all these solutions are inferior to making a real C++ pref as follows:\n\n1) Whitelist the pref (if it exists already, or create one) for settingsPrivate API at [1]\n2) This could cause the pref to be registered at [2], such that any changes are propagating to the Settings UI via the normal pref mechanism, and therefore allow using settings-control-button via a normal pref, instead of a fake on-the-fly JS pref. Any changes to policies would automatically update that UI component, without having to communicate them out-of-band, like currently done via the \u0027safe-browsing-extended-reporting-change\u0027 WebUI event.\n\nFor step 1, I am still not 100% clear on whether a C++ pref already exists, but somehow it is not registered with the settingsPrivate API, or if such pref does not exist at all.\n\nI am not suggesting that the above must be done in this CL, but it would help clarifying whether any of this is possible for SBER. IMO, if a C++ pref already exists, then piping it via the API is a much better solution, and would prefer going that route.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/settings_private/prefs_util.cc?l\u003d92.\n[2] https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/settings_private/settings_private_event_router.cc?l\u003d98,106",
+      "parentUuid": "adfe631d_137d5f5d",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 43
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "944e46f5_b88bdc1b",
         "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
         "patchSetId": 9
