@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd98a7bc_127f29f2",
+        "filename": "third_party/WebKit/LayoutTests/animations/keyframe-effect-options-composite.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-01T20:05:11Z",
+      "side": 1,
+      "message": "nit: Given that this test is only verifies parsing behavior I suggest making the test name\nmore specific e.g., keyframe-effect-options-composite-parsing.html",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a9881b_2f9b37e5",
+        "filename": "third_party/WebKit/LayoutTests/animations/keyframe-effect-options-composite.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-01T20:05:11Z",
+      "side": 1,
+      "message": "nit: should this be featureValueOld instead?",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e7ab0c_56d4049e",
+        "filename": "third_party/WebKit/Source/core/animation/EffectModel.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-01T20:05:11Z",
+      "side": 1,
+      "message": "nit: Seem unnecessary. IMHO this is an implementation details and it is also repeated in\nthe function definition.",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51702ff4_c8e6b9e3",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-01T20:05:11Z",
+      "side": 1,
+      "message": "nit: Unused! Remove.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add708d2_a20e3e3a",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-01T20:05:11Z",
+      "side": 1,
+      "message": "ditto!",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "17d61a5d6f35a5c7ef29ef7319bc317b0c141183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
