@@ -130,6 +130,8 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
   return kDefaultMethod;
 }
 
+// DEPRECATED, Use AccountConsistencyModeManager::IsMirrorEnabledForProfile
+// instead.
 bool IsAccountConsistencyMirrorEnabled() {
   return GetAccountConsistencyMethod() == AccountConsistencyMethod::kMirror;
 }
