@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0badc75_91312191",
+        "filename": "ui/message_center/views/notification_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T23:28:07Z",
+      "side": 1,
+      "message": "Isn\u0027t that the first thing that ~View does?\n\nChanging the destruction/re-creation logic is beyond the intended scope of this CL.",
+      "parentUuid": "15f14115_c8d1300f",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce90338_bfa6f989",
         "filename": "ui/message_center/views/notification_view.cc",
         "patchSetId": 14
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "229ee33c_1c2ac53e",
+        "filename": "ui/message_center/views/notification_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T23:28:07Z",
+      "side": 1,
+      "message": "There should be no behavior change. The comments in constants.h (deleted) explain the reasoning for setting the background color. If one of the k[...]TextColor constants was, say, white, then this would change the behavior, but I don\u0027t think the code would have been intentionally written like that.",
+      "parentUuid": "8ce90338_bfa6f989",
+      "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1d7e20c_b0fe5ab1",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 14
@@ -53,6 +95,24 @@
       "writtenOn": "2018-02-01T23:04:18Z",
       "side": 1,
       "message": "Move these to the constants file? (for shared use here and in non-MD)",
+      "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58517ff_85e3f5e6",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T23:28:07Z",
+      "side": 1,
+      "message": "The reason I would rather not do this is because the non-MD code should hopefully die off soon, and the chances of this moving back into this file when that happens are slim to none.\n\nThere is more code (not just constants) that the two classes could share if we actually planned to keep both long term, but the complexity of sharing is not worth the difficulty of un-sharing later.",
+      "parentUuid": "e1d7e20c_b0fe5ab1",
       "revId": "d4e499cbfdb8a9605eb00f49286dbbca453c5402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
