@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e1d3ce_58de5d64",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:30:00Z",
+      "side": 1,
+      "message": "How to make closure compiler not to give an error:\n## ../chromeos/login/offline_ad_login.js:73: ERROR - variable Oobe is undeclared\n##     Oobe.setupSelect(",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 77
+      },
+      "revId": "26c22070d80ebd8e9483274b2c0278992f354359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
