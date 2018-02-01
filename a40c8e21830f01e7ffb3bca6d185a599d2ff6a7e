@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4f1e7b_dac79e64",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2018-02-01T03:51:21Z",
+      "side": 1,
+      "message": "The reason I didn\u0027t add the default_isolate_map here is because we have action \u0027append\u0027. For example, --i xxx --i yyy, we want it to be [xxx, yyy] not [default, xxx, yyy]",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdad408_0584aff6",
+        "filename": "tools/mb/mb_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2018-02-01T03:51:21Z",
+      "side": 1,
+      "message": "AssertionError 1 not equal to 0 is not the clearest message for debug to be honest.",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
