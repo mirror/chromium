@@ -80,8 +80,8 @@ class TextInputSceneTest : public UiTest {
     text_input_delegate_ =
         std::make_unique<StrictMock<MockTextInputDelegate>>();
     text_input_info_ = std::make_unique<TextInputInfo>();
-    auto text_input = UiSceneCreator::CreateTextInput(
-        1, model_, text_input_info_.get(), text_input_delegate_.get());
+    auto text_input = CreateTextInput(1, model_, text_input_info_.get(),
+                                      text_input_delegate_.get());
     text_input_ = text_input.get();
     scene_->AddUiElement(k2dBrowsingForeground, std::move(text_input));
     EXPECT_TRUE(OnBeginFrame());
@@ -92,6 +92,36 @@ class TextInputSceneTest : public UiTest {
   std::unique_ptr<StrictMock<MockTextInputDelegate>> text_input_delegate_;
   std::unique_ptr<TextInputInfo> text_input_info_;
   testing::Sequence in_sequence_;
+
+ private:
+  std::unique_ptr<TextInput> CreateTextInput(
+      float font_height_meters,
+      Model* model,
+      TextInputInfo* text_input_model,
+      TextInputDelegate* text_input_delegate) {
+    auto text_input = std::make_unique<TextInput>(
+        font_height_meters,
+        base::BindRepeating(
+            [](Model* model, bool focused) { model->editing_input = focused; },
+            base::Unretained(model)),
+        base::BindRepeating(
+            [](TextInputInfo* model, const TextInputInfo& text_input_info) {
+              *model = text_input_info;
+            },
+            base::Unretained(text_input_model)));
+    text_input->SetDrawPhase(kPhaseNone);
+    text_input->set_hit_testable(false);
+    text_input->SetTextInputDelegate(text_input_delegate);
+    text_input->AddBinding(std::make_unique<Binding<TextInputInfo>>(
+        VR_BIND_LAMBDA([](TextInputInfo* info) { return *info; },
+                       base::Unretained(text_input_model)),
+        VR_BIND_LAMBDA(
+            [](TextInput* e, const TextInputInfo& value) {
+              e->UpdateInput(value);
+            },
+            base::Unretained(text_input.get()))));
+    return text_input;
+  }
 };
 
 TEST_F(TextInputSceneTest, InputFieldFocus) {

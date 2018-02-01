@@ -79,6 +79,7 @@ class Text : public TexturedElement {
 
   // TODO(vollick): should use TexturedElement::SetForegroundColor
   void SetColor(SkColor color);
+  void SetSelectionColors(const TextSelectionColors& colors);
 
   // Formatting must be applied only to non-wrapping text elements.
   void SetFormatting(const TextFormatting& formatting);
@@ -90,7 +91,9 @@ class Text : public TexturedElement {
   // position is determined while laying out text, a parent may wish to supply
   // cursor parameters and determine where the cursor was last drawn.
   void SetCursorEnabled(bool enabled);
-  void SetCursorPosition(int position);
+
+  // Sets the current selection on the text field.
+  void SetSelection(int start, int end);
 
   // Returns the most recently computed cursor position, in pixels.  This is
   // used for scene dirtiness and testing.
