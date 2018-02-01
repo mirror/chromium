@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d4ab4f4_98bace01",
+        "filename": "chromeos/dbus/fake_update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-02-01T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22ba928d_112ba3b9",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f329030e_0886e87e",
         "filename": "chromeos/dbus/fake_update_engine_client.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d139ddc_8358c64e",
+        "filename": "chromeos/dbus/fake_update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-02-01T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f329030e_0886e87e",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5aee881d_e298f721",
+        "filename": "chromeos/dbus/fake_update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-02-01T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a423db00_1a95dd18",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35c13a4_adf3bebb",
         "filename": "chromeos/dbus/fake_update_engine_client.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c58e78b_7e09a4cd",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-02-01T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c35c13a4_adf3bebb",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0c2eb249_3794c388",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-02-01T07:42:12Z",
+      "side": 1,
+      "message": "it\u0027s copied from the deleted Stub implementation so it has the delays of gradual status update change.\n\nit looks there\u0027re some tests to test step-by-step status of interactions between UpdateEngineClient instead of auto-gradual change with some delays.",
+      "parentUuid": "fb8129e7_4f9703ae",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f031b664_ddf59214",
         "filename": "chromeos/dbus/update_engine_client.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89abf1f3_d7efb424",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-02-01T07:42:12Z",
+      "side": 1,
+      "message": "oh. it\u0027s a mistake. thanks for pointing out.",
+      "parentUuid": "f031b664_ddf59214",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
