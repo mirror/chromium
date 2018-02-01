@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf7e666_b167b44f",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T20:15:17Z",
+      "side": 1,
+      "message": "This reads a bit confusingly: as far as I can tell, this is called when *this* frame calls focus() on *any* DOMWindow object, right? IOW, if it calls focus() on itself, it will still report this message (and kick itself out of fullscreen).",
+      "revId": "36f801fdbec07d116a6f4f07bb363f10897d6a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
