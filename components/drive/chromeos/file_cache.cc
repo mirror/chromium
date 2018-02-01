@@ -488,9 +488,6 @@ FileError FileCache::MarkAsMounted(const std::string& id,
   if (!entry.file_specific_info().cache_state().is_present())
     return FILE_ERROR_NOT_FOUND;
 
-  if (mounted_files_.count(id))
-    return FILE_ERROR_INVALID_OPERATION;
-
   base::FilePath path = GetCacheFilePath(id);
 
 #if defined(OS_CHROMEOS)
