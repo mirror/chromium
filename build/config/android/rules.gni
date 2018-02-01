@@ -2157,9 +2157,6 @@ if (enable_java_templates) {
       dex_path = _lib_dex_path
       apk_path = _final_apk_path
 
-      if (defined(invoker.apk_under_test)) {
-        deps += [ "${invoker.apk_under_test}" ]
-      }
       incremental_allowed = _incremental_allowed
       incremental_apk_path = "${_final_apk_path_no_ext}_incremental.apk"
       incremental_install_json_path = _incremental_install_json_path
@@ -2759,6 +2756,9 @@ if (enable_java_templates) {
         "//tools/android/forwarder2",
         "//tools/android/md5sum",
       ]
+      if (defined(invoker.apk_under_test)) {
+        data_deps += [ invoker.apk_under_test ]
+      }
       if (defined(invoker.additional_apks)) {
         data_deps += invoker.additional_apks
       }
