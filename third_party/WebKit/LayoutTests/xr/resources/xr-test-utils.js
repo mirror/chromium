@@ -13,11 +13,40 @@ function xr_session_promise_test(
   promise_test((t) => {
     return navigator.xr.requestDevice().then(
         (device) => new Promise((resolve, reject) => {
-          // Perform the session request in a user gesture.
-          runWithUserGesture(() => {
-            resolve(device.requestSession(sessionOptions)
-                        .then((session) => func(session, t)));
-          });
+          if (sessionOptions instanceof Array) {
+            // Run the test with each set of sessionOptions from the array one at a time.
+            function nextSessionTest(i) {
+              if (i == sessionOptions.length) {
+                resolve();
+              }
+              // Perform the session request in a user gesture.
+              runWithUserGesture(() => {
+                let nextOptions = sessionOptions[i];
+                let testSession = null;
+                device.requestSession(nextOptions)
+                    .then((session) => {
+                      testSession = session;
+                      return func(session, t);
+                    })
+                    .then(() => {
+                      try {
+                        testSession.end();
+                      } finally {
+                        nextSessionTest(++i);
+                      }
+                    })
+                    .catch(reject);
+              });
+            }
+
+            nextSessionTest(0);
+          } else {
+            // Perform the session request in a user gesture.
+            runWithUserGesture(() => {
+              resolve(device.requestSession(sessionOptions)
+                          .then((session) => func(session, t)));
+            });
+          }
         }));
   }, name, properties);
 }
@@ -35,6 +64,12 @@ function webglCanvasSetup() {
     antialias: false,
   };
   gl = webglCanvas.getContext(webgl2 ? 'webgl2' : 'webgl', glAttributes);
+}
+
+function getOutputContext() {
+  let outputCanvas = document.createElement('canvas');
+  document.body.appendChild(outputCanvas);
+  return outputCanvas.getContext('xrpresent');
 }
 
 // TODO(offenwanger): eventSender cannot be used with WPTs. Find another way to
