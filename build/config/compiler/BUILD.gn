@@ -256,6 +256,9 @@ config("compiler") {
         }
         inputs += [ _sample_path ]
       }
+    } else {
+      # put dummy inputs here to avoid gn errors
+      inputs += [ "" ]
     }
 
     # Stack protection.
