@@ -107,7 +107,7 @@ class CONTENT_EXPORT RequestExtraData : public blink::WebURLRequest::ExtraData {
   void set_is_prefetch(bool prefetch) { is_prefetch_ = prefetch; }
 
   // The request is downloaded to the network cache, but not rendered or
-  // executed. The renderer will see this as an aborted request.
+  // executed.
   bool download_to_network_cache_only() const {
     return download_to_network_cache_only_;
   }
