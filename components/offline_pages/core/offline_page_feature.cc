@@ -101,7 +101,7 @@ bool IsOfflinePagesPrefetchingUIEnabled() {
 
 bool IsLimitlessPrefetchingEnabled() {
   // TODO(https://crbug.com/803584): fix limitless mode or fully remove it.
-  return false;
+  return true;
 }
 
 bool IsOfflinePagesLoadSignalCollectingEnabled() {
