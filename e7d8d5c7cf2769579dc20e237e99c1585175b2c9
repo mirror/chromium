@@ -22,6 +22,30 @@
       "revId": "e7d8d5c7cf2769579dc20e237e99c1585175b2c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899d7ef8_c62d86e9",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-01T14:23:21Z",
+      "side": 1,
+      "message": "Hmmm, I was under the assumption that calling Close() on the SharedMemory would call Unmap() but reading the code/comments that\u0027s not true. Let me double check if that\u0027s a problem, neither render or browser process calls Unmap() after calling Map().",
+      "parentUuid": "6d9adf43_3c3b18fe",
+      "range": {
+        "startLine": 2350,
+        "startChar": 0,
+        "endLine": 2351,
+        "endChar": 73
+      },
+      "revId": "e7d8d5c7cf2769579dc20e237e99c1585175b2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
