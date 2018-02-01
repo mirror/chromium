@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c1af26_b63dbfb6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T18:31:59Z",
+      "side": 1,
+      "message": "How about adding a helper function:\n FloatRoundedRect ToClipRect(const LayoutRect\u0026 rect) {\n   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())\n     return FloatRoundedRect(FloatRect(PixelSnappedIntRect(rect)));\n   return FloatRoundedRect(FloatRect(rect));\n }",
+      "revId": "26ba02219f3ae24661f0918197b8e9b30bd35b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
