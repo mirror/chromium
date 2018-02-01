@@ -568,6 +568,31 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
       settings_.kMinimumDrawOcclusionSize.height() * device_scale_factor_;
   int minimum_draw_occlusion_width =
       settings_.kMinimumDrawOcclusionSize.width() * device_scale_factor_;
+
+  // The minimum size required to apply the layer occlusion.
+  gfx::Size layer_occlusion_skip_rect_size(160 * device_scale_factor_,
+                                           160 * device_scale_factor_);
+
+  // Record the total number of DrawQuads that are skipped from applying draw
+  // occlusion.
+  size_t total_quad_skipped = 0;
+
+  // Record the total number of DrawQuads that are not shown on screen so that
+  // it's removed by draw occlusion.
+  size_t total_quad_removed = 0;
+
+  // Record the total number of DrawQuads that are partially shown on screen so
+  // that its visible rect is updated by draw occlusion.
+  size_t total_quad_resized = 0;
+
+  // Record the total number of DrawQuads has non scale or translation
+  // transform.
+  size_t total_quad_with_complex_transform = 0;
+
+  // Record the total number of DrawQudas has a visible rect that are smaller
+  // than 160x160
+  size_t total_small_quads = 0;
+
   for (const auto& pass : frame->render_pass_list) {
     // TODO(yiyix): Add filter effects to draw occlusion calculation and perform
     // draw occlusion on render pass.
@@ -582,6 +607,13 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
     auto quad_list_end = pass->quad_list.end();
     gfx::Rect occlusion_in_quad_content_space;
     for (auto quad = pass->quad_list.begin(); quad != quad_list_end;) {
+      if (quad->visible_rect.width() <=
+              layer_occlusion_skip_rect_size.width() &&
+          quad->visible_rect.height() <=
+              layer_occlusion_skip_rect_size.height()) {
+        total_small_quads += 1;
+      }
+
       // Skip quad if it is a RenderPassDrawQuad because RenderPassDrawQuad is a
       // special type of DrawQuad where the visible_rect of shared quad state is
       // not entirely covered by draw quads in it; or the DrawQuad size is
@@ -590,6 +622,7 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
           (quad->visible_rect.width() <= minimum_draw_occlusion_width &&
            quad->visible_rect.height() <= minimum_draw_occlusion_height)) {
         ++quad;
+        total_quad_skipped += 1;
         continue;
       }
 
@@ -646,6 +679,7 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
               cc::MathUtil::MapEnclosedRectWith2dAxisAlignedTransform(
                   reverse_transform, occlusion_in_target_space.bounds());
         } else {
+          total_quad_with_complex_transform += 1;
           occlusion_in_quad_content_space = gfx::Rect();
         }
       }
@@ -660,13 +694,18 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
         // occlusion region in the quad content space. If the |quad| is not
         // shown on the screen, then remove |quad| from the compositor frame.
         quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
+        total_quad_removed += 1;
 
       } else if (occlusion_in_quad_content_space.Intersects(
                      quad->visible_rect)) {
         // Case 2: for simple transforms, if the quad is partially shown on
         // screen and the region formed by (occlusion region - visible_rect) is
         // a rect, then update visible_rect to the resulting rect.
+        gfx::Rect origin_rect = quad->visible_rect;
         quad->visible_rect.Subtract(occlusion_in_quad_content_space);
+        if (!quad->visible_rect.Contains(origin_rect)) {
+          total_quad_resized += 1;
+        }
         ++quad;
       } else if (occlusion_in_quad_content_space.IsEmpty() &&
                  occlusion_in_target_space.Contains(
@@ -676,11 +715,24 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
         // target space. If the |quad| is not shown on the screen, then remove
         // |quad| from the compositor frame.
         quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
+        total_quad_removed += 1;
       } else {
         ++quad;
       }
     }
   }
+  UMA_HISTOGRAM_COUNTS_1000("Compositing.Display.Draw.Quads.Skipped",
+                            total_quad_skipped);
+  UMA_HISTOGRAM_COUNTS_1000("Compositing.Display.Draw.Quads.Removed",
+                            total_quad_removed);
+  UMA_HISTOGRAM_COUNTS_1000("Compositing.Display.Draw.Quads.Resized",
+                            total_quad_resized);
+  UMA_HISTOGRAM_COUNTS_1000(
+      "Compositing.Display.Draw.Quads.With.Complex.Transform",
+      total_quad_with_complex_transform);
+  UMA_HISTOGRAM_COUNTS_1000(
+      "Compositing.Display.Draw.Quads.Small.Quads",
+      total_small_quads);
 }
 
 }  // namespace viz
