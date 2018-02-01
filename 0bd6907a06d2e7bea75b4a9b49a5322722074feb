@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43ffd005_7bf06f48",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-01T00:10:43Z",
+      "side": 1,
+      "message": "nit: Mebbe mention that these metrics were replaced with UKM ones?",
+      "range": {
+        "startLine": 1365,
+        "startChar": 27,
+        "endLine": 1365,
+        "endChar": 0
+      },
+      "revId": "0bd6907a06d2e7bea75b4a9b49a5322722074feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
