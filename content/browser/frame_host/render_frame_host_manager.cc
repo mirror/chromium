@@ -1792,7 +1792,8 @@ void RenderFrameHostManager::CreateOuterDelegateProxy(
 void RenderFrameHostManager::SetRWHViewForInnerContents(
     RenderWidgetHostView* child_rwhv) {
   DCHECK(ForInnerDelegate() && frame_tree_node_->IsMainFrame());
-  GetProxyToOuterDelegate()->SetChildRWHView(child_rwhv);
+  GetProxyToOuterDelegate()->SetChildRWHView(child_rwhv,
+                                             base::Optional<gfx::Rect>());
 }
 
 bool RenderFrameHostManager::InitRenderView(
@@ -1958,7 +1959,8 @@ bool RenderFrameHostManager::ReinitializeRenderFrame(
     // is re-initialized.
     RenderFrameProxyHost* proxy_to_parent = GetProxyToParent();
     if (proxy_to_parent)
-      GetProxyToParent()->SetChildRWHView(render_frame_host->GetView());
+      GetProxyToParent()->SetChildRWHView(render_frame_host->GetView(),
+                                          render_frame_host->frame_rect());
   }
 
   DCHECK(render_frame_host->IsRenderFrameLive());
@@ -2035,26 +2037,6 @@ void RenderFrameHostManager::CommitPending() {
     old_background_color = old_render_frame_host->GetView()->background_color();
   }
 
-  // Show the new view (or a sad tab) if necessary.
-  bool new_rfh_has_view = !!render_frame_host_->GetView();
-  if (!delegate_->IsHidden() && new_rfh_has_view) {
-    // In most cases, we need to show the new view.
-    render_frame_host_->GetView()->Show();
-  }
-  // The process will no longer try to exit, so we can decrement the count.
-  render_frame_host_->GetProcess()->RemovePendingView();
-
-  if (!new_rfh_has_view) {
-    // If the view is gone, then this RenderViewHost died while it was hidden.
-    // We ignored the RenderProcessGone call at the time, so we should send it
-    // now to make sure the sad tab shows up, etc.
-    DCHECK(!render_frame_host_->IsRenderFrameLive());
-    DCHECK(!render_frame_host_->render_view_host()->IsRenderViewLive());
-    render_frame_host_->ResetLoadingState();
-    delegate_->RenderProcessGoneFromRenderManager(
-        render_frame_host_->render_view_host());
-  }
-
   // For top-level frames, also hide the old RenderViewHost's view.
   // TODO(creis): As long as show/hide are on RVH, we don't want to hide on
   // subframe navigations or we will interfere with the top-level frame.
@@ -2123,6 +2105,10 @@ void RenderFrameHostManager::CommitPending() {
         MSG_ROUTING_NONE);
   }
 
+  // Store the old_render_frame_host's current frame_rect so that it can be used
+  // to initialize the child RWHV.
+  base::Optional<gfx::Rect> old_rect = old_render_frame_host->frame_rect();
+
   // Swap out the old frame now that the new one is visible.
   // This will swap it out and schedule it for deletion when the swap out ack
   // arrives (or immediately if the process isn't live).
@@ -2141,7 +2127,27 @@ void RenderFrameHostManager::CommitPending() {
   // the proxy we're looking for.
   RenderFrameProxyHost* proxy_to_parent = GetProxyToParent();
   if (proxy_to_parent)
-    proxy_to_parent->SetChildRWHView(render_frame_host_->GetView());
+    proxy_to_parent->SetChildRWHView(render_frame_host_->GetView(), old_rect);
+
+  // Show the new view (or a sad tab) if necessary.
+  bool new_rfh_has_view = !!render_frame_host_->GetView();
+  if (!delegate_->IsHidden() && new_rfh_has_view) {
+    // In most cases, we need to show the new view.
+    render_frame_host_->GetView()->Show();
+  }
+  // The process will no longer try to exit, so we can decrement the count.
+  render_frame_host_->GetProcess()->RemovePendingView();
+
+  if (!new_rfh_has_view) {
+    // If the view is gone, then this RenderViewHost died while it was hidden.
+    // We ignored the RenderProcessGone call at the time, so we should send it
+    // now to make sure the sad tab shows up, etc.
+    DCHECK(!render_frame_host_->IsRenderFrameLive());
+    DCHECK(!render_frame_host_->render_view_host()->IsRenderViewLive());
+    render_frame_host_->ResetLoadingState();
+    delegate_->RenderProcessGoneFromRenderManager(
+        render_frame_host_->render_view_host());
+  }
 
   // After all is done, there must never be a proxy in the list which has the
   // same SiteInstance as the current RenderFrameHost.

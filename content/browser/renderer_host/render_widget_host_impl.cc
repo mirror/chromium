@@ -2996,8 +2996,8 @@ bool RenderWidgetHostImpl::CanResize() {
   // Don't resize if the |delegate_| has already been detached because its
   // WebContents is being deleted.
   return !resize_ack_pending_ && process_->HasConnection() && view_ &&
-         renderer_initialized_ && !auto_resize_enabled_ && delegate_ &&
-         !is_hidden_;
+         view_->HasSize() && renderer_initialized_ && !auto_resize_enabled_ &&
+         delegate_ && !is_hidden_;
 }
 
 void RenderWidgetHostImpl::DidSendResizeParams(

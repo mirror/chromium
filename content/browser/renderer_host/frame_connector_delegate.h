@@ -212,10 +212,16 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
                                      uint64_t sequence_number) {}
 
+  bool has_size() const { return has_size_; }
+
  protected:
+  // Called to resize the child renderer. |frame_rect| is in pixels if
+  // zoom-for-dsf is enabled, and in DIP if not.
+  virtual void SetRect(const gfx::Rect& frame_rect);
+
   explicit FrameConnectorDelegate(bool use_zoom_for_device_scale_factor);
 
-  virtual ~FrameConnectorDelegate() {}
+  virtual ~FrameConnectorDelegate();
 
   // This is here rather than in the implementation class so that
   // ViewportIntersection() can return a reference.
@@ -226,9 +232,14 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   gfx::Size local_frame_size_in_pixels_;
   gfx::Rect screen_space_rect_in_dip_;
   gfx::Rect screen_space_rect_in_pixels_;
+
   viz::LocalSurfaceId local_surface_id_;
 
+  bool has_size_ = false;
   const bool use_zoom_for_device_scale_factor_;
+
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewChildFrameZoomForDSFTest,
+                           PhysicalBackingSize);
 };
 
 }  // namespace content

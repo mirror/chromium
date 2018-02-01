@@ -2410,6 +2410,10 @@ void RenderFrameHostImpl::UpdateEncoding(const std::string& encoding_name) {
   delegate_->UpdateEncoding(this, encoding_name);
 }
 
+void RenderFrameHostImpl::FrameRectsChanged(const gfx::Rect& frame_rect) {
+  frame_rect_ = frame_rect;
+}
+
 void RenderFrameHostImpl::OnDidBlockFramebust(const GURL& url) {
   delegate_->OnDidBlockFramebust(url);
 }
