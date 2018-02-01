@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "29c6b030_aeba8aad",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T06:34:09Z",
+      "side": 1,
+      "message": "Nit: return rare_data_ \u0026\u0026 rare_data-\u003eis_clip_path_cache_valid_;",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5a15d22_a4bcbb7d",
         "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
         "patchSetId": 2
@@ -47,6 +64,63 @@
       "writtenOn": "2018-02-01T05:15:47Z",
       "side": 1,
       "message": "Is it necessary to have this method? There is only one callsite, so it looks specialized\nto me.",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f356b6b4_00a13434",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T06:34:09Z",
+      "side": 1,
+      "message": "For the object, PaintInvalidation happens after PaintPropertyTreeBuilder, so this will affect PaintPropertyTreeBuilder in the next cycle. This doesn\u0027t seem intended?",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611e5ff3_b7eea883",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T06:34:09Z",
+      "side": 1,
+      "message": "Please update PaintPropertyTreePrinter.cpp accordingly.",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60488016_fae44254",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-01T06:34:09Z",
+      "side": 1,
+      "message": "Should [ clip path clip ] be shown in the tree?",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 20
+      },
       "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
