@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bd90b0fc_03f70771",
+        "filename": "android_webview/browser/deferred_gpu_command_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T23:55:54Z",
+      "side": 1,
+      "message": "\u003e Done.\n\u003e piman: I can\u0027t think of a way to use base::NoDestructor to create a static instance to serve as a lock. If you know of a way, please share with me.\n\nyou can define a dummy wrapper type and do all of this in the constructor. I assume NoDestructor like LazyInstance ensures the object is only constructed once?",
+      "parentUuid": "77250459_24d8202d",
+      "revId": "e1df2be7b642f0c4c3cc3c69dfc618f790676948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b07db96_f9e6b5b1",
         "filename": "android_webview/browser/deferred_gpu_command_service.cc",
         "patchSetId": 3
