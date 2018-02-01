@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "321591b3_8a56d9c6",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T09:16:03Z",
+      "side": 1,
+      "message": "I think, because status update is notified via Observer, step-by-step can be done technically.\nAlso, for accelerate testing, you can set delay duration, e.g. set_delay_for_testing().\n\nIf it requires more work, I\u0027m ok to move forward with the current way, but could you add TODO, e.g. \"unify status update mechanism for Fake for ChromeOS Chrome, and unittesting\".\n\nCurrently, it has two status update emulation mechanism, which looks like a target to be cleaned up to me.",
+      "parentUuid": "0c2eb249_3794c388",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f031b664_ddf59214",
         "filename": "chromeos/dbus/update_engine_client.cc",
         "patchSetId": 2
