@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a863bb7c_42a2a238",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-01T14:17:48Z",
+      "side": 1,
+      "message": "Account ID is an obfuscated ID string that Gaia uses to uniquely identity a user. We store this in pref encrypted. I think it is fine if the user wants to see it on its machine (it is the ID of their Gaia account after all). If they want to check it, then can also just look it up on disk.\n\nWe should not be leaking it to random websites, but that should not be case in your CL.",
+      "parentUuid": "417ef824_9065a910",
+      "range": {
+        "startLine": 482,
+        "startChar": 20,
+        "endLine": 482,
+        "endChar": 26
+      },
+      "revId": "b486483d38af864efdc585a0bf04012e0102cfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22ccd016_bbb3d902",
         "filename": "components/signin/core/browser/account_tracker_service.cc",
         "patchSetId": 13
