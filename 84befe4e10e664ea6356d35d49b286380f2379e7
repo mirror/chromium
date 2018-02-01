@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f61e7f2a_8d951896",
+        "filename": "third_party/WebKit/Source/core/css/resolver/MatchedPropertiesCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-01T04:57:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be:\n\nfor (...) {\n  if (IsHeapObjectAlive()) return true;\n}\nreturn false;\n\n?",
+      "revId": "84befe4e10e664ea6356d35d49b286380f2379e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e1b7a9_7b6a9d1b",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-01T04:57:53Z",
+      "side": 1,
+      "message": "Is it possible that TraceInCollectionTrait::IsAlive is called with kNoWeakHandlingInCollections?\n\nCan we probably add NOT_REACHED()?",
+      "revId": "84befe4e10e664ea6356d35d49b286380f2379e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ee9f6f6_2a18f232",
         "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
         "patchSetId": 1
