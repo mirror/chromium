@@ -45,6 +45,30 @@
       "revId": "5b73cf116e14bdb5a07b3b0ce10579b31bc01bf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18c4a4e_02ba61be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-01T17:04:51Z",
+      "side": 1,
+      "message": "+1 to FilterType.",
+      "parentUuid": "a7b5b03a_0060fa32",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "5b73cf116e14bdb5a07b3b0ce10579b31bc01bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
