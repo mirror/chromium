@@ -128,11 +128,7 @@ if (is_mac || is_ios || is_linux) {
 # most translation units, that they are emitted correctly, and that the
 # compiler or platform provides a way to access them.
 can_unwind_with_frame_pointers = enable_frame_pointers
-if (current_cpu == "arm" && arm_use_thumb) {
-  # We cannot currently unwind ARM Thumb frame pointers correctly.
-  # See https://bugs.llvm.org/show_bug.cgi?id=18505
-  can_unwind_with_frame_pointers = false
-} else if (is_win) {
+if (is_win) {
   # Windows 32-bit does provide frame pointers, but the compiler does not
   # provide intrinsics to access them, so we don't use them.
   can_unwind_with_frame_pointers = false
