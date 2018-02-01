@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "52a12050_26ab51c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-02-01T17:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "292f72b5_bc61e1d1",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e297d29_26dfe454",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrModalPresenter.java",
         "patchSetId": 11
@@ -517,6 +541,30 @@
       "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b8182c_1b5edab7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-02-01T17:00:38Z",
+      "side": 1,
+      "message": "Removed the parent check.",
+      "parentUuid": "242124b2_1f88839c",
+      "range": {
+        "startLine": 662,
+        "startChar": 8,
+        "endLine": 662,
+        "endChar": 39
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
