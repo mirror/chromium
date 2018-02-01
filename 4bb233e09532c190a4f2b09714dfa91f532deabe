@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38a1275b_77078a1b",
+        "filename": "ash/public/cpp/menu_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-01T20:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11ef300_1618ec02",
+      "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a51f495d_b51f57e1",
         "filename": "ash/public/cpp/menu_utils.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T20:01:13Z",
       "side": 1,
       "message": "Is it possible to just make the integer types match so we don\u0027t need this checked cast?",
+      "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd0615d_1a33a46f",
+        "filename": "ash/public/cpp/menu_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-01T20:49:36Z",
+      "side": 1,
+      "message": "Currently menu models are using |int| for command_id, so our menus have to following this to implement the interfaces. Therefore I think it\u0027s hard to unify the types.\n\nIt seems that all integers in mojom are unsigned, but it\u0027ll be a big change to make all menus use unsigned ints.",
+      "parentUuid": "a51f495d_b51f57e1",
       "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf48ad17_8c28d6e2",
+        "filename": "ash/public/cpp/menu_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-01T20:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfe693d_cbf62a82",
+      "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
