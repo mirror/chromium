@@ -68,6 +68,24 @@
       "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45d587b_7d1dd777",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T01:42:44Z",
+      "side": 0,
+      "message": "If the resource pool now owns these resources, and they aren\u0027t stored in the ResourceProvider as well, there\u0027s no code remaining that links the resource dumped here to its allocation in the GPU process.\n\nSee the ownership edge logic here: https://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003db7883a0984d9cd87f71c5bfeda092c882529fd4a\u0026l\u003d233\n\nMaybe this needs to be factored out into a common helper class and called here as well? If my understanding of this patch is correct, this only handles GPU resources, so you\u0027d only need a subset of the logic there.\n\nWithout these edges, we can\u0027t alias the Browser/Renderer memory with each-other (currently broken anyway, so not a big loss), or the Browser/Renderer memory with GPU process memory (currently works).\n\nBasically, you need to generate a tracing GUID from either the GL ID (for texture backed resource), the GMB handle (for GMB resources), or the shared bitmap ID (for software resources) and create an ownership edge from that GUID to this dump.\n\nFeel free to ping me to discuss further.",
+      "parentUuid": "0dd3ca91_27bd332f",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
