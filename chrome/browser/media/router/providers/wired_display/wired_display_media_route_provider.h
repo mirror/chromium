@@ -46,6 +46,8 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
   void CreateRoute(const std::string& media_source,
                    const std::string& sink_id,
                    const std::string& presentation_id,
+                   int32_t render_process_id,
+                   int32_t render_frame_id,
                    const url::Origin& origin,
                    int32_t tab_id,
                    base::TimeDelta timeout,
@@ -144,7 +146,8 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
 
   Presentation CreatePresentation(const std::string& presentation_id,
                                   const display::Display& display,
-                                  const MediaRoute& media_route);
+                                  const MediaRoute& media_route,
+                                  const std::pair<int, int>& opener_rf_id);
 
   // Terminates all presentation receivers on |display|.
   void TerminatePresentationsOnDisplay(const display::Display& display);

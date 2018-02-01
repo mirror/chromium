@@ -10,6 +10,13 @@ PresentationInfo::PresentationInfo(const GURL& presentation_url,
                                    const std::string& presentation_id)
     : presentation_url(presentation_url), presentation_id(presentation_id) {}
 
+PresentationInfo::PresentationInfo(const GURL& presentation_url,
+                                   const std::string& presentation_id,
+                                   int routing_id)
+    : presentation_url(presentation_url),
+      presentation_id(presentation_id),
+      routing_id(routing_id) {}
+
 PresentationInfo::~PresentationInfo() {}
 
 PresentationError::PresentationError()

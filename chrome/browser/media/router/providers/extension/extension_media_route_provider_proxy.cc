@@ -28,6 +28,8 @@ void ExtensionMediaRouteProviderProxy::CreateRoute(
     const std::string& media_source,
     const std::string& sink_id,
     const std::string& original_presentation_id,
+    int32_t render_process_id,
+    int32_t render_frame_id,
     const url::Origin& origin,
     int32_t tab_id,
     base::TimeDelta timeout,
@@ -36,8 +38,9 @@ void ExtensionMediaRouteProviderProxy::CreateRoute(
   request_manager_->RunOrDefer(
       base::BindOnce(&ExtensionMediaRouteProviderProxy::DoCreateRoute,
                      weak_factory_.GetWeakPtr(), media_source, sink_id,
-                     original_presentation_id, origin, tab_id, timeout,
-                     incognito, std::move(callback)),
+                     original_presentation_id, render_process_id,
+                     render_frame_id, origin, tab_id, timeout, incognito,
+                     std::move(callback)),
       MediaRouteProviderWakeReason::CREATE_ROUTE);
 }
 
@@ -242,6 +245,8 @@ void ExtensionMediaRouteProviderProxy::DoCreateRoute(
     const std::string& media_source,
     const std::string& sink_id,
     const std::string& original_presentation_id,
+    int32_t render_process_id,
+    int32_t render_frame_id,
     const url::Origin& origin,
     int32_t tab_id,
     base::TimeDelta timeout,
@@ -249,9 +254,9 @@ void ExtensionMediaRouteProviderProxy::DoCreateRoute(
     CreateRouteCallback callback) {
   DVLOG(1) << "DoCreateRoute " << media_source << "=>" << sink_id
            << ", presentation ID: " << original_presentation_id;
-  media_route_provider_->CreateRoute(media_source, sink_id,
-                                     original_presentation_id, origin, tab_id,
-                                     timeout, incognito, std::move(callback));
+  media_route_provider_->CreateRoute(
+      media_source, sink_id, original_presentation_id, render_process_id,
+      render_frame_id, origin, tab_id, timeout, incognito, std::move(callback));
 }
 
 void ExtensionMediaRouteProviderProxy::DoJoinRoute(

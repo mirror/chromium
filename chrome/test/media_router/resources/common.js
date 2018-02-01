@@ -9,6 +9,7 @@
 
 var startSessionPromise = null;
 var startedConnection = null;
+var startedWindow = null;
 var reconnectedSession = null;
 var presentationUrl = null;
 let params = (new URL(window.location.href)).searchParams;
@@ -72,11 +73,12 @@ function checkSession() {
     sendResult(false, 'Did not attempt to start session');
   } else {
     startSessionPromise.then(function(session) {
-      if(!session) {
+      if (!session) {
         sendResult(false, 'Failed to start session: connection is null');
       } else {
         // set the new session
-        startedConnection = session;
+        startedConnection = session.connection;
+        startedWindow = session.window;
         waitForConnectedStateAndSendResult(startedConnection);
       }
     }).catch(function(e) {

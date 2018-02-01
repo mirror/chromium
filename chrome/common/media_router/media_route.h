@@ -94,6 +94,9 @@ class MediaRoute {
   }
   bool is_local_presentation() const { return is_local_presentation_; }
 
+  void set_render_frame_id(int32_t id) { render_frame_id_ = id; }
+  int32_t render_frame_id() const { return render_frame_id_; }
+
   bool Equals(const MediaRoute& other) const;
 
  private:
@@ -129,6 +132,8 @@ class MediaRoute {
   // |true| if the presentation associated with this route is a local
   // presentation.
   bool is_local_presentation_ = false;
+
+  int32_t render_frame_id_ = -1;
 };
 
 }  // namespace media_router

@@ -40,6 +40,8 @@ class MockMediaRouteProvider : public mojom::MediaRouteProvider {
   void CreateRoute(const std::string& source_urn,
                    const std::string& sink_id,
                    const std::string& presentation_id,
+                   int32_t render_process_id,
+                   int32_t render_frame_id,
                    const url::Origin& origin,
                    int tab_id,
                    base::TimeDelta timeout,

@@ -521,7 +521,8 @@ void RemotePlayback::Init() {
   mojom::blink::PresentationConnectionPtr connection_ptr;
   presentation_connection_binding_.Bind(mojo::MakeRequest(&connection_ptr));
   presentation_controller->GetPresentationService()->SetPresentationConnection(
-      mojom::blink::PresentationInfo::New(presentation_url_, presentation_id_),
+      mojom::blink::PresentationInfo::New(presentation_url_, presentation_id_,
+                                          -1),
       std::move(connection_ptr),
       mojo::MakeRequest(&target_presentation_connection_));
 }

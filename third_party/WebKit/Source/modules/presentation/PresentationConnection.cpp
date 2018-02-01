@@ -240,7 +240,7 @@ ControllerPresentationConnection* ControllerPresentationConnection::Take(
 
   return Take(controller,
               mojom::blink::PresentationInfo(presentation_info.url,
-                                             presentation_info.id),
+                                             presentation_info.id, -1),
               request);
 }
 
@@ -299,7 +299,7 @@ void ControllerPresentationConnection::Init() {
   auto& service = controller_->GetPresentationService();
   if (service) {
     service->SetPresentationConnection(
-        mojom::blink::PresentationInfo::New(url_, id_),
+        mojom::blink::PresentationInfo::New(url_, id_, -1),
         std::move(controller_connection_ptr),
         mojo::MakeRequest(&target_connection_));
   }

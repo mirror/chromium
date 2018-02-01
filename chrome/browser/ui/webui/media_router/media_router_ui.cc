@@ -596,6 +596,11 @@ bool MediaRouterUI::CreateRoute(const MediaSink::Id& sink_id,
   // Default the tab casting the content to the initiator, and change if
   // necessary.
   content::WebContents* tab_contents = initiator_;
+  const auto opener_id =
+      start_presentation_context_
+          ? start_presentation_context_->presentation_request()
+                .render_frame_host_id
+          : std::pair<int, int>(-1, -1);
 
   if (cast_mode == MediaCastMode::LOCAL_FILE) {
     GURL url = media_router_file_dialog_->GetLastSelectedFileUrl();
@@ -615,7 +620,7 @@ bool MediaRouterUI::CreateRoute(const MediaSink::Id& sink_id,
   }
 
   GetIssueManager()->ClearNonBlockingIssues();
-  router_->CreateRoute(source_id, sink_id, origin, tab_contents,
+  router_->CreateRoute(source_id, sink_id, opener_id, origin, tab_contents,
                        std::move(route_response_callbacks), timeout, incognito);
   return true;
 }

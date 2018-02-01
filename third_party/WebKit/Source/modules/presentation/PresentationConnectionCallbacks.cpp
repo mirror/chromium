@@ -7,11 +7,14 @@
 #include <memory>
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
+#include "core/frame/Frame.h"
 #include "modules/presentation/PresentationConnection.h"
 #include "modules/presentation/PresentationError.h"
 #include "modules/presentation/PresentationRequest.h"
+#include "modules/presentation/PresentationTurtle.h"
 #include "public/platform/modules/presentation/WebPresentationError.h"
 #include "public/platform/modules/presentation/presentation.mojom-blink.h"
+#include "public/web/WebLocalFrame.h"
 
 namespace blink {
 
@@ -50,7 +53,15 @@ void PresentationConnectionCallbacks::OnSuccess(
     connection_ = ControllerPresentationConnection::Take(
         resolver_.Get(), presentation_info, request_);
   }
-  resolver_->Resolve(connection_);
+
+  if (presentation_info.web_frame) {
+    auto* window =
+        WebFrame::ToCoreFrame(*presentation_info.web_frame)->DomWindow();
+    DCHECK(window);
+    resolver_->Resolve(PresentationTurtle::Create(connection_, window));
+    return;
+  }
+  resolver_->Resolve(PresentationTurtle::Create(connection_));
 }
 
 void PresentationConnectionCallbacks::OnError(

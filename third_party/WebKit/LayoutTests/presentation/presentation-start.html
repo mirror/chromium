@@ -15,9 +15,11 @@ var testPresentationRequestStart = function(t, requestArgument, connectionUrl) {
   // This is receiving the user gesture and runs the callback.
   waitForClick(() => {
     new PresentationRequest(requestArgument).start().then(
-    t.step_func_done(connection => {
-      assert_equals(connection.url, connectionUrl);
-      assert_equals(connection.state, 'connecting');
+    t.step_func_done(turtle => {
+      assert_equals(turtle.window, null);
+      assert_not_equals(turtle.connection, null);
+      assert_equals(turtle.connection.url, connectionUrl);
+      assert_equals(turtle.connection.state, 'connecting');
     }));
   }, button);
 };

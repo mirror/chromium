@@ -14,7 +14,7 @@
     RuntimeEnabled=Presentation,
     Exposed=Window
 ] interface PresentationRequest : EventTarget {
-    [CallWith=ScriptState, MeasureAs=PresentationRequestStart] Promise<PresentationConnection> start();
+    [CallWith=ScriptState, MeasureAs=PresentationRequestStart] Promise<PresentationTurtle> start();
     [CallWith=ScriptState, MeasureAs=PresentationRequestReconnect] Promise<PresentationConnection> reconnect(DOMString id);
     [CallWith=ScriptState, MeasureAs=PresentationRequestGetAvailability] Promise<PresentationAvailability> getAvailability();
 

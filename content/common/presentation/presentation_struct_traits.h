@@ -153,6 +153,11 @@ struct StructTraits<blink::mojom::PresentationInfoDataView,
     return presentation_info.presentation_id;
   }
 
+  static int32_t routing_id(
+      const content::PresentationInfo& presentation_info) {
+    return presentation_info.routing_id;
+  }
+
   static bool Read(blink::mojom::PresentationInfoDataView data,
                    content::PresentationInfo* out);
 };

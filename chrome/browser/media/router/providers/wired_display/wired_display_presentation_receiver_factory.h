@@ -14,6 +14,10 @@
 
 class Profile;
 
+namespace content {
+class WebContents;
+}  // namespace content
+
 namespace gfx {
 class Rect;
 }  // namespace gfx
@@ -31,8 +35,20 @@ class WiredDisplayPresentationReceiverFactory {
           base::RepeatingCallback<void(const std::string&)>
               title_change_callback)>;
 
-  static std::unique_ptr<WiredDisplayPresentationReceiver> Create(
+  static std::unique_ptr<WiredDisplayPresentationReceiver> CreateOTR(
       Profile* profile,
+      const gfx::Rect& bounds,
+      base::OnceClosure termination_callback,
+      base::RepeatingCallback<void(const std::string&)> title_change_callback);
+  static std::unique_ptr<WiredDisplayPresentationReceiver> CreateWithOpener(
+      Profile* profile,
+      const gfx::Rect& bounds,
+      const std::pair<int, int>& opener_rf_id,
+      base::OnceClosure termination_callback,
+      base::RepeatingCallback<void(const std::string&)> title_change_callback);
+  static std::unique_ptr<WiredDisplayPresentationReceiver>
+  CreateWithWebContents(
+      content::WebContents* web_contents,
       const gfx::Rect& bounds,
       base::OnceClosure termination_callback,
       base::RepeatingCallback<void(const std::string&)> title_change_callback);

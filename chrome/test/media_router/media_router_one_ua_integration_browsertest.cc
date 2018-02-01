@@ -5,6 +5,7 @@
 
 #include "base/files/file_util.h"
 #include "base/path_service.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/test/media_router/media_router_integration_browsertest.h"
 #include "content/public/test/test_utils.h"
 #include "net/base/filename_util.h"
@@ -44,6 +45,15 @@ class MediaRouterIntegrationOneUABrowserTest
 
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationOneUABrowserTest, MANUAL_Basic) {
   RunBasicTest();
+}
+
+IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationOneUABrowserTest, MANUAL_Window) {
+  ASSERT_TRUE(base::FeatureList::IsEnabled(features::kLocalScreenCasting));
+  WebContents* web_contents = StartSessionWithTestPageAndChooseSink();
+  ExecuteJavaScriptAPI(web_contents, "checkSession();");
+  ExecuteJavaScriptAPI(
+      web_contents,
+      "sendResult(startedWindow != null, 'window object was not returned');");
 }
 
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationOneUABrowserTest,

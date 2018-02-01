@@ -89,7 +89,8 @@ void StartPresentationContext::InvokeSuccessCallback(
     const MediaRoute& route) {
   if (!cb_invoked_) {
     std::move(success_cb_)
-        .Run(content::PresentationInfo(presentation_url, presentation_id),
+        .Run(content::PresentationInfo(presentation_url, presentation_id,
+                                       route.render_frame_id()),
              route);
     cb_invoked_ = true;
   }

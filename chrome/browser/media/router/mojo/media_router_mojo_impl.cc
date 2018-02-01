@@ -177,6 +177,7 @@ void MediaRouterMojoImpl::RouteResponseReceived(
 void MediaRouterMojoImpl::CreateRoute(
     const MediaSource::Id& source_id,
     const MediaSink::Id& sink_id,
+    const std::pair<int, int>& opener_rf_id,
     const url::Origin& origin,
     content::WebContents* web_contents,
     std::vector<MediaRouteResponseCallback> callbacks,
@@ -200,9 +201,11 @@ void MediaRouterMojoImpl::CreateRoute(
   auto callback = base::BindOnce(
       &MediaRouterMojoImpl::RouteResponseReceived, weak_factory_.GetWeakPtr(),
       presentation_id, provider_id, incognito, base::Passed(&callbacks), false);
+  const auto rp_id = opener_rf_id.first;
+  const auto rf_id = opener_rf_id.second;
   media_route_providers_[provider_id]->CreateRoute(
-      source_id, sink_id, presentation_id, origin, tab_id, timeout, incognito,
-      std::move(callback));
+      source_id, sink_id, presentation_id, rp_id, rf_id, origin, tab_id,
+      timeout, incognito, std::move(callback));
 }
 
 void MediaRouterMojoImpl::JoinRoute(

@@ -19,7 +19,6 @@
 
 class GURL;
 class PresentationReceiverWindow;
-class Profile;
 
 namespace content {
 class WebContents;
@@ -43,7 +42,7 @@ class PresentationReceiverWindowController final
   using TitleChangeCallback = base::RepeatingCallback<void(const std::string&)>;
 
   static std::unique_ptr<PresentationReceiverWindowController>
-  CreateFromOriginalProfile(Profile* profile,
+  CreateFromOriginalProfile(content::WebContents* web_contents,
                             const gfx::Rect& bounds,
                             base::OnceClosure termination_callback,
                             TitleChangeCallback title_change_callback);
@@ -62,12 +61,10 @@ class PresentationReceiverWindowController final
   friend class PresentationReceiverWindowControllerBrowserTest;
 
   PresentationReceiverWindowController(
-      Profile* profile,
+      content::WebContents* web_contents,
       const gfx::Rect& bounds,
       base::OnceClosure termination_callback,
       TitleChangeCallback title_change_callback);
-
-  void OriginalProfileDestroyed(Profile* profile);
 
   // These methods are intended to be used by tests.
   void CloseWindowForTest();
@@ -81,6 +78,7 @@ class PresentationReceiverWindowController final
   // content::WebContentsObserver overrides.
   void DidStartNavigation(content::NavigationHandle* handle) final;
   void TitleWasSet(content::NavigationEntry* entry) final;
+  void WebContentsDestroyed() final;
 
   // content::WebContentsDelegate overrides.
   void NavigationStateChanged(content::WebContents* source,
@@ -106,12 +104,8 @@ class PresentationReceiverWindowController final
       const std::string& partition_id,
       content::SessionStorageNamespace* session_storage_namespace) final;
 
-  // The profile used for the presentation.
-  std::unique_ptr<IndependentOTRProfileManager::OTRProfileRegistration>
-      otr_profile_registration_;
-
   // WebContents for rendering the receiver page.
-  std::unique_ptr<content::WebContents> web_contents_;
+  content::WebContents* web_contents_;
 
   // The actual UI window for displaying the receiver page.
   PresentationReceiverWindow* window_;

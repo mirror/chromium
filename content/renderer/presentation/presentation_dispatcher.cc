@@ -148,7 +148,11 @@ void PresentationDispatcher::OnConnectionCreated(
   DCHECK(presentation_info);
   callback->OnSuccess(blink::WebPresentationInfo(
       presentation_info->presentation_url,
-      blink::WebString::FromUTF8(presentation_info->presentation_id)));
+      blink::WebString::FromUTF8(presentation_info->presentation_id),
+      presentation_info->routing_id != -1
+          ? RenderFrame::FromRoutingID(presentation_info->routing_id)
+                ->GetWebFrame()
+          : nullptr));
 
   auto* connection = callback->GetConnection();
   if (connection)

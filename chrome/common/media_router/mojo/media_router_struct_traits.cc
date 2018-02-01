@@ -219,6 +219,7 @@ bool StructTraits<media_router::mojom::MediaRouteDataView,
   out->set_for_display(data.for_display());
   out->set_incognito(data.is_incognito());
   out->set_local_presentation(data.is_local_presentation());
+  out->set_render_frame_id(data.render_frame_id());
 
   return true;
 }

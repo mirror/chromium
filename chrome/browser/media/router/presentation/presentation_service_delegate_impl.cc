@@ -449,6 +449,8 @@ void PresentationServiceDelegateImpl::StartPresentation(
     content::PresentationConnectionCallback success_cb,
     content::PresentationConnectionErrorCallback error_cb) {
   const auto& render_frame_host_id = request.render_frame_host_id;
+  DVLOG(2) << "StartPresentation from (" << render_frame_host_id.first << ", "
+           << render_frame_host_id.second << ")";
   const auto& presentation_urls = request.presentation_urls;
   if (presentation_urls.empty()) {
     std::move(error_cb).Run(

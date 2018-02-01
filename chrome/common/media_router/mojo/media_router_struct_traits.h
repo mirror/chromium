@@ -445,6 +445,10 @@ struct StructTraits<media_router::mojom::MediaRouteDataView,
   static bool is_local_presentation(const media_router::MediaRoute& route) {
     return route.is_local_presentation();
   }
+
+  static int32_t render_frame_id(const media_router::MediaRoute& route) {
+    return route.render_frame_id();
+  }
 };
 
 // PresentationConnectionState

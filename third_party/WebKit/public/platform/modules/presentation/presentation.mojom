@@ -13,6 +13,7 @@ import "url/mojo/url.mojom";
 struct PresentationInfo {
   url.mojom.Url url;
   string id;
+  int32 routing_id;
 };
 
 enum ScreenAvailability {

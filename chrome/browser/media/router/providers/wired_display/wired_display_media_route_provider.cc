@@ -17,9 +17,14 @@
 #include "chrome/common/media_router/media_source_helper.h"
 #include "chrome/common/media_router/route_request_result.h"
 #include "chrome/grit/generated_resources.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/site_instance.h"
+#include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+
+#include "content/public/browser/render_process_host.h"
 
 using display::Display;
 
@@ -97,6 +102,8 @@ void WiredDisplayMediaRouteProvider::CreateRoute(
     const std::string& media_source,
     const std::string& sink_id,
     const std::string& presentation_id,
+    int32_t render_process_id,
+    int32_t render_frame_id,
     const url::Origin& origin,
     int32_t tab_id,
     base::TimeDelta timeout,
@@ -118,10 +125,21 @@ void WiredDisplayMediaRouteProvider::CreateRoute(
                    true, true);
   route.set_local_presentation(true);
   route.set_incognito(profile_->IsOffTheRecord());
-  Presentation presentation =
-      CreatePresentation(presentation_id, *display, route);
+  Presentation presentation = CreatePresentation(
+      presentation_id, *display, route,
+      std::pair<int, int>(render_process_id, render_frame_id));
 
   presentation.receiver->Start(presentation_id, GURL(media_source));
+  if (content::SiteInstance::IsSameWebSite(profile_, origin.GetURL(),
+                                           GURL(media_source))) {
+    auto* contents = presentation.receiver->web_contents();
+    DCHECK(contents);
+    auto* rfh = contents->GetMainFrame();
+    DCHECK(rfh);
+    DVLOG(2) << "CreateRoute created (" << rfh->GetProcess()->GetID() << ", "
+             << rfh->GetRoutingID() << ")";
+    route.set_render_frame_id(rfh->GetRoutingID());
+  }
   presentations_.emplace(presentation_id, std::move(presentation));
   std::move(callback).Run(route, base::nullopt, RouteRequestResult::OK);
   NotifyRouteObservers();
@@ -346,7 +364,7 @@ std::vector<Display> WiredDisplayMediaRouteProvider::GetAvailableDisplays()
            display.bounds() == primary_display.bounds();
   });
   // If there is only one display, the user should not be able to present to it.
-  return displays.size() == 1 ? std::vector<Display>() : displays;
+  return displays;
 }
 
 void WiredDisplayMediaRouteProvider::ReportSinkAvailability(
@@ -382,16 +400,26 @@ WiredDisplayMediaRouteProvider::Presentation
 WiredDisplayMediaRouteProvider::CreatePresentation(
     const std::string& presentation_id,
     const Display& display,
-    const MediaRoute& route) {
+    const MediaRoute& route,
+    const std::pair<int, int>& opener_rf_id) {
   std::unique_ptr<WiredDisplayPresentationReceiver> receiver =
-      WiredDisplayPresentationReceiverFactory::Create(
-          profile_, display.bounds(),
-          base::BindOnce(
-              &WiredDisplayMediaRouteProvider::RemovePresentationById,
-              base::Unretained(this), presentation_id),
-          base::BindRepeating(
-              &WiredDisplayMediaRouteProvider::UpdateRouteDescription,
-              base::Unretained(this), presentation_id));
+      (opener_rf_id.first != -1 && opener_rf_id.second != -1)
+          ? WiredDisplayPresentationReceiverFactory::CreateWithOpener(
+                profile_, display.bounds(), opener_rf_id,
+                base::BindOnce(
+                    &WiredDisplayMediaRouteProvider::RemovePresentationById,
+                    base::Unretained(this), presentation_id),
+                base::BindRepeating(
+                    &WiredDisplayMediaRouteProvider::UpdateRouteDescription,
+                    base::Unretained(this), presentation_id))
+          : WiredDisplayPresentationReceiverFactory::CreateOTR(
+                profile_, display.bounds(),
+                base::BindOnce(
+                    &WiredDisplayMediaRouteProvider::RemovePresentationById,
+                    base::Unretained(this), presentation_id),
+                base::BindRepeating(
+                    &WiredDisplayMediaRouteProvider::UpdateRouteDescription,
+                    base::Unretained(this), presentation_id));
   return Presentation(route, std::move(receiver));
 }
 

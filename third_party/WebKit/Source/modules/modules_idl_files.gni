@@ -231,6 +231,7 @@ modules_idl_files =
           "presentation/PresentationConnectionList.idl",
           "presentation/PresentationReceiver.idl",
           "presentation/PresentationRequest.idl",
+          "presentation/PresentationTurtle.idl",
           "push_messaging/PushEvent.idl",
           "push_messaging/PushManager.idl",
           "push_messaging/PushMessageData.idl",

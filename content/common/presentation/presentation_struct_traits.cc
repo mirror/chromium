@@ -16,6 +16,7 @@ bool StructTraits<blink::mojom::PresentationInfoDataView,
       !data.ReadId(&(out->presentation_id))) {
     return false;
   }
+  out->routing_id = data.routing_id();
 
   if (out->presentation_id.empty() ||
       !base::IsStringASCII(out->presentation_id) ||

@@ -3330,7 +3330,6 @@ ChromeContentBrowserClient::GetReceiverPresentationServiceDelegate(
     // an incognito profile.
     if (auto* impl = media_router::ReceiverPresentationServiceDelegateImpl::
             FromWebContents(web_contents)) {
-      DCHECK(web_contents->GetBrowserContext()->IsOffTheRecord());
       return impl;
     }
   }

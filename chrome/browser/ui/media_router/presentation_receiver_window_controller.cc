@@ -14,34 +14,24 @@
 #include "chrome/browser/ui/media_router/presentation_receiver_window.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 #include "ui/views/widget/widget.h"
 
 using content::WebContents;
 
-namespace {
-
-WebContents::CreateParams CreateWebContentsParams(Profile* profile) {
-  WebContents::CreateParams params(profile);
-  params.starting_sandbox_flags = blink::kPresentationReceiverSandboxFlags;
-  return params;
-}
-
-}  // namespace
-
 // static
 std::unique_ptr<PresentationReceiverWindowController>
 PresentationReceiverWindowController::CreateFromOriginalProfile(
-    Profile* profile,
+    WebContents* web_contents,
     const gfx::Rect& bounds,
     base::OnceClosure termination_callback,
     TitleChangeCallback title_change_callback) {
-  DCHECK(profile);
-  DCHECK(!profile->IsOffTheRecord());
   DCHECK(termination_callback);
   return base::WrapUnique(new PresentationReceiverWindowController(
-      profile, bounds, std::move(termination_callback),
+      web_contents, bounds, std::move(termination_callback),
       std::move(title_change_callback)));
 }
 
@@ -57,7 +47,7 @@ void PresentationReceiverWindowController::Start(
   DCHECK(web_contents_);
 
   media_router::ReceiverPresentationServiceDelegateImpl::CreateForWebContents(
-      web_contents_.get(), presentation_id);
+      web_contents_, presentation_id);
 
   content::NavigationController::LoadURLParams load_params(start_url);
   load_params.should_replace_current_entry = true;
@@ -94,42 +84,24 @@ gfx::Rect PresentationReceiverWindowController::GetWindowBoundsForTest() const {
 }
 
 WebContents* PresentationReceiverWindowController::web_contents() const {
-  return web_contents_.get();
+  return web_contents_;
 }
 
 PresentationReceiverWindowController::PresentationReceiverWindowController(
-    Profile* profile,
+    WebContents* web_contents,
     const gfx::Rect& bounds,
     base::OnceClosure termination_callback,
     TitleChangeCallback title_change_callback)
-    : otr_profile_registration_(
-          IndependentOTRProfileManager::GetInstance()
-              ->CreateFromOriginalProfile(
-                  profile,
-                  base::BindOnce(&PresentationReceiverWindowController::
-                                     OriginalProfileDestroyed,
-                                 base::Unretained(this)))),
-      web_contents_(WebContents::Create(
-          CreateWebContentsParams(otr_profile_registration_->profile()))),
+    : web_contents_(web_contents),
       window_(PresentationReceiverWindow::Create(this, bounds)),
       termination_callback_(std::move(termination_callback)),
       title_change_callback_(std::move(title_change_callback)) {
-  DCHECK(otr_profile_registration_->profile());
-  DCHECK(otr_profile_registration_->profile()->IsOffTheRecord());
-  content::WebContentsObserver::Observe(web_contents_.get());
+  content::WebContentsObserver::Observe(web_contents_);
   web_contents_->SetDelegate(this);
 }
 
 void PresentationReceiverWindowController::WindowClosed() {
   window_ = nullptr;
-  Terminate();
-}
-
-void PresentationReceiverWindowController::OriginalProfileDestroyed(
-    Profile* profile) {
-  DCHECK(profile == otr_profile_registration_->profile());
-  web_contents_.reset();
-  otr_profile_registration_.reset();
   Terminate();
 }
 
@@ -146,6 +118,11 @@ void PresentationReceiverWindowController::TitleWasSet(
     title_change_callback_.Run(base::UTF16ToUTF8(entry->GetTitle()));
 }
 
+void PresentationReceiverWindowController::WebContentsDestroyed() {
+  web_contents_ = nullptr;
+  Terminate();
+}
+
 void PresentationReceiverWindowController::NavigationStateChanged(
     WebContents* source,
     content::InvalidateTypes changed_flags) {
@@ -154,13 +131,13 @@ void PresentationReceiverWindowController::NavigationStateChanged(
 
 void PresentationReceiverWindowController::CloseContents(
     content::WebContents* source) {
-  web_contents_.reset();
+  web_contents_ = nullptr;
   Terminate();
 }
 
 bool PresentationReceiverWindowController::ShouldSuppressDialogs(
     content::WebContents* source) {
-  DCHECK_EQ(web_contents_.get(), source);
+  DCHECK_EQ(web_contents_, source);
   // Suppress all because there is no possible direct user interaction with
   // dialogs.
   // TODO(https://crbug.com/734191): This does not suppress window.print().
@@ -169,7 +146,7 @@ bool PresentationReceiverWindowController::ShouldSuppressDialogs(
 
 bool PresentationReceiverWindowController::ShouldFocusLocationBarByDefault(
     content::WebContents* source) {
-  DCHECK_EQ(web_contents_.get(), source);
+  DCHECK_EQ(web_contents_, source);
   // Indicate the location bar should be focused instead of the page, even
   // though there is no location bar in fullscreen (the presentation's default
   // state).  This will prevent the page from automatically receiving input
@@ -203,7 +180,7 @@ bool PresentationReceiverWindowController::ShouldCreateWebContents(
     const GURL& target_url,
     const std::string& partition_id,
     content::SessionStorageNamespace* session_storage_namespace) {
-  DCHECK_EQ(web_contents_.get(), web_contents);
+  DCHECK_EQ(web_contents_, web_contents);
   // Disallow creating separate WebContentses.  The WebContents implementation
   // uses this to spawn new windows/tabs, which is also not allowed for
   // local presentations.

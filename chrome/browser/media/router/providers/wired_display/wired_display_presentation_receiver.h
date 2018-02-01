@@ -12,6 +12,10 @@
 
 class GURL;
 
+namespace content {
+class WebContents;
+};
+
 namespace media_router {
 
 // An interface for receivers used by WiredDisplayMediaRouteProvider for
@@ -27,6 +31,8 @@ class WiredDisplayPresentationReceiver {
 
   // Terminates the presentation.
   virtual void Terminate() = 0;
+
+  virtual content::WebContents* web_contents() const = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WiredDisplayPresentationReceiver);

@@ -33,12 +33,16 @@ struct CONTENT_EXPORT PresentationInfo {
   PresentationInfo() = default;
   PresentationInfo(const GURL& presentation_url,
                    const std::string& presentation_id);
+  PresentationInfo(const GURL& presentation_url,
+                   const std::string& presentation_id,
+                   int routing_id);
   ~PresentationInfo();
 
   static constexpr size_t kMaxIdLength = 256;
 
   GURL presentation_url;
   std::string presentation_id;
+  int routing_id = -1;
 };
 
 // Possible reasons why an attempt to create a presentation failed.

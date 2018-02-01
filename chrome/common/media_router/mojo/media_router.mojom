@@ -120,6 +120,8 @@ struct MediaRoute {
   bool is_incognito;
   // Set to true if this route corresponds to a local presentation.
   bool is_local_presentation;
+
+  int32 render_frame_id;
 };
 
 // Notifications or an actionable events to be shown to the user.
@@ -259,6 +261,8 @@ interface MediaRouteProvider {
   CreateRoute(string media_source,
               string sink_id,
               string original_presentation_id,
+              int32 render_process_id,
+              int32 render_frame_id,
               url.mojom.Origin origin,
               int32 tab_id,
               mojo.common.mojom.TimeDelta timeout,

@@ -85,6 +85,7 @@ class MediaRouter : public KeyedService {
   // If |incognito| is true, the request was made by an incognito profile.
   virtual void CreateRoute(const MediaSource::Id& source_id,
                            const MediaSink::Id& sink_id,
+                           const std::pair<int, int>& opener_rf_id,
                            const url::Origin& origin,
                            content::WebContents* web_contents,
                            std::vector<MediaRouteResponseCallback> callbacks,
