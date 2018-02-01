@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_BROWSER_UI_INTERFACE_H_
 #define CHROME_BROWSER_VR_BROWSER_UI_INTERFACE_H_
 
+#include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "components/security_state/core/security_state.h"
 
