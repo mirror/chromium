@@ -16,7 +16,6 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "mojo/public/cpp/bindings/strong_binding_set.h"
 #include "services/network/cookie_manager.h"
 #include "services/network/public/cpp/url_request_context_owner.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
@@ -30,8 +29,8 @@ class URLRequestContext;
 
 namespace network {
 class NetworkService;
+class NetworkServiceURLLoaderFactory;
 class UDPSocketFactory;
-class URLLoader;
 class URLRequestContextBuilderMojo;
 
 // A NetworkContext creates and manages access to a URLRequestContext.
@@ -79,10 +78,12 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkContext
 
   NetworkService* network_service() { return network_service_; }
 
-  // These are called by individual url loaders as they are being created and
-  // destroyed.
-  void RegisterURLLoader(URLLoader* url_loader);
-  void DeregisterURLLoader(URLLoader* url_loader);
+  // These are called by individual url loader factories as they are being
+  // created and destroyed.
+  void RegisterURLLoaderFactory(
+      NetworkServiceURLLoaderFactory* url_loader_factory);
+  void DeregisterURLLoaderFactory(
+      NetworkServiceURLLoaderFactory* url_loader_factory);
 
   // mojom::NetworkContext implementation:
   void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request,
@@ -139,15 +140,10 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkContext
 
   net::URLRequestContext* url_request_context_ = nullptr;
 
-  // Put it below |url_request_context_| so that it outlives all the
-  // NetworkServiceURLLoaderFactory instances.
-  mojo::StrongBindingSet<mojom::URLLoaderFactory> loader_factory_bindings_;
-
-  // URLLoaders register themselves with the NetworkContext so that they can
-  // be cleaned up when the NetworkContext goes away. This is needed as
-  // net::URLRequests held by URLLoaders have to be gone when
-  // net::URLRequestContext (held by NetworkContext) is destroyed.
-  std::set<URLLoader*> url_loaders_;
+  // URLLoaderFactories register themselves with the NetworkContext so that they
+  // can be cleaned up when the NetworkContext goes away. This is needed as the
+  // depend on |url_request_context_|.
+  std::set<NetworkServiceURLLoaderFactory*> url_loader_factories_;
 
   mojom::NetworkContextParamsPtr params_;
 
