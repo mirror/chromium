@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1404cd1_7ea15ffb",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-01T01:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472fafa9_d71ec91b",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88a9266_c80b60f5",
         "filename": "content/browser/devtools/protocol/devtools_download_item.h",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "0340aebe979088be362257ca210c319ba84eab9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44ed0fb_a3b0497f",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-01T01:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88a9266_c80b60f5",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "163292a9_8cfa8355",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-01T01:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "710bbf9a_c8232fe6",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4d833b3_05cd2355",
         "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
         "patchSetId": 19
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-31T18:03:31Z",
       "side": 1,
       "message": "Is devtool using a different BrowserContext? otherwise, whhile devtool is running on one tab, is it possible user start download on another tab? In that case, the DownloadManager retrieved by the other tab will be wrong",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c97107_4ec032ea",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-01T01:09:11Z",
+      "side": 1,
+      "message": "There\u0027s only one DevToolsDownloadManager instance, assotiated to the BrowserContext. \nThe logic on what manager to use is on https://chromium-review.googlesource.com/c/chromium/src/+/861546/19/content/browser/download/download_request_handle.cc\n\nIn short, tabs get associated a DevToolsDownloadManagerHelper, which is what indicates that the download should be handled by the DevToolsDownloadManager, instead of the default DownloadManager implementation. \n\nIf a user starts a download on another tab, there will be no DevToolsDownloadManagerHelper associated, and the download will be handled by the default manager.",
+      "parentUuid": "b4d833b3_05cd2355",
       "revId": "0340aebe979088be362257ca210c319ba84eab9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "0340aebe979088be362257ca210c319ba84eab9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b953a4_53ff79da",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-01T01:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76ccc0_f783f844",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
