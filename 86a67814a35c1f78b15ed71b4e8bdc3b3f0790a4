@@ -16,6 +16,24 @@
       "revId": "86a67814a35c1f78b15ed71b4e8bdc3b3f0790a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8a1b80_df94a026",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T15:11:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "07642e8d_d2c5c8b3",
+      "revId": "86a67814a35c1f78b15ed71b4e8bdc3b3f0790a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
