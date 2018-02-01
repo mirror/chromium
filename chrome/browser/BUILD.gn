@@ -4874,6 +4874,8 @@ static_library("test_support_ui") {
     sources += [
       "password_manager/password_manager_test_base.cc",
       "password_manager/password_manager_test_base.h",
+      "ssl/cert_verifier_browser_test.cc",
+      "ssl/cert_verifier_browser_test.h",
       "ui/webui/web_ui_test_handler.cc",
       "ui/webui/web_ui_test_handler.h",
     ]
