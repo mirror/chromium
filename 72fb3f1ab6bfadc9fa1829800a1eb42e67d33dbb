@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9bc2ae7_88bed8eb",
+        "filename": "luci-scheduler.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2018-02-01T22:31:23Z",
+      "side": 1,
+      "message": "note: the history of this job in Scheduler will be lost (which is probably OK)",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "72fb3f1ab6bfadc9fa1829800a1eb42e67d33dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
