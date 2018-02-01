@@ -454,6 +454,24 @@
     },
     {
       "key": {
+        "uuid": "5f30deaa_c02238d0",
+        "filename": "notification_helper/com_server_module.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "No objection to the use of a namespace, though this file will never be included outside of this directory so there\u0027s no risk of collision.",
+      "parentUuid": "ab83b5bc_ab17ea93",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ff0f304_e87fddc7",
         "filename": "notification_helper/com_server_module.h",
         "patchSetId": 50
@@ -629,6 +647,24 @@
     },
     {
       "key": {
+        "uuid": "297ce875_53171579",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "I think Peter is saying he was confused by \"0, nullptr\" rather than \"argc, argv\".",
+      "parentUuid": "888be8c8_aa1b753a",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bcb911b_081be131",
         "filename": "notification_helper/notification_helper.cc",
         "patchSetId": 50
@@ -658,6 +694,24 @@
       "side": 1,
       "message": "I will start a discussion in the design doc, and loop in the experts.",
       "parentUuid": "9bcb911b_081be131",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3cd014_ecedf593",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "we follow this pattern for chrome.exe and setup.exe: the process spawns a copy of itself to run the crash service. i think that this is the right thing here as well. i propose that you add scottmg as a reviewer specifically for the crashpad integration.",
+      "parentUuid": "8b50af38_629f315a",
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

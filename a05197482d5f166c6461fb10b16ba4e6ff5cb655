@@ -1,0 +1,369 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16a1a824_aa01d532",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 66
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "meta comment: imo, this is too much information for the CL description. this text goes into the whys and wherefores at a level that i think is better suited for the design doc and/or README.md. just my $0.02.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b17f01_9bcc3c7a",
+        "filename": "BUILD.gn",
+        "patchSetId": 66
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "i wonder why we also have an is_win block on line 271. :-)",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755bf901_287d4993",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "nit: move the definition here -- there\u0027s no need for the copy above:\n  base::FilePath notification_helper \u003d target_path.AppendASCII(...)...;",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a8b49a_067fa799",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "\"generally\"? the |size| of the string is fixed at kGuidLengthFull on the line above. the capacity (which is being used below) could be anything. since std::basic_string::operator[] doesn\u0027t say that any position between 0 and capacity() is valid, i would say that the use of capactity() below is incorrect. since the size of the string is set to kGuidLengthFull above, i suggest you get rid of the cast and simply use kGuidLengthFull below. then you can remove this comment, as there\u0027s nothing peculiar to explain.",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a21d7d3_3440e992",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "\u0027dev\u0027, \u0027official\u0027",
+      "range": {
+        "startLine": 618,
+        "startChar": 18,
+        "endLine": 618,
+        "endChar": 28
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296c83f3_7d173e40",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "move this down to notification_helper.exe.pdb and omit \u0027archive\u0027 for this file so that it\u0027s included in the default .zip file.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d621a20_918c950a",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "\u0027dev\u0027, \u0027official\u0027",
+      "range": {
+        "startLine": 624,
+        "startChar": 18,
+        "endLine": 624,
+        "endChar": 28
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed643dc_f76a3474",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "i don\u0027t understand what this constant and the static_assert below are accomplishing. why not just make the event\u0027s policy MANUAL when constructing it on line 32 and leave a comment there saying that it must be a manual reset event? how is that unsafe?",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8302859_264bc336",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "tiny nit: \"...supplied method is invoked when...\" to avoid collision with our own base::Callback type (which this isn\u0027t). i also don\u0027t see any need to name the callback function since it\u0027s spelled out just below this. as the style guide states: \"In your implementation you should have comments in tricky, non-obvious, interesting, or important parts of your code.\" (https://google.github.io/styleguide/cppguide.html#Implementation_Comments). there\u0027s nothing non-obvious about the name of the function.",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 40
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5aeba84_906df105",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "this asserts that a constant above has a specific value. it doesn\u0027t assert that this value was actually used when constructing the event.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ff36af_6492e18a",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "if you want to be sure to only define __WRL_CLASSIC_COM_STRICT__ if it isn\u0027t already defined (i can\u0027t think of a strong reason not to), put this #endif up on line 10. i\u0027m pretty sure you don\u0027t want to omit all of the code in this file if someone were to define __WRL_CLASSIC_COM_STRICT__ in the BUILD.gn file.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ed761d_e1b985b2",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "this seems broken. why is it that this can be included by files in base/win (among other), but not here?",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16475ab0_fa6d9d8d",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "nit: entry \u003d {}; to zero it out before use",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fb6ed1_9b913027",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "use base::win::ScopedHandle",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 8
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af6bddf_5c1cf1b7",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "it\u0027s safer to return false explicitly here rather than be dependent on someone not changing the default value of is_running in the future.",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d678f42_08257d0d",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "you\u0027re ignoring the first process here. i suggest you structure the loop like the one here: https://cs.chromium.org/chromium/src/base/process/process_handle_win.cc?q\u003dProcess32First\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d34.\n\nbetter yet, use base::NamedProcessIterator for this search.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2695ef0d_41394782",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "i don\u0027t get this. this needs to be fixed before landing.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcb32fb_4922f6ea",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "this test requires that Chrome be installed? i think this greatly limits the utility of the test. could you make the test register the server in the build output directory? you could use SetUp() and TearDown() overrides to save any existing registration before registering the server, then restore the originals when done.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e034bc_fb21600c",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:16:34Z",
+      "side": 1,
+      "message": "the strategy here of waiting 3s makes the test unnecessarily long in most cases, and flaky on occasion. i suggest you change this to something more like:\n  base::Process helper \u003d FindHelperProcess();\n  ASSERT_TRUE(helper.IsValid());\n\nwhere FindHelperProcess is something like:\n{\n  int helper_pid \u003d 0;\n  {\n    base::NamedProcessIterator iter(kNotificationHelperExe, nullptr);\n    const auto* entry \u003d iter.NextProcessEntry();\n    if (!entry)\n      return base::Process();\n    helper_pid \u003d entry-\u003epid;\n  }\n  base::Process helper \u003d base::Process::Open(helper_pid);\n  if (!helper.IsValid())\n    return helper;\n\n  // Due to aggressive PID reuse, it\u0027s possible that a different process was\n  // just opened. Now that a handle is held to *some* process, take another\n  // run through the snapshot to see if the process with this PID has the right\n  // exe name.\n  base::NamedProcessIterator iter(kNotificationHelperExe, nullptr);\n  while (const auto* entry \u003d iter.NextProcessEntry()) {\n    if (entry-\u003epid() \u003d\u003d helper_pid)\n      return helper;  // Found it.\n  }\n  return base::Process();  // The PID was reused.\n}\n\nand then after the release do something like:\n\n  ASSERT_TRUE(helper.WaitForExitWithTimeout(TestTimeouts::action_timeout(), nullptr));\n\nyou should also make a check that FindHelperProcess returns an invalid handle before CoCreateInstance is called.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
