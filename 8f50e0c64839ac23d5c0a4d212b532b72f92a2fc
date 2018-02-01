@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e7ac001_69031c9a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T01:02:16Z",
+      "side": 1,
+      "message": "Is this only flaky on one bot? If so, can we please disable on KitKat but leave enabled on other platforms until I get a chance to investigate?",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "8f50e0c64839ac23d5c0a4d212b532b72f92a2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
