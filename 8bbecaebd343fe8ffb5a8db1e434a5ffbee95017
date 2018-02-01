@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31601f07_e8b96f65",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "Is this change needed?",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80f725b_4f5ee045",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about this. So this is saying that if I print preview and then print the entire document, it\u0027s safe to reuse the compositor right? Otherwise we need a new one?",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 14
+      },
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23734d50_982b6bed",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "I\u0027d prefer no default param here if possible.",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca3b891_0d65c60c",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "What\u0027s a draft page? Something for print preview?",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636a63fa_35bbed98",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "FWIW, it\u0027s possible to combine these:\n\nauto\u0026 frame_info \u003d frame_info_map_[frame_guide] \u003d std::make_unique\u003cFrameInfo\u003e();\n\nbut it\u0027s probably simpler to just write:\n\nstd::unique_ptr\u003cFrameInfo\u003e\u0026 frame_info \u003d frame_info_map_.emplace(frame_guide, std::make_unique\u003cFrameInfo\u003e())-\u003esecond;",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 71
+      },
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3aef6c2_663ffcf3",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "To be clear, this is because we\u0027re reusing the compositor now? The reuse logic makes me a bit nervous: is it an important optimization?",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad63d5d4_adc40fdc",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "It seems like that\u0027s still in FrameContentInfo, which this subclasses?",
+      "range": {
+        "startLine": 86,
+        "startChar": 44,
+        "endLine": 87,
+        "endChar": 18
+      },
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4283a5cf_52a7bfc2",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "I guess we do this to streamline printing so we don\u0027t have to wait for this frame to return all its results?\n\n(I kind of feel like it might be a little simpler if it wasn\u0027t streamlined like this)",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2cac8f_92e47bd5",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "Is there any significance to 100x100 here?",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d607470c_da480db0",
+        "filename": "printing/metafile_skia_wrapper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why metadata would be null.",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f97b95a_652debd6",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "Could we name this something that doesn\u0027t have abbreviations?",
+      "range": {
+        "startLine": 382,
+        "startChar": 22,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6b0a93_e6e31494",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "When might code want to use the default ctor?",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f83bf5_7ed33b8d",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "I\u0027d prefer no default arguments (it\u0027s also unclear if this page # is 0-indexed or 1-indexed)",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db13bd2_c850b6fd",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "draw_recorder to match naming conventions.",
+      "range": {
+        "startLine": 155,
+        "startChar": 18,
+        "endLine": 155,
+        "endChar": 30
+      },
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795231bf_f5478dc1",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T21:56:01Z",
+      "side": 1,
+      "message": "Please document what the return value means.",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
