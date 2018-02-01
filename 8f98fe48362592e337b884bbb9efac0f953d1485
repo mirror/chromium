@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "45b2a08f_5739f068",
+        "filename": "content/browser/loader/signed_exchange_header_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-01T10:08:14Z",
+      "side": 1,
+      "message": "Now it takes single argument, so explicit stays.",
+      "parentUuid": "6fe8a54e_1f2cd97c",
+      "revId": "8f98fe48362592e337b884bbb9efac0f953d1485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb609c74_c835b049",
         "filename": "content/browser/loader/signed_exchange_header_parser.cc",
         "patchSetId": 4
