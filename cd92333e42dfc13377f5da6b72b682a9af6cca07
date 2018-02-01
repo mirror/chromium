@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9cf3e71_198bf4d3",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-02-01T20:27:37Z",
+      "side": 1,
+      "message": "nit: Would it be possible to extend this test? We show menu for first app and focus is there. Then we show menu for second app and focus is moved to second app.\nWDYT?",
+      "range": {
+        "startLine": 1135,
+        "startChar": 1,
+        "endLine": 1144,
+        "endChar": 48
+      },
+      "revId": "cd92333e42dfc13377f5da6b72b682a9af6cca07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
