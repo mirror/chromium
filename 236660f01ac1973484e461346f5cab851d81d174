@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a14ee3_2c413af8",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-01T21:16:04Z",
+      "side": 1,
+      "message": "why not kHaveFutureData?\n\nif we\u0027re still making progress on preroll, should we allow idle suspend?",
+      "range": {
+        "startLine": 1580,
+        "startChar": 33,
+        "endLine": 1580,
+        "endChar": 56
+      },
+      "revId": "236660f01ac1973484e461346f5cab851d81d174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c446050_3857a9e3",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-01T21:16:04Z",
+      "side": 1,
+      "message": "...metadata state (some missing word) there is...",
+      "range": {
+        "startLine": 1911,
+        "startChar": 50,
+        "endLine": 1911,
+        "endChar": 51
+      },
+      "revId": "236660f01ac1973484e461346f5cab851d81d174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
