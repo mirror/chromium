@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80f4c3d7_98d508d0",
+        "filename": "base/base_paths.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T22:23:44Z",
+      "side": 1,
+      "message": "Updated description and kept this change. It\u0027s not related to DIR_ASSETS. I noticed that the result is ignored here, which is not right. It shouldn\u0027t make much difference in practice, potentially can be replaced with a DCHECK.",
+      "parentUuid": "84119297_46e6a77c",
+      "revId": "42fcea0e65f37aad70992ff4a212432af5a5d0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2da92ffc_8a93dcb0",
         "filename": "base/base_paths.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "42fcea0e65f37aad70992ff4a212432af5a5d0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d97a2c1_b717e69e",
+        "filename": "base/base_paths.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T22:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da92ffc_8a93dcb0",
+      "revId": "42fcea0e65f37aad70992ff4a212432af5a5d0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
