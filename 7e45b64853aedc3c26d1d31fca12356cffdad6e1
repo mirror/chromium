@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92c7bf52_f36c1f61",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-02-01T17:30:17Z",
+      "side": 1,
+      "message": "Is this whole comment block still accurate? (In particular, it\u0027s not obvious how the code is detecting the 1st and third conditions.)",
+      "revId": "7e45b64853aedc3c26d1d31fca12356cffdad6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
