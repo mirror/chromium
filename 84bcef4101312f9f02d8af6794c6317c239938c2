@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62bac03_d2a6b091",
+        "filename": "mash/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "You don\u0027t need the \u0027:assistant\u0027 here.\nThat said, why do you need this dep here? AFAICT you aren\u0027t using assistant from mash?",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bddfb8_8e3ffea7",
+        "filename": "services/assistant/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "I don\u0027t see these files in your patch.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c49d7f_a32a1fbc",
+        "filename": "services/assistant/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "Only two spaces.",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1926f205_29d89d66",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "Please add descriptions, at a minimum for all classes, and ideally for all non-obvious functions.. In addition I encourage you to add a README.md to this directory.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afe16d2_312efe55",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "I don\u0027t see this class used inside the service, why is it an inner class?",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0d9c32_c1be57af",
+        "filename": "services/assistant/assistant_manager_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "Why are you using VLOG? VLOGs are compiled into the product, do you really need that?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23dee6b_c99adf7f",
+        "filename": "services/assistant/fake_assistant_manager_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "Be consistent. Use default here too.",
+      "range": {
+        "startLine": 9,
+        "startChar": 67,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0999a568_733a905e",
+        "filename": "services/assistant/fake_assistant_manager_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "Helpful comments are one that document \u0027why\u0027, not what the code does. I would be inclined to remove this given the class is named \u0027fake\u0027 it\u0027s obvious it doesn\u0027t do anything.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f62a6b_d380c6cf",
+        "filename": "services/assistant/fake_assistant_manager_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T22:58:59Z",
+      "side": 1,
+      "message": "private:",
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
