@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab7e2aa8_83cee346",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-02-01T02:49:42Z",
+      "side": 1,
+      "message": "Nit: This line is no longer required.",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 80
+      },
+      "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4d0269_b639e812",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-02-01T02:49:42Z",
+      "side": 1,
+      "message": "Nit: Drop \"that\"",
+      "range": {
+        "startLine": 1214,
+        "startChar": 9,
+        "endLine": 1214,
+        "endChar": 13
+      },
+      "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1666eaa4_62dba386",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-02-01T02:49:42Z",
+      "side": 1,
+      "message": "The changes made to this test mean that it\u0027s no longer useful as a regression test. \n\nI think we either add the InitAndDisableFeature code (and revert the other changes), or set the treatment to |warning-and-dangerous-on-form-edits| and update the expected security level?",
+      "range": {
+        "startLine": 1367,
+        "startChar": 23,
+        "endLine": 1367,
+        "endChar": 72
+      },
+      "revId": "a9c747e625401f5963d4df551402ea9d7e0128e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
