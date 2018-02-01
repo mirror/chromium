@@ -963,7 +963,8 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
       client_->DidFail(
           status.cors_error_status
               ? WebURLError(*status.cors_error_status, has_copy_in_cache, url_)
-              : WebURLError(status.error_code, has_copy_in_cache,
+              : WebURLError(status.error_code, status.extended_error_code,
+                            has_copy_in_cache,
                             WebURLError::IsWebSecurityViolation::kFalse, url_),
           total_transfer_size, encoded_body_size, status.decoded_body_length);
     } else {
@@ -995,7 +996,7 @@ void WebURLLoaderImpl::Context::CancelBodyStreaming() {
   }
   if (client_) {
     // TODO(yhirano): Set |stale_copy_in_cache| appropriately if possible.
-    client_->DidFail(WebURLError(net::ERR_ABORTED, url_),
+    client_->DidFail(WebURLError(net::ERR_ABORTED, 0, url_),
                      WebURLLoaderClient::kUnknownEncodedDataLength, 0, 0);
   }
 
@@ -1315,7 +1316,8 @@ void WebURLLoaderImpl::LoadSynchronously(const WebURLRequest& request,
           error_code == net::ERR_ABORTED
               ? WebURLError::IsWebSecurityViolation::kTrue
               : WebURLError::IsWebSecurityViolation::kFalse;
-      error = WebURLError(error_code, WebURLError::HasCopyInCache::kFalse,
+      error = WebURLError(error_code, sync_load_response.extended_error_code,
+                          WebURLError::HasCopyInCache::kFalse,
                           is_web_security_violation, final_url);
     }
     return;

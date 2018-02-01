@@ -2809,7 +2809,7 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
 }
 
 void RenderFrameImpl::LoadErrorPage(int reason) {
-  WebURLError error(reason, frame_->GetDocument().Url());
+  WebURLError error(reason, 0, frame_->GetDocument().Url());
 
   std::string error_html;
   GetContentClient()->renderer()->PrepareErrorPage(
@@ -3285,7 +3285,7 @@ void RenderFrameImpl::CommitFailedNavigation(
 
   // Send the provisional load failure.
   WebURLError error(
-      error_code,
+      error_code, 0,
       has_stale_copy_in_cache ? WebURLError::HasCopyInCache::kTrue
                               : WebURLError::HasCopyInCache::kFalse,
       WebURLError::IsWebSecurityViolation::kFalse, common_params.url);
