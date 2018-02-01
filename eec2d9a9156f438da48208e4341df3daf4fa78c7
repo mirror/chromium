@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a4d3f0_9b575736",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T17:36:58Z",
+      "side": 1,
+      "message": "Same, re cmd line flag names",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44959ffa_f603f604",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T17:36:58Z",
+      "side": 1,
+      "message": "nit: I think you could drop this if?",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e937433e_82026100",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T17:36:58Z",
+      "side": 1,
+      "message": "can you put \"consecutive_frame_with_damage_count_ \u003c kDamagedFrameLimit\" in a local variable like recent_frame_had_no_damage or something?",
+      "range": {
+        "startLine": 2185,
+        "startChar": 6,
+        "endLine": 2185,
+        "endChar": 63
+      },
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b9029e_36adc1a3",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T17:36:58Z",
+      "side": 1,
+      "message": "nit: Naming a command line flag here seems likely to bitrot, I\u0027d word this without it.",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0a5533_ca2e92c9",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T17:36:58Z",
+      "side": 1,
+      "message": "\"had no damage\"?",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0437298_4fb2d31f",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T17:36:58Z",
+      "side": 1,
+      "message": "Do you want to test around the edge cases of of the magic 3 number? If so the constant should probably be a setting so you can see it from tests",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
