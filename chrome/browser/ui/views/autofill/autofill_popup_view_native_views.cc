@@ -26,7 +26,6 @@ namespace {
 
 // Padding values for the entire dropdown.
 const int kPopupTopBottomPadding = 8;
-const int kPopupSidePadding = 0;
 
 // Padding values and dimensions for rows.
 const int kRowHeight = 28;
@@ -41,6 +40,12 @@ const int kSeparatorSidePadding = 0;
 // a width which is a multiple of 16.
 const int kDropdownWidthMultiple = 16;
 const int kDropdownMinWidth = 64;
+
+views::View* MakePaddingRow() {
+  auto* pad = new views::View;
+  pad->SetPreferredSize(gfx::Size(1, kPopupTopBottomPadding));
+  return pad;
+}
 
 }  // namespace
 
@@ -73,6 +78,16 @@ void AutofillPopupRowView::SetStyle(bool is_selected) {
       this, is_selected
                 ? ui::NativeTheme::kColorId_ResultsTableSelectedBackground
                 : ui::NativeTheme::kColorId_ResultsTableNormalBackground));
+
+  if (text_label_) {
+    text_label_->SetEnabledColor(is_selected ? text_selected_color_
+                                             : text_color_);
+  }
+
+  if (subtext_label_) {
+    subtext_label_->SetEnabledColor(is_selected ? subtext_selected_color_
+                                                : subtext_color_);
+  }
 }
 
 void AutofillPopupRowView::OnMouseEntered(const ui::MouseEvent& event) {
@@ -97,19 +112,17 @@ bool AutofillPopupRowView::OnMousePressed(const ui::MouseEvent& event) {
 }
 
 void AutofillPopupRowView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
-  if (text_label_) {
-    text_label_->SetEnabledColor(theme->GetSystemColor(
-        is_warning_ ? ui::NativeTheme::kColorId_ResultsTableNegativeText
-                    : ui::NativeTheme::kColorId_ResultsTableNormalText));
-    text_label_->SetSelectionTextColor(theme->GetSystemColor(
-        is_warning_ ? ui::NativeTheme::kColorId_ResultsTableNegativeSelectedText
-                    : ui::NativeTheme::kColorId_ResultsTableSelectedText));
-  }
+  text_color_ = theme->GetSystemColor(
+      is_warning_ ? ui::NativeTheme::kColorId_ResultsTableNegativeText
+                  : ui::NativeTheme::kColorId_ResultsTableNormalText);
+  text_selected_color_ = theme->GetSystemColor(
+      is_warning_ ? ui::NativeTheme::kColorId_ResultsTableNegativeSelectedText
+                  : ui::NativeTheme::kColorId_ResultsTableSelectedText);
 
-  if (subtext_label_) {
-    subtext_label_->SetEnabledColor(theme->GetSystemColor(
-        ui::NativeTheme::kColorId_ResultsTableNormalDimmedText));
-  }
+  subtext_color_ = theme->GetSystemColor(
+      ui::NativeTheme::kColorId_ResultsTableNormalDimmedText);
+  subtext_selected_color_ = theme->GetSystemColor(
+      ui::NativeTheme::kColorId_ResultsTableSelectedDimmedText);
 }
 
 void AutofillPopupRowView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
@@ -168,8 +181,7 @@ AutofillPopupViewNativeViews::AutofillPopupViewNativeViews(
       controller_(controller) {
   views::BoxLayout* layout =
       SetLayoutManager(std::make_unique<views::BoxLayout>(
-          views::BoxLayout::kVertical,
-          gfx::Insets(kPopupTopBottomPadding, kPopupSidePadding)));
+          views::BoxLayout::kVertical, gfx::Insets(0, 0)));
   layout->set_main_axis_alignment(views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
 
   CreateChildViews();
@@ -216,11 +228,19 @@ void AutofillPopupViewNativeViews::OnSuggestionsChanged() {
 
 void AutofillPopupViewNativeViews::CreateChildViews() {
   RemoveAllChildViews(true /* delete_children */);
+
+  // Add an empty row before and after adding the children. This implements
+  // the top and bottom padding in a way which doesn't trigger hover/click
+  // events in the top-level popup.
+  AddChildView(MakePaddingRow());
+
   rows_.clear();
   for (int i = 0; i < controller_->GetLineCount(); ++i) {
     rows_.push_back(new AutofillPopupRowView(controller_, i));
     AddChildView(rows_.back());
   }
+
+  AddChildView(MakePaddingRow());
 }
 
 void AutofillPopupViewNativeViews::DoUpdateBoundsAndRedrawPopup() {

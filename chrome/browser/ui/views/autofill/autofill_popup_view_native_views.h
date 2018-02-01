@@ -9,6 +9,7 @@
 #include "base/optional.h"
 #include "chrome/browser/ui/autofill/autofill_popup_view.h"
 #include "chrome/browser/ui/views/autofill/autofill_popup_base_view.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 #include <vector>
 
@@ -52,6 +53,13 @@ class AutofillPopupRowView : public views::View {
 
   views::Label* text_label_ = nullptr;
   views::Label* subtext_label_ = nullptr;
+
+  // Setting to black is equivalent to zeroing out. These are overwritten
+  // by OnNativeThemeChanged.
+  SkColor text_color_ = SK_ColorBLACK;
+  SkColor text_selected_color_ = SK_ColorBLACK;
+  SkColor subtext_color_ = SK_ColorBLACK;
+  SkColor subtext_selected_color_ = SK_ColorBLACK;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillPopupRowView);
 };
