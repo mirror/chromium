@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "945bae9e_9b20c3e2",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b9f921_ca5ef26f",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1080181b_f5b45248",
         "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f120c9_faf9bde8",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Renamed the method *ForTest since that\u0027s what we seem to do elsewhere.",
+      "parentUuid": "1080181b_f5b45248",
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3a03da3a_7de70019",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781261a0_ad8d7f7b",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7aa687_cd3b2491",
         "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5715cb30_3e50faa7",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Done - much cleaner now, thanks",
+      "parentUuid": "eb7aa687_cd3b2491",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b12aff87_2d00f930",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41e91d03_10b3b624",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f6c1ba_ab87fc71",
         "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd06f95_09d9fc75",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f6c1ba_ab87fc71",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "a715f60c_9f72dc72",
+        "filename": "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62bc83c0_e7a6bc4c",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecfbce9_055b29b4",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 5
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "781072bf_eb4de7a8",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "named it is_metrics_reporting_enabled_initial_value to match reporting browser test",
+      "parentUuid": "fecfbce9_055b29b4",
+      "range": {
+        "startLine": 210,
+        "startChar": 48,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e91a05b_43bf1cbc",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 5
@@ -191,6 +377,30 @@
       "writtenOn": "2018-02-01T00:58:54Z",
       "side": 1,
       "message": "I think you mean to always pass true here.",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 218,
+        "endChar": 18
+      },
+      "revId": "1639746a330267c45bb6549260f145d0acc5aef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784ec1d6_eb356131",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T17:41:22Z",
+      "side": 1,
+      "message": "Whoops, thanks.",
+      "parentUuid": "1e91a05b_43bf1cbc",
       "range": {
         "startLine": 218,
         "startChar": 8,
