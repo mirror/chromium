@@ -302,6 +302,9 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPreviewPage_Params)
 
   // Cookie for the document to ensure correctness.
   IPC_STRUCT_MEMBER(int, document_cookie)
+
+  // True if this is a draft page.
+  IPC_STRUCT_MEMBER(bool, is_draft)
 IPC_STRUCT_END()
 
 // Parameters sent along with the page count.

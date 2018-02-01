@@ -34,6 +34,7 @@ class PrintCompositeClient
       int cookie,
       uint64_t frame_guid,
       int page_num,
+      bool is_draft,
       base::SharedMemoryHandle handle,
       uint32_t data_size,
       const ContentToFrameMap& subframe_content_map,
@@ -59,6 +60,7 @@ class PrintCompositeClient
   void OnDidCompositePageToPdf(
       int page_num,
       int document_cookie,
+      bool is_draft,
       printing::mojom::PdfCompositor::CompositePageToPdfCallback callback,
       printing::mojom::PdfCompositor::Status status,
       mojo::ScopedSharedBufferHandle handle);
@@ -71,7 +73,8 @@ class PrintCompositeClient
 
   // Get the request, but doesn't own it.
   mojom::PdfCompositorPtr& GetCompositeRequest(int cookie,
-                                               base::Optional<int> page_num);
+                                               base::Optional<int> page_num,
+                                               bool for_draft = false);
 
   // Find an existing request or create a new one, and own it.
   void RemoveCompositeRequest(int cookie, base::Optional<int> page_num);

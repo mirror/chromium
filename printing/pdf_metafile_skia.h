@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "build/build_config.h"
 #include "cc/paint/paint_canvas.h"
 #include "printing/common/pdf_metafile_utils.h"
@@ -28,7 +29,10 @@ struct PdfMetafileSkiaData;
 // TODO(thestig): Rename to MetafileSkia.
 class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
  public:
-  explicit PdfMetafileSkia(SkiaDocumentType type);
+  PdfMetafileSkia();
+  PdfMetafileSkia(SkiaDocumentType type,
+                  int document_cookie,
+                  base::Optional<int> page_number = base::nullopt);
   ~PdfMetafileSkia() override;
 
   // Metafile methods.
@@ -75,6 +79,8 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
   cc::PaintCanvas* GetVectorCanvasForNewPage(const gfx::Size& page_size,
                                              const gfx::Rect& content_area,
                                              const float& scale_factor);
+
+  base::Optional<int> GetPageNumber() const;
 
  private:
   std::unique_ptr<PdfMetafileSkiaData> data_;
