@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab95d1a_704d34c4",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2018-02-01T21:50:37Z",
+      "side": 1,
+      "message": "this does not have any effect at the moment\nDo you think it make sense to move this code into 2nd CL, which actually does implement this?\n(my concern it to have code artifacts in between 2 CLs, which were normally discouraged in Chrome as far as I remember)",
+      "range": {
+        "startLine": 203,
+        "startChar": 65,
+        "endLine": 203,
+        "endChar": 77
+      },
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c714d2_06c8c66d",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2018-02-01T21:50:37Z",
+      "side": 1,
+      "message": "would it ever be needed to flush cache for all services?\nif so, may be make empty string to do that and document that behavior.",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fc09d1_fbebb91b",
+        "filename": "chrome/browser/local_discovery/service_discovery_device_lister.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2018-02-01T21:50:37Z",
+      "side": 1,
+      "message": "If there is 1 delegate per 1 service_type, then there is no need for service_type here (since it must be the same as during Create).\n\nIf there is 1 delegate per multiple service_types, then it might be a good idea to add service_type to all delegate function, so delegate code may track this.",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
