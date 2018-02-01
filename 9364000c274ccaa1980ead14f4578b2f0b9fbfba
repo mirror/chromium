@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d29b9d_8b0257a1",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this global. (there\u0027s kinda already one in views::MenuController::active_instance_, but that\u0027s orthogonal).\n\nCan ProfileChooserView store a unique_ptr\u003cDiceAccountsMenu\u003e? That way something that could trigger closing the profile switcher will also destroy |DiceAccountsMenu|, and close the menu rather than leaving it dangling. Probably Show() can return a std::unique_ptr for this.\n\nAnd ProfileChooserView is short-lived, so i wouldn\u0027t worry about clearing out the unique_ptr\u003cDiceAccountsMenu\u003e. And if the menu is shown twice on the same ProfileChooserView, it can just be replaced when the new menu is created.",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4978a0f_52bd6a53",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "comment about separators?\n\n // DiceAccountsMenu adds separators at the top and between each item to....",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586185be_5d102954",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "scale factors might do something funny if you don\u0027t also pass anchor_view-\u003esize() before converting to screen coordinates.\n\nCan you just pass anchor_view-\u003eGetBoundsInScreen() to RunMenuAt()?",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b924b6_8d4ecd2c",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "int(..) is a `functional cast` which we tend not to use. static_cast\u003csize_t\u003e(id) or or just `NOTIMPLEMENTED() \u003c\u003c \"Selected id: \" \u003c\u003c id.",
+      "range": {
+        "startLine": 82,
+        "startChar": 28,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb65500_dfdb5f4f",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "MenuClosed callbacks usually just reset |menu_runner_|. i.e.,\n  menu_runner_ \u003d nullptr;\n\nI think doing nothing is also OK.\n\nBut deleting the menu delegate (i.e. |this|) is normally not done. I think lifetimes get complicated - usually menus are \"owned\" by something, and that something can go away and call `delete` before the menu is closed -- that triggers MenuClosed(), so if MenuClosed() also tries to delete, it becomes a double-free.",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8508812a_7b33308a",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "would it make sense to move GetImagesForAccounts() into dice_accounts_menu.cc? the icons need only live in the menu model then",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93be543_f6ea2dbf",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "nit: explicit not needed (% comment above)",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576066e1_7aaf8791",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T02:11:05Z",
+      "side": 1,
+      "message": "this is never null (nor changed), so shouldn\u0027t be a unique_ptr -- see https://chromium.googlesource.com/chromium/src/+/lkgr/styleguide/c++/c++.md#forward-declarations-vs_includes",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
