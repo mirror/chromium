@@ -16,6 +16,24 @@
       "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16660ca_4adf4431",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-01T16:54:38Z",
+      "side": 1,
+      "message": "1. Previous tests overrided FrameSinkManagerImpl::GetActiveFrameIndex to always use 0 as the frame_index, which we can\u0027t do anymore. In this CL, when we try to find the real active frame_index from Surface [1] in tests, it would fail because we didn\u0027t create a Surface in the first place. CFSS::SubmitCompositorFrame() can cover all that (creating a Surface, calling QueueFrame() so we have a valid active_frame_index and submitting hit-test region list), WDYT?\n\n2. In CFSS::SubmitCompositorFrame(), we check the new local_surface_id against the previous submitted ones [2]. There are some tests that are not submitting hit-test region list in order so that check was failing. Since we only care about checking hit-test region list in these unittests, I thought I would just evict the surface immediately after to avoid dealing with this. It is also required for tests where we submit multiple compositor frames so that we add each one into the destroy surface list and garbage collect all of them during TearDown().\n\n[1] https://cs.chromium.org/chromium/src/components/viz/service/frame_sinks/frame_sink_manager_impl.cc?type\u003dcs\u0026q\u003dframe_sink_manager_impl.cc\u0026l\u003d440\n[2] https://cs.chromium.org/chromium/src/components/viz/service/frame_sinks/compositor_frame_sink_support.cc?type\u003dcs\u0026l\u003d224",
+      "parentUuid": "ac274064_13e47329",
+      "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
