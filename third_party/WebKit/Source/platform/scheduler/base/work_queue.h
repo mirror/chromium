@@ -83,12 +83,8 @@ class PLATFORM_EXPORT WorkQueue {
 
   // Pulls a task off the |work_queue_| and informs the WorkQueueSets.  If the
   // task removed had an enqueue order >= the current fence then WorkQueue
-  // pretends to be empty as far as the WorkQueueSets is concerned.
+  // pretends to be empty as far as the WorkQueueSets is concrned.
   TaskQueueImpl::Task TakeTaskFromWorkQueue();
-
-  // Removes all canceled tasks from the head of the list. Returns true if any
-  // tasks were removed.
-  bool RemoveAllCanceledTasksFromFront();
 
   const char* name() const { return name_; }
 
