@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84badeba_d4b005e8",
+        "filename": "third_party/WebKit/Source/platform/text/Character.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-01T14:39:18Z",
+      "side": 1,
+      "message": "maybe we want to add:\n  if (8bit) return true;\nfor perf? Up to you.",
+      "revId": "0a58cacaa2823aad5f1f178664accf3c503cb5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
