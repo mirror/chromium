@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78d4d93_140684ca",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-01T23:18:56Z",
+      "side": 1,
+      "message": "nit: optionally, just pass this value to\nOpenOnRegistryTaskRunner(), alongside callbacks",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 12
+      },
+      "revId": "2ad53debf822df816e30ae2697d44a080220e132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d88d12_7a9d447b",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-01T23:18:56Z",
+      "side": 1,
+      "message": "no need for c_str()",
+      "range": {
+        "startLine": 171,
+        "startChar": 60,
+        "endLine": 171,
+        "endChar": 78
+      },
+      "revId": "2ad53debf822df816e30ae2697d44a080220e132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
