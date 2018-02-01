@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e952fc4_a6665c24",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-01T14:20:25Z",
+      "side": 1,
+      "message": "Another option would be to move dismissTabSwitcher into a separate protocol and have StackViewController register as the handler.  That would let you revert the changes in the toolbar files, and we wouldn\u0027t have to publicly expose the stackButton anymore.\n\nMark, do you have a preference for one option or another?",
+      "revId": "4276be191a42e12de07a70669391e83c273283ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
