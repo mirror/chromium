@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe7275c_8e75be83",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T20:15:26Z",
+      "side": 1,
+      "message": "(optional) Since this is for a text style, we could put tools:ignore\u003d\"UnusedResources\" to prevent warnings if whatever\u0027s using this stops.",
+      "revId": "46867cfe74e39c73147af32872eb838b61ea2c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633191d9_7f1b35e6",
+        "filename": "ui/android/java/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T20:15:26Z",
+      "side": 1,
+      "message": "(optional) Since these are also for text styles, we could include  tools:ignore\u003d\"UnusedResources on all of the headline_ and text_size_ dimensions to prevent complaints in the future.",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "46867cfe74e39c73147af32872eb838b61ea2c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
