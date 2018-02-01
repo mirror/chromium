@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b78f4d1_200e9413",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba475a2_2d12df58",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d05cba03_db0e4043",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e2cc166_a9c99f8f",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a76a95d3_d9ef3f1b",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 34
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a92ff1d6_42d66730",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e59a5830_a820896b",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92ff1d6_42d66730",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ad6a62a_5328da5b",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
@@ -138,6 +210,30 @@
       "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0fc1ee_08087eea",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad6a62a_5328da5b",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "a425e9f8_90cac476",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "I did this on purpose:\n* if we want to remove the histogram when dice is launched, it\u0027s better to keep the code separate\n* I want to cherry pick this on beta, so it\u0027s better if the change does not affect other code.\n\nHowever, I just realized that this histogram is actually very similar to the other histogram RecordDiceResponseHeader(). So we can just add the new calls together with these, and have a very small change in the end. The new version is much simpler.\n\nI think I will have merge conflicts anyway, so it probably won\u0027t make too much of a difference on that side.",
+      "parentUuid": "98150553_79ff2c63",
+      "range": {
+        "startLine": 385,
+        "startChar": 14,
+        "endLine": 385,
+        "endChar": 29
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c065989e_5f0c7085",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
@@ -207,6 +327,30 @@
       "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7598cb6a_245c7f64",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "This is a good question.\n\nI put this specifically so that it will be easier to remove the \"if\" when dice is fully enabled and we remove the flags.\nWhen Dice will be enabled secondary_accounts.size() \u003d\u003d account_infos.size() will always be true, but I think it\u0027s not very easy to see, and maybe we would be scared to remove that test in the future. With this version of the code, it\u0027s obvious that it\u0027s safe to remove it.",
+      "parentUuid": "c065989e_5f0c7085",
+      "range": {
+        "startLine": 423,
+        "startChar": 6,
+        "endLine": 423,
+        "endChar": 68
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +397,54 @@
       "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f162079b_65db6793",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4734,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd88a6f1_1a195a74",
+      "range": {
+        "startLine": 4734,
+        "startChar": 63,
+        "endLine": 4734,
+        "endChar": 70
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36aa519f_3ab5cbdb",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4734,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T15:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8f9db0_9084cdce",
+      "range": {
+        "startLine": 4734,
+        "startChar": 31,
+        "endLine": 4734,
+        "endChar": 38
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
