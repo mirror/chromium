@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "2950effe_01bc85a8",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit: update comment? (custom window icon and custom panel icon?) I\u0027m not totally sure?",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39682c56_3e7714b6",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit: \"no longer\"",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffbcd1d_67b5d875",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit: \"are passed\", \"to the shelf\", and a trailing period",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273e1f69_a33d5543",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "So, app_custom_icon_item.image is no longer the up-to-date custom icon, because ash::ShelfController doesn\u0027t send item images to clients, right?\nhttps://cs.chromium.org/chromium/src/ash/shelf/shelf_controller.cc?rcl\u003d0de176f5fe57a2069a239dcd61541ed1d7a5f62a\u0026l\u003d272\nStill, I\u0027m a little confused why Chrome isn\u0027t sending the image in the first place, I\u0027d expect images loaded by chrome/extensions to be saved in the ShelfModel owned by ChromeLauncherController.",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50ad721_4be9f1b9",
+        "filename": "chrome/browser/ui/test/test_app_window_icon_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit: \"Handle the case where the app icon is already set prior to this callback. If it is set, handle the icon update immediately.\"",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f93cbd_571cb617",
         "filename": "chrome/browser/ui/test/test_app_window_icon_observer.cc",
         "patchSetId": 3
@@ -19,6 +104,64 @@
         "endLine": 70,
         "endChar": 25
       },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4650b1f_aa009cc6",
+        "filename": "chrome/browser/ui/test/test_app_window_icon_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "Add a short comment here explaining that. Maybe \"The window icon property changes more frequently than the image itself, leading to test flakiness. Just record instances where the image actually changes.\"",
+      "parentUuid": "82f93cbd_571cb617",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049828a5_26c63ab6",
+        "filename": "chrome/browser/ui/test/test_app_window_icon_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "Is it simpler to use base::Hash?",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f4c73e_cb60e979",
+        "filename": "chrome/test/data/extensions/platform_apps/app_icon/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit: no else after return",
       "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -48,6 +191,47 @@
     },
     {
       "key": {
+        "uuid": "b5d5d6e5_123bed59",
+        "filename": "chrome/test/data/extensions/platform_apps/app_icon/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "Maybe add comments?",
+      "parentUuid": "68fe74ae_e8f6fe6d",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04b7b2d_38527ddd",
+        "filename": "chrome/test/data/extensions/platform_apps/app_icon/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit \"the default\"",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45cbc827_19922b18",
         "filename": "chrome/test/data/extensions/platform_apps/app_icon/test.js",
         "patchSetId": 3
@@ -65,6 +249,40 @@
         "endLine": 51,
         "endChar": 42
       },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cf727f_44ec36a8",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "Does delaying icon loading until the window is ready cause an additional noticeable delay for showing the app icon?",
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e40a5a_96211109",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T22:30:54Z",
+      "side": 1,
+      "message": "nit: comment?",
       "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
