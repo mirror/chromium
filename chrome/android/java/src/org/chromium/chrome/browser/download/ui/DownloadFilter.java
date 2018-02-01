@@ -43,7 +43,7 @@ public class DownloadFilter {
      *
      * Changing the ordering of these items requires changing the FILTER_* values in
      * {@link DownloadHistoryAdapter} and the values in mCanonicalDirectoryPairs in
-     * {@link org.chromium.chrome.browser.preferences.download.DownloadDirectoryAdapter}
+     * {@link org.chromium.chrome.browser.preferences.download.DownloadDirectoryUtil}.
      */
     static final int[][] FILTER_LIST = new int[][] {
             {R.drawable.ic_file_download_24dp, R.string.download_manager_ui_all_downloads},
