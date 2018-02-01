@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f14389a1_dcf8cbff",
+        "filename": "media/capture/video/file_video_capture_device_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-01T19:33:17Z",
+      "side": 1,
+      "message": "Use of std::shared_ptr\u003c\u003e is still banned in Chromium code style.\n\nSince construction of |image_capture_client_| is using a default constructor and we do not have any test case where we need to release it as part of the test case, we can probably just make it a member without smart pointer, i.e. |MockImageCaptureClient image_capture_client_;|. Then use base::Unretained(\u0026image_capture_client_) when binding to it.",
+      "revId": "0fc484ed9705babd02d8400ea1fec5aca50baf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
