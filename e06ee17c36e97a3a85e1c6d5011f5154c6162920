@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "484bbb97_5f757f26",
+        "filename": "content/browser/loader/signed_exchange_header_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T09:28:37Z",
+      "side": 1,
+      "message": "Would you add test case for quoted chars?",
+      "range": {
+        "startLine": 135,
+        "startChar": 30,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "e06ee17c36e97a3a85e1c6d5011f5154c6162920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfc4d7b9_a26cef52",
         "filename": "content/browser/loader/signed_exchange_header_parser.cc",
         "patchSetId": 6
@@ -13,6 +36,46 @@
       "writtenOn": "2018-02-01T08:44:36Z",
       "side": 1,
       "message": "The spec seems to say each label must have \"sig\", \"integrity\", \"validtyUrl\", \"date\" and \"expires\", and either \"certUrl\" and \"certSha256\" or \"ed25519Key\" must exist too, should we have the check?",
+      "revId": "e06ee17c36e97a3a85e1c6d5011f5154c6162920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296d8e36_5ff4683e",
+        "filename": "content/browser/loader/signed_exchange_header_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T09:28:37Z",
+      "side": 1,
+      "message": "Optional: How about base::Optional\u003cstd::vector\u003cstd::string\u003e\u003e?",
+      "revId": "e06ee17c36e97a3a85e1c6d5011f5154c6162920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b8c27b_0fd3d7ec",
+        "filename": "content/browser/loader/signed_exchange_header_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T09:28:37Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 13
+      },
       "revId": "e06ee17c36e97a3a85e1c6d5011f5154c6162920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
