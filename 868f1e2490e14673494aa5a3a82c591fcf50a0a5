@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f00a12e6_3f055475",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-01T14:48:45Z",
+      "side": 1,
+      "message": "Can we make a source_set for these files instead of including them in several targets? Currently skia_image_filter_proto_converter.cc gets needlessly compiled twice in the build.",
+      "revId": "868f1e2490e14673494aa5a3a82c591fcf50a0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
