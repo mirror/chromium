@@ -101,6 +101,7 @@ class NET_EXPORT NetworkDelegate {
                                           AuthCredentials* credentials);
   bool CanGetCookies(const URLRequest& request,
                      const CookieList& cookie_list);
+  bool CanAttachSameSiteCookies(const URLRequest& request);
   bool CanSetCookie(const URLRequest& request,
                     const net::CanonicalCookie& cookie,
                     CookieOptions* options);
@@ -271,6 +272,10 @@ class NET_EXPORT NetworkDelegate {
   // LOAD_DO_NOT_SEND_COOKIES is specified.
   virtual bool OnCanGetCookies(const URLRequest& request,
                                const CookieList& cookie_list) = 0;
+
+  // Called when checking whether SameSite cookies are allowed to be
+  // attached to an URLRequest.
+  virtual bool OnCanAttachSameSiteCookies(const URLRequest& request) = 0;
 
   // Called when a cookie is set to allow the network delegate to block access
   // to the cookie. This method will never be invoked when
