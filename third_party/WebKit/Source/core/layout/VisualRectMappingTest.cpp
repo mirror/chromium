@@ -166,7 +166,7 @@ TEST_F(VisualRectMappingTest, LayoutView) {
   // This case involves clipping: frame height is 50, y-coordinate of result
   // rect is 13, so height should be clipped to (50 - 13) == 37.
   ChildDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 47), kProgrammaticScroll);
+      ScrollOffset(0, 47), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   LayoutRect original_rect(4, 60, 20, 80);
@@ -241,7 +241,7 @@ TEST_F(VisualRectMappingTest, LayoutViewDisplayNone) {
   // This part is copied from the LayoutView test, just to ensure that the
   // mapped rect is valid before display:none is set on the iframe.
   ChildDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 47), kProgrammaticScroll);
+      ScrollOffset(0, 47), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   LayoutRect original_rect(4, 60, 20, 80);

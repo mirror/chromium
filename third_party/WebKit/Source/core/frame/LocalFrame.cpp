@@ -647,7 +647,7 @@ void LocalFrame::SetPageAndTextZoomFactors(float page_zoom_factor,
       scrollable_area->SetScrollOffset(
           ScrollOffset(scroll_offset.Width() * percent_difference,
                        scroll_offset.Height() * percent_difference),
-          kProgrammaticScroll);
+          kBrowserScroll);
     }
   }
 

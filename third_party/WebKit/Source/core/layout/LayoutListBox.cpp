@@ -135,10 +135,10 @@ void LayoutListBox::ScrollToRect(const LayoutRect& rect) {
     DCHECK(Layer());
     DCHECK(Layer()->GetScrollableArea());
     Layer()->GetScrollableArea()->ScrollIntoView(
-        rect, WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
-                                      ScrollAlignment::kAlignToEdgeIfNeeded,
-                                      kProgrammaticScroll, false,
-                                      kScrollBehaviorInstant));
+        rect,
+        WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                                ScrollAlignment::kAlignToEdgeIfNeeded,
+                                kBrowserScroll, false, kScrollBehaviorInstant));
   }
 }
 

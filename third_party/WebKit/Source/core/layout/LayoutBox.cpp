@@ -646,7 +646,8 @@ static bool IsDisallowedAutoscroll(HTMLFrameOwnerElement* owner_element,
 void LayoutBox::ScrollRectToVisibleRecursive(
     const LayoutRect& rect,
     const WebScrollIntoViewParams& params) {
-  DCHECK(params.GetScrollType() == kProgrammaticScroll ||
+  DCHECK(params.GetScrollType() == kBrowserScroll ||
+         params.GetScrollType() == kScriptScroll ||
          params.GetScrollType() == kUserScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
@@ -1159,7 +1160,7 @@ void LayoutBox::ScrollByRecursively(const ScrollOffset& delta) {
     DCHECK(scrollable_area);
 
     ScrollOffset new_scroll_offset = scrollable_area->GetScrollOffset() + delta;
-    scrollable_area->SetScrollOffset(new_scroll_offset, kProgrammaticScroll);
+    scrollable_area->SetScrollOffset(new_scroll_offset, kBrowserScroll);
 
     // If this layer can't do the scroll we ask the next layer up that can
     // scroll to try.

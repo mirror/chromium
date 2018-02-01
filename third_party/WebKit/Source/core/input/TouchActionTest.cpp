@@ -213,7 +213,7 @@ WebViewImpl* TouchActionTest::SetupTest(
   Document* document =
       static_cast<Document*>(web_view->MainFrameImpl()->GetDocument());
   document->GetFrame()->View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, kScrollOffset), kProgrammaticScroll);
+      ScrollOffset(0, kScrollOffset), kScriptScroll);
 
   return web_view;
 }

@@ -73,7 +73,8 @@ enum ScrollDirectionPhysical {
 
 enum ScrollType {
   kUserScroll,
-  kProgrammaticScroll,
+  kScriptScroll,
+  kBrowserScroll,
   kClampingScroll,
   kCompositorScroll,
   kAnchoringScroll,
@@ -86,8 +87,9 @@ enum ScrollType {
 // An explicit scroll is one that was requested by the user or the webpage.
 // An implicit scroll is a side effect of a layout change.
 inline bool IsExplicitScrollType(ScrollType scroll_type) {
-  return scroll_type == kUserScroll || scroll_type == kProgrammaticScroll ||
-         scroll_type == kCompositorScroll || scroll_type == kSequencedScroll;
+  return scroll_type == kUserScroll || scroll_type == kScriptScroll ||
+         scroll_type == kBrowserScroll || scroll_type == kCompositorScroll ||
+         scroll_type == kSequencedScroll;
 }
 
 // Convert logical scroll direction to physical. Physical scroll directions are

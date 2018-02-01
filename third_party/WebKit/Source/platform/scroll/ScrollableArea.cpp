@@ -209,7 +209,8 @@ void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
       GetScrollAnimator().AdjustAnimationAndSetScrollOffset(clamped_offset,
                                                             scroll_type);
       break;
-    case kProgrammaticScroll:
+    case kScriptScroll:
+    case kBrowserScroll:
       ProgrammaticScrollHelper(clamped_offset, behavior, false);
       break;
     case kSequencedScroll:
@@ -338,7 +339,7 @@ bool ScrollableArea::ScrollBehaviorFromString(const String& behavior_string,
 
 // NOTE: Only called from Internals for testing.
 void ScrollableArea::UpdateScrollOffsetFromInternals(const IntSize& offset) {
-  ScrollOffsetChanged(ScrollOffset(offset), kProgrammaticScroll);
+  ScrollOffsetChanged(ScrollOffset(offset), kBrowserScroll);
 }
 
 void ScrollableArea::ContentAreaWillPaint() const {
