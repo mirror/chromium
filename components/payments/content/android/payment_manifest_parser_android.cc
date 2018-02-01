@@ -27,6 +27,12 @@ class ParseCallback {
 
   ~ParseCallback() {}
 
+  void OnFailure() {
+    // Can trigger synchronous deletion of PaymentManifestParserAndroid.
+    Java_ManifestParseCallback_onManifestParseFailure(
+        base::android::AttachCurrentThread(), jcallback_);
+  }
+
   // Copies payment method manifest into Java.
   void OnPaymentMethodManifestParsed(
       const std::vector<GURL>& web_app_manifest_urls,
@@ -127,10 +133,16 @@ void PaymentManifestParserAndroid::ParsePaymentMethodManifest(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jstring>& jcontent,
+    const base::android::JavaParamRef<jstring>& jmanifest_location,
     const base::android::JavaParamRef<jobject>& jcallback) {
   parser_.ParsePaymentMethodManifest(
       base::android::ConvertJavaStringToUTF8(env, jcontent),
+      GURL(base::android::ConvertJavaStringToUTF8(env, jmanifest_location)),
       base::BindOnce(&ParseCallback::OnPaymentMethodManifestParsed,
+                     std::make_unique<ParseCallback>(jcallback)),
+      base::BindOnce(&ParseCallback::OnFailure,
+                     std::make_unique<ParseCallback>(jcallback)),
+      base::BindOnce(&ParseCallback::OnFailure,
                      std::make_unique<ParseCallback>(jcallback)));
 }
 
@@ -142,6 +154,10 @@ void PaymentManifestParserAndroid::ParseWebAppManifest(
   parser_.ParseWebAppManifest(
       base::android::ConvertJavaStringToUTF8(env, jcontent),
       base::BindOnce(&ParseCallback::OnWebAppManifestParsed,
+                     std::make_unique<ParseCallback>(jcallback)),
+      base::BindOnce(&ParseCallback::OnFailure,
+                     std::make_unique<ParseCallback>(jcallback)),
+      base::BindOnce(&ParseCallback::OnFailure,
                      std::make_unique<ParseCallback>(jcallback)));
 }
 

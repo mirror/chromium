@@ -4,16 +4,15 @@
 
 #include "components/payments/content/manifest_verifier.h"
 
-#include <stdint.h>
 #include <algorithm>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/strings/string_util.h"
+#include "components/payments/content/origin_security_checker.h"
+#include "components/payments/content/payment_manifest_downloader.h"
 #include "components/payments/content/payment_manifest_web_data_service.h"
 #include "components/payments/content/utility/payment_manifest_parser.h"
-#include "components/payments/core/payment_manifest_downloader.h"
 #include "components/webdata/common/web_data_results.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -101,35 +100,29 @@ void ManifestVerifier::Verify(content::PaymentAppProvider::PaymentApps apps,
         continue;
       }
 
-      // GURL constructor may crash with some invalid unicode strings.
-      if (!base::IsStringUTF8(method)) {
-        dev_tools_.WarnIfPossible("Payment method name \"" + method +
-                                  "\" is not valid unicode.");
+      GURL payment_method_name;
+      std::string error_message_suffix;
+      if (!OriginSecurityChecker::IsValidWebPaymentsUrl(
+              method, GURL(), &payment_method_name, &error_message_suffix)) {
+        dev_tools_.WarnIfPossible("Payment method name \"" + method + "\" " +
+                                  error_message_suffix);
         continue;
       }
-
-      // All URL payment method names must be HTTPS.
-      GURL method_manifest_url = GURL(method);
-      if (!method_manifest_url.is_valid() ||
-          method_manifest_url.scheme() != "https") {
-        dev_tools_.WarnIfPossible("\"" + method +
-                                  "\" is not a valid payment method name.");
-        continue;
-      }
+      DCHECK(payment_method_name.is_valid());
 
       // Same origin payment methods are always allowed.
       url::Origin app_origin =
           url::Origin::Create(app.second->scope.GetOrigin());
-      if (url::Origin::Create(method_manifest_url.GetOrigin())
+      if (url::Origin::Create(payment_method_name.GetOrigin())
               .IsSameOriginWith(app_origin)) {
         verified_method_names.emplace_back(method);
         continue;
       }
 
-      manifests_to_download.insert(method_manifest_url);
-      manifest_url_to_app_origins_map_[method_manifest_url].insert(app_origin);
+      manifests_to_download.insert(payment_method_name);
+      manifest_url_to_app_origins_map_[payment_method_name].insert(app_origin);
       prohibited_payment_methods_[app.second->scope].insert(
-          method_manifest_url);
+          payment_method_name);
     }
 
     app.second->enabled_methods.swap(verified_method_names);
@@ -144,9 +137,9 @@ void ManifestVerifier::Verify(content::PaymentAppProvider::PaymentApps apps,
     return;
   }
 
-  for (const auto& method_manifest_url : manifests_to_download) {
+  for (const auto& payment_method_name : manifests_to_download) {
     cache_request_handles_[cache_->GetPaymentMethodManifest(
-        method_manifest_url.spec(), this)] = method_manifest_url;
+        payment_method_name.spec(), this)] = payment_method_name;
   }
 }
 
@@ -175,7 +168,7 @@ void ManifestVerifier::OnWebDataServiceRequestDone(
   if (it == cache_request_handles_.end())
     return;
 
-  GURL method_manifest_url = it->second;
+  GURL payment_method_name = it->second;
   cache_request_handles_.erase(it);
 
   const std::vector<std::string>& supported_origin_strings =
@@ -186,12 +179,12 @@ void ManifestVerifier::OnWebDataServiceRequestDone(
                                          kAllOriginsSupportedIndicator) !=
                                supported_origin_strings.end();
   EnableMethodManifestUrlForSupportedApps(
-      method_manifest_url, supported_origin_strings, all_origins_supported,
-      manifest_url_to_app_origins_map_[method_manifest_url], &apps_,
+      payment_method_name, supported_origin_strings, all_origins_supported,
+      manifest_url_to_app_origins_map_[payment_method_name], &apps_,
       &prohibited_payment_methods_);
 
   if (!supported_origin_strings.empty()) {
-    cached_manifest_urls_.insert(method_manifest_url);
+    cached_manifest_urls_.insert(payment_method_name);
     if (--number_of_manifests_to_verify_ == 0) {
       RemoveInvalidPaymentApps();
       std::move(finished_verification_callback_).Run(std::move(apps_));
@@ -199,33 +192,28 @@ void ManifestVerifier::OnWebDataServiceRequestDone(
   }
 
   downloader_->DownloadPaymentMethodManifest(
-      method_manifest_url,
+      payment_method_name,
       base::BindOnce(&ManifestVerifier::OnPaymentMethodManifestDownloaded,
-                     weak_ptr_factory_.GetWeakPtr(), method_manifest_url));
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ManifestVerifier::OnPaymentMethodManifestDownloaded(
-    const GURL& method_manifest_url,
-    const std::string& content) {
+    const std::string& content,
+    const GURL& method_manifest_url) {
   DCHECK_LT(0U, number_of_manifests_to_download_);
 
   if (content.empty()) {
-    if (cached_manifest_urls_.find(method_manifest_url) ==
-            cached_manifest_urls_.end() &&
-        --number_of_manifests_to_verify_ == 0) {
-      RemoveInvalidPaymentApps();
-      std::move(finished_verification_callback_).Run(std::move(apps_));
-    }
-
-    if (--number_of_manifests_to_download_ == 0)
-      std::move(finished_using_resources_callback_).Run();
-
+    OnVerificationFailure(method_manifest_url);
     return;
   }
 
   parser_->ParsePaymentMethodManifest(
-      content,
+      content, method_manifest_url,
       base::BindOnce(&ManifestVerifier::OnPaymentMethodManifestParsed,
+                     weak_ptr_factory_.GetWeakPtr(), method_manifest_url),
+      base::BindOnce(&ManifestVerifier::OnVerificationFailure,
+                     weak_ptr_factory_.GetWeakPtr(), method_manifest_url),
+      base::BindOnce(&ManifestVerifier::OnVerificationFailure,
                      weak_ptr_factory_.GetWeakPtr(), method_manifest_url));
 }
 
@@ -258,6 +246,18 @@ void ManifestVerifier::OnPaymentMethodManifestParsed(
     supported_origin_strings.emplace_back(kAllOriginsSupportedIndicator);
   cache_->AddPaymentMethodManifest(method_manifest_url.spec(),
                                    supported_origin_strings);
+
+  if (--number_of_manifests_to_download_ == 0)
+    std::move(finished_using_resources_callback_).Run();
+}
+
+void ManifestVerifier::OnVerificationFailure(const GURL& method_manifest_url) {
+  if (cached_manifest_urls_.find(method_manifest_url) ==
+          cached_manifest_urls_.end() &&
+      --number_of_manifests_to_verify_ == 0) {
+    RemoveInvalidPaymentApps();
+    std::move(finished_verification_callback_).Run(std::move(apps_));
+  }
 
   if (--number_of_manifests_to_download_ == 0)
     std::move(finished_using_resources_callback_).Run();

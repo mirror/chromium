@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PAYMENTS_CORE_PAYMENT_MANIFEST_DOWNLOADER_H_
-#define COMPONENTS_PAYMENTS_CORE_PAYMENT_MANIFEST_DOWNLOADER_H_
+#ifndef COMPONENTS_PAYMENTS_CONTENT_PAYMENT_MANIFEST_DOWNLOADER_H_
+#define COMPONENTS_PAYMENTS_CONTENT_PAYMENT_MANIFEST_DOWNLOADER_H_
 
 #include <map>
 #include <memory>
@@ -35,7 +35,7 @@ namespace payments {
 //  - Link header does not contain rel="payment-method-manifest".
 //  - Link header does not contain a valid URL.
 using PaymentManifestDownloadCallback =
-    base::OnceCallback<void(const std::string&)>;
+    base::OnceCallback<void(const std::string&, const GURL&)>;
 
 // The interface for the downloader of the payment method manifest.
 //
@@ -121,7 +121,6 @@ class PaymentManifestDownloader
   void InitiateDownload(const GURL& url,
                         net::URLFetcher::RequestType request_type,
                         PaymentManifestDownloadCallback callback);
-  bool IsValidManifestUrl(const GURL& url);
 
   scoped_refptr<net::URLRequestContextGetter> context_;
 
@@ -136,4 +135,4 @@ class PaymentManifestDownloader
 
 }  // namespace payments
 
-#endif  // COMPONENTS_PAYMENTS_CORE_PAYMENT_MANIFEST_DOWNLOADER_H_
+#endif  // COMPONENTS_PAYMENTS_CONTENT_PAYMENT_MANIFEST_DOWNLOADER_H_

@@ -83,8 +83,8 @@ class ManifestVerifier final : public WebDataServiceConsumer {
       std::unique_ptr<WDTypedResult> result) override;
 
   // Called when a manifest is downloaded.
-  void OnPaymentMethodManifestDownloaded(const GURL& method_manifest_url,
-                                         const std::string& content);
+  void OnPaymentMethodManifestDownloaded(const std::string& content,
+                                         const GURL& method_manifest_url);
 
   // Called when a manifest is parsed.
   void OnPaymentMethodManifestParsed(
@@ -92,6 +92,9 @@ class ManifestVerifier final : public WebDataServiceConsumer {
       const std::vector<GURL>& default_applications,
       const std::vector<url::Origin>& supported_origins,
       bool all_origins_supported);
+
+  // Called when manifest file contents are not valid.
+  void OnVerificationFailure(const GURL& method_manifest_url);
 
   // Called immediately preceding the verification callback invocation.
   void RemoveInvalidPaymentApps();
@@ -127,7 +130,7 @@ class ManifestVerifier final : public WebDataServiceConsumer {
   // use these payment method names.
   std::map<GURL, std::set<url::Origin>> manifest_url_to_app_origins_map_;
 
-  // The mapping of cache request handles to the payment method manifest URLs.
+  // The mapping of cache request handles to the payment method names.
   std::map<WebDataServiceBase::Handle, GURL> cache_request_handles_;
 
   // The set of payment method manifest URLs for which the cached value was

@@ -1713,6 +1713,8 @@ chrome_test_java_sources = [
   "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestIncompletePhoneTest.java",
   "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestIncompleteServerCardTest.java",
   "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+  "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestLocalhostServiceWorkerPaymentAppAllowedTest.java",
+  "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestLocalhostServiceWorkerPaymentAppNotAllowedTest.java",
   "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestMultipleContactDetailsTest.java",
   "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestMetricsTest.java",
   "javatests/src/org/chromium/chrome/browser/payments/PaymentRequestNameAndFreeShippingTest.java",

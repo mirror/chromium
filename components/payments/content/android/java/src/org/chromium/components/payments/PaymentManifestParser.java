@@ -70,13 +70,15 @@ public class PaymentManifestParser {
     /**
      * Parses the payment method manifest file asynchronously.
      *
-     * @param content  The content to parse.
-     * @param callback The callback to invoke when finished parsing.
+     * @param content          The content to parse.
+     * @param manifestLocation The location of the manifest being parsed. Should not be null.
+     * @param callback         The callback to invoke when finished parsing.
      */
-    public void parsePaymentMethodManifest(String content, ManifestParseCallback callback) {
+    public void parsePaymentMethodManifest(String content, URI manifestLocation, ManifestParseCallback callback) {
         ThreadUtils.assertOnUiThread();
         assert mNativePaymentManifestParserAndroid != 0;
-        nativeParsePaymentMethodManifest(mNativePaymentManifestParserAndroid, content, callback);
+        assert manifestLocation != null;
+        nativeParsePaymentMethodManifest(mNativePaymentManifestParserAndroid, content, manifestLocation.toString(), callback);
     }
 
     /**
@@ -127,7 +129,7 @@ public class PaymentManifestParser {
     private static native void nativeDestroyPaymentManifestParserAndroid(
             long nativePaymentManifestParserAndroid);
     private static native void nativeParsePaymentMethodManifest(
-            long nativePaymentManifestParserAndroid, String content,
+            long nativePaymentManifestParserAndroid, String content, String manifestLocation,
             ManifestParseCallback callback);
     private static native void nativeParseWebAppManifest(long nativePaymentManifestParserAndroid,
             String content, ManifestParseCallback callback);

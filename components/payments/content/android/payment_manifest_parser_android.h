@@ -24,6 +24,7 @@ class PaymentManifestParserAndroid {
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& jcaller,
       const base::android::JavaParamRef<jstring>& jcontent,
+      const base::android::JavaParamRef<jstring>& jmanifest_location,
       const base::android::JavaParamRef<jobject>& jcallback);
 
   void ParseWebAppManifest(

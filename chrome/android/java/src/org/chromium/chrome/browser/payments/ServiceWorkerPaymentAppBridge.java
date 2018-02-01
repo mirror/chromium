@@ -156,7 +156,7 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      * @param canMakePayment Indicates whether a SW payment app can make payment.
      */
     @VisibleForTesting
-    public static void setCanMakePaymentForTesting(boolean canMakePayment) {
+    /* package */ static void setCanMakePaymentForTesting(boolean canMakePayment) {
         sCanMakePaymentForTesting = canMakePayment;
     }
 
@@ -175,9 +175,10 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      * @param modifiers        Payment method specific modifiers to the payment items and the total.
      * @param callback         Called after the payment app is finished running.
      */
-    public static void invokePaymentApp(WebContents webContents, long registrationId, String origin,
-            String iframeOrigin, String paymentRequestId, Set<PaymentMethodData> methodData,
-            PaymentItem total, Set<PaymentDetailsModifier> modifiers,
+    /* package */ static void invokePaymentApp(WebContents webContents, long registrationId,
+            String origin, String iframeOrigin, String paymentRequestId,
+            Set<PaymentMethodData> methodData, PaymentItem total,
+            Set<PaymentDetailsModifier> modifiers,
             PaymentInstrument.InstrumentDetailsCallback callback) {
         ThreadUtils.assertOnUiThread();
 
@@ -193,7 +194,7 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      * @param registrationId   The service worker registration ID of the Payment App.
      * @param callback         Called after abort invoke payment app is finished running.
      */
-    public static void abortPaymentApp(WebContents webContents, long registrationId,
+    /* package */ static void abortPaymentApp(WebContents webContents, long registrationId,
             PaymentInstrument.AbortCallback callback) {
         ThreadUtils.assertOnUiThread();
 

@@ -2523,6 +2523,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kAgcStartupMinVolume,
     switches::kAecRefinedAdaptiveFilter,
     switches::kAllowLoopbackInPeerConnection,
+    switches::kAllowWebPaymentsLocalhostUrls,
     switches::kAndroidFontsPath,
     switches::kAudioBufferSize,
     switches::kAutoplayPolicy,

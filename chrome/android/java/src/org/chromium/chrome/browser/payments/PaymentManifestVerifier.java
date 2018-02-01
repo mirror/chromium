@@ -354,7 +354,7 @@ public class PaymentManifestVerifier
 
     @Override
     public void onPaymentMethodManifestDownloadSuccess(String content) {
-        mParser.parsePaymentMethodManifest(content, this);
+        mParser.parsePaymentMethodManifest(content, mMethodName, this);
     }
 
     @Override

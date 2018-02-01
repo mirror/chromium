@@ -55,7 +55,8 @@ class PaymentManifestParserTest : public InProcessBrowserTest {
     parser_.ParseWebAppManifest(
         content,
         base::BindOnce(&PaymentManifestParserTest::OnWebAppManifestParsed,
-                       base::Unretained(this), run_loop.QuitClosure()));
+                       base::Unretained(this), run_loop.QuitClosure()),
+        run_loop.QuitClosure(), run_loop.QuitClosure());
     run_loop.Run();
   }
 
@@ -64,9 +65,11 @@ class PaymentManifestParserTest : public InProcessBrowserTest {
   void ParsePaymentMethodManifest(const std::string& content) {
     base::RunLoop run_loop;
     parser_.ParsePaymentMethodManifest(
-        content, base::BindOnce(
-                     &PaymentManifestParserTest::OnPaymentMethodManifestParsed,
-                     base::Unretained(this), run_loop.QuitClosure()));
+        content, GURL(),
+        base::BindOnce(
+            &PaymentManifestParserTest::OnPaymentMethodManifestParsed,
+            base::Unretained(this), run_loop.QuitClosure()),
+        run_loop.QuitClosure(), run_loop.QuitClosure());
     run_loop.Run();
   }
 

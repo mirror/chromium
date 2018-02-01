@@ -28,6 +28,7 @@ static_library("content") {
 
   deps = [
     ":content_common",
+    ":origin_security_checker",
     ":utils",
     "//components/autofill/core/browser",
     "//components/keyed_service/content",
@@ -51,12 +52,26 @@ static_library("content_common") {
   ]
 }
 
-static_library("utils") {
+static_library("origin_security_checker") {
   sources = [
-    "manifest_verifier.cc",
-    "manifest_verifier.h",
     "origin_security_checker.cc",
     "origin_security_checker.h",
+  ]
+
+  deps = [
+    "//base",
+    "//content/public/common",
+    "//net",
+    "//url",
+  ]
+}
+
+static_library("utils") {
+  sources = [
+    "payment_manifest_downloader.cc",
+    "payment_manifest_downloader.h",
+    "manifest_verifier.cc",
+    "manifest_verifier.h",
     "payment_manifest_web_data_service.cc",
     "payment_manifest_web_data_service.h",
     "payment_method_manifest_table.cc",
@@ -69,6 +84,7 @@ static_library("utils") {
 
   deps = [
     ":content_common",
+    ":origin_security_checker",
     "//components/autofill/core/browser",
     "//components/payments/content/utility",
     "//components/payments/core",
@@ -79,6 +95,8 @@ static_library("utils") {
     "//sql",
     "//third_party/WebKit/public:blink_headers",
     "//ui/base",
+    "//components/data_use_measurement/core",
+    "//components/link_header_util",
   ]
 
   public_deps = [
@@ -87,9 +105,26 @@ static_library("utils") {
   ]
 }
 
+static_library("test_support") {
+  testonly = true
+  sources = [
+    "test_payment_manifest_downloader.cc",
+    "test_payment_manifest_downloader.h",
+  ]
+
+  deps = [
+    ":utils",
+    "//base",
+    "//url",
+    "//net:test_support",
+  ]
+}
+
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "origin_security_checker_unittest.cc",
+    "payment_manifest_downloader_unittest.cc",
     "payment_method_manifest_table_unittest.cc",
     "payment_request_spec_unittest.cc",
     "payment_request_state_unittest.cc",
@@ -103,6 +138,8 @@ source_set("unit_tests") {
 
   deps = [
     ":content",
+    ":origin_security_checker",
+    ":test_support",
     ":utils",
     "//base",
     "//base/test:test_support",
@@ -118,5 +155,6 @@ source_set("unit_tests") {
     "//third_party/WebKit/public:blink_headers",
     "//third_party/icu",
     "//third_party/libaddressinput:test_support",
+    "//net:test_support",
   ]
 }

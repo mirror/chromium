@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/payments/core/payment_manifest_downloader.h"
+#include "components/payments/content/payment_manifest_downloader.h"
 
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -29,7 +29,8 @@ class PaymentMethodManifestDownloaderTest : public testing::Test {
 
   ~PaymentMethodManifestDownloaderTest() override {}
 
-  MOCK_METHOD1(OnManifestDownload, void(const std::string& content));
+  MOCK_METHOD2(OnManifestDownload,
+               void(const std::string& content, const GURL& manifest_url));
 
   net::TestURLFetcher* fetcher() { return factory_.GetFetcherByID(0); }
 
@@ -45,7 +46,7 @@ class PaymentMethodManifestDownloaderTest : public testing::Test {
 TEST_F(PaymentMethodManifestDownloaderTest, HttpHeadResponse404IsFailure) {
   fetcher()->set_response_code(404);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -53,7 +54,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, HttpHeadResponse404IsFailure) {
 TEST_F(PaymentMethodManifestDownloaderTest, NoHttpHeadersIsFailure) {
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -64,7 +65,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, EmptyHttpHeaderIsFailure) {
   fetcher()->set_response_headers(headers);
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -76,7 +77,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, EmptyHttpLinkHeaderIsFailure) {
   fetcher()->set_response_headers(headers);
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -88,7 +89,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, NoRelInHttpLinkHeaderIsFailure) {
   fetcher()->set_response_headers(headers);
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -100,7 +101,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, NoUrlInHttpLinkHeaderIsFailure) {
   fetcher()->set_response_headers(headers);
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -113,7 +114,7 @@ TEST_F(PaymentMethodManifestDownloaderTest,
   fetcher()->set_response_headers(headers);
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -127,7 +128,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, HttpGetResponse404IsFailure) {
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
   fetcher()->set_response_code(404);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -141,7 +142,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, EmptyHttpGetResponseIsFailure) {
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -156,7 +157,9 @@ TEST_F(PaymentMethodManifestDownloaderTest, NonEmptyHttpGetResponseIsSuccess) {
   fetcher()->SetResponseString("manifest content");
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload("manifest content"));
+  EXPECT_CALL(*this,
+              OnManifestDownload("manifest content",
+                                 GURL("https://bobpay.com/manifest.json")));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -173,7 +176,9 @@ TEST_F(PaymentMethodManifestDownloaderTest, HeaderResponseCode204IsSuccess) {
   fetcher()->SetResponseString("manifest content");
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload("manifest content"));
+  EXPECT_CALL(*this,
+              OnManifestDownload("manifest content",
+                                 GURL("https://bobpay.com/manifest.json")));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -213,7 +218,7 @@ TEST_F(PaymentMethodManifestDownloaderTest, AbsoluteHttpHeaderLinkUrl) {
   fetcher()->set_response_headers(headers);
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -232,7 +237,8 @@ class WebAppManifestDownloaderTest : public testing::Test {
 
   ~WebAppManifestDownloaderTest() override {}
 
-  MOCK_METHOD1(OnManifestDownload, void(const std::string& content));
+  MOCK_METHOD2(OnManifestDownload,
+               void(const std::string& content, const GURL& manifest_url));
 
   net::TestURLFetcher* fetcher() { return factory_.GetFetcherByID(0); }
 
@@ -248,7 +254,7 @@ class WebAppManifestDownloaderTest : public testing::Test {
 TEST_F(WebAppManifestDownloaderTest, HttpGetResponse404IsFailure) {
   fetcher()->set_response_code(404);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -256,7 +262,7 @@ TEST_F(WebAppManifestDownloaderTest, HttpGetResponse404IsFailure) {
 TEST_F(WebAppManifestDownloaderTest, EmptyHttpGetResponseIsFailure) {
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload(std::string()));
+  EXPECT_CALL(*this, OnManifestDownload(std::string(), GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }
@@ -265,7 +271,7 @@ TEST_F(WebAppManifestDownloaderTest, NonEmptyHttpGetResponseIsSuccess) {
   fetcher()->SetResponseString("manifest content");
   fetcher()->set_response_code(200);
 
-  EXPECT_CALL(*this, OnManifestDownload("manifest content"));
+  EXPECT_CALL(*this, OnManifestDownload("manifest content", GURL()));
 
   fetcher()->delegate()->OnURLFetchComplete(fetcher());
 }

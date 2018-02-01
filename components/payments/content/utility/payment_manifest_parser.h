@@ -52,44 +52,82 @@ namespace payments {
 // }
 //
 // Spec:
-// https://docs.google.com/document/d/1izV4uC-tiRJG3JLooqY3YRLU22tYOsLTNq0P_InPJeE
+// https://w3c.github.io/payment-method-manifest/
 //
 // Note the JSON parsing is done using the SafeJsonParser (either OOP or in a
 // safe environment).
 class PaymentManifestParser {
  public:
-  // Called on successful parsing of a payment method manifest. Parse failure
-  // results in empty vectors and "false".
+  // Called on successful parsing of a payment method manifest.
   using PaymentMethodCallback = base::OnceCallback<
       void(const std::vector<GURL>&, const std::vector<url::Origin>&, bool)>;
-  // Called on successful parsing of a web app manifest. Parse failure results
-  // in an empty vector.
+  // Called on successful parsing of a web app manifest.
   using WebAppCallback =
       base::OnceCallback<void(const std::vector<WebAppManifestSection>&)>;
+
+  // Two separate error callbacks are necessary for the simplest implementation
+  // that works with the safe JSON parser API.
+
+  // Called on failure to JSON-parse the string contents of a manifest.
+  using JsonParseErrorCallback = base::OnceClosure;
+  // Called on failure to extract valid data from the JSON-parsed manifest.
+  using InvalidDataCallback = base::OnceClosure;
 
   PaymentManifestParser();
   ~PaymentManifestParser();
 
+  // Parses |content| payment method manifest using |manifest_location| to
+  // resolve relative web app manifest URLs.
   void ParsePaymentMethodManifest(const std::string& content,
-                                  PaymentMethodCallback callback);
-  void ParseWebAppManifest(const std::string& content, WebAppCallback callback);
+                                  const GURL& manifest_location,
+                                  PaymentMethodCallback success_callback,
+                                  JsonParseErrorCallback parse_error_callback,
+                                  InvalidDataCallback invalid_data_callback);
+
+  // Parses |content| web app manifest.
+  void ParseWebAppManifest(const std::string& content,
+                           WebAppCallback success_callback,
+                           JsonParseErrorCallback parse_error_callback,
+                           InvalidDataCallback invalid_data_callback);
 
   // Visible for tests.
-  static void ParsePaymentMethodManifestIntoVectors(
+  static bool ParsePaymentMethodManifestIntoVectors(
       std::unique_ptr<base::Value> value,
+      const GURL& manifest_location,
       std::vector<GURL>* web_app_manifest_urls,
       std::vector<url::Origin>* supported_origins,
       bool* all_origins_supported);
 
+  // Visible for tests.
   static bool ParseWebAppManifestIntoVector(
       std::unique_ptr<base::Value> value,
       std::vector<WebAppManifestSection>* output);
 
  private:
-  void OnPaymentMethodParse(PaymentMethodCallback callback,
-                            std::unique_ptr<base::Value> value);
-  void OnWebAppParse(WebAppCallback callback,
-                     std::unique_ptr<base::Value> value);
+  // Called upon successful JSON-parsing of the string contents of a payment
+  // method manifest file.
+  void OnPaymentMethodJsonParseSuccess(
+      const GURL& manifest_location,
+      PaymentMethodCallback success_callback,
+      InvalidDataCallback invalid_data_callback,
+      std::unique_ptr<base::Value> value);
+
+  // Called upon failure to JSON-parse the string contents of a payment method
+  // manifest file.
+  void OnPaymentMethodJsonParseError(
+      JsonParseErrorCallback parse_error_callback,
+      const std::string& error_message);
+
+  // Called upon successful JSON-parsing of the string contents of a web app
+  // manifest file.
+  void OnWebAppJsonParseSuccess(WebAppCallback success_callback,
+                                InvalidDataCallback invalid_data_callback,
+                                std::unique_ptr<base::Value> value);
+
+  // Called upon failure to JSON-parse the string contents of a web app manifest
+  // file.
+  void OnWebAppJsonParseError(JsonParseErrorCallback parse_error_callback,
+                              const std::string& error_message);
 
   int64_t parse_payment_callback_counter_ = 0;
   int64_t parse_webapp_callback_counter_ = 0;

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/payments/core/payment_manifest_downloader.h"
+#include "components/payments/content/payment_manifest_downloader.h"
 
 #include <unordered_map>
 #include <utility>
@@ -14,6 +14,7 @@
 #include "base/strings/string_split.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/link_header_util/link_header_util.h"
+#include "components/payments/content/origin_security_checker.h"
 #include "net/base/load_flags.h"
 #include "net/base/url_util.h"
 #include "net/http/http_response_headers.h"
@@ -27,19 +28,29 @@
 namespace payments {
 namespace {
 
-GURL ParseResponseHeader(const net::URLFetcher* source) {
+bool IsValidManifestUrlFormat(const GURL& url) {
+  return url.is_valid() &&
+         (url.SchemeIs(url::kHttpsScheme) ||
+          (url.SchemeIs(url::kHttpScheme) && net::IsLocalhost(url)));
+}
+
+bool ParseResponseHeader(const net::URLFetcher* source,
+                         std::string* url_string) {
+  DCHECK(source);
+  DCHECK(url_string);
+
   if (source->GetResponseCode() != net::HTTP_OK &&
       source->GetResponseCode() != net::HTTP_NO_CONTENT) {
     LOG(ERROR) << "Unable to make a HEAD request to " << source->GetURL()
                << " for payment method manifest.";
-    return GURL();
+    return false;
   }
 
   net::HttpResponseHeaders* headers = source->GetResponseHeaders();
   if (!headers) {
     LOG(ERROR) << "No HTTP headers found on " << source->GetURL()
                << " for payment method manifest.";
-    return GURL();
+    return false;
   }
 
   std::string link_header;
@@ -47,7 +58,7 @@ GURL ParseResponseHeader(const net::URLFetcher* source) {
   if (link_header.empty()) {
     LOG(ERROR) << "No HTTP Link headers found on " << source->GetURL()
                << " for payment method manifest.";
-    return GURL();
+    return false;
   }
 
   for (const auto& value : link_header_util::SplitLinkHeader(link_header)) {
@@ -65,13 +76,15 @@ GURL ParseResponseHeader(const net::URLFetcher* source) {
     std::vector<std::string> rel_parts =
         base::SplitString(rel->second.value_or(""), HTTP_LWS,
                           base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
-    if (base::ContainsValue(rel_parts, "payment-method-manifest"))
-      return source->GetOriginalURL().Resolve(payment_method_manifest_url);
+    if (base::ContainsValue(rel_parts, "payment-method-manifest")) {
+      *url_string = payment_method_manifest_url;
+      return true;
+    }
   }
 
   LOG(ERROR) << "No rel=\"payment-method-manifest\" HTTP Link headers found on "
              << source->GetURL() << " for payment method manifest.";
-  return GURL();
+  return false;
 }
 
 std::string ParseResponseContent(const net::URLFetcher* source) {
@@ -99,14 +112,14 @@ PaymentManifestDownloader::~PaymentManifestDownloader() {}
 void PaymentManifestDownloader::DownloadPaymentMethodManifest(
     const GURL& url,
     PaymentManifestDownloadCallback callback) {
-  DCHECK(IsValidManifestUrl(url));
+  DCHECK(IsValidManifestUrlFormat(url));
   InitiateDownload(url, net::URLFetcher::HEAD, std::move(callback));
 }
 
 void PaymentManifestDownloader::DownloadWebAppManifest(
     const GURL& url,
     PaymentManifestDownloadCallback callback) {
-  DCHECK(IsValidManifestUrl(url));
+  DCHECK(IsValidManifestUrlFormat(url));
   InitiateDownload(url, net::URLFetcher::GET, std::move(callback));
 }
 
@@ -123,16 +136,28 @@ void PaymentManifestDownloader::OnURLFetchComplete(
   downloads_.erase(download_it);
 
   if (download->request_type == net::URLFetcher::HEAD) {
-    GURL url = ParseResponseHeader(source);
-    if (IsValidManifestUrl(url)) {
+    std::string url_string;
+    if (!ParseResponseHeader(source, &url_string)) {
+      std::move(download->callback).Run(std::string(), GURL());
+      return;
+    }
+
+    GURL url;
+    std::string error_message_suffix;
+    if (OriginSecurityChecker::IsValidWebPaymentsUrl(
+            url_string, source->GetOriginalURL(), &url,
+            &error_message_suffix)) {
       InitiateDownload(url, net::URLFetcher::GET,
                        std::move(download->callback));
     } else {
-      LOG(ERROR) << url << " is not a valid payment method manifest URL.";
-      std::move(download->callback).Run(std::string());
+      LOG(ERROR) << "HTTP Link <" << url_string
+                 << ">; rel=\"payment-method-manifest\" "
+                 << error_message_suffix;
+      std::move(download->callback).Run(std::string(), GURL());
     }
   } else {
-    std::move(download->callback).Run(ParseResponseContent(source));
+    std::move(download->callback)
+        .Run(ParseResponseContent(source), source->GetOriginalURL());
   }
 }
 
@@ -140,7 +165,7 @@ void PaymentManifestDownloader::InitiateDownload(
     const GURL& url,
     net::URLFetcher::RequestType request_type,
     PaymentManifestDownloadCallback callback) {
-  DCHECK(IsValidManifestUrl(url));
+  DCHECK(IsValidManifestUrlFormat(url));
 
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("payment_manifest_downloader", R"(
@@ -181,12 +206,6 @@ void PaymentManifestDownloader::InitiateDownload(
   auto insert_result =
       downloads_.insert(std::make_pair(identifier, std::move(download)));
   DCHECK(insert_result.second);  // Whether the insert has succeeded.
-}
-
-bool PaymentManifestDownloader::IsValidManifestUrl(const GURL& url) {
-  return url.is_valid() &&
-         (url.SchemeIs(url::kHttpsScheme) ||
-          (url.SchemeIs(url::kHttpScheme) && net::IsLocalhost(url)));
 }
 
 }  // namespace payments

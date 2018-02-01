@@ -140,7 +140,7 @@ public class PaymentRequestImpl
          * @param methods The map of the payment methods that are being queried to the corresponding
          *                payment method data.
          */
-        public CanMakePaymentQuery(Map<String, PaymentMethodData> methods) {
+        /* package */ CanMakePaymentQuery(Map<String, PaymentMethodData> methods) {
             assert methods != null;
             mMethods = new HashMap<>();
             for (Map.Entry<String, PaymentMethodData> method : methods.entrySet()) {
@@ -158,7 +158,7 @@ public class PaymentRequestImpl
          * @return True if the given methods and data match the previously queried payment methods
          *         and data.
          */
-        public boolean matchesPaymentMethods(Map<String, PaymentMethodData> methods) {
+        /* package */ boolean matchesPaymentMethods(Map<String, PaymentMethodData> methods) {
             if (!mMethods.keySet().equals(methods.keySet())) return false;
 
             for (Map.Entry<String, String> thisMethod : mMethods.entrySet()) {
@@ -171,7 +171,7 @@ public class PaymentRequestImpl
         }
 
         /** @param response Whether payment can be made. */
-        public void notifyObserversOfResponse(boolean response) {
+        /* package */ void notifyObserversOfResponse(boolean response) {
             for (PaymentRequestImpl observer : mObservers) {
                 observer.respondCanMakePaymentQuery(response);
             }
@@ -186,6 +186,9 @@ public class PaymentRequestImpl
 
     /** Limit in the number of suggested items in a section. */
     public static final int SUGGESTIONS_LIMIT = 4;
+
+    /* package */ static final String ALLOW_WEB_PAYMENTS_LOCALHOST_URLS_FLAG =
+            "allow-web-payments-localhost-urls";
 
     private static final String TAG = "cr_PaymentRequest";
     private static final String ANDROID_PAY_METHOD_NAME = "https://android.com/pay";
@@ -267,7 +270,6 @@ public class PaymentRequestImpl
     };
 
     private final Handler mHandler = new Handler();
-    private final RenderFrameHost mRenderFrameHost;
     private final WebContents mWebContents;
     private final String mTopLevelOrigin;
     private final String mPaymentRequestOrigin;
@@ -338,9 +340,6 @@ public class PaymentRequestImpl
     private TabModelSelector mObservedTabModelSelector;
     private TabModel mObservedTabModel;
 
-    /** Aborts should only be recorded if the Payment Request was shown to the user. */
-    private boolean mShouldRecordAbortReason;
-
     /**
      * There are a few situations were the Payment Request can appear, from a code perspective, to
      * be shown more than once. This boolean is used to make sure it is only logged once.
@@ -375,11 +374,10 @@ public class PaymentRequestImpl
     public PaymentRequestImpl(RenderFrameHost renderFrameHost) {
         assert renderFrameHost != null;
 
-        mRenderFrameHost = renderFrameHost;
         mWebContents = WebContentsStatics.fromRenderFrameHost(renderFrameHost);
 
         mPaymentRequestOrigin = UrlFormatter.formatUrlForSecurityDisplay(
-                mRenderFrameHost.getLastCommittedURL(), true);
+                renderFrameHost.getLastCommittedURL(), true);
         mTopLevelOrigin =
                 UrlFormatter.formatUrlForSecurityDisplay(mWebContents.getLastCommittedUrl(), true);
 
@@ -673,7 +671,6 @@ public class PaymentRequestImpl
                 mUI.show();
             } else {
                 mDidRecordShowEvent = true;
-                mShouldRecordAbortReason = true;
                 mJourneyLogger.setEventOccurred(Event.SKIPPED_SHOW);
 
                 onPayClicked(null /* selectedShippingAddress */, null /* selectedShippingOption */,
@@ -1059,7 +1056,7 @@ public class PaymentRequestImpl
      * Gets currency formatter for a given PaymentCurrencyAmount,
      * creates one if no existing instance is found.
      *
-     * @amount The given payment amount.
+     * @param amount The given payment amount.
      */
     private CurrencyFormatter getOrCreateCurrencyFormatter(PaymentCurrencyAmount amount) {
         String key = amount.currency + amount.currencySystem;
@@ -1094,7 +1091,6 @@ public class PaymentRequestImpl
 
         if (!mDidRecordShowEvent) {
             mDidRecordShowEvent = true;
-            mShouldRecordAbortReason = true;
             mJourneyLogger.setEventOccurred(Event.SHOWN);
         }
     }
@@ -1451,10 +1447,8 @@ public class PaymentRequestImpl
             PaymentPreferencesUtil.setPaymentCompleteOnce();
         }
 
-        /**
-         * Update records of the used payment instrument for sorting payment apps and instruments
-         * next time.
-         */
+        // Update records of the used payment instrument for sorting payment apps and instruments
+        // next time.
         PaymentOption selectedPaymentMethod = mPaymentMethodsSection.getSelectedItem();
         PaymentPreferencesUtil.increasePaymentInstrumentUseCount(
                 selectedPaymentMethod.getIdentifier());
@@ -1947,12 +1941,13 @@ public class PaymentRequestImpl
     }
 
     @VisibleForTesting
-    public static void setObserverForTest(PaymentRequestServiceObserverForTest observerForTest) {
+    /* package */ static void setObserverForTest(
+            PaymentRequestServiceObserverForTest observerForTest) {
         sObserverForTest = observerForTest;
     }
 
     @VisibleForTesting
-    public static void setIsLocalCanMakePaymentQueryQuotaEnforcedForTest() {
+    /* package */ static void setIsLocalCanMakePaymentQueryQuotaEnforcedForTest() {
         sIsLocalCanMakePaymentQueryQuotaEnforcedForTest = true;
     }
 
@@ -1975,7 +1970,7 @@ public class PaymentRequestImpl
      * The frecency score is calculated according to use count and last use date. The formula is
      * the same as the one used in GetFrecencyScore in autofill_data_model.cc.
      */
-    private static final double getFrecencyScore(int count, long date) {
+    private static double getFrecencyScore(int count, long date) {
         long currentTime = System.currentTimeMillis();
         return -Math.log((currentTime - date) / (24 * 60 * 60 * 1000) + 2) / Math.log(count + 2);
     }

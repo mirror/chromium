@@ -30,8 +30,6 @@ static_library("core") {
     "payment_instrument.h",
     "payment_item.cc",
     "payment_item.h",
-    "payment_manifest_downloader.cc",
-    "payment_manifest_downloader.h",
     "payment_method_data.cc",
     "payment_method_data.h",
     "payment_options.cc",
@@ -85,8 +83,6 @@ static_library("test_support") {
   sources = [
     "payments_test_util.cc",
     "payments_test_util.h",
-    "test_payment_manifest_downloader.cc",
-    "test_payment_manifest_downloader.h",
     "test_payment_request_delegate.cc",
     "test_payment_request_delegate.h",
   ]
@@ -116,7 +112,6 @@ source_set("unit_tests") {
     "payment_details_unittest.cc",
     "payment_details_validation_unittest.cc",
     "payment_item_unittest.cc",
-    "payment_manifest_downloader_unittest.cc",
     "payment_method_data_unittest.cc",
     "payment_options_unittest.cc",
     "payment_request_data_util_unittest.cc",

@@ -97,13 +97,13 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
     /** Contains information about a URI payment method. */
     private static final class PaymentMethod {
         /** The default applications for this payment method. */
-        public final Set<ResolveInfo> defaultApplications = new HashSet<>();
+        /* package */ final Set<ResolveInfo> defaultApplications = new HashSet<>();
 
         /** The supported origins of this payment method. */
-        public final Set<URI> supportedOrigins = new HashSet<>();
+        /* package */ final Set<URI> supportedOrigins = new HashSet<>();
 
         /** Whether all origins are supported. */
-        public boolean supportsAllOrigins;
+        /* package */ boolean supportsAllOrigins;
     }
 
     /**
@@ -122,16 +122,16 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
     /**
      * Finds native Android payment apps.
      *
-     * @param webContents            The web contents that invoked the web payments API.
-     * @param methods                The list of payment methods requested by the merchant. For
-     *                               example, "https://bobpay.com", "https://android.com/pay",
-     *                               "basic-card".
-     * @param webDataService         The web data service to cache manifest.
-     * @param downloader             The manifest downloader.
-     * @param parser                 The manifest parser.
+     * @param webContents The web contents that invoked the web payments API.
+     * @param methods The list of payment methods requested by the merchant. For
+     * example, "https://bobpay.com", "https://android.com/pay",
+     * "basic-card".
+     * @param webDataService The web data service to cache manifest.
+     * @param downloader The manifest downloader.
+     * @param parser The manifest parser.
      * @param packageManagerDelegate The package information retriever.
-     * @param callback               The asynchronous callback to be invoked (on the UI thread) when
-     *                               all Android payment apps have been found.
+     * @param callback The asynchronous callback to be invoked (on the UI thread) when
+     * all Android payment apps have been found.
      */
     public static void find(WebContents webContents, Set<String> methods,
             PaymentManifestWebDataService webDataService, PaymentManifestDownloader downloader,
@@ -235,13 +235,13 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             String defaultMethod = app.activityInfo.metaData == null
                     ? null
                     : app.activityInfo.metaData.getString(
-                              META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME);
+                            META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME);
 
             URI appOrigin = null;
             URI defaultUriMethod = null;
             if (!TextUtils.isEmpty(defaultMethod)) {
                 if (!methodToAppsMapping.containsKey(defaultMethod)) {
-                    methodToAppsMapping.put(defaultMethod, new HashSet<ResolveInfo>());
+                    methodToAppsMapping.put(defaultMethod, new HashSet<>());
                 }
                 methodToAppsMapping.get(defaultMethod).add(app);
 
@@ -252,13 +252,13 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
 
                         if (!uriMethodToDefaultAppsMapping.containsKey(defaultUriMethod)) {
                             uriMethodToDefaultAppsMapping.put(
-                                    defaultUriMethod, new HashSet<ResolveInfo>());
+                                    defaultUriMethod, new HashSet<>());
                         }
                         uriMethodToDefaultAppsMapping.get(defaultUriMethod).add(app);
 
                         appOrigin = UriUtils.getOrigin(defaultUriMethod);
                         if (!mOriginToUriDefaultMethodsMapping.containsKey(appOrigin)) {
-                            mOriginToUriDefaultMethodsMapping.put(appOrigin, new HashSet<URI>());
+                            mOriginToUriDefaultMethodsMapping.put(appOrigin, new HashSet<>());
                         }
                         mOriginToUriDefaultMethodsMapping.get(appOrigin).add(defaultUriMethod);
                     }
@@ -277,7 +277,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
                 }
 
                 if (!methodToAppsMapping.containsKey(supportedMethod)) {
-                    methodToAppsMapping.put(supportedMethod, new HashSet<ResolveInfo>());
+                    methodToAppsMapping.put(supportedMethod, new HashSet<>());
                 }
                 methodToAppsMapping.get(supportedMethod).add(app);
 
@@ -285,14 +285,14 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
 
                 if (!mMethodToSupportedAppsMapping.containsKey(supportedUriMethod)) {
                     mMethodToSupportedAppsMapping.put(
-                            supportedUriMethod, new HashSet<ResolveInfo>());
+                            supportedUriMethod, new HashSet<>());
                 }
                 mMethodToSupportedAppsMapping.get(supportedUriMethod).add(app);
 
                 if (appOrigin == null) continue;
 
                 if (!uriMethodToSupportedOriginsMapping.containsKey(supportedUriMethod)) {
-                    uriMethodToSupportedOriginsMapping.put(supportedUriMethod, new HashSet<URI>());
+                    uriMethodToSupportedOriginsMapping.put(supportedUriMethod, new HashSet<>());
                 }
                 uriMethodToSupportedOriginsMapping.get(supportedUriMethod).add(appOrigin);
             }
@@ -346,7 +346,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
      *
      * @param activityInfo The application information to query.
      * @return The set of non-default payment method names that this application supports. Never
-     *         null.
+     * null.
      */
     private Set<String> getSupportedPaymentMethods(ActivityInfo activityInfo) {
         Set<String> result = new HashSet<>();
@@ -438,7 +438,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
     private void onAllAppsFound() {
         assert mPendingVerifiersCount == 0;
 
-        if (!mIsIncognito) {
+        if (!mIsIncognito && !mValidApps.isEmpty()) {
             List<ResolveInfo> resolveInfos =
                     mPackageManagerDelegate.getServicesThatCanRespondToIntent(
                             new Intent(ACTION_IS_READY_TO_PAY));
@@ -460,7 +460,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
      * Enables the given payment app to use this method name.
      *
      * @param resolveInfo The payment app that's allowed to use the method name.
-     * @param methodName  The method name that can be used by the app.
+     * @param methodName The method name that can be used by the app.
      */
     private void onValidPaymentAppForPaymentMethodName(ResolveInfo resolveInfo, String methodName) {
         String packageName = resolveInfo.activityInfo.packageName;
@@ -477,11 +477,11 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             String webAppIdCanDeduped = resolveInfo.activityInfo.metaData == null
                     ? null
                     : resolveInfo.activityInfo.metaData.getString(
-                              META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME);
+                            META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME);
             app = new AndroidPaymentApp(mWebContents, packageName, resolveInfo.activityInfo.name,
                     label.toString(), mPackageManagerDelegate.getAppIcon(resolveInfo), mIsIncognito,
                     webAppIdCanDeduped == null ? null
-                                               : UriUtils.parseUriFromString(webAppIdCanDeduped));
+                            : UriUtils.parseUriFromString(webAppIdCanDeduped));
             mValidApps.put(packageName, app);
         }
 
