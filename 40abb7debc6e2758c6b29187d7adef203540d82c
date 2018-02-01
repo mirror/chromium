@@ -34,6 +34,24 @@
       "revId": "40abb7debc6e2758c6b29187d7adef203540d82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cc7c81_d9378547",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-01T06:37:07Z",
+      "side": 1,
+      "message": "OK, thanks.",
+      "parentUuid": "7092f957_1d195cfe",
+      "revId": "40abb7debc6e2758c6b29187d7adef203540d82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
