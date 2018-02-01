@@ -29,7 +29,9 @@ import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper.InputConnectionProvider;
+import org.chromium.content_public.browser.ChromiumBaseInputConnection;
 import org.chromium.content_public.browser.ImeAdapter;
+import org.chromium.content_public.browser.Range;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 import org.chromium.ui.base.ime.TextInputType;
@@ -99,7 +101,7 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
                 }
             }
         };
-        getImeAdapter().setInputMethodManagerWrapperForTest(mInputMethodManagerWrapper);
+        getImeAdapter().setInputMethodManagerWrapper(mInputMethodManagerWrapper);
         Assert.assertEquals(0, mInputMethodManagerWrapper.getShowSoftInputCounter());
         mConnectionFactory =
                 new TestInputConnectionFactory(getImeAdapter().getInputConnectionFactoryForTest());
@@ -578,7 +580,7 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
         }
 
         @Override
-        public ChromiumBaseInputConnection initializeAndGet(View view, ImeAdapterImpl imeAdapter,
+        public ChromiumBaseInputConnection initializeAndGet(View view, ImeAdapter imeAdapter,
                 int inputType, int inputFlags, int inputMode, int selectionStart, int selectionEnd,
                 EditorInfo outAttrs) {
             mTextInputTypeList.add(inputType);

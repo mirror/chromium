@@ -22,11 +22,16 @@ class PointF;
 
 namespace vr {
 
+struct TextInputInfo;
+
 class ContentInputForwarder {
  public:
   virtual ~ContentInputForwarder() {}
   virtual void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                             int content_id) = 0;
+  // Text input specific.
+  virtual void OnTextInputEdited(const TextInputInfo& info) = 0;
+  virtual void OnTextInputCommitted(const TextInputInfo& info) = 0;
 };
 
 class PlatformController;
@@ -42,6 +47,10 @@ class ContentInputDelegate {
   void OnContentMove(const gfx::PointF& normalized_hit_point);
   void OnContentDown(const gfx::PointF& normalized_hit_point);
   void OnContentUp(const gfx::PointF& normalized_hit_point);
+
+  // Text Input specific.
+  void OnTextInputEdited(const TextInputInfo& info);
+  void OnTextInputCommitted(const TextInputInfo& info);
 
   // The following functions are virtual so that they may be overridden in the
   // MockContentInputDelegate.
