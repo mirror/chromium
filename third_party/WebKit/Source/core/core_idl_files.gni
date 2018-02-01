@@ -167,6 +167,8 @@ core_idl_files =
                     "events/TransitionEvent.idl",
                     "events/UIEvent.idl",
                     "events/WheelEvent.idl",
+                    "fetch/AbortController.idl",
+                    "fetch/AbortSignal.idl",
                     "fetch/Body.idl",
                     "fetch/Headers.idl",
                     "fetch/Request.idl",

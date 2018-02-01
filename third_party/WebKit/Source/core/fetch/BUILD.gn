@@ -6,6 +6,10 @@ import("//third_party/WebKit/Source/core/core.gni")
 
 blink_core_sources("fetch") {
   sources = [
+    "AbortController.cpp",
+    "AbortController.h",
+    "AbortSignal.cpp",
+    "AbortSignal.h",
     "BlobBytesConsumer.cpp",
     "BlobBytesConsumer.h",
     "Body.cpp",

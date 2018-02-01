@@ -3396,3 +3396,13 @@ crbug.com/805794 [ Linux Win ] virtual/threaded/animations/responsive/viewport-u
 crbug.com/806748 [ Win7 ] virtual/mouseevent_fractional/fast/events/touch/gesture/gesture-tap-hover-state-iframe.html [ Pass Failure ]
 # Flaky on Linux
 crbug.com/806017 [ Linux ] virtual/gpu/fast/canvas/canvas-strokePath-shadow.html [ Pass Timeout ]
+
+# TODO(ricea): Remove these once fetch abort implementation is complete
+crbug.com/750599 external/wpt/fetch/api/abort/general-serviceworker.https.html [ Timeout ]
+crbug.com/750599 external/wpt/fetch/api/abort/general-sharedworker.html [ Timeout ]
+crbug.com/750599 external/wpt/fetch/api/abort/general.any.html [ Timeout ]
+crbug.com/750599 external/wpt/fetch/api/abort/general.any.worker.html [ Timeout ]
+crbug.com/750599 virtual/outofblink-cors/external/wpt/fetch/api/abort/general-serviceworker.https.html [ Timeout ]
+crbug.com/750599 virtual/outofblink-cors/external/wpt/fetch/api/abort/general-sharedworker.html [ Timeout ]
+crbug.com/750599 virtual/outofblink-cors/external/wpt/fetch/api/abort/general.any.html [ Timeout ]
+crbug.com/750599 virtual/outofblink-cors/external/wpt/fetch/api/abort/general.any.worker.html [ Timeout ]
