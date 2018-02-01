@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648290b5_6484685c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T22:29:01Z",
+      "side": 1,
+      "message": "nit: Can we rename this just mTestRule? It\u0027s not specific to VR, and avoids XR/VR confusion.",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "ba3b56a660e32fef92b56b1a4014819e289f9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74c9751_f2548fcd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T22:29:01Z",
+      "side": 1,
+      "message": "nit: All that needs to change between these two branches is this string, so we can just de-duplicate the rest. (I wouldn\u0027t worry about XR/VR in the description string)",
+      "range": {
+        "startLine": 311,
+        "startChar": 58,
+        "endLine": 311,
+        "endChar": 83
+      },
+      "revId": "ba3b56a660e32fef92b56b1a4014819e289f9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b7d1d5_29cf2dc3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T22:29:01Z",
+      "side": 1,
+      "message": "Looks like this code is duplicated in a few places, we should de-dup.",
+      "range": {
+        "startLine": 402,
+        "startChar": 8,
+        "endLine": 410,
+        "endChar": 9
+      },
+      "revId": "ba3b56a660e32fef92b56b1a4014819e289f9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
