@@ -327,6 +327,24 @@
       "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e58bfa81_ac855d81",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-01T14:40:03Z",
+      "side": 1,
+      "message": "BTW: This behavior (sniffing for JSON parser breakers in *all* content types and blocking the result if the parser breaker is found) has already been implemented by Nick (although AFAIK we don\u0027t sniff if the nosniff header is present).",
+      "parentUuid": "be86c4d5_0ae5b47b",
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
