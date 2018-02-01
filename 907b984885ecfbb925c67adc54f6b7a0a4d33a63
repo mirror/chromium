@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21be67ce_4c24114c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreePrinter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-01T23:15:36Z",
+      "side": 1,
+      "message": "nit: while here, can you please add braces?",
+      "revId": "907b984885ecfbb925c67adc54f6b7a0a4d33a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cc1644_c99ea0a0",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-01T23:15:36Z",
+      "side": 1,
+      "message": "nit: const auto\u0026",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 8
+      },
+      "revId": "907b984885ecfbb925c67adc54f6b7a0a4d33a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acbcf41_19909e1b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-01T23:15:36Z",
+      "side": 1,
+      "message": "nit: two spaces intentional? (one from String::Format and one from here?)",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "907b984885ecfbb925c67adc54f6b7a0a4d33a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
