@@ -11,9 +11,12 @@
 #include "base/run_loop.h"
 #include "base/test/bind_test_util.h"
 #include "base/test/mock_callback.h"
+#include "base/test/test_timeouts.h"
 #include "build/build_config.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/interface_provider_filtering.h"
+#include "content/browser/renderer_host/frame_connector_delegate.h"
+#include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/javascript_dialog_manager.h"
@@ -1221,6 +1224,61 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
     EXPECT_TRUE(child->has_committed_real_load());
     EXPECT_EQ(subframe_url, child->current_url());
   }
+}
+
+// Verifies that when navigating an OOPIF to same site and then canceling
+// navigation in beforeunload handler will not remove the RemoteFrameView from
+// OOPIF's owner element in the parent process.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
+                       CanceledBeforeUnloadWillNotClearRemoteFrameView) {
+  GURL a_url(embedded_test_server()->GetURL("a.com", "/page_with_iframe.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), a_url));
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+  // Need to override the delegate to handle the before unload dialog.
+  TestJavaScriptDialogManager dialog_manager;
+  web_contents->SetDelegate(&dialog_manager);
+
+  GURL b_url(embedded_test_server()->GetURL(
+      "b.com", "/render_frame_host/beforeunload.html"));
+  NavigateIframeToURL(web_contents, "test_iframe", b_url);
+  RenderFrameHostImpl* child_frame =
+      web_contents->GetFrameTree()->root()->child_at(0)->current_frame_host();
+  // Disable the hang monitor, otherwise there will be a race between the
+  // beforeunload dialog and the beforeunload hang timer.
+  child_frame->DisableBeforeUnloadHangMonitorForTesting();
+  child_frame->ExecuteJavaScriptWithUserGestureForTests(base::string16());
+
+  // Now navigate the frame to about:blank (same-site).
+  ASSERT_TRUE(ExecuteScript(
+      web_contents, "document.querySelector('iframe').src = 'about:blank';"));
+  dialog_manager.Wait();
+  // Reply no to the dialog so that navigation gets canceled.
+  std::move(dialog_manager.callback()).Run(false, base::string16());
+  EXPECT_TRUE(WaitForLoadStop(web_contents));
+  ASSERT_EQ(1U, web_contents->GetFrameTree()->root()->child_count());
+
+  FrameConnectorDelegate* frame_connector_delegate =
+      static_cast<RenderWidgetHostViewChildFrame*>(child_frame->GetView())
+          ->FrameConnectorForTesting();
+  EXPECT_FALSE(frame_connector_delegate->IsHidden());
+
+  // Now verify that RemoteFrameView still exists. This can be done by hiding
+  // the <iframe> and waiting for an update in visibility state of the child
+  // frame.
+  ASSERT_TRUE(ExecuteScript(
+      web_contents,
+      "document.querySelector('iframe').style.visibility = 'hidden';"));
+  LOG(ERROR) << "Wait for hiding.";
+  while (!frame_connector_delegate->IsHidden()) {
+    base::RunLoop run_loop;
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
+    run_loop.Run();
+  }
+
+  web_contents->SetDelegate(nullptr);
+  web_contents->SetJavaScriptDialogManagerForTesting(nullptr);
 }
 
 }  // namespace content
