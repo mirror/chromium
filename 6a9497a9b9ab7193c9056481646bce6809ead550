@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "56669d8f_98bb87ef",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-01T18:46:03Z",
+      "side": 1,
+      "message": "Since EnrollmentScreenHandler is the interface between JS code and authpolicy_login_helper_, convert to KerberosEncryptionTypes enum here and pass that into the login helper. authpolicy_login_helper_ shouldn\u0027t be concerned with the data type choices that UI makes.",
+      "parentUuid": "9171772a_fc03dd82",
+      "range": {
+        "startLine": 590,
+        "startChar": 1,
+        "endLine": 590,
+        "endChar": 35
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3861a6e8_66a64bc0",
         "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.h",
         "patchSetId": 3
@@ -257,6 +281,30 @@
       "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d771a378_633eb67b",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-01T18:46:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35ce3d00_a7245b77",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -483,6 +531,30 @@
       "side": 1,
       "message": "Maybe, but how could we specify that it\u0027s missing? E.g. now it\u0027s an empty string.",
       "parentUuid": "9bfd76a6_9e8d57f4",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059f0eae_031f1456",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-01T18:46:03Z",
+      "side": 1,
+      "message": "Use \u0027strong\u0027 when it\u0027s missing? This would make it easier to reason when you only look at this code, although you\u0027d duplicate the logic. There\u0027s also base::Optional.",
+      "parentUuid": "ca156634_a962b9db",
       "range": {
         "startLine": 158,
         "startChar": 0,
