@@ -588,6 +588,35 @@ TEST_F(MediaControlsImplTest, DownloadButtonInProductHelpDisabled) {
   EXPECT_FALSE(MediaControls().DownloadInProductHelp());
 }
 
+class MediaControlsImplPictureInPictureTest : public MediaControlsImplTest {
+ public:
+  void SetUp() override {
+    RuntimeEnabledFeatures::SetPictureInPictureEnabled(true);
+    MediaControlsImplTest::SetUp();
+  }
+};
+
+TEST_F(MediaControlsImplPictureInPictureTest,
+       PictureInPictureButtonDisablePictureInPicturePlaybackAttr) {
+  EnsureSizing();
+  MediaControls().Reset();
+
+  Element* picture_in_picture_button = GetElementByShadowPseudoId(
+      MediaControls(), "-internal-media-controls-picture-in-picture-button");
+  ASSERT_NE(nullptr, picture_in_picture_button);
+  ASSERT_TRUE(IsElementVisible(*picture_in_picture_button));
+
+  MediaControls().MediaElement().SetBooleanAttribute(
+      HTMLNames::disablepictureinpictureAttr, true);
+  testing::RunPendingTasks();
+  ASSERT_FALSE(IsElementVisible(*picture_in_picture_button));
+
+  MediaControls().MediaElement().SetBooleanAttribute(
+      HTMLNames::disablepictureinpictureAttr, false);
+  testing::RunPendingTasks();
+  ASSERT_TRUE(IsElementVisible(*picture_in_picture_button));
+}
+
 class MediaControlsImplInProductHelpTest : public MediaControlsImplTest {
  public:
   void SetUp() override {
