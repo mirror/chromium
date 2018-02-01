@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7b2122ec_19b9dde8",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-01T21:32:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "682e9876_b3cf6549",
+      "revId": "68819d877b389961b4f5499916e135fba9c17328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04933fec_69fd40ac",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 7
