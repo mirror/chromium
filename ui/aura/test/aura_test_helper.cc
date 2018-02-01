@@ -56,6 +56,7 @@ AuraTestHelper::AuraTestHelper()
       ui::ScopedAnimationDurationScaleMode::ZERO_DURATION));
   ui::test::EnableTestConfigForPlatformWindows();
   InitializeAuraEventGeneratorDelegate();
+  LOG(ERROR) << "AuraTestHelper";
 }
 
 AuraTestHelper::~AuraTestHelper() {
