@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f0df873a_006b8713",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T18:17:07Z",
+      "side": 1,
+      "message": "OK. I wonder if this is something that ought to be controlled from the Chromium side in the long run (at least in Chromium builds, saying --js-flags\u003d--random_seed\u003d42 seems odd for something that affects things that are unrelated to V8 as well). But OK. :)",
+      "parentUuid": "c10c085f_1a850332",
+      "revId": "e3806b178a4717e017fb97c3ce9075257b84baaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc46cb7a_ba83542a",
         "filename": "gin/v8_platform.cc",
         "patchSetId": 8
