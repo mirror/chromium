@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e53403_e467d7b6",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-02-01T06:52:46Z",
+      "side": 1,
+      "message": "Let\u0027s refer to RFC7231 unless you intentionally chose RFC2616.\nhttps://tools.ietf.org/html/rfc7231#section-3.1.1.1",
+      "revId": "5e2540b78009e82ecc79a4c6aeec3482a9bc55db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
