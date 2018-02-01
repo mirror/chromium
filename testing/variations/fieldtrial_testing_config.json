@@ -2222,6 +2222,24 @@
             ]
         }
     ],
+    "NewExtensionUpdaterService": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "NewExtensionUpdaterService"
+                    ]
+                }
+            ]
+        }
+    ],
     "NewTabInProductHelp": [
         {
             "platforms": [

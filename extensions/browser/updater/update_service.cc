@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/files/file_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "components/update_client/update_client_errors.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -18,6 +19,7 @@
 #include "extensions/browser/updater/update_data_provider.h"
 #include "extensions/browser/updater/update_service_factory.h"
 #include "extensions/common/extension_features.h"
+#include "extensions/common/extension_updater_uma.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/manifest_url_handlers.h"
 
@@ -69,6 +71,36 @@ void UpdateService::OnEvent(Events event, const std::string& extension_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   VLOG(2) << "UpdateService::OnEvent " << static_cast<int>(event) << " "
           << extension_id;
+
+  switch (event) {
+    case Events::COMPONENT_UPDATED:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Extensions.ExtensionUpdaterResults",
+          ExtensionUpdaterUpdateResult::UPDATE_SUCCESS,
+          ExtensionUpdaterUpdateResult::UPDATE_RESULT_COUNT);
+      break;
+    case Events::COMPONENT_UPDATE_ERROR:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Extensions.ExtensionUpdaterResults",
+          ExtensionUpdaterUpdateResult::UPDATE_ERROR,
+          ExtensionUpdaterUpdateResult::UPDATE_RESULT_COUNT);
+      break;
+    case Events::COMPONENT_NOT_UPDATED:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Extensions.ExtensionUpdaterResults",
+          ExtensionUpdaterUpdateResult::NO_UPDATE,
+          ExtensionUpdaterUpdateResult::UPDATE_RESULT_COUNT);
+      break;
+    case Events::COMPONENT_UPDATE_FOUND:
+      UMA_HISTOGRAM_COUNTS_100("Extensions.ExtensionUpdaterUpdateFoundCount",
+                               1);
+      break;
+    case Events::COMPONENT_CHECKING_FOR_UPDATES:
+    case Events::COMPONENT_WAIT:
+    case Events::COMPONENT_UPDATE_READY:
+    case Events::COMPONENT_UPDATE_DOWNLOADING:
+      break;
+  }
 
   // When no update is found, a previous update check might have queued an
   // update for this extension because it was in use at the time. We should
@@ -128,6 +160,9 @@ void UpdateService::StartUpdateCheck(
   }
   if (extension_ids.empty())
     return;
+
+  UMA_HISTOGRAM_COUNTS_100("Extensions.ExtensionUpdaterUpdateCalls",
+                           extension_ids.size());
 
   update_client_->Update(
       extension_ids,

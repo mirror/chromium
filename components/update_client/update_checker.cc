@@ -132,13 +132,15 @@ void UpdateCheckerImpl::CheckForUpdatesHelper(
   if (IsEncryptionRequired(components))
     RemoveUnsecureUrls(&urls);
 
+  const std::string update_check_request = BuildUpdateCheckRequest(
+      *config_, ids_checked_, components, metadata_, additional_attributes,
+      enabled_component_updates, updater_state_attributes_);
+
+  VLOG(3) << "Sending update check request: " << update_check_request;
+
   request_sender_ = std::make_unique<RequestSender>(config_);
   request_sender_->Send(
-      config_->EnabledCupSigning(),
-      BuildUpdateCheckRequest(*config_, ids_checked_, components, metadata_,
-                              additional_attributes, enabled_component_updates,
-                              updater_state_attributes_),
-      urls,
+      config_->EnabledCupSigning(), update_check_request, urls,
       base::BindOnce(&UpdateCheckerImpl::OnRequestSenderComplete,
                      base::Unretained(this), base::ConstRef(components)));
 }
@@ -155,6 +157,8 @@ void UpdateCheckerImpl::OnRequestSenderComplete(
     UpdateCheckFailed(components, error, retry_after_sec);
     return;
   }
+
+  VLOG(3) << "Received update check response: " << response;
 
   ProtocolParser update_response;
   if (!update_response.Parse(response)) {
