@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b755168_8875a7dd",
+        "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-01T00:14:50Z",
+      "side": 1,
+      "message": "Current naming is consistent with the rest of the code - we use response vs notification internally (e.g. in v8-inspector.h).",
+      "parentUuid": "07854b60_19972e66",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "a34bd3cb9fc36062573f95b8ffdfbfdcc5256a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bb93271_38a63b37",
         "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-01T00:12:15Z",
       "side": 1,
       "message": "Can this become non-optional?",
+      "range": {
+        "startLine": 97,
+        "startChar": 26,
+        "endLine": 97,
+        "endChar": 32
+      },
+      "revId": "a34bd3cb9fc36062573f95b8ffdfbfdcc5256a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6709b6_4d429274",
+        "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-01T00:14:50Z",
+      "side": 1,
+      "message": "Nope. As the comment on line 94 says, we don\u0027t resend the state if it did not change, since it may be quite large sometimes.",
+      "parentUuid": "6bb93271_38a63b37",
       "range": {
         "startLine": 97,
         "startChar": 26,
