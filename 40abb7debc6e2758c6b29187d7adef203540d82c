@@ -16,6 +16,24 @@
       "revId": "40abb7debc6e2758c6b29187d7adef203540d82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7092f957_1d195cfe",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-02-01T06:24:13Z",
+      "side": 1,
+      "message": "This has been discussed on https://chromium-review.googlesource.com/c/chromium/src/+/666138#message-e2d83146cb7cb52b0e9351b00965566fb733bcd5 .\n\nAllowing libva dlopen() the driver libraries it will use itself allows us to remove a bunch of sandboxing code, and is actually a necessity if we ever want to enable libva on non-Chromium OS setups. While we control where libva\u0027s driver libraries reside on Chrome OS, this is not the case on other distributions and we cannot work in that context with hardcoded paths.",
+      "parentUuid": "1f1a703b_91dd8581",
+      "revId": "40abb7debc6e2758c6b29187d7adef203540d82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
