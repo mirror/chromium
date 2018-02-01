@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23a06415_11f8eee8",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-01T15:54:26Z",
+      "side": 1,
+      "message": "nit: I think enabling this via a separate method would be nicer. Currently only one client needs it, but RegisterFrameSinkId is widely used.",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "093327a2857002b55a6dcd6ac9034f482e01aff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
