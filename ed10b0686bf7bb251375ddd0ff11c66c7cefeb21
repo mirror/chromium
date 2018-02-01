@@ -16,6 +16,24 @@
       "revId": "ed10b0686bf7bb251375ddd0ff11c66c7cefeb21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bc80b5_635a80c5",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-01T00:49:31Z",
+      "side": 0,
+      "message": "Yeah, sorry - when you follow this down the stack trace you get to the calls I was talking about in https://crbug.com/795272#c10. I\u0027ll CC oshima on the bug, thanks!",
+      "parentUuid": "c07959ff_dfc003ff",
+      "revId": "ed10b0686bf7bb251375ddd0ff11c66c7cefeb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
