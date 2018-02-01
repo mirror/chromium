@@ -507,6 +507,7 @@ extern const char kOpenPdfDownloadInSystemReader[];
 #endif
 #if defined(OS_ANDROID)
 extern const char kPromptForDownloadAndroid[];
+extern const char kPromptForDownloadAndroidInitial[];
 #endif
 
 extern const char kSaveFileDefaultDirectory[];
