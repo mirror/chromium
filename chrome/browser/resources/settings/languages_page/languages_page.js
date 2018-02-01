@@ -117,9 +117,11 @@ Polymer({
   },
 
   observers: [
+    // <if expr="not is_macosx">
     'updateSpellcheckLanguages_(languages.enabled.*, ' +
         'languages.forcedSpellCheckLanguages.*)',
     'updateSpellcheckEnabled_(prefs.browser.enable_spellchecking.*)',
+    // </if>
   ],
 
   /**
