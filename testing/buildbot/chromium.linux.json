@@ -444,6 +444,10 @@
         "test": "content_unittests"
       },
       {
+        "args": [
+          "--use-new-test-runner",
+          "-v"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -455,6 +459,10 @@
         "test": "crypto_unittests"
       },
       {
+        "args": [
+          "--use-new-test-runner",
+          "-v"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -502,6 +510,10 @@
         "test": "service_manager_unittests"
       },
       {
+        "args": [
+          "--use-new-test-runner",
+          "-v"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -513,6 +525,10 @@
         "test": "skia_unittests"
       },
       {
+        "args": [
+          "--use-new-test-runner",
+          "-v"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
