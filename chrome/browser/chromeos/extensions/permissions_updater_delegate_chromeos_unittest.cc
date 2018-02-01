@@ -59,8 +59,10 @@ std::unique_ptr<const PermissionSet> CreatePermissions(
       URLPattern(URLPattern::SCHEME_ALL, "<all_urls>")});
   URLPatternSet scriptable_hosts({
     URLPattern(URLPattern::SCHEME_ALL, "http://www.wikipedia.com/*")});
+  URLPatternSet dnr_hosts(
+      {URLPattern(URLPattern::SCHEME_ALL, "http://www.foo.com/*")});
   auto permissions = std::make_unique<const PermissionSet>(
-      apis, manifest, explicit_hosts, scriptable_hosts);
+      apis, manifest, explicit_hosts, scriptable_hosts, dnr_hosts);
   return permissions;
 }
 

@@ -146,7 +146,7 @@ class PermissionsUpdaterTestDelegate : public PermissionsUpdater::Delegate {
     api_permission_set.erase(APIPermission::kCookie);
     granted_permissions->reset(
         new PermissionSet(api_permission_set, ManifestPermissionSet(),
-                          URLPatternSet(), URLPatternSet()));
+                          URLPatternSet(), URLPatternSet(), URLPatternSet()));
   }
 
  private:
@@ -172,7 +172,8 @@ TEST_F(PermissionsUpdaterTest, AddAndRemovePermissions) {
   URLPatternSet default_hosts;
   AddPattern(&default_hosts, "http://a.com/*");
   PermissionSet default_permissions(default_apis, empty_manifest_permissions,
-                                    default_hosts, URLPatternSet());
+                                    default_hosts, URLPatternSet(),
+                                    URLPatternSet());
 
   // Make sure it loaded properly.
   ASSERT_EQ(default_permissions,
@@ -187,41 +188,45 @@ TEST_F(PermissionsUpdaterTest, AddAndRemovePermissions) {
   apis.insert(APIPermission::kNotifications);
   URLPatternSet hosts;
   AddPattern(&hosts, "http://*.c.com/*");
+  URLPatternSet dnr_hosts;
+  AddPattern(&dnr_hosts, "http://*.example.com/*");
 
   {
     PermissionSet delta(apis, empty_manifest_permissions, hosts,
-                        URLPatternSet());
+                        URLPatternSet(), dnr_hosts);
 
-  PermissionsUpdaterListener listener;
-  PermissionsUpdater(profile_.get()).AddPermissions(extension.get(), delta);
+    PermissionsUpdaterListener listener;
+    PermissionsUpdater(profile_.get()).AddPermissions(extension.get(), delta);
 
-  listener.Wait();
+    listener.Wait();
 
-  // Verify that the permission notification was sent correctly.
-  ASSERT_TRUE(listener.received_notification());
-  ASSERT_EQ(extension.get(), listener.extension());
-  ASSERT_EQ(UpdatedExtensionPermissionsInfo::ADDED, listener.reason());
-  ASSERT_EQ(delta, *listener.permissions());
+    // Verify that the permission notification was sent correctly.
+    ASSERT_TRUE(listener.received_notification());
+    ASSERT_EQ(extension.get(), listener.extension());
+    ASSERT_EQ(UpdatedExtensionPermissionsInfo::ADDED, listener.reason());
+    ASSERT_EQ(delta, *listener.permissions());
 
-  // Make sure the extension's active permissions reflect the change.
-  active_permissions = PermissionSet::CreateUnion(default_permissions, delta);
-  ASSERT_EQ(*active_permissions,
-            extension->permissions_data()->active_permissions());
+    // Make sure the extension's active permissions reflect the change.
+    active_permissions = PermissionSet::CreateUnion(default_permissions, delta);
+    ASSERT_EQ(*active_permissions,
+              extension->permissions_data()->active_permissions());
 
-  // Verify that the new granted and active permissions were also stored
-  // in the extension preferences. In this case, the granted permissions should
-  // be equal to the active permissions.
-  ASSERT_EQ(*active_permissions, *prefs->GetActivePermissions(extension->id()));
-  granted_permissions = active_permissions->Clone();
-  ASSERT_EQ(*granted_permissions,
-            *prefs->GetGrantedPermissions(extension->id()));
+    // Verify that the new granted and active permissions were also stored
+    // in the extension preferences. In this case, the granted permissions
+    // should be equal to the active permissions.
+    ASSERT_EQ(*active_permissions,
+              *prefs->GetActivePermissions(extension->id()));
+    granted_permissions = active_permissions->Clone();
+    ASSERT_EQ(*granted_permissions,
+              *prefs->GetGrantedPermissions(extension->id()));
   }
 
   {
   // In the second part of the test, we'll remove the permissions that we
   // just added except for 'notifications'.
   apis.erase(APIPermission::kNotifications);
-  PermissionSet delta(apis, empty_manifest_permissions, hosts, URLPatternSet());
+  PermissionSet delta(apis, empty_manifest_permissions, hosts, URLPatternSet(),
+                      dnr_hosts);
 
   PermissionsUpdaterListener listener;
   PermissionsUpdater(profile_.get())
@@ -259,15 +264,17 @@ TEST_F(PermissionsUpdaterTest, RevokingPermissions) {
     APIPermissionSet apis;
     apis.insert(id);
     return std::make_unique<PermissionSet>(apis, ManifestPermissionSet(),
-                                           URLPatternSet(), URLPatternSet());
+                                           URLPatternSet(), URLPatternSet(),
+                                           URLPatternSet());
   };
 
   auto url_permission_set = [](const GURL& url) {
     URLPatternSet set;
     URLPattern pattern(URLPattern::SCHEME_ALL, url.spec());
     set.AddPattern(pattern);
-    return std::make_unique<PermissionSet>(
-        APIPermissionSet(), ManifestPermissionSet(), set, URLPatternSet());
+    return std::make_unique<PermissionSet>(APIPermissionSet(),
+                                           ManifestPermissionSet(), set,
+                                           URLPatternSet(), URLPatternSet());
   };
 
   auto can_access_page =

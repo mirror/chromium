@@ -71,7 +71,7 @@ TEST(ExtensionMessageTypesTest, TestLoadedParams) {
   tab_permissions.insert(APIPermission::kDns);
   extension->permissions_data()->UpdateTabSpecificPermissions(
       1, PermissionSet(tab_permissions, ManifestPermissionSet(),
-                       URLPatternSet(), URLPatternSet()));
+                       URLPatternSet(), URLPatternSet(), URLPatternSet()));
   URLPatternSet runtime_blocked_hosts;
   AddPattern("*://*.example.*/*", &runtime_blocked_hosts);
   URLPatternSet runtime_allowed_hosts;

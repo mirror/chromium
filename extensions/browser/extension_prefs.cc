@@ -142,6 +142,7 @@ constexpr const char kPrefAPIs[] = "api";
 constexpr const char kPrefManifestPermissions[] = "manifest_permissions";
 constexpr const char kPrefExplicitHosts[] = "explicit_host";
 constexpr const char kPrefScriptableHosts[] = "scriptable_host";
+constexpr const char kPrefDNRHosts[] = "dnr_host";
 
 // A preference that indicates when an extension was installed.
 constexpr const char kPrefInstallTime[] = "install_time";
@@ -592,8 +593,13 @@ std::unique_ptr<const PermissionSet> ExtensionPrefs::ReadPrefAsPermissionSet(
       extension_id, JoinPrefs(pref_key, kPrefScriptableHosts),
       &scriptable_hosts, UserScript::ValidUserScriptSchemes());
 
-  return std::make_unique<PermissionSet>(apis, manifest_permissions,
-                                         explicit_hosts, scriptable_hosts);
+  // Retrieve the DNR host permissions.
+  URLPatternSet dnr_hosts;
+  ReadPrefAsURLPatternSet(extension_id, JoinPrefs(pref_key, kPrefDNRHosts),
+                          &dnr_hosts, UserScript::ValidUserScriptSchemes());
+
+  return std::make_unique<PermissionSet>(
+      apis, manifest_permissions, explicit_hosts, scriptable_hosts, dnr_hosts);
 }
 
 // Set the API or Manifest permissions.
@@ -647,6 +653,13 @@ void ExtensionPrefs::SetExtensionPrefPermissionSet(
     SetExtensionPrefURLPatternSet(extension_id,
                                   JoinPrefs(pref_key, kPrefScriptableHosts),
                                   new_value.scriptable_hosts());
+  }
+
+  // Set the DNR host permissions.
+  if (!new_value.dnr_hosts().is_empty()) {
+    SetExtensionPrefURLPatternSet(extension_id,
+                                  JoinPrefs(pref_key, kPrefDNRHosts),
+                                  new_value.dnr_hosts());
   }
 }
 

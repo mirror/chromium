@@ -168,7 +168,8 @@ class DeclarativeNetRequestBrowserTest
     const Extension* extension = nullptr;
     switch (GetParam()) {
       case ExtensionLoadType::PACKED:
-        extension = InstallExtension(extension_dir, 1 /* expected_change */);
+        extension = InstallExtensionWithPermissionsGranted(
+            extension_dir, 1 /* expected_change */);
         break;
       case ExtensionLoadType::UNPACKED:
         extension = LoadExtension(extension_dir);

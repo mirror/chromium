@@ -211,6 +211,15 @@ class PermissionsData {
                                     int tab_id,
                                     std::string* error) const;
 
+  // Returns true if the |extension| has permission to access the given |url|
+  // for DNR.
+  // If this returns false and |error| is non-null, |error| will be popualted
+  // with the reason the extension cannot access the page.
+  bool CanAccessURLForDNR(const Extension* extension,
+                          const GURL& url,
+                          int tab_id,
+                          std::string* error) const;
+
   // Returns true if extension is allowed to obtain the contents of a page as
   // an image. Since a page may contain sensitive information, this is
   // restricted to the extension's host permissions as well as the extension

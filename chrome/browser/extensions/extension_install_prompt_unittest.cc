@@ -103,7 +103,7 @@ TEST_F(ExtensionInstallPromptUnitTest, PromptShowsPermissionWarnings) {
   api_permissions.insert(APIPermission::kTab);
   std::unique_ptr<const PermissionSet> permission_set(
       new PermissionSet(api_permissions, ManifestPermissionSet(),
-                        URLPatternSet(), URLPatternSet()));
+                        URLPatternSet(), URLPatternSet(), URLPatternSet()));
   scoped_refptr<const Extension> extension =
       ExtensionBuilder()
           .SetManifest(DictionaryBuilder()

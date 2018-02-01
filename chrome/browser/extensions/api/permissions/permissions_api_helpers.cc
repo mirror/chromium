@@ -145,8 +145,10 @@ std::unique_ptr<const PermissionSet> UnpackPermissionSet(
     }
   }
 
+  // Scriptable and DNR hosts are not supported by the permissions API
+  // currently.
   return std::make_unique<PermissionSet>(apis, manifest_permissions, origins,
-                                         URLPatternSet());
+                                         URLPatternSet(), URLPatternSet());
 }
 
 }  // namespace permissions_api_helpers

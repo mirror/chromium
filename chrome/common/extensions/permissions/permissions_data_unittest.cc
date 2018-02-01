@@ -223,7 +223,7 @@ TEST(PermissionsDataTest, EffectiveHostPermissions) {
   new_hosts.AddOrigin(URLPattern::SCHEME_ALL, tab_url);
   extension->permissions_data()->UpdateTabSpecificPermissions(
       1, PermissionSet(APIPermissionSet(), ManifestPermissionSet(), new_hosts,
-                       URLPatternSet()));
+                       URLPatternSet(), URLPatternSet()));
   EXPECT_TRUE(
       extension->permissions_data()->GetEffectiveHostPermissions().MatchesURL(
           tab_url));
@@ -703,7 +703,7 @@ TEST_F(ExtensionScriptAndCaptureVisibleTest, TabSpecific) {
 
   {
     PermissionSet permissions(APIPermissionSet(), ManifestPermissionSet(),
-                              allowed_hosts, URLPatternSet());
+                              allowed_hosts, URLPatternSet(), URLPatternSet());
     permissions_data->UpdateTabSpecificPermissions(0, permissions);
     EXPECT_EQ(permissions.explicit_hosts(),
               permissions_data->GetTabSpecificPermissionsForTesting(0)
@@ -729,14 +729,15 @@ TEST_F(ExtensionScriptAndCaptureVisibleTest, TabSpecific) {
 
   {
     PermissionSet permissions1(APIPermissionSet(), ManifestPermissionSet(),
-                               allowed_hosts, URLPatternSet());
+                               allowed_hosts, URLPatternSet(), URLPatternSet());
     permissions_data->UpdateTabSpecificPermissions(0, permissions1);
     EXPECT_EQ(permissions1.explicit_hosts(),
               permissions_data->GetTabSpecificPermissionsForTesting(0)
                   ->explicit_hosts());
 
     PermissionSet permissions2(APIPermissionSet(), ManifestPermissionSet(),
-                               more_allowed_hosts, URLPatternSet());
+                               more_allowed_hosts, URLPatternSet(),
+                               URLPatternSet());
     permissions_data->UpdateTabSpecificPermissions(1, permissions2);
     EXPECT_EQ(permissions2.explicit_hosts(),
               permissions_data->GetTabSpecificPermissionsForTesting(1)
@@ -800,7 +801,7 @@ TEST(PermissionsDataTest, ChromeWebstoreUrl) {
   tab_hosts.AddOrigin(UserScript::ValidUserScriptSchemes(),
                       GURL("https://chrome.google.com./webstore").GetOrigin());
   PermissionSet tab_permissions(APIPermissionSet(), ManifestPermissionSet(),
-                                tab_hosts, tab_hosts);
+                                tab_hosts, tab_hosts, tab_hosts);
   for (const Extension* extension : extensions) {
     // Give the extension activeTab permissions to run on the webstore - it
     // shouldn't make a difference.
@@ -823,6 +824,8 @@ TEST(PermissionsDataTest, ChromeWebstoreUrl) {
                 extension->permissions_data()->GetContentScriptAccess(
                     extension, url, kTabId, &error))
           << extension->name() << ": " << url;
+
+      // TODO(crbug.com/777714): Also check access by the DNR API.
     }
   }
 }

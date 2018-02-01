@@ -61,10 +61,7 @@ PermissionsData::PermissionsData(const Extension* extension)
     : extension_id_(extension->id()), manifest_type_(extension->GetType()) {
   const PermissionSet& required_permissions =
       PermissionsParser::GetRequiredPermissions(extension);
-  active_permissions_unsafe_.reset(new PermissionSet(
-      required_permissions.apis(), required_permissions.manifest_permissions(),
-      required_permissions.explicit_hosts(),
-      required_permissions.scriptable_hosts()));
+  active_permissions_unsafe_ = required_permissions.Clone();
   withheld_permissions_unsafe_.reset(new PermissionSet());
 }
 
@@ -364,6 +361,22 @@ PermissionsData::AccessType PermissionsData::GetContentScriptAccess(
       active_permissions_unsafe_->scriptable_hosts(),
       withheld_permissions_unsafe_->scriptable_hosts(),
       tab_permissions ? &tab_permissions->scriptable_hosts() : nullptr, error);
+}
+
+bool PermissionsData::CanAccessURLForDNR(const Extension* extension,
+                                         const GURL& url,
+                                         int tab_id,
+                                         std::string* error) const {
+  base::AutoLock auto_lock(runtime_lock_);
+
+  const PermissionSet* tab_permissions = GetTabSpecificPermissions(tab_id);
+  AccessType result = CanRunOnPage(
+      extension, url, tab_id, active_permissions_unsafe_->dnr_hosts(),
+      withheld_permissions_unsafe_->dnr_hosts(),
+      tab_permissions ? &tab_permissions->dnr_hosts() : nullptr, error);
+
+  // TODO(crbug.com/460306): Support Click to Script for DNR.
+  return result == ACCESS_ALLOWED || result == ACCESS_WITHHELD;
 }
 
 bool PermissionsData::CanCaptureVisiblePage(int tab_id,
