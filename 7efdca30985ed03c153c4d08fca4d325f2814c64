@@ -52,6 +52,24 @@
       "revId": "7efdca30985ed03c153c4d08fca4d325f2814c64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ca7709_ff8d3d88",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-01T16:51:50Z",
+      "side": 1,
+      "message": "Yeah, but at that point you have to do more acrobatics to get the data into the two vectors you\u0027d need for the 16-bit values and to pack them back together when you\u0027re done.  There are plenty enough vector registers that you could load 8,16,32,64 pixels per load... we\u0027ve got to make a call to stop at some point, and stopping here at 8-byte 8-bit registers and 16-byte 16-bit registers is very ergonomic.  Seems like a good follow up thing to try, but I bet you this gets most of the win we\u0027re ever going to see over portable code.",
+      "parentUuid": "c3e3586b_dd1ff780",
+      "revId": "7efdca30985ed03c153c4d08fca4d325f2814c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
