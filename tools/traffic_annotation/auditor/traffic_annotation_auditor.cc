@@ -491,9 +491,12 @@ bool TrafficAnnotationAuditor::CheckIfCallCanBeUnannotated(
     // Check if the file including this function is part of Chrome build.
     const base::CommandLine::CharType* args[] = {
 #if defined(OS_WIN)
-      FILE_PATH_LITERAL("gn.bat"),
+      source_path_.Append(FILE_PATH_LITERAL("gn.bat")),
 #else
-      FILE_PATH_LITERAL("gn"),
+      // In python I would do
+      //   os.path.join(source_path, "third_party", "depot_tools", "gn")
+      // I'm not sure what this looks like in C++.
+      FILE_PATH_LITERAL(source_path_.Append("third_party", "depot_tools", "gn").value()),
 #endif
       FILE_PATH_LITERAL("refs"),
       FILE_PATH_LITERAL("--all")
