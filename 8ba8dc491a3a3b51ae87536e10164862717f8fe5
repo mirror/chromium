@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d0a6d4a_35367b47",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "The first admonition actually is wrong, now.  Fixed.",
+      "parentUuid": "4b77c63e_19dafa33",
+      "range": {
+        "startLine": 360,
+        "startChar": 27,
+        "endLine": 360,
+        "endChar": 30
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9635ef3c_f8370130",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-31T17:39:15Z",
       "side": 1,
       "message": "Not part of this CL, but: It looks to me as if this error return is only used for ERR_IO_PENDING.  Am I confused?  I ask because if the consumer can arrange for a non-ERR_IO_PENDING/OK return here, we\u0027ll stop reading from the Mojo pipe, which makes a little ambigous whether or not the guarantee in the simple_url_loader_stream_handler.h (\"In the case of error, all received data will be passed to this method before calling OnComplete\").  All data received from Mojo will be passed, but that\u0027s not the same thing as all data received from the network.\n\nThis may be a pretty corner case concern :-}.",
+      "range": {
+        "startLine": 361,
+        "startChar": 17,
+        "endLine": 361,
+        "endChar": 22
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94d799b_ac1cf4b9",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "FileWriter returns write errors, which is why it was already returning error codes.  But DownloadAsStreamBodyHandler only returns ERR_IO_PENDING (And calls Resume), so that comment is correct, for DownloadAsStreamBodyHandler.  Note that \"all received data\" refers to all data received from the URLLoader.",
+      "parentUuid": "9635ef3c_f8370130",
       "range": {
         "startLine": 361,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd8563ba_e9af654b",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "I meant to put a comment about that OnDataRead.  You suggested I removed redundant docs earlier.  Should I have them here?\n\nI don\u0027t think there\u0027s anything to DCHECK here, unfortunately, and I\u0027m a bit reluctant to add state just for DCHECKs.  Thoughts?",
+      "parentUuid": "759722e4_c2efa79c",
+      "range": {
+        "startLine": 404,
+        "startChar": 7,
+        "endLine": 404,
+        "endChar": 13
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47c42353_6793e18c",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c66104_11cdee28",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Added a comment above.",
+      "parentUuid": "47c42353_6793e18c",
+      "range": {
+        "startLine": 443,
+        "startChar": 25,
+        "endLine": 443,
+        "endChar": 31
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a16bdfde_8e928869",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Done.  Also fleshed out the comment a little.",
+      "parentUuid": "0a7fdfe3_aa9756c9",
+      "range": {
+        "startLine": 502,
+        "startChar": 22,
+        "endLine": 502,
+        "endChar": 29
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7db14c_564da17e",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "70fe6203_ac61420f",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "It\u0027s a typo.  Rephrased.  It\u0027s about the reason for a PostTask.  We can\u0027t DCHECK, because we explicitly allow it in the API contract.",
+      "parentUuid": "5e7db14c_564da17e",
+      "range": {
+        "startLine": 982,
+        "startChar": 19,
+        "endLine": 982,
+        "endChar": 20
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d10329b9_a7ebe98a",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-31T17:39:15Z",
       "side": 1,
       "message": "Suggestion: My sense is you\u0027re talking around the difference between streaming (in which case the partial response body will already have been provided to the caller) and downloading to a string (in which case it will be when the error occurs).  Maybe shift \"will be\" to \"is\" to make this description more accurate in an umbrella sense?",
+      "range": {
+        "startLine": 180,
+        "startChar": 10,
+        "endLine": 180,
+        "endChar": 12
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ee7f90_11f1857d",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "I\u0027m not talking about streaming, actually - this change was because it also applies to download to file.",
+      "parentUuid": "d10329b9_a7ebe98a",
       "range": {
         "startLine": 180,
         "startChar": 10,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5ae30999_a0d067ad",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Last I heard, separate files for delegates/observers were preferred over putting them in the same file (I think the reason was build time and minimizing transitive includes, not sure though).",
+      "parentUuid": "323ef423_999f6794",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc48a38c_a05cce6c",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 5
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "418b925e_04d43ec9",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc48a38c_a05cce6c",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cc85bf_e0af257d",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 5
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-31T17:39:15Z",
       "side": 1,
       "message": "I\u0027m a bit uncomfortable with the similarity in name between this and the SimpleURLLoader BodyHandlers.  I dunno if there\u0027s some other reasonably descriptive name for what this is doing, but I wouldn\u0027t mind calling it something that doesn\u0027t create that confusion.",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd27059a_4bc9c9d9",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "I\u0027m not at all committed to this name.  SimpleURLLoaderStreamReader doesn\u0027t work, because of the BodyReader, and StreamReceiver also sounds too similar to me.  Maybe SimpleURLLoaderStreamDelegate?  We clearly need more classes named delegate in Chrome!\n\nSimpleURLLoaderResponseWriter would mirror the URLFetcher-equivalent name, but I don\u0027t want to make assumptions about what the consumer is doing.\n\nYou have any preferences or other ideas?  Not going to rename it until we agree on something, since renaming more than once is a bit of a pain.",
+      "parentUuid": "f1cc85bf_e0af257d",
       "range": {
         "startLine": 19,
         "startChar": 21,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "bbedab89_62968937",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760c64ca_9deb47ef",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39dda701_53d92aeb",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 5
@@ -275,6 +539,30 @@
       "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfc72ac_6ce65957",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39dda701_53d92aeb",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "5eab18a1_fa2f8864",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4df8daf8_ad8399eb",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73d11a78_cf354adb",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 5
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "8e5af74a_a12d7d37",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Yes, it could be true in the case of a truncated response - it depends on whether SimpleURLLoader was set to allow partial responses.  Updated comment to explicitly mention SimpleURLLoader configuration.",
+      "parentUuid": "73d11a78_cf354adb",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00e78cdc_33c3da90",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 5
@@ -344,6 +680,30 @@
       "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467dddea_a30ab2f5",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T16:15:51Z",
+      "side": 1,
+      "message": "Just removed the comment.",
+      "parentUuid": "00e78cdc_33c3da90",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
