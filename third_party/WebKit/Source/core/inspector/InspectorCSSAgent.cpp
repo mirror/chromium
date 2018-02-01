@@ -324,7 +324,8 @@ enum ForcePseudoClassFlags {
   kPseudoFocus = 1 << 1,
   kPseudoActive = 1 << 2,
   kPseudoVisited = 1 << 3,
-  kPseudoFocusWithin = 1 << 4
+  kPseudoFocusWithin = 1 << 4,
+  kPseudoFocusVisible = 1 << 5
 };
 
 static unsigned ComputePseudoClassMask(
@@ -332,6 +333,7 @@ static unsigned ComputePseudoClassMask(
   DEFINE_STATIC_LOCAL(String, active, ("active"));
   DEFINE_STATIC_LOCAL(String, hover, ("hover"));
   DEFINE_STATIC_LOCAL(String, focus, ("focus"));
+  DEFINE_STATIC_LOCAL(String, focusVisible, ("focus-visible"));
   DEFINE_STATIC_LOCAL(String, focusWithin, ("focus-within"));
   DEFINE_STATIC_LOCAL(String, visited, ("visited"));
   if (!pseudo_class_array || !pseudo_class_array->length())
@@ -346,6 +348,8 @@ static unsigned ComputePseudoClassMask(
       result |= kPseudoHover;
     else if (pseudo_class == focus)
       result |= kPseudoFocus;
+    else if (pseudo_class == focusVisible)
+      result |= kPseudoFocusVisible;
     else if (pseudo_class == focusWithin)
       result |= kPseudoFocusWithin;
     else if (pseudo_class == visited)
@@ -838,6 +842,9 @@ void InspectorCSSAgent::ForcePseudoState(Element* element,
       break;
     case CSSSelector::kPseudoFocus:
       force = forced_pseudo_state & kPseudoFocus;
+      break;
+    case CSSSelector::kPseudoFocusVisible:
+      force = forced_pseudo_state & kPseudoFocusVisible;
       break;
     case CSSSelector::kPseudoFocusWithin:
       force = forced_pseudo_state & kPseudoFocusWithin;
