@@ -5,6 +5,7 @@
 #ifndef GPU_CONFIG_GPU_UTIL_H_
 #define GPU_CONFIG_GPU_UTIL_H_
 
+#include "base/macros.h"
 #include "build/build_config.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
@@ -51,6 +52,17 @@ GPU_EXPORT void CacheGpuFeatureInfo(const GpuFeatureInfo& gpu_feature_info);
 // If GpuFeatureInfo is cached, write into |gpu_feature_info|, clear cache, and
 // return true; otherwise, return false;
 GPU_EXPORT bool PopGpuFeatureInfoCache(GpuFeatureInfo* gpu_feature_info);
+
+#if defined(OS_ANDROID)
+class GLBindingsInitializationAutoLock {
+ public:
+  GLBindingsInitializationAutoLock();
+  ~GLBindingsInitializationAutoLock();
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(GLBindingsInitializationAutoLock);
+};
+#endif  // OS_ANDROID
 
 }  // namespace gpu
 
