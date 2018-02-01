@@ -679,30 +679,6 @@ IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest, SingletonCorrectWindow) {
   EXPECT_FALSE(client.IsTabOpenWithURL(singleton_url));
 }
 
-// This test verifies that navigation to a singleton prefers the latest
-// used browser, if multiple exist.
-IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest, SingletonLatestWindow) {
-  // Navigate to a site.
-  NavigateHelper(GURL("http://maps.google.com/"), browser(),
-                 WindowOpenDisposition::CURRENT_TAB);
-
-  // Navigate to a new window.
-  Browser* browser1 = NavigateHelper(GURL("http://maps.google.com/"), browser(),
-                                     WindowOpenDisposition::NEW_WINDOW);
-
-  // Make yet another window.
-  Browser* browser2 = NavigateHelper(GURL("http://maps.google.com/"), browser(),
-                                     WindowOpenDisposition::NEW_WINDOW);
-
-  // Navigate to the latest copy of the URL, in spite of specifying
-  // the previous browser.
-  Browser* test_browser =
-      NavigateHelper(GURL("http://maps.google.com/"), browser1,
-                     WindowOpenDisposition::SINGLETON_TAB);
-
-  EXPECT_EQ(browser2, test_browser);
-}
-
 // Tests that a disposition of SINGLETON_TAB can "see" non-incognito
 // tab URLs from incognito mode, but not vice versa, and that a
 // disposition of SWITCH_TO_TAB can't transition either direction.
