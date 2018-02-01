@@ -97,19 +97,26 @@ void GLSurfacePresentationHelper::PreSwapBuffers(
 
 void GLSurfacePresentationHelper::PostSwapBuffers(gfx::SwapResult result) {
   DCHECK(!pending_frames_.empty());
-  if (result == gfx::SwapResult::SWAP_ACK && gpu_timing_client_) {
-    if (!waiting_for_vsync_parameters_)
+  if (result == gfx::SwapResult::SWAP_ACK) {
+    if (!gpu_timing_client_) {
+      // The GPUTimer is not avaliable, so run the callback with current time.
+      auto frame = std::move(pending_frames_.back());
+      pending_frames_.pop_back();
+      frame.callback.Run(gfx::PresentationFeedback(
+          base::TimeTicks::Now(), vsync_interval_, 0 /* flags */));
+    } else if (!waiting_for_vsync_parameters_) {
       CheckPendingFrames();
-    return;
+    }
+  } else {
+    // SwapBuffers failed.
+    auto frame = std::move(pending_frames_.back());
+    pending_frames_.pop_back();
+    if (frame.timer) {
+      bool has_context = gl_context_ && gl_context_->IsCurrent(surface_);
+      frame.timer->Destroy(has_context);
+    }
+    frame.callback.Run(gfx::PresentationFeedback());
   }
-
-  auto frame = std::move(pending_frames_.back());
-  pending_frames_.pop_back();
-  if (frame.timer) {
-    bool has_context = gl_context_ && gl_context_->IsCurrent(surface_);
-    frame.timer->Destroy(has_context);
-  }
-  frame.callback.Run(gfx::PresentationFeedback());
 }
 
 void GLSurfacePresentationHelper::CheckPendingFrames() {
