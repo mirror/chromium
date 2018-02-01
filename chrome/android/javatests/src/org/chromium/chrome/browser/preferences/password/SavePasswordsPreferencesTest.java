@@ -54,6 +54,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.MetricsUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -1013,5 +1014,44 @@ public class SavePasswordsPreferencesTest {
         // The search bar should still be open and still display the search query.
         Espresso.onView(withId(R.id.search_src_text)).check(matches(isDisplayed()));
         Espresso.onView(withId(R.id.search_src_text)).check(matches(withText("Zeu")));
+    }
+
+    /**
+     * Check that triggering searches and inspected search results are recorded in histograms.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIsRecordedInHistograms() throws Exception {
+        MetricsUtils.HistogramDelta triggered_delta = new MetricsUtils.HistogramDelta(
+                "PasswordManager.Android.PasswordSearchTriggered", 1);
+        MetricsUtils.HistogramDelta untriggered_delta = new MetricsUtils.HistogramDelta(
+                "PasswordManager.Android.PasswordSearchTriggered", 0);
+        MetricsUtils.HistogramDelta viewed_after_search_delta = new MetricsUtils.HistogramDelta(
+                "PasswordManager.Android.PasswordCredentialEntry", 3);
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Open the search and filter all but "Zeus".
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        Espresso.onView(withId(R.id.search_src_text))
+                .perform(click(), typeText("Zeu"), closeSoftKeyboard());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName()))
+                .check(matches(isDisplayed()))
+                .perform(click());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        Espresso.pressBack(); // Go back to the search list.
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        mActivityTestRule.getActivity().finish(); // Close the preferences.
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        Assert.assertEquals(1, triggered_delta.getDelta());
+        Assert.assertEquals(0, untriggered_delta.getDelta());
+        Assert.assertEquals(1, viewed_after_search_delta.getDelta());
     }
 }
