@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "292fa01b_e6c4677c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T22:28:30Z",
+      "side": 1,
+      "message": "Curious, what test is that? I wonder if that test can run on non-official bots too.",
+      "revId": "002a8de8d487c16fd5984a08ca9916b672f03773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
