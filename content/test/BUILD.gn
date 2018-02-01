@@ -636,6 +636,7 @@ static_library("test_runner_support") {
 }
 
 if (is_android) {
+  enable_multidex = true
   import("//build/config/android/rules.gni")
 
   jinja_template("content_browsertests_manifest") {
