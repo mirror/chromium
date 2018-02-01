@@ -7,6 +7,8 @@
 #include <utility>
 #include <vector>
 
+#include "ash/message_center/message_center_controller.h"
+#include "ash/shell.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -123,7 +125,14 @@ void ArcNotificationItemImpl::OnUpdatedFromAndroid(
   for (auto& observer : observers_)
     observer.OnItemUpdated();
 
-  message_center_->AddNotification(std::move(notification));
+  if (ash::Shell::HasInstance()) {
+    ash::Shell::Get()
+        ->message_center_controller()
+        ->UpdateNotifierIdAndAddNotification(data->package_name.value(),
+                                             std::move(notification));
+  } else {
+    message_center_->AddNotification(std::move(notification));
+  }
 }
 
 void ArcNotificationItemImpl::OnClosedFromAndroid() {

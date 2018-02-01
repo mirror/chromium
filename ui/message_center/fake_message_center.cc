@@ -74,6 +74,9 @@ void FakeMessageCenter::RemoveNotificationsForNotifierId(
 
 void FakeMessageCenter::RemoveAllNotifications(bool by_user, RemoveType type) {}
 
+void FakeMessageCenter::SetNotificationAppId(const std::string& notification_id,
+                                             const std::string& app_id) {}
+
 void FakeMessageCenter::SetNotificationIcon(const std::string& notification_id,
                                             const gfx::Image& image) {
 }
