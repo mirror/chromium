@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2ebfac4e_311c0393",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-01T19:36:45Z",
+      "side": 1,
+      "message": "Authenticate with pin is not available in login screen (yet), so it\u0027s more applicable to lock screen for now.",
+      "parentUuid": "d6867ca2_7a24711c",
+      "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18bc4cf2_69374e0c",
         "filename": "ash/metrics/user_metrics_recorder.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2018-02-01T19:01:15Z",
       "side": 1,
       "message": "I removed those checks, because now I relized that they are redundant with state check in LoginMetricsRecorder.",
+      "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba76d517_339a23c1",
+        "filename": "ash/metrics/user_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-01T19:36:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18bc4cf2_69374e0c",
       "revId": "e1053c1a5e2f59867f5f720155c79f34028b5f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
