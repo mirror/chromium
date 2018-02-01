@@ -34,6 +34,24 @@
       "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6ec43f_60421b03",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T01:21:25Z",
+      "side": 1,
+      "message": "So in other words, I can\u0027t move the ui/message_center/views changes into a different CL without taking some of the chrome/ changes along with them.",
+      "parentUuid": "cdce27dc_4b4d57bb",
+      "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
