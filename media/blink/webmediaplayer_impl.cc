@@ -144,11 +144,6 @@ void RecordEncryptedEvent(bool encrypted_event_fired) {
   UMA_HISTOGRAM_BOOLEAN("Media.EME.EncryptedEvent", encrypted_event_fired);
 }
 
-// How much time must have elapsed since loading last progressed before we
-// assume that the decoder will have had time to complete preroll.
-constexpr base::TimeDelta kPrerollAttemptTimeout =
-    base::TimeDelta::FromSeconds(3);
-
 // Maximum number, per-WMPI, of media logs of playback rate changes.
 constexpr int kMaxNumPlaybackRateLogs = 10;
 
@@ -250,7 +245,6 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       overlay_surface_id_(SurfaceManager::kNoSurfaceID),
       suppress_destruction_errors_(false),
       is_encrypted_(false),
-      preroll_attempt_pending_(false),
       observer_(params->media_observer()),
       max_keyframe_distance_to_disable_background_video_(
           params->max_keyframe_distance_to_disable_background_video()),
@@ -1028,36 +1022,6 @@ blink::WebTimeRanges WebMediaPlayerImpl::Seekable() const {
   return blink::WebTimeRanges(&seekable_range, 1);
 }
 
-bool WebMediaPlayerImpl::IsPrerollAttemptNeeded() {
-  // TODO(sandersd): Replace with |highest_ready_state_since_seek_| if we need
-  // to ensure that preroll always gets a chance to complete.
-  // See http://crbug.com/671525.
-  if (highest_ready_state_ >= ReadyState::kReadyStateHaveFutureData)
-    return false;
-
-  // To suspend before we reach kReadyStateHaveCurrentData is only ok
-  // if we know we're going to get woken up when we get more data, which
-  // will only happen if the network is in the "Loading" state.
-  // This happens when the network is fast, but multiple videos are loading
-  // and multiplexing gets held up waiting for available threads.
-  if (highest_ready_state_ <= ReadyState::kReadyStateHaveMetadata &&
-      network_state_ != WebMediaPlayer::kNetworkStateLoading) {
-    return true;
-  }
-
-  if (preroll_attempt_pending_)
-    return true;
-
-  // Freshly initialized; there has never been any loading progress. (Otherwise
-  // |preroll_attempt_pending_| would be true when the start time is null.)
-  if (preroll_attempt_start_time_.is_null())
-    return false;
-
-  base::TimeDelta preroll_attempt_duration =
-      tick_clock_->NowTicks() - preroll_attempt_start_time_;
-  return preroll_attempt_duration < kPrerollAttemptTimeout;
-}
-
 bool WebMediaPlayerImpl::DidLoadingProgress() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
@@ -1613,14 +1577,7 @@ void WebMediaPlayerImpl::CreateVideoDecodeStatsReporter() {
 
 void WebMediaPlayerImpl::OnProgress() {
   DVLOG(4) << __func__;
-  if (highest_ready_state_ < ReadyState::kReadyStateHaveFutureData) {
-    // Reset the preroll attempt clock.
-    preroll_attempt_pending_ = true;
-    preroll_attempt_start_time_ = base::TimeTicks();
-
-    // Clear any 'stale' flag and give the pipeline a chance to resume. If we
-    // are already resumed, this will cause |preroll_attempt_start_time_| to
-    // be set.
+  if (ready_state_ < ReadyState::kReadyStateHaveMetadata) {
     delegate_->ClearStaleFlag(delegate_id_);
     UpdatePlayState();
   } else if (ready_state_ == ReadyState::kReadyStateHaveFutureData &&
@@ -1950,8 +1907,9 @@ void WebMediaPlayerImpl::OnIdleTimeout() {
   // This should never be called when stale state testing overrides are used.
   DCHECK(!stale_state_override_for_testing_.has_value());
 
-  // If we are attempting preroll, clear the stale flag.
-  if (IsPrerollAttemptNeeded()) {
+  // If we haven't reached the metadata state yet, clear the stale flag. There's
+  // no point in suspend before the metadata state there is nothing to suspend.
+  if (ready_state_ < kReadyStateHaveMetadata) {
     delegate_->ClearStaleFlag(delegate_id_);
     return;
   }
@@ -2458,22 +2416,10 @@ void WebMediaPlayerImpl::SetSuspendState(bool is_suspended) {
   if (IsNetworkStateError(network_state_))
     return;
 
-  if (is_suspended) {
-    // If we were not resumed for long enough to satisfy the preroll attempt,
-    // reset the clock.
-    if (!preroll_attempt_pending_ && IsPrerollAttemptNeeded()) {
-      preroll_attempt_pending_ = true;
-      preroll_attempt_start_time_ = base::TimeTicks();
-    }
+  if (is_suspended)
     pipeline_controller_.Suspend();
-  } else {
-    // When resuming, start the preroll attempt clock.
-    if (preroll_attempt_pending_) {
-      preroll_attempt_pending_ = false;
-      preroll_attempt_start_time_ = tick_clock_->NowTicks();
-    }
+  else
     pipeline_controller_.Resume();
-  }
 }
 
 WebMediaPlayerImpl::PlayState
@@ -2491,15 +2437,9 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   // errors.
   bool has_error = IsNetworkStateError(network_state_);
 
-  // After HaveFutureData, Blink will call play() if the state is not paused;
-  // prior to this point |paused_| is not accurate.
-  bool have_future_data =
-      highest_ready_state_ >= WebMediaPlayer::kReadyStateHaveFutureData;
-
   // Background suspend is only enabled for paused players.
   // In the case of players with audio the session should be kept.
-  bool background_suspended =
-      can_auto_suspend && is_backgrounded && paused_ && have_future_data;
+  bool background_suspended = can_auto_suspend && is_backgrounded && paused_;
 
   // Idle suspension is allowed prior to have future data since there exist
   // mechanisms to exit the idle state when the player is capable of reaching
@@ -2510,11 +2450,9 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   bool idle_suspended =
       can_auto_suspend && is_stale && paused_ && !seeking_ && !overlay_enabled_;
 
-  // If we're already suspended, see if we can wait for user interaction. Prior
-  // to HaveFutureData, we require |is_stale| to remain suspended. |is_stale|
-  // will be cleared when we receive data which may take us to HaveFutureData.
-  bool can_stay_suspended =
-      (is_stale || have_future_data) && is_suspended && paused_ && !seeking_;
+  // If we're already suspended, see if we can wait for user interaction.
+  bool can_stay_suspended = is_suspended && paused_ && !seeking_ &&
+                            ready_state_ >= kReadyStateHaveMetadata;
 
   // Combined suspend state.
   result.is_suspended = is_remote || must_suspend || idle_suspended ||
@@ -2534,15 +2472,11 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   // page (e.g. via the notification controls or by audio focus events). Idle
   // suspension does not destroy the media session, because we expect that the
   // notification controls (and audio focus) remain. With some exceptions for
-  // background videos, the player only needs to have audio to have controls
-  // (requires |have_future_data|).
+  // background videos, the player only needs to have audio to have controls.
   //
   // |alive| indicates if the player should be present (not |GONE|) to the
   // delegate, either paused or playing. The following must be true for the
   // player:
-  //   - |have_future_data|, since we need to know whether we are paused to
-  //     correctly configure the session and also because the tracks and
-  //     duration are passed to DidPlay(),
   //   - |is_remote| is false as remote playback is not handled by the delegate,
   //   - |has_error| is false as player should have no errors,
   //   - |background_suspended| is false, otherwise |has_remote_controls| must
@@ -2557,7 +2491,8 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   bool backgrounded_video_has_no_remote_controls =
       IsBackgroundedSuspendEnabled() && !IsResumeBackgroundVideosEnabled() &&
       is_backgrounded && HasVideo();
-  bool can_play = !has_error && !is_remote && have_future_data;
+  bool can_play = !has_error && !is_remote &&
+                  highest_ready_state_ >= kReadyStateHaveFutureData;
   bool has_remote_controls =
       HasAudio() && !backgrounded_video_has_no_remote_controls;
   bool alive = can_play && !must_suspend &&
