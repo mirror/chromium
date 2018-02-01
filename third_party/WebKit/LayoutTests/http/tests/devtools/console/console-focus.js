@@ -23,7 +23,10 @@
   }
 
   function logMessages() {
-    ConsoleTestRunner.waitForConsoleMessages(2, () => TestRunner.runTestSuite(testSuite));
+    ConsoleTestRunner.waitForConsoleMessages(2, async () => {
+      await ConsoleTestRunner.waitForPendingViewportUpdates();
+      TestRunner.runTestSuite(testSuite);
+    });
     ConsoleTestRunner.evaluateInConsole(
         '\'foo ' +
         '\n'.repeat(50) + 'bar\'');
@@ -62,7 +65,7 @@
       TestRunner.addResult('Clicking on container');
       consoleView._messagesElement.click();
 
-      dumpFocusAndScrollInfo();
+      dumpFocus();
       TestRunner.addResult('Selection after: ' + consoleEditor.selection().toString());
       next();
     }
@@ -78,12 +81,16 @@
     previewElement.dispatchEvent(new MouseEvent('click', {clientX: clientX, clientY: clientY, bubbles: true}));
   }
 
-  function dumpFocusAndScrollInfo() {
+  function dumpFocus() {
     var focusedElement = document.deepActiveElement();
     if (focusedElement)
       TestRunner.addResult('Focused element: ' + focusedElement.tagName);
     else
       TestRunner.addResult('No focus');
+  }
+
+  function dumpFocusAndScrollInfo() {
+    dumpFocus();
     TestRunner.addResult('Viewport scrolled to top: ' + String(viewport.element.scrollTop === 0));
   }
 })();
