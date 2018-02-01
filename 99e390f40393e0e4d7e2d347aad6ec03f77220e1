@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb01f3f7_be234114",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThread.cpp",
+        "patchSetId": 58
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T08:40:55Z",
+      "side": 1,
+      "message": "Nit: you can drop SetThreadName() -- the name will have a reasonable default depending on ThreadType (\"AnimationWorklet thread\" in this case).",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "99e390f40393e0e4d7e2d347aad6ec03f77220e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
