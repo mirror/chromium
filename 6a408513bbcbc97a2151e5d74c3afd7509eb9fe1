@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85eeeb2a_f2c68b55",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e222a579_9b96f933",
+      "range": {
+        "startLine": 415,
+        "startChar": 2,
+        "endLine": 415,
+        "endChar": 18
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "389d4280_0d225a0f",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
         "patchSetId": 33
@@ -45,6 +69,30 @@
       "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7bae87_fa8a4340",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "I reverted this change.",
+      "parentUuid": "389d4280_0d225a0f",
+      "range": {
+        "startLine": 571,
+        "startChar": 45,
+        "endLine": 571,
+        "endChar": 48
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b76ab33f_a1e7e3ff",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970e33dd_1a2c6726",
+      "range": {
+        "startLine": 172,
+        "startChar": 35,
+        "endLine": 172,
+        "endChar": 36
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4813c7a5_c4d7a137",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
         "patchSetId": 33
@@ -91,6 +163,30 @@
       "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec373479_0c8c2064",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "So, because this class depends on HistoryService, it will be destroyed first, which will cause the scoped_observer to automatically unregister itself from historyservice and everything is fine? Great :)",
+      "parentUuid": "4813c7a5_c4d7a137",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f4a9ddef_eeedfe7a",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c803a38_26438da7",
+      "range": {
+        "startLine": 38,
+        "startChar": 49,
+        "endLine": 38,
+        "endChar": 72
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8908a706_011b100f",
         "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
         "patchSetId": 33
@@ -137,6 +257,30 @@
       "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a18125_abc925fd",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "I added a comment to the header and to CreateDeletionPredicate(). The semantics of history_observer after my change in the previous cl is this:\ntime_range.IsAllTime() -\u003e deleted_rows is empty and invalid. delete everything\n!time_range.IsValid() -\u003e deleted_rows is the only source of truth\n\n!time_range.IsAllTime() \u0026\u0026 time_range.IsValid() -\u003e deleted_rows is valid and contains all history entries in time_range but we still use time_range here because there can be navigation entries without corresponding history entry. \nA DCHECK doesn\u0027t really make sense in this case.",
+      "parentUuid": "8908a706_011b100f",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +327,30 @@
       "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3d6582_68354338",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-02-01T17:02:28Z",
+      "side": 1,
+      "message": "Done. That was still part of trying to have the EXPECT_EQ macro accept the vector. EXPECT_EQ((std::vector\u003cGURL\u003e{url_b_, url_d_}), v) actually works but that is quite ugly.",
+      "parentUuid": "9d3444c8_a881d194",
+      "range": {
+        "startLine": 198,
+        "startChar": 16,
+        "endLine": 198,
+        "endChar": 33
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
