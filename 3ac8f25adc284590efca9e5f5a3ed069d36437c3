@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3792b65b_11ec1c13",
+        "filename": "chrome/browser/password_manager/password_manager_util_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-01T17:28:31Z",
+      "side": 1,
+      "message": "Would it be possible to avoid this include in the header?",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "3ac8f25adc284590efca9e5f5a3ed069d36437c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
