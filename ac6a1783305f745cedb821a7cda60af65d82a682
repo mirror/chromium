@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99096d64_339ce0bb",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T10:35:04Z",
+      "side": 1,
+      "message": "Can you comment on the computation of the final alpha value? Is it oldAlpha * visibilityFactor?",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 80
+      },
+      "revId": "ac6a1783305f745cedb821a7cda60af65d82a682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5876c305_87424231",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T10:35:04Z",
+      "side": 1,
+      "message": "can already have",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "ac6a1783305f745cedb821a7cda60af65d82a682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
