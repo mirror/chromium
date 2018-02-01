@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c5808b1_beceb760",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Added. Oh my, these bugs - so old!",
+      "parentUuid": "5122fbbe_a685188b",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd26adb2_fbbb3abd",
         "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5e832bfc_403dfa34",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd26adb2_fbbb3abd",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f4b5045_6a95f332",
         "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2206b4f6_ea32a2ac",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4b5045_6a95f332",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "536b139f_e8b25978",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7d4cc0_6c67d569",
+      "range": {
+        "startLine": 5,
+        "startChar": 52,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492521bf_fce10a8d",
         "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
         "patchSetId": 3
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ab39d019_21a68ab9",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492521bf_fce10a8d",
+      "range": {
+        "startLine": 6,
+        "startChar": 24,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b7310c_97f7cb95",
         "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
         "patchSetId": 3
@@ -119,6 +221,30 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395bf8e4_17963e34",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "xD",
+      "parentUuid": "24b7310c_97f7cb95",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +288,48 @@
     },
     {
       "key": {
+        "uuid": "e0c709dd_a720ede5",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d74cb28c_64debec0",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c9daa4b_3ca86d81",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8afbaf01_d89c407b",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8eb6177_c53bab3b",
         "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
         "patchSetId": 3
@@ -182,6 +350,30 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a942c_05b8c84c",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8eb6177_c53bab3b",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "0b3de76d_519c7a02",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Lol, yeahhh, don\u0027t want to fire any shots. How about \"The FaceBlock\"?\n\n\nJk.",
+      "parentUuid": "c9253dad_54ca65c5",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 36
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d0c1a9_d9c94ad4",
         "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
         "patchSetId": 3
@@ -228,6 +444,30 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32abff59_f9b4b469",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d0c1a9_d9c94ad4",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "d0ab879d_14ee501c",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec279c95_c011fa28",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7847ec20_369971ab",
         "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
         "patchSetId": 3
@@ -274,6 +538,30 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab2a209_40badf96",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7847ec20_369971ab",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -300,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "c53cf470_3144bae7",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d6a11e_875757a3",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6be2cc9d_710d8c99",
         "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
         "patchSetId": 3
@@ -320,6 +632,30 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1053e5_086d25b1",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Yes, whoops! Added",
+      "parentUuid": "6be2cc9d_710d8c99",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -346,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "9d008a43_cb7f5ebc",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667c6727_a05f70d6",
+      "range": {
+        "startLine": 238,
+        "startChar": 26,
+        "endLine": 238,
+        "endChar": 35
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bba9bf_9277c1bf",
         "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
         "patchSetId": 3
@@ -369,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "4e83d527_e605433b",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bba9bf_9277c1bf",
+      "range": {
+        "startLine": 271,
+        "startChar": 13,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6cf3bcf_5627459a",
         "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
         "patchSetId": 3
@@ -389,6 +773,30 @@
       "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b05eb4_8443b4c1",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-02-01T17:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6cf3bcf_5627459a",
+      "range": {
+        "startLine": 272,
+        "startChar": 36,
+        "endLine": 272,
+        "endChar": 37
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
