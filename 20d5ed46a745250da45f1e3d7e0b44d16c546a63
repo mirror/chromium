@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3dd016b_7393989b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/dom/interfaces-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "external/wpt/dom/interfaces.html needs a declaration of \u0027EventTarget\u0027 now, preferably by pulling in html.idl\n\nSee hr-time/idlharness.html for an example.",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8776b45_e4c587fb",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "Should we go ahead and put the impl in Source/core/dom/ now, so we don\u0027t have to move it later?",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28140799_7e7305c4",
+        "filename": "third_party/WebKit/Source/core/fetch/AbortController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "What is \u003cutility\u003e needed for in this file?",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1e4aa6_f3e05681",
+        "filename": "third_party/WebKit/Source/core/fetch/AbortController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "style nit: would be more common to put this right above the class definition.",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ca94e3_f670dc8f",
+        "filename": "third_party/WebKit/Source/core/fetch/AbortSignal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "Ah... maybe move this comment to the header (as noted there?)",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99896b87_0933a019",
+        "filename": "third_party/WebKit/Source/core/fetch/AbortSignal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "Should exit early if aborted_flag_ is set.",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c64e0b_42eeb630",
+        "filename": "third_party/WebKit/Source/core/fetch/AbortSignal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "Move comment to header?",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53004531_f6ea34e0",
+        "filename": "third_party/WebKit/Source/core/fetch/AbortSignal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-01T22:15:09Z",
+      "side": 1,
+      "message": "Two suggestions for the comment:\n\n(1) Reference the spec (https://dom.spec.whatwg.org/#abortsignal-add) and/or call out that this is for dependent features to call, when executing what the spec calls \"To add an algorithm /algorithm/ to an AbortSignal object...\"  - that naming is unusual if you don\u0027t know the spec text.\n\n(2) Rephrase as e.g.: \"Callers should pass a OnceClosure holding a weak pointer, unless...\"",
+      "revId": "20d5ed46a745250da45f1e3d7e0b44d16c546a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
