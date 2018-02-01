@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68e037ff_fe20835e",
+        "filename": "third_party/WebKit/LayoutTests/animations/keyframe-effect-options-composite.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T16:34:46Z",
+      "side": 1,
+      "message": "Done. I don\u0027t know were generic layout test helpers go (aside from into testharness I guess, but I\u0027m not sure how \u0027clean\u0027 we try to keep that). Lmk if you have somewhere you want me to put it.",
+      "parentUuid": "6a973fef_d49fcd2b",
+      "revId": "92e4debaa4081f8d610221a0c6e52a22dcef9215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e35ca05e_e936ece5",
         "filename": "third_party/WebKit/Source/core/animation/EffectModel.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "92e4debaa4081f8d610221a0c6e52a22dcef9215",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d558650_4b43f32c",
+        "filename": "third_party/WebKit/Source/core/animation/EffectModel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-01T16:34:46Z",
+      "side": 1,
+      "message": "You are totally right. Fixed.",
+      "parentUuid": "e35ca05e_e936ece5",
+      "revId": "92e4debaa4081f8d610221a0c6e52a22dcef9215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
