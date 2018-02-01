@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbf028b9_7be1700e",
+        "filename": "components/ukm/ukm_recorder_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-02-01T20:33:46Z",
+      "side": 1,
+      "message": "I think this is just unused now? So we can drop it from this CL.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 4
+      },
+      "revId": "577e74c5209b958936ec2c07a9238d1c7ad447ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
