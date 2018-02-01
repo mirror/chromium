@@ -192,6 +192,7 @@ class BASE_EXPORT SharedMemory {
   // Returns the underlying OS handle for this segment. The caller also gets
   // ownership of the handle. This is logically equivalent to:
   //   SharedMemoryHandle dup = DuplicateHandle(handle());
+  //   Unmap();
   //   Close();
   //   return dup;
   SharedMemoryHandle TakeHandle();
