@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d3a6435_d172bd4e",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-02-01T09:12:51Z",
+      "side": 1,
+      "message": "Yes. Do you still think we should after the comment re: channel behavior unchanged on PS15? If so I\u0027ll add it.",
+      "parentUuid": "c6b38e06_397d57bb",
+      "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7523d07e_930fbd3c",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 16
