@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c06358_96baffa8",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T16:05:12Z",
+      "side": 1,
+      "message": "nitty nit: I think load_error_behavior \u003d\u003d kNoisy is slightly more intuitive here.",
+      "range": {
+        "startLine": 668,
+        "startChar": 48,
+        "endLine": 669,
+        "endChar": 73
+      },
+      "revId": "9649d702b5084fc44dfe0d931004e59d3e110b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
