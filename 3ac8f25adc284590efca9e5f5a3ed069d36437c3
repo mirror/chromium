@@ -22,6 +22,30 @@
       "revId": "3ac8f25adc284590efca9e5f5a3ed069d36437c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22b0420_445c3c2a",
+        "filename": "chrome/browser/password_manager/password_manager_util_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-02-01T19:17:02Z",
+      "side": 1,
+      "message": "That is where I found \"typedef int LocalProfileId;\" and LocalProfileId is used in the API. Can change it to \"int\" or move the typedef somewhere else but I am not sure where.\n\nCould add a !defined(OS_LINUX) to the ifdef and for OS_LINUX have the typedef in this file. Need to do some minor refactoring anyway for ChromeOS.",
+      "parentUuid": "3792b65b_11ec1c13",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "3ac8f25adc284590efca9e5f5a3ed069d36437c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
