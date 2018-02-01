@@ -75,6 +75,8 @@
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_host.h"
+#include "extensions/browser/extension_pref_value_map.h"
+#include "extensions/browser/extension_pref_value_map_factory.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/extension_util.h"
@@ -1374,6 +1376,11 @@ void ExtensionService::AddComponentExtension(const Extension* extension) {
   }
 
   AddExtension(extension);
+  ExtensionPrefValueMapFactory::GetForBrowserContext(profile())
+      ->RegisterExtension(extension->id(),
+                          base::Time(),  // install_time.
+                          true,          // is_enabled.
+                          true);         // is_incognito_enabled.
 }
 
 void ExtensionService::CheckPermissionsIncrease(const Extension* extension,
