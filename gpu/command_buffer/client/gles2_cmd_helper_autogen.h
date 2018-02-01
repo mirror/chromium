@@ -2701,6 +2701,19 @@ void WaitSyncTokenCHROMIUM(GLint namespace_id,
   }
 }
 
+void UnpremultiplyAndDitherCopyCHROMIUM(GLuint src_texture,
+                                        GLuint dst_texture,
+                                        GLint x,
+                                        GLint y,
+                                        GLsizei width,
+                                        GLsizei height) {
+  gles2::cmds::UnpremultiplyAndDitherCopyCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::UnpremultiplyAndDitherCopyCHROMIUM>();
+  if (c) {
+    c->Init(src_texture, dst_texture, x, y, width, height);
+  }
+}
+
 void DrawBuffersEXTImmediate(GLsizei count, const GLenum* bufs) {
   const uint32_t size =
       gles2::cmds::DrawBuffersEXTImmediate::ComputeSize(count);
