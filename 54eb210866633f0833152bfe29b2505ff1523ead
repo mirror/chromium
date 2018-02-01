@@ -22,6 +22,30 @@
       "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06201a56_f1eeeb03",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-01T20:57:07Z",
+      "side": 1,
+      "message": "Something like this?\n    #if defined(__aarch64__)\n        flag_crc32 \u003d HWCAP_CRC32;\n        flag_pmull \u003d HWCAP_PMULL;\n        capabilities \u003d getauxval(AT_HWCAP);\n    #elif defined(__ARM_NEON) || defined(__ARM_NEON__)\n        /* It seems that cronet can be built *without* neon support\n         * for *really* old ARM devices.\n         *\n         * The use of HWCAP2 is for getting features of newer ARMv8-A SoCs\n         * while running in 32bits mode (i.e. aarch32).\n         */\n        flag_crc32 \u003d HWCAP2_CRC32;\n        flag_pmull \u003d HWCAP2_PMULL;\n        capabilities \u003d getauxval(AT_HWCAP2);\n    #endif",
+      "parentUuid": "e85b8117_a178924a",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
