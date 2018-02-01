@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4397dff2_5d04d018",
+        "filename": "components/suggestions/image_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1263833
+      },
+      "writtenOn": "2018-02-01T23:11:27Z",
+      "side": 1,
+      "message": "Does this subtly alter the behavior of future ServeFromCacheOrNetwork calls?\n\nIf this cache is not cleared, the ImageCacheRequest.image_url for a given ImageCacheRequest.url key in pending_cache_requests_ never changes (even as callbacks are added) when the SuggestionsProfile is updated. By clearing the cache, a new entry (created in line 177-181) is added, using the current values in image_url_map_.\n\nOverall, this is probably a good thing! I\u0027m not super familiar with the codebase yet, so just raising this for confirmation.",
+      "range": {
+        "startLine": 310,
+        "startChar": 2,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "bcba05ebd822faf861cf25b1279f10cb3e2daae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
