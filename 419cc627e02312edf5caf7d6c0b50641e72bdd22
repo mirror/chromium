@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59306bd9_b8dea9c1",
+        "filename": "chrome/browser/ui/sad_tab.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-01T06:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e5e752_7b9d20f4",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9016bf5_84f79baa",
         "filename": "chrome/browser/ui/views/frame/browser_view.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T03:14:56Z",
       "side": 1,
       "message": "GetContentsWebView -\u003e contents_web_view()? We could also change the return type of GetTabContentsContainerView() to WebView, or just delete the method. The only caller outside browser_view.cc seems to be browser_view_focus_uitest.cc",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1f0af6_ce404911",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-01T06:54:26Z",
+      "side": 1,
+      "message": "Good idea, I deleted GetTabContentsContainerView and GetContentsWebVIew\nand replaced them both with a contents_web_view() accessor.",
+      "parentUuid": "a9016bf5_84f79baa",
       "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "877de700_55f6848b",
+        "filename": "chrome/browser/ui/views/sad_tab_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-01T06:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1385fc5e_e8f9b1e9",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33afa25d_304ce343",
         "filename": "chrome/browser/ui/views/sad_tab_view.h",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-01T03:14:56Z",
       "side": 1,
       "message": "initialize?  (although.. I guess none of these are initialized with initializers..)",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf43383_7f32a79c",
+        "filename": "chrome/browser/ui/views/sad_tab_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-01T06:54:26Z",
+      "side": 1,
+      "message": "Sure, always safer to initialize here.",
+      "parentUuid": "33afa25d_304ce343",
       "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e7516f8c_54f3183a",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-01T06:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d7cdb9_bb649ab0",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669c8815_8957d960",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-01T03:14:56Z",
       "side": 1,
       "message": "IIRC this doesn\u0027t destroy |crashed_overlay_view_|. To remove views from the hierarchy, we usually just `delete crashed_overlay_view_;` `crashed_overlay_view_ \u003d nullptr;`",
+      "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29480e23_0881b816",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-01T06:54:26Z",
+      "side": 1,
+      "message": "This is on purpose, as SadTabView is owned by SadTabHelper. I changed\nthe comment in WebView to reflect that.\n\nIf this ownership is confusing maybe SadTabView should create a View\n(but not own it) rather than being a View...",
+      "parentUuid": "669c8815_8957d960",
       "revId": "419cc627e02312edf5caf7d6c0b50641e72bdd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
