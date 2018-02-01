@@ -45,6 +45,9 @@ class WebContents;
 // exactly one NavigationController.
 class NavigationController {
  public:
+  typedef base::RepeatingCallback<bool(const content::NavigationEntry& entry)>
+      DeletionPredicate;
+
   // Load type used in LoadURLParams.
   //
   // A Java counterpart will be generated for this enum.
@@ -458,6 +461,13 @@ class NavigationController {
   // |CanPruneAllButLastCommitted| returns true before calling this, or it will
   // crash.
   virtual void PruneAllButLastCommitted() = 0;
+
+  // Removes all navigation entries matching |deletionPredicate| except the last
+  // commited entry.
+  // Callers must ensure |CanPruneAllButLastCommitted| returns true before
+  // calling this, or it will crash.
+  virtual void DeleteNavigationEntries(
+      const DeletionPredicate& deletionPredicate) = 0;
 
   // Clears all screenshots associated with navigation entries in this
   // controller. Useful to reduce memory consumption in low-memory situations.
