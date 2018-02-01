@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "508593be_45130417",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-01T10:13:37Z",
+      "side": 1,
+      "message": "That\u0027s unclear to me. So I took a look:\n\nThe stack trace from the form submission to the notification to the Browser:\n#2 0x7f3a0c705ff3 content::RenderFrameImpl::DidAddContentSecurityPolicies()\n#3 0x7f39fe7253c9 blink::LocalFrameClientImpl::DidAddContentSecurityPolicies()\n#4 0x7f39fe920a78 blink::ContentSecurityPolicy::AddAndReportPolicyFromHeaderValue()\n#5 0x7f39fe92088f blink::ContentSecurityPolicy::CopyStateFrom()\n#6 0x7f39fe42907c blink::Document::InitContentSecurityPolicy()\n#7 0x7f39fe409ed8 blink::Document::InitSecurityContext()\n#8 0x7f39fe408a9b blink::Document::Document()\n#9 0x7f39fe96b63e blink::HTMLDocument::HTMLDocument()\n#10 0x7f39fe3fc9ed blink::HTMLDocument::Create()\n#11 0x7f39fe3fc42d blink::DOMImplementation::createDocument()\n#12 0x7f39fe83c72b blink::LocalDOMWindow::CreateDocument()\n#13 0x7f39fe83c907 blink::LocalDOMWindow::InstallNewDocument()\n#14 0x7f39ff03c549 blink::DocumentLoader::InstallNewDocument()\n#15 0x7f39ff03c0f9 blink::DocumentLoader::CommitNavigation()\n#16 0x7f39ff03a7ba blink::DocumentLoader::CommitData()\n#17 0x7f39ff03a061 blink::DocumentLoader::FinishedLoading()\n#18 0x7f39ff03d475 blink::DocumentLoader::MaybeLoadEmpty()\n#19 0x7f39ff03d61c blink::DocumentLoader::StartLoading()\n#20 0x7f39ff05bb0f blink::FrameLoader::Init()\n#21 0x7f39fe84e9b0 blink::LocalFrame::Init()\n#22 0x7f39fe8f949b blink::WebLocalFrameImpl::InitializeCoreFrame()\n#23 0x7f39fe8f8f51 blink::WebLocalFrameImpl::CreateMainFrame()\n#24 0x7f39fe8f8dad blink::WebLocalFrame::CreateMainFrame()\n#25 0x7f3a0c6e2a3f content::RenderFrameImpl::CreateMainFrame()\n#26 0x7f3a0c77fb73 content::RenderViewImpl::Initialize()\n#27 0x7f3a0c784202 content::RenderViewImpl::Create()\n#28 0x7f3a0c787fe7 content::RenderViewImpl::CreateView()\n#29 0x7f3a0c7881bc content::RenderViewImpl::CreateView()\n#30 0x7f39ff0eae26 blink::ChromeClientImpl::CreateWindow()\n#31 0x7f39ff0f83ca blink::CreateNewWindow()\n#32 0x7f39ff0f7a3e blink::CreateWindowHelper()\n#33 0x7f39ff0f7c95 blink::CreateWindowForRequest()\n#34 0x7f39ff05f6d7 blink::FrameLoader::Load()\n#35 0x7f39ff082d7b blink::ScheduledFormSubmission::Fire()\n#36 0x7f39ff08117e blink::NavigationScheduler::NavigateTask()\n\nDocument::InitSecurityContext(const DocumentInit\u0026 initializer) is interesting:\nAFAIU, policy_to_inherit is always the one of initializer.OwnerDocument()\nThe owner document is defined in DocumentLoader::CommitNavigation like this:\n\n```\n\n  if (Document::ShouldInheritSecurityOriginFromOwner(Url())) {\n    Frame* owner_frame \u003d frame_-\u003eTree().Parent();\n    if (!owner_frame)\n      owner_frame \u003d frame_-\u003eLoader().Opener();\n    if (owner_frame \u0026\u0026 owner_frame-\u003eIsLocalFrame())\n      owner_document \u003d ToLocalFrame(owner_frame)-\u003eGetDocument();\n  }\n\n```\n\nIt means we inherit from 1) our parent 2) the opener.\n\n```\n\nbool Document::ShouldInheritSecurityOriginFromOwner(const KURL\u0026 url) {\n  // https://html.spec.whatwg.org/multipage/browsers.html#origin\n  //\n  // If a Document is the initial \"about:blank\" document The origin and\n  // effective script origin of the Document are those it was assigned when its\n  // browsing context was created.\n  //\n  // Note: We generalize this to all \"blank\" URLs and invalid URLs because we\n  // treat all of these URLs as about:blank.\n  return url.IsEmpty() || url.ProtocolIsAbout();\n}\n\n```\n\nOnly when we are loading the initial blank document",
+      "parentUuid": "f9135fb2_b18d180e",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93ab67c5_e65f7f73",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "57d6dc15_0bf8ab35",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-01T10:13:37Z",
+      "side": 1,
+      "message": "Yes thanks!",
+      "parentUuid": "93ab67c5_e65f7f73",
+      "range": {
+        "startLine": 594,
+        "startChar": 17,
+        "endLine": 594,
+        "endChar": 29
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7869eb7_c85a5614",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-01T02:28:44Z",
       "side": 1,
       "message": "If I\u0027m reading https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?l\u003d6243\u0026rcl\u003d3cfda4569058d71b138650ae49b9eef34bbf263a correctly, the Blink-side logic for inheriting CSP favors the parent over the opener.  Same thing for origin inheritance: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?l\u003d680\u0026rcl\u003dbb3933892e1499aafdb25841ca90ff6c5e8ccf94.  Should we do the same here and check parent() first?  (And yes, a subframe can have both a parent() and an opener(), for example if there was a preceding window.open() that targeted that subframe by name.)",
+      "range": {
+        "startLine": 594,
+        "startChar": 32,
+        "endLine": 596,
+        "endChar": 65
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cad2e9_c6bad1ca",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-01T10:13:37Z",
+      "side": 1,
+      "message": "That\u0027s what blink does you are right.\n\nI think the case when where opener() and parent() are both true can\u0027t happen when we are loading the first blank page. It is either a new frame or a new window. If a form-submission target an iframe, the iframe has already loaded is initial blank document.",
+      "parentUuid": "b7869eb7_c85a5614",
       "range": {
         "startLine": 594,
         "startChar": 32,
