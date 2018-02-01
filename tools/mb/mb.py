@@ -91,9 +91,10 @@ class MetaBuildWrapper(object):
                         help='path to config file '
                              '(default is %(default)s)')
       subp.add_argument('-i', '--isolate-map-file', metavar='PATH',
-                        default=self.default_isolate_map,
                         help='path to isolate map file '
-                             '(default is %(default)s)')
+                             '(default is %(default)s)',
+                        default=[],
+                        action='append')
       subp.add_argument('-g', '--goma-dir',
                         help='path to goma directory')
       subp.add_argument('--android-version-code',
@@ -581,11 +582,19 @@ class MetaBuildWrapper(object):
     self.mixins = contents['mixins']
 
   def ReadIsolateMap(self):
-    if not self.Exists(self.args.isolate_map_file):
-      raise MBErr('isolate map file not found at %s' %
-                  self.args.isolate_map_file)
+    if (not self.args.isolate_map_file or
+        not all(self.Exists(f) for f in self.args.isolate_map_file)):
+      if not self.Exists(self.default_isolate_map):
+        raise MBErr('isolate map file not found at %s' %
+                    self.args.isolate_map_file)
+      else:
+        self.args.isolate_map_file = [self.default_isolate_map]
     try:
-      return ast.literal_eval(self.ReadFile(self.args.isolate_map_file))
+      isolate_maps = ast.literal_eval(
+          self.ReadFile(self.args.isolate_map_file[0]))
+      for isolate_map in self.args.isolate_map_file[1:]:
+        isolate_maps.update(ast.literal_eval(self.ReadFile(isolate_map)))
+      return isolate_maps
     except SyntaxError as e:
       raise MBErr('Failed to parse isolate map file "%s": %s' %
                   (self.args.isolate_map_file, e))

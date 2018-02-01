@@ -420,6 +420,14 @@ class UnitTest(unittest.TestCase):
           "  'args': [],"
           "}}\n"
       ),
+      '/fake_src/testing/buildbot/gn_isolate_map2.pyl': (
+          "{'cc_perftests': {"
+          "  'label': '//cc:cc_perftests',"
+          "  'type': 'script',"
+          "  'script': '/fake_src/out/Default/test_script.py',"
+          "  'args': [],"
+          "}}\n"
+      ),
       'c:\\fake_src\out\Default\cc_perftests.exe.runtime_deps': (
           "cc_perftests\n"
       ),
@@ -430,6 +438,8 @@ class UnitTest(unittest.TestCase):
                 '--swarming-targets-file', '/tmp/swarming_targets',
                 '--isolate-map-file',
                 '/fake_src/testing/buildbot/gn_isolate_map.pyl',
+                '--isolate-map-file',
+                '/fake_src/testing/buildbot/gn_isolate_map2.pyl',
                 '//out/Default'], mbw=mbw, ret=0)
     self.assertIn('c:\\fake_src\\out\\Default\\cc_perftests.isolate',
                   mbw.files)
