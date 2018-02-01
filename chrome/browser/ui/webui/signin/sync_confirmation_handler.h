@@ -50,6 +50,14 @@ class SyncConfirmationHandler : public content::WebUIMessageHandler,
   // sync settings page for configuration before starting sync.
   virtual void HandleGoToSettings(const base::ListValue* args);
 
+  // Handles "recordConsent" message from the page. Expects two parameters:
+  // 1. List of strings (names of the string resources constituting the consent
+  //                     description as per WebUIDataSource)
+  // 2. Strings (name of the string resource of the consent confirmation)
+  // This message is sent when the user interacts with the dialog in a positive
+  // manner, i.e. clicks on the confirmation button or the settings link.
+  virtual void HandleRecordConsent(const base::ListValue* args);
+
   // Handles the web ui message sent when the html content is done being laid
   // out and it's time to resize the native view hosting it to fit. |args| is
   // a single integer value for the height the native view should resize to.

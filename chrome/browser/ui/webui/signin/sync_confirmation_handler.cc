@@ -8,6 +8,8 @@
 
 #include "base/bind.h"
 #include "base/metrics/user_metrics.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/consent_auditor/consent_auditor_factory.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -16,6 +18,8 @@
 #include "chrome/browser/ui/signin_view_controller_delegate.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/browser/ui/webui/signin/signin_utils.h"
+#include "chrome/browser/ui/webui/signin/sync_confirmation_ui.h"
+#include "components/consent_auditor/consent_auditor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "content/public/browser/web_contents.h"
@@ -23,6 +27,60 @@
 #include "url/gurl.h"
 
 const int kProfileImageSize = 128;
+
+namespace {
+
+// Delays recording consent after it has been granted in the UI until the
+// sign-in is completed.
+class ConsentRecordingDelayer : SigninManagerBase::Observer {
+ public:
+  ConsentRecordingDelayer(Profile* profile,
+                          const std::vector<int>& consent_text_ids)
+      : profile_(profile),
+        observer_(this),
+        consent_text_ids_(consent_text_ids) {
+    SigninManager* signin_manager =
+        SigninManagerFactory::GetForProfile(profile);
+
+    if (signin_manager->IsAuthenticated())
+      RecordConsent();
+    else
+      observer_.Add(signin_manager);
+  }
+
+  ~ConsentRecordingDelayer() override {}
+
+  // SigninManager::Observer implementation:
+  void GoogleSigninFailed(const GoogleServiceAuthError& error) override {
+    DestroySelf();
+  }
+
+  void GoogleSigninSucceeded(const AccountInfo& account_info) override {
+    RecordConsent();
+    DestroySelf();
+  }
+
+  void GoogleSignedOut(const AccountInfo& account_info) override {
+    DestroySelf();
+  }
+
+ private:
+  void RecordConsent() {
+    ConsentAuditorFactory::GetForProfile(profile_)->RecordGaiaConsent(
+        "signin-sync", consent_text_ids_, std::vector<std::string>(),
+        consent_auditor::ConsentStatus::GIVEN);
+  }
+
+  void DestroySelf() {
+    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
+  }
+
+  Profile* profile_;
+  ScopedObserver<SigninManagerBase, SigninManagerBase::Observer> observer_;
+  std::vector<int> consent_text_ids_;
+};
+
+}  // namespace
 
 SyncConfirmationHandler::SyncConfirmationHandler(Browser* browser)
     : profile_(browser->profile()),
@@ -62,6 +120,9 @@ void SyncConfirmationHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback("initializedWithSize",
       base::Bind(&SyncConfirmationHandler::HandleInitializedWithSize,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "recordConsent", base::Bind(&SyncConfirmationHandler::HandleRecordConsent,
+                                  base::Unretained(this)));
 }
 
 void SyncConfirmationHandler::HandleConfirm(const base::ListValue* args) {
@@ -85,6 +146,36 @@ void SyncConfirmationHandler::HandleUndo(const base::ListValue* args) {
 
   if (browser_)
     browser_->signin_view_controller()->CloseModalSignin();
+}
+
+void SyncConfirmationHandler::HandleRecordConsent(const base::ListValue* args) {
+  CHECK_EQ(2U, args->GetSize());
+  const std::vector<base::Value>& consent_description =
+      args->GetList()[0].GetList();
+  const std::string& consent_confirmation = args->GetList()[1].GetString();
+
+  std::vector<int> consent_text_ids;
+
+  SyncConfirmationUI* web_ui_controller =
+      static_cast<SyncConfirmationUI*>(web_ui()->GetController());
+  const std::map<std::string, int>& resource_name_to_grd_id_map =
+      web_ui_controller->GetResourceNameToGrdIdMap();
+
+  // Use |controller| to convert string resource names into their GRD IDs.
+  for (const base::Value& resource_name : consent_description) {
+    auto iter = resource_name_to_grd_id_map.find(resource_name.GetString());
+    CHECK(iter != resource_name_to_grd_id_map.end());
+    consent_text_ids.push_back(iter->second);
+  }
+
+  auto iter = resource_name_to_grd_id_map.find(consent_confirmation);
+  CHECK(iter != resource_name_to_grd_id_map.end());
+  consent_text_ids.push_back(iter->second);
+
+  // To record the sign-in consent, we need to have an authenticated channel
+  // to Google in the first place. Delay the recording after the signin
+  // is complete. ConsentRecordingDelayer deletes itself when done.
+  new ConsentRecordingDelayer(profile_, consent_text_ids);
 }
 
 void SyncConfirmationHandler::SetUserImageURL(const std::string& picture_url) {
