@@ -46,6 +46,30 @@
       "revId": "493f6fff5cbccc215455b13bd608b2bfdb677bdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb90754_a435d2ba",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2018-02-01T18:04:51Z",
+      "side": 1,
+      "message": "But that still doesn\u0027t take care of the problem of us passing a not-quite-fully-created WebViewChromiumFactoryProvider to the ctor of AwHandler, right?",
+      "parentUuid": "cae52066_046e2930",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "493f6fff5cbccc215455b13bd608b2bfdb677bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
