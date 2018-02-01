@@ -207,7 +207,7 @@ void MessageBoxView::Init(const InitParams& params) {
     message_labels_[0]->SetSelectable(true);
 
   if (params.options & HAS_PROMPT_FIELD) {
-    prompt_field_ = new Textfield;
+    prompt_field_ = new Textfield(message_labels_);
     prompt_field_->SetText(params.default_prompt);
   }
 

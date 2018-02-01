@@ -229,6 +229,9 @@ class InProcessBrowserTest : public content::BrowserTestBase {
     open_about_blank_on_browser_launch_ = value;
   }
 
+  // Runs accessibility checks and sets |error_message| if it fails.
+  bool RunUIAccessibilityChecks(std::string* error_message);
+
  private:
   // Creates a user data directory for the test if one is needed. Returns true
   // if successful.

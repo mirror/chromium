@@ -1566,6 +1566,9 @@ are declared in build/common.gypi.
       <message name="IDS_MD_DOWNLOAD_NO_DOWNLOADS" desc="A message shown when the user has no downloads to show on chrome://downloads.">
         Files you download appear here
       </message>
+      <message name="IDS_DOWNLOAD_ITEM_DROPDOWN_BUTTON_ACCESSIBLE_TEXT" desc="Text for the dropdown button that opens the download item options menu">
+        Options menu
+      </message>
       <message name="IDS_DOWNLOAD_LINK_RESUME"
                desc="In the download view, 'Resume' link text">
         Resume
@@ -2046,6 +2049,9 @@ are declared in build/common.gypi.
       </message>
       <message name="IDS_APPLICATION_INFO_SIZE_SMALL_LABEL" desc="Text displayed instead of the app or extension's size for apps and extensions that are less than 1 megabyte in size.">
         &lt; 1 MB
+      </message>
+      <message name="IDS_APPLICATION_INFO_LAUNCH_OPTIONS_ALT_TEXT" desc="Accessible name for launch options combobox.">
+        How would you like this application to launch?
       </message>
       <message name="IDS_APPLICATION_INFO_REVOKE_PERMISSION_ALT_TEXT" desc="Alt text displayed on hover (or in a screen reader) on the icon button that revokes (removes) the permission from this app.">
         Revoke the permission '<ph name="PERMISSION">$1<ex>Access your USB and Bluetooth devices</ex></ph>'
@@ -5734,6 +5740,9 @@ the Bookmarks menu.">
       </message>
       <message name="IDS_LEGACY_SUPERVISED_USER_AVATAR_LABEL" desc="A label for the supervised user which is used in the avatar menu and as a label in the titlebar.">
         Supervised user
+      </message>
+      <message name="IDS_GENERIC_USER_NEW_AVATAR_LABEL" desc="Label shown in the new avatar menu for the only user.">
+        Current user
       </message>
       <message name="IDS_LEGACY_SUPERVISED_USER_NEW_AVATAR_LABEL" desc="Label shown in the new avatar menu for a supervised user.">
         <ph name="PROFILE_DISPLAY_NAME">$1<ex>Markus</ex></ph> (Supervised)
