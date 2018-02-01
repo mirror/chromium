@@ -3223,3 +3223,13 @@ EVENT_TYPE(HOST_CACHE_PREF_WRITE)
 // This event is created when the HostCachePersistenceManager starts the timer
 // for writing a cache change to prefs.
 EVENT_TYPE(HOST_CACHE_PERSISTENCE_START_TIMER)
+
+// -----------------------------------------------------------------------------
+// DHCP-based WPAD (Windows)
+// -----------------------------------------------------------------------------
+
+EVENT_TYPE(WPAD_DHCP_WIN_FETCH)
+EVENT_TYPE(WPAD_DHCP_WIN_GET_ADAPTERS)
+EVENT_TYPE(WPAD_DHCP_WIN_ON_FETCHER_DONE)
+EVENT_TYPE(WPAD_DHCP_WIN_START_WAIT_TIMER)
+EVENT_TYPE(WPAD_DHCP_WIN_ON_WAIT_TIMER)
