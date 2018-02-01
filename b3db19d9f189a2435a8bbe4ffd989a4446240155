@@ -227,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "3f4df0e8_2e2621e2",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-01T11:56:44Z",
+      "side": 1,
+      "message": "My worry is AddTrack(), because it will create a sender, but the sender will *not* have a track. So track (if \"no track\" is represented by null) will be null, and the DCHECK will fail.\nThe same applies to the situation after sender.replaceTrack(null).",
+      "parentUuid": "8b46531e_5144932a",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b0a0e4_9c5456f1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 3
@@ -256,6 +274,24 @@
       "side": 1,
       "message": "The expected number of senders are so small that the square-runtime would most likely be faster, but I improved this by using std::sets just in case and for readability. I don\u0027t dare to remove-while-iterating because I see no way of getting an iterator valid-after-removal when using HeapHashMap and erase, so I still use a temporary set of unused sender IDs. Comment added.\n\nIn any case, this will be removed in the follow-up CL.",
       "parentUuid": "38b0a0e4_9c5456f1",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8f0a000_90923d68",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-01T11:56:44Z",
+      "side": 1,
+      "message": "Thanks, I found this code easier to read!",
+      "parentUuid": "4fdefa52_0efa08bc",
       "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
