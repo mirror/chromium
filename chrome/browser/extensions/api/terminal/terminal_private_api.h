@@ -37,6 +37,7 @@ class TerminalPrivateOpenTerminalProcessFunction
   void RespondOnUIThread(int terminal_id);
 
   std::string command_;
+  std::string user_hash_;
 };
 
 // Send input to the terminal process specified by the terminal ID, which is set
