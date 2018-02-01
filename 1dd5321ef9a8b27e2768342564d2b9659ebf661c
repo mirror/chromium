@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2d41b9_6366dc8d",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T21:00:52Z",
+      "side": 1,
+      "message": "This should be called only if the cmd-flag is present, right?",
+      "revId": "1dd5321ef9a8b27e2768342564d2b9659ebf661c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
