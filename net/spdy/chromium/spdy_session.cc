@@ -40,6 +40,7 @@
 #include "net/log/net_log_source_type.h"
 #include "net/log/net_log_with_source.h"
 #include "net/quic/chromium/quic_http_utils.h"
+#include "net/quic/core/spdy_utils.h"
 #include "net/socket/socket.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/spdy/chromium/header_coalescer.h"
@@ -1605,12 +1606,22 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
 
   streams_pushed_count_++;
 
+  // "Promised requests MUST be cacheable and MUST be safe [...]" (RFC7540
+  // Section 8.2).  Only cacheable safe request methods are GET and HEAD.
+  SpdyHeaderBlock::const_iterator it = headers.find(kHttp2MethodHeader);
+  if (it == headers.end() || (it->second != "GET" && it->second != "HEAD")) {
+    EnqueueResetStreamFrame(stream_id, request_priority,
+                            ERROR_CODE_REFUSED_STREAM,
+                            "Inadequate request method.");
+    return;
+  }
+
   // Verify that the response had a URL for us.
-  GURL gurl = GetUrlFromHeaderBlock(headers);
+  GURL gurl(SpdyUtils::GetPromisedUrlFromHeaders(headers));
   if (!gurl.is_valid()) {
-    EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
-        "Pushed stream url was invalid: " + gurl.possibly_invalid_spec());
+    EnqueueResetStreamFrame(stream_id, request_priority,
+                            ERROR_CODE_REFUSED_STREAM,
+                            "Invalid pushed request headers.");
     return;
   }
 
@@ -1662,16 +1673,6 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
     }
   }
 
-  // "Promised requests MUST be cacheable and MUST be safe [...]" (RFC7540
-  // Section 8.2).  Only cacheable safe request methods are GET and HEAD.
-  SpdyHeaderBlock::const_iterator it = headers.find(kHttp2MethodHeader);
-  if (it == headers.end() || (it->second != "GET" && it->second != "HEAD")) {
-    EnqueueResetStreamFrame(stream_id, request_priority,
-                            ERROR_CODE_REFUSED_STREAM,
-                            "Inadequate request method.");
-    return;
-  }
-
   // Insertion fails if there already is a pushed stream with the same path.
   if (!pool_->push_promise_index()->RegisterUnclaimedPushedStream(
           gurl, stream_id, this)) {
@@ -1721,7 +1722,8 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
                            net_log_);
   }
 
-  active_it->second->OnPushPromiseHeadersReceived(std::move(headers));
+  active_it->second->OnPushPromiseHeadersReceived(std::move(headers),
+                                                  std::move(gurl));
   DCHECK(active_it->second->IsReservedRemote());
   num_pushed_streams_++;
   return;
