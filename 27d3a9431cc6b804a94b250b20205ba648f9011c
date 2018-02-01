@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534882b3_297513f4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-01T04:46:13Z",
+      "side": 1,
+      "message": "Woops. Just realized this will be problematic after https://chromium-review.googlesource.com/c/chromium/src/+/884881. If we have |locked_images_| in CanvasImageProvider, unrefing them will try to access the cache.",
+      "range": {
+        "startLine": 384,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 35
+      },
+      "revId": "27d3a9431cc6b804a94b250b20205ba648f9011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
