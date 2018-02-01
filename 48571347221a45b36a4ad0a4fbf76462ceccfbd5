@@ -94,6 +94,30 @@
       "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76431bf4_bbba1914",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-02-01T02:58:05Z",
+      "side": 1,
+      "message": "\u003e I am sorry for forgetting to mention that there is no way to determine --use-zoom-for-dsf is enabled in Blink (because IsUseZoomForDSFEnabled() is part of content/). Could you suggest a way to check --use-zoom-for-dsf here?\n\nIt\u0027s surprising that nothing in Blink has needed to query this setting before.  Typically such a thing would be plumbed through WebRuntimeFeatures with an entry in runtime_enabled_features.json5.  That seems like overkill for this change alone.  I wonder if there was a deliberate decision that Blink should always use WindowToViewportScalar instead of checking the setting.\n\nYou can land this as is if you want.",
+      "parentUuid": "bbb295c3_f87a1243",
+      "range": {
+        "startLine": 200,
+        "startChar": 39,
+        "endLine": 200,
+        "endChar": 61
+      },
+      "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
