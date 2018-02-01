@@ -83,6 +83,10 @@ class PLATFORM_EXPORT TaskQueueSelector {
   // otherwise.
   bool EnabledWorkQueuesEmpty() const;
 
+  // No enabled queue could be selected, check if we could have chosen a
+  // disabled (blocked) work queue instead.
+  void TrySelectingBlockedQueue();
+
  protected:
   class PLATFORM_EXPORT PrioritizingSelector {
    public:
@@ -170,9 +174,6 @@ class PLATFORM_EXPORT TaskQueueSelector {
   void DidSelectQueueWithPriority(TaskQueue::QueuePriority priority,
                                   bool chose_delayed_over_immediate);
 
-  // No enabled queue could be selected, check if we could have chosen a
-  // disabled (blocked) work queue instead.
-  void TrySelectingBlockedQueue();
 
   // Check if we could have chosen a disabled (blocked) work queue instead.
   // |chosen_enabled_queue| is the enabled queue that got chosen.
