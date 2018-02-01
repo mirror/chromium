@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c63de69d_50842275",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-addsourcebuffer-mode-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-02-01T00:13:54Z",
+      "side": 1,
+      "message": "Internally, we treat audio/aac and audio/mpeg as sequence mode per the original auto-update-timestampoffset code. But we don\u0027t correctly expose that mode setting to the web API for associated sourcebuffers. This is tracked by crbug 607372.",
+      "parentUuid": "a012d6cf_6767e514",
+      "revId": "90a2c2ab736d3fa8f5b0ff4ae5fde2fe7a4e311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "936510e8_fb396d5f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-buffered-expected.txt",
         "patchSetId": 10
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "dcae139f_8bb59454",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-buffered-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-02-01T00:13:54Z",
+      "side": 1,
+      "message": "Yes. Mozilla updated the muxed mp4 files upstream, along with new expectations. kMseBufferByPts is not yet plumbed into Blink experimental settings, so layout tests still exercise as ByDts. I\u0027m working on this as part of getting Chrome PTS compliant (bug 760264. specifically bug 807793), including vetting the files+buffered range expectations previously upstreamed by mozilla.\n\nThis specific test case passes the current upstream expectation on tip-of-tree Chrome with --enable-features\u003dMseBufferByPts. But the very next case, below, fails very likely due to differences in how Chrome versus Firefox manage how a track buffer reports its coded frame group start in a muxed SourceBuffer (Chrome allows a common start time earlier than the first buffer in a track; Mozilla apparently doesn\u0027t) -- I\u0027ll also be investigating that as part of bug 760264 (specifically bug 807793) work. Specifically, the current Chrome-with-ByPts failure for the next case looks like:\nassert_equals: mediaSource.activeSourceBuffers[0] expected \"{ [0.067, 2.043) }\" but got \"{ [0.000, 2.043) }\"",
+      "parentUuid": "936510e8_fb396d5f",
+      "revId": "90a2c2ab736d3fa8f5b0ff4ae5fde2fe7a4e311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b04e2646_878df8c5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-endofstream-expected.txt",
         "patchSetId": 10
@@ -81,6 +117,24 @@
       "writtenOn": "2018-01-31T00:19:30Z",
       "side": 1,
       "message": "Seems expectations might be wrong then.",
+      "revId": "90a2c2ab736d3fa8f5b0ff4ae5fde2fe7a4e311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4053f70a_8fb082ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-endofstream-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-02-01T00:13:54Z",
+      "side": 1,
+      "message": "This (and the failure, above) are very likely the known issue tracked by crbug 639144.",
+      "parentUuid": "b04e2646_878df8c5",
       "revId": "90a2c2ab736d3fa8f5b0ff4ae5fde2fe7a4e311e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
