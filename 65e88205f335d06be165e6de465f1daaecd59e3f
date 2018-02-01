@@ -22,6 +22,30 @@
       "revId": "65e88205f335d06be165e6de465f1daaecd59e3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9e9665_a11e6b76",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T20:13:14Z",
+      "side": 1,
+      "message": "I had questions about this magic number so thank you.",
+      "parentUuid": "a63745a4_239f45ed",
+      "range": {
+        "startLine": 688,
+        "startChar": 14,
+        "endLine": 688,
+        "endChar": 25
+      },
+      "revId": "65e88205f335d06be165e6de465f1daaecd59e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
