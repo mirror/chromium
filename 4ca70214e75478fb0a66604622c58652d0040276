@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "523b03a6_1476441e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeFontProviderWin.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T23:54:51Z",
+      "side": 1,
+      "message": "I had to move it in this CL because WebFontRenderStyle is in platform layer, while LayoutThemeFontProvider is in blink core, so WebFontRenderStyle::SetDefaultFontSize() is not allowed to call LayoutThemeFontProvider::SetDefaultFontSize(). I definitely agree that FontCache is not the right place for these settings. But we already have many other font size values stored there, which are all used for the same purpose:  SmallCaptionFontHeight(), MenuFontHeight() and StatusFontHeight(). So I think it makes sense to move DefaultFontSize to FontCache for now. Later we can move all these parameters somewhere else. I\u0027ve filed crbug.com/808221, which mentions this work item.",
+      "parentUuid": "9f9cba81_e495ee8a",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5883239f_eebb0637",
         "filename": "third_party/WebKit/Source/platform/fonts/FontCache.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T14:49:23Z",
       "side": 1,
       "message": "As mentioned in the LayoutThemeWin file, I\u0027d prefer to keep this out of FontCache.",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d1e8d2_c32ca4dc",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T23:54:51Z",
+      "side": 1,
+      "message": "Added TODO.",
+      "parentUuid": "5883239f_eebb0637",
       "revId": "4ca70214e75478fb0a66604622c58652d0040276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9411145d_b5dc2d66",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPlatformData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T23:54:51Z",
+      "side": 1,
+      "message": "Originally this logic was in the end of FontRenderStyle::QuerySystem(). It\u0027s is hard to follow the logic there. I tried to keep the same behavior without any change. Hopefully this version is easier to understand.\nAlso related is the code in WebFontRenderStyle::ApplyToPaintFont(), which was previously in FontRenderStyle::ApplyToPaintFont(). I tried to rewrite it to make it easier to understand.",
+      "parentUuid": "03e804db_8ca50a11",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a52ccd1_c3961b0d",
         "filename": "third_party/WebKit/Source/platform/fonts/FontPlatformData.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-01T14:49:23Z",
       "side": 1,
       "message": "If it\u0027s not too much trouble, please file bugs for the TODOs.",
+      "revId": "4ca70214e75478fb0a66604622c58652d0040276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351dc8d0_100d4792",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPlatformData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-01T23:54:51Z",
+      "side": 1,
+      "message": "Filed https://crbug.com/808221 for all cleanup work for font configuration.",
+      "parentUuid": "7a52ccd1_c3961b0d",
       "revId": "4ca70214e75478fb0a66604622c58652d0040276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
