@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23046e40_0291ab1c",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d98d6e4_7cc23412",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e9a40e_e85cef82",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9803f293_7dcbdd04",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "We already have UMA for these cases so I\u0027m not sure if we have much use for this right now.",
+      "parentUuid": "d7e9a40e_e85cef82",
+      "range": {
+        "startLine": 439,
+        "startChar": 6,
+        "endLine": 439,
+        "endChar": 18
+      },
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "fdeec712_0bf2ce48",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa74d91c_7207ee40",
+      "range": {
+        "startLine": 451,
+        "startChar": 16,
+        "endLine": 451,
+        "endChar": 28
+      },
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ffcec5d_8885da24",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "From my testing, as written it\u0027s already logging the url as the top-level.",
+      "parentUuid": "169dafe1_3c6737f2",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da13fb9e_82e49dcb",
         "filename": "chrome/browser/permissions/permission_uma_util.h",
         "patchSetId": 7
@@ -96,6 +180,24 @@
       "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af755b3_fce5006a",
+        "filename": "chrome/browser/permissions/permission_uma_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da13fb9e_82e49dcb",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "ec5c1739_bbfba105",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "I think it could still be useful to track these (we can still do page into/page action icons, they just aren\u0027t hooked up yet). For now I\u0027ll update the summaries here to make it clear we\u0027re only handling prompts.",
+      "parentUuid": "85845f6d_4b043fdf",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53335be2_5f5451a4",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 7
@@ -130,6 +250,24 @@
       "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f537adc_2e0bde8d",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 1925,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-02-01T04:54:52Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "53335be2_5f5451a4",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
