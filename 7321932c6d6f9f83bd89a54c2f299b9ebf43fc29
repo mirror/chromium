@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c5403978_1edd2336",
+        "filename": "android_webview/browser/deferred_gpu_command_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T01:20:54Z",
+      "side": 1,
+      "message": "This is where we create a tmp minimum binding to collect GL strings. I plan to get rid of CollectBasicGraphicsInfo() on Android in the next CL. On Android it should always be CollectContextGraphicsInfo().",
+      "parentUuid": "f40965f5_4cdce268",
+      "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6506604_fca798f3",
         "filename": "content/renderer/render_thread_impl_browsertest.cc",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6b661887_c3b088bb",
+        "filename": "content/renderer/render_thread_impl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6506604_fca798f3",
+      "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07055baa_9d45db9b",
         "filename": "content/test/content_test_suite.cc",
         "patchSetId": 7
@@ -68,6 +104,24 @@
       "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c461a93a_fc45bddd",
+        "filename": "content/test/content_test_suite.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-01T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07055baa_9d45db9b",
+      "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
