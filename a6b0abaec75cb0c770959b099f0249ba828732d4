@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9ce8c89_59306a61",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T10:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19b570d_805e47c8",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "970f0daa_686924ec",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_handle.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8208ba97_2aa4d920",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T10:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970f0daa_686924ec",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47697195_8bbfe8a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T10:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d0f86d1_a2c6acb7",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8501b83_77aacea7",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_state.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95029680_9252463d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-01T10:55:24Z",
+      "side": 1,
+      "message": "Done.\n\nThe root cause of the problem here is that we use term \"WorkerScheduler\" for all non-main thread schedulers. I\u0027d be grateful if someone comes with a good name for it.",
+      "parentUuid": "e8501b83_77aacea7",
+      "revId": "a6b0abaec75cb0c770959b099f0249ba828732d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
