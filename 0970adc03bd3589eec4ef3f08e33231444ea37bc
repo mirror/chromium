@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dbcdebb_8115cbb5",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-01T20:10:54Z",
+      "side": 1,
+      "message": "Devlin: The RunAllTasksUntilIdle() isn\u0027t strictly necessary for the tests to pass. However, since we were observing OnExtensionInstalled before but observing OnExtensionWillBeInstalled now, I thought RunAlltaksUntilIdle() would make it equivalent to the old code. What\u0027s your thought on this?",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 34
+      },
+      "revId": "0970adc03bd3589eec4ef3f08e33231444ea37bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
