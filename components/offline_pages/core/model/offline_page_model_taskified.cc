@@ -8,10 +8,12 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
@@ -30,6 +32,7 @@
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/offline_store_utils.h"
+#include "components/offline_pages/core/system_download_manager.h"
 #include "url/gurl.h"
 
 namespace offline_pages {
@@ -120,14 +123,17 @@ constexpr base::TimeDelta OfflinePageModelTaskified::kClearStorageInterval;
 OfflinePageModelTaskified::OfflinePageModelTaskified(
     std::unique_ptr<OfflinePageMetadataStoreSQL> store,
     std::unique_ptr<ArchiveManager> archive_manager,
+    std::unique_ptr<SystemDownloadManager> download_manager,
     const scoped_refptr<base::SequencedTaskRunner>& task_runner,
     std::unique_ptr<base::Clock> clock)
     : store_(std::move(store)),
       archive_manager_(std::move(archive_manager)),
+      download_manager_(std::move(download_manager)),
       policy_controller_(new ClientPolicyController()),
       clock_(std::move(clock)),
       task_queue_(this),
       skip_clearing_original_url_for_testing_(false),
+      task_runner_(task_runner),
       weak_ptr_factory_(this) {
   CreateArchivesDirectoryIfNeeded();
   PostClearLegacyTemporaryPagesTask();
@@ -398,9 +404,51 @@ void OfflinePageModelTaskified::OnCreateArchiveDone(
     offline_page.original_url = save_page_params.original_url;
   }
 
+  if (policy_controller_->IsSupportedByDownload(
+          offline_page.client_id.name_space)) {
+    // If the user intentionally downloaded the page, move it to a public place.
+    SavePageToDownloads(offline_page, callback);
+  } else {
+    // For pages that we download on the user's behalf, we keep them in an
+    // internal chrome directory, and add them here to the OfflinePageModel
+    // database.
+    AddPage(offline_page,
+            base::Bind(&OfflinePageModelTaskified::OnAddPageForSavePageDone,
+                       weak_ptr_factory_.GetWeakPtr(), callback, offline_page));
+  }
+}
+
+void OfflinePageModelTaskified::SavePageToDownloads(
+    OfflinePageItem offline_page,
+    const SavePageCallback& save_page_callback) {
+  scoped_refptr<MoveAndAddResults> move_results = new MoveAndAddResults();
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&OfflinePageArchiver::PublishPage, offline_page,
+                     archive_manager_->GetPublicArchivesDir(),
+                     download_manager_.get(), move_results),
+      base::BindOnce(&OfflinePageModelTaskified::MoveAndAddDone,
+                     weak_ptr_factory_.GetWeakPtr(), save_page_callback,
+                     offline_page, move_results));
+}
+
+// Unpack the results of the file move on another thread, and either return
+// failure, or forward the call to AddPage to add the offline_page to the
+// OfflinePageModel database.
+void OfflinePageModelTaskified::MoveAndAddDone(
+    const SavePageCallback& save_page_callback,
+    OfflinePageItem offline_page,
+    scoped_refptr<MoveAndAddResults> move_results) {
+  if (move_results->move_result() != SavePageResult::SUCCESS)
+    save_page_callback.Run(move_results->move_result(), 0LL);
+
+  offline_page.file_path = move_results->new_file_path();
+  offline_page.system_download_id = move_results->download_id();
+
   AddPage(offline_page,
           base::Bind(&OfflinePageModelTaskified::OnAddPageForSavePageDone,
-                     weak_ptr_factory_.GetWeakPtr(), callback, offline_page));
+                     weak_ptr_factory_.GetWeakPtr(), save_page_callback,
+                     offline_page));
 }
 
 void OfflinePageModelTaskified::OnAddPageForSavePageDone(

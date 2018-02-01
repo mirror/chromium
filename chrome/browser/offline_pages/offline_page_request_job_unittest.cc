@@ -35,6 +35,7 @@
 #include "components/offline_pages/core/model/offline_page_model_taskified.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h"
+#include "components/offline_pages/core/system_download_manager_stub.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
 #include "content/public/browser/browser_thread.h"
@@ -94,6 +95,8 @@ const int kTestFileSize7 = 450;           // Real size of hello.mhtml.
 const int kTestFileSize8 = 450;           // Real size of hello.mhtml.
 const int kTestFileSize9 = 444;           // Real size of test.mhtml.
 const int kTestFileSize10 = 450;          // Real size of hello.mhtml.
+
+const int64_t kDownloadId = 42LL;
 
 const std::string kTestDigest2(
     "\x90\x64\xF9\x7C\x94\xE5\x9E\x91\x83\x3D\x41\xB0\x36\x90\x0A\xDF\xB3\xB1"
@@ -321,11 +324,13 @@ std::unique_ptr<KeyedService> BuildTestOfflinePageModel(
   std::unique_ptr<ArchiveManager> archive_manager(
       new ArchiveManager(private_archives_dir, private_archives_dir,
                          public_archives_dir, task_runner));
+  std::unique_ptr<SystemDownloadManager> download_manager(
+      new SystemDownloadManagerStub(kDownloadId, true));
   std::unique_ptr<base::Clock> clock(new base::DefaultClock);
 
   return std::unique_ptr<KeyedService>(new OfflinePageModelTaskified(
-      std::move(metadata_store), std::move(archive_manager), task_runner,
-      std::move(clock)));
+      std::move(metadata_store), std::move(archive_manager),
+      std::move(download_manager), task_runner, std::move(clock)));
 }
 
 }  // namespace
