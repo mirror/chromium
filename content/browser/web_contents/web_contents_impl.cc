@@ -5421,10 +5421,8 @@ void WebContentsImpl::OnIgnoredUIEvent() {
 
 void WebContentsImpl::RendererUnresponsive(
     RenderWidgetHostImpl* render_widget_host) {
-  RenderProcessHost* hung_process = render_widget_host->GetProcess();
-
   for (auto& observer : observers_)
-    observer.OnRendererUnresponsive(hung_process);
+    observer.OnRendererUnresponsive(render_widget_host->GetProcess());
 
   if (ShouldIgnoreUnresponsiveRenderer())
     return;
@@ -5433,15 +5431,13 @@ void WebContentsImpl::RendererUnresponsive(
     return;
 
   if (delegate_)
-    delegate_->RendererUnresponsive(this, hung_process);
+    delegate_->RendererUnresponsive(this, render_widget_host);
 }
 
 void WebContentsImpl::RendererResponsive(
     RenderWidgetHostImpl* render_widget_host) {
-  RenderProcessHost* hung_process = render_widget_host->GetProcess();
-
   if (delegate_)
-    delegate_->RendererResponsive(this, hung_process);
+    delegate_->RendererResponsive(this, render_widget_host);
 }
 
 void WebContentsImpl::BeforeUnloadFiredFromRenderManager(
