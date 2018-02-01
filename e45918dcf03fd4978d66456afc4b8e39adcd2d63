@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf22dbe_69c3beba",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T20:19:43Z",
+      "side": 1,
+      "message": "; is lonely...",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 3
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c820a40f_2d945de8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T20:19:43Z",
+      "side": 1,
+      "message": "this seems a bit odd... id_for_auto_resize is not valid in this case, you\u0027re going to zero the number here..\n\n\nI think you want to call \"SetLocalSurfaceIdChildSequenceNumber\" in the block above (id_for_auto_resize.is_valid())\n\nyou should no longer need \"window_-\u003eSetLocalSurfaceId\"",
+      "range": {
+        "startLine": 2050,
+        "startChar": 13,
+        "endLine": 2050,
+        "endChar": 49
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60917b41_e231390f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T20:19:43Z",
+      "side": 1,
+      "message": "Again, we want to avoid checking the parent here, as it may cause us to drop child updates.",
+      "range": {
+        "startLine": 2381,
+        "startChar": 27,
+        "endLine": 2381,
+        "endChar": 49
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe6ab8e_d94f1430",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T20:19:43Z",
+      "side": 1,
+      "message": "No need to check the child that came in, as we don\u0027t do anything with it and want to get parent updates in either case.",
+      "range": {
+        "startLine": 622,
+        "startChar": 30,
+        "endLine": 622,
+        "endChar": 51
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79472bb_85e5fc8e",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T20:19:43Z",
+      "side": 1,
+      "message": "I think this whole block should look something like:\n\nlocal_surface_id_ \u003d child_local_surface_id_allocator_.UpdateParentIdAndNonce(id, nonce);\n\nThis ensures our local ID includes the newest parent data, but doesn\u0027t lose the child data.",
+      "range": {
+        "startLine": 628,
+        "startChar": 26,
+        "endLine": 628,
+        "endChar": 59
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10635a13_1fb7667b",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-01T20:19:43Z",
+      "side": 1,
+      "message": "Same idea... something like\n\nSetLocalSurfaceId(parent_local_surface_id_allocator_.UpdateChildSequenceNumber(child_seq_#));",
+      "range": {
+        "startLine": 166,
+        "startChar": 37,
+        "endLine": 166,
+        "endChar": 62
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
