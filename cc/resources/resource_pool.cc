@@ -660,6 +660,16 @@ void ResourcePool::PoolResource::OnMemoryDump(
     const LayerTreeResourceProvider* resource_provider,
     bool dump_parent,
     bool is_free) const {
+  if (!dump_parent) {
+    // If |dump_parent| is false, the ownership of the resource is in the
+    // ResourcePool, so we can see if any memory is allocated. If not, then
+    // don't dump it.
+    // TODO(danakj): Early out for gpu paths as they move ownership to
+    // ResourcePool.
+    if (!shared_bitmap_)
+      return;
+  }
+
   // Resource IDs are not process-unique, so log with the
   // LayerTreeResourceProvider's unique id.
   std::string dump_name =
@@ -674,6 +684,17 @@ void ResourcePool::PoolResource::OnMemoryDump(
         base::StringPrintf("cc/resource_memory/provider_%d/resource_%d",
                            resource_provider->tracing_id(), resource_id_);
     pmd->AddSuballocation(dump->guid(), parent_node);
+  } else {
+    const int kImportance = 2;
+    if (shared_bitmap_) {
+      base::UnguessableToken guid =
+          shared_bitmap_->GetSharedMemoryHandle().GetGUID();
+      DCHECK(!guid.is_empty());
+      pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), guid, kImportance);
+    }
+
+    // TODO(danakj): Gpu paths need to report guids as they move ownership to
+    // ResourcePool.
   }
 
   uint64_t total_bytes =
