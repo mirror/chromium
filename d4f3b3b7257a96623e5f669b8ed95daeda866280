@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d613c92_31fa9bde",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T21:29:25Z",
+      "side": 1,
+      "message": "Would it make sense to combine these to button_bar_-\u003eSetIsLocked()?",
+      "revId": "d4f3b3b7257a96623e5f669b8ed95daeda866280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
