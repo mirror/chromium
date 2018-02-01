@@ -30,10 +30,10 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/display/unified_desktop_utils.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(INTERNAL_WINDOW_MODE)
 #include "base/optional.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
-#include "ui/display/manager/chromeos/touch_device_manager.h"
+#include "ui/display/manager/internal/display_configurator.h"
+#include "ui/display/manager/internal/touch_device_manager.h"
 #endif
 
 namespace gfx {
@@ -75,7 +75,7 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     virtual void PreDisplayConfigurationChange(bool clear_focus) = 0;
     virtual void PostDisplayConfigurationChange() = 0;
 
-#if defined(OS_CHROMEOS)
+#if defined(INTERNAL_WINDOW_MODE)
     // Get the DisplayConfigurator.
     virtual DisplayConfigurator* display_configurator() = 0;
 #endif
@@ -131,7 +131,7 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // Returns the display id of the first display in the outupt list.
   int64_t first_display_id() const { return first_display_id_; }
 
-#if defined(OS_CHROMEOS)
+#if defined(INTERNAL_WINDOW_MODE)
   TouchDeviceManager* touch_device_manager() const {
     return touch_device_manager_.get();
   }
@@ -662,7 +662,7 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // OnWillProcessDisplayChanges() and OnDidProcessDisplayChanges().
   int notify_depth_ = 0;
 
-#if defined(OS_CHROMEOS)
+#if defined(INTERNAL_WINDOW_MODE)
   std::unique_ptr<TouchDeviceManager> touch_device_manager_;
 #endif
 
