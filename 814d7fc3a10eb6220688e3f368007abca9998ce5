@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f102ffc6_e4029ea6",
+        "filename": "ash/login/ui/login_keyboard_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T21:37:25Z",
+      "side": 1,
+      "message": "I agree that it should not derieve from LoginTestBase. I am not sure if it is always \u0027better\u0027, LoginTestBase is more flexible. So for now I will:\n* make this class derive from AshTestBase (there is one tmp cut corner - I make LoginTestBase::CreateUser static method)\n* proceed with this cl if it\u0027s fine with you\n* investigate consolidating LoginTestBase and LoginKeyboardTestBase in separate cl",
+      "parentUuid": "55f097ff_68981276",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de323e18_1f52a8a7",
         "filename": "ash/login/ui/login_keyboard_test_base.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2b0fab_9c5d9078",
+        "filename": "ash/login/ui/login_keyboard_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T21:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de323e18_1f52a8a7",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5bad5f41_cb6f86f7",
+        "filename": "ash/login/ui/login_keyboard_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T21:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a5ff97f_cb217c5e",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "021f1799_6e9b6a0a",
         "filename": "ash/login/ui/login_keyboard_test_base.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8c1feff0_508d3366",
+        "filename": "ash/login/ui/login_keyboard_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T21:37:25Z",
+      "side": 1,
+      "message": "It is no longer derived from LoginTestBase, so resolved.",
+      "parentUuid": "021f1799_6e9b6a0a",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27fbab33_8c59eef9",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5a6ff2_dd08a0b3",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T21:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fbab33_8c59eef9",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
