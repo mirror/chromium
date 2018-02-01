@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87591019_0ee2d2de",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-01T17:12:35Z",
+      "side": 1,
+      "message": "nit: This would be much cleaner as two separate functions (enable/disable). Calling Enabled with a bunch of unused arguments to disable the dialog isn\u0027t great.",
+      "range": {
+        "startLine": 463,
+        "startChar": 0,
+        "endLine": 476,
+        "endChar": 1
+      },
+      "revId": "78adca65433c58c51e041ff2ca24e7054bc9fd1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
