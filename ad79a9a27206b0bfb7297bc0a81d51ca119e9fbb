@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e98c72f_add7dd18",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:59:08Z",
+      "side": 1,
+      "message": "nit: Can we move this to credential-helpers?",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a8aff0_96eab4c4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
         "patchSetId": 3
@@ -13,6 +30,81 @@
       "writtenOn": "2018-01-31T22:53:40Z",
       "side": 1,
       "message": "You will notice that two tests from credentialscontainer-create-from-nested-frame.html aren\u0027t here. They can\u0027t be run here because they don\u0027t use the mock; they call all the way down to the device layer and time out. (Unlike the way we return from authenticator_impl in makeCredential calls by giving an invalid algorithm, there isn\u0027t a way to return from authenticator_impl prior to reaching device/ for getAssertion calls.)",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533804f0_9ed9fa9c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:59:08Z",
+      "side": 1,
+      "message": "I think that with the first version of the about:blank test we are actually using the mock, so that should(?) work.\n\nFor the second version, can we specify a really low timeout and let the requests actually time out? Maybe the current minimum of 1 minute for the adjusted timeout is too long anyway?",
+      "parentUuid": "a2a8aff0_96eab4c4",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4d8452_e2609597",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:59:08Z",
+      "side": 1,
+      "message": "nit: Why do we have these four here and not in -basics.hmtl? The same question goes for create-origins.html.",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba8322a_a57b4a9b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/credential-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:59:08Z",
+      "side": 1,
+      "message": "nit: WDYT about calling this and co. GET_CREDENTIAL, to be more consistent with the terminology of the spec?",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9893cf_1663e3ba",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:59:08Z",
+      "side": 1,
+      "message": "nit: {} not needed.",
+      "range": {
+        "startLine": 395,
+        "startChar": 73,
+        "endLine": 395,
+        "endChar": 74
+      },
       "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
