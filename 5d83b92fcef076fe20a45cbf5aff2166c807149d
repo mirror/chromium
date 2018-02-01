@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b55e2f04_bfd954ff",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-01T21:57:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a404017e_4640ec6a",
+      "revId": "5d83b92fcef076fe20a45cbf5aff2166c807149d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58bdcfca_9e2b2672",
         "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5d83b92fcef076fe20a45cbf5aff2166c807149d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b555896_79e24c2d",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-01T21:57:47Z",
+      "side": 1,
+      "message": "What is happening is that some platforms have those values as `unsigned long` and others as `unsigned int` and so far I couldn\u0027t find a %-value that would work for both cases.\n\nI will give %zu a try and otherwise revert back to this solution.",
+      "parentUuid": "58bdcfca_9e2b2672",
+      "revId": "5d83b92fcef076fe20a45cbf5aff2166c807149d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
