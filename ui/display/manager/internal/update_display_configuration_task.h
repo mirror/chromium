@@ -12,8 +12,8 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "ui/display/manager/chromeos/configure_displays_task.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/display/manager/internal/configure_displays_task.h"
+#include "ui/display/manager/internal/display_configurator.h"
 #include "ui/display/types/native_display_observer.h"
 
 namespace display {

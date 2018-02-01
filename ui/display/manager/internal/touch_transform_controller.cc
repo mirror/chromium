@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/display/manager/chromeos/touch_transform_controller.h"
+#include "ui/display/manager/internal/touch_transform_controller.h"
 
 #include <utility>
 #include <vector>
 
 #include "third_party/skia/include/core/SkMatrix44.h"
 #include "ui/display/display_layout.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
-#include "ui/display/manager/chromeos/touch_device_manager.h"
-#include "ui/display/manager/chromeos/touch_transform_setter.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/internal/display_configurator.h"
+#include "ui/display/manager/internal/touch_device_manager.h"
+#include "ui/display/manager/internal/touch_transform_setter.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
@@ -360,9 +360,13 @@ void TouchTransformController::UpdateTouchTransforms(
       // In mirror mode, there is just one WindowTreeHost and two displays.
       // Make the WindowTreeHost accept touch events from both displays.
       std::size_t touch_display_index =
+#if defined(OS_CHROMEOS)
           display_manager_->SoftwareMirroringEnabled()
               ? primary_display_id_index
               : index;
+#else
+          index;
+#endif
       UpdateTouchTransform(display_id_list[primary_display_id_index],
                            display_info_list[index],
                            display_info_list[touch_display_index], update_data);

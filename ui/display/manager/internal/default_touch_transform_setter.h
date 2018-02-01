@@ -6,7 +6,7 @@
 #define UI_DISPLAY_MANAGER_CHROMEOS_DEFAULT_TOUCH_TRANSFORM_SETTER_H_
 
 #include "base/macros.h"
-#include "ui/display/manager/chromeos/touch_transform_setter.h"
+#include "ui/display/manager/internal/touch_transform_setter.h"
 
 namespace display {
 
