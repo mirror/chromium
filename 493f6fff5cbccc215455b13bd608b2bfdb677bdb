@@ -22,6 +22,30 @@
       "revId": "493f6fff5cbccc215455b13bd608b2bfdb677bdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae52066_046e2930",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T17:46:33Z",
+      "side": 1,
+      "message": "\u003e Haah, I just realized mAwHolder needs to be final (to be thread safe), but for it to be final we need to create it in the ctors of this class - so I believe passing a reference to \u0027this\u0027 at that point is NOT OK? (since \u0027this\u0027 object won\u0027t have been fully initialized at that point).\n\nIt\u0027s effectively final as written here. If you are worried about it, you can turn initialize into a private constructor (add a dummy argument I guess), then compiler can actually check it\n\njava isn\u0027t as unsafe as c++, yes some fields might not be initialized, but that\u0027s about it, there aren\u0027t hidden dangerous things like vtables state and whatnot",
+      "parentUuid": "8aed762a_f0a8a3af",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "493f6fff5cbccc215455b13bd608b2bfdb677bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
