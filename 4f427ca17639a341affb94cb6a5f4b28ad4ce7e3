@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb91eed_fb8c7ffd",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T18:47:10Z",
+      "side": 1,
+      "message": "nit: true /* incognito */\n\nIt\u0027d help me if the code would explicitly point out (in a comment) why we\u0027re loading an Incognito profile.",
+      "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023824fd_1753cb2e",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T18:47:10Z",
+      "side": 1,
+      "message": "Since we run the AtExitManager well past closing down the profile manager and/or the BrowserProcessImpl, it should be safe to use base::Unretained() here?",
+      "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749e1e28_27155083",
+        "filename": "chrome/browser/notifications/system_notification_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T18:47:10Z",
+      "side": 1,
+      "message": "nit: In this comment and below, let\u0027s consistently talk about \"profile\" instead of mixing it with \"user\"",
+      "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
