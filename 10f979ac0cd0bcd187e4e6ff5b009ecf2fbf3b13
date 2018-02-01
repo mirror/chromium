@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c62a68c_48d71127",
+        "filename": "content/browser/media/media_suspend_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T01:58:12Z",
+      "side": 1,
+      "message": "Eh, it\u0027s only in this test, whereas the other constants are in multiple tests.",
+      "parentUuid": "a317fe5b_56d6c845",
+      "range": {
+        "startLine": 38,
+        "startChar": 55,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "10f979ac0cd0bcd187e4e6ff5b009ecf2fbf3b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98e1cfaf_bba8c378",
         "filename": "content/browser/media/media_suspend_browsertest.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "10f979ac0cd0bcd187e4e6ff5b009ecf2fbf3b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fe56df_bcd9e2d2",
+        "filename": "content/browser/media/media_suspend_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T01:58:12Z",
+      "side": 1,
+      "message": "Good point. The code now uses the internals method to detect suspend.",
+      "parentUuid": "98e1cfaf_bba8c378",
+      "revId": "10f979ac0cd0bcd187e4e6ff5b009ecf2fbf3b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
