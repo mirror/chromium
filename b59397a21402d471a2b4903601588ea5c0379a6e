@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13a33338_9888a73a",
+        "filename": "ios/chrome/browser/ui/orchestrator/omnibox_focus_orchestrator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T16:04:53Z",
+      "side": 1,
+      "message": "Nit: I think technically, this means that the block can take an arbitrary number of arguments? \n\nvoid (^contraction)(void) would mean that it takes no argument.",
+      "range": {
+        "startLine": 65,
+        "startChar": 22,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "b59397a21402d471a2b4903601588ea5c0379a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4f2c79_d1371bca",
+        "filename": "ios/chrome/browser/ui/orchestrator/omnibox_focus_orchestrator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T16:04:53Z",
+      "side": 1,
+      "message": "Why not \"animations:contraction\"?",
+      "range": {
+        "startLine": 81,
+        "startChar": 14,
+        "endLine": 81,
+        "endChar": 24
+      },
+      "revId": "b59397a21402d471a2b4903601588ea5c0379a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094b778e_e480a4af",
+        "filename": "ios/chrome/browser/ui/orchestrator/omnibox_focus_orchestrator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T16:04:53Z",
+      "side": 1,
+      "message": "Idem, why not \"animations:showControls\".",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "b59397a21402d471a2b4903601588ea5c0379a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4617892c_d6b4eb2c",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T16:04:53Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 42,
+        "startChar": 50,
+        "endLine": 42,
+        "endChar": 72
+      },
+      "revId": "b59397a21402d471a2b4903601588ea5c0379a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9708f25f_8352db78",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T16:04:53Z",
+      "side": 1,
+      "message": "Don\u0027t you need to deactivate before activating the new ones? Otherwise your layout might be overconstrained and issue warnings in the console.",
+      "range": {
+        "startLine": 176,
+        "startChar": 22,
+        "endLine": 176,
+        "endChar": 43
+      },
+      "revId": "b59397a21402d471a2b4903601588ea5c0379a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
