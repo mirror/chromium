@@ -1020,6 +1020,14 @@ function PaymentRequest(methodData, details, opt_options) {
   this.shippingOption = null;
   this.shippingType = null;
 
+  // Tracks the event handler registered via
+  // PaymentRequest.prototype.onshippingaddresschange.
+  this.shippingAddressChangeHandler = null;
+
+  // Tracks the event handler registered via
+  // PaymentRequest.prototype.onshippingoptionchange.
+  this.shippingOptionChangeHandler = null;
+
   /**
    * The state of this request, used to govern its lifecycle.
    * @type {PaymentRequestState}
@@ -1122,6 +1130,34 @@ PaymentRequest.prototype.shippingOption = null;
  * @type {?PaymentShippingType}
  */
 PaymentRequest.prototype.shippingType = null;
+
+/**
+ * Registers a handler function for 'shippingaddresschange' event. The new
+ * handler function replaces the previous handler set via this function, if any.
+ * @type {Function} handler The event handler for 'shippingaddresschange' event.
+ */
+PaymentRequest.prototype.onshippingaddresschange = function(handler) {
+  if (this.shippingAddressChangeHandler) {
+    this.removeEventListener(
+        'shippingaddresschange', this.shippingAddressChangeHandler);
+  }
+  this.shippingAddressChangeHandler = handler;
+  this.addEventListener('shippingaddresschange', handler);
+};
+
+/**
+ * Registers a handler function for 'shippingoptionchange' event. The new
+ * handler function replaces the previous handler set via this function, if any.
+ * @type {Function} handler The event handler for 'shippingoptionchange' event.
+ */
+PaymentRequest.prototype.onshippingoptionchange = function(handler) {
+  if (this.shippingOptionChangeHandler) {
+    this.removeEventListener(
+        'shippingoptionchange', this.shippingOptionChangeHandler);
+  }
+  this.shippingOptionChangeHandler = handler;
+  this.addEventListener('shippingoptionchange', handler);
+};
 
 /**
  * Presents the PaymentRequest UI to the user.
