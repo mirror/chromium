@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d74cc867_208c80d6",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-01T23:16:04Z",
+      "side": 1,
+      "message": "I\u0027d rather this be\n  if (color_space \u003d\u003d \u003c\u003cthe color space we know matches this\u003e\u003e)\nIsHDR can also refer to extended-sRGB, and a bunch of other stuff.",
+      "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2667a7a0_1a01c75a",
         "filename": "ui/gfx/mac/io_surface.cc",
         "patchSetId": 5
@@ -19,6 +36,23 @@
         "endLine": 224,
         "endChar": 59
       },
+      "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025940d0_121f20b7",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-01T23:16:04Z",
+      "side": 1,
+      "message": "base::ScopedCFTypeRef\u003cCGColorSpaceRef\u003e cg_color_space(CGColorSpaceCreate...) will do the release for you.",
       "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
