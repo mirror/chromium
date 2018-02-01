@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b622c4_6662d464",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-01T11:17:57Z",
+      "side": 1,
+      "message": "The folder would be changed to source_path before running gn. So you don\u0027t need to append to it.\n\nYou can use:\nFILE_PATH_LITERAL(\"third_party/depot_tools/gn.bat\"),",
+      "range": {
+        "startLine": 494,
+        "startChar": 6,
+        "endLine": 494,
+        "endChar": 18
+      },
+      "revId": "4391b1f700f5447d0dda6a6435c9891f05369112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94c4d34_af0d8463",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-01T11:17:57Z",
+      "side": 1,
+      "message": "You can use:\nFILE_PATH_LITERAL(\"third_party/depot_tools/gn\"),",
+      "revId": "4391b1f700f5447d0dda6a6435c9891f05369112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
