@@ -45,6 +45,54 @@
       "revId": "ac6a1783305f745cedb821a7cda60af65d82a682",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903c1930_7673e364",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:43:36Z",
+      "side": 1,
+      "message": "It already have in all cases.",
+      "parentUuid": "5876c305_87424231",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "ac6a1783305f745cedb821a7cda60af65d82a682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69655fb7_8bd842db",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:43:36Z",
+      "side": 1,
+      "message": "I don\u0027t think your comment is accurate. I have updated it.",
+      "parentUuid": "99096d64_339ce0bb",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 80
+      },
+      "revId": "ac6a1783305f745cedb821a7cda60af65d82a682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
