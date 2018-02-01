@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "4d352084_332c5038",
+        "filename": "services/assistant/assistant_manager_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T18:37:56Z",
+      "side": 1,
+      "message": "Btw I looked around the implementation and tests and it seems like user_id is often an integer anyway, so it\u0027s not clear to me why it\u0027s a string?",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a3609f_602c5eab",
         "filename": "services/assistant/platform_api_impl.cc",
         "patchSetId": 5
