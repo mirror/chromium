@@ -87,6 +87,24 @@
       "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3660e5d5_f988431e",
+        "filename": "components/security_interstitials/core/browser/resources/interstitial_webview_quiet.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-01T00:29:16Z",
+      "side": 1,
+      "message": "Actually - upon further testing - this already seems to work properly. I\u0027m not sure why I thought it didn\u0027t.",
+      "parentUuid": "08a967da_a991237d",
+      "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
