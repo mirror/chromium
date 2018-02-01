@@ -27,15 +27,15 @@ class HttpResponseHeaders;
 
 namespace network {
 
-class NetworkContext;
 class NetToMojoPendingBuffer;
+class NetworkServiceURLLoaderFactory;
 struct ResourceResponse;
 
 class COMPONENT_EXPORT(NETWORK_SERVICE) URLLoader
     : public mojom::URLLoader,
       public net::URLRequest::Delegate {
  public:
-  URLLoader(NetworkContext* context,
+  URLLoader(NetworkServiceURLLoaderFactory* url_loader_factory,
             mojom::URLLoaderRequest url_loader_request,
             int32_t options,
             const ResourceRequest& request,
@@ -45,7 +45,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) URLLoader
             uint32_t process_id);
   ~URLLoader() override;
 
-  // Called when the associated NetworkContext is going away.
+  // Called when the associated URLLoaderFactory is going away.
   void Cleanup();
 
   // mojom::URLLoader implementation:
@@ -96,7 +96,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) URLLoader
       mojom::SSLPrivateKeyPtr ssl_private_key,
       bool cancel_certificate_selection);
 
-  NetworkContext* context_;
+  NetworkServiceURLLoaderFactory* const url_loader_factory_;
   int32_t options_;
   int resource_type_;
   bool is_load_timing_enabled_;
