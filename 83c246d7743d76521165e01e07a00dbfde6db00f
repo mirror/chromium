@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd254c23_04900421",
+        "filename": "third_party/WebKit/Source/build/scripts/make_element_type_helpers.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-02-01T07:19:11Z",
+      "side": 1,
+      "message": "This should be moved to the bottom of the loop, and should be\n  elements.add(tag[\u0027js_interface\u0027])\n\nin order to drop unnecessary C++-only classes from enum HTMLElementType.",
+      "revId": "83c246d7743d76521165e01e07a00dbfde6db00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
