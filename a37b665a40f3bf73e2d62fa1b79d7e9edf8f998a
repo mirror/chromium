@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02264af0_0e96ab94",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-01T11:55:19Z",
+      "side": 1,
+      "message": "requested_state?",
+      "range": {
+        "startLine": 44,
+        "startChar": 60,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bbe23d_4c8e6940",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-01T11:55:19Z",
+      "side": 1,
+      "message": "please use same naming as protocol. either change this to SnapToLeft or update protocol.",
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0e7379_cbbac0c9",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-01T11:55:19Z",
+      "side": 1,
+      "message": "please use same naming as protocol.",
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923410cb_ffa005da",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-01T11:55:19Z",
+      "side": 1,
+      "message": "what\u0027s the difference between current_state and new_state? can we make this less confusing somehow?",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 64
+      },
+      "revId": "a37b665a40f3bf73e2d62fa1b79d7e9edf8f998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
