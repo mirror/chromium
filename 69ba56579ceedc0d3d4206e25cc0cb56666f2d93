@@ -22,6 +22,30 @@
       "revId": "69ba56579ceedc0d3d4206e25cc0cb56666f2d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2df4fc4_6ceabd29",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-02-01T04:24:45Z",
+      "side": 1,
+      "message": "Thank you.",
+      "parentUuid": "29ec163e_1db52a6b",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "69ba56579ceedc0d3d4206e25cc0cb56666f2d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
