@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "f6a2e34a_d8c1d96d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-01T23:35:52Z",
+      "side": 1,
+      "message": "const\u0026 extends the lifetime of temporaries until it goes out of scope, so it should be safe. Not a big deal here though.",
+      "parentUuid": "971ec9bd_b8e1a924",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 8
+      },
+      "revId": "907b984885ecfbb925c67adc54f6b7a0a4d33a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2acbcf41_19909e1b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
         "patchSetId": 4
