@@ -6,7 +6,6 @@
 
 #import <UIKit/UIKit.h>
 
-#include "base/files/file_util.h"
 #include "base/run_loop.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ios/chrome/browser/download/download_directory_util.h"
@@ -18,7 +17,6 @@
 #import "ios/web/public/test/fakes/fake_download_task.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
 #include "ios/web/public/test/test_web_thread_bundle.h"
-#include "net/base/net_errors.h"
 #include "net/url_request/url_fetcher_response_writer.h"
 #include "testing/gtest_mac.h"
 #include "testing/platform_test.h"
@@ -102,6 +100,9 @@ TEST_F(DownloadManagerCoordinatorTest, Start) {
   EXPECT_EQ(kTestReceivedBytes, viewController.countOfBytesReceived);
   EXPECT_EQ(kTestTotalBytes, viewController.countOfBytesExpectedToReceive);
   EXPECT_NSEQ(kTestSuggestedFileName, viewController.fileName);
+
+  // Stop to avoid holding a dangling pointer to destroyed task.
+  [coordinator_ stop];
 }
 
 // Tests stopping coordinator. Verifies that hiding web states dismisses the
@@ -148,6 +149,9 @@ TEST_F(DownloadManagerCoordinatorTest, DelegateCreatedDownload) {
   EXPECT_EQ(kTestReceivedBytes, viewController.countOfBytesReceived);
   EXPECT_EQ(kTestTotalBytes, viewController.countOfBytesExpectedToReceive);
   EXPECT_NSEQ(kTestSuggestedFileName, viewController.fileName);
+
+  // Stop to avoid holding a dangling pointer to destroyed task.
+  [coordinator_ stop];
 }
 
 // Tests downloadManagerTabHelper:didCreateDownload:webStateIsVisible: callback
@@ -162,89 +166,6 @@ TEST_F(DownloadManagerCoordinatorTest,
 
   // Background tab should not present Download Manager UI.
   EXPECT_EQ(0U, base_view_controller_.childViewControllers.count);
-}
-
-// Tests downloadManagerTabHelper:didUpdateDownload: callback for download task
-// completion. Verifies that DownloadManagerViewController state is changed to
-// kDownloadManagerStateSuceeded.
-TEST_F(DownloadManagerCoordinatorTest, DelegateCompletedDownload) {
-  auto task = CreateTestTask();
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didCreateDownload:task.get()
-                       webStateIsVisible:YES];
-  task->SetDone(true);
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didUpdateDownload:task.get()];
-
-  // Verify that DownloadManagerViewController state is set to suceeded.
-  EXPECT_EQ(1U, base_view_controller_.childViewControllers.count);
-  DownloadManagerViewController* viewController =
-      base_view_controller_.childViewControllers.firstObject;
-  ASSERT_EQ([DownloadManagerViewController class], [viewController class]);
-  EXPECT_EQ(kDownloadManagerStateSuceeded, viewController.state);
-}
-
-// Tests downloadManagerTabHelper:didUpdateDownload: callback for download task
-// failure. Verifies that DownloadManagerViewController state is changed to
-// kDownloadManagerStateFailed.
-TEST_F(DownloadManagerCoordinatorTest, DelegateFailedDownload) {
-  auto task = CreateTestTask();
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didCreateDownload:task.get()
-                       webStateIsVisible:YES];
-  task->SetErrorCode(net::ERR_INTERNET_DISCONNECTED);
-  task->SetDone(true);
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didUpdateDownload:task.get()];
-
-  // Verify that DownloadManagerViewController state is set to failed.
-  EXPECT_EQ(1U, base_view_controller_.childViewControllers.count);
-  DownloadManagerViewController* viewController =
-      base_view_controller_.childViewControllers.firstObject;
-  ASSERT_EQ([DownloadManagerViewController class], [viewController class]);
-  EXPECT_EQ(kDownloadManagerStateFailed, viewController.state);
-}
-
-// Tests downloadManagerTabHelper:didUpdateDownload: callback for download task
-// progress. Verifies that DownloadManagerViewController state is changed to
-// kDownloadManagerStateInProgress.
-TEST_F(DownloadManagerCoordinatorTest, DelegateProgressedDownload) {
-  auto task = CreateTestTask();
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didCreateDownload:task.get()
-                       webStateIsVisible:YES];
-  task->Start(std::make_unique<net::URLFetcherStringWriter>());
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didUpdateDownload:task.get()];
-
-  // Verify that DownloadManagerViewController state is set to "in progress".
-  EXPECT_EQ(1U, base_view_controller_.childViewControllers.count);
-  DownloadManagerViewController* viewController =
-      base_view_controller_.childViewControllers.firstObject;
-  ASSERT_EQ([DownloadManagerViewController class], [viewController class]);
-  EXPECT_EQ(kDownloadManagerStateInProgress, viewController.state);
-}
-
-// Tests downloadManagerTabHelper:didUpdateDownload: callback for background
-// download task when web state is not visible. Verifies that coordinator
-// ignores callback from a background tab.
-TEST_F(DownloadManagerCoordinatorTest, DelegateCompletedBackgroundDownload) {
-  auto task = CreateTestTask();
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didCreateDownload:task.get()
-                       webStateIsVisible:YES];
-  auto background_task = CreateTestTask();
-  background_task->SetDone(true);
-  [coordinator_ downloadManagerTabHelper:&tab_helper_
-                       didUpdateDownload:background_task.get()];
-
-  // Background tab download progress should not affect presented Download
-  // Manager UI.
-  EXPECT_EQ(1U, base_view_controller_.childViewControllers.count);
-  DownloadManagerViewController* viewController =
-      base_view_controller_.childViewControllers.firstObject;
-  ASSERT_EQ([DownloadManagerViewController class], [viewController class]);
-  EXPECT_EQ(kDownloadManagerStateNotStarted, viewController.state);
 }
 
 // Tests downloadManagerTabHelper:didHideDownload: callback. Verifies that
@@ -287,6 +208,9 @@ TEST_F(DownloadManagerCoordinatorTest, DelegateShowDownload) {
   EXPECT_EQ(kTestReceivedBytes, viewController.countOfBytesReceived);
   EXPECT_EQ(kTestTotalBytes, viewController.countOfBytesExpectedToReceive);
   EXPECT_NSEQ(kTestSuggestedFileName, viewController.fileName);
+
+  // Stop to avoid holding a dangling pointer to destroyed task.
+  [coordinator_ stop];
 }
 
 // Tests closing view controller. Coordinator should be stopped and task
@@ -308,6 +232,9 @@ TEST_F(DownloadManagerCoordinatorTest, Close) {
   EXPECT_EQ(0U, base_view_controller_.childViewControllers.count);
   EXPECT_FALSE(coordinator_.downloadTask);
   EXPECT_EQ(web::DownloadTask::State::kCancelled, task.GetState());
+
+  // Stop to avoid holding a dangling pointer to destroyed task.
+  [coordinator_ stop];
 }
 
 // Tests starting the download. Verifies that download task is started and its
@@ -339,26 +266,7 @@ TEST_F(DownloadManagerCoordinatorTest, StartDownload) {
   base::FilePath download_dir;
   ASSERT_TRUE(GetDownloadsDirectory(&download_dir));
   EXPECT_TRUE(download_dir.IsParent(file));
-}
 
-// Tests starting and failing the download. Simulates download failure from
-// inability to create a file writer.
-TEST_F(DownloadManagerCoordinatorTest, StartDownloadFailure) {
-  web::TestWebThreadBundle thread_bundle;
-  web::FakeDownloadTask task(GURL(kTestUrl), kTestMimeType);
-  // Writer can not be created without file name, which will fail the download.
-  coordinator_.downloadTask = &task;
-  [coordinator_ start];
-
-  DownloadManagerViewController* viewController =
-      base_view_controller_.childViewControllers.firstObject;
-  ASSERT_EQ([DownloadManagerViewController class], [viewController class]);
-  [viewController.delegate
-      downloadManagerViewControllerDidStartDownload:viewController];
-
-  // Writer is created by a background task, so wait for failure.
-  ASSERT_TRUE(WaitUntilConditionOrTimeout(testing::kWaitForDownloadTimeout, ^{
-    base::RunLoop().RunUntilIdle();
-    return viewController.state == kDownloadManagerStateFailed;
-  }));
+  // Stop to avoid holding a dangling pointer to destroyed task.
+  [coordinator_ stop];
 }
