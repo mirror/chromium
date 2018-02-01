@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f803b8_b74a9c7a",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "This class exposes a constructor and a single public method that does not modify the state of the object. Compared to a single public function this makes it more verbose to call, without obvious benefits. Is this class going to be extended soon?\n\nOh, one benefit could be in grouping of the methods, though this groups almost everything to this class, which is almost equivalent to no grouping.\n\nAlso does not help testing, the injection of the test offset processor is now longer to follow.\n\nConfused.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698fbba9_04c32c85",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "typo: s/proccessor/processor/",
+      "range": {
+        "startLine": 41,
+        "startChar": 35,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd90f865_3804bc9d",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "nit: http, their certificate expired ~1 year ago",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4d480c_4af0e1a2",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "Referring to test_utils.SymbolInfo as \u0027SymbolInfo\u0027 can be confusing here because the majority of uses of SymbolInfo comes from symbol_extractor.\n\nI see 2 ways to reduce the hypothetical confusion:\n1. use explicit test_utils.SymbolInfo here\n2. use symbol_extractor.SymbolInfo here with None as a section\n\nI would prefer (2) because it avoids introducing one-more-similar abstraction - easier to remember",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308f210e_627c0dc6",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "Why reintroducing symbol_extractor.SymbolInfo under a different name?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec176dc0_296836fa",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "since it is a single use of this name, test_utils.TestSymbolOffsetProcessor looks clearer",
+      "range": {
+        "startLine": 33,
+        "startChar": 30,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70de7a24_954336a0",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T16:06:46Z",
+      "side": 1,
+      "message": "I think the order of test methods was alphabetical, what is the new ordering principle?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
