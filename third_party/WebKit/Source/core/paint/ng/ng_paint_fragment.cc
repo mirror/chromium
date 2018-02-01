@@ -7,6 +7,7 @@
 #include "core/layout/LayoutInline.h"
 #include "core/layout/ng/geometry/ng_physical_offset_rect.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/layout/ng/ng_physical_container_fragment.h"
 #include "core/layout/ng/ng_physical_fragment.h"
@@ -149,6 +150,14 @@ void NGPaintFragment::PaintInlineBoxForDescendants(
     child->PaintInlineBoxForDescendants(paint_info, paint_offset, layout_object,
                                         offset + child->Offset());
   }
+}
+
+LayoutRect NGPaintFragment::PartialInvalidationRect() const {
+  // TODO(yochio): Return only selected rect.
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  const NGPaintFragment* block_fragment =
+      GetLayoutObject()->EnclosingNGBlockFlow()->PaintFragment();
+  return block_fragment->VisualRect();
 }
 
 }  // namespace blink
