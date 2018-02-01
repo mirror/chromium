@@ -206,7 +206,7 @@ void MockPrinter::PrintPage(
   // Load the data sent from a RenderView object and create a PageData object.
   // We duplicate the given file handle when creating a base::SharedMemory
   // instance so that its destructor closes the copy.
-  auto& content = params.content;
+  const auto& content = params.content;
   EXPECT_GT(content.data_size, 0U);
   base::SharedMemory metafile_data(content.metafile_data_handle, true);
   metafile_data.Map(content.data_size);

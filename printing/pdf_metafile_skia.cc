@@ -65,6 +65,8 @@ struct PdfMetafileSkiaData {
 
   std::vector<Page> pages_;
   std::unique_ptr<SkStreamAsset> pdf_data_;
+  int document_cookie = 0;
+  base::Optional<int> page_number;
 
   // The scale factor is used because Blink occasionally calls
   // PaintCanvas::getTotalMatrix() even though the total matrix is not as
@@ -78,9 +80,18 @@ struct PdfMetafileSkiaData {
 #endif
 };
 
-PdfMetafileSkia::PdfMetafileSkia(SkiaDocumentType type)
+PdfMetafileSkia::PdfMetafileSkia()
+    : data_(std::make_unique<PdfMetafileSkiaData>()) {
+  data_->type_ = SkiaDocumentType::PDF;
+}
+
+PdfMetafileSkia::PdfMetafileSkia(SkiaDocumentType type,
+                                 int document_cookie,
+                                 base::Optional<int> page_number)
     : data_(std::make_unique<PdfMetafileSkiaData>()) {
   data_->type_ = type;
+  data_->document_cookie = document_cookie;
+  data_->page_number = page_number;
 }
 
 PdfMetafileSkia::~PdfMetafileSkia() = default;
@@ -281,7 +292,8 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     SkiaDocumentType type) {
   // If we only ever need the metafile for the last page, should we
   // only keep a handle on one PaintRecord?
-  auto metafile = std::make_unique<PdfMetafileSkia>(type);
+  auto metafile =
+      std::make_unique<PdfMetafileSkia>(type, data_->document_cookie);
   if (data_->pages_.size() == 0)
     return metafile;
 
@@ -294,6 +306,10 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     metafile.reset();
 
   return metafile;
+}
+
+base::Optional<int> PdfMetafileSkia::GetPageNumber() const {
+  return data_->page_number;
 }
 
 }  // namespace printing

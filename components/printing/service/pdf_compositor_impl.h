@@ -65,12 +65,13 @@ class PdfCompositorImpl : public mojom::PdfCompositor {
       base::OnceCallback<void(PdfCompositor::Status,
                               mojo::ScopedSharedBufferHandle)>;
 
-  // Other than content, it also stores the mapping for all the subframe content
-  // to the frames they refer to, and status during frame composition.
-  struct FrameInfo {
-    FrameInfo(std::unique_ptr<base::SharedMemory> content,
-              const ContentToFrameMap& map);
-    ~FrameInfo();
+  // Base structure to store a frame's content and its subframe
+  // content information.
+  struct FrameContentInfo {
+    FrameContentInfo(std::unique_ptr<base::SharedMemory> content,
+                     const ContentToFrameMap& map);
+    FrameContentInfo();
+    ~FrameContentInfo();
 
     // Serialized SkPicture content of this frame.
     std::unique_ptr<base::SharedMemory> serialized_content;
@@ -80,6 +81,13 @@ class PdfCompositorImpl : public mojom::PdfCompositor {
 
     // Subframe content id and its corresponding frame guid.
     ContentToFrameMap subframe_content_map;
+  };
+
+  // Other than content, it also stores the mapping for all the subframe content
+  // to the frames they refer to, and status during frame composition.
+  struct FrameInfo : public FrameContentInfo {
+    FrameInfo();
+    ~FrameInfo();
 
     // The following fields are used for storing composition status.
     // Set to true when this frame's |serialized_content| is composed with
@@ -92,9 +100,11 @@ class PdfCompositorImpl : public mojom::PdfCompositor {
   using FrameMap = base::flat_map<uint64_t, std::unique_ptr<FrameInfo>>;
 
   // Stores the page or document's request information.
-  struct RequestInfo {
+  struct RequestInfo : public FrameContentInfo {
     RequestInfo(uint64_t frame_guid,
                 base::Optional<uint32_t> page_num,
+                std::unique_ptr<base::SharedMemory> content,
+                const ContentToFrameMap& content_info,
                 const base::flat_set<uint64_t>& pending_subframes,
                 CompositeToPdfCallback callback);
     ~RequestInfo();
@@ -161,7 +171,7 @@ class PdfCompositorImpl : public mojom::PdfCompositor {
   // Keep track of all frames' information indexed by frame id.
   FrameMap frame_info_map_;
 
-  std::unique_ptr<RequestInfo> request_;
+  std::vector<std::unique_ptr<RequestInfo>> requests_;
 
   DISALLOW_COPY_AND_ASSIGN(PdfCompositorImpl);
 };
