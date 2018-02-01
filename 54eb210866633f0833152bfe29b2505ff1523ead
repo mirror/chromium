@@ -46,6 +46,30 @@
       "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a80a0e_7a2bc9ab",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T21:12:41Z",
+      "side": 1,
+      "message": "I think so.\n\nThe comment about HWCAP2 (as opposed to HWCAP) makes more sense when it is closer to the actual use of HWCAP2. So I like that part.\n\nThe other part about cronet and really old ARM devices....I assume that is only for __ARM_NEON(__). All __aarch64__ would be newer devices. But it isn\u0027t perfectly clear where that comment belongs.\n\n\nThe cronet builds won\u0027t have __ARM_NEON(__) defined, right? So maybe it doesn\u0027t belong here.\n\nActually, thinking about it more, we probably just want to delete that comment. It could help someone who is debugging why this optimization path isn\u0027t being taken on their cronet build. But that is a very, very specific situation. And if we plan to upstream this, that won\u0027t provide value to typical users.",
+      "parentUuid": "06201a56_f1eeeb03",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
