@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a62036c5_6317e66b",
+        "filename": "chrome/browser/extensions/lazy_background_page_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T02:39:16Z",
+      "side": 1,
+      "message": "Ack; thank you for the effort!",
+      "parentUuid": "0571d186_cade5aaa",
+      "revId": "318ba42db09b260e145c7d34cd6652e78a34bcfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b25f00be_f784c101",
         "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.js",
         "patchSetId": 3
