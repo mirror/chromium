@@ -5,12 +5,14 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.support.customtabs.CustomTabsIntent;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -27,6 +29,7 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.webapk.lib.client.WebApkValidator;
 import org.chromium.webapk.lib.common.WebApkConstants;
+import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.lang.ref.WeakReference;
 
@@ -71,8 +74,7 @@ public class WebappLauncherActivity extends Activity {
         // {@link WebApkInfo#create()} and {@link WebappInfo#create()} return null if the intent
         // does not specify required values such as the uri.
         if (webappInfo == null) {
-            String url = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_URL);
-            launchInTab(url, ShortcutSource.UNKNOWN);
+            launchInvalidWebapp(intent);
             return;
         }
 
@@ -108,11 +110,43 @@ public class WebappLauncherActivity extends Activity {
             return;
         }
 
-        Log.e(TAG, "Shortcut (%s) opened in Chrome.", webappUrl);
-
         // The shortcut data doesn't match the current encoding. Change the intent action to
         // launch the URL with a VIEW Intent in the regular browser.
-        launchInTab(webappUrl, webappSource);
+        launchInvalidWebapp(intent);
+    }
+
+    /** Launches the invalid Webapp. */
+    private void launchInvalidWebapp(Intent intent) {
+        String url = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_URL);
+        if (TextUtils.isEmpty(url) || !shouldLaunchInvalidWebappInCct(intent)) {
+            Log.e(TAG, "Shortcut (%s) opened in Chrome.", url);
+            launchInTab(url, ShortcutSource.UNKNOWN);
+            return;
+        }
+        // For WebAPKs with disableFullScreenMode set to true, launch them in a Custom Tab.
+        // See https://crbug.com/806946.
+        launchInCCT(url);
+    }
+
+    /** Returns whether to launch the Webapp in a Custom Tab. */
+    private boolean shouldLaunchInvalidWebappInCct(Intent intent) {
+        String webApkPackage =
+                IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
+        if (TextUtils.isEmpty(webApkPackage)) return false;
+
+        Bundle metaData = ShortcutHelper.extractMetaData(webApkPackage);
+        if (metaData == null) return false;
+        return metaData.getBoolean(WebApkMetaDataKeys.DISABLE_FULL_SCREEN_MODE);
+    }
+
+    /** Launches the URL in a Custom Tab. */
+    private void launchInCCT(String url) {
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent customTabsIntent = builder.build();
+
+        Context context = ContextUtils.getApplicationContext();
+        customTabsIntent.intent.setPackage(context.getPackageName());
+        customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 
     // Gets the source of a WebAPK from the WebappDataStorage if the source has been stored before.
