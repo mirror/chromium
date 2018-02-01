@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c36af28_ad1436d7",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T17:46:28Z",
+      "side": 1,
+      "message": "nit:  \"scheme_to_record\" sounds like the scheme we care about, not whether we care about the scheme.  Maybe \"should_record_scheme\"?",
+      "range": {
+        "startLine": 247,
+        "startChar": 44,
+        "endLine": 247,
+        "endChar": 52
+      },
+      "revId": "05528159759a69d2ecc038319939ce8a9ef72f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de939867_50601754",
+        "filename": "content/browser/loader/resource_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T17:46:28Z",
+      "side": 1,
+      "message": "WARN_UNUSED_RESULT?  also document the return value, and what it does?",
+      "range": {
+        "startLine": 361,
+        "startChar": 33,
+        "endLine": 361,
+        "endChar": 46
+      },
+      "revId": "05528159759a69d2ecc038319939ce8a9ef72f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc30fdd0_c43bf34b",
+        "filename": "services/network/public/interfaces/url_loader.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-01T17:46:28Z",
+      "side": 1,
+      "message": "nit:  \"before fetching body starts\" -\u003e \"before fetching the body starts\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 29,
+        "endLine": 64,
+        "endChar": 38
+      },
+      "revId": "05528159759a69d2ecc038319939ce8a9ef72f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
