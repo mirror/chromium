@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f5db7d_3cdabb15",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "I still think it\u0027s weird that you have a default origin. I don\u0027t think it makes sense for you to ever specify a raw site exception without wanting to specify it\u0027s origin explicitly. I think it\u0027s probably best to make origin a required argument for this function, with an optional override.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d21419b_4e3e0067",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "Can we use createRawSiteException instead of this?",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d351fa84_e237bc45",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "As mentioned, pass an array of {setting, value} objects directly here.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb481d3_9bd8397f",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "This should be using createRawSiteException. I\u0027m also not sure why this isn\u0027t just fully replaced by createRawSiteException with the setting field overridden. Especially since some callers set the setting to ALLOW, and half the callers set embeddingOrigin to \u0027\u0027 anyway.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d083bb_aa0ac6bd",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "Should be using createRawSiteException?",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103a9dac_836c64f5",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "This should be non-nullable too, right?",
+      "range": {
+        "startLine": 8,
+        "startChar": 24,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506a541f_5d452965",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "Remove and replace with something like createContentSettingPair which returns {setting: string, value: Object}.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6131de81_752250f1",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "nit: this uses braces around a typename but bars for SiteSettingsPref. I\u0027m also happy to delete these descriptions since they don\u0027t really add any value.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b17229d_270b7e8f",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "Make these overrides optional. I\u0027m seeing a lot of empty objects getting passed.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2da523_42df2f85",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T05:51:31Z",
+      "side": 1,
+      "message": "As discussed, pass a list here instead.",
+      "revId": "9607e1b47b09a185b8d816498230a701f4ca860d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
