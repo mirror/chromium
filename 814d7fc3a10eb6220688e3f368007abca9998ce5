@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f097ff_68981276",
+        "filename": "ash/login/ui/login_keyboard_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T19:24:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure this class should derive from LoginTestBase, since it seems like a lot of methods on that class are not useful given this one, ie, data_dispatcher, widget_handling, etc.\n\nThis class seems like a better LoginTestBase - do you want to investigate just replacing LoginTestBase with this code?",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de323e18_1f52a8a7",
+        "filename": "ash/login/ui/login_keyboard_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T19:24:15Z",
+      "side": 1,
+      "message": "// LoginTestBase:\n\nPut at the end after non-overrides",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5ff97f_cb217c5e",
+        "filename": "ash/login/ui/login_keyboard_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T19:24:15Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021f1799_6e9b6a0a",
+        "filename": "ash/login/ui/login_keyboard_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T19:24:15Z",
+      "side": 1,
+      "message": "Can we either override LoginTestBase::SetUserCount or make SetUserCount do what this method does? I think API users will be confused by the difference.",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fbab33_8c59eef9",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T19:24:15Z",
+      "side": 1,
+      "message": "target_height? min_height implies we support a range but the conditional on line 185 implies otherwise.",
+      "revId": "814d7fc3a10eb6220688e3f368007abca9998ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
