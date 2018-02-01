@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbef50aa_56660802",
+        "filename": "storage/browser/blob/blob_url_loader_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-01T19:02:33Z",
+      "side": 1,
+      "message": "Ultimately my hope is to get rid of content::BlobURLLoaderFactory completely, replacing all usage with this somehow. Certainly all renderer initiated fetching of blob URLs will have to go through this codepath, and most browser initiated fetching of blob URLs probably shouldn\u0027t be using URLs in the first place.\n \nBut yeah, I do agree that it\u0027s very confusing to have the same class in multiple namespaces, and I definitely could use a comment here. Also added a comment to the storage:: one explaining why it\u0027s deprecated.",
+      "parentUuid": "3dd42219_0c0bdd15",
+      "revId": "cb227d67a205d87a95df1305ffcb7e464c176cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd7f296_d29ee0e6",
         "filename": "third_party/WebKit/common/blob/blob_url_store.mojom",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "cb227d67a205d87a95df1305ffcb7e464c176cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09bf2d2_8f5de617",
+        "filename": "third_party/WebKit/common/blob/blob_url_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-01T19:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd7f296_d29ee0e6",
+      "revId": "cb227d67a205d87a95df1305ffcb7e464c176cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
