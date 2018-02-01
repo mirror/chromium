@@ -31,7 +31,8 @@ OffscreenCanvasSurfaceImpl::OffscreenCanvasSurfaceImpl(
   binding_.set_connection_error_handler(
       base::BindOnce(&OffscreenCanvasSurfaceImpl::OnSurfaceConnectionClosed,
                      base::Unretained(this)));
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager_->RegisterFrameSinkId(
+      frame_sink_id_, false /* report_synchronization_events */, this);
 #if DCHECK_IS_ON()
   host_frame_sink_manager_->SetFrameSinkDebugLabel(
       frame_sink_id_, "OffscreenCanvasSurfaceImpl");
@@ -70,6 +71,9 @@ void OffscreenCanvasSurfaceImpl::OnFirstSurfaceActivation(
   if (client_)
     client_->OnFirstSurfaceActivation(surface_info);
 }
+
+void OffscreenCanvasSurfaceImpl::OnSynchronizationEvent(
+    base::TimeDelta duration) {}
 
 void OffscreenCanvasSurfaceImpl::OnFrameTokenChanged(uint32_t frame_token) {
   // TODO(yiyix, fsamuel): To complete plumbing of frame tokens for offscreen

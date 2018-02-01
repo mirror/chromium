@@ -12,6 +12,7 @@
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/default_tick_clock.h"
 #include "cc/base/switches.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -59,7 +60,8 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
   factory->GetContextFactory()->AddObserver(this);
   viz::HostFrameSinkManager* host_frame_sink_manager =
       factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
-  host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager->RegisterFrameSinkId(
+      frame_sink_id_, true /* report_synchronization_events */, this);
 #if DCHECK_IS_ON()
   host_frame_sink_manager->SetFrameSinkDebugLabel(frame_sink_id_,
                                                   "DelegatedFrameHost");
@@ -619,6 +621,14 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
 
   frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   // Note: the frame may have been evicted immediately.
+}
+
+void DelegatedFrameHost::OnSynchronizationEvent(base::TimeDelta duration) {
+  TRACE_EVENT_INSTANT1("viz", "MainFrameSynchronizationEvent",
+                       TRACE_EVENT_SCOPE_THREAD, "duration_ms",
+                       duration.InMilliseconds());
+  UMA_HISTOGRAM_TIMES("Compositing.MainFrameSynchronization.Duration",
+                      duration);
 }
 
 void DelegatedFrameHost::OnFrameTokenChanged(uint32_t frame_token) {

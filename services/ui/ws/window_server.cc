@@ -56,7 +56,7 @@ class VizHostProxyImpl : public VizHostProxy {
   void RegisterFrameSinkId(const viz::FrameSinkId& frame_sink_id,
                            viz::HostFrameSinkClient* client) override {
     if (manager_)
-      manager_->RegisterFrameSinkId(frame_sink_id, client);
+      manager_->RegisterFrameSinkId(frame_sink_id, false, client);
   }
 
   void SetFrameSinkDebugLabel(const viz::FrameSinkId& frame_sink_id,

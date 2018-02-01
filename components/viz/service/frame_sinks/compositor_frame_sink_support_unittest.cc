@@ -64,7 +64,7 @@ class CompositorFrameSinkSupportTest : public testing::Test {
         consumer_sync_token_(GenTestSyncToken(5)) {
     manager_.SetLocalClient(&frame_sink_manager_client_);
     manager_.surface_manager()->AddObserver(&surface_observer_);
-    manager_.RegisterFrameSinkId(kArbitraryFrameSinkId);
+    manager_.RegisterFrameSinkId(kArbitraryFrameSinkId, false);
     manager_.SetFrameSinkDebugLabel(kArbitraryFrameSinkId,
                                     "kArbitraryFrameSinkId");
     support_ = std::make_unique<CompositorFrameSinkSupport>(
@@ -455,7 +455,7 @@ TEST_F(CompositorFrameSinkSupportTest, ResourceLifetime) {
 }
 
 TEST_F(CompositorFrameSinkSupportTest, AddDuringEviction) {
-  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId, false);
   manager_.SetFrameSinkDebugLabel(kAnotherArbitraryFrameSinkId,
                                   "kAnotherArbitraryFrameSinkId");
   MockCompositorFrameSinkClient mock_client;
@@ -481,7 +481,7 @@ TEST_F(CompositorFrameSinkSupportTest, AddDuringEviction) {
 
 // Verifies that only monotonically increasing LocalSurfaceIds are accepted.
 TEST_F(CompositorFrameSinkSupportTest, MonotonicallyIncreasingLocalSurfaceIds) {
-  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId, false);
   manager_.SetFrameSinkDebugLabel(kAnotherArbitraryFrameSinkId,
                                   "kAnotherArbitraryFrameSinkId");
   MockCompositorFrameSinkClient mock_client;
@@ -520,7 +520,7 @@ TEST_F(CompositorFrameSinkSupportTest, MonotonicallyIncreasingLocalSurfaceIds) {
 
 // Tests doing an EvictCurrentSurface before shutting down the factory.
 TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
-  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId, false);
   manager_.SetFrameSinkDebugLabel(kAnotherArbitraryFrameSinkId,
                                   "kAnotherArbitraryFrameSinkId");
   MockCompositorFrameSinkClient mock_client;
@@ -561,7 +561,7 @@ TEST_F(CompositorFrameSinkSupportTest, EvictSurfaceWithTemporaryReference) {
   frame_sink_manager_client_.SetFrameSinkHierarchy(parent_frame_sink_id,
                                                    support_->frame_sink_id());
 
-  manager_.RegisterFrameSinkId(parent_frame_sink_id);
+  manager_.RegisterFrameSinkId(parent_frame_sink_id, false);
   manager_.SetFrameSinkDebugLabel(parent_frame_sink_id, "parent_frame_sink_id");
 
   const LocalSurfaceId local_surface_id(5, kArbitraryToken);

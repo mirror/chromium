@@ -37,6 +37,8 @@ class TestFrameSinkManagerClient : public mojom::FrameSinkManagerClient {
 
   // mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const SurfaceId& surface_id) override;
+  void OnSynchronizationEvent(const FrameSinkId& frame_sink_id,
+                              base::TimeDelta duration) override {}
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override {}
   void OnClientConnectionClosed(const FrameSinkId& frame_sink_id) override {}
   void OnAggregatedHitTestRegionListUpdated(

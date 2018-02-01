@@ -476,7 +476,7 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       layer_tree_frame_sink_request_pending_(false),
       lock_manager_(base::ThreadTaskRunnerHandle::Get(), this),
       weak_factory_(this) {
-  GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+  GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, false, this);
 #if DCHECK_IS_ON()
   GetHostFrameSinkManager()->SetFrameSinkDebugLabel(frame_sink_id_,
                                                     "CompositorImpl");
@@ -965,6 +965,8 @@ void CompositorImpl::OnFirstSurfaceActivation(
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }
+
+void CompositorImpl::OnSynchronizationEvent(base::TimeDelta duration) {}
 
 void CompositorImpl::OnDisplayMetricsChanged(const display::Display& display,
                                              uint32_t changed_metrics) {
