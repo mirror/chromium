@@ -760,12 +760,17 @@ bool ColorSpace::GetTransferFunction(SkColorSpaceTransferFn* fn) const {
       // This could potentially be represented the same as IEC61966_2_1, but
       // it handles negative values differently.
       break;
+    case ColorSpace::TransferID::SMPTEST2084:
+    case ColorSpace::TransferID::SMPTEST2084_NON_HDR:
+      // SMPTE ST.2084 EOTF function is not amenable to SkColorSpaceTransferFn
+      // style, so we use an approximation for low luminance: Y = 2.3 E' ^ 2.8
+      fn->fA = 1.3464f;
+      fn->fG = 2.8f;
+      return true;
     case ColorSpace::TransferID::ARIB_STD_B67:
     case ColorSpace::TransferID::BT1361_ECG:
     case ColorSpace::TransferID::LOG:
     case ColorSpace::TransferID::LOG_SQRT:
-    case ColorSpace::TransferID::SMPTEST2084:
-    case ColorSpace::TransferID::SMPTEST2084_NON_HDR:
     case ColorSpace::TransferID::INVALID:
       break;
   }
