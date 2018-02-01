@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5355309_03fe9a86",
+        "filename": "extensions/renderer/module_system.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T16:54:57Z",
+      "side": 1,
+      "message": "super-nit: as the comment on DefineOwnProperty says, since you don\u0027t specify any attributes, CreateDataProperty may be slightly faster here (but it\u0027s no big deal either way)",
+      "revId": "ffbc1a6dc338f5e139622503d352ea7f3409ee40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
