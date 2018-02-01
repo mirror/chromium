@@ -174,6 +174,30 @@
     },
     {
       "key": {
+        "uuid": "975b8b8f_994b0df7",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2018-02-01T00:12:30Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c260dd70_816d1fea",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 61
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "076537e2_416b3930",
         "filename": "components/cbor/cbor_writer.cc",
         "patchSetId": 3
