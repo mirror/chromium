@@ -1419,6 +1419,16 @@
       # Audio Linux" at all, since they're supposed to be compiled out for
       # Chromecast.
     ],
+    'modifications': {
+      # chromium.linux
+      'Fuchsia x64': {
+        # TODO(kbr): remove this spurious filter.
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
+      },
+    },
   },
   'dbus_unittests': {
     'remove_from': [
@@ -2363,6 +2373,15 @@
           'hard_timeout': 0,
         },
       },
+
+      # chromium.linux
+      'Fuchsia x64': {
+        # TODO(kbr): remove this spurious filter.
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
+      },
     },
   },
   'mojo_public_bindings_unittests': {
@@ -3184,6 +3203,16 @@
       'Cast Audio Linux',
       'Cast Linux',
     ],
+    'modifications': {
+      # chromium.linux
+      'Fuchsia x64': {
+        # TODO(kbr): remove this spurious filter.
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
+      },
+    },
   },
   'snapshot_unittests': {
     'remove_from': [
@@ -3227,6 +3256,14 @@
         'swarming': {
           'hard_timeout': 60,
         },
+      },
+      # chromium.linux
+      'Fuchsia x64': {
+        # TODO(kbr): remove this spurious filter.
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
       },
     },
   },
