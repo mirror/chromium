@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc233f2_ff2d4e52",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-01T00:12:23Z",
+      "side": 1,
+      "message": "Since this is not trivial, could you add a comment above this line?",
+      "revId": "b781862c366af1e8a2d0202eda1da0ec718c0cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8bae7b_844e5789",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/ResourceWebSocketFrameView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-01T00:12:23Z",
+      "side": 1,
+      "message": "move this check to be the second line of this method?",
+      "revId": "b781862c366af1e8a2d0202eda1da0ec718c0cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
