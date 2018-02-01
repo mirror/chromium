@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df5baf9a_b346f3f4",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "We should really update these constants to be a single char as opposed to a string at some point :)",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563bc485_71c7d62c",
+        "filename": "content/browser/notifications/notification_id_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "nit: add a TODO to remove \"Mojo\" from the name when the old code path is being deleted",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b924af2_ac11eed5",
+        "filename": "content/browser/notifications/notification_id_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "nit: Ideally this would just take a url::Origin. That also makes the DCHECK checking that origin\u003d\u003dorigin.GetOrigin() in the implementation redundant.\n\nPretty much all our code has to be updated to use url::Origin...",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677d23a6_23ca62cb",
+        "filename": "third_party/WebKit/Source/modules/notifications/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "base/unguessable_token.h",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747ee80a_a1efcdb6",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "auto unguessable_token \u003d base::UnguessableToken::Create();\n\nWe\u0027re now creating a null one through the default constructor. I think that\u0027s meant to DCHECK, odd that we\u0027re not hitting it..",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2293993_d0cc444a",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "nit: no need for the explicit conversion",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d247ee_d6f72090",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "Maybe DCHECK(!token.IsEmpty()) and remove the one in Close()?",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8525ee85_cd551a00",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "nit: document |token|",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c16a41_521d38e0",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T19:10:33Z",
+      "side": 1,
+      "message": "Please document the |token| here too",
+      "revId": "e2399f723d718cc2162d307258618c213f8c490a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
