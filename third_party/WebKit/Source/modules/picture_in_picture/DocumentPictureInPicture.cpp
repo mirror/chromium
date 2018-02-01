@@ -6,6 +6,8 @@
 
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
+#include "core/dom/events/Event.h"
+#include "core/html/media/HTMLVideoElement.h"
 #include "modules/picture_in_picture/PictureInPictureController.h"
 
 namespace blink {
@@ -26,14 +28,19 @@ bool DocumentPictureInPicture::pictureInPictureEnabled(Document& document) {
 ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
     ScriptState* script_state,
     Document& document) {
-  if (!PictureInPictureController::Ensure(document).PictureInPictureElement()) {
+  HTMLVideoElement* picture_in_picture_element =
+      PictureInPictureController::Ensure(document).PictureInPictureElement();
+
+  if (!picture_in_picture_element) {
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(kInvalidStateError, kNoPictureInPictureElement));
   }
 
   // TODO(crbug.com/806249): Call element.exitPictureInPicture().
-  // TODO(crbug.com/806249): Trigger leavepictureinpicture event.
+
+  picture_in_picture_element->DispatchEvent(
+      Event::CreateBubble(EventTypeNames::leavepictureinpicture));
 
   PictureInPictureController::Ensure(document).UnsetPictureInPictureElement();
 
