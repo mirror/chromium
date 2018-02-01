@@ -218,7 +218,22 @@ void IOSurfaceSetColorSpace(IOSurfaceRef io_surface,
     icc_profile =
         ICCProfile::FromParametricColorSpace(color_space.GetAsFullRangeRGB());
   }
-
+  if (__builtin_available(macos 10.12, *)) {
+    if (!icc_profile.IsValid() && color_space.IsHDR()) {
+      CGColorSpaceRef cg_color_space(
+          CGColorSpaceCreateWithName(kCGColorSpaceITUR_2020));
+      std::unique_ptr<CGColorSpaceRef, std::function<void(CGColorSpaceRef*)>>
+          auto_release(&cg_color_space,
+                       [](CGColorSpaceRef* f) { CGColorSpaceRelease(*f); });
+      DCHECK(cg_color_space);
+      base::ScopedCFTypeRef<CFDataRef> cf_data_icc_profile(
+          CGColorSpaceCopyICCData(cg_color_space));
+      DCHECK(cf_data_icc_profile);
+      IOSurfaceSetValue(io_surface, CFSTR("IOSurfaceColorSpace"),
+                        cf_data_icc_profile);
+      return;
+    }
+  }
   // If that fails, we can't use this color space.
   if (!icc_profile.IsValid()) {
     DLOG(ERROR) << "Failed to set color space for IOSurface: no ICC profile: "
