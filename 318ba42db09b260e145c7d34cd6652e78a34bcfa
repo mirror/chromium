@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0571d186_cade5aaa",
+        "filename": "chrome/browser/extensions/lazy_background_page_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-01T01:10:20Z",
+      "side": 1,
+      "message": "So, unfortunately both of my attempts (one with UI polling as the old test, one with MutationObserver) flaked on the bots and got reverted (I was never able to repro the flakiness locally). Given the amount of time already spent on these unsuccessful attepms, I am OK with not porting this to the MD page and simply rely on unit tests.",
+      "parentUuid": "b3cd5112_902e9fd8",
+      "revId": "318ba42db09b260e145c7d34cd6652e78a34bcfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b25f00be_f784c101",
         "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.js",
         "patchSetId": 3
