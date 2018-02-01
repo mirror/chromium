@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b36984_8280e846",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-01T19:59:54Z",
+      "side": 1,
+      "message": "Is there a reason to use GridLayout here? If not, use FillLayout and control the dialog size using CalculatePreferredSize instead.",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "ef8087e77cc1d95d7a829cc8650997f24a10182b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a992ff_b1128a6e",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-01T19:59:54Z",
+      "side": 1,
+      "message": "Use ChromeDistanceMetric::DISTANCE_BUBBLE_PREFERRED_WIDTH and remove this constant.",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "ef8087e77cc1d95d7a829cc8650997f24a10182b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
