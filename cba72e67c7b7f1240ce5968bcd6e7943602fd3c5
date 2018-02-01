@@ -87,6 +87,24 @@
       "revId": "cba72e67c7b7f1240ce5968bcd6e7943602fd3c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cfe0b6_bce3429b",
+        "filename": "chromeos/components/tether/wifi_hotspot_disconnector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-01T00:01:15Z",
+      "side": 1,
+      "message": "I removed a bit of complexity by no longer passing the GUID to CleanUpAfterWifiDisconnection(), but I kept it here.",
+      "parentUuid": "07d205ad_4da58eec",
+      "revId": "cba72e67c7b7f1240ce5968bcd6e7943602fd3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
