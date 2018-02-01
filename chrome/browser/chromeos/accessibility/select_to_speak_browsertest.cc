@@ -16,11 +16,15 @@
 #include "chrome/browser/chromeos/accessibility/speech_monitor.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/common/extensions/extension_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/test/browser_test_utils.h"
+#include "extensions/browser/extension_host.h"
 #include "extensions/browser/notification_types.h"
+#include "extensions/browser/process_manager.h"
 #include "ui/events/test/event_generator.h"
 #include "url/url_constants.h"
 
@@ -82,6 +86,23 @@ class SelectToSpeakTest : public InProcessBrowserTest {
 
   base::WeakPtr<SelectToSpeakTest> GetWeakPtr() {
     return weak_ptr_factory_.GetWeakPtr();
+  }
+
+  void RunJavaScriptInSelectToSpeakBackgroundPage(const std::string& script) {
+    extensions::ExtensionHost* host =
+        extensions::ProcessManager::Get(browser()->profile())
+            ->GetBackgroundHostForExtension(
+                extension_misc::kSelectToSpeakExtensionId);
+    CHECK(content::ExecuteScript(host->host_contents(), script));
+  }
+
+  content::WebContents* GetWebContents() {
+    return browser()->tab_strip_model()->GetActiveWebContents();
+  }
+
+  void ExecuteJavaScriptInForeground(const std::string& script) {
+    CHECK(
+        content::ExecuteScript(GetWebContents()->GetRenderViewHost(), script));
   }
 
  private:
@@ -224,6 +245,24 @@ IN_PROC_BROWSER_TEST_F(SelectToSpeakTest, FocusRingMovesWithMouse) {
   // by releasing the key before the button.
   WaitForFocusRingChanged();
   EXPECT_EQ(focus_rings.size(), 0u);
+}
+
+IN_PROC_BROWSER_TEST_F(SelectToSpeakTest, ContinuesReadingDuringResize) {
+  ActivateSelectToSpeakInWindowBounds(
+      "data:text/html;charset=utf-8,<p>First paragraph</p>"
+      "<div id='resize' style='width:300px; font-size: 10em'>"
+      "<p>Second paragraph is longer than 300 pixels and will wrap when "
+      "resized</p></div>");
+
+  EXPECT_TRUE(base::MatchPattern(speech_monitor_.GetNextUtterance(),
+                                 "First paragraph*"));
+
+  // Resize before second is spoken. If resizing caused errors finding the
+  // inlineTextBoxes in the node, speech would be stopped early.
+  ExecuteJavaScriptInForeground(
+      "document.getElementById('resize').style.width='100px'");
+  EXPECT_TRUE(
+      base::MatchPattern(speech_monitor_.GetNextUtterance(), "*when*resized*"));
 }
 
 }  // namespace chromeos
