@@ -365,6 +365,7 @@ test("aura_unittests") {
   ]
 
   deps = [
+    ":aura",
     ":test_support",
     "//base/test:test_support",
     "//components/viz/client",
