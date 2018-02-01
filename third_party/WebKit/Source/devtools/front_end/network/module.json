@@ -160,6 +160,7 @@
         "requestCookiesView.css",
         "requestHeadersTree.css",
         "requestHeadersView.css",
+        "requestHTMLView.css",
         "webSocketFrameView.css"
     ]
 }
