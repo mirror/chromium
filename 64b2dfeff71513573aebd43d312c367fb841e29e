@@ -16,6 +16,24 @@
       "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed3eaa8_c6b901bb",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116849
+      },
+      "writtenOn": "2018-02-01T21:02:43Z",
+      "side": 0,
+      "message": "It\u0027ll just show as 0 on the perf dashboard/results UI. The benchmark should not fail.",
+      "parentUuid": "b8444928_77268351",
+      "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
