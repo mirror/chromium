@@ -106,6 +106,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654f89e2_948d8d06",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-01T18:20:34Z",
+      "side": 1,
+      "message": "Yes, you are right. The CL in patch set 6 is : treating [0, 20] [340, 360] as a single range and only using the angle after the lid angle readings continuously fall into this range for 2 seconds. Should I revert back to that solution?",
+      "parentUuid": "2041b7f7_05d50a6c",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
