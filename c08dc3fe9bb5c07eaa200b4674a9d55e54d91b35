@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6e82d0_e0135572",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T01:45:23Z",
+      "side": 1,
+      "message": "Can we rename this method to more generic name (because it is also used for for repost now)?",
+      "range": {
+        "startLine": 298,
+        "startChar": 13,
+        "endLine": 298,
+        "endChar": 65
+      },
+      "revId": "c08dc3fe9bb5c07eaa200b4674a9d55e54d91b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

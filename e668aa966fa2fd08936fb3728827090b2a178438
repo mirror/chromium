@@ -334,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "7ef8d5fa_785e50a4",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-01T01:45:23Z",
+      "side": 1,
+      "message": "The last option will not catch the bug if Chrome stop showing form repost dialog for all back-forward navigations. I think it is better to have predictable behavior (like your option #1).",
+      "parentUuid": "9d4e26b5_04e326f5",
+      "range": {
+        "startLine": 268,
+        "startChar": 31,
+        "endLine": 268,
+        "endChar": 37
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c2e5257_5592d7d6",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
