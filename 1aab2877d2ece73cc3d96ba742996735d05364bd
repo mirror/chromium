@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "321babd2_bcae29c8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/distance/pathLength-zero-percentage.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-02-01T15:01:24Z",
+      "side": 1,
+      "message": "If a 0 pathLength must be treated as infinite scaling, then isn\u0027t 50% of infinite infinite, and the rendering should not appear? I suspect I am misunderstanding what infinite scaling means, and that the intention is for a pathLength\u003d0 to mean that every point along the path is actually zero distance along the path (as you have this test doing).",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "1aab2877d2ece73cc3d96ba742996735d05364bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
