@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08786fdf_1d0e12f1",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T07:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "917ecae8_54ab473a",
+      "revId": "cf08086daa286b0b704eba312fbb1cd44c44e14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c8372ad_0a8da63f",
         "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "cf08086daa286b0b704eba312fbb1cd44c44e14a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e45ae31_ae0b84fe",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T07:26:25Z",
+      "side": 1,
+      "message": "Done. This is from me, but \u0027git cl format\u0027 did not correct this ;-)",
+      "parentUuid": "2c8372ad_0a8da63f",
+      "revId": "cf08086daa286b0b704eba312fbb1cd44c44e14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
