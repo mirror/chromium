@@ -84,19 +84,16 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
   // Binds |ptr| to an implementation of Interface in the remote application.
   // |ptr| can immediately be used to start sending requests to the remote
   // interface.
-  template <typename Interface>
-  void GetInterface(mojo::InterfacePtr<Interface>* ptr) {
-    mojo::MessagePipe pipe;
-    ptr->Bind(mojo::InterfacePtrInfo<Interface>(std::move(pipe.handle0), 0u));
-
-    GetInterface(Interface::Name_, std::move(pipe.handle1));
+  template <typename... Args>
+  void GetInterface(Args&&... args) {
+    GetInterface(MakeRequest(std::forward<Args>(args)...));
   }
   template <typename Interface>
   void GetInterface(mojo::InterfaceRequest<Interface> request) {
-    GetInterface(Interface::Name_, std::move(request.PassMessagePipe()));
+    GetInterfaceByName(Interface::Name_, std::move(request.PassMessagePipe()));
   }
-  void GetInterface(const std::string& name,
-                    mojo::ScopedMessagePipeHandle request_handle);
+  void GetInterfaceByName(const std::string& name,
+                          mojo::ScopedMessagePipeHandle request_handle);
 
   // Returns a callback to GetInterface<Interface>(). This can be passed to
   // BinderRegistry::AddInterface() to forward requests.
