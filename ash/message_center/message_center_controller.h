@@ -67,7 +67,17 @@ class ASH_EXPORT MessageCenterController
   // display.
   void SetNotifierSettingsListener(NotifierSettingsListener* listener);
 
+  // Asks the client for |package_name|'s app id, which is used to update and
+  // add the notification.
+  void UpdateNotifierIdAndAddNotification(
+      const std::string& package_name,
+      std::unique_ptr<message_center::Notification> notification);
+
  private:
+  // Callback for GetAppId.
+  void OnGotAppId(std::unique_ptr<message_center::Notification> notification,
+                  const std::string& app_id);
+
   // Callback for GetNotifierList.
   void OnGotNotifierList(std::vector<mojom::NotifierUiDataPtr> ui_data);
 
