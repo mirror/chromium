@@ -118,6 +118,30 @@
       "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfed33b0_25d1eb4d",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-02-01T03:05:51Z",
+      "side": 1,
+      "message": "I just followed what the initial project leader did (i.e., oshima@). I agree with the opinion that the current way causes some inefficiency. I will discuss this issue with oshima@ and bokan@ (bokan@ will take over this project after this March. He is versed on Blink, so I believe he has his own opinion on it).",
+      "parentUuid": "76431bf4_bbba1914",
+      "range": {
+        "startLine": 200,
+        "startChar": 39,
+        "endLine": 200,
+        "endChar": 61
+      },
+      "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
