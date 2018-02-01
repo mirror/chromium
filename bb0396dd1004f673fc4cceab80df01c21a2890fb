@@ -16,6 +16,24 @@
       "revId": "bb0396dd1004f673fc4cceab80df01c21a2890fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a554be_dd70760c",
+        "filename": "mojo/public/cpp/bindings/array_traits_span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-01T23:20:29Z",
+      "side": 1,
+      "message": "The problem with treating span of {nullptr, 0} as null is that make_span(std::vector\u003cT\u003e()); would be (c++ std library) implementation defined as to being null or not.",
+      "parentUuid": "b931295c_0dcec330",
+      "revId": "bb0396dd1004f673fc4cceab80df01c21a2890fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
