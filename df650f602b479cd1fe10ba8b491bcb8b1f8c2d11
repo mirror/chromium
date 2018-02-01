@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fec7fe8_48091565",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-01T18:44:47Z",
+      "side": 1,
+      "message": "minor nit: Typo?",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "df650f602b479cd1fe10ba8b491bcb8b1f8c2d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
