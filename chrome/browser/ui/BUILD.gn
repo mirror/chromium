@@ -3255,6 +3255,13 @@ split_static_library("ui") {
         ]
       }
     }
+
+    if (!is_chromeos) {
+      sources += [
+        "views/restart_notification/restart_notification_controller.cc",
+        "views/restart_notification/restart_notification_controller.h",
+      ]
+    }
   }
 
   if (use_aura) {
