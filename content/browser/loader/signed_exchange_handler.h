@@ -9,8 +9,10 @@
 
 #include "base/callback.h"
 #include "base/optional.h"
+#include "content/public/common/resource_type.h"
 #include "mojo/common/data_pipe_drainer.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "net/cert/cert_status_flags.h"
 #include "net/ssl/ssl_info.h"
 #include "url/gurl.h"
 
@@ -18,12 +20,22 @@ namespace mojo {
 class StringDataPipeProducer;
 }  // namespace mojo
 
+namespace net {
+class URLRequestContext;
+}  // namespace net
+
 namespace network {
 struct ResourceResponseHead;
 struct URLLoaderCompletionStatus;
 }  // namespace network
 
 namespace content {
+
+class ResourceContext;
+class SignedExchangeCertFetcher;
+class URLLoaderFactoryGetter;
+class URLLoaderFactoryImpl;
+class URLLoaderThrottle;
 
 // IMPORTANT: Currenly SignedExchangeHandler doesn't implement any CBOR parsing
 // logic nor verifying logic. It just behaves as if the passed body is a signed
@@ -42,11 +54,18 @@ class SignedExchangeHandler final
                               mojo::ScopedDataPipeConsumerHandle)>;
   using ExchangeFinishedCallback =
       base::OnceCallback<void(const network::URLLoaderCompletionStatus&)>;
+  using URLLoaderThrottlesGetter = base::OnceCallback<
+      std::vector<std::unique_ptr<content::URLLoaderThrottle>>()>;
 
   // The passed |body| will be read to parse the signed HTTP exchange.
   // TODO(https://crbug.com/803774): Consider making SignedExchangeHandler
   // independent from DataPipe to make it easy to port it in //net.
-  explicit SignedExchangeHandler(mojo::ScopedDataPipeConsumerHandle body);
+  SignedExchangeHandler(
+      mojo::ScopedDataPipeConsumerHandle body,
+      URLLoaderFactoryGetter* default_url_loader_factory_getter,
+      ResourceContext* resource_context,
+      net::URLRequestContext* request_context,
+      URLLoaderThrottlesGetter url_loader_throttles_getter);
 
   ~SignedExchangeHandler() override;
 
@@ -66,12 +85,27 @@ class SignedExchangeHandler final
   // Called from |data_producer_|.
   void OnDataWritten(MojoResult result);
 
+  void OnCertVerified(net::CertStatus cert_staus,
+                      const base::Optional<net::SSLInfo>& ssl_info);
+
   mojo::ScopedDataPipeConsumerHandle body_;
+  // Used only when NetworkService is enabled.
+  scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
+  // Used only when NetworkService is disabled to keep a URLLoaderFactoryImpl
+  // for fetching certificate.
+  std::unique_ptr<URLLoaderFactoryImpl> url_loader_factory_impl_;
+  ResourceContext* resource_context_;
+  net::URLRequestContext* request_context_;
+  URLLoaderThrottlesGetter url_loader_throttles_getter_;
+  std::unique_ptr<SignedExchangeCertFetcher> cert_fetcher_;
+
   std::unique_ptr<mojo::common::DataPipeDrainer> drainer_;
   ExchangeFoundCallback found_callback_;
   ExchangeFinishedCallback finish_callback_;
   std::string original_body_string_;
   std::unique_ptr<mojo::StringDataPipeProducer> data_producer_;
+
+  bool data_completed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SignedExchangeHandler);
 };
