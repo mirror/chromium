@@ -10,6 +10,7 @@
 
 #include "base/callback.h"
 #include "base/strings/string16.h"
+#include "build/build_config.h"
 #include "ui/gfx/native_widget_types.h"
 
 class PermissionRequest;
@@ -58,6 +59,11 @@ class PermissionPrompt {
   static std::unique_ptr<PermissionPrompt> Create(
       content::WebContents* web_contents,
       Delegate* delegate);
+#if defined(OS_MACOSX)
+  static std::unique_ptr<PermissionPrompt> CreateForCocoaWindow(
+      content::WebContents* web_contents,
+      Delegate* delegate);
+#endif
   virtual ~PermissionPrompt() {}
 
   // Updates where the prompt should be anchored. ex: fullscreen toggle.
