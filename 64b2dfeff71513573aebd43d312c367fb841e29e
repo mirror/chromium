@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8444928_77268351",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-01T21:00:18Z",
+      "side": 0,
+      "message": "What happens when you return empty first_gesture_scroll_update_latency like the comment warns about? Does the benchmark fail? Or does the results or perf waterfall UI look weird?",
+      "revId": "64b2dfeff71513573aebd43d312c367fb841e29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
