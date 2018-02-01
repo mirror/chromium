@@ -245,8 +245,7 @@ void FlingController::GenerateAndSendWheelEvents(
     blink::WebMouseWheelEvent::Phase phase) {
   MouseWheelEventWithLatencyInfo synthetic_wheel(
       WebInputEvent::kMouseWheel, current_fling_parameters_.modifiers,
-      ui::EventTimeStampToSeconds(base::TimeTicks::Now()),
-      ui::LatencyInfo(ui::SourceEventType::WHEEL));
+      base::TimeTicks::Now(), ui::LatencyInfo(ui::SourceEventType::WHEEL));
   synthetic_wheel.event.delta_x = delta.x();
   synthetic_wheel.event.delta_y = delta.y();
   synthetic_wheel.event.has_precise_scrolling_deltas = true;
@@ -274,8 +273,7 @@ void FlingController::GenerateAndSendGestureScrollEvents(
     WebInputEvent::Type type,
     const gfx::Vector2dF& delta /* = gfx::Vector2dF() */) {
   GestureEventWithLatencyInfo synthetic_gesture(
-      type, current_fling_parameters_.modifiers,
-      ui::EventTimeStampToSeconds(base::TimeTicks::Now()),
+      type, current_fling_parameters_.modifiers, base::TimeTicks::Now(),
       ui::LatencyInfo(ui::SourceEventType::TOUCH));
   synthetic_gesture.event.x = current_fling_parameters_.point.x();
   synthetic_gesture.event.y = current_fling_parameters_.point.y();
@@ -362,8 +360,7 @@ void FlingController::CancelCurrentFling() {
            WebInputEvent::kGestureScrollUpdate)) {
     WebGestureEvent scroll_begin_event = last_fling_boost_event;
     scroll_begin_event.SetType(WebInputEvent::kGestureScrollBegin);
-    scroll_begin_event.SetTimeStampSeconds(
-        ui::EventTimeStampToSeconds(base::TimeTicks::Now()));
+    scroll_begin_event.SetTimeStamp(base::TimeTicks::Now());
     bool is_update =
         last_fling_boost_event.GetType() == WebInputEvent::kGestureScrollUpdate;
     float delta_x_hint =
@@ -401,9 +398,7 @@ bool FlingController::UpdateCurrentFlingState(
       gfx::Vector2d(fling_start_event.global_x, fling_start_event.global_y);
   current_fling_parameters_.modifiers = fling_start_event.GetModifiers();
   current_fling_parameters_.source_device = fling_start_event.source_device;
-  current_fling_parameters_.start_time =
-      base::TimeTicks() +
-      base::TimeDelta::FromSecondsD(fling_start_event.TimeStampSeconds());
+  current_fling_parameters_.start_time = fling_start_event.TimeStamp();
 
   if (velocity.IsZero()) {
     CancelCurrentFling();

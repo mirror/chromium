@@ -6,6 +6,7 @@ module content.mojom;
 
 import "content/common/native_types.mojom";
 import "mojo/common/string16.mojom";
+import "mojo/common/time.mojom";
 import "services/ui/public/interfaces/ime/ime.mojom";
 import "third_party/WebKit/public/web/selection_menu_behavior.mojom";
 import "ui/events/mojo/event.mojom";
@@ -137,7 +138,7 @@ struct TouchData {
 struct Event {
   EventType type;
   int32 modifiers;
-  double timestamp_seconds;
+  mojo.common.mojom.TimeTicks timestamp;
   ui.mojom.LatencyInfo latency;
   KeyData? key_data;
   PointerData? pointer_data;
