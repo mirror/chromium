@@ -77,6 +77,7 @@
 #include "modules/media_controls/elements/MediaControlTimelineElement.h"
 #include "modules/media_controls/elements/MediaControlToggleClosedCaptionsButtonElement.h"
 #include "modules/media_controls/elements/MediaControlVolumeSliderElement.h"
+#include "modules/picture_in_picture/PictureInPictureController.h"
 #include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -147,6 +148,12 @@ bool ShouldShowFullscreenButton(const HTMLMediaElement& media_element) {
   }
 
   return true;
+}
+
+bool ShouldShowPictureInPictureButton(HTMLMediaElement& media_element) {
+  return PictureInPictureController::Ensure(media_element.GetDocument())
+             .IsElementAllowed(ToHTMLVideoElement(media_element)) ==
+         PictureInPictureController::Status::kEnabled;
 }
 
 bool ShouldShowCastButton(HTMLMediaElement& media_element) {
@@ -233,7 +240,8 @@ class MediaControlsImpl::MediaControlsResizeObserverDelegate final
 };
 
 // Observes changes to the HTMLMediaElement attributes that affect controls.
-// Currently only observes the disableRemotePlayback attribute.
+// Currently only observes the disableRemotePlayback and disablePictureInPicture
+// attributes.
 class MediaControlsImpl::MediaElementMutationCallback
     : public MutationObserver::Delegate {
  public:
@@ -242,7 +250,9 @@ class MediaControlsImpl::MediaElementMutationCallback
     MutationObserverInit init;
     init.setAttributeOldValue(true);
     init.setAttributes(true);
-    init.setAttributeFilter({HTMLNames::disableremoteplaybackAttr.ToString()});
+    init.setAttributeFilter(
+        {HTMLNames::disableremoteplaybackAttr.ToString(),
+         HTMLNames::disablepictureinpictureAttr.ToString()});
     observer_->observe(&controls_->MediaElement(), init, ASSERT_NO_EXCEPTION);
   }
 
@@ -260,10 +270,13 @@ class MediaControlsImpl::MediaElementMutationCallback
       if (record->oldValue() == element.getAttribute(record->attributeName()))
         continue;
 
-      DCHECK_EQ(HTMLNames::disableremoteplaybackAttr.ToString(),
-                record->attributeName());
-      controls_->RefreshCastButtonVisibility();
-      return;
+      if (record->attributeName() ==
+          HTMLNames::disableremoteplaybackAttr.ToString())
+        controls_->RefreshCastButtonVisibility();
+
+      if (record->attributeName() ==
+          HTMLNames::disablepictureinpictureAttr.ToString())
+        controls_->RefreshPictureInPictureButtonVisibility();
     }
   }
 
@@ -898,6 +911,21 @@ String MediaControlsImpl::GetTextTrackLabel(TextTrack* track) const {
   }
 
   return track_label;
+}
+
+void MediaControlsImpl::RefreshPictureInPictureButtonVisibility() {
+  RefreshPictureInPictureButtonVisibilityWithoutUpdate();
+  BatchedControlUpdate batch(this);
+}
+
+void MediaControlsImpl::RefreshPictureInPictureButtonVisibilityWithoutUpdate() {
+  if (!ShouldShowPictureInPictureButton(MediaElement())) {
+    picture_in_picture_button_->SetIsWanted(false);
+    return;
+  }
+
+  if (MediaElement().ShouldShowControls())
+    picture_in_picture_button_->SetIsWanted(true);
 }
 
 void MediaControlsImpl::RefreshCastButtonVisibility() {
