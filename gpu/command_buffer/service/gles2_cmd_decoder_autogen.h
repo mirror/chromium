@@ -4814,6 +4814,19 @@ error::Error GLES2DecoderImpl::HandleLoseContextCHROMIUM(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderImpl::HandleUnpremultiplyAndDitherCopyCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::UnpremultiplyAndDitherCopyCHROMIUM& c =
+      *static_cast<
+          const volatile gles2::cmds::UnpremultiplyAndDitherCopyCHROMIUM*>(
+          cmd_data);
+  GLuint src_texture = static_cast<GLuint>(c.src_texture);
+  GLuint dst_texture = static_cast<GLuint>(c.dst_texture);
+  DoUnpremultiplyAndDitherCopyCHROMIUM(src_texture, dst_texture);
+  return error::kNoError;
+}
+
 error::Error GLES2DecoderImpl::HandleDrawBuffersEXTImmediate(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {
