@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6dceaf_0c58872c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-01T03:38:19Z",
+      "side": 0,
+      "message": "Nit: Comments should end in a period, like it was already here (per styleguide).\n\nI suggest reverting this file fully using the following, assuming you have a master branch with no changes from ToT.\n\ngit checkout master -- chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+      "range": {
+        "startLine": 115,
+        "startChar": 71,
+        "endLine": 115,
+        "endChar": 72
+      },
+      "revId": "87c7229a0d01387dcba50d1346cc08d7ff546e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
