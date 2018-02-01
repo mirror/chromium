@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6ffb9b_e054f093",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "Can you add a test-case where sync-reporting is turned on?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087b68c1_cb6ae98b",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "Is this something you want to measure to make sure it doesn\u0027t regress? Or do you plan on using this data to inform some other decision? In the latter case, can you document that somewhere?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205360c2_20b236d4",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "false /* field name */",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5120e6_b9a7fc9e",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "Do you see this being useful in general? Or just for reporting purposes? If the latter, would it make sense to make that a more explicit and separate reporting api? Should viz itself just report the tracing/uma based on some runtime/startup flag (or just always)?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93d20c2_b43f4e6d",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "If the deadline passes, and the dependencies become available afterwards, does this get called twice? Or just once for the deadline?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127497f0_8bdef551",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 10731,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "What is \u0027main frame\u0027? \u0027toplevel\u0027/\u0027root\u0027 frame? Or something else?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec433451_7e040e53",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-01T23:46:48Z",
+      "side": 1,
+      "message": "Set it true when the TODO in OnSynchronizationEvent() is resolved?",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
