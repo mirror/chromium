@@ -70,6 +70,24 @@
       "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8974d7fd_be5a231c",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T21:40:46Z",
+      "side": 1,
+      "message": "sure, +msw for //ui/message_center/views/",
+      "parentUuid": "a54f186f_23db5dcd",
+      "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

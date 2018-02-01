@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae0ad5cd_1fa35bd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-01T21:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e57a17_d938bc79",
+      "revId": "948323a22b10b889cc9b8b450b65f6c6fa06a057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3287a412_c8393e08",
         "filename": "ui/message_center/views/bounded_label.cc",
         "patchSetId": 12
