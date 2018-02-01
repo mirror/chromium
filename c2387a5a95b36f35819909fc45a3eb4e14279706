@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3be1db86_7e834d87",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2018-02-01T00:50:01Z",
+      "side": 1,
+      "message": "Could you add a bit more comment (here and in the CL description) that Android side is always using the default scale factor regardless of Chrome side (possibly dynamic) DSF.",
+      "range": {
+        "startLine": 287,
+        "startChar": 58,
+        "endLine": 287,
+        "endChar": 73
+      },
+      "revId": "c2387a5a95b36f35819909fc45a3eb4e14279706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bded5bb8_1f8b0b7c",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2018-02-01T00:50:01Z",
+      "side": 1,
+      "message": "could you apply the same change here as well?",
+      "range": {
+        "startLine": 387,
+        "startChar": 24,
+        "endLine": 387,
+        "endChar": 62
+      },
+      "revId": "c2387a5a95b36f35819909fc45a3eb4e14279706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
