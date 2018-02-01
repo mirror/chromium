@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6548e3b9_fec48dcd",
+        "filename": "third_party/WebKit/Source/core/css/resolver/MatchedPropertiesCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T09:35:05Z",
+      "side": 1,
+      "message": "The semantics (see below): \n\n// A given cache entry is only kept alive if none of the MatchedProperties\n// in the CachedMatchedProperties value contain a dead \"properties\" field.\n// If there is a dead field the entire cache entry is removed.\n     \nSo, a single dead property makes the cache entry go away.",
+      "parentUuid": "f61e7f2a_8d951896",
+      "revId": "84befe4e10e664ea6356d35d49b286380f2379e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8e1b7a9_7b6a9d1b",
         "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T04:57:53Z",
       "side": 1,
       "message": "Is it possible that TraceInCollectionTrait::IsAlive is called with kNoWeakHandlingInCollections?\n\nCan we probably add NOT_REACHED()?",
+      "revId": "84befe4e10e664ea6356d35d49b286380f2379e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345bd455_1ddc8a27",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T09:35:05Z",
+      "side": 1,
+      "message": "Will try, I think it is called from the KVP override because that one takes the flag from TRaits again.",
+      "parentUuid": "e8e1b7a9_7b6a9d1b",
       "revId": "84befe4e10e664ea6356d35d49b286380f2379e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
