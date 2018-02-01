@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bc91efa_e6630af0",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T19:32:49Z",
+      "side": 1,
+      "message": "nit: Get rid of |view| and use contents_view() in place",
+      "range": {
+        "startLine": 215,
+        "startChar": 15,
+        "endLine": 215,
+        "endChar": 19
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9932e10_62d46e41",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T19:32:49Z",
+      "side": 1,
+      "message": "nit: use close_button() in place",
+      "range": {
+        "startLine": 355,
+        "startChar": 22,
+        "endLine": 355,
+        "endChar": 27
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a66aa8d_e2b867ae",
+        "filename": "ui/chromeos/search_box/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T19:32:49Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr, here and other places where it fits",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 5
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271e68f1_ae333f6f",
+        "filename": "ui/chromeos/search_box/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T19:32:49Z",
+      "side": 1,
+      "message": "nit: drop explicit since this is no longer a single arg ctor",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feabc0cf_dec7965f",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T19:32:49Z",
+      "side": 1,
+      "message": "nit: Suggest to call it InitCloseButton or SetupCloseButton. SetXXX is a bit confusing to read. Same goes for SetBackButton.",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f5506a_49a93383",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T19:32:49Z",
+      "side": 1,
+      "message": "Drop const when returning non-const value.\n\nSee https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly",
+      "range": {
+        "startLine": 136,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 38
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
