@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a566ee_71d975d3",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-01T13:00:19Z",
+      "side": 1,
+      "message": "Doesn\u0027t 260 and 263 test the same thing? i.e. we only need one small delay and one UntilNoTasksRemains()?\n\nI guess it\u0027s fine to test FastForwardBy() twice in a row, but there\u0027s no requirement that kInferiorTaskDelay \u003c kShortTaskDelay.\n\nIt\u0027s just multiple delays. In fact you should test that fast-forwarding to a time at which there is no tasks also advances the clock (even though no tasks are processed).",
+      "revId": "b7694597c98e04db04ff8ca2fdc93dafd43e3116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
