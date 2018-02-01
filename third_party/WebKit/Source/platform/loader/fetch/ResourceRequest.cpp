@@ -121,6 +121,7 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   input_perf_metric_report_policy_ = data->input_perf_metric_report_policy_;
   redirect_status_ = data->redirect_status_;
   suggested_filename_ = data->suggested_filename_;
+  is_ad_resource_ = data->is_ad_resource_;
 }
 
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
@@ -208,6 +209,7 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->input_perf_metric_report_policy_ = input_perf_metric_report_policy_;
   data->redirect_status_ = redirect_status_;
   data->suggested_filename_ = suggested_filename_;
+  data->is_ad_resource_ = is_ad_resource_;
   return data;
 }
 
@@ -405,6 +407,19 @@ void ResourceRequest::SetExternalRequestStateFromRequestorAddressSpace(
 
 void ResourceRequest::SetNavigationStartTime(double navigation_start) {
   navigation_start_ = navigation_start;
+}
+
+void ResourceRequest::SetIsAdResource(bool is_ad_resource) {
+  // If this resource is already set as a non-ad, then do not overwrite its
+  // value. Since a resource request may be shared across multiple request
+  // contexts, it will be safe to retain its value as not an ad if at least one
+  // of the request comes from a non-ad context. Note that this means such a
+  // resource will not make its way to ad specific metrics, but this scenario
+  // should be rare enough to justify that.
+  if (is_ad_resource_ == AdResource::SET_FALSE)
+    return;
+  is_ad_resource_ =
+      is_ad_resource ? AdResource::SET_TRUE : AdResource::SET_FALSE;
 }
 
 bool ResourceRequest::IsConditional() const {
