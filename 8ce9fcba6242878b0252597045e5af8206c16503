@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4082563_e1365a56",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-01T08:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056921b0_77dff92f",
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d810293_d57a8250",
         "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_api.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f881189_e11435bd",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-01T08:55:15Z",
+      "side": 1,
+      "message": "I was following the \u0027pattern\u0027 introduced by GetDirectoryDeviceId :)\nBut I agree, I\u0027ll inline them.",
+      "parentUuid": "5d810293_d57a8250",
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "59445cae_292c639f",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-01T08:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a5c09e0_305c4404",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "558b738a_7a97b5a8",
         "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_apitest.cc",
         "patchSetId": 8
@@ -79,6 +139,30 @@
       "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4646d7a0_bf24578a",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-01T08:55:15Z",
+      "side": 1,
+      "message": "Oh yes you\u0027re right, but that breaks with DictionaryValue-\u003eValue, which is deprecated anyway, so I\u0027ve fixed that too.",
+      "parentUuid": "558b738a_7a97b5a8",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

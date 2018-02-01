@@ -122,6 +122,24 @@
       "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56b696f8_352490cc",
+        "filename": "chrome/test/data/extensions/api_test/enterprise_device_attributes/basic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-01T08:55:15Z",
+      "side": 1,
+      "message": "Understood, thanks for explaining!",
+      "parentUuid": "fa4faa1c_6f2e881f",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
