@@ -15,6 +15,8 @@ namespace blink {
 class CachingWordShaperTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    FontCache::InitializeForTesting();
+    font_cache_purge_preventer.emplace();
     font_description.SetComputedSize(12.0);
     font_description.SetLocale(LayoutLocale::Get("en"));
     ASSERT_EQ(USCRIPT_LATIN, font_description.GetScript());
@@ -27,7 +29,7 @@ class CachingWordShaperTest : public ::testing::Test {
     cache = std::make_unique<ShapeCache>();
   }
 
-  FontCachePurgePreventer font_cache_purge_preventer;
+  Optional<FontCachePurgePreventer> font_cache_purge_preventer;
   FontDescription font_description;
   Font font;
   std::unique_ptr<ShapeCache> cache;

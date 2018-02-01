@@ -5,11 +5,13 @@
 #include "platform/fonts/AcceptLanguagesResolver.h"
 
 #include "platform/LayoutLocale.h"
+#include "platform/fonts/FontCache.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
 TEST(AcceptLanguagesResolverTest, AcceptLanguagesChanged) {
+  FontCache::InitializeForTesting();
   struct {
     const char* accept_languages;
     UScriptCode script;

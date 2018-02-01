@@ -36,6 +36,8 @@ scoped_refptr<ShapeResult> ShapeLine(ShapingLineBreaker* breaker,
 class ShapingLineBreakerTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    FontCache::InitializeForTesting();
+    font_cache_purge_preventer.emplace();
     font_description.SetComputedSize(12.0);
     font = Font(font_description);
     font.Update(nullptr);
@@ -72,7 +74,7 @@ class ShapingLineBreakerTest : public ::testing::Test {
     return break_positions;
   }
 
-  FontCachePurgePreventer font_cache_purge_preventer;
+  Optional<FontCachePurgePreventer> font_cache_purge_preventer;
   FontDescription font_description;
   Font font;
   unsigned start_index = 0;

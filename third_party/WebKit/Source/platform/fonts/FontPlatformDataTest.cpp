@@ -39,7 +39,12 @@ using blink::testing::CreateTestFont;
 
 namespace blink {
 
-TEST(FontPlatformDataTest, AhemHasNoSpaceInLigaturesOrKerning) {
+class FontPlatformDataTest : public ::testing::Test {
+ protected:
+  void SetUp() override { FontCache::InitializeForTesting(); }
+};
+
+TEST_F(FontPlatformDataTest, AhemHasNoSpaceInLigaturesOrKerning) {
   Font font =
       CreateTestFont("Ahem", testing::PlatformTestDataPath("Ahem.woff"), 16);
   const FontPlatformData& platform_data = font.PrimaryFont()->PlatformData();
@@ -48,7 +53,7 @@ TEST(FontPlatformDataTest, AhemHasNoSpaceInLigaturesOrKerning) {
   EXPECT_FALSE(platform_data.HasSpaceInLigaturesOrKerning(features));
 }
 
-TEST(FontPlatformDataTest, AhemSpaceLigatureHasSpaceInLigaturesOrKerning) {
+TEST_F(FontPlatformDataTest, AhemSpaceLigatureHasSpaceInLigaturesOrKerning) {
   Font font = CreateTestFont(
       "AhemSpaceLigature",
       testing::PlatformTestDataPath("AhemSpaceLigature.woff"), 16);
@@ -58,7 +63,7 @@ TEST(FontPlatformDataTest, AhemSpaceLigatureHasSpaceInLigaturesOrKerning) {
   EXPECT_TRUE(platform_data.HasSpaceInLigaturesOrKerning(features));
 }
 
-TEST(FontPlatformDataTest, AhemSpaceLigatureHasNoSpaceWithoutFontFeatures) {
+TEST_F(FontPlatformDataTest, AhemSpaceLigatureHasNoSpaceWithoutFontFeatures) {
   Font font = CreateTestFont(
       "AhemSpaceLigature",
       testing::PlatformTestDataPath("AhemSpaceLigature.woff"), 16);

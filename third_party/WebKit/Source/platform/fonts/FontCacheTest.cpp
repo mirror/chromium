@@ -13,7 +13,12 @@
 
 namespace blink {
 
-TEST(FontCache, getLastResortFallbackFont) {
+class FontCacheTest : public ::testing::Test {
+ protected:
+  void SetUp() override { FontCache::InitializeForTesting(); }
+};
+
+TEST_F(FontCacheTest, getLastResortFallbackFont) {
   FontCache* font_cache = FontCache::GetFontCache();
   ASSERT_TRUE(font_cache);
 
@@ -28,7 +33,7 @@ TEST(FontCache, getLastResortFallbackFont) {
   EXPECT_TRUE(font_data);
 }
 
-TEST(FontCache, NoFallbackForPrivateUseArea) {
+TEST_F(FontCacheTest, NoFallbackForPrivateUseArea) {
   FontCache* font_cache = FontCache::GetFontCache();
   ASSERT_TRUE(font_cache);
 
@@ -43,7 +48,7 @@ TEST(FontCache, NoFallbackForPrivateUseArea) {
   }
 }
 
-TEST(FontCache, firstAvailableOrFirst) {
+TEST_F(FontCacheTest, firstAvailableOrFirst) {
   EXPECT_TRUE(FontCache::FirstAvailableOrFirst("").IsEmpty());
   EXPECT_TRUE(FontCache::FirstAvailableOrFirst(String()).IsEmpty());
 
@@ -64,7 +69,7 @@ TEST(FontCache, firstAvailableOrFirst) {
 }
 
 #if !defined(OS_MACOSX)
-TEST(FontCache, systemFont) {
+TEST_F(FontCacheTest, systemFont) {
   FontCache::SystemFontFamily();
   // Test the function does not crash. Return value varies by system and config.
 }

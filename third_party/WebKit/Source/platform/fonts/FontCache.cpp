@@ -66,6 +66,7 @@ FontCache::FontCache() : purge_prevent_count_(0), font_manager_(nullptr) {}
 #endif  // !defined(OS_WIN) && !defined(OS_LINUX)
 
 SkFontMgr* FontCache::static_font_manager_ = nullptr;
+bool FontCache::is_initialized_for_testing_ = false;
 
 #if defined(OS_WIN)
 bool FontCache::antialiased_text_enabled_ = false;

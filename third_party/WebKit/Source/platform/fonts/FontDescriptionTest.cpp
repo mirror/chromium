@@ -25,6 +25,7 @@
 
 #include "platform/fonts/FontDescription.h"
 
+#include "platform/fonts/FontCache.h"
 #include "platform/wtf/Vector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -63,6 +64,7 @@ TEST(FontDescriptionTest, TestHashCollision) {
 }
 
 TEST(FontDescriptionTest, ToString) {
+  FontCache::InitializeForTesting();
   FontDescription description;
 
   FontFamily family;

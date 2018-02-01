@@ -32,6 +32,7 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
+#include "platform/fonts/FontCache.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/BitmapImage.h"
@@ -133,6 +134,7 @@ TEST(DragImageTest, CreateDragImage) {
 }
 
 TEST(DragImageTest, TrimWhitespace) {
+  FontCache::InitializeForTesting();
   KURL url("http://www.example.com/");
   String test_label = "          Example Example Example      \n    ";
   String expected_label = "Example Example Example";

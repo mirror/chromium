@@ -14,6 +14,7 @@ namespace blink {
 
 static void TestBitmapGlyphsBlacklisted(AtomicString windows_family_name,
                                         bool blacklisted_expected) {
+  FontCache::InitializeForTesting();
   FontCache* font_cache = FontCache::GetFontCache();
   FontDescription font_description;
   FontFamily font_family;

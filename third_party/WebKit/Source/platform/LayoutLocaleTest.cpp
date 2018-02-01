@@ -9,7 +9,12 @@
 
 namespace blink {
 
-TEST(LayoutLocaleTest, Get) {
+class LayoutLocaleTest : public ::testing::Test {
+ protected:
+  void SetUp() override { FontCache::InitializeForTesting(); }
+};
+
+TEST_F(LayoutLocaleTest, Get) {
   FontGlobalContext::ClearForTesting();
 
   EXPECT_EQ(nullptr, LayoutLocale::Get(g_null_atom));
@@ -24,12 +29,12 @@ TEST(LayoutLocaleTest, Get) {
   FontGlobalContext::ClearForTesting();
 }
 
-TEST(LayoutLocaleTest, GetCaseInsensitive) {
+TEST_F(LayoutLocaleTest, GetCaseInsensitive) {
   const LayoutLocale* en_us = LayoutLocale::Get("en-us");
   EXPECT_EQ(en_us, LayoutLocale::Get("en-US"));
 }
 
-TEST(LayoutLocaleTest, ScriptTest) {
+TEST_F(LayoutLocaleTest, ScriptTest) {
   // Test combinations of BCP 47 locales.
   // https://tools.ietf.org/html/bcp47
   struct {
@@ -117,7 +122,7 @@ TEST(LayoutLocaleTest, ScriptTest) {
   }
 }
 
-TEST(LayoutLocaleTest, BreakKeyword) {
+TEST_F(LayoutLocaleTest, BreakKeyword) {
   struct {
     const char* expected;
     const char* locale;
@@ -141,7 +146,7 @@ TEST(LayoutLocaleTest, BreakKeyword) {
   }
 }
 
-TEST(LayoutLocaleTest, ExistingKeywordName) {
+TEST_F(LayoutLocaleTest, ExistingKeywordName) {
   const char* tests[] = {
       "en@x=", "en@lb=xyz", "en@ =",
   };

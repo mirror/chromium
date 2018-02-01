@@ -15,6 +15,7 @@ using blink::testing::CreateTestFont;
 namespace blink {
 
 TEST(FontTest, TextIntercepts) {
+  FontCache::InitializeForTesting();
   Font font =
       CreateTestFont("Ahem", testing::PlatformTestDataPath("Ahem.woff"), 16);
   // A sequence of LATIN CAPITAL LETTER E WITH ACUTE and LATIN SMALL LETTER P

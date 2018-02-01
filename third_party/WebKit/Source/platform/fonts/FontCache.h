@@ -234,6 +234,8 @@ class PLATFORM_EXPORT FontCache {
   void DumpFontPlatformDataCache(base::trace_event::ProcessMemoryDump*);
   void DumpShapeResultCache(base::trace_event::ProcessMemoryDump*);
 
+  static void InitializeForTesting() { is_initialized_for_testing_ = true; }
+
   ~FontCache() = default;
 
  private:
@@ -298,6 +300,7 @@ class PLATFORM_EXPORT FontCache {
 
   // A leaky owning bare pointer.
   static SkFontMgr* static_font_manager_;
+  static bool is_initialized_for_testing_;
 
 #if defined(OS_WIN)
   static bool antialiased_text_enabled_;
