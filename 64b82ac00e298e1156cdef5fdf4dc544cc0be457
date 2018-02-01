@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d2e54b_ef695395",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-01T21:18:17Z",
+      "side": 1,
+      "message": "return filter \u0026\u0026 filter-\u003eIsAdResource(...); to avoid the ternary.",
+      "revId": "64b82ac00e298e1156cdef5fdf4dc544cc0be457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44be292_15329906",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-01T21:18:17Z",
+      "side": 1,
+      "message": "Maybe make some mention of \"single element cache\"",
+      "revId": "64b82ac00e298e1156cdef5fdf4dc544cc0be457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871e323d_6654e7b5",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-01T21:18:17Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e and KURL.",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 11
+      },
+      "revId": "64b82ac00e298e1156cdef5fdf4dc544cc0be457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19371a9d_8c1434fe",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-01T21:18:17Z",
+      "side": 1,
+      "message": "nit prefer constant names like kUnknown, kIsAd, kIsNotAd, etc.",
+      "revId": "64b82ac00e298e1156cdef5fdf4dc544cc0be457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
