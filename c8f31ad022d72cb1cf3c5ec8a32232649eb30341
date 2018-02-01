@@ -899,6 +899,30 @@
     },
     {
       "key": {
+        "uuid": "39c989b1_c0cb17ec",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-01T18:22:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure the opinions are diverging. If anything, they seem to be converging to OutputDebugString (see https://chromium-review.googlesource.com/c/chromium/src/+/868750/50/notification_helper/com_server_module.cc#46 )",
+      "parentUuid": "3bf8c8c1_6700425b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338b9cf8_dea60283",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
