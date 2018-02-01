@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b440a66_e6362b10",
+        "filename": "gpu/command_buffer/build_raster_cmd_buffer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-02-01T20:51:31Z",
+      "side": 0,
+      "message": "We\u0027ll need to add these TransferCache commands back in.  They\u0027re currently implemented in GLES2Implementation, but will need a RasterImplementation version.",
+      "revId": "35565a5d3d623f5420d066a4bf9814e6c5075998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
