@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09defe16_e95cd881",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-01T19:22:20Z",
+      "side": 1,
+      "message": "nit: extra space..?",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 46
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47c5293_19d5b7fa",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-01T19:22:20Z",
+      "side": 1,
+      "message": "nit: Perhaps precede this with a comment to explain that the out-dir may differ between the builder and the swarming client, so we use relative paths?",
+      "range": {
+        "startLine": 126,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 67
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342dddb2_113c635a",
+        "filename": "build/fuchsia/create_runner_script.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-01T19:22:20Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t \"exec\" replace the currently-running program entirely, so we\u0027ll never reach here? Or, rather, if we do reach here then it is an error and we should e.g. return 1?",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95392bad_becbe30e",
+        "filename": "build/fuchsia/runner_v2/symbolizer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-01T19:22:20Z",
+      "side": 1,
+      "message": "Do we need the \"exists\" test if we instead test the _stripped_ file for ELF-ness?  Is the exists check only required because we\u0027re trying to open unstripped-non-ELF files?",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "0ce06adc6064f891bf3c50e159e603a5d06da7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
