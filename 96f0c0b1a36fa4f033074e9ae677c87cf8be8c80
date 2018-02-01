@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bd7ca9f_9d385c9a",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T22:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28996bd_fa8949bf",
+      "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7beb54d_004e1e94",
         "filename": "ash/metrics/login_metrics_recorder.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2e1cea5f_e811d908",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T22:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7beb54d_004e1e94",
+      "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8c43b7_ffcdfd7b",
         "filename": "ash/metrics/login_metrics_recorder.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f7664c_57ff62e2",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-01T22:03:55Z",
+      "side": 1,
+      "message": "Done. Although I need to check if stat is LOCKED or LOGIN below anyway.",
+      "parentUuid": "ef8c43b7_ffcdfd7b",
+      "revId": "96f0c0b1a36fa4f033074e9ae677c87cf8be8c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
