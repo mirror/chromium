@@ -46,7 +46,9 @@ void NGFragmentPainter::PaintOutline(const PaintInfo& paint_info,
           paint_info.context, paint_fragment_, paint_info.phase))
     return;
 
-  PaintOutlineRects(paint_info, outline_rects, style, paint_fragment_);
+  DrawingRecorder recorder(paint_info.context, paint_fragment_,
+                           paint_info.phase);
+  PaintOutlineRects(paint_info, outline_rects, style);
 }
 
 void NGFragmentPainter::CollectDescendantOutlines(
@@ -106,6 +108,8 @@ void NGFragmentPainter::PaintDescendantOutlines(
                             &outline_rect_map);
 
   // Paint all outlines
+  DrawingRecorder recorder(paint_info.context, paint_fragment_,
+                           paint_info.phase);
   for (auto& anchor_iter : anchor_fragment_map) {
     NGPaintFragment* fragment = anchor_iter.value;
     Vector<LayoutRect>* outline_rects =
@@ -114,7 +118,7 @@ void NGFragmentPainter::PaintDescendantOutlines(
     if (DrawingRecorder::UseCachedDrawingIfPossible(
             paint_info.context, *fragment, paint_info.phase))
       continue;
-    PaintOutlineRects(paint_info, *outline_rects, fragment->Style(), *fragment);
+    PaintOutlineRects(paint_info, *outline_rects, fragment->Style());
   }
 }
 
