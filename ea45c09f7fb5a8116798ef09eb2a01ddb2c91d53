@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc24fc65_5563c89a",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2018-02-01T00:06:32Z",
+      "side": 1,
+      "message": "Should it say \"ARIA relations such as active descendant ...\"?\nAlso, could you add a TODO for me, since I am re-writing ARIA relations logic in BLINK?",
+      "revId": "ea45c09f7fb5a8116798ef09eb2a01ddb2c91d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24167cc5_d95a5632",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2018-02-01T00:06:32Z",
+      "side": 1,
+      "message": "Sorry, I feel there is something not correctly phrased in this part of the comment.\n\"A client expects an update to date\"",
+      "revId": "ea45c09f7fb5a8116798ef09eb2a01ddb2c91d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
