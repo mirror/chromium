@@ -154,6 +154,47 @@
       "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae20e90_73223b09",
+        "filename": "services/assistant/platform_api_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2018-02-01T19:08:39Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "f5a3609f_602c5eab",
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce5a911_6370e528",
+        "filename": "services/assistant/platform_api_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2018-02-01T19:08:39Z",
+      "side": 1,
+      "message": "Just use the std::unique_ptr\u003cAuthProvider\u003e?",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "270911ce6c7204b67c2a42c18fac199b83832d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
