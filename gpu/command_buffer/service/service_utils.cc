@@ -35,18 +35,15 @@ gl::GLContextAttribs GenerateGLContextAttribs(
 
     attribs.robust_resource_initialization = true;
     attribs.robust_buffer_access = true;
+  }
 
-    // Request a specific context version instead of always 3.0
-    if (IsWebGL2OrES3ContextType(attribs_helper.context_type)) {
-      attribs.client_major_es_version = 3;
-      attribs.client_minor_es_version = 0;
-    } else {
-      DCHECK(IsWebGL1OrES2ContextType(attribs_helper.context_type));
-      attribs.client_major_es_version = 2;
-      attribs.client_minor_es_version = 0;
-    }
-  } else {
+  // Request a specific context version instead of always 3.0
+  if (IsWebGL2OrES3ContextType(attribs_helper.context_type)) {
     attribs.client_major_es_version = 3;
+    attribs.client_minor_es_version = 0;
+  } else {
+    DCHECK(IsWebGL1OrES2ContextType(attribs_helper.context_type));
+    attribs.client_major_es_version = 2;
     attribs.client_minor_es_version = 0;
   }
 
