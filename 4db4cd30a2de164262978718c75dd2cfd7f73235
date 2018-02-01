@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb54a1d5_12cc15be",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-02-01T15:59:21Z",
+      "side": 0,
+      "message": "What happens if we seek to the end (duration)?",
+      "parentUuid": "082029f6_f0a40f32",
+      "range": {
+        "startLine": 3150,
+        "startChar": 2,
+        "endLine": 3150,
+        "endChar": 25
+      },
+      "revId": "4db4cd30a2de164262978718c75dd2cfd7f73235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be05be85_a614c183",
         "filename": "third_party/WebKit/Source/core/html/track/CueTimeline.cpp",
         "patchSetId": 2
