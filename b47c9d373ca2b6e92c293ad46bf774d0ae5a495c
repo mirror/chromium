@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3882855e_4db398f5",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T18:00:20Z",
+      "side": 1,
+      "message": "i thought we were still supposed to use size_t? :)",
+      "revId": "b47c9d373ca2b6e92c293ad46bf774d0ae5a495c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f363fb_78c3dbad",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-01T18:00:20Z",
+      "side": 1,
+      "message": "can you add comments to why histograms.xml is not needed for this?",
+      "revId": "b47c9d373ca2b6e92c293ad46bf774d0ae5a495c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
