@@ -31,7 +31,6 @@ test("cronet_test") {
     "//components/cronet/ios:cronet_framework+link",
     "//components/cronet/native:cronet_native_tests",
     "//components/grpc_support:bidirectional_stream_unittest",
-    "//components/grpc_support/test:quic_test_server",
     "//net",
     "//net:simple_quic_tools",
     "//net:test_support",
