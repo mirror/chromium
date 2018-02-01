@@ -17,7 +17,8 @@
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
 #import "ios/chrome/browser/sync/synced_sessions_bridge.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/closed_tabs_observer_bridge.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.h"
+#import "ios/chrome/browser/ui/ntp/recent_tabs/legacy_recent_tabs_table_view_controller.h"
+#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller_delegate.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -31,7 +32,7 @@
       _syncedSessionsObserver;
   std::unique_ptr<recent_tabs::ClosedTabsObserverBridge> _closedTabsObserver;
   SessionsSyncUserState _userState;
-  RecentTabsTableViewController* _tableViewController;
+  LegacyRecentTabsTableViewController* _tableViewController;
   ios::ChromeBrowserState* _browserState;  // Weak.
 }
 
@@ -60,14 +61,15 @@
 - (instancetype)initWithLoader:(id<UrlLoader>)loader
                   browserState:(ios::ChromeBrowserState*)browserState
                     dispatcher:(id<ApplicationCommands>)dispatcher {
-  return [self initWithController:[[RecentTabsTableViewController alloc]
+  return [self initWithController:[[LegacyRecentTabsTableViewController alloc]
                                       initWithBrowserState:browserState
                                                     loader:loader
                                                 dispatcher:dispatcher]
                      browserState:browserState];
 }
 
-- (instancetype)initWithController:(RecentTabsTableViewController*)controller
+- (instancetype)initWithController:
+                    (LegacyRecentTabsTableViewController*)controller
                       browserState:(ios::ChromeBrowserState*)browserState {
   self = [super initWithBaseViewController:nil browserState:browserState];
   if (self) {
@@ -205,7 +207,7 @@
 #pragma mark - RecentTabsTableViewControllerDelegate
 
 - (void)refreshSessionsViewRecentTabsTableViewController:
-    (RecentTabsTableViewController*)controller {
+    (LegacyRecentTabsTableViewController*)controller {
   [self refreshSessionsView];
 }
 
