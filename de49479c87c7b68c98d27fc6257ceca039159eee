@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1551d4da_7bdaa907",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:29:12Z",
+      "side": 1,
+      "message": "wdyt of: \", generating raw patch.\" for consistency with line 362?",
+      "range": {
+        "startLine": 372,
+        "startChar": 38,
+        "endLine": 372,
+        "endChar": 39
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef3f0f5_53cce5f1",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:29:12Z",
+      "side": 1,
+      "message": "nit: \", generating single-file patch.\" for consistency with line 362.",
+      "range": {
+        "startLine": 380,
+        "startChar": 51,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412152c3_d39b1a52",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:29:12Z",
+      "side": 1,
+      "message": "nit: only one space",
+      "range": {
+        "startLine": 392,
+        "startChar": 12,
+        "endLine": 392,
+        "endChar": 14
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28abab81_17017571",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-01T10:29:12Z",
+      "side": 1,
+      "message": "it\u0027s probably equivalent, but can you use emplace_back(new_image.size(), 0) here?",
+      "range": {
+        "startLine": 440,
+        "startChar": 24,
+        "endLine": 440,
+        "endChar": 33
+      },
+      "revId": "de49479c87c7b68c98d27fc6257ceca039159eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
