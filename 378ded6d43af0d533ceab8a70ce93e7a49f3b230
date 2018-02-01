@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d24fe8a_0c4ab584",
+        "filename": "ash/public/cpp/menu_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "break ?",
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0886a21a_db72dd66",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "nit: I would call this GetMojoMenuItemsFromModel for easier understanding without checking the comments.",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50942d44_54c326a0",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "nit: PopulateMenuFromMojoMenuItems",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249682fd_ba94afed",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "Should this be SkColor?",
+      "range": {
+        "startLine": 73,
+        "startChar": 48,
+        "endLine": 73,
+        "endChar": 56
+      },
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e23837_4e25a544",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "Update the comment and document the args.",
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb06af1_98ce2195",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "nit: document the args, esp. what is |id| and |command_id|.",
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7f2e4d_1d23944d",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-01T18:30:34Z",
+      "side": 1,
+      "message": "nit: wrap with {} since it takes more than 1 line",
+      "revId": "378ded6d43af0d533ceab8a70ce93e7a49f3b230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
