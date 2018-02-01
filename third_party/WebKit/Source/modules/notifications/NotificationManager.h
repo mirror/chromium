@@ -45,9 +45,14 @@ class NotificationManager final
 
   // Shows a notification that is not tied to any service worker.
   void DisplayNonPersistentNotification(
+      const String& token,
       const WebNotificationData&,
       std::unique_ptr<WebNotificationResources>,
       mojom::blink::NonPersistentNotificationListenerPtr);
+
+  // Closes a notification that was previously displayed via
+  // |DisplayNonPersistentNotification| with the given |token|.
+  void CloseNonPersistentNotification(const String& token);
 
   virtual void Trace(blink::Visitor*);
 
