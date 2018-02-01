@@ -104,6 +104,24 @@
       "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ea0fc3_978c1045",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-01T23:21:36Z",
+      "side": 0,
+      "message": "I\u0027ve rebased this on https://chromium-review.googlesource.com/c/chromium/src/+/888844 which added the memory dump ownership edges for gpu resources, so this CL should get it correct now for free.",
+      "parentUuid": "aeec818c_e40315ca",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
