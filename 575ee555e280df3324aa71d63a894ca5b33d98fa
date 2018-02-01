@@ -16,6 +16,24 @@
       "revId": "575ee555e280df3324aa71d63a894ca5b33d98fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13575ba9_0c003227",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-02-01T00:27:25Z",
+      "side": 1,
+      "message": "I Am actually reconsidering modifying how these global vars work now that we want to sometimes bypass the picker. I will land this for the time being to fix this simple issue, expect further changes in this class and the respective unit tests.",
+      "parentUuid": "d71ff7c1_9defc751",
+      "revId": "575ee555e280df3324aa71d63a894ca5b33d98fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
