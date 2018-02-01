@@ -243,6 +243,8 @@ void BrowserCompositorMac::CopyCompleted(
     ReadbackResponse response) {
   callback.Run(bitmap, response);
   if (browser_compositor) {
+    LOG(ERROR) << "BrowserCompositorMac::CopyCompleted: "
+               << browser_compositor->outstanding_copy_count_;
     browser_compositor->outstanding_copy_count_ -= 1;
     browser_compositor->UpdateState();
   }
@@ -255,6 +257,8 @@ void BrowserCompositorMac::CopyFromCompositingSurface(
     SkColorType preferred_color_type) {
   DCHECK(delegated_frame_host_);
   DCHECK(state_ == HasAttachedCompositor);
+  LOG(ERROR) << "BrowserCompositorMac::CopyFromCompositingSurface: "
+             << browser_compositor->outstanding_copy_count_;
   outstanding_copy_count_ += 1;
 
   auto callback_with_decrement =
