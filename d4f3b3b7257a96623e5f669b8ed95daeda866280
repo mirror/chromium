@@ -34,6 +34,24 @@
       "revId": "d4f3b3b7257a96623e5f669b8ed95daeda866280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9addc8ce_8ec5d1e3",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T22:52:29Z",
+      "side": 1,
+      "message": "It\u0027s just a little awkward that we are passing \u0027is_locked\u0027 to button_bar_ in multiple places. (1) seems a bit better to me than this. (2) doesn\u0027t help because passing \u0027hide_arrow\u0027 and \u0027clear_notificaiton\u0027 to a method named IsLocked() doesn\u0027t make sense either.",
+      "parentUuid": "009a2af0_08abdc1f",
+      "revId": "d4f3b3b7257a96623e5f669b8ed95daeda866280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
