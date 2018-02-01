@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d752a1b4_528396a9",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-02-01T18:15:54Z",
+      "side": 1,
+      "message": "Nit: is this needed?",
+      "range": {
+        "startLine": 466,
+        "startChar": 19,
+        "endLine": 466,
+        "endChar": 40
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb3b8b5_022a3dea",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-02-01T18:15:54Z",
+      "side": 1,
+      "message": "Nit: file_length_ could be initialized once in the .h file.",
+      "range": {
+        "startLine": 466,
+        "startChar": 41,
+        "endLine": 466,
+        "endChar": 56
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d994fede_7f3b4251",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-02-01T18:15:54Z",
+      "side": 1,
+      "message": "Nit: wording.",
+      "range": {
+        "startLine": 270,
+        "startChar": 5,
+        "endLine": 270,
+        "endChar": 44
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6d4328_5c859354",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-02-01T18:15:54Z",
+      "side": 1,
+      "message": "Nit: might be worth having a local FilePath var foo_dir and bar_dir.",
+      "range": {
+        "startLine": 379,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 80
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
