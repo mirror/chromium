@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864d7385_fbf30959",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:24:41Z",
+      "side": 1,
+      "message": "pull?",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "7092b60ec1c4f91627b256b077cc44ad24a119d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257e3f1f_f42f8cef",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:24:41Z",
+      "side": 1,
+      "message": "This is an observer for *any* animation happening in the window. How do you know it\u0027s the animation you care about?",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "7092b60ec1c4f91627b256b077cc44ad24a119d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396fa6d5_74b7f40c",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:24:41Z",
+      "side": 1,
+      "message": "window_ is rather misleading given the class is LegacyRenderWidgetHostHWND. Please use a name that better matches the type.",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "7092b60ec1c4f91627b256b077cc44ad24a119d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975095da_5a3acbc0",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:24:41Z",
+      "side": 1,
+      "message": "How do you know there is still a host or compositor at this point?",
+      "range": {
+        "startLine": 123,
+        "startChar": 3,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "7092b60ec1c4f91627b256b077cc44ad24a119d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c196da38_5ef082d7",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:24:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is safe. What if the RWHVA moves to another window (say you drag a tab from one window to another)?",
+      "range": {
+        "startLine": 180,
+        "startChar": 44,
+        "endLine": 180,
+        "endChar": 64
+      },
+      "revId": "7092b60ec1c4f91627b256b077cc44ad24a119d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cdf6b0_fa2622ee",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:24:41Z",
+      "side": 1,
+      "message": "Why do you have to keep readding?",
+      "range": {
+        "startLine": 506,
+        "startChar": 53,
+        "endLine": 506,
+        "endChar": 73
+      },
+      "revId": "7092b60ec1c4f91627b256b077cc44ad24a119d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
