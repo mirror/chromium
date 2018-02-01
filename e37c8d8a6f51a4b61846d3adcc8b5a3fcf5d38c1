@@ -16,6 +16,24 @@
       "revId": "e37c8d8a6f51a4b61846d3adcc8b5a3fcf5d38c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ad60d0_694fa5b9",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-01T01:30:02Z",
+      "side": 1,
+      "message": "Based on the fact the we have a method called SafeBrowsingUrlCheckerImpl::CheckWebUIUrls (which I moved from the older code):\nhttps://cs.chromium.org/chromium/src/components/safe_browsing/browser/safe_browsing_url_checker_impl.cc?rcl\u003da4d4595ef0b36a593f9b50a45bdf3836d93b1b16\u0026l\u003d317\n\nI think we do. (Please let me know if I am wrong, Varun.)",
+      "parentUuid": "0e7e9bf6_b4c571e7",
+      "revId": "e37c8d8a6f51a4b61846d3adcc8b5a3fcf5d38c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

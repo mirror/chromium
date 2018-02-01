@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ec7014b_38b90c30",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-01T01:30:02Z",
+      "side": 1,
+      "message": "John: Please note that I hacked this method some more to make it provide enough information for URLLoaderThrottle and ThrottlingURLLoader.\n\nI don\u0027t quite understand why in this code path |resource_request_| (the class member) is not populated. It also doesn\u0027t have a valid |navigation_ui_data_| member.\n\nThanks!",
+      "revId": "0cb3d9f0a379f5d477b5fb8008d6af6889475d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
