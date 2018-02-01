@@ -1108,6 +1108,9 @@ void Layer::SetBoundsFromAnimation(const gfx::Rect& bounds,
   const gfx::Rect old_bounds = bounds_;
   bounds_ = bounds;
 
+  LOG(ERROR) << old_bounds.ToString();
+  LOG(ERROR) << bounds.ToString() << "," << delegate_;
+
   RecomputeDrawsContentAndUVRect();
   RecomputePosition();
 
@@ -1121,6 +1124,7 @@ void Layer::SetBoundsFromAnimation(const gfx::Rect& bounds,
       ScheduleDraw();
   } else {
     // Always schedule a paint, even if we're invisible.
+    LOG(ERROR) << "hi";
     SchedulePaint(gfx::Rect(bounds.size()));
   }
 

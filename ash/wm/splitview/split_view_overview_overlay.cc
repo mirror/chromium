@@ -24,6 +24,7 @@
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "ui/compositor/scoped_layer_animation_settings.h"
 namespace ash {
 
 namespace {
@@ -118,6 +119,11 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
     right_hightlight_view_ =
         new RoundedRectView(kHighlightScreenRoundRectRadiusDp, SK_ColorWHITE);
 
+    left_hightlight_view_->SetPaintToLayer();
+    right_hightlight_view_->SetPaintToLayer();
+    left_hightlight_view_->layer()->SetFillsBoundsOpaquely(false);
+    right_hightlight_view_->layer()->SetFillsBoundsOpaquely(false);
+
     AddChildView(left_hightlight_view_);
     AddChildView(right_hightlight_view_);
 
@@ -130,16 +136,21 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
 
   ~SplitViewOverviewOverlayView() override = default;
 
-  void OnIndicatorTypeChanged(IndicatorType indicator_type) {
+  void OnIndicatorTypeChanged(IndicatorType indicator_type,
+                              base::Optional<gfx::Rect> phantom_bounds) {
     if (indicator_type_ == indicator_type)
       return;
 
     indicator_type_ = indicator_type;
+    phantom_bounds_ = phantom_bounds;
+
     switch (indicator_type) {
       case IndicatorType::NONE:
         return;
       case IndicatorType::DRAG_AREA:
-      case IndicatorType::CANNOT_SNAP:
+      case IndicatorType::CANNOT_SNAP: {
+        Layout();
+        SetLabelsVisible(true);
         SetLabelsText(l10n_util::GetStringUTF16(
             indicator_type == IndicatorType::CANNOT_SNAP
                 ? IDS_ASH_SPLIT_VIEW_CANNOT_SNAP
@@ -152,6 +163,13 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
         right_hightlight_view_->SetBackgroundColor(
             SkColorSetA(color, kHighlightBackgroundAlpha));
         return;
+      }
+      case IndicatorType::PHANTOM_LEFT:
+      case IndicatorType::PHANTOM_RIGHT: {
+        SetLabelsVisible(false);
+        Layout();
+        return;
+      }
     }
 
     NOTREACHED();
@@ -159,17 +177,29 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
 
   // views::View:
   void Layout() override {
+    LOG(ERROR) << "layout";
     const bool landscape = Shell::Get()
                                ->split_view_controller()
                                ->IsCurrentScreenOrientationLandscape();
 
     // Calculate the bounds of the two highlight regions.
-    const int highlight_width =
+    int highlight_width =
         landscape ? width() * kHighlightScreenPrimaryAxisRatio
                   : width() - 2 * kHighlightScreenEdgePaddingDp;
-    const int highlight_height =
+    int highlight_height =
         landscape ? height() - 2 * kHighlightScreenEdgePaddingDp
                   : height() * kHighlightScreenPrimaryAxisRatio;
+
+    gfx::Transform transform;
+    if (phantom_bounds_.has_value()) {
+      gfx::Rect phantom_bounds = phantom_bounds_.value();
+      phantom_bounds.Inset(kHighlightScreenEdgePaddingDp,
+                           kHighlightScreenEdgePaddingDp);
+      highlight_width = phantom_bounds.width();
+      highlight_height = phantom_bounds.height();
+      transform.Scale(static_cast<double>(phantom_bounds.width()) / static_cast<double>(highlight_width), 1.0);
+    }
+
     // The origin of the right highlight view in landscape, or the bottom
     // highlight view in portrait.
     const gfx::Point right_bottom_origin(
@@ -178,9 +208,27 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
         landscape
             ? kHighlightScreenEdgePaddingDp
             : height() - highlight_height - kHighlightScreenEdgePaddingDp);
-    left_hightlight_view_->SetBounds(kHighlightScreenEdgePaddingDp,
-                                     kHighlightScreenEdgePaddingDp,
-                                     highlight_width, highlight_height);
+
+    {
+      ui::LayerAnimator* animator =
+          left_hightlight_view_->layer()->GetAnimator();
+      animator->StopAnimating();
+      ui::ScopedLayerAnimationSettings settings(animator);
+      settings.SetPreemptionStrategy(ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+      settings.SetTransitionDuration(
+          base::TimeDelta::FromMilliseconds(1200));
+
+
+      int org = phantom_bounds_.has_value() ? 0 : 0;
+
+      left_hightlight_view_->SetBounds(kHighlightScreenEdgePaddingDp + org,
+                                       kHighlightScreenEdgePaddingDp + org,
+                                       highlight_width, highlight_height);
+//       left_hightlight_view_->layer()->SetTransform(transform);
+    }
+//    left_hightlight_view_->SetBounds(kHighlightScreenEdgePaddingDp,
+//                                     kHighlightScreenEdgePaddingDp,
+//                                     highlight_width, highlight_height);
     right_hightlight_view_->SetBounds(right_bottom_origin.x(),
                                       right_bottom_origin.y(), highlight_width,
                                       highlight_height);
@@ -209,10 +257,14 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
   }
 
  private:
+  void SetLabelsVisible(bool visible) {
+    left_rotated_view_->SetVisible(visible);
+    right_rotated_view_->SetVisible(visible);
+  }
+
   void SetLabelsText(const base::string16& text) {
     left_rotated_view_->SetLabelText(text);
     right_rotated_view_->SetLabelText(text);
-    Layout();
   }
 
   RoundedRectView* left_hightlight_view_ = nullptr;
@@ -220,6 +272,7 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
   RotatedImageLabelView* left_rotated_view_ = nullptr;
   RotatedImageLabelView* right_rotated_view_ = nullptr;
 
+  base::Optional<gfx::Rect> phantom_bounds_;
   IndicatorType indicator_type_ = IndicatorType::NONE;
 
   DISALLOW_COPY_AND_ASSIGN(SplitViewOverviewOverlayView);
@@ -237,7 +290,8 @@ SplitViewOverviewOverlay::~SplitViewOverviewOverlay() = default;
 
 void SplitViewOverviewOverlay::SetIndicatorType(
     IndicatorType indicator_type,
-    const gfx::Point& event_location) {
+    const gfx::Point& event_location,
+    base::Optional<gfx::Rect> phantom_bounds) {
   if (indicator_type == current_indicator_type_)
     return;
 
@@ -267,7 +321,7 @@ void SplitViewOverviewOverlay::SetIndicatorType(
   ::wm::ConvertRectToScreen(root_window, &bounds);
   widget_->SetBounds(bounds);
   AnimateSplitviewLabelOpacity(widget_->GetLayer(), visible);
-  overlay_view_->OnIndicatorTypeChanged(current_indicator_type_);
+  overlay_view_->OnIndicatorTypeChanged(current_indicator_type_, phantom_bounds);
 }
 
 void SplitViewOverviewOverlay::OnDisplayBoundsChanged() {

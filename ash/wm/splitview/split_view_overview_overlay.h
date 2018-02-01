@@ -10,7 +10,9 @@
 #include "ash/ash_export.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "ui/gfx/geometry/point.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace views {
 class Widget;
@@ -18,7 +20,13 @@ class Widget;
 
 namespace ash {
 
-enum class IndicatorType { NONE, DRAG_AREA, CANNOT_SNAP };
+enum class IndicatorType {
+  NONE,
+  DRAG_AREA,
+  CANNOT_SNAP,
+  PHANTOM_LEFT,
+  PHANTOM_RIGHT
+};
 
 // An overlay in overview mode which guides users while they are attempting to
 // enter splitview.
@@ -31,7 +39,8 @@ class ASH_EXPORT SplitViewOverviewOverlay {
   // split view controllers state. If |event_location| is located on a different
   // root window than |widget_|, |widget_| will reparent.
   void SetIndicatorType(IndicatorType indicator_type,
-                        const gfx::Point& event_location);
+                        const gfx::Point& event_location,
+                        base::Optional<gfx::Rect> phantom_bounds);
   IndicatorType current_indicator_type() const {
     return current_indicator_type_;
   }

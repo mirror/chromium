@@ -232,6 +232,7 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
 
   void AddToCollection(LayerAnimatorCollection* collection);
   void RemoveFromCollection(LayerAnimatorCollection* collection);
+  void SetTransitionDuration(base::TimeDelta duration);
 
  protected:
   ~LayerAnimator() override;
@@ -343,7 +344,6 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   void OnScheduled(LayerAnimationSequence* sequence);
 
   // Sets |transition_duration_| unless |is_transition_duration_locked_| is set.
-  void SetTransitionDuration(base::TimeDelta duration);
 
   // Clears the animation queues and notifies any running animations that they
   // have been aborted.
