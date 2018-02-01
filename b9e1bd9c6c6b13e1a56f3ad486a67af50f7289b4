@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1109110b_1c6c60a2",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-01T09:49:11Z",
+      "side": 1,
+      "message": "Can you make the comment more verbose? Since this CL is doing incorrect thing, it should note how it\u0027s incorrect, why we do this for now, and what it actually should do. That helps someone who would really fix this.",
+      "revId": "b9e1bd9c6c6b13e1a56f3ad486a67af50f7289b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
