@@ -34,8 +34,6 @@ using safe_browsing::ClientSafeBrowsingReportRequest;
 
 namespace {
 
-const int kMessageWidth = 320;
-
 // Views-specific implementation of download danger prompt dialog. We use this
 // class rather than a TabModalConfirmDialog so that we can use custom
 // formatting on the text in the body of the dialog.
@@ -95,15 +93,21 @@ DownloadDangerPromptViews::DownloadDangerPromptViews(
   download_->AddObserver(this);
 
   contents_view_ = new views::View;
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
-  set_margins(ChromeLayoutProvider::Get()->GetDialogInsetsForContentType(
-      views::TEXT, views::TEXT));
+  set_margins(
+      provider->GetDialogInsetsForContentType(views::TEXT, views::TEXT));
   views::GridLayout* layout = contents_view_->SetLayoutManager(
       std::make_unique<views::GridLayout>(contents_view_));
 
   views::ColumnSet* column_set = layout->AddColumnSet(0);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::FIXED, kMessageWidth, 0);
+  column_set->AddColumn(
+      views::GridLayout::FILL, views::GridLayout::FILL, 1,
+      views::GridLayout::FIXED,
+      provider->GetDistanceMetric(
+          ChromeDistanceMetric::DISTANCE_BUBBLE_PREFERRED_WIDTH) -
+          margins().width(),
+      0);
 
   views::Label* message_body_label = new views::Label(GetMessageBody());
   message_body_label->SetMultiLine(true);
