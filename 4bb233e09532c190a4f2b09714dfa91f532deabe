@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f11ef300_1618ec02",
+        "filename": "ash/public/cpp/menu_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T20:01:13Z",
+      "side": 1,
+      "message": "Nit: per the updated naming conventions, please call this *_mojom_traits.*",
+      "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51f495d_b51f57e1",
+        "filename": "ash/public/cpp/menu_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T20:01:13Z",
+      "side": 1,
+      "message": "Is it possible to just make the integer types match so we don\u0027t need this checked cast?",
+      "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfe693d_cbf62a82",
+        "filename": "ash/public/cpp/menu_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T20:01:13Z",
+      "side": 1,
+      "message": "Please use base::NoDestructor to avoid generating a global destructor.",
+      "revId": "4bb233e09532c190a4f2b09714dfa91f532deabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7820f313_90060b7e",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 3
