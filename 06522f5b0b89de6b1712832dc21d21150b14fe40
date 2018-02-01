@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d085ae_6989c8c0",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-01T20:28:01Z",
+      "side": 1,
+      "message": "This seems ok. But would it make sense to really just put all the logic in InteractiveDetector... and then have an getter on LocalFrame that can return the InteractiveDetector and PageWidgetDelegate calls that directly?",
+      "revId": "06522f5b0b89de6b1712832dc21d21150b14fe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
