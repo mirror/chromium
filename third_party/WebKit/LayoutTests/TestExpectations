@@ -87,6 +87,7 @@ crbug.com/771643 virtual/spv175/compositing/overflow/nested-border-radius-clippi
 crbug.com/807395 virtual/spv175/fast/multicol/mixed-opacity-test.html [ Failure ]
 crbug.com/807382 virtual/spv175/fast/multicol/multicol-svg.html [ Failure ]
 crbug.com/805049 [ Mac ] virtual/spv175/compositing/iframes/fixed-position-iframe.html [ Pass Crash ]
+crbug.com/808219 virtual/spv175/printing/print-subframe.html [ Failure ]
 
 # spv175+root-layer-scrolls failures. They also fail with root-layer-scrolls without enable-slimming-paint-v175.
 crbug.com/417782 virtual/spv175/compositing/overflow/border-radius-composited-subframe.html [ Failure ]
