@@ -50,6 +50,10 @@ const EncryptionScheme::Pattern& EncryptionScheme::pattern() const {
   return pattern_;
 }
 
+bool EncryptionScheme::HasPattern() const {
+  return pattern_.IsInEffect();
+}
+
 bool EncryptionScheme::Matches(const EncryptionScheme& other) const {
   return mode_ == other.mode_ && pattern_.Matches(other.pattern_);
 }

@@ -10,6 +10,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
 #include "media/base/media_switches.h"
+#include "media/base/media_util.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -78,7 +79,8 @@ TEST_F(MojoJpegDecodeAcceleratorServiceTest, InitializeAndDecode) {
       kArbitraryBitstreamBufferId,
       base::SharedMemory::DuplicateHandle(shm.handle()),
       kInputBufferSizeInBytes);
-  bitstream_buffer.SetDecryptConfig(DecryptConfig(kKeyId, kIv, subsamples));
+  bitstream_buffer.SetDecryptConfig(
+      DecryptConfig(kKeyId, kIv, subsamples, AesCtrEncryptionScheme()));
 
   jpeg_decoder->Decode(
       bitstream_buffer, kDummyFrameCodedSize, std::move(output_frame_handle),

@@ -28,6 +28,7 @@ void BitstreamBuffer::SetDecryptConfig(const DecryptConfig& decrypt_config) {
   key_id_ = decrypt_config.key_id();
   iv_ = decrypt_config.iv();
   subsamples_ = decrypt_config.subsamples();
+  encryption_scheme_ = decrypt_config.encryption_scheme();
 }
 
 }  // namespace media

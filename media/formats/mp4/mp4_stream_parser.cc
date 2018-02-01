@@ -36,6 +36,7 @@ namespace media {
 namespace mp4 {
 
 namespace {
+
 const int kMaxEmptySampleLogs = 20;
 const int kMaxInvalidConversionLogs = 20;
 
@@ -753,15 +754,16 @@ ParseResult MP4StreamParser::EnqueueSample(BufferQueueMap* buffers) {
   if (decrypt_config) {
     if (!subsamples.empty()) {
       // Create a new config with the updated subsamples.
-      decrypt_config.reset(new DecryptConfig(decrypt_config->key_id(),
-                                             decrypt_config->iv(), subsamples));
+      decrypt_config = std::make_unique<DecryptConfig>(
+          decrypt_config->key_id(), decrypt_config->iv(), subsamples,
+          decrypt_config->encryption_scheme());
     }
     // else, use the existing config.
   } else if (is_track_encrypted_[runs_->track_id()]) {
     // The media pipeline requires a DecryptConfig with an empty |iv|.
     // TODO(ddorwin): Refactor so we do not need a fake key ID ("1");
-    decrypt_config.reset(
-        new DecryptConfig("1", "", std::vector<SubsampleEntry>()));
+    decrypt_config = std::make_unique<DecryptConfig>(
+        "1", "", std::vector<SubsampleEntry>(), Unencrypted());
   }
 
   StreamParserBuffer::Type buffer_type = audio ? DemuxerStream::AUDIO :

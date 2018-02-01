@@ -191,7 +191,8 @@ void FakeDemuxerStream::DoRead() {
   if (is_encrypted_) {
     buffer->set_decrypt_config(std::make_unique<DecryptConfig>(
         std::string(kKeyId, kKeyId + arraysize(kKeyId)),
-        std::string(kIv, kIv + arraysize(kIv)), std::vector<SubsampleEntry>()));
+        std::string(kIv, kIv + arraysize(kIv)), std::vector<SubsampleEntry>(),
+        AesCtrEncryptionScheme()));
   }
   buffer->set_timestamp(current_timestamp_);
   buffer->set_duration(duration_);

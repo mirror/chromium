@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/sys_byteorder.h"
 #include "media/base/decrypt_config.h"
+#include "media/base/media_util.h"
 #include "media/formats/webm/webm_constants.h"
 
 namespace media {
@@ -147,7 +148,8 @@ bool WebMCreateDecryptConfig(const uint8_t* data,
 
   decrypt_config->reset(new DecryptConfig(
       std::string(reinterpret_cast<const char*>(key_id), key_id_size),
-      counter_block, subsample_entries));
+      counter_block, subsample_entries,
+      counter_block.empty() ? Unencrypted() : AesCtrEncryptionScheme()));
   *data_offset = frame_offset;
 
   return true;

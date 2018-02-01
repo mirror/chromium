@@ -467,7 +467,8 @@ bool EsParserH264::EmitFrame(int64_t access_unit_pos,
 #if BUILDFLAG(ENABLE_HLS_SAMPLE_AES)
   if (use_hls_sample_aes_ && base_decrypt_config) {
     std::unique_ptr<DecryptConfig> decrypt_config(new DecryptConfig(
-        base_decrypt_config->key_id(), base_decrypt_config->iv(), subsamples));
+        base_decrypt_config->key_id(), base_decrypt_config->iv(), subsamples,
+        base_decrypt_config->encryption_scheme()));
     stream_parser_buffer->set_decrypt_config(std::move(decrypt_config));
   }
 #endif

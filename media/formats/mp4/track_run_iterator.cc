@@ -13,10 +13,11 @@
 #include "base/numerics/checked_math.h"
 #include "base/numerics/safe_conversions.h"
 #include "media/base/demuxer_memory_limit.h"
+#include "media/base/encryption_scheme.h"
+#include "media/base/media_util.h"
 #include "media/base/timestamp_constants.h"
 #include "media/formats/mp4/rcheck.h"
 #include "media/formats/mp4/sample_to_group_iterator.h"
-#include "media/media_features.h"
 
 namespace media {
 namespace mp4 {
@@ -51,6 +52,8 @@ struct TrackRunInfo {
   int aux_info_default_size;
   std::vector<uint8_t> aux_info_sizes;  // Populated if default_size == 0.
   int aux_info_total_size;
+
+  EncryptionScheme encryption_scheme;
 
   std::vector<CencSampleEncryptionInfoEntry> fragment_sample_encryption_info;
 
@@ -342,20 +345,39 @@ bool TrackRunIterator::Init(const MovieFragment& moof) {
           traf.sample_group_description.entries;
 
       const TrackEncryption* track_encryption;
+      const ProtectionSchemeInfo* sinf;
       tri.is_audio = (stsd.type == kAudio);
       if (tri.is_audio) {
         RCHECK(!stsd.audio_entries.empty());
         if (desc_idx >= stsd.audio_entries.size())
           desc_idx = 0;
         tri.audio_description = &stsd.audio_entries[desc_idx];
+        sinf = &tri.audio_description->sinf;
         track_encryption = &tri.audio_description->sinf.info.track_encryption;
       } else {
         RCHECK(!stsd.video_entries.empty());
         if (desc_idx >= stsd.video_entries.size())
           desc_idx = 0;
         tri.video_description = &stsd.video_entries[desc_idx];
+        sinf = &tri.video_description->sinf;
         track_encryption = &tri.video_description->sinf.info.track_encryption;
       }
+
+      if (!sinf->HasSupportedScheme()) {
+        tri.encryption_scheme = Unencrypted();
+      } else {
+#if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)
+        tri.encryption_scheme = EncryptionScheme(
+            sinf->IsAesCtrScheme() ? EncryptionScheme::CIPHER_MODE_AES_CTR
+                                   : EncryptionScheme::CIPHER_MODE_AES_CBC,
+            EncryptionScheme::Pattern(
+                track_encryption->default_crypt_byte_block,
+                track_encryption->default_skip_byte_block));
+#else
+        tri.encryption_scheme = AesCtrEncryptionScheme();
+#endif
+      }
+
       // Initialize aux_info variables only if no sample encryption entries.
       if (sample_encryption_entries_count == 0 &&
           traf.auxiliary_offset.offsets.size() > j) {
@@ -670,10 +692,14 @@ bool TrackRunIterator::is_keyframe() const {
   return sample_itr_->is_keyframe;
 }
 
-const TrackEncryption& TrackRunIterator::track_encryption() const {
+const ProtectionSchemeInfo& TrackRunIterator::protection_scheme_info() const {
   if (is_audio())
-    return audio_description().sinf.info.track_encryption;
-  return video_description().sinf.info.track_encryption;
+    return audio_description().sinf;
+  return video_description().sinf;
+}
+
+const TrackEncryption& TrackRunIterator::track_encryption() const {
+  return protection_scheme_info().info.track_encryption;
 }
 
 std::unique_ptr<DecryptConfig> TrackRunIterator::GetDecryptConfig() {
@@ -693,7 +719,7 @@ std::unique_ptr<DecryptConfig> TrackRunIterator::GetDecryptConfig() {
           std::string(reinterpret_cast<const char*>(
                           sample_encryption_entry.initialization_vector),
                       arraysize(sample_encryption_entry.initialization_vector)),
-          sample_encryption_entry.subsamples));
+          sample_encryption_entry.subsamples, run_itr_->encryption_scheme));
     }
 #endif
     MEDIA_LOG(ERROR, media_log_) << "Sample encryption info is not available.";
@@ -717,7 +743,7 @@ std::unique_ptr<DecryptConfig> TrackRunIterator::GetDecryptConfig() {
       std::string(reinterpret_cast<const char*>(
                       sample_encryption_entry.initialization_vector),
                   arraysize(sample_encryption_entry.initialization_vector)),
-      sample_encryption_entry.subsamples));
+      sample_encryption_entry.subsamples, GetEncryptionScheme(sample_idx)));
 }
 
 uint32_t TrackRunIterator::GetGroupDescriptionIndex(
@@ -745,6 +771,28 @@ uint8_t TrackRunIterator::GetIvSize(size_t sample_index) const {
   uint32_t index = GetGroupDescriptionIndex(sample_index);
   return (index == 0) ? track_encryption().default_iv_size
                       : GetSampleEncryptionInfoEntry(*run_itr_, index)->iv_size;
+}
+
+EncryptionScheme TrackRunIterator::GetEncryptionScheme(size_t sample_index) {
+#if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)
+  uint32_t index = GetGroupDescriptionIndex(sample_index);
+  EncryptionScheme::CipherMode mode =
+      protection_scheme_info().IsAesCtrScheme()
+          ? EncryptionScheme::CIPHER_MODE_AES_CTR
+          : EncryptionScheme::CIPHER_MODE_AES_CBC;
+  uint32_t encrypt_blocks =
+      (index == 0)
+          ? track_encryption().default_crypt_byte_block
+          : GetSampleEncryptionInfoEntry(*run_itr_, index)->crypt_byte_block;
+  uint32_t skip_blocks =
+      (index == 0)
+          ? track_encryption().default_skip_byte_block
+          : GetSampleEncryptionInfoEntry(*run_itr_, index)->skip_byte_block;
+  return EncryptionScheme(
+      mode, EncryptionScheme::Pattern(encrypt_blocks, skip_blocks));
+#else
+  return AesCtrEncryptionScheme();
+#endif
 }
 
 #if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)

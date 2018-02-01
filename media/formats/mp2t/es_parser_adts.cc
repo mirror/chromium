@@ -213,9 +213,9 @@ bool EsParserAdts::ParseFromEsQueue() {
       if (base_decrypt_config) {
         std::vector<SubsampleEntry> subsamples;
         CalculateSubsamplesForAdtsFrame(adts_frame, &subsamples);
-        std::unique_ptr<DecryptConfig> decrypt_config(
-            new DecryptConfig(base_decrypt_config->key_id(),
-                              base_decrypt_config->iv(), subsamples));
+        std::unique_ptr<DecryptConfig> decrypt_config(new DecryptConfig(
+            base_decrypt_config->key_id(), base_decrypt_config->iv(),
+            subsamples, base_decrypt_config->encryption_scheme()));
         stream_parser_buffer->set_decrypt_config(std::move(decrypt_config));
       }
     }

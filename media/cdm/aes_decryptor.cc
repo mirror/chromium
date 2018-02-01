@@ -178,6 +178,14 @@ static scoped_refptr<DecoderBuffer> DecryptData(
   CHECK(input.decrypt_config());
   CHECK(key);
 
+  // Only support CTR decryption.
+  if (input.decrypt_config()->encryption_scheme().mode() !=
+          EncryptionScheme::CIPHER_MODE_AES_CTR ||
+      input.decrypt_config()->encryption_scheme().HasPattern()) {
+    DVLOG(1) << "Only CTR mode supported.";
+    return nullptr;
+  }
+
   crypto::Encryptor encryptor;
   if (!encryptor.Init(key, crypto::Encryptor::CTR, "")) {
     DVLOG(1) << "Could not initialize decryptor.";
