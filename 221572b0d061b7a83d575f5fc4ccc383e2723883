@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fe48054b_86ba0860",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done.Now we have class_factories[].",
+      "parentUuid": "26badc2a_b3d67498",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 79
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408250ba_4531921c",
         "filename": "notification_helper/notification_activator.cc",
         "patchSetId": 60
@@ -613,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "52eeb735_0212ac80",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done. I was running out of time yesterday.",
+      "parentUuid": "7448d745_58c75d19",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f729ba5_a0244bca",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 60
@@ -728,6 +776,30 @@
       "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdc7e78_7186b5cb",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "It seems that I used \"wrl/client.h\". Sorry about the confusion. Now it\u0027s fixed.",
+      "parentUuid": "837af482_fd9edde3",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -892,6 +964,30 @@
       "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a005787a_8324f5c4",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done. I took Greg\u0027s approach, which uses similar APIs.",
+      "parentUuid": "2a20989a_0991c206",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 58
+      },
+      "revId": "221572b0d061b7a83d575f5fc4ccc383e2723883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

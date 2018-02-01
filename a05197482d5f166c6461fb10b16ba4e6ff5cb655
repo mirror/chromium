@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "459b9d88_ee960183",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 66
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Text removed. I linked the design doc here though. Hopefully that\u0027s okay.",
+      "parentUuid": "eaea8576_ebb41b5c",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b17f01_9bcc3c7a",
         "filename": "BUILD.gn",
         "patchSetId": 66
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b321736c_3f6cae71",
+        "filename": "BUILD.gn",
+        "patchSetId": 66
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Good eye. Merged. Btw, there is another is_win on line on line 387 ish, with comments \"# Accessibility API debugging tools.\". Also merged.",
+      "parentUuid": "c4b17f01_9bcc3c7a",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755bf901_287d4993",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 66
@@ -68,6 +104,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a66d46_b955885c",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done. Sorry that I forgot to clean it up.",
+      "parentUuid": "755bf901_287d4993",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "688e7a02_b40cc708",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Hmm, I will leave it for now until we have a final decision then :-)",
+      "parentUuid": "b365866a_1af6c2b5",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a21d7d3_3440e992",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
@@ -141,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "2fd5bb1e_1b8a8623",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a21d7d3_3440e992",
+      "range": {
+        "startLine": 618,
+        "startChar": 18,
+        "endLine": 618,
+        "endChar": 28
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296c83f3_7d173e40",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
@@ -155,6 +257,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdddcb3_74e213a7",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "The pdb file already has \u0027archive\u0027, so I just delete it here. peter@ suggested adding \u0027archive\u0027 here.",
+      "parentUuid": "296c83f3_7d173e40",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +301,30 @@
     },
     {
       "key": {
+        "uuid": "e2c8d4ba_e05bcc3f",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d621a20_918c950a",
+      "range": {
+        "startLine": 624,
+        "startChar": 18,
+        "endLine": 624,
+        "endChar": 28
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f4ab42e_723ca201",
         "filename": "notification_helper/README.md",
         "patchSetId": 66
@@ -192,6 +336,30 @@
       "writtenOn": "2018-02-01T17:53:40Z",
       "side": 1,
       "message": "Thanks for providing a README. Might I suggest you make this a little more generic:\nThis directory contains the code for a COM server to handle notification\nactivation. This code is compiled in an executable that ...\n\nAlso, you should clearly indicate this is a standalone executable that doesn\u0027t contain Chrome, and that in order to run Chrome is launches Chrome using a certain command line.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a47c7ee_cb640856",
+        "filename": "notification_helper/README.md",
+        "patchSetId": 66
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Updated. I am not sure if I should remove the last two paragraphs. I personally feel that the COM machinery is not that straightforward to everyone. Since the design doc is not linked here, I prefer to keep them in README.md. If you think that is unnecessary, I can remove them though.",
+      "parentUuid": "9f4ab42e_723ca201",
       "range": {
         "startLine": 1,
         "startChar": 2,
@@ -221,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "031a174a_eace8987",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Here is the story. I have to check IsSignal() for sampling profiler in another CL. https://chromium-review.googlesource.com/c/chromium/src/+/851427/37/base/profiler/stack_sampling_profiler.cc\n\ngab@ explicitly asked me to add the static_assert thing. So I did the same thing here too. If you think this is unnecessary, I can go back to the original version.",
+      "parentUuid": "bed643dc_f76a3474",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8302859_264bc336",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 66
@@ -244,6 +430,30 @@
     },
     {
       "key": {
+        "uuid": "f27490a1_319b98dc",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8302859_264bc336",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 40
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5aeba84_906df105",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 66
@@ -255,6 +465,24 @@
       "writtenOn": "2018-02-01T10:16:34Z",
       "side": 1,
       "message": "this asserts that a constant above has a specific value. it doesn\u0027t assert that this value was actually used when constructing the event.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3586af8_9bde02f3",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Please see my comment above.",
+      "parentUuid": "b5aeba84_906df105",
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -278,6 +506,24 @@
     },
     {
       "key": {
+        "uuid": "a4aa3af9_4feed7d5",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Ah, you are right. Done.",
+      "parentUuid": "35ff36af_6492e18a",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27ed761d_e1b985b2",
         "filename": "notification_helper/com_server_module_unittest.cc",
         "patchSetId": 66
@@ -292,6 +538,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d02dea9_5ddc4ea8",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "I cannot recall but it seems that I included \"wrl/client.h\", rather than \u003cwrl/client.h\u003e. Sorry about the confusion I brought here. Now it\u0027s fixed.",
+      "parentUuid": "27ed761d_e1b985b2",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +582,30 @@
     },
     {
       "key": {
+        "uuid": "4592fff5_f35b5e7e",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16475ab0_fa6d9d8d",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9fb6ed1_9b913027",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 66
@@ -338,6 +626,30 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cceb2bb3_1fb7770a",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9fb6ed1_9b913027",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 8
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +676,30 @@
     },
     {
       "key": {
+        "uuid": "7115c149_47556bde",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3af6bddf_5c1cf1b7",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d678f42_08257d0d",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 66
@@ -381,6 +717,24 @@
     },
     {
       "key": {
+        "uuid": "945c6f10_5b787f96",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Thanks for pointing me to the example. I should be searched it in our codebase.",
+      "parentUuid": "1d678f42_08257d0d",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2695ef0d_41394782",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 66
@@ -395,6 +749,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc4edac_aa856307",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "2695ef0d_41394782",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -429,6 +801,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf4da00_3ac2318d",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:50:10Z",
+      "side": 1,
+      "message": "Done. Pure awesomeness. I was worried about the flakiness too.",
+      "parentUuid": "87e034bc_fb21600c",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
