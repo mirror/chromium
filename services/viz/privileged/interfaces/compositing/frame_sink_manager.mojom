@@ -116,6 +116,8 @@ interface FrameSinkManager {
 
   // Creates a FrameSinkVideoCapturer instance.
   CreateVideoCapturer(FrameSinkVideoCapturer& request);
+
+  EvictSurfaces(array<SurfaceId> surface_ids);
 };
 
 // The FrameSinkManagerClient interface is implemented by the Display
