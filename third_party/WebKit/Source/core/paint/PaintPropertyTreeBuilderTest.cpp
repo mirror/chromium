@@ -132,7 +132,7 @@ void PaintPropertyTreeBuilderTest::SetUp() {
 INSTANTIATE_TEST_CASE_P(
     All,
     PaintPropertyTreeBuilderTest,
-    ::testing::ValuesIn(kSlimmingPaintNonV1TestConfigurations));
+    ::testing::ValuesIn(kAllSlimmingPaintTestConfigurations));
 
 TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
   LoadTestData("fixed-position.html");
