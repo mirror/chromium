@@ -333,8 +333,7 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
       assertWithMatcher:grey_notNil()];
 
   [ChromeEarlGrey goBack];
-  [[EarlGrey selectElementWithMatcher:OmniboxText(URL.GetContent())]
-      assertWithMatcher:grey_notNil()];
+  [ChromeEarlGrey waitForWebViewContainingText:"Link"];
 }
 
 // Tests that a link with WebUI URL does not trigger a load. WebUI pages may
