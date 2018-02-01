@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96b33eaa_b05a4761",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T23:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d553b4_4c5df691",
+      "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f21785ec_61fe53f7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "08cf3525_d261b2c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T23:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21785ec_61fe53f7",
+      "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8b66e1c_baa36b1f",
         "filename": "chrome/test/data/banners/main.js",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334ec009_93de78a9",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-01T23:29:12Z",
+      "side": 1,
+      "message": "Good catch, fixed.",
+      "parentUuid": "f8b66e1c_baa36b1f",
+      "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
