@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "20b3ed90_f0a11dbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-01T14:11:26Z",
+      "side": 1,
+      "message": "Okay, so it\u0027s the former, but let\u0027s clarify it here.",
+      "parentUuid": "6573718f_3713a8da",
+      "revId": "287f19ece81346fa7ad744bfcfd1a7c63fe97f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e2b9dc8_857fc532",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
