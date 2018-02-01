@@ -22,6 +22,30 @@
       "revId": "1738d63104937bbd29fa97e02493e4263756c3ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbca2d8_d40a9d4a",
+        "filename": "chromeos/process_proxy/process_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000994
+      },
+      "writtenOn": "2018-02-01T01:02:28Z",
+      "side": 1,
+      "message": "Sure, looks doable. Is there an easy way to get the active profile from the Terminal API?",
+      "parentUuid": "59e4924d_ede2d640",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "1738d63104937bbd29fa97e02493e4263756c3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
