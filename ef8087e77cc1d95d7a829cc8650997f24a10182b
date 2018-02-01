@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "65c3140c_87461ade",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-01T22:34:01Z",
+      "side": 1,
+      "message": "I actually almost suggested converting this to a DialogDelegateView, because then a lot of the overrides (and contents_view_) can go away, but I figured I wouldn\u0027t make you do it unless it was necessary.\n\nThe other option would be to call SizeToFit on the Label.",
+      "parentUuid": "742dd5a5_024a1109",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "ef8087e77cc1d95d7a829cc8650997f24a10182b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9a992ff_b1128a6e",
         "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
         "patchSetId": 2
