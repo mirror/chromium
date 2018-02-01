@@ -10,7 +10,6 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
 
@@ -38,7 +37,7 @@ public class CompositorAnimator extends Animator {
     private final WeakReference<CompositorAnimationHandler> mHandler;
 
     /** The list of listeners for events through the life of an animation. */
-    private final ObserverList<AnimatorListener> mListeners = new ObserverList<>();
+    private final ArrayList<AnimatorListener> mListeners = new ArrayList<>();
 
     /** The list of frame update listeners for this animation. */
     private final ArrayList<AnimatorUpdateListener> mAnimatorUpdateListeners = new ArrayList<>();
@@ -123,8 +122,12 @@ public class CompositorAnimator extends Animator {
         CompositorAnimator animator = new CompositorAnimator(handler);
         animator.setValues(startValue, endValue);
         animator.setDuration(durationMs);
-        animator.addUpdateListener(
-                (CompositorAnimator a) -> property.setValue(target, a.getAnimatedValue()));
+        animator.addUpdateListener(new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(CompositorAnimator animator) {
+                property.setValue(target, animator.getAnimatedValue());
+            }
+        });
         return animator;
     }
 
@@ -237,12 +240,12 @@ public class CompositorAnimator extends Animator {
 
     @Override
     public void addListener(AnimatorListener listener) {
-        mListeners.addObserver(listener);
+        mListeners.add(listener);
     }
 
     @Override
     public void removeListener(AnimatorListener listener) {
-        mListeners.removeObserver(listener);
+        mListeners.remove(listener);
     }
 
     @Override
@@ -262,7 +265,8 @@ public class CompositorAnimator extends Animator {
         if (handler != null) handler.registerAndStartAnimator(this);
         mTimeSinceStartMs = 0;
 
-        for (AnimatorListener listener : mListeners) listener.onAnimationStart(this);
+        ArrayList<AnimatorListener> clonedList = (ArrayList<AnimatorListener>) mListeners.clone();
+        for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationStart(this);
     }
 
     @Override
@@ -273,7 +277,8 @@ public class CompositorAnimator extends Animator {
 
         super.cancel();
 
-        for (AnimatorListener listener : mListeners) listener.onAnimationCancel(this);
+        ArrayList<AnimatorListener> clonedList = (ArrayList<AnimatorListener>) mListeners.clone();
+        for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationCancel(this);
 
         end();
     }
@@ -289,12 +294,13 @@ public class CompositorAnimator extends Animator {
         // If the animation was ended early but not canceled, push one last update to the listeners.
         if (!mDidUpdateToCompletion && !wasCanceled) {
             mAnimatedFraction = 1f;
-            for (AnimatorUpdateListener listener : mAnimatorUpdateListeners) {
-                listener.onAnimationUpdate(this);
-            }
+            ArrayList<AnimatorUpdateListener> clonedList =
+                    (ArrayList<AnimatorUpdateListener>) mAnimatorUpdateListeners.clone();
+            for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationUpdate(this);
         }
 
-        for (AnimatorListener listener : mListeners) listener.onAnimationEnd(this);
+        ArrayList<AnimatorListener> clonedList = (ArrayList<AnimatorListener>) mListeners.clone();
+        for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationEnd(this);
     }
 
     @Override

@@ -1,4 +1,5 @@
 include_rules = [
+  "+base/feature_list.h",
   "+components/bookmarks/browser",
   "+components/bookmarks/test",
   "+components/browser_sync",
