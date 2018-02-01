@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579c21e9_94da19f2",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-01T15:14:45Z",
+      "side": 1,
+      "message": "optional: all_popup_blocker_?",
+      "revId": "f59cac10b34947291259a8ee5c3487f4aba9c5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
