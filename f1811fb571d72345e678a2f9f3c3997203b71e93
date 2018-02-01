@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e1da305_8bc33951",
+        "filename": "content/browser/service_worker/payment_handler_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd65d048_36c21610",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "295720b4_d0a9d8c5",
         "filename": "content/browser/service_worker/payment_handler_support.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7de86345_346b6bba",
+        "filename": "content/browser/service_worker/payment_handler_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "295720b4_d0a9d8c5",
+      "range": {
+        "startLine": 30,
+        "startChar": 71,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05430e37_2ee39a1b",
         "filename": "content/browser/service_worker/payment_handler_support.cc",
         "patchSetId": 4
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e697ce41_0113f585",
+        "filename": "content/browser/service_worker/payment_handler_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05430e37_2ee39a1b",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d560c45_257c6eaa",
         "filename": "content/browser/service_worker/payment_handler_support.h",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d8d447_a14b8fc2",
+        "filename": "content/browser/service_worker/payment_handler_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d560c45_257c6eaa",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "28b58cb4_510c514a",
+        "filename": "content/browser/service_worker/payment_handler_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12d8b77f_73ab71db",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e69087d_718c00c7",
         "filename": "content/browser/service_worker/payment_handler_support.h",
         "patchSetId": 4
@@ -119,6 +227,24 @@
       "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cae5f7a_6a5aaae9",
+        "filename": "content/browser/service_worker/payment_handler_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "9e69087d_718c00c7",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "4dec9a6c_e618da70",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "I found out the discussion here: https://chromium-review.googlesource.com/c/chromium/src/+/616740/9/content/browser/service_worker/service_worker_provider_host.cc#932\nbinding_.Close() does not invoke the error connection handler set by us for some necessary work, so we did not use it in SWProviderHost before.\nBut this |binding_| of SWVersion does not need the error connection handler, so, yes we can just use binding_.Close() here with no need to run the response callback with nonsense arguments.\n\n# mojo::AssociatedBinding class does not have ReportBadMessage() method.",
+      "parentUuid": "452cfffa_75d28113",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68b22d18_e750abeb",
         "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
         "patchSetId": 4
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "771eb040_8cbe53e2",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68b22d18_e750abeb",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed11928_a9cc44d9",
         "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
         "patchSetId": 4
@@ -170,6 +332,24 @@
       "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422edbf3_206295c4",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-01T03:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed11928_a9cc44d9",
+      "revId": "f1811fb571d72345e678a2f9f3c3997203b71e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
