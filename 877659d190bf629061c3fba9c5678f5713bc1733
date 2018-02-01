@@ -16,6 +16,24 @@
       "revId": "877659d190bf629061c3fba9c5678f5713bc1733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f177f20f_834a3e43",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-01T22:53:23Z",
+      "side": 1,
+      "message": "While I don\u0027t think this value is security sensitive, if I were to fully apply my interpretation of the style guidelines, we should report a bad message for out-of-range values. However, adding a new enum value is kind of a pain and a very one-off kind of thing. I guess let\u0027s just leave it like this and wait for Mojo conversion, which will make it easier to report a bad message.\n\n(As an aside, I\u0027m wondering if we should avoid sending this IPC at all now for non-main frames? I guess it makes things easier to do it this way though--since we also call it in DidStartLoading / DidStopLoading.)",
+      "parentUuid": "74601419_a0acdfb0",
+      "revId": "877659d190bf629061c3fba9c5678f5713bc1733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
