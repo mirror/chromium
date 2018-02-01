@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "cc/trees/layer_tree_frame_sink_client.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
@@ -78,6 +79,8 @@ bool DirectLayerTreeFrameSink::BindToClient(
   support_ = support_manager_->CreateCompositorFrameSinkSupport(
       this, frame_sink_id_, is_root,
       capabilities_.delegated_sync_points_required);
+  if (features::IsVizHitTestingEnabled())
+    support_->SetUpHitTest();
   begin_frame_source_ = std::make_unique<ExternalBeginFrameSource>(this);
   client_->SetBeginFrameSource(begin_frame_source_.get());
 
@@ -129,7 +132,8 @@ void DirectLayerTreeFrameSink::DisplayOutputSurfaceLost() {
 void DirectLayerTreeFrameSink::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
     const RenderPassList& render_passes) {
-  // This notification is not relevant to our client outside of tests.
+  if (support_->GetHitTestAggregator())
+    support_->GetHitTestAggregator()->Aggregate(display_->CurrentSurfaceId());
 }
 
 void DirectLayerTreeFrameSink::DisplayDidDrawAndSwap() {

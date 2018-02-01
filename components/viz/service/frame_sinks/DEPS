@@ -4,6 +4,7 @@ include_rules = [
   "+cc/base",
   "+cc/ipc",
   "+cc/scheduler",
+  "+components/viz/common/features.h",
   "+components/viz/service/display",
   "+components/viz/service/display_embedder",
   "+components/viz/service/hit_test",

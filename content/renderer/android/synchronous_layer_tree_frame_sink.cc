@@ -15,6 +15,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/trees/layer_tree_frame_sink_client.h"
 #include "components/viz/common/display/renderer_settings.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/render_pass.h"
@@ -191,6 +192,9 @@ bool SynchronousLayerTreeFrameSink::BindToClient(
   child_support_ = std::make_unique<viz::CompositorFrameSinkSupport>(
       this, frame_sink_manager_.get(), kChildFrameSinkId, child_support_is_root,
       needs_sync_points);
+
+  if (features::IsVizHitTestingEnabled())
+    root_support_->SetUpHitTest();
 
   viz::RendererSettings software_renderer_settings;
 
