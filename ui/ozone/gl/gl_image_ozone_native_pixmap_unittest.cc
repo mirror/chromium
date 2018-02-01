@@ -9,6 +9,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/client_native_pixmap.h"
+#include "ui/gfx/client_native_pixmap_factory.h"
 #include "ui/gl/gl_image_native_pixmap.h"
 #include "ui/gl/test/gl_image_test_template.h"
 #include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
@@ -25,7 +26,7 @@ template <gfx::BufferUsage usage, gfx::BufferFormat format>
 class GLImageNativePixmapTestDelegate : public GLImageTestDelegateBase {
  public:
   GLImageNativePixmapTestDelegate() {
-    client_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
+    ui::CreateClientNativePixmapFactoryOzone();
   }
   scoped_refptr<GLImage> CreateSolidColorImage(const gfx::Size& size,
                                                const uint8_t color[4]) const {
@@ -37,7 +38,7 @@ class GLImageNativePixmapTestDelegate : public GLImageTestDelegateBase {
     DCHECK(pixmap);
     if (usage == gfx::BufferUsage::GPU_READ_CPU_READ_WRITE ||
         usage == gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE) {
-      auto client_pixmap = client_pixmap_factory_->ImportFromHandle(
+      auto client_pixmap = gfx::ClientNativePixmapFactory::GetInstance()->ImportFromHandle(
           pixmap->ExportHandle(), size, usage);
       bool mapped = client_pixmap->Map();
       EXPECT_TRUE(mapped);
@@ -72,7 +73,7 @@ class GLImageNativePixmapTestDelegate : public GLImageTestDelegateBase {
   }
 
  private:
-  std::unique_ptr<gfx::ClientNativePixmapFactory> client_pixmap_factory_;
+  DISALLOW_COPY_AND_ASSIGN(GLImageNativePixmapTestDelegate);
 };
 
 using GLImageScanoutType = testing::Types<

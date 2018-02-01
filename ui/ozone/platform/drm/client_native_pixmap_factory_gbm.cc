@@ -14,6 +14,7 @@
 namespace ui {
 
 gfx::ClientNativePixmapFactory* CreateClientNativePixmapFactoryGbm() {
+  LOG(ERROR) << "JAMES CreateClientNativePixmapFactoryGbm";
   return gfx::CreateClientNativePixmapFactoryDmabuf();
 }
 
