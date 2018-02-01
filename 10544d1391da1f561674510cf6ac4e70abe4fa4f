@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49350c0_37f74f65",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T08:29:24Z",
+      "side": 1,
+      "message": "Added this in order to avoid synchronously nesting DoHeaderLoop repeatedly. (This seems to be a common pattern...)  Let me know if this looks suspicious!",
+      "revId": "10544d1391da1f561674510cf6ac4e70abe4fa4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
