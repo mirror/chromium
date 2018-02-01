@@ -57,12 +57,12 @@ void EnableMethodManifestUrlForSupportedApps(
 
 ManifestVerifier::ManifestVerifier(
     content::WebContents* web_contents,
-    std::unique_ptr<PaymentMethodManifestDownloaderInterface> downloader,
-    std::unique_ptr<PaymentManifestParser> parser,
-    scoped_refptr<PaymentManifestWebDataService> cache)
+    PaymentManifestDownloaderInterface* downloader,
+    PaymentManifestParser* parser,
+    PaymentManifestWebDataService* cache)
     : dev_tools_(web_contents),
-      downloader_(std::move(downloader)),
-      parser_(std::move(parser)),
+      downloader_(downloader),
+      parser_(parser),
       cache_(cache),
       number_of_manifests_to_verify_(0),
       number_of_manifests_to_download_(0),

@@ -44,4 +44,12 @@ void TestDownloader::DownloadPaymentMethodManifest(
   impl_.DownloadPaymentMethodManifest(actual_url, std::move(callback));
 }
 
+void TestDownloader::DownloadWebAppManifest(
+    const GURL& url,
+    PaymentManifestDownloadCallback callback) {
+  // Returns empty to simulate failed to download web app manifest.
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(std::move(callback), std::string()));
+}
+
 }  // namespace payments

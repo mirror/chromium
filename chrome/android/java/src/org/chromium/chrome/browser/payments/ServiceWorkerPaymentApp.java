@@ -41,6 +41,13 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     private final Set<String> mPreferredRelatedApplicationIds;
     private final boolean mIsIncognito;
 
+    // Below variables used for installable service worker payment app specifically.
+    private final boolean mNeedsInstallation;
+    private final String mAppName;
+    private final URI mSwUri;
+    private final URI mScope;
+    private final boolean mUseCache;
+
     /**
      * This class represents capabilities of a payment instrument. It is currently only used for
      * 'basic-card' payment instrument.
@@ -132,6 +139,52 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         ChromeActivity activity = ChromeActivity.fromWebContents(mWebContents);
         mIsIncognito = activity != null && activity.getCurrentTabModel() != null
                 && activity.getCurrentTabModel().isIncognito();
+
+        mNeedsInstallation = false;
+        mAppName = name;
+        mSwUri = null;
+        mScope = null;
+        mUseCache = false;
+    }
+
+    /**
+     * Build a service worker payment app instance needs installation. The payment app will be
+     * installed explicitly when invoking it.
+     *
+     * @see https://w3c.github.io/webpayments-payment-handler/#structure-of-a-web-payment-app
+     *
+     * @param webContents                    The web contents where PaymentRequest was invoked.
+     * @param name                           The name of the payment app.
+     * @param swUri                          The URI to get the service worker js script.
+     * @param scope                          The registration scope of the corresponding service
+     *                                       worker.
+     * @param useCache                       Whether cache is used to register the service worker.
+     * @param icon                           The drawable icon of the payment app.
+     * @param methodName                     The supported method name.
+     */
+    public ServiceWorkerPaymentApp(WebContents webContents, @Nullable String name, URI swUri,
+            URI scope, boolean useCache, @Nullable Drawable icon, String methodName) {
+        // Do not display duplicate information.
+        super(scope.toString(), TextUtils.isEmpty(name) ? scope.toString() : name, null,
+                TextUtils.isEmpty(name) ? null : scope.toString(), icon);
+
+        mWebContents = webContents;
+        mRegistrationId = -1; // Should never be used.
+        mCanPreselect = false;
+        mMethodNames = new HashSet<>();
+        mMethodNames.add(methodName);
+        mCapabilities = new Capabilities[0];
+        mPreferredRelatedApplicationIds = new HashSet<>();
+
+        ChromeActivity activity = ChromeActivity.fromWebContents(mWebContents);
+        mIsIncognito = activity != null && activity.getCurrentTabModel() != null
+                && activity.getCurrentTabModel().isIncognito();
+
+        mNeedsInstallation = true;
+        mAppName = name;
+        mSwUri = swUri;
+        mScope = scope;
+        mUseCache = useCache;
     }
 
     @Override
@@ -139,8 +192,8 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             String iframeOrigin, byte[][] unusedCertificateChain,
             Map<String, PaymentDetailsModifier> modifiers, final InstrumentsCallback callback) {
         // Do not send canMakePayment event when in incognito mode or basic-card is the only
-        // supported payment method for the payment request.
-        if (mIsIncognito || isOnlySupportBasiccard(methodDataMap)) {
+        // supported payment method or this an app needs installation for the payment request.
+        if (mNeedsInstallation || mIsIncognito || isOnlySupportBasiccard(methodDataMap)) {
             new Handler().post(() -> {
                 List<PaymentInstrument> instruments =
                         Collections.singletonList(ServiceWorkerPaymentApp.this);
@@ -267,9 +320,16 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             byte[][] unusedCertificateChain, Map<String, PaymentMethodData> methodData,
             PaymentItem total, List<PaymentItem> displayItems,
             Map<String, PaymentDetailsModifier> modifiers, InstrumentDetailsCallback callback) {
-        ServiceWorkerPaymentAppBridge.invokePaymentApp(mWebContents, mRegistrationId, origin,
-                iframeOrigin, id, new HashSet<>(methodData.values()), total,
-                new HashSet<>(modifiers.values()), callback);
+        if (mNeedsInstallation) {
+            ServiceWorkerPaymentAppBridge.invokeInstallablePaymentApp(mWebContents, origin,
+                    iframeOrigin, id, new HashSet<>(methodData.values()), total,
+                    new HashSet<>(modifiers.values()), callback, mAppName, mSwUri, mScope,
+                    mUseCache, mMethodNames);
+        } else {
+            ServiceWorkerPaymentAppBridge.invokePaymentApp(mWebContents, mRegistrationId, origin,
+                    iframeOrigin, id, new HashSet<>(methodData.values()), total,
+                    new HashSet<>(modifiers.values()), callback);
+        }
     }
 
     @Override
