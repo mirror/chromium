@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e5d999_8fe42beb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-02-01T18:58:01Z",
+      "side": 1,
+      "message": "Perhaps we should clean this up before submitting the patch.",
+      "range": {
+        "startLine": 366,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 6
+      },
+      "revId": "80ecb512f9bb68bb0a33c71daf0a465ca2555023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
