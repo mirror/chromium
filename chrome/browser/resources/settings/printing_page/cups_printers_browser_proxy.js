@@ -112,7 +112,7 @@ cr.define('settings', function() {
     removeCupsPrinter(printerId, printerName) {}
 
     /**
-     * @return {!Promise<string>} The full path of the printer PPD file.
+     * @return {!Promise<string>} The full path of the printer PPD file
      */
     getCupsPrinterPPDPath() {}
 
