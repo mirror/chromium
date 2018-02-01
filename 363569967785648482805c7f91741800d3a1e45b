@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591514e8_f9376fd5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/persistence-external-change-breakpoints.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2018-02-01T00:00:56Z",
+      "side": 1,
+      "message": "I believe that we have helper function: SourcesTestRunner.dumpBreakpointSidebarPane.\nCan we test something with inline breakpoints and dump them as well?",
+      "revId": "363569967785648482805c7f91741800d3a1e45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
