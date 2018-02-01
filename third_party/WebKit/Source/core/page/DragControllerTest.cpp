@@ -182,7 +182,7 @@ TEST_P(DragControllerTest, DragImageForSelectionClipsToViewport) {
   int scroll_offset = 500;
   LocalFrameView* frame_view = GetDocument().View();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   expected_selection =
       FloatRect(0, scroll_offset, node_width, viewport_height_css);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(GetFrame()));
@@ -195,7 +195,7 @@ TEST_P(DragControllerTest, DragImageForSelectionClipsToViewport) {
   // the bottom of the node is now visible.
   scroll_offset = 800;
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, scroll_offset, node_width,
                                  node_height + node_margin_top - scroll_offset);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(GetFrame()));
@@ -251,7 +251,7 @@ TEST_P(DragControllerTest, DragImageForSelectionClipsChildFrameToViewport) {
   int scroll_offset = 50;
   LocalFrameView* frame_view = GetDocument().View();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, 5, 30, 20);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
   selection_image = DragController::DragImageForSelection(child_frame, 1);
@@ -263,7 +263,7 @@ TEST_P(DragControllerTest, DragImageForSelectionClipsChildFrameToViewport) {
   // the visual viewport.
   scroll_offset = 210;
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, 10, 30, 15);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
   selection_image = DragController::DragImageForSelection(child_frame, 1);
@@ -274,7 +274,7 @@ TEST_P(DragControllerTest, DragImageForSelectionClipsChildFrameToViewport) {
   // visual viewport clip.
   int iframe_scroll_offset = 7;
   child_frame.View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, iframe_scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, iframe_scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, 17, 30, 8);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
   selection_image = DragController::DragImageForSelection(child_frame, 1);
@@ -332,7 +332,7 @@ TEST_P(DragControllerTest,
   int scroll_offset = 50;
   LocalFrameView* frame_view = GetDocument().View();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, 5, 30, 20);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
   selection_image = DragController::DragImageForSelection(child_frame, 1);
@@ -345,7 +345,7 @@ TEST_P(DragControllerTest,
   // the visual viewport.
   scroll_offset = 210;
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, 10, 30, 15);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
   selection_image = DragController::DragImageForSelection(child_frame, 1);
@@ -357,7 +357,7 @@ TEST_P(DragControllerTest,
   // visual viewport clip.
   int iframe_scroll_offset = 7;
   child_frame.View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, iframe_scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, iframe_scroll_offset), kScriptScroll);
   expected_selection = FloatRect(0, 17, 30, 8);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
   selection_image = DragController::DragImageForSelection(child_frame, 1);

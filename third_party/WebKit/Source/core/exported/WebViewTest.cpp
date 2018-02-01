@@ -4744,7 +4744,7 @@ TEST_P(WebViewTest, ViewportOverrideAdaptsToScaleAndScroll) {
   // account.
   web_view_impl->SetPageScaleFactor(1.5f);
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(100, 150), kProgrammaticScroll, kScrollBehaviorInstant);
+      ScrollOffset(100, 150), kScriptScroll, kScrollBehaviorInstant);
   dev_tools_emulator->ForceViewport(WebFloatPoint(50, 55), 2.f);
   expected_matrix.MakeIdentity()
       .Scale(2.f)
@@ -4759,7 +4759,7 @@ TEST_P(WebViewTest, ViewportOverrideAdaptsToScaleAndScroll) {
 
   // Transform adapts to scroll changes.
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(50, 55), kProgrammaticScroll, kScrollBehaviorInstant);
+      ScrollOffset(50, 55), kScriptScroll, kScrollBehaviorInstant);
   expected_matrix.MakeIdentity()
       .Scale(2.f)
       .Translate(-50, -55)

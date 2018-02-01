@@ -32,7 +32,7 @@ void ProgrammaticScrollAnimator::ResetAnimationState() {
 void ProgrammaticScrollAnimator::NotifyOffsetChanged(
     const ScrollOffset& offset) {
   ScrollType scroll_type =
-      is_sequenced_scroll_ ? kSequencedScroll : kProgrammaticScroll;
+      is_sequenced_scroll_ ? kSequencedScroll : kBrowserScroll;
   ScrollOffsetChanged(offset, scroll_type);
 }
 

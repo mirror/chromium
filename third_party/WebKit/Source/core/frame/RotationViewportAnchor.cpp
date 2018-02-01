@@ -191,7 +191,7 @@ void RotationViewportAnchor::RestoreToAnchor() {
                  visual_viewport_origin);
 
   LayoutViewport().SetScrollOffset(ToScrollOffset(main_frame_origin),
-                                   kProgrammaticScroll);
+                                   kBrowserScroll);
 
   // Set scale before location, since location can be clamped on setting scale.
   visual_viewport_->SetScale(new_page_scale_factor);

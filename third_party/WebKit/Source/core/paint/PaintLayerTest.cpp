@@ -267,7 +267,7 @@ TEST_P(PaintLayerTest, CompositedScrollingNoNeedsRepaint) {
   EXPECT_EQ(LayoutPoint(), content_layer->Location());
 
   scroll_layer->GetScrollableArea()->SetScrollOffset(ScrollOffset(1000, 1000),
-                                                     kProgrammaticScroll);
+                                                     kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhasesExceptPaint();
   EXPECT_EQ(LayoutPoint(-1000, -1000), content_layer->Location());
   EXPECT_FALSE(content_layer->NeedsRepaint());
@@ -297,7 +297,7 @@ TEST_P(PaintLayerTest, NonCompositedScrollingNeedsRepaint) {
   EXPECT_EQ(LayoutPoint(), content_layer->Location());
 
   scroll_layer->GetScrollableArea()->SetScrollOffset(ScrollOffset(1000, 1000),
-                                                     kProgrammaticScroll);
+                                                     kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhasesExceptPaint();
   EXPECT_EQ(LayoutPoint(-1000, -1000), content_layer->Location());
   EXPECT_TRUE(content_layer->NeedsRepaint());
@@ -579,7 +579,7 @@ TEST_P(PaintLayerTest, PaintInvalidationOnNonCompositedScroll) {
   EXPECT_EQ(LayoutRect(0, 30, 50, 5), content->FirstFragment().VisualRect());
 
   scroller->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 20),
-                                                 kProgrammaticScroll);
+                                                 kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(LayoutRect(0, 10, 50, 10),
             content_layer->FirstFragment().VisualRect());
@@ -609,7 +609,7 @@ TEST_P(PaintLayerTest, PaintInvalidationOnCompositedScroll) {
   EXPECT_EQ(LayoutRect(0, 30, 50, 5), content->FirstFragment().VisualRect());
 
   scroller->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 20),
-                                                 kProgrammaticScroll);
+                                                 kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(LayoutRect(0, 30, 50, 10),
             content_layer->FirstFragment().VisualRect());
@@ -884,7 +884,7 @@ TEST_P(PaintLayerTest, FloatLayerUnderInlineLayerScrolled) {
   PaintLayer* span = GetPaintLayerByElementId("span");
   PaintLayer* container = GetPaintLayerByElementId("container");
   container->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 400),
-                                                  kProgrammaticScroll);
+                                                  kScriptScroll);
 
   EXPECT_EQ(span, floating->Parent());
   EXPECT_EQ(container, floating->ContainingLayer());
@@ -1078,7 +1078,7 @@ TEST_P(PaintLayerTest, ColumnSpanLayerUnderExtraLayerScrolled) {
   PaintLayer* extra_layer = GetPaintLayerByElementId("extraLayer");
   PaintLayer* columns = GetPaintLayerByElementId("columns");
   columns->GetScrollableArea()->SetScrollOffset(ScrollOffset(200, 0),
-                                                kProgrammaticScroll);
+                                                kScriptScroll);
 
   EXPECT_EQ(extra_layer, spanner->Parent());
   EXPECT_EQ(columns, spanner->ContainingLayer());

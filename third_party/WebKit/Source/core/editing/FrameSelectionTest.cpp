@@ -1051,7 +1051,7 @@ TEST_F(FrameSelectionTest, SelectionBounds) {
   const int scroll_offset = 500;
   LocalFrameView* frame_view = GetDocument().View();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+      ScrollOffset(0, scroll_offset), kScriptScroll);
   EXPECT_EQ(LayoutRect(0, node_margin_top, node_width, node_height),
             Selection().UnclippedBounds());
 

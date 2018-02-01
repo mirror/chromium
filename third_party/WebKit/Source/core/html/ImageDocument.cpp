@@ -351,7 +351,7 @@ void ImageDocument::ImageClicked(int x, int y) {
                      static_cast<float>(GetFrame()->View()->Height()) / 2;
 
     GetFrame()->View()->LayoutViewportScrollableArea()->SetScrollOffset(
-        ScrollOffset(scroll_x, scroll_y), kProgrammaticScroll);
+        ScrollOffset(scroll_x, scroll_y), kBrowserScroll);
   }
 }
 

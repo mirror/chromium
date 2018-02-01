@@ -264,7 +264,7 @@ void Internals::ResetToConsistentState(Page* page) {
   page->DeprecatedLocalMainFrame()
       ->View()
       ->LayoutViewportScrollableArea()
-      ->SetScrollOffset(ScrollOffset(), kProgrammaticScroll);
+      ->SetScrollOffset(ScrollOffset(), kBrowserScroll);
   OverrideUserPreferredLanguagesForTesting(Vector<AtomicString>());
   if (page->DeprecatedLocalMainFrame()->GetEditor().IsOverwriteModeEnabled())
     page->DeprecatedLocalMainFrame()->GetEditor().ToggleOverwriteModeEnabled();

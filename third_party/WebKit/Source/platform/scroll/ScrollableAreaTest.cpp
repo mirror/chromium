@@ -145,11 +145,11 @@ TEST_F(ScrollableAreaTest, InvalidatesNonCompositedScrollbarsWhenThumbMoves) {
       .WillRepeatedly(Return(kNoPart));
 
   // A scroll in each direction should only invalidate one scrollbar.
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 50), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 50), kScriptScroll);
   EXPECT_FALSE(scrollable_area->HorizontalScrollbarNeedsPaintInvalidation());
   EXPECT_TRUE(scrollable_area->VerticalScrollbarNeedsPaintInvalidation());
   scrollable_area->ClearNeedsPaintInvalidationForScrollControls();
-  scrollable_area->SetScrollOffset(ScrollOffset(50, 50), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(50, 50), kScriptScroll);
   EXPECT_TRUE(scrollable_area->HorizontalScrollbarNeedsPaintInvalidation());
   EXPECT_FALSE(scrollable_area->VerticalScrollbarNeedsPaintInvalidation());
   scrollable_area->ClearNeedsPaintInvalidationForScrollControls();
@@ -201,7 +201,7 @@ TEST_F(ScrollableAreaTest, InvalidatesCompositedScrollbarsIfPartsNeedRepaint) {
   // the back button (i.e. the track).
   EXPECT_CALL(theme, InvalidateOnThumbPositionChange(_, _, _))
       .WillOnce(Return(kBackButtonStartPart));
-  scrollable_area->SetScrollOffset(ScrollOffset(50, 0), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(50, 0), kScriptScroll);
   EXPECT_TRUE(layer_for_horizontal_scrollbar.HasTrackedRasterInvalidations());
   EXPECT_FALSE(layer_for_vertical_scrollbar.HasTrackedRasterInvalidations());
   EXPECT_TRUE(horizontal_scrollbar->TrackNeedsRepaint());
@@ -212,7 +212,7 @@ TEST_F(ScrollableAreaTest, InvalidatesCompositedScrollbarsIfPartsNeedRepaint) {
   // Next, we'll scroll vertically, but invalidate the thumb.
   EXPECT_CALL(theme, InvalidateOnThumbPositionChange(_, _, _))
       .WillOnce(Return(kThumbPart));
-  scrollable_area->SetScrollOffset(ScrollOffset(50, 50), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(50, 50), kScriptScroll);
   EXPECT_FALSE(layer_for_horizontal_scrollbar.HasTrackedRasterInvalidations());
   EXPECT_TRUE(layer_for_vertical_scrollbar.HasTrackedRasterInvalidations());
   EXPECT_FALSE(vertical_scrollbar->TrackNeedsRepaint());
@@ -227,7 +227,7 @@ TEST_F(ScrollableAreaTest, InvalidatesCompositedScrollbarsIfPartsNeedRepaint) {
   EXPECT_CALL(theme, InvalidateOnThumbPositionChange(_, _, _))
       .Times(2)
       .WillRepeatedly(Return(kNoPart));
-  scrollable_area->SetScrollOffset(ScrollOffset(70, 70), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(70, 70), kScriptScroll);
   EXPECT_TRUE(layer_for_horizontal_scrollbar.HasTrackedRasterInvalidations());
   EXPECT_TRUE(layer_for_vertical_scrollbar.HasTrackedRasterInvalidations());
   EXPECT_FALSE(horizontal_scrollbar->TrackNeedsRepaint());

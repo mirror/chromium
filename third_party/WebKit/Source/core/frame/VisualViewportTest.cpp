@@ -233,7 +233,7 @@ TEST_P(VisualViewportTest, TestResizeAtFullyScrolledPreservesViewportLocation) {
 
   // Fully scroll both viewports.
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(10000, 10000), kProgrammaticScroll);
+      ScrollOffset(10000, 10000), kScriptScroll);
   visual_viewport.Move(FloatSize(10000, 10000));
 
   // Sanity check.
@@ -473,7 +473,7 @@ TEST_P(VisualViewportTest, TestVisibleRectInDocument) {
   // visibleRectInDocument().
   LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(40, 100), kProgrammaticScroll);
+      ScrollOffset(40, 100), kScriptScroll);
   EXPECT_FLOAT_RECT_EQ(FloatRect(50, 115, 50, 200),
                        visual_viewport.VisibleRectInDocument());
 }
@@ -488,7 +488,7 @@ TEST_P(VisualViewportTest, TestFractionalScrollOffsetIsNotOverwritten) {
 
   LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 10.5), kProgrammaticScroll);
+      ScrollOffset(0, 10.5), kScriptScroll);
   frame_view.LayoutViewportScrollableArea()->ScrollableArea::SetScrollOffset(
       ScrollOffset(10, 30.5), kCompositorScroll);
 
@@ -915,7 +915,7 @@ TEST_P(VisualViewportTest,
 
   LocalFrameView* frame_view = WebView()->MainFrameImpl()->GetFrameView();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 1000), kProgrammaticScroll);
+      ScrollOffset(0, 1000), kScriptScroll);
 
   EXPECT_EQ(IntSize(1000, 1000), frame_view->FrameRect().Size());
 
@@ -1126,7 +1126,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
   // the viewport at all.
   WebView()->SetVisualViewportOffset(WebFloatPoint(250.25f, 100.25f));
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.75),
-                                                   kProgrammaticScroll);
+                                                   kScriptScroll);
   inputBox->scrollIntoViewIfNeeded(false);
 
   EXPECT_EQ(ScrollOffset(0, 900),
@@ -1135,7 +1135,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
 
   // Change the fractional part of the frameview to one that would round down.
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.125),
-                                                   kProgrammaticScroll);
+                                                   kScriptScroll);
   inputBox->scrollIntoViewIfNeeded(false);
 
   EXPECT_EQ(ScrollOffset(0, 900),
@@ -1145,7 +1145,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
   // Repeat both tests above with the visual viewport at a high fractional.
   WebView()->SetVisualViewportOffset(WebFloatPoint(250.875f, 100.875f));
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.75),
-                                                   kProgrammaticScroll);
+                                                   kScriptScroll);
   inputBox->scrollIntoViewIfNeeded(false);
 
   EXPECT_EQ(ScrollOffset(0, 900),
@@ -1154,7 +1154,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
 
   // Change the fractional part of the frameview to one that would round down.
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.125),
-                                                   kProgrammaticScroll);
+                                                   kScriptScroll);
   inputBox->scrollIntoViewIfNeeded(false);
 
   EXPECT_EQ(ScrollOffset(0, 900),
@@ -1164,7 +1164,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
   // Both viewports with a 0.5 fraction.
   WebView()->SetVisualViewportOffset(WebFloatPoint(250.5f, 100.5f));
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.5),
-                                                   kProgrammaticScroll);
+                                                   kScriptScroll);
   inputBox->scrollIntoViewIfNeeded(false);
 
   EXPECT_EQ(ScrollOffset(0, 900),
@@ -1470,7 +1470,7 @@ TEST_P(VisualViewportTest, TestTopControlHidingResizeDoesntClampMainFrame) {
                                  1, -1);
   LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 10000), kProgrammaticScroll);
+      ScrollOffset(0, 10000), kScriptScroll);
   EXPECT_EQ(
       500,
       frame_view.LayoutViewportScrollableArea()->GetScrollOffset().Height());
@@ -1648,7 +1648,7 @@ TEST_P(VisualViewportTest, visualViewportIsInert) {
   EXPECT_EQ(200, html->clientWidth());
   EXPECT_EQ(300, html->clientHeight());
 
-  visual_viewport.SetScrollOffset(ScrollOffset(10, 15), kProgrammaticScroll);
+  visual_viewport.SetScrollOffset(ScrollOffset(10, 15), kScriptScroll);
 
   ASSERT_EQ(10, visual_viewport.GetScrollOffset().Width());
   ASSERT_EQ(15, visual_viewport.GetScrollOffset().Height());
@@ -1785,7 +1785,7 @@ TEST_P(VisualViewportTest, AccessibilityHitTestWhileZoomedIn) {
   WebView()->SetPageScaleFactor(2);
   WebView()->SetVisualViewportOffset(WebFloatPoint(200, 230));
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(400, 1100), kProgrammaticScroll);
+      ScrollOffset(400, 1100), kScriptScroll);
 
   // FIXME(504057): PaintLayerScrollableArea dirties the compositing state.
   ForceFullCompositingUpdate();
@@ -1845,7 +1845,7 @@ TEST_P(VisualViewportTest, TestCoordinateTransforms) {
 
   // Scrolling the main frame should have no effect.
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(100, 120), kProgrammaticScroll);
+      ScrollOffset(100, 120), kScriptScroll);
   EXPECT_FLOAT_POINT_EQ(FloatPoint(50, 62), visual_viewport.ViewportToRootFrame(
                                                 FloatPoint(80, 100)));
   EXPECT_FLOAT_POINT_EQ(
@@ -1921,7 +1921,7 @@ TEST_P(VisualViewportTest, ResizeWithScrollAnchoring) {
 
   LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(700, 500), kProgrammaticScroll);
+      ScrollOffset(700, 500), kScriptScroll);
   WebView()->UpdateAllLifecyclePhases();
 
   WebView()->Resize(IntSize(800, 300));
@@ -1948,10 +1948,10 @@ TEST_P(VisualViewportTest, ResizeAnchoringWithRootScroller) {
 
   WebView()->SetPageScaleFactor(3.f);
   frame_view.GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 400),
-                                                  kProgrammaticScroll);
+                                                  kScriptScroll);
 
   VisualViewport& visual_viewport = WebView()->GetPage()->GetVisualViewport();
-  visual_viewport.SetScrollOffset(ScrollOffset(0, 400), kProgrammaticScroll);
+  visual_viewport.SetScrollOffset(ScrollOffset(0, 400), kScriptScroll);
 
   WebView()->Resize(IntSize(800, 500));
 

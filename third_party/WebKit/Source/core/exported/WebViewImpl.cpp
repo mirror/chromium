@@ -870,8 +870,7 @@ bool WebViewImpl::StartPageScaleAnimation(const IntPoint& target_position,
       LocalFrameView* view = MainFrameImpl()->GetFrameView();
       if (view && view->GetScrollableArea()) {
         view->GetScrollableArea()->SetScrollOffset(
-            ScrollOffset(clamped_point.x, clamped_point.y),
-            kProgrammaticScroll);
+            ScrollOffset(clamped_point.x, clamped_point.y), kBrowserScroll);
       }
 
       return false;
@@ -2746,7 +2745,7 @@ void WebViewImpl::ScrollAndRescaleViewports(
   // Order is important: visual viewport location is clamped based on
   // main frame scroll position and visual viewport scale.
 
-  view->SetScrollOffset(ToScrollOffset(main_frame_origin), kProgrammaticScroll);
+  view->SetScrollOffset(ToScrollOffset(main_frame_origin), kBrowserScroll);
 
   SetPageScaleFactor(scale_factor);
 
@@ -3063,7 +3062,7 @@ void WebViewImpl::ResetScrollAndScaleState() {
         frame_view->LayoutViewportScrollableArea();
 
     if (!scrollable_area->GetScrollOffset().IsZero())
-      scrollable_area->SetScrollOffset(ScrollOffset(), kProgrammaticScroll);
+      scrollable_area->SetScrollOffset(ScrollOffset(), kBrowserScroll);
   }
 
   if (Document* document =

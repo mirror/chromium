@@ -371,7 +371,7 @@ void CanvasRenderingContext2D::ScrollPathIntoViewInternal(const Path& path) {
                                      : ScrollAlignment::kAlignLeftAlways,
           !is_horizontal_writing_mode ? ScrollAlignment::kAlignToEdgeIfNeeded
                                       : ScrollAlignment::kAlignTopAlways,
-          kProgrammaticScroll, false, kScrollBehaviorAuto));
+          kBrowserScroll, false, kScrollBehaviorAuto));
 }
 
 void CanvasRenderingContext2D::clearRect(double x,

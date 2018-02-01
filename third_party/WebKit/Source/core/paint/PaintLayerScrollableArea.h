@@ -310,19 +310,19 @@ class CORE_EXPORT PaintLayerScrollableArea final
   void ScrollToAbsolutePosition(
       const FloatPoint& position,
       ScrollBehavior scroll_behavior = kScrollBehaviorInstant,
-      ScrollType scroll_type = kProgrammaticScroll) {
+      ScrollType scroll_type = kScriptScroll) {
     SetScrollOffset(position - ScrollOrigin(), scroll_type, scroll_behavior);
   }
 
   // This will set the scroll position without clamping, and it will do all
   // post-update work even if the scroll position didn't change.
   void SetScrollOffsetUnconditionally(const ScrollOffset&,
-                                      ScrollType = kProgrammaticScroll);
+                                      ScrollType = kBrowserScroll);
 
   // This will set the scroll position without clamping, and it will do all
   // post-update work even if the scroll position didn't change.
   void SetScrollPositionUnconditionally(const DoublePoint&,
-                                        ScrollType = kProgrammaticScroll);
+                                        ScrollType = kBrowserScroll);
 
   // TODO(szager): Actually run these after all of layout is finished.
   // Currently, they run at the end of box()'es layout (or after all flexbox

@@ -195,7 +195,7 @@ TEST_P(CompositedLayerMappingTest, VerticalRightLeftWritingModeDocument) {
 
   GetDocument().View()->UpdateAllLifecyclePhases();
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(-5000, 0), kProgrammaticScroll);
+      ScrollOffset(-5000, 0), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   PaintLayer* paint_layer = GetDocument().GetLayoutView()->Layer();
@@ -592,7 +592,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectChangeOnViewportScroll) {
             PreviousInterestRect(root_scrolling_layer));
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 300), kProgrammaticScroll);
+      ScrollOffset(0, 300), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   // Still use the previous interest rect because the recomputed rect hasn't
   // changed enough.
@@ -602,7 +602,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectChangeOnViewportScroll) {
             PreviousInterestRect(root_scrolling_layer));
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 600), kProgrammaticScroll);
+      ScrollOffset(0, 600), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   // Use recomputed interest rect because it changed enough.
   EXPECT_EQ(IntRect(0, 0, 800, 5200),
@@ -611,7 +611,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectChangeOnViewportScroll) {
             PreviousInterestRect(root_scrolling_layer));
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 5400), kProgrammaticScroll);
+      ScrollOffset(0, 5400), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(IntRect(0, 1400, 800, 8600),
             RecomputeInterestRect(root_scrolling_layer));
@@ -619,7 +619,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectChangeOnViewportScroll) {
             PreviousInterestRect(root_scrolling_layer));
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 9000), kProgrammaticScroll);
+      ScrollOffset(0, 9000), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   // Still use the previous interest rect because it contains the recomputed
   // interest rect.
@@ -629,7 +629,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectChangeOnViewportScroll) {
             PreviousInterestRect(root_scrolling_layer));
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 2000), kProgrammaticScroll);
+      ScrollOffset(0, 2000), kScriptScroll);
   // Use recomputed interest rect because it changed enough.
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(IntRect(0, 0, 800, 6600),
@@ -831,7 +831,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectOfIframeInScrolledDiv) {
 
   // Scroll 8000 pixels down to move the iframe into view.
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 8000.0), kProgrammaticScroll);
+      ScrollOffset(0.0, 8000.0), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   Element* target = ChildDocument().getElementById("target");
@@ -862,7 +862,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectOfScrolledIframe) {
 
   // Scroll 7500 pixels down to bring the scrollable area to the bottom.
   ChildDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 7500.0), kProgrammaticScroll);
+      ScrollOffset(0.0, 7500.0), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   ASSERT_TRUE(ChildDocument().View()->GetLayoutView()->HasLayer());
@@ -896,7 +896,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectOfIframeWithContentBoxOffset) {
   // Scroll 3000 pixels down to bring the scrollable area to somewhere in the
   // middle.
   ChildDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 3000.0), kProgrammaticScroll);
+      ScrollOffset(0.0, 3000.0), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   ASSERT_TRUE(ChildDocument().View()->GetLayoutView()->HasLayer());

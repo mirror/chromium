@@ -385,7 +385,7 @@ void SnapCoordinator::PerformSnapping(const LayoutBox& snap_container,
       scrollable_area->SetScrollOffset(
           ScrollPositionToOffset(snap_position,
                                  scrollable_area->ScrollOrigin()),
-          kProgrammaticScroll, kScrollBehaviorSmooth);
+          kBrowserScroll, kScrollBehaviorSmooth);
     }
   }
 }

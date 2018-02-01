@@ -433,7 +433,7 @@ TEST_P(FrameThrottlingTest, UnthrottlingTriggersRepaint) {
       .MainFrameImpl()
       ->GetFrameView()
       ->LayoutViewportScrollableArea()
-      ->SetScrollOffset(ScrollOffset(0, 480), kProgrammaticScroll);
+      ->SetScrollOffset(ScrollOffset(0, 480), kScriptScroll);
   auto display_items = CompositeFrame();
   EXPECT_FALSE(display_items.Contains(SimCanvas::kRect, "green"));
 
@@ -475,7 +475,7 @@ TEST_P(FrameThrottlingTest, UnthrottlingTriggersRepaintInCompositedChild) {
       .MainFrameImpl()
       ->GetFrameView()
       ->LayoutViewportScrollableArea()
-      ->SetScrollOffset(ScrollOffset(0, 480), kProgrammaticScroll);
+      ->SetScrollOffset(ScrollOffset(0, 480), kScriptScroll);
   auto display_items = CompositeFrame();
   EXPECT_FALSE(display_items.Contains(SimCanvas::kRect, "green"));
 
@@ -511,7 +511,7 @@ TEST_P(FrameThrottlingTest, ChangeStyleInThrottledFrame) {
       .MainFrameImpl()
       ->GetFrameView()
       ->LayoutViewportScrollableArea()
-      ->SetScrollOffset(ScrollOffset(0, 480), kProgrammaticScroll);
+      ->SetScrollOffset(ScrollOffset(0, 480), kScriptScroll);
   auto display_items = CompositeFrame();
   EXPECT_FALSE(display_items.Contains(SimCanvas::kRect, "red"));
   EXPECT_FALSE(display_items.Contains(SimCanvas::kRect, "green"));

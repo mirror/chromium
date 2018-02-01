@@ -615,7 +615,7 @@ TEST_F(PaintLayerScrollableAreaTest, HideTooltipWhenScrollPositionChanges) {
   EXPECT_CALL(GetChromeClient(),
               MockSetToolTip(GetDocument().GetFrame(), String(), _))
       .Times(0);
-  scrollable_area->SetScrollOffset(ScrollOffset(2, 2), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(2, 2), kScriptScroll);
 }
 
 TEST_F(PaintLayerScrollableAreaTest, IncludeOverlayScrollbarsInVisibleWidth) {
@@ -723,7 +723,7 @@ TEST_F(PaintLayerScrollableAreaTest,
 
   // Going from zero scroll offset to non-zero may require a new paint property
   // and should invalidate paint and paint properties.
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kScriptScroll);
   EXPECT_TRUE(scroller->PaintingLayer()->NeedsRepaint());
   EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -733,7 +733,7 @@ TEST_F(PaintLayerScrollableAreaTest,
   EXPECT_NE(nullptr, properties->ScrollTranslation());
 
   // A property update is needed when scroll offset changes.
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 2), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 2), kScriptScroll);
   EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -743,7 +743,7 @@ TEST_F(PaintLayerScrollableAreaTest,
 
   // Going from non-zero scroll offset to zero may require destroying a paint
   // property and should invalidate paint and paint properties.
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 0), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 0), kScriptScroll);
   EXPECT_TRUE(scroller->PaintingLayer()->NeedsRepaint());
   EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -780,7 +780,7 @@ TEST_F(PaintLayerScrollableAreaTest, SlimmingPaintV2ScrollDoesNotInvalidate) {
   EXPECT_EQ(FloatSize(0, 0), scrollable_area->GetScrollOffset());
 
   // Changing the scroll offset should not require paint invalidation.
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kScriptScroll);
   EXPECT_FALSE(scroller->ShouldDoFullPaintInvalidation());
   EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -813,7 +813,7 @@ TEST_F(PaintLayerScrollableAreaTest,
 
   // Programmatically changing the scroll offset should require paint
   // invalidation due to background attachment.
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 1), kScriptScroll);
   EXPECT_TRUE(scroller->ShouldDoFullPaintInvalidation());
   EXPECT_TRUE(scroller->NeedsPaintPropertyUpdate());
   GetDocument().View()->UpdateAllLifecyclePhases();

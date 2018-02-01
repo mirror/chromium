@@ -1174,7 +1174,7 @@ TEST_P(ScrollbarsTestWithVirtualTimer, TestNonCompositedOverlayScrollbarsFade) {
   RunTasksForPeriod(kMockOverlayFadeOutDelayMS);
   EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
 
-  scrollable_area->SetScrollOffset(ScrollOffset(10, 10), kProgrammaticScroll,
+  scrollable_area->SetScrollOffset(ScrollOffset(10, 10), kScriptScroll,
                                    kScrollBehaviorInstant);
 
   EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
@@ -1197,7 +1197,7 @@ TEST_P(ScrollbarsTestWithVirtualTimer, TestNonCompositedOverlayScrollbarsFade) {
 
   // Non-composited scrollbars don't fade out while mouse is over.
   EXPECT_TRUE(scrollable_area->VerticalScrollbar());
-  scrollable_area->SetScrollOffset(ScrollOffset(20, 20), kProgrammaticScroll,
+  scrollable_area->SetScrollOffset(ScrollOffset(20, 20), kScriptScroll,
                                    kScrollBehaviorInstant);
   EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
   scrollable_area->MouseEnteredScrollbar(*scrollable_area->VerticalScrollbar());
@@ -1402,8 +1402,7 @@ TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
 
   Compositor().BeginFrame();
 
-  scrollable_area->SetScrollOffset(ScrollOffset(0, 10000000),
-                                   kProgrammaticScroll);
+  scrollable_area->SetScrollOffset(ScrollOffset(0, 10000000), kScriptScroll);
 
   Compositor().BeginFrame();
 

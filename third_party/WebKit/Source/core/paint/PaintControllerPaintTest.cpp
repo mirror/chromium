@@ -180,7 +180,7 @@ TEST_P(PaintControllerPaintTestForSPv2, FrameScrollingContents) {
   }
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(5000, 5000), kProgrammaticScroll);
+      ScrollOffset(5000, 5000), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
@@ -233,7 +233,7 @@ TEST_P(PaintControllerPaintTestForSPv2, BlockScrollingNonLayeredContents) {
                       TestDisplayItem(div2, kBackgroundType));
 
   container.GetScrollableArea()->SetScrollOffset(ScrollOffset(5000, 5000),
-                                                 kProgrammaticScroll);
+                                                 kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   // Cull rect after scroll: (1000,1000 8100x8100)

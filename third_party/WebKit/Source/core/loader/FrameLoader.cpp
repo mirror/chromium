@@ -1188,7 +1188,7 @@ void FrameLoader::RestoreScrollPositionAndViewState(
              view_state->scroll_anchor_data_.simhash_});
     if (!did_restore) {
       view->LayoutViewportScrollableArea()->SetScrollOffset(
-          view_state->scroll_offset_, kProgrammaticScroll);
+          view_state->scroll_offset_, kBrowserScroll);
     }
   }
 

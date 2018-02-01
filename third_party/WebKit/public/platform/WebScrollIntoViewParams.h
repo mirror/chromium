@@ -46,7 +46,8 @@ struct WebScrollIntoViewParams {
   // Scroll type set through 'scroll-type' CSS property.
   enum Type {
     kUser = 0,
-    kProgrammatic,
+    kScript,
+    kBrowser,
     kClamping,
     kCompositor,
     kAnchoring,
@@ -64,7 +65,7 @@ struct WebScrollIntoViewParams {
 
   Alignment align_x;
   Alignment align_y;
-  Type type = kProgrammatic;
+  Type type = kBrowser;
   bool make_visible_in_visual_viewport = true;
   Behavior behavior = kAuto;
   bool is_for_scroll_sequence = false;
@@ -74,7 +75,7 @@ struct WebScrollIntoViewParams {
   BLINK_PLATFORM_EXPORT WebScrollIntoViewParams(
       ScrollAlignment,
       ScrollAlignment,
-      ScrollType scroll_type = kProgrammaticScroll,
+      ScrollType,
       bool make_visible_in_visual_viewport = true,
       ScrollBehavior scroll_behavior = kScrollBehaviorAuto,
       bool is_for_scroll_sequence = false);

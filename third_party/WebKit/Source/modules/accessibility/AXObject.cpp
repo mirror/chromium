@@ -1961,8 +1961,7 @@ void AXObject::SetScrollOffset(const IntPoint& offset) const {
     return;
 
   // TODO(bokan): This should potentially be a UserScroll.
-  area->SetScrollOffset(ScrollOffset(offset.X(), offset.Y()),
-                        kProgrammaticScroll);
+  area->SetScrollOffset(ScrollOffset(offset.X(), offset.Y()), kBrowserScroll);
 }
 
 void AXObject::GetRelativeBounds(AXObject** out_container,
@@ -2238,7 +2237,7 @@ bool AXObject::OnNativeScrollToMakeVisibleAction() const {
       target_rect,
       WebScrollIntoViewParams(ScrollAlignment::kAlignCenterIfNeeded,
                               ScrollAlignment::kAlignCenterIfNeeded,
-                              kProgrammaticScroll, false, kScrollBehaviorAuto));
+                              kBrowserScroll, false, kScrollBehaviorAuto));
   AXObjectCache().PostNotification(
       AXObjectCache().GetOrCreate(GetDocument()->GetLayoutView()),
       AXObjectCacheImpl::kAXLocationChanged);
@@ -2264,7 +2263,7 @@ bool AXObject::OnNativeScrollToMakeVisibleWithSubFocusAction(
   layout_object->ScrollRectToVisible(
       target_rect,
       WebScrollIntoViewParams(scroll_alignment, scroll_alignment,
-                              kProgrammaticScroll, false, kScrollBehaviorAuto));
+                              kBrowserScroll, false, kScrollBehaviorAuto));
   AXObjectCache().PostNotification(
       AXObjectCache().GetOrCreate(GetDocument()->GetLayoutView()),
       AXObjectCacheImpl::kAXLocationChanged);
@@ -2282,8 +2281,8 @@ bool AXObject::OnNativeScrollToGlobalPointAction(
   layout_object->ScrollRectToVisible(
       target_rect,
       WebScrollIntoViewParams(ScrollAlignment::kAlignLeftAlways,
-                              ScrollAlignment::kAlignTopAlways,
-                              kProgrammaticScroll, false, kScrollBehaviorAuto));
+                              ScrollAlignment::kAlignTopAlways, kBrowserScroll,
+                              false, kScrollBehaviorAuto));
   AXObjectCache().PostNotification(
       AXObjectCache().GetOrCreate(GetDocument()->GetLayoutView()),
       AXObjectCacheImpl::kAXLocationChanged);

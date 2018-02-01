@@ -532,7 +532,7 @@ void Element::scrollIntoViewWithOptions(const ScrollIntoViewOptions& options) {
 
   LayoutRect bounds = BoundingBoxForScrollIntoView();
   GetLayoutObject()->ScrollRectToVisible(
-      bounds, {align_x, align_y, kProgrammaticScroll, false, behavior});
+      bounds, {align_x, align_y, kScriptScroll, false, behavior});
 
   GetDocument().SetSequentialFocusNavigationStartingPoint(this);
 }
@@ -546,14 +546,12 @@ void Element::scrollIntoViewIfNeeded(bool center_if_needed) {
   LayoutRect bounds = BoundingBoxForScrollIntoView();
   if (center_if_needed) {
     GetLayoutObject()->ScrollRectToVisible(
-        bounds,
-        {ScrollAlignment::kAlignCenterIfNeeded,
-         ScrollAlignment::kAlignCenterIfNeeded, kProgrammaticScroll, false});
+        bounds, {ScrollAlignment::kAlignCenterIfNeeded,
+                 ScrollAlignment::kAlignCenterIfNeeded, kScriptScroll, false});
   } else {
     GetLayoutObject()->ScrollRectToVisible(
-        bounds,
-        {ScrollAlignment::kAlignToEdgeIfNeeded,
-         ScrollAlignment::kAlignToEdgeIfNeeded, kProgrammaticScroll, false});
+        bounds, {ScrollAlignment::kAlignToEdgeIfNeeded,
+                 ScrollAlignment::kAlignToEdgeIfNeeded, kScriptScroll, false});
   }
 }
 
@@ -1109,7 +1107,7 @@ void Element::ScrollFrameBy(const ScrollToOptions& scroll_to_options) {
   float new_scaled_top =
       top * frame->PageZoomFactor() + viewport->GetScrollOffset().Height();
   viewport->SetScrollOffset(ScrollOffset(new_scaled_left, new_scaled_top),
-                            kProgrammaticScroll, scroll_behavior);
+                            kScriptScroll, scroll_behavior);
 }
 
 void Element::ScrollFrameTo(const ScrollToOptions& scroll_to_options) {
@@ -1135,7 +1133,7 @@ void Element::ScrollFrameTo(const ScrollToOptions& scroll_to_options) {
         ScrollableArea::NormalizeNonFiniteScroll(scroll_to_options.top()) *
         frame->PageZoomFactor();
   viewport->SetScrollOffset(ScrollOffset(scaled_left, scaled_top),
-                            kProgrammaticScroll, scroll_behavior);
+                            kScriptScroll, scroll_behavior);
 }
 
 bool Element::HasNonEmptyLayoutSize() const {

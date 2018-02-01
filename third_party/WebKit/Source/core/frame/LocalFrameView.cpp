@@ -2440,7 +2440,8 @@ void LocalFrameView::ScrollToFragmentAnchor() {
     // Align to the top and to the closest side (this matches other browsers).
     anchor_node->GetLayoutObject()->ScrollRectToVisible(
         rect, WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
-                                      ScrollAlignment::kAlignTopAlways));
+                                      ScrollAlignment::kAlignTopAlways,
+                                      kBrowserScroll));
 
     if (boundary_frame && boundary_frame->IsLocalFrame()) {
       ToLocalFrame(boundary_frame)
@@ -4927,7 +4928,8 @@ LayoutRect LocalFrameView::ScrollIntoView(
                             ? ScrollOffset(FlooredIntSize(new_scroll_offset))
                             : new_scroll_offset;
     if (params.is_for_scroll_sequence) {
-      DCHECK(params.GetScrollType() == kProgrammaticScroll);
+      DCHECK(params.GetScrollType() == kBrowserScroll ||
+             params.GetScrollType() == kScriptScroll);
       ScrollBehavior behavior =
           DetermineScrollBehavior(params.GetScrollBehavior(),
                                   GetLayoutBox()->Style()->GetScrollBehavior());
