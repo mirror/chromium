@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082029f6_f0a40f32",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-02-01T02:27:33Z",
+      "side": 0,
+      "message": "FinishSeek fires its own timeupdate event, so this caused a duplicate event. The reassuring comment about current movie time is wrong. We only checked the movie time for periodic calls to ScheduleTimeUpdate. \n\nDoing diligence for all callers of this method - only called by WMPI in two places:\n1) WMPI::OnEnded\n2) WMPI::OnBufferingStateChange\n\nFor 1) we still need to raise the timeupdate. Now moved a few lines down into the \"ended\" section, which makes it read more parallel to the spec.\n\nFor 2) we only call it in OnBufferingStateChange when going from HAVE_NOTHING -\u003e HAVE_ENOUGH after a seek (WMPI::should_notify_time_changed_ \u003d true) ... so thats covered",
+      "range": {
+        "startLine": 3150,
+        "startChar": 2,
+        "endLine": 3150,
+        "endChar": 25
+      },
+      "revId": "4db4cd30a2de164262978718c75dd2cfd7f73235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be05be85_a614c183",
+        "filename": "third_party/WebKit/Source/core/html/track/CueTimeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-02-01T02:27:33Z",
+      "side": 0,
+      "message": "This lead to double scheduled periodic timeupdates. HTMLMediaElement delegates a lot of the \"time marches on\" steps to CueTimeline, but I don\u0027t think CueTimeline is the right owner of the periodic timeupdate scheduling (not directly related to queues). \n\nHTMLMediaElement::PlaybackProgressTimerFired triggers the periodic time-marches-on (including calling this method). Lets let it be the sole owner of periodic timeupdate scheduling.",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "4db4cd30a2de164262978718c75dd2cfd7f73235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
