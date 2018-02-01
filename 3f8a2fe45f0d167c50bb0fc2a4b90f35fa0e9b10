@@ -93,6 +93,30 @@
       "revId": "3f8a2fe45f0d167c50bb0fc2a4b90f35fa0e9b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cf2dca_38bd6eaf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 104830,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-01T22:01:52Z",
+      "side": 0,
+      "message": "As long as there was never any data emitted to them, it\u0027s fine to remove them altogether rather than marking them as obsolete.  Thanks!",
+      "parentUuid": "8190025b_06159cad",
+      "range": {
+        "startLine": 104828,
+        "startChar": 0,
+        "endLine": 104830,
+        "endChar": 56
+      },
+      "revId": "3f8a2fe45f0d167c50bb0fc2a4b90f35fa0e9b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
