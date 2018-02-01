@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad78a571_98e2b4c4",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T15:20:22Z",
+      "side": 1,
+      "message": "nit: should we also hint that it skips the automatic profiling step?",
+      "range": {
+        "startLine": 811,
+        "startChar": 30,
+        "endLine": 812,
+        "endChar": 48
+      },
+      "revId": "d07948ac8c5e7c94fbdb4cc990bc4d0701fdc77a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
