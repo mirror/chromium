@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722f12eb_c7d88494",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-01T22:18:11Z",
+      "side": 1,
+      "message": "move to ash/login/ui/test_utils.h?",
+      "revId": "9eca7981449b63ec9af7c5ebdaa22abd0d0909c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
