@@ -52,6 +52,24 @@
       "revId": "4276be191a42e12de07a70669391e83c273283ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cc52b7_88d67151",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-02-01T16:38:21Z",
+      "side": 1,
+      "message": "Updated to use a delegate. \n\nOut of curiosity, could I also have made a TabSwitcherCommands protocol, have the StackViewController register for it, and have the toolbar controller take a id\u003cApplicationCommands, BrowserCommands, TabSwitcherCommands, ToolbarCommands\u003e dispatcher?",
+      "parentUuid": "c2a7c37e_c0b86523",
+      "revId": "4276be191a42e12de07a70669391e83c273283ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
