@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2667a7a0_1a01c75a",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-01T22:55:06Z",
+      "side": 1,
+      "message": "Tried a few kCGColorSpace...s and the only difference I saw was \nbetween linear and non-linears, otherwise 2020 seems to make no\ndifference.",
+      "range": {
+        "startLine": 224,
+        "startChar": 37,
+        "endLine": 224,
+        "endChar": 59
+      },
+      "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
