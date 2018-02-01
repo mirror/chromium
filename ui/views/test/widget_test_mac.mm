@@ -6,6 +6,7 @@
 
 #include <Cocoa/Cocoa.h>
 
+#import "base/mac/foundation_util.h"
 #import "base/mac/scoped_nsobject.h"
 #import "base/mac/scoped_objc_class_swizzler.h"
 #include "base/macros.h"
@@ -93,6 +94,20 @@ Widget::Widgets WidgetTest::GetAllWidgets() {
       all_widgets.insert(widget);
   }
   return all_widgets;
+}
+
+// static
+void WidgetTest::SaveAsPNG(Widget* widget, const base::FilePath& path) {
+  NSWindow* window = widget->GetNativeWindow();
+  base::ScopedCFTypeRef<CGImageRef> cg_image(CGWindowListCreateImage(
+      CGRectNull, kCGWindowListOptionIncludingWindow, [window windowNumber],
+      kCGWindowImageBoundsIgnoreFraming));
+  base::scoped_nsobject<NSBitmapImageRep> bitmap(
+      [[NSBitmapImageRep alloc] initWithCGImage:cg_image]);
+  NSData* png = [bitmap representationUsingType:NSPNGFileType properties:{}];
+  DCHECK(png);
+  [png writeToFile:base::mac::FilePathToNSString(path) atomically:YES];
+  VLOG(0) << "Wrote to " << path.value();
 }
 
 }  // namespace test
