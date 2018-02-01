@@ -14,7 +14,9 @@ UnguessableToken::UnguessableToken(uint64_t high, uint64_t low)
     : high_(high), low_(low) {}
 
 std::string UnguessableToken::ToString() const {
-  return base::StringPrintf("%08" PRIX64 "%08" PRIX64, high_, low_);
+  return base::StringPrintf(
+      VLOG_IS_ON(1) ? "%08" PRIX64 "%08" PRIX64 : "%04" PRIX64 "..%04" PRIX64,
+      high_, low_);
 }
 
 // static
