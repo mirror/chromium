@@ -227,7 +227,7 @@ void ScriptInjectionManager::RFOHelper::OnStop() {
   // keeping the frame in a START state indefinitely which leads to deadlocks.
   if (content::IsBrowserSideNavigationEnabled()) {
     DidFailProvisionalLoad(
-        blink::WebURLError(net::ERR_FAILED, blink::WebURL()));
+        blink::WebURLError(net::ERR_FAILED, 0, blink::WebURL()));
   }
 }
 
