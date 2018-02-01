@@ -70,6 +70,30 @@
       "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb295c3_f87a1243",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-02-01T02:44:43Z",
+      "side": 1,
+      "message": "I am sorry for forgetting to mention that there is no way to determine --use-zoom-for-dsf is enabled in Blink (because IsUseZoomForDSFEnabled() is part of content/). Could you suggest a way to check --use-zoom-for-dsf here?",
+      "parentUuid": "47893fc9_a2f7712b",
+      "range": {
+        "startLine": 200,
+        "startChar": 39,
+        "endLine": 200,
+        "endChar": 61
+      },
+      "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
