@@ -129,7 +129,7 @@ TEST_F(V8ScriptRunnerTest, resourcelessShouldPass) {
 }
 
 TEST_F(V8ScriptRunnerTest, emptyResourceDoesNotHaveCacheHandler) {
-  Resource* resource = CreateEmptyResource();
+  ScriptResource* resource = CreateEmptyResource();
   EXPECT_FALSE(resource->CacheHandler());
 }
 
