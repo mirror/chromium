@@ -154,9 +154,14 @@ CSSNumericValue* CSSUnitValue::Negate() {
   return CSSUnitValue::Create(-value_, unit_);
 }
 
-CSSNumericValue* CSSUnitValue::Invert() {
-  if (unit_ == CSSPrimitiveValue::UnitType::kNumber)
+CSSNumericValue* CSSUnitValue::Invert(ExceptionState& exception_state) {
+  if (unit_ == CSSPrimitiveValue::UnitType::kNumber) {
+    if (value_ == 0) {
+      exception_state.ThrowRangeError("Can't divide-by-zero");
+      return nullptr;
+    }
     return CSSUnitValue::Create(1.0 / value_, unit_);
+  }
   return CSSMathInvert::Create(this);
 }
 
