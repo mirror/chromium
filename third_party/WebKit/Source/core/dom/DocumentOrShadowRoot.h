@@ -9,6 +9,7 @@
 #include "core/dom/ShadowRoot.h"
 #include "core/frame/UseCounter.h"
 #include "core/fullscreen/Fullscreen.h"
+#include "modules/picture_in_picture/PictureInPictureController.h"
 
 namespace blink {
 
@@ -77,6 +78,11 @@ class DocumentOrShadowRoot {
 
   static Element* fullscreenElement(TreeScope& scope) {
     return Fullscreen::FullscreenElementForBindingFrom(scope);
+  }
+
+  static HTMLVideoElement* pictureInPictureElement(TreeScope& scope) {
+    return PictureInPictureController::Ensure(scope.GetDocument())
+        .PictureInPictureElement(scope);
   }
 };
 

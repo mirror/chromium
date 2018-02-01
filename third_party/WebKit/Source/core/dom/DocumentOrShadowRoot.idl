@@ -23,4 +23,7 @@
     // Fullscreen API
     // https://fullscreen.spec.whatwg.org/
     [RuntimeEnabled=FullscreenUnprefixed] readonly attribute Element? fullscreenElement;
+    // Picture-in-Picture API
+    // https://wicg.github.io/picture-in-picture/#shadow-root-extension
+    [RuntimeEnabled=PictureInPictureAPI] readonly attribute HTMLVideoElement? pictureInPictureElement;
 };
