@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00bf108e_e9fd230f",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:57:56Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 480,
+        "startChar": 31,
+        "endLine": 480,
+        "endChar": 32
+      },
+      "revId": "96d7ab468fa4d7a1ab8173d0ebdbdf54bda023a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adce9abf_d2458390",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:57:56Z",
+      "side": 1,
+      "message": "OnceCallback?",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "96d7ab468fa4d7a1ab8173d0ebdbdf54bda023a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2e3108_4f90b2a6",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:57:56Z",
+      "side": 1,
+      "message": "Having the test observer in the real API and supporting more than one feels a bit ick. Do you really need more than one? Can you friend the test classes (or maybe the observer) and have it set a single member?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 73
+      },
+      "revId": "96d7ab468fa4d7a1ab8173d0ebdbdf54bda023a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e339c8_4d05df26",
+        "filename": "ui/snapshot/screenshot_grabber.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:57:56Z",
+      "side": 1,
+      "message": "Will nullptr get converted to the right thing?",
+      "range": {
+        "startLine": 124,
+        "startChar": 31,
+        "endLine": 124,
+        "endChar": 69
+      },
+      "revId": "96d7ab468fa4d7a1ab8173d0ebdbdf54bda023a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6d9bdd_802f3c40",
+        "filename": "ui/snapshot/screenshot_grabber.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:57:56Z",
+      "side": 1,
+      "message": "OnceCallback?",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "96d7ab468fa4d7a1ab8173d0ebdbdf54bda023a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
