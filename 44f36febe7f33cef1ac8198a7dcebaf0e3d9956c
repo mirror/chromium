@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "6c54fca3_f8159cfd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2018-02-01T20:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b56c997a_18b84e40",
+      "revId": "44f36febe7f33cef1ac8198a7dcebaf0e3d9956c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f02c8ba_8860fb58",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
         "patchSetId": 6
