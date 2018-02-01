@@ -125,4 +125,13 @@ ResourceRequesterInfo::CreateForNavigationPreload(
       original_request_info->service_worker_context(), get_contexts_callback));
 }
 
+scoped_refptr<ResourceRequesterInfo>
+ResourceRequesterInfo::CreateForStandaloneRequest(
+    const GetContextsCallback& get_contexts_callback) {
+  return scoped_refptr<ResourceRequesterInfo>(new ResourceRequesterInfo(
+      RequesterType::STANDALONE, -1, nullptr /* appcache_service */,
+      nullptr /* blob_storage_context */, nullptr /* file_system_context */,
+      nullptr /* service_worker_context */, get_contexts_callback));
+}
+
 }  // namespace content

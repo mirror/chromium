@@ -963,6 +963,8 @@ jumbo_source_set("browser") {
     "loader/cross_site_document_resource_handler.h",
     "loader/detachable_resource_handler.cc",
     "loader/detachable_resource_handler.h",
+    "loader/detached_resource_request.cc",
+    "loader/detached_resource_request.h",
     "loader/downloaded_temp_file_impl.cc",
     "loader/downloaded_temp_file_impl.h",
     "loader/global_routing_id.h",
