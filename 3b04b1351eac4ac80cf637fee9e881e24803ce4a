@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec6e8d38_d2b82dc3",
+        "filename": "extensions/common/api/declarative_net_request/dnr_manifest_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T02:30:52Z",
+      "side": 1,
+      "message": "nit: prefer base::StrCat for this.",
+      "revId": "3b04b1351eac4ac80cf637fee9e881e24803ce4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5437a7de_e1b2dc76",
+        "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T02:30:52Z",
+      "side": 1,
+      "message": "(semi-random place for this comment): The reason we pass in api_permissions here (and, as a result, to this method as a whole) is because chrome://favicon and chrome://thumbnail are conditionally allowed based on whether the extension has the favicon API permission.  These are used in a pseudo-API call by doing something like fetch(\u0027chrome://favicon/https://www.google.com\u0027). But these URLs were never intended to be *manipulated* by the extension.  I don\u0027t think we should take them into account for DNR, since I don\u0027t think we would want to intercept any calls to them (and they should be properly filtered out by various checks in the webRequest layer).",
+      "revId": "3b04b1351eac4ac80cf637fee9e881e24803ce4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "740460d5_37620c59",
         "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
         "patchSetId": 3
