@@ -52,6 +52,24 @@
       "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54f186f_23db5dcd",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T21:11:34Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m less familiar with the Views code changes so I put that part off (I was hoping you could pawn them off on someone else). I meant to take a look today but got swamped, I\u0027ll take a look tomorrow.",
+      "parentUuid": "9b6ec43f_60421b03",
+      "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

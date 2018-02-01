@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1e57a17_d938bc79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T21:11:34Z",
+      "side": 1,
+      "message": "Maybe at least mention the change to use SetAutoColorReadabilityEnabled",
+      "revId": "948323a22b10b889cc9b8b450b65f6c6fa06a057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3287a412_c8393e08",
+        "filename": "ui/message_center/views/bounded_label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-01T21:11:34Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this change (simply because I\u0027m unfamiliar with the function) but I\u0027ll assume it\u0027s correct? Again, it doesn\u0027t seem strictly related.",
+      "revId": "948323a22b10b889cc9b8b450b65f6c6fa06a057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
