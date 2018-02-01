@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6819828f_7c6477a9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "Do you still need those?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264a61e8_b77360c6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "FYI, I am removing this protocol from the dispatcher in the AdaptiveToolbarCoordinator and ButtonFactory.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/895532",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bbb00d_68601e33",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "Do we want to keep \"Google\"? Maybe just \"doodle\"?",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8e770d_aed18d1a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "Good catch! But the problem is actually worse than that.\nThe PrimaryToolbarViewController is constraining 5 different layout guides. By adding the toolbar in the view hierarchy, the constraints are broken for those other layout guides (they are silently removed).\n\nI think a BOOL flag should be added to the PrimaryToolbarViewController, default to NO, to know whether the named layout guide should be constrained. You have constraints in -viewDidLoad and -didMoveToParentViewController:. Can you do that (or something else if you have a better idea)?",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d97e5a_5aed43d2",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "Can you add a comment to those methods, either // No-op. or // TODO(...): Implement.?\nI think the last 3 (at least) are no op, as the toolbar mediator should do this job.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 1
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3b24b3_babeb226",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "Yes, but this the ContentSuggestionsHeaderViewController is part of the VC hierarchy. It is added in ContentSuggestionsCoordinator, on line 166.",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 61
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d469d49_2b802340",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "s/vc/parentViewController/",
+      "range": {
+        "startLine": 223,
+        "startChar": 26,
+        "endLine": 223,
+        "endChar": 28
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885c118d_904cba92",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "I think this call and the following two should not be made for the toolbar.\nInstead, you can remove them from this CL and create a ToolbarMediator in the ContentSuggestionsCoordinator (in a future CL). Doing this would allow us to remove the WebState{List} observation from the NTPHomeMediator when cleaning up.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 63
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d81924b_8965f372",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-01T10:31:05Z",
+      "side": 1,
+      "message": "Same, this shouldn\u0027t be needed after https://chromium-review.googlesource.com/c/chromium/src/+/895532 lands.",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
