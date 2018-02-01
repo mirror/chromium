@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba322f7b_2b3ce1c5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-01T03:00:20Z",
+      "side": 1,
+      "message": "I think this is going to clear storage too much. It will be highly polished, essentially.\nIndeed, lets say user opens DH, clicks on page (it opens), clicks on Back (when it works), opens another page etc. With just an interval in a minute we\u0027ll run several more fetches from database (it\u0027s not memory-backed anymore), and then pretty massive file operations. This trigger happens when some UI is being opened. We do care about smoothness and speed of this operation. Populating UI, especially on slow devices, may become junky if we schedule/run all those tasks.\n\nWould it be sufficient to only run on this trigger once per Chrome session and also delay tasks say 10 seconds or so to allow the whatever caused GetAllItems to fully show up?",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37970c9e_c102e0bf",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-01T03:00:20Z",
+      "side": 1,
+      "message": "Do we really need to run all cleanup tasks at this point, for example consistency checks? Or every time? Perhaps only ClearStorageTask needs to run, and maybe only once per Chrome session? Not sure what is optimal here, but I\u0027m trying to avoid doing heavy ops while lets say OPC page is saved (on every tab switch/going to background).",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7da1467_84599438",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 2
