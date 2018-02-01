@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fe3abea9_b504b700",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T20:04:23Z",
+      "side": 1,
+      "message": "Commented elsewhere about this being ref-counted (I\u0027m not sure it\u0027s safer). If what you say in the first paragraph here is accurate (it\u0027s slightly surprising to me that the WebWidget is destroyed after its LTHI, but I haven\u0027t dug into it), then maybe simply rewording the comment to be more explicit would suffice. Something like:\n\n  // LayerTreeHostImpl, which owns mutator_, is guaranteed to outlive this object,\n  // because it is maintains ownership until it is destroyed, which happens while\n  // the main thread is blocked during the destruction of the LayerTreeHost.\n  // The RenderWidget, which owns both, destroys this WebWidget first.\n\nThere is a comment next to content::RenderWidget::compositor_ (which AFAICT is the path through which the LTHI is owned) claims that the RenderWidgetCompositor \"must not outlive webwidget_\", which seems to be the opposite. If it doesn\u0027t outlive WebWidget, then this pointer can become dangling, so perhaps it should be explicitly cleared.",
+      "parentUuid": "4e3feef3_c2dbeb69",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e60edf68_599f17a1",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 54
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "The constructor is private, so make_unique can\u0027t call it.\nChanging this to a refcounted smart pointer allows us to let the constructor duplicate the pointer and keep this cleaner.",
       "parentUuid": "76ef6ef9_6e105025",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e93017f8_55950162",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T20:04:23Z",
+      "side": 1,
+      "message": "In that case, prefer base::WrapUnique (https://abseil.io/tips/126 explains) to a raw pointer.",
+      "parentUuid": "6f10101b_5bc4db31",
       "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

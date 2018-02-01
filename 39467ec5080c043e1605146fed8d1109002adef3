@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d845e4_41bd0c68",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 61
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T20:04:23Z",
+      "side": 1,
+      "message": "I\u0027m slightly confused here. This seems to make it possible for CompositorMutatorImpl to be destroyed on the main thread (in ~WebViewImpl) if that\u0027s the last reference, but ~CompositorMutatorImpl calls Seal on its animators, which IIUC should only happen on the compositor thread.\n\nIf this cannot happen, is this really an owning reference? (And if it\u0027s not, are there any owning references besides the one in CompositorMutatorClient, i.e. could CompositorMutatorImpl be uniquely owned)?\n\nSimilar for WebFrameWidgetImpl.",
+      "revId": "39467ec5080c043e1605146fed8d1109002adef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58868ec_3965ce6d",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.cpp",
+        "patchSetId": 61
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T20:04:23Z",
+      "side": 1,
+      "message": "Upcast shouldn\u0027t require static_cast; does \"return mutator_.get();\" not work?",
+      "revId": "39467ec5080c043e1605146fed8d1109002adef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d767aeb_33f035a0",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 61
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T20:04:23Z",
+      "side": 1,
+      "message": "nit: WTF::ThreadSafeRefCounted (and use the WTF traits instead of the base ones)? Or is there some reason this was done this way?",
+      "revId": "39467ec5080c043e1605146fed8d1109002adef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
