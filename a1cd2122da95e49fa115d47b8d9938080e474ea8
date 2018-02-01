@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97fee4b1_4e57e3ad",
+        "filename": "components/gcm_driver/features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T13:04:49Z",
+      "side": 1,
+      "message": "This is the issue: we\u0027re ending up with a partly defined base::Feature here -- the string should end after \"TokenInvalidationAfterDays\". The name is now invalid because the name must not contain spaces.\n\nOn a tangent, we generally name the feature (the string parameter) the same as its variable, minus the \"k\" prefix. What about GCMTokenInvalidation?",
+      "revId": "a1cd2122da95e49fa115d47b8d9938080e474ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ee3b68_a6f71255",
+        "filename": "components/gcm_driver/features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T13:04:49Z",
+      "side": 1,
+      "message": "nits: blank lines after :9, :10, :11, :14, :18, :19-:21 :)\n\nWe use a fair amount of whitespace to distinguish between logical sections. The .cc could use a bunch more too.",
+      "revId": "a1cd2122da95e49fa115d47b8d9938080e474ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e977c3_30b12061",
+        "filename": "components/gcm_driver/features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-01T13:04:49Z",
+      "side": 1,
+      "message": "What would you think about this header defining (1) the base::Feature constant, and (2) a function like:\n\n    base::TimeDelta GetTokenInvalidationInterval();\n\nThat way the parameters can stay internal to features.cc. The comment on lines 12-13 would be most applicable to the function -- it\u0027s all the reader needs to know about.",
+      "revId": "a1cd2122da95e49fa115d47b8d9938080e474ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
