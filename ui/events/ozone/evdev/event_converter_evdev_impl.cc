@@ -49,7 +49,12 @@ EventConverterEvdevImpl::EventConverterEvdevImpl(
       has_caps_lock_led_(devinfo.HasLedEvent(LED_CAPSL)),
       controller_(FROM_HERE),
       cursor_(cursor),
-      dispatcher_(dispatcher) {}
+      dispatcher_(dispatcher) {
+  x_abs_min_ = devinfo.GetAbsMinimum(ABS_X);
+  x_abs_range_ = devinfo.GetAbsMaximum(ABS_X) - x_abs_min_ + 1;
+  y_abs_min_ = devinfo.GetAbsMinimum(ABS_Y);
+  y_abs_range_ = devinfo.GetAbsMaximum(ABS_Y) - y_abs_min_ + 1;
+}
 
 EventConverterEvdevImpl::~EventConverterEvdevImpl() {
 }
@@ -126,6 +131,9 @@ void EventConverterEvdevImpl::ProcessEvents(const input_event* inputs,
       case EV_REL:
         ConvertMouseMoveEvent(input);
         break;
+      case EV_ABS:
+        ConvertAbsEvent(input);
+        break;
       case EV_SYN:
         if (input.code == SYN_DROPPED)
           OnLostSync();
@@ -157,6 +165,22 @@ void EventConverterEvdevImpl::ConvertKeyEvent(const input_event& input) {
   // Keyboard processing.
   OnKeyChange(input.code, input.value != kKeyReleaseValue,
               TimeTicksFromInputEvent(input));
+}
+
+void EventConverterEvdevImpl::ConvertAbsEvent(const input_event& input) {
+  if (!cursor_)
+    return;
+
+  switch (input.code) {
+    case ABS_X:
+      x_abs_location_ = input.value;
+      abs_value_dirty_ = true;
+      break;
+    case ABS_Y:
+      y_abs_location_ = input.value;
+      abs_value_dirty_ = true;
+      break;
+  }
 }
 
 void EventConverterEvdevImpl::ConvertMouseMoveEvent(const input_event& input) {
@@ -242,18 +266,31 @@ void EventConverterEvdevImpl::OnButtonChange(int code,
 }
 
 void EventConverterEvdevImpl::FlushEvents(const input_event& input) {
-  if (!cursor_ || (x_offset_ == 0 && y_offset_ == 0))
+  if (!cursor_ || (!abs_value_dirty_ && x_offset_ == 0 && y_offset_ == 0))
     return;
 
-  cursor_->MoveCursor(gfx::Vector2dF(x_offset_, y_offset_));
+  if (abs_value_dirty_) {
+    gfx::Rect confined_bounds = cursor_->GetCursorConfinedBounds();
+    int x = ((x_abs_location_ - x_abs_min_) * confined_bounds.width()) /
+            x_abs_range_;
+    int y = ((y_abs_location_ - y_abs_min_) * confined_bounds.height()) /
+            y_abs_range_;
+    x += confined_bounds.x();
+    y += confined_bounds.y();
+    cursor_->MoveCursorTo(gfx::PointF(x, y));
+    abs_value_dirty_ = false;
+  }
+
+  if (x_offset_ || y_offset_) {
+    cursor_->MoveCursor(gfx::Vector2dF(x_offset_, y_offset_));
+    x_offset_ = 0;
+    y_offset_ = 0;
+  }
 
   dispatcher_->DispatchMouseMoveEvent(
       MouseMoveEventParams(input_device_.id, EF_NONE, cursor_->GetLocation(),
                            PointerDetails(EventPointerType::POINTER_TYPE_MOUSE),
                            TimeTicksFromInputEvent(input)));
-
-  x_offset_ = 0;
-  y_offset_ = 0;
 }
 
 }  // namespace ui

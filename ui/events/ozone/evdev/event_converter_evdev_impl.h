@@ -52,6 +52,7 @@ class EVENTS_OZONE_EVDEV_EXPORT EventConverterEvdevImpl
  private:
   void ConvertKeyEvent(const input_event& input);
   void ConvertMouseMoveEvent(const input_event& input);
+  void ConvertAbsEvent(const input_event& input);
   void OnKeyChange(unsigned int key,
                    bool down,
                    const base::TimeTicks& timestamp);
@@ -80,6 +81,18 @@ class EVENTS_OZONE_EVDEV_EXPORT EventConverterEvdevImpl
 
   // Save y-axis events of relative devices to be flushed at EV_SYN time.
   int y_offset_ = 0;
+
+  int x_abs_location_ = 0;
+  int y_abs_location_ = 0;
+
+  // Input range for EV_ABS events.
+  int x_abs_min_;
+  int y_abs_min_;
+  int x_abs_range_;
+  int y_abs_range_;
+
+  // Whether we need to move the cursor
+  bool abs_value_dirty_ = false;
 
   // Controller for watching the input fd.
   base::MessagePumpLibevent::FileDescriptorWatcher controller_;
