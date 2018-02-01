@@ -172,8 +172,7 @@ class PLATFORM_EXPORT HeapAllocator {
   template <typename VisitorDispatcher, typename T, typename Traits>
   static void Trace(VisitorDispatcher visitor, T& t) {
     TraceCollectionIfEnabled<WTF::IsTraceableInCollectionTrait<Traits>::value,
-                             Traits::kWeakHandlingFlag,
-                             WTF::kWeakPointersActWeak, T,
+                             Traits::kWeakHandlingFlag, T,
                              Traits>::Trace(visitor, t);
   }
 
@@ -319,8 +318,8 @@ static void TraceListHashSetValue(VisitorDispatcher visitor, Value& value) {
   // arbitrarily.
   TraceCollectionIfEnabled<
       WTF::IsTraceableInCollectionTrait<WTF::HashTraits<Value>>::value,
-      WTF::kNoWeakHandlingInCollections, WTF::kWeakPointersActWeak, Value,
-      WTF::HashTraits<Value>>::Trace(visitor, value);
+      WTF::kNoWeakHandling, Value, WTF::HashTraits<Value>>::Trace(visitor,
+                                                                  value);
 }
 
 // The inline capacity is just a dummy template argument to match the off-heap
@@ -811,8 +810,8 @@ struct HashTraits<blink::WeakMember<T>>
   template <typename VisitorDispatcher>
   static bool TraceInCollection(VisitorDispatcher visitor,
                                 blink::WeakMember<T>& weak_member,
-                                ShouldWeakPointersBeMarkedStrongly strongify) {
-    if (strongify == kWeakPointersActStrong) {
+                                WeakHandlingFlag weakness) {
+    if (weakness == kNoWeakHandling) {
       visitor->Trace(weak_member.Get());  // Strongified visit.
       return false;
     }
