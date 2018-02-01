@@ -16,6 +16,24 @@
       "revId": "a306d8f59b76638d810bcbe242afd95f5275b25d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0563b77d_28c11c71",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-02-01T21:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdaee7ea_4e10a193",
+      "revId": "a306d8f59b76638d810bcbe242afd95f5275b25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
