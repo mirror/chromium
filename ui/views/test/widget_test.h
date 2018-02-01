@@ -93,6 +93,8 @@ class WidgetTest : public ViewsTestBase {
   // Returns the set of all Widgets that currently have a NativeWindow.
   static Widget::Widgets GetAllWidgets();
 
+  static void SaveAsPNG(Widget* widget, const base::FilePath& path);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(WidgetTest);
 };

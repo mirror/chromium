@@ -127,6 +127,30 @@ bool TestBrowserDialog::VerifyUi() {
   }
   widgets_ = added;
 
+  if (!added.empty() &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch("screenshot")) {
+    constexpr int kScreenshotDelayMs = 1000;
+    auto* test_info = testing::UnitTest::GetInstance()->current_test_info();
+    std::string test_name = test_info->test_case_name();
+    test_name += '_';
+    test_name += test_info->name();
+    base::RunLoop run_loop;
+    base::OnceClosure task = base::BindOnce(
+        [](base::OnceClosure first, base::Closure second) {
+          std::move(first).Run();
+          second.Run();
+        },
+        base::BindOnce(
+            &views::test::WidgetTest::SaveAsPNG, *added.begin(),
+            base::FilePath(".").AppendASCII(test_name).AddExtension("png")),
+        run_loop.QuitClosure());
+
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE, std::move(task),
+        base::TimeDelta::FromMilliseconds(kScreenshotDelayMs));
+    run_loop.Run();
+  }
+
   return added.size() == 1;
 #else
   NOTIMPLEMENTED();
