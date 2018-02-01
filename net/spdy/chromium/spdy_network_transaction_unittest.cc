@@ -519,7 +519,13 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
   }
 
   SpdyString GetDefaultUrlWithPath(const char* path) const {
-    return SpdyString(kDefaultUrl) + path;
+    // Create URL from |kDefaultUrl| that is guaranteed to end on '/'.
+    std::string url = GURL(kDefaultUrl).spec();
+    // Remove trailing '/'.
+    url.pop_back();
+    // |path| must start with '/'.
+    url.append(path);
+    return url;
   }
 
   size_t num_active_streams(base::WeakPtr<SpdySession> session) {
