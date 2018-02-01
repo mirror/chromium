@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d90871fa_f1eb7f26",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-01T21:57:31Z",
+      "side": 1,
+      "message": "Let\u0027s update this comment to describe what |render_widget_host| means, and why it\u0027s passed in instead of just the process.",
+      "revId": "2de4bd485c3a9aa9fac121454ab35a71efeccd48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7ed660_e2d052ac",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-01T21:57:31Z",
+      "side": 1,
+      "message": "Same for this one.",
+      "revId": "2de4bd485c3a9aa9fac121454ab35a71efeccd48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
