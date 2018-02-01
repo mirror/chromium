@@ -12,13 +12,22 @@
 
 namespace chromeos {
 
+enum FakeUpdateEngineClientOptions {
+  NONE = 0,
+  USE_FAKE_UPDATE_RESULT = 1 << 0,
+  USE_FAKE_UPDATE_STATUS = 1 << 1,
+};
+
 // A fake implementation of UpdateEngineClient. The user of this class can
 // use set_update_engine_client_status() to set a fake last Status and
 // GetLastStatus() returns the fake with no modification. Other methods do
 // nothing.
 class FakeUpdateEngineClient : public UpdateEngineClient {
  public:
-  FakeUpdateEngineClient();
+  FakeUpdateEngineClient(
+      uint32_t options /* bitwise or of FakeUpdateEngineClientOptions */);
+  FakeUpdateEngineClient(
+      /* options default to USE_FAKE_UPDATE_RESULT | USE_FAKE_UPDATE_STATUS */);
   ~FakeUpdateEngineClient() override;
 
   // UpdateEngineClient overrides
@@ -46,6 +55,7 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   // GetLastStatus() returns the status set by this method in FIFO order.
   // See set_default_status().
   void PushLastStatus(const UpdateEngineClient::Status& status) {
+    DCHECK(options_ & USE_FAKE_UPDATE_STATUS);
     status_queue_.push(status);
   }
 
@@ -85,6 +95,10 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   int can_rollback_call_count() const { return can_rollback_call_count_; }
 
  private:
+  void StateTransition();
+
+  Status last_status_;
+
   base::ObserverList<Observer> observers_;
   base::queue<UpdateEngineClient::Status> status_queue_;
   UpdateEngineClient::Status default_status_;
@@ -94,6 +108,13 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   int request_update_check_call_count_;
   int rollback_call_count_;
   int can_rollback_call_count_;
+
+  std::string current_channel_;
+  std::string target_channel_;
+
+  uint32_t options_;
+
+  base::WeakPtrFactory<FakeUpdateEngineClient> weak_factory_;
 };
 
 }  // namespace chromeos
