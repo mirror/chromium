@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a63612_afb1a878",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 101295,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-01T15:43:11Z",
+      "side": 1,
+      "message": "This should be an enum\u003d\"Boolean\" or more specific.",
+      "range": {
+        "startLine": 101295,
+        "startChar": 64,
+        "endLine": 101295,
+        "endChar": 0
+      },
+      "revId": "b55fbb4583bfb2e786d677afa8850f3c97e07040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5dded8_82113c92",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 101299,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-01T15:43:11Z",
+      "side": 1,
+      "message": "Nit: Mention on startup",
+      "range": {
+        "startLine": 101299,
+        "startChar": 12,
+        "endLine": 101299,
+        "endChar": 0
+      },
+      "revId": "b55fbb4583bfb2e786d677afa8850f3c97e07040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
