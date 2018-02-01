@@ -245,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "8a637033_2fa612de",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-01T12:27:42Z",
+      "side": 1,
+      "message": "If a sender was created by other means (addTrack, addTransceiver) a corresponding blink sender is created and added to rtp_senders_, meaning the \"if (it !\u003d rtp_senders_.end()) continue;\" a couple of lines above will make sure that we don\u0027t examine any such sender further and it\u0027s track value is irrelevant.\n\nWe cannot reach replaceTrack(null) on any sender without first having created the blink layer sender, thus rtp_senders_ contains the sender. addTrack() and addTransceiver() are blocking operations that create the blink sender before returning, so it\u0027s impossible to reach addStream() in a state where rtp_senders_ is not up to date. And because addStream() calls CreateMissingSendersForStream() it\u0027s impossible to exit addStream() without rtp_senders_ being up-to-date.\n\nAdded a comment.",
+      "parentUuid": "3f4df0e8_2e2621e2",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b0a0e4_9c5456f1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 3
