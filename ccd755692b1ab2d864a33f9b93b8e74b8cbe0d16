@@ -16,6 +16,24 @@
       "revId": "ccd755692b1ab2d864a33f9b93b8e74b8cbe0d16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744c3fc5_a8ab5833",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-01T02:23:20Z",
+      "side": 1,
+      "message": "yes for now since the cls are checked in async.  Will update this later to remove.",
+      "parentUuid": "8dc0a923_421c587c",
+      "revId": "ccd755692b1ab2d864a33f9b93b8e74b8cbe0d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
