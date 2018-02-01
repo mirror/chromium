@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c52c35b_f1f74e2d",
+        "filename": "extensions/common/api/declarative_net_request/dnr_manifest_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T18:52:58Z",
+      "side": 1,
+      "message": "nitty nit: to me, ParseHostsList implies that we\u0027d also parse the hosts, which we don\u0027t really do here.  Maybe just GetHostsList() (which can still fail)?  WDYT?  I don\u0027t feel super strongly, so not a big deal if you prefer as-is.",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "eeee516c63442147aaae817a139b7c02e165b478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edae49b8_7dbf99c2",
+        "filename": "extensions/common/api/declarative_net_request/dnr_manifest_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T18:52:58Z",
+      "side": 1,
+      "message": "maybe also a quick test for an invalid scheme?  The foo://* above would work if it didn\u0027t also have invalid patterns.  I\u0027d suggest breaking that apart into two tests - one for a valid scheme, invalid pattern, and one for an invalid scheme, valid pattern.",
+      "revId": "eeee516c63442147aaae817a139b7c02e165b478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61a1904_9e2b7e71",
+        "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T18:52:58Z",
+      "side": 1,
+      "message": "#include memory, vector, string",
+      "revId": "eeee516c63442147aaae817a139b7c02e165b478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e7cd5b_a029ce01",
+        "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T18:52:58Z",
+      "side": 1,
+      "message": "I don\u0027t think we use kConstantStyle for values that are computed at runtime.  Prefer `const bool can_execute_script_everywhere`",
+      "revId": "eeee516c63442147aaae817a139b7c02e165b478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
