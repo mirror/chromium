@@ -769,6 +769,24 @@
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3833021d_ef83e9d2",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T22:52:42Z",
+      "side": 1,
+      "message": "Just wanna confirm these are what I need to do:\n1) Remove the crashpad related code block here;\n2) When launching Chrome.exe from this executable, use command line \"chrome.exe --type\u003dcrashpad-handler ...\" \n\nPlease correct me if I misunderstood.",
+      "parentUuid": "8744cf1e_992bc2d3",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
