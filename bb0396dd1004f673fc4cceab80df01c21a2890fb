@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b931295c_0dcec330",
+        "filename": "mojo/public/cpp/bindings/array_traits_span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-01T23:16:43Z",
+      "side": 1,
+      "message": "Technically, we could consider span of {nullptr, 0} as null, while {non-null, 0} as empty.\n\nNot sure whether it is what you want, but we could remove definition of IsNull() and SetToNull() to disallow a nullable array to be converted to/from base::span\u003cT\u003e.\n\nWDYT?",
+      "revId": "bb0396dd1004f673fc4cceab80df01c21a2890fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
