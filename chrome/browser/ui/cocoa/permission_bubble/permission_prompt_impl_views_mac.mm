@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "build/buildflag.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
@@ -11,6 +12,7 @@
 #include "chrome/browser/ui/cocoa/bubble_anchor_helper_views.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #include "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.h"
+#include "ui/base/ui_features.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -25,7 +27,7 @@ views::BubbleDialogDelegateView* BubbleForWindow(gfx::NativeWindow window) {
 }  // namespace
 
 // static
-std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
+std::unique_ptr<PermissionPrompt> PermissionPrompt::CreateForCocoaWindow(
     content::WebContents* web_contents,
     Delegate* delegate) {
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
@@ -40,3 +42,11 @@ std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
                    GetPageInfoDecoration(browser->window()->GetNativeWindow()));
   return prompt;
 }
+
+#if !BUILDFLAG(MAC_VIEWS_BROWSER)
+std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
+    content::WebContents* web_contents,
+    Delegate* delegate) {
+  return CreateForCocoaWindow(web_contents, delegate);
+}
+#endif
