@@ -370,19 +370,4 @@ SharedMemoryHandle SharedMemory::handle() const {
   return shm_;
 }
 
-SharedMemoryHandle SharedMemory::TakeHandle() {
-  SharedMemoryHandle handle(shm_);
-  handle.SetOwnershipPassesToIPC(true);
-  shm_ = SharedMemoryHandle();
-  // TODO(ssid): Find some way to track the shared memory in this case
-  // https://crbug/804399.
-  if (memory_) {
-    SharedMemoryTracker::GetInstance()->DecrementMemoryUsage(*this);
-    mapped_id_ = UnguessableToken();
-  }
-  memory_ = nullptr;
-  mapped_size_ = 0;
-  return handle;
-}
-
 }  // namespace base
