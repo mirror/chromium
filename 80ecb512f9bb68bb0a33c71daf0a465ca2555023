@@ -22,6 +22,30 @@
       "revId": "80ecb512f9bb68bb0a33c71daf0a465ca2555023",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d66b669_8e466007",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-02-01T19:21:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e5d999_8fe42beb",
+      "range": {
+        "startLine": 366,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 6
+      },
+      "revId": "80ecb512f9bb68bb0a33c71daf0a465ca2555023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
