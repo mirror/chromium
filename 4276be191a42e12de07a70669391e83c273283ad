@@ -34,6 +34,24 @@
       "revId": "4276be191a42e12de07a70669391e83c273283ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a7c37e_c0b86523",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-02-01T15:21:16Z",
+      "side": 1,
+      "message": "Exposing a VC\u0027s button for another class to configure seems like an antipattern. \n\nThe future tab switcher (the tab grid) will have a toolbar, but it won\u0027t be derived from the toolbar used for open tabs, and it may not be a separate view controller. Generally the local dispatch pattern will be used, I think. So having a protocol is probably correct.\n\nBrowserCommands should only contain commands (or command protocols) that go through the dispatcher.",
+      "parentUuid": "cfc10159_6dfd6842",
+      "revId": "4276be191a42e12de07a70669391e83c273283ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
