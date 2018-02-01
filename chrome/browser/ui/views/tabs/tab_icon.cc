@@ -34,6 +34,15 @@ bool ShouldThemifyFaviconForUrl(const GURL& url) {
          url.host_piece() != chrome::kChromeUIAppLauncherPageHost;
 }
 
+sk_sp<cc::PaintShader> CreateFadeTailShader(int start_x, int end_x) {
+  SkColor grad_colors[2] = {SK_ColorBLACK, SkColorSetARGB(0, 255, 255, 255)};
+  SkPoint grad_points[2];
+  grad_points[0].iset(start_x, 0);
+  grad_points[1].iset(end_x, 0);
+  return cc::PaintShader::MakeLinearGradient(grad_points, grad_colors, nullptr,
+                                             2, SkShader::kClamp_TileMode);
+}
+
 }  // namespace
 
 // Helper class that manages the favicon crash animation.
@@ -204,13 +213,31 @@ void TabIcon::OnPaint(gfx::Canvas* canvas) {
       icon_to_paint = &themed_favicon_;
   }
 
+  if (fade_tail_)
+    canvas->SaveLayerAlpha(0xff);
+
+  bool painted_icon = false;
   if (attention_types_ != 0 && !should_display_crashed_favicon_) {
     PaintAttentionIndicatorAndIcon(canvas, *icon_to_paint, icon_bounds);
+    painted_icon = true;
   } else if (!icon_to_paint->isNull()) {
     canvas->DrawImageInt(*icon_to_paint, 0, 0, icon_bounds.width(),
                          icon_bounds.height(), icon_bounds.x(), icon_bounds.y(),
                          icon_bounds.width(), icon_bounds.height(), false);
+    painted_icon = true;
   }
+
+  if (painted_icon && fade_tail_) {
+    const int icon_width = icon_bounds.width();
+    cc::PaintFlags fade_flags;
+    fade_flags.setBlendMode(SkBlendMode::kDstIn);
+    fade_flags.setShader(CreateFadeTailShader(icon_width / 3.0, icon_width));
+    canvas->DrawRect(gfx::Rect(0, 0, icon_width, icon_bounds.height()),
+                     fade_flags);
+  }
+
+  if (fade_tail_)
+    canvas->Restore();
 }
 
 void TabIcon::OnThemeChanged() {
