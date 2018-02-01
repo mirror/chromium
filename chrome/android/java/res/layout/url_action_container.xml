@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+<org.chromium.chrome.browser.omnibox.UrlActionContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:chrome="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/toolbar_height_no_shadow"
+    android:layout_gravity="end|center_vertical"
+    android:orientation="horizontal"
+    android:visibility="gone" >
+
+    <org.chromium.chrome.browser.widget.TintedImageButton
+        android:id="@+id/mic_button"
+        style="@style/LocationBarButton"
+        android:layout_width="@dimen/location_bar_icon_width"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/btn_mic"
+        android:visibility="gone"
+        android:contentDescription="@string/accessibility_toolbar_btn_mic" />
+
+    <org.chromium.chrome.browser.widget.TintedImageButton
+        android:id="@+id/delete_button"
+        style="@style/LocationBarButton"
+        android:layout_width="@dimen/location_bar_icon_width"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/btn_delete_24dp"
+        android:visibility="gone"
+        android:contentDescription="@string/accessibility_toolbar_btn_delete_url" />
+
+</org.chromium.chrome.browser.omnibox.UrlActionContainer>
