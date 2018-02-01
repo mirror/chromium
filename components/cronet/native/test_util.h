@@ -12,6 +12,9 @@ namespace cronet {
 // Various test utility functions for testing Cronet.
 namespace test {
 
+// Create an engine that is configured to support local test servers.
+Cronet_EnginePtr CreateTestEngine(int quic_server_port);
+
 // Create an executor that runs tasks on different background thread.
 Cronet_ExecutorPtr CreateTestExecutor();
 
