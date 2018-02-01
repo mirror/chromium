@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b83050_bafd0e34",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/thai-word-at-document-end.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-01T01:52:17Z",
+      "side": 1,
+      "message": "Could you split the segments so that we can write selection_test more understandable like\nselection_test(`\u003cdiv \u003e|${kSegment1}${kSegment2}${kSegment3}.\u003c/div\u003e`,\n  selection \u003d\u003e selection.modify(\u0027move\u0027, \u0027forward\u0027, \u0027word\u0027),\n  `\u003cdiv \u003e${kSegment1}$|{kSegment2}${kSegment3}.\u003c/div\u003e`);",
+      "revId": "c42937e6b4f868b403a2d587e81fead6f06e9290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
