@@ -82,7 +82,6 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
   void SendResponseToClient();
   void CompletePendingWrite();
   void SetRawResponseHeaders(scoped_refptr<const net::HttpResponseHeaders>);
-  void UpdateBodyReadBeforePaused();
   void SendUploadProgress(const net::UploadProgress& progress);
   void OnUploadProgressACK();
   void OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
@@ -92,6 +91,8 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
       const std::vector<uint16_t>& algorithm_preferences,
       mojom::SSLPrivateKeyPtr ssl_private_key,
       bool cancel_certificate_selection);
+  bool HasDataPipe() const;
+  void RecordBodyReadFromNetBeforePausedIfNeeded();
 
   NetworkContext* context_;
   int32_t options_;
@@ -127,8 +128,6 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
   // The response body stream is open, but transferring data is paused.
   bool paused_reading_body_ = false;
 
-  // Set to true if the response body may be read from cache.
-  bool body_may_be_from_cache_ = false;
   // Whether to update |body_read_before_paused_| after the pending read is
   // completed (or when the response body stream is closed).
   bool update_body_read_before_paused_ = false;
