@@ -875,6 +875,30 @@
     },
     {
       "key": {
+        "uuid": "3bf8c8c1_6700425b",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T02:10:04Z",
+      "side": 1,
+      "message": "Maybe also set this aside for now? Seems that grt@, robliao@ and peter@ all have different opinions for this. I\u0027d like to avoid changing the route in this implementation all the time.",
+      "parentUuid": "4a859c49_6edd713b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338b9cf8_dea60283",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
@@ -982,6 +1006,30 @@
       "side": 1,
       "message": "Huh, interesting. Even Microsoft\u0027s doesn\u0027t do this. (Generate a sample project in Visual Studio for example or search in GitHub: https://github.com/Microsoft/Windows-classic-samples/search?utf8\u003d%E2%9C%93\u0026q\u003dwWinMain\u0026type\u003d).",
       "parentUuid": "fa80d663_b489e7b8",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb57b460_ab36e74e",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-01T02:10:04Z",
+      "side": 1,
+      "message": "Hmm, let us side this aside for now?",
+      "parentUuid": "750344f8_0e737c00",
       "range": {
         "startLine": 21,
         "startChar": 0,
