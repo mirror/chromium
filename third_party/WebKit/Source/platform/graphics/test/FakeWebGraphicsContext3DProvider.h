@@ -54,6 +54,9 @@ class FakeWebGraphicsContext3DProvider : public WebGraphicsContext3DProvider {
     return image_decode_cache_;
   }
 
+  void AddObserver(DestructionObserver*) override {}
+  void RemoveObserver(DestructionObserver*) override {}
+
  private:
   gpu::gles2::GLES2Interface* gl_;
   sk_sp<GrContext> gr_context_;

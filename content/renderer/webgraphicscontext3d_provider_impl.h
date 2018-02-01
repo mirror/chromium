@@ -7,6 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h"
@@ -41,6 +42,8 @@ class CONTENT_EXPORT WebGraphicsContext3DProviderImpl
   ~WebGraphicsContext3DProviderImpl() override;
 
   // WebGraphicsContext3DProvider implementation.
+  void AddObserver(DestructionObserver*) override;
+  void RemoveObserver(DestructionObserver*) override;
   bool BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
   GrContext* GetGrContext() override;
@@ -68,6 +71,7 @@ class CONTENT_EXPORT WebGraphicsContext3DProviderImpl
   const bool software_rendering_;
   base::RepeatingClosure context_lost_callback_;
   std::unique_ptr<cc::ImageDecodeCache> image_decode_cache_;
+  base::ObserverList<DestructionObserver> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(WebGraphicsContext3DProviderImpl);
 };

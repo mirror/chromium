@@ -56,7 +56,16 @@ namespace blink {
 
 class WebGraphicsContext3DProvider {
  public:
+  class DestructionObserver {
+   public:
+    virtual ~DestructionObserver() {}
+    virtual void OnContextDestroyed() = 0;
+  };
+
   virtual ~WebGraphicsContext3DProvider() = default;
+
+  virtual void AddObserver(DestructionObserver*) = 0;
+  virtual void RemoveObserver(DestructionObserver*) = 0;
 
   virtual gpu::gles2::GLES2Interface* ContextGL() = 0;
   virtual bool BindToCurrentThread() = 0;

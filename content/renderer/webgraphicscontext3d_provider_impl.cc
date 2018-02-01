@@ -19,6 +19,17 @@ WebGraphicsContext3DProviderImpl::WebGraphicsContext3DProviderImpl(
 
 WebGraphicsContext3DProviderImpl::~WebGraphicsContext3DProviderImpl() {
   provider_->RemoveObserver(this);
+  for (auto& observer : observers_)
+    observer.OnContextDestroyed();
+}
+
+void WebGraphicsContext3DProviderImpl::AddObserver(DestructionObserver* obs) {
+  observers_.AddObserver(obs);
+}
+
+void WebGraphicsContext3DProviderImpl::RemoveObserver(
+    DestructionObserver* obs) {
+  observers_.RemoveObserver(obs);
 }
 
 bool WebGraphicsContext3DProviderImpl::BindToCurrentThread() {
