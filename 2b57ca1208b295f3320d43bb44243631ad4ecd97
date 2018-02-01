@@ -22,6 +22,30 @@
       "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba44fbcd_5b88ac1a",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-01T05:08:46Z",
+      "side": 1,
+      "message": "Sadly, there is currently no constant that we can use for this. Other callers also use \"-1\"[1] D: But I just sent out a separate patch[1] to add such a constant. I\u0027ll rebase whichever patch lands first.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_controller_impl.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d736\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/897216",
+      "parentUuid": "44035cf9_71e08968",
+      "range": {
+        "startLine": 313,
+        "startChar": 29,
+        "endLine": 313,
+        "endChar": 58
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
