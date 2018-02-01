@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "0dfbb2e4_b71052dc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98218ff1_7288ebdf",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1af577_52349f68",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 12
@@ -56,6 +74,24 @@
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0ec858_86c3220e",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "This was done on purpose, because we are moving the old_render_frame_host in the call below, so I don\u0027t think it\u0027s a good idea to assume that pointers to its members are safe to keep.",
+      "parentUuid": "bb1af577_52349f68",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "0dcbd147_45fb1188",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "Done. I added the comment, but ended up removing the overload when refactoring to use base::Optional.",
+      "parentUuid": "294b1d5a_e359bcc6",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad027110_f08720df",
         "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
         "patchSetId": 12
@@ -90,6 +144,24 @@
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beef6ef5_182a3351",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad027110_f08720df",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +199,24 @@
     },
     {
       "key": {
+        "uuid": "426df62f_f25854d2",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "Do you have any suggestions?\n\nThe way it\u0027s currently implemented, this is being sent for all local frames, including the main frame, whenever the frame rect changes. In practice, the browser process isn\u0027t using the size of the main frame, but I didn\u0027t special case it.",
+      "parentUuid": "53aaf186_122953d0",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a47e5d8_96ec92f8",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 12
@@ -141,6 +231,24 @@
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c455f62_c37695fc",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4355,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "That makes sense. I\u0027ve re-implemented the blocking code to block on the WebFrameWidgetImpl. In this case, it made more sense to use the WebFrameWidget\u0027s own size, and resume the parser when calling WebWidget::Resize() for the first time. That also avoids the plumbing into content.",
+      "parentUuid": "4a47e5d8_96ec92f8",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +269,24 @@
     },
     {
       "key": {
+        "uuid": "97061c64_e8ea1730",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "In practice, it is what it does. Since we block the start of parsing, this RenderWidget can\u0027t have more than a single RenderFrame, which has to be the local root. With the refactor moving things to webwidget, this should be more clear.",
+      "parentUuid": "b8363f8b_377da356",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a67de9cd_7e81f5d5",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 12
@@ -178,6 +304,24 @@
     },
     {
       "key": {
+        "uuid": "5338b25f_8db7678b",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a67de9cd_7e81f5d5",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86273abb_37001cf7",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 12
@@ -192,6 +336,24 @@
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c26c0b_6cc81532",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "This is a bit complicated.\n\nProcessDataBuffer injects data into the parser (it calls parser-\u003eAppendBytes). When the parser is parsing the input, if it encounters a \u003cscript\u003e tag it\u0027ll execute the script before continuing parsing. Inside this script, we may have something like a sync XHR or a modal dialog, which causes a nested message loop. If we get a DataReceived() IPC inside this nested message loop, we need to protect the parser so we don\u0027t append data in the wrong order. That\u0027s why we also need to call ProcessDataBuffer at the end of this block.\n\nI haven\u0027t verified that the scenario above can happen (we also use a background parser most of the time), but that\u0027s what the comment inside DocumentLoader::DataReceived suggests.\n\nAs for unifying the buffers, I couldn\u0027t come up with a clever solution to make this possible while preserving the state/API surface between the DocumentLoader and the parser. I did consider blocking the parser on the HTMLDocumentParser side, but it turned out to be complicated to synchronize the state between the parser/html construction on the main thread and the background parser.",
+      "parentUuid": "86273abb_37001cf7",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "45170401_bc6c6032",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "See the other comment.",
+      "parentUuid": "84128633_a6f0ff5a",
+      "range": {
+        "startLine": 325,
+        "startChar": 24,
+        "endLine": 325,
+        "endChar": 44
+      },
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9313a0f3_f131fc28",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 12
@@ -232,6 +418,24 @@
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381ceff4_1d9da1b7",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-01T22:45:51Z",
+      "side": 1,
+      "message": "That is correct.",
+      "parentUuid": "9313a0f3_f131fc28",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
