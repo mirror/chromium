@@ -16,6 +16,7 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -40,6 +41,7 @@
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
@@ -61,7 +63,10 @@
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/display/display_switches.h"
+#include "ui/views/accessibility/view_accessibility.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -259,6 +264,83 @@ void InProcessBrowserTest::SetUpDefaultCommandLine(
 
   if (open_about_blank_on_browser_launch_ && command_line->GetArgs().empty())
     command_line->AppendArg(url::kAboutBlankURL);
+}
+
+std::string GetViewAncestry(views::View* view) {
+  std::string view_ancestry;  // e.g. BrowserView>OmniboxView.
+  std::string kSeparator = " > ";
+  while (view) {
+    view_ancestry = kSeparator + view->GetClassName() + view_ancestry;
+    view = view->parent();
+  }
+  return view_ancestry.substr(kSeparator.length());  // Remove first separator.
+}
+
+bool CheckFocusableHasName(views::View* view, std::string* error_message) {
+  if (!view->IsAccessibilityFocusable())
+    return true;  // No accessibility checks for unfocusable views.
+
+  // Focusable nodes must have an accessible name, otherwise screen reader users
+  // will not know what they landed on. For example, the reload button should
+  // have an accessible name of "Reload".
+  // Note: explictly setting the name to "" is allowed.
+  views::ViewAccessibility& view_ax = view->GetViewAccessibility();
+  ui::AXNodeData node_data;
+  view_ax.GetAccessibleNodeData(&node_data);
+  if (node_data.GetNameFrom() == ax::mojom::NameFrom::kAttributeExplicitlyEmpty)
+    return true;  // Empty name is intentional.
+
+  if (node_data.GetStringAttribute(ax::mojom::StringAttribute::kName).empty()) {
+    *error_message = base::StringPrintf(
+        "Accessibility error: focusable view requires accessible name: %s",
+        GetViewAncestry(view).c_str());
+    return false;
+  }
+
+  return true;  // One view passed all checks.
+}
+
+bool CheckViewAccessibility(views::View* view, std::string* error_message) {
+  return CheckFocusableHasName(view, error_message);
+}
+
+bool CheckViewSubtreeAccessibility(views::View* view,
+                                   std::string* error_message) {
+  if (!CheckViewAccessibility(view, error_message))
+    return false;
+  for (int i = 0; i < view->child_count(); ++i) {
+    if (!CheckViewSubtreeAccessibility(view->child_at(i), error_message))
+      return false;
+  }
+
+  return true;  // All views in this subtree passed all checks.
+}
+
+bool InProcessBrowserTest::RunUIAccessibilityChecks(
+    std::string* error_message) {
+#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+  return true;
+#else
+  const BrowserList* active_browser_list = BrowserList::GetInstance();
+  for (size_t index = 0; index < active_browser_list->size(); index++) {
+    Browser* browser = active_browser_list->get(index);
+    if (browser->IsAttemptingToCloseBrowser())
+      continue;
+    BrowserWindow* browser_window = browser->window();
+    if (!browser_window) {
+      *error_message = base::StringPrintf(
+          "Accessibility error: no browser window for browser %zu", index);
+      return false;
+    }
+    BrowserView* browser_view = static_cast<BrowserView*>(browser_window);
+
+    CheckViewSubtreeAccessibility(browser_view, error_message);
+    if (!error_message->empty())
+      return false;
+  }
+
+  return true;
+#endif  // OS_MACOSX && !BUILDFLAG(MAC_VIEWS_BROWSER)
 }
 
 bool InProcessBrowserTest::CreateUserDataDirectory() {
@@ -487,6 +569,15 @@ void InProcessBrowserTest::PreRunTestOnMainThread() {
 }
 
 void InProcessBrowserTest::PostRunTestOnMainThread() {
+#if defined(OS_MACOSX)
+  autorelease_pool_->Recycle();
+#endif
+
+  // Currently we always run UI accessibility checks.
+  std::string error_message;
+  EXPECT_TRUE(RunUIAccessibilityChecks(&error_message));
+  EXPECT_EQ("", error_message);
+
 #if defined(OS_MACOSX)
   autorelease_pool_->Recycle();
 #endif
