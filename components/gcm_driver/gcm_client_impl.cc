@@ -889,9 +889,22 @@ void GCMClientImpl::Register(
     }
 
     if (matched) {
-      delegate_->OnRegisterFinished(registration_info,
-                                    registrations_iter->second, SUCCESS);
-      return;
+      // Skip registration if token is fresh.
+      int token_invalidation_period = base::GetFieldTrialParamByFeatureAsInt(
+          gcm::features::kTokenInvalidationPeriodDays,
+          gcm::features::kParamNameTokenInvalidationPeriodDays,
+          gcm::features::kDefaultTokenInvalidationPeriodDays);
+
+      if (token_invalidation_period) {
+        auto last_validated_at =
+            registrations_iter->first.get()->last_validated;
+        if (clock_->Now() - last_validated_at <
+            base::TimeDelta::FromDays(token_invalidation_period)) {
+          delegate_->OnRegisterFinished(registration_info,
+                                        registrations_iter->second, SUCCESS);
+          return;
+        }
+      }
     }
   }
 

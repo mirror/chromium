@@ -17,6 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/clock.h"
@@ -41,7 +42,6 @@
 #include "third_party/leveldatabase/leveldb_chrome.h"
 
 namespace gcm {
-
 namespace {
 
 enum LastEvent {
@@ -423,6 +423,7 @@ class GCMClientImplTest : public testing::Test,
 
   // Injected to GCM client.
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context_getter_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 GCMClientImplTest::GCMClientImplTest()
@@ -443,6 +444,9 @@ void GCMClientImplTest::SetUp() {
   InitializeGCMClient();
   StartGCMClient();
   SetUpUrlFetcherFactory();
+  scoped_feature_list_.InitAndEnableFeature(
+      gcm::features::kTokenInvalidationPeriodDays);
+  ASSERT_TRUE(gcm::features::IsTokenInvalidationEnabled());
   ASSERT_NO_FATAL_FAILURE(
       CompleteCheckin(kDeviceAndroidId, kDeviceSecurityToken, std::string(),
                       std::map<std::string, std::string>()));
@@ -870,6 +874,77 @@ TEST_F(GCMClientImplTest, RegisterPreviousSenderAgain) {
   EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
   EXPECT_EQ(kExtensionAppId, last_app_id());
   EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+}
+
+TEST_F(GCMClientImplTest, RegisterAgainWhenTokenIsFresh) {
+  // Register a sender.
+  std::vector<std::string> senders;
+  senders.push_back("sender");
+  Register(kExtensionAppId, senders);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+
+  reset_last_event();
+
+  // Advance time by (token_invalidation_period)/2
+  int token_invalidation_period = base::GetFieldTrialParamByFeatureAsInt(
+      gcm::features::kTokenInvalidationPeriodDays,
+      gcm::features::kParamNameTokenInvalidationPeriodDays,
+      gcm::features::kDefaultTokenInvalidationPeriodDays);
+  clock()->Advance(base::TimeDelta::FromDays(token_invalidation_period / 2));
+  // Register the same sender again. The same registration ID as the
+  // previous one should be returned.
+  std::vector<std::string> senders2;
+  senders2.push_back("sender2");
+  Register(kExtensionAppId, senders2);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+}
+
+TEST_F(GCMClientImplTest, RegisterAgainWhenTokenIsStale) {
+  // Register a sender.
+  std::vector<std::string> senders;
+  senders.push_back("sender");
+  Register(kExtensionAppId, senders);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id", last_registration_id());
+  EXPECT_EQ(GCMClient::SUCCESS, last_result());
+  EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+
+  reset_last_event();
+
+  // Advance time by (token_invalidation_period)
+  int token_invalidation_period = base::GetFieldTrialParamByFeatureAsInt(
+      gcm::features::kTokenInvalidationPeriodDays,
+      gcm::features::kParamNameTokenInvalidationPeriodDays,
+      gcm::features::kDefaultTokenInvalidationPeriodDays);
+  clock()->Advance(base::TimeDelta::FromDays(token_invalidation_period));
+
+  // Register the same sender again. Different registration ID from the
+  // previous one should be returned.
+  std::vector<std::string> senders2;
+  senders2.push_back("sender2");
+  Register(kExtensionAppId, senders2);
+  ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id2"));
+
+  EXPECT_EQ(REGISTRATION_COMPLETED, last_event());
+  EXPECT_EQ(kExtensionAppId, last_app_id());
+  EXPECT_EQ("reg_id2", last_registration_id());
   EXPECT_EQ(GCMClient::SUCCESS, last_result());
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
 }
