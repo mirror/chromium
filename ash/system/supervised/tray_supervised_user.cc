@@ -110,7 +110,7 @@ void TraySupervisedUser::CreateOrUpdateNotification() {
               message_center::NotifierId::SYSTEM_COMPONENT,
               kNotifierSupervisedUser),
           message_center::RichNotificationData(), nullptr,
-          kNotificationSupervisedIcon,
+          kSystemMenuChildUserIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
   notification->SetSystemPriority();
   // AddNotification does an update if the notification already exists.
