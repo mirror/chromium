@@ -189,6 +189,15 @@ void LayeredNetworkDelegate::OnCanGetCookiesInternal(
     const CookieList& cookie_list) {
 }
 
+bool LayeredNetworkDelegate::OnCanAttachSameSiteCookies(
+    const URLRequest& request) {
+  OnCanAttachSameSiteCookiesInternal(request);
+  return nested_network_delegate_->CanAttachSameSiteCookies(request);
+}
+
+void LayeredNetworkDelegate::OnCanAttachSameSiteCookiesInternal(
+    const URLRequest& request) {}
+
 bool LayeredNetworkDelegate::OnCanSetCookie(const URLRequest& request,
                                             const net::CanonicalCookie& cookie,
                                             CookieOptions* options) {

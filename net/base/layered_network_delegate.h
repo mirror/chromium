@@ -74,6 +74,7 @@ class NET_EXPORT LayeredNetworkDelegate : public NetworkDelegate {
                                       AuthCredentials* credentials) final;
   bool OnCanGetCookies(const URLRequest& request,
                        const CookieList& cookie_list) final;
+  bool OnCanAttachSameSiteCookies(const URLRequest& request) final;
   bool OnCanSetCookie(const URLRequest& request,
                       const net::CanonicalCookie& cookie,
                       CookieOptions* options) final;
@@ -144,6 +145,8 @@ class NET_EXPORT LayeredNetworkDelegate : public NetworkDelegate {
 
   virtual void OnCanGetCookiesInternal(const URLRequest& request,
                                        const CookieList& cookie_list);
+
+  virtual void OnCanAttachSameSiteCookiesInternal(const URLRequest& request);
 
   virtual void OnCanSetCookieInternal(const URLRequest& request,
                                       const net::CanonicalCookie& cookie,

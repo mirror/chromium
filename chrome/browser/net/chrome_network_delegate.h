@@ -175,6 +175,7 @@ class ChromeNetworkDelegate : public net::NetworkDelegateImpl {
       net::AuthCredentials* credentials) override;
   bool OnCanGetCookies(const net::URLRequest& request,
                        const net::CookieList& cookie_list) override;
+  bool OnCanAttachSameSiteCookies(const net::URLRequest& request) override;
   bool OnCanSetCookie(const net::URLRequest& request,
                       const net::CanonicalCookie& cookie,
                       net::CookieOptions* options) override;

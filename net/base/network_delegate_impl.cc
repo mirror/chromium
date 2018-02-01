@@ -81,6 +81,11 @@ bool NetworkDelegateImpl::OnCanGetCookies(const URLRequest& request,
   return true;
 }
 
+bool NetworkDelegateImpl::OnCanAttachSameSiteCookies(
+    const URLRequest& request) {
+  return false;
+}
+
 bool NetworkDelegateImpl::OnCanSetCookie(const URLRequest& request,
                                          const net::CanonicalCookie& cookie,
                                          CookieOptions* options) {

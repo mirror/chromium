@@ -28,6 +28,7 @@
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/custom_handlers/protocol_handler_registry.h"
 #include "chrome/browser/net/chrome_extensions_network_delegate.h"
+#include "chrome/browser/profiles/profile_io_data.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/common/features.h"
@@ -45,6 +46,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/resource_type.h"
+#include "extensions/browser/info_map.h"
 #include "extensions/features/features.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
@@ -441,6 +443,27 @@ bool ChromeNetworkDelegate::OnCanGetCookies(
   }
 
   return allow;
+}
+
+bool ChromeNetworkDelegate::OnCanAttachSameSiteCookies(
+    const net::URLRequest& request) {
+  const content::ResourceRequestInfo* info =
+      content::ResourceRequestInfo::ForRequest(&request);
+  if (!info)
+    return false;
+
+  url::Origin initiator_origin =
+      url::Origin::Create(request.initiator().value().GetURL());
+  ProfileIOData* io_data =
+      ProfileIOData::FromResourceContext(info->GetContext());
+  extensions::InfoMap* extension_info_map = io_data->GetExtensionInfoMap();
+
+  if (initiator_origin.scheme() == extensions::kExtensionScheme &&
+      extension_info_map->extensions().GetByID(initiator_origin.host())) {
+    return true;
+  }
+
+  return false;
 }
 
 bool ChromeNetworkDelegate::OnCanSetCookie(const net::URLRequest& request,
