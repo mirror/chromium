@@ -16,6 +16,24 @@
       "revId": "67c7f57d87619e98b1acf8f4e5f3367c2d567848",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43f5701_73dfd899",
+        "filename": "third_party/libjingle_xmpp/xmpp/xmpplogintask_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1216234
+      },
+      "writtenOn": "2018-02-01T14:21:38Z",
+      "side": 1,
+      "message": "The empty do-while forces call sites to put a semicolon after the macro call.",
+      "parentUuid": "16dfcfda_42ff6160",
+      "revId": "67c7f57d87619e98b1acf8f4e5f3367c2d567848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
