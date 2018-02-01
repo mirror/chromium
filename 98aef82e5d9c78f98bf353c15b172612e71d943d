@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2024dae6_1737bd71",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T02:08:21Z",
+      "side": 1,
+      "message": "Yeah... pretty tempted to leave it.",
+      "parentUuid": "df947eff_e12f08fb",
+      "revId": "98aef82e5d9c78f98bf353c15b172612e71d943d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a1155c_4577a2b7",
         "filename": "chrome/browser/ui/extensions/application_launch.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T07:47:20Z",
       "side": 1,
       "message": "I wonder if we need this line above/below\n\n  // Whether the renderer\u0027s current browser context accept drops from the OS\n  // that result in navigations away from the current page.\n  bool can_accept_load_drops;\n\nfine for a follow-up if we do. It probably belongs in some shared code somewhere.",
+      "revId": "98aef82e5d9c78f98bf353c15b172612e71d943d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59567d60_1b018012",
+        "filename": "chrome/browser/ui/extensions/application_launch.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-01T02:08:21Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s uhhh. Pretty niche stuff. Good catch. I\u0027ll fix it in a follow-up.",
+      "parentUuid": "b1a1155c_4577a2b7",
       "revId": "98aef82e5d9c78f98bf353c15b172612e71d943d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
