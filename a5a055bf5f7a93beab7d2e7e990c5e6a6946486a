@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313d886f_0731e5a2",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3083,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-02-01T14:15:06Z",
+      "side": 1,
+      "message": "Why a unique_ptr? Why not a local member?",
+      "range": {
+        "startLine": 3083,
+        "startChar": 7,
+        "endLine": 3083,
+        "endChar": 17
+      },
+      "revId": "a5a055bf5f7a93beab7d2e7e990c5e6a6946486a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
