@@ -152,6 +152,8 @@ class COLOR_SPACE_EXPORT ColorSpace {
   static ColorSpace CreateREC601();
   static ColorSpace CreateREC709();
 
+  static int GetNextId();
+
   bool operator==(const ColorSpace& other) const;
   bool operator!=(const ColorSpace& other) const;
   bool operator<(const ColorSpace& other) const;
