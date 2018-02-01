@@ -268,6 +268,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include "components/crash/content/app/crashpad.h"  // nogncheck
 #define IntToStringType base::IntToString16
 #else
 #define IntToStringType base::IntToString
@@ -3655,6 +3656,11 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
     status = child_process_launcher_->GetChildTerminationStatus(already_dead,
                                                                 &exit_code);
     if (already_dead && status == base::TERMINATION_STATUS_STILL_RUNNING) {
+#if defined(OS_WIN)
+      // TODO(wfh): Remove after debugging https://crbug.com/806661.
+      crash_reporter::DumpAndCrashTargetProcess(
+          child_process_launcher_->GetProcess().Handle(), nullptr, 0);
+#endif
       // May be in case of IPC error, if it takes long time for renderer
       // to exit. Child process will be killed in any case during
       // child_process_launcher_.reset(). Make sure we will not broadcast

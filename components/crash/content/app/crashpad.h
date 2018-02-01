@@ -67,6 +67,12 @@ void InitializeCrashpad(bool initial_client, const std::string& process_type);
 void InitializeCrashpadWithEmbeddedHandler(bool initial_client,
                                            const std::string& process_type,
                                            const std::string& user_data_dir);
+// Requests that the handler capture a dump of a different process.
+// See full documentation in
+// third_party/crashpad/crashpad/client/crashpad_client.h.
+bool DumpAndCrashTargetProcess(HANDLE process,
+                               HANDLE blame_thread,
+                               DWORD exception_code);
 #endif  // OS_WIN
 
 // Returns the CrashpadClient for this process. This will lazily create it if

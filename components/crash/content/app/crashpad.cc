@@ -191,6 +191,14 @@ void InitializeCrashpadWithEmbeddedHandler(bool initial_client,
                                            const std::string& user_data_dir) {
   InitializeCrashpadImpl(initial_client, process_type, user_data_dir, true);
 }
+
+bool DumpAndCrashTargetProcess(HANDLE process,
+                               HANDLE blame_thread,
+                               DWORD exception_code) {
+  return crashpad::CrashpadClient::DumpAndCrashTargetProcess(
+      process, blame_thread, exception_code);
+}
+
 #endif  // OS_WIN
 
 crashpad::CrashpadClient& GetCrashpadClient() {
