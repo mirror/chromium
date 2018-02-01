@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3076c4c8_ac2c1a60",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-01T07:11:17Z",
+      "side": 1,
+      "message": "I didn\u0027t test this particular line because I don\u0027t think it will be called since we should not need to render more pages after is_print_ready_metafile_sent_ is set to true, right?\n\nHowever, on line 1354, we will create draft page from the current printed doc, that is being used in current system.",
+      "parentUuid": "a030ff28_d3c3ab03",
+      "revId": "46976c071490c82366d133f60675c1ef424bc097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6111f7f8_cd3ca94f",
         "filename": "components/printing/test/mock_printer.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9491477_ab8984f0",
+        "filename": "components/printing/test/mock_printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-01T07:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6111f7f8_cd3ca94f",
+      "revId": "46976c071490c82366d133f60675c1ef424bc097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d0264f7_49b02a25",
         "filename": "printing/pdf_metafile_skia.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "46976c071490c82366d133f60675c1ef424bc097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b2cd31_2c559405",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-01T07:11:17Z",
+      "side": 1,
+      "message": "Will be used in the following CL, removed it for now, will add there.",
+      "parentUuid": "2d0264f7_49b02a25",
+      "revId": "46976c071490c82366d133f60675c1ef424bc097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
