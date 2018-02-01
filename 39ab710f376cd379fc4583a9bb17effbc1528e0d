@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb7202a2_6f7d14df",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:39:39Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s hard to think of everything when requesting a UKM collection review from privacy.\n\nWhat\u0027s \"iconified\"? I only see some references in relation to minimize, which is tracked here.",
+      "parentUuid": "9dde10dd_8a35f1dc",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "586e3680_d3fab0a0",
         "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-29T17:33:38Z",
       "side": 1,
       "message": "Is there a reason why you need the two phase Update and then sanitize? Is there a reason Update can\u0027t call (or do) the sanitize step?",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 35
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebaa64bf_5479aafb",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-01T05:39:39Z",
+      "side": 1,
+      "message": "Just that it complicates the call site -- we want to update a member variable and create a temporary.\n\nWe\u0027re starting to prototype inferencing now, where we\u0027ll be using these metrics to make predictions instead of (or in addition to) logging. So I also expect some churn in these structures anyway.",
+      "parentUuid": "586e3680_d3fab0a0",
       "range": {
         "startLine": 204,
         "startChar": 9,
