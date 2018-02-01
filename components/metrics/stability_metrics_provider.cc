@@ -14,6 +14,9 @@
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
 #endif
+#if defined(OS_WIN)
+#include "components/metrics/system_session_analyzer_win.h"
+#endif
 
 namespace metrics {
 
@@ -66,6 +69,9 @@ void StabilityMetricsProvider::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(prefs::kStabilityCrashCountWithoutGmsCoreUpdate,
                                 0);
 #endif
+#if defined(OS_WIN)
+  registry->RegisterIntegerPref(prefs::kStabilitySystemCrashCount, 0);
+#endif
 }
 
 void StabilityMetricsProvider::ClearSavedStabilityMetrics() {
@@ -81,6 +87,9 @@ void StabilityMetricsProvider::ClearSavedStabilityMetrics() {
   // Note: kStabilityDiscardCount is not cleared as its intent is to measure
   // the number of times data is discarded, even across versions.
   local_state_->SetInteger(prefs::kStabilityVersionMismatchCount, 0);
+#if defined(OS_WIN)
+  local_state_->SetInteger(prefs::kStabilitySystemCrashCount, 0);
+#endif
 }
 
 void StabilityMetricsProvider::ProvideStabilityMetrics(
@@ -135,6 +144,13 @@ void StabilityMetricsProvider::ProvideStabilityMetrics(
     UMA_STABILITY_HISTOGRAM_COUNTS_100(
         "Stability.Internals.VersionMismatchCount", pref_value);
   }
+
+#if defined(OS_WIN)
+  if (GetPrefValue(prefs::kStabilitySystemCrashCount, &pref_value)) {
+    UMA_STABILITY_HISTOGRAM_COUNTS_100("Stability.Internals.SystemCrashCount",
+                                       pref_value);
+  }
+#endif
 }
 
 void StabilityMetricsProvider::RecordBreakpadRegistration(bool success) {
@@ -163,7 +179,7 @@ void StabilityMetricsProvider::MarkSessionEndCompleted(bool end_completed) {
   local_state_->SetBoolean(prefs::kStabilitySessionEndCompleted, end_completed);
 }
 
-void StabilityMetricsProvider::LogCrash() {
+void StabilityMetricsProvider::LogCrash(base::Time last_live_timestamp) {
   IncrementPrefValue(prefs::kStabilityCrashCount);
 
 #if defined(OS_ANDROID)
@@ -172,6 +188,21 @@ void StabilityMetricsProvider::LogCrash() {
   // report crash if the GMS core version has not been changed.
   if (UpdateGmsCoreVersionPref(local_state_))
     IncrementPrefValue(prefs::kStabilityCrashCountWithoutGmsCoreUpdate);
+#endif
+
+#if defined(OS_WIN)
+  if (last_live_timestamp != base::Time()) {
+    // There's a non-null last live timestamp, see if this occurred in
+    // a Windows system session that ended abnormally. Limit the log crawl to
+    // the last 3 system sessions in the interest of worst-case performance.
+    SystemSessionAnalyzer analyzer(3);
+
+    SystemSessionAnalyzer::Status status =
+        analyzer.IsSessionUnclean(last_live_timestamp);
+
+    if (status == SystemSessionAnalyzer::UNCLEAN)
+      IncrementPrefValue(prefs::kStabilitySystemCrashCount);
+  }
 #endif
 }
 
