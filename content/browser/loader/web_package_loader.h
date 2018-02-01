@@ -6,13 +6,22 @@
 #define CONTENT_BROWSER_LOADER_WEB_PACKAGE_LOADER_H_
 
 #include "base/optional.h"
+#include "content/public/common/resource_type.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/ssl/ssl_info.h"
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 
+namespace net {
+class URLRequestContext;
+}  // namespace net
+
 namespace content {
 
+class ResourceContext;
+class URLLoaderFactoryGetter;
+class URLLoaderFactoryImpl;
+class URLLoaderThrottle;
 class SignedExchangeHandler;
 
 // WebPackageLoader handles an origin-signed HTTP exchange response. It is
@@ -23,9 +32,16 @@ class SignedExchangeHandler;
 class WebPackageLoader final : public network::mojom::URLLoaderClient,
                                public network::mojom::URLLoader {
  public:
+  using URLLoaderThrottlesGetter = base::OnceCallback<
+      std::vector<std::unique_ptr<content::URLLoaderThrottle>>()>;
+
   WebPackageLoader(const network::ResourceResponseHead& original_response,
                    network::mojom::URLLoaderClientPtr forwarding_client,
-                   network::mojom::URLLoaderClientEndpointsPtr endpoints);
+                   network::mojom::URLLoaderClientEndpointsPtr endpoints,
+                   URLLoaderFactoryGetter* default_url_loader_factory_getter,
+                   ResourceContext* resource_context,
+                   net::URLRequestContext* request_context,
+                   URLLoaderThrottlesGetter url_loader_throttles_getter);
   ~WebPackageLoader() override;
 
   // network::mojom::URLLoaderClient implementation
@@ -58,6 +74,7 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
   void ConnectToClient(network::mojom::URLLoaderClientPtr client);
 
  private:
+  class CertFetcher;
   class ResponseTimingInfo;
 
   // Called from |signed_exchange_handler_| when it finds an origin-signed HTTP
@@ -97,6 +114,16 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
   mojo::ScopedDataPipeConsumerHandle pending_body_;
   // This is used to keep the status until ProceedWithResponse() is called.
   base::Optional<network::URLLoaderCompletionStatus> pending_completion_status_;
+
+  // Used only when NetworkService is enabled.
+  scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
+  // Used only when NetworkService is disabled to keep a URLLoaderFactoryImpl
+  // for fetching certificate.
+  std::unique_ptr<URLLoaderFactoryImpl> url_loader_factory_impl_;
+
+  ResourceContext* resource_context_;
+  net::URLRequestContext* request_context_;
+  URLLoaderThrottlesGetter url_loader_throttles_getter_;
 
   base::WeakPtrFactory<WebPackageLoader> weak_factory_;
 
