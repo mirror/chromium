@@ -23,26 +23,12 @@ def _CreatePageClassWithSmoothInteractions(page_cls):
 
     def RunPageInteractions(self, action_runner):
       action_runner.Wait(1)
-      _IssueMarkerAndScroll(action_runner, self.story_set.scroll_forever)
+      scroll_forever = False
+      if self.story_set.hasattr('scroll_forever'):
+        scroll_forever = bool(self.story_set.scroll_forever)
+      _IssueMarkerAndScroll(action_runner, scroll_forever)
 
   return DerivedSmoothPage
-
-
-class TopSmoothPage(page_module.Page):
-
-  def __init__(self, url, page_set, name='', extra_browser_args=None):
-    if name == '':
-      name = url
-    super(TopSmoothPage, self).__init__(
-        url=url,
-        page_set=page_set,
-        name=name,
-        shared_page_state_class=shared_page_state.SharedDesktopPageState,
-        extra_browser_args=extra_browser_args)
-
-  def RunPageInteractions(self, action_runner):
-    action_runner.Wait(1)
-    _IssueMarkerAndScroll(action_runner, self.story_set.scroll_forever)
 
 
 class GmailSmoothPage(top_pages.GmailPage):
@@ -112,6 +98,80 @@ class ESPNSmoothPage(top_pages.ESPNPage):
           action_runner.ScrollPage(direction='down', left_start_ratio=0.1)
 
 
+def AddPagesToPageSet(
+    page_set,
+    shared_page_state_class=shared_page_state.SharedDesktopPageState,
+    name_prefix='',
+    extra_browser_args=None):
+  smooth_page_classes = [
+      (GmailSmoothPage, 'gmail'),
+      (GoogleCalendarSmoothPage, 'google_calendar'),
+      (GoogleDocSmoothPage, 'google_docs'),
+      (ESPNSmoothPage, 'espn'),
+  ]
+
+  for smooth_page_class, page_name in smooth_page_classes:
+    page_set.AddStory(
+        smooth_page_class(
+            page_set,
+            shared_page_state_class=shared_page_state_class,
+            name=name_prefix + page_name,
+            extra_browser_args=extra_browser_args))
+
+  non_smooth_page_classes = [
+      (top_pages.GoogleWebSearchPage, 'google_web_search'),
+      (top_pages.GoogleImageSearchPage, 'google_image_search'),
+      (top_pages.GooglePlusPage, 'google_plus'),
+      (top_pages.YoutubePage, 'youtube'),
+      (top_pages.BlogspotPage, 'blogspot'),
+      (top_pages.WordpressPage, 'wordpress'),
+      (top_pages.FacebookPage, 'facebook'),
+      (top_pages.LinkedinPage, 'linkedin'),
+      (top_pages.WikipediaPage, 'wikipedia'),
+      (top_pages.TwitterPage, 'twitter'),
+      (top_pages.PinterestPage, 'pinterest'),
+      (top_pages.WeatherPage, 'weather'),
+      (top_pages.YahooGamesPage, 'yahoo_games'),
+  ]
+
+  for non_smooth_page_class, page_name in non_smooth_page_classes:
+    page_set.AddStory(
+        _CreatePageClassWithSmoothInteractions(non_smooth_page_class)(
+            page_set,
+            shared_page_state_class=shared_page_state_class,
+            name=name_prefix + page_name,
+            extra_browser_args=extra_browser_args))
+
+  other_urls = [
+      # Why: #1 news worldwide (Alexa global)
+      ('http://news.yahoo.com', 'yahoo_news'),
+      # Why: #2 news worldwide
+      ('http://www.cnn.com', 'cnn'),
+      # Why: #1 world commerce website by visits; #3 commerce in the US by
+      # time spent
+      ('http://www.amazon.com', 'amazon'),
+      # Why: #1 commerce website by time spent by users in US
+      ('http://www.ebay.com', 'ebay'),
+      # Why: #1 Alexa recreation
+      ('http://booking.com', 'booking'),
+      # Why: #1 Alexa reference
+      ('http://answers.yahoo.com', 'yahoo_answers'),
+      # Why: #1 Alexa sports
+      ('http://sports.yahoo.com/', 'yahoo_sports'),
+      # Why: top tech blog
+      ('http://techcrunch.com', 'techcrunch'),
+  ]
+
+  for url, page_name in other_urls:
+    page_set.AddStory(
+        _CreatePageClassWithSmoothInteractions(page_module.Page)(
+            url,
+            page_set,
+            shared_page_state_class=shared_page_state_class,
+            name=name_prefix + page_name,
+            extra_browser_args=extra_browser_args))
+
+
 class Top25SmoothPageSet(story.StorySet):
   """ Pages hand-picked for 2012 CrOS scrolling tuning efforts. """
 
@@ -122,59 +182,4 @@ class Top25SmoothPageSet(story.StorySet):
 
     self.scroll_forever = scroll_forever
 
-    desktop_state_class = shared_page_state.SharedDesktopPageState
-
-    smooth_page_classes = [
-        GmailSmoothPage,
-        GoogleCalendarSmoothPage,
-        GoogleDocSmoothPage,
-        ESPNSmoothPage,
-    ]
-
-    for smooth_page_class in smooth_page_classes:
-      self.AddStory(
-          smooth_page_class(self, shared_page_state_class=desktop_state_class))
-
-    non_smooth_page_classes = [
-        top_pages.GoogleWebSearchPage,
-        top_pages.GoogleImageSearchPage,
-        top_pages.GooglePlusPage,
-        top_pages.YoutubePage,
-        top_pages.BlogspotPage,
-        top_pages.WordpressPage,
-        top_pages.FacebookPage,
-        top_pages.LinkedinPage,
-        top_pages.WikipediaPage,
-        top_pages.TwitterPage,
-        top_pages.PinterestPage,
-        top_pages.WeatherPage,
-        top_pages.YahooGamesPage,
-    ]
-
-    for non_smooth_page_class in non_smooth_page_classes:
-      self.AddStory(
-          _CreatePageClassWithSmoothInteractions(non_smooth_page_class)(
-              self, shared_page_state_class=desktop_state_class))
-
-    other_urls = [
-        # Why: #1 news worldwide (Alexa global)
-        'http://news.yahoo.com',
-        # Why: #2 news worldwide
-        'http://www.cnn.com',
-        # Why: #1 world commerce website by visits; #3 commerce in the US by
-        # time spent
-        'http://www.amazon.com',
-        # Why: #1 commerce website by time spent by users in US
-        'http://www.ebay.com',
-        # Why: #1 Alexa recreation
-        'http://booking.com',
-        # Why: #1 Alexa reference
-        'http://answers.yahoo.com',
-        # Why: #1 Alexa sports
-        'http://sports.yahoo.com/',
-        # Why: top tech blog
-        'http://techcrunch.com',
-    ]
-
-    for url in other_urls:
-      self.AddStory(TopSmoothPage(url, self))
+    AddPagesToPageSet(self)
