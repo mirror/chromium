@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2809242d_dd4673a1",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-01T13:24:49Z",
+      "side": 1,
+      "message": "I think we can get this quite a bit more compact, without multiplies or going beyond 16-bit:\n\nauto premultipy \u003d [](uint8x8_t c, uint8x8_t a) {\n    // First multiply the color by alpha, expanding to 16-bit (max 255*255).\n    uint16x8_t ca \u003d vmull_u8(c,a);   \n\n    // Now we need to round back down to 8-bit, returning (x+127)/255.\n    // (x+127)/255 \u003d\u003d (x + ((x+128)\u003e\u003e8) + 128)\u003e\u003e8.  This form is well suited \n    // to NEON: vrshrq_n_u16(...,8) gives the inner (x+128)\u003e\u003e8, and \n    // vraddhn_u16() both the outer add-shift and our conversion back to 8-bit.\n    \n    return vraddhn_u16(ca, vrshrq_n_u16(ca, 8));\n};\n\n  ...\n\n  bgra.val[0] \u003d premultiply(rgba.val[2], rgba.val[3]);\n  bgra.val[1] \u003d premultiply(rgba.val[1], rgba.val[3]);\n  bgra.val[2] \u003d premultiply(rgba.val[0], rgba.val[3]);",
+      "revId": "7efdca30985ed03c153c4d08fca4d325f2814c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
