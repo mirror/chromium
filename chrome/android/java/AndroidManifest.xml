@@ -230,13 +230,9 @@ by a child template that "extends" this file.
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
-                <data android:host="*" />
-                <data android:mimeType="*/*"/>
-                <data android:pathPattern="/.*\\.mhtml"/>
-                <data android:pathPattern="/.*\\.mht"/>
+                <data android:mimeType="message/rfc822"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_SEARCH" />
