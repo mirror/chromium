@@ -30,7 +30,7 @@ uintptr_t GetMask() {
   if (!IsWindows8Point1OrGreater()) {
     mask = internal::kASLRMaskBefore8_10;
   }
-#endif  // defined(OS_WIN)
+#endif  // defined(OS_WIN) && !defined(MEMORY_TOOL_REPLACES_ALLOCATOR))
 #elif defined(ARCH_CPU_32_BITS)
 #if defined(OS_WIN)
   BOOL is_wow64 = FALSE;
@@ -45,6 +45,14 @@ uintptr_t GetMask() {
 }
 
 const size_t kSamples = 100;
+#if defined(OS_WIN) && defined(ARCH_CPU_32_BITS)
+// Allow a few address collisions on 32 bit Windows since these are more likely
+// due to the small address space and larger page granularity (64K).
+const size_t kMaxCollisions = 2;
+#else
+// The probability of a collision is astronomically small.
+const size_t kMaxCollisions = 0;
+#endif
 
 }  // namespace
 
@@ -70,6 +78,7 @@ TEST(AddressSpaceRandomizationTest, Unpredictable) {
   std::set<uintptr_t> addresses;
   uintptr_t address_logical_sum = 0;
   uintptr_t address_logical_product = static_cast<uintptr_t>(-1);
+  size_t total_collisions = 0;
   for (size_t i = 0; i < kSamples; ++i) {
     uintptr_t address = reinterpret_cast<uintptr_t>(base::GetRandomPageBase());
     // Test that address is in range.
@@ -77,8 +86,9 @@ TEST(AddressSpaceRandomizationTest, Unpredictable) {
     EXPECT_GE(internal::kASLROffset + mask, address);
     // Test that address is page aligned.
     EXPECT_EQ(0ULL, (address & kPageAllocationGranularityOffsetMask));
-    // Test that address is unique (no collisions in kSamples tries)
-    CHECK_EQ(0ULL, addresses.count(address));
+    // Test that address is sufficiently "random".
+    if (addresses.count(address) > 0)
+      total_collisions++;
     addresses.insert(address);
     // Sum and product to test randomness at each bit position, below.
     address -= internal::kASLROffset;
@@ -92,6 +102,7 @@ TEST(AddressSpaceRandomizationTest, Unpredictable) {
   // is larger than kASLRMask, or if adding kASLROffset generated a carry.
   EXPECT_EQ(mask, address_logical_sum & mask);
   EXPECT_EQ(0ULL, address_logical_product & mask);
+  EXPECT_GE(kMaxCollisions, total_collisions);
 }
 
 TEST(AddressSpaceRandomizationTest, Predictable) {
@@ -106,6 +117,7 @@ TEST(AddressSpaceRandomizationTest, Predictable) {
   // Make sure the addresses look random but are predictable.
   std::set<uintptr_t> addresses;
   std::vector<uintptr_t> sequence;
+  size_t total_collisions = 0;
   for (size_t i = 0; i < kSamples; ++i) {
     uintptr_t address = reinterpret_cast<uintptr_t>(base::GetRandomPageBase());
     sequence.push_back(address);
@@ -114,12 +126,14 @@ TEST(AddressSpaceRandomizationTest, Predictable) {
     EXPECT_GE(internal::kASLROffset + mask, address);
     // Test that address is page aligned.
     EXPECT_EQ(0ULL, (address & kPageAllocationGranularityOffsetMask));
-    // Test that address is unique (no collisions in kSamples tries)
-    CHECK_EQ(0ULL, addresses.count(address));
+    // Test that address is sufficiently "random".
+    if (addresses.count(address) > 0)
+      total_collisions++;
     addresses.insert(address);
     // Test that (address - offset) == (predicted & mask).
     address -= internal::kASLROffset;
   }
+  EXPECT_GE(kMaxCollisions, total_collisions);
 
   // Make sure sequence is repeatable.
   base::SetRandomPageBaseSeed(kInitialSeed);
