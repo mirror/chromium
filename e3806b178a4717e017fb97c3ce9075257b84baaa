@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced352f2_b800934a",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T16:48:38Z",
+      "side": 1,
+      "message": "It seems slightly inverted for V8 to be configuring a global parameter of base. Why do we do this?",
+      "revId": "e3806b178a4717e017fb97c3ce9075257b84baaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc46cb7a_ba83542a",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-01T16:48:38Z",
+      "side": 1,
+      "message": "LazyInstance is now deprecated. Instead, you can put this in GetPageAllocator:\n\n  static base::NoDestructor\u003cPageAllocator\u003e page_allocator;\n  return page_allocator.get();",
+      "revId": "e3806b178a4717e017fb97c3ce9075257b84baaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
