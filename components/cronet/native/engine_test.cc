@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/cronet/native/test_util.h"
+#include "net/cert/mock_cert_verifier.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -137,6 +138,16 @@ TEST_F(EngineTest, ValidPkpParams) {
   // The engine should start successfully.
   EXPECT_EQ(Cronet_RESULT_SUCCESS,
             Cronet_Engine_StartWithParams(engine, engine_params));
+  Cronet_Engine_Destroy(engine);
+  Cronet_EngineParams_Destroy(engine_params);
+}
+
+TEST_F(EngineTest, SetMockCertVerifierForTesting) {
+  auto cert_verifier(std::make_unique<net::MockCertVerifier>());
+  Cronet_EnginePtr engine = Cronet_Engine_Create();
+  Cronet_Engine_SetMockCertVerifierForTesting(engine, cert_verifier.release());
+  Cronet_EngineParamsPtr engine_params = Cronet_EngineParams_Create();
+  Cronet_Engine_StartWithParams(engine, engine_params);
   Cronet_Engine_Destroy(engine);
   Cronet_EngineParams_Destroy(engine_params);
 }

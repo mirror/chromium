@@ -10,11 +10,21 @@
 // Cronet public C API is generated from cronet.idl and
 #include "cronet.idl_c.h"
 
+// Bidirectional Stream C API for GRPC.
+#include "bidirectional_stream_c.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// TODO(mef): Remove this file if it is not needed.
+CRONET_EXPORT void Cronet_Engine_SetMockCertVerifierForTesting(
+    Cronet_EnginePtr engine,
+    void* raw_mock_cert_verifier);
+
+// Returns stream_engine interface for bidirectionsl stream support for GRPC.
+// Returned stream engine is owned by Cronet Engine.
+CRONET_EXPORT stream_engine* Cronet_Engine_GetStreamEngine(
+    Cronet_EnginePtr engine);
 
 #ifdef __cplusplus
 }
