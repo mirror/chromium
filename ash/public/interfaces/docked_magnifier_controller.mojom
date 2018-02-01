@@ -1,0 +1,31 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+// Represents a point on screen.
+struct Point {
+  int32 x;
+  int32 y;
+};
+
+// Used by a client (e.g. Chrome) to notify ash of focus change events of nodes
+// in webpages.
+interface DockedMagnifierController {
+  // Sets the client that will be notified with status changes of the Docked
+  // Magnifier.
+  SetClient(DockedMagnifierClient client);
+
+  // Notifys the controller of focus change events on non editable nodes in web-
+  // pages (ash observes editable nodes by itself).
+  NonEditableNodeFocusChangedInPage(Point center_point_in_screen);
+};
+
+// Used by ash to notify a client (e.g. Chrome) of changed in the Docked
+// Magnifier enabled status. This relieves clients from observing changes in the
+// active user profile and the associated prefs.
+interface DockedMagnifierClient {
+  // Notifies the client with the new enabled status of the Docked Magnifier.
+  OnEnabledStatusChanged(bool enabled);
+};
