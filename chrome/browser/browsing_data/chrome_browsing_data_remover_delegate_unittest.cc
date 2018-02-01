@@ -1026,7 +1026,9 @@ class MockNetworkErrorLoggingDelegate
     NOTREACHED();
   }
 
-  void OnNetworkError(const ErrorDetails& details) override { NOTREACHED(); }
+  void OnMonitoredRequest(const RequestDetails& details) override {
+    NOTREACHED();
+  }
 
   void RemoveBrowsingData(const base::RepeatingCallback<bool(const GURL&)>&
                               origin_filter) override {
