@@ -95,6 +95,7 @@ class MEDIA_EXPORT TrackRunIterator {
  private:
   bool UpdateCts();
   bool ResetRun();
+  const ProtectionSchemeInfo& protection_scheme_info() const;
   const TrackEncryption& track_encryption() const;
 
   uint32_t GetGroupDescriptionIndex(uint32_t sample_index) const;
@@ -103,6 +104,7 @@ class MEDIA_EXPORT TrackRunIterator {
   bool IsSampleEncrypted(size_t sample_index) const;
   uint8_t GetIvSize(size_t sample_index) const;
   const std::vector<uint8_t>& GetKeyId(size_t sample_index) const;
+  EncryptionScheme GetEncryptionScheme(size_t sample_index);
 #if BUILDFLAG(ENABLE_CBCS_ENCRYPTION_SCHEME)
   bool ApplyConstantIv(size_t sample_index, SampleEncryptionEntry* entry) const;
 #endif

@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "media/base/media_tracks.h"
+#include "media/base/media_util.h"
 #include "media/base/stream_parser_buffer.h"
 #include "media/base/text_track_config.h"
 #include "media/base/timestamp_constants.h"
@@ -843,8 +844,9 @@ void Mp2tStreamParser::UnregisterCat() {
 }
 
 void Mp2tStreamParser::RegisterCencPids(int ca_pid, int pssh_pid) {
-  std::unique_ptr<TsSectionCetsEcm> ecm_parser(new TsSectionCetsEcm(base::Bind(
-      &Mp2tStreamParser::RegisterDecryptConfig, base::Unretained(this))));
+  std::unique_ptr<TsSectionCetsEcm> ecm_parser(
+      new TsSectionCetsEcm(base::BindRepeating(
+          &Mp2tStreamParser::RegisterNewKeyIdAndIv, base::Unretained(this))));
   std::unique_ptr<PidState> ecm_pid_state(
       new PidState(ca_pid, PidState::kPidCetsEcm, std::move(ecm_parser)));
   ecm_pid_state->Enable();
@@ -886,9 +888,12 @@ void Mp2tStreamParser::RegisterEncryptionScheme(
   decrypt_config_.reset(nullptr);
 }
 
-void Mp2tStreamParser::RegisterDecryptConfig(const DecryptConfig& config) {
+void Mp2tStreamParser::RegisterNewKeyIdAndIv(const std::string& key_id,
+                                             const std::string& iv) {
+  std::vector<SubsampleEntry> subsamples_empty;
   decrypt_config_.reset(
-      new DecryptConfig(config.key_id(), config.iv(), config.subsamples()));
+      new DecryptConfig(key_id, iv, subsamples_empty,
+                        iv.size() ? initial_scheme_ : Unencrypted()));
 }
 
 void Mp2tStreamParser::RegisterPsshBoxes(

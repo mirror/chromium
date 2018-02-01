@@ -12,6 +12,7 @@
 #include "chromecast/media/cma/base/decoder_buffer_base.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/decrypt_config.h"
+#include "media/base/media_util.h"
 
 namespace chromecast {
 namespace media {
@@ -99,7 +100,8 @@ scoped_refptr<DecoderBufferBase> FrameGeneratorForTest::Generate() {
 
     std::unique_ptr<::media::DecryptConfig> decrypt_config(
         new ::media::DecryptConfig(std::string(key_id, arraysize(key_id)),
-                                   std::string(iv, arraysize(iv)), subsamples));
+                                   std::string(iv, arraysize(iv)), subsamples,
+                                   ::media::AesCtrEncryptionScheme()));
     buffer->set_decrypt_config(std::move(decrypt_config));
   }
 

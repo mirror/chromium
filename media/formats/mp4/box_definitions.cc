@@ -351,6 +351,11 @@ bool ProtectionSchemeInfo::HasSupportedScheme() const {
   return false;
 }
 
+bool ProtectionSchemeInfo::IsAesCtrScheme() const {
+  FourCC fourCC = type.type;
+  return (fourCC == FOURCC_CENC);
+}
+
 MovieHeader::MovieHeader()
     : version(0),
       creation_time(0),

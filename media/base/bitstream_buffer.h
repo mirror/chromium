@@ -68,6 +68,9 @@ class MEDIA_EXPORT BitstreamBuffer {
   const std::string& key_id() const { return key_id_; }
   const std::string& iv() const { return iv_; }
   const std::vector<SubsampleEntry>& subsamples() const { return subsamples_; }
+  const EncryptionScheme& encryption_scheme() const {
+    return encryption_scheme_;
+  }
 
  private:
   int32_t id_;
@@ -87,6 +90,7 @@ class MEDIA_EXPORT BitstreamBuffer {
   std::string key_id_;                      // key ID.
   std::string iv_;                          // initialization vector
   std::vector<SubsampleEntry> subsamples_;  // clear/cypher sizes
+  EncryptionScheme encryption_scheme_;
 
   friend struct IPC::ParamTraits<media::BitstreamBuffer>;
 

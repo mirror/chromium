@@ -6,6 +6,7 @@
 
 #include "chromecast/public/media/cast_decrypt_config.h"
 #include "media/base/decoder_buffer.h"
+#include "media/base/media_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -84,7 +85,8 @@ TEST(DecoderBufferAdapterTest, DecryptConfig) {
   {
     std::vector<::media::SubsampleEntry> subsamples;
     std::unique_ptr<::media::DecryptConfig> decrypt_config(
-        new ::media::DecryptConfig(kKeyId, "", subsamples));
+        new ::media::DecryptConfig(kKeyId, "", subsamples,
+                                   ::media::Unencrypted()));
     EXPECT_FALSE(decrypt_config->is_encrypted());
 
     scoped_refptr<::media::DecoderBuffer> buffer = MakeDecoderBuffer();
@@ -99,7 +101,8 @@ TEST(DecoderBufferAdapterTest, DecryptConfig) {
   {
     std::vector<::media::SubsampleEntry> subsamples;
     std::unique_ptr<::media::DecryptConfig> decrypt_config(
-        new ::media::DecryptConfig(kKeyId, kIV, subsamples));
+        new ::media::DecryptConfig(kKeyId, kIV, subsamples,
+                                   ::media::AesCtrEncryptionScheme()));
     EXPECT_TRUE(decrypt_config->is_encrypted());
 
     scoped_refptr<::media::DecoderBuffer> buffer = MakeDecoderBuffer();
@@ -127,7 +130,8 @@ TEST(DecoderBufferAdapterTest, DecryptConfig) {
     subsamples.emplace_back(kClearBytes[1], kCypherBytes[1]);
 
     std::unique_ptr<::media::DecryptConfig> decrypt_config(
-        new ::media::DecryptConfig(kKeyId, kIV, subsamples));
+        new ::media::DecryptConfig(kKeyId, kIV, subsamples,
+                                   ::media::AesCtrEncryptionScheme()));
     EXPECT_TRUE(decrypt_config->is_encrypted());
 
     scoped_refptr<::media::DecoderBuffer> buffer = MakeDecoderBuffer();
