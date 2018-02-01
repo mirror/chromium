@@ -46,6 +46,30 @@
       "revId": "e7d8d5c7cf2769579dc20e237e99c1585175b2c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fa2bdb_950ee4f4",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-01T14:36:34Z",
+      "side": 1,
+      "message": "The call to Unmap() happens in the SharedMemory destructor normally.\n\nhttps://cs.chromium.org/chromium/src/base/memory/shared_memory_posix.cc?l\u003d48\u0026rcl\u003dae1e8023bd48be9fd2c9546b7140e7e535c64884\n\nTakeHandle() resets |memory_| so that won\u0027t do anything. I have no idea if Unmap() needs to be called before calling TakeHandle() though.\n\nhttps://cs.chromium.org/chromium/src/base/memory/shared_memory_posix.cc?l\u003d346\u0026rcl\u003dae1e8023bd48be9fd2c9546b7140e7e535c64884",
+      "parentUuid": "899d7ef8_c62d86e9",
+      "range": {
+        "startLine": 2350,
+        "startChar": 0,
+        "endLine": 2351,
+        "endChar": 73
+      },
+      "revId": "e7d8d5c7cf2769579dc20e237e99c1585175b2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
