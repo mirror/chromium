@@ -37,13 +37,14 @@ namespace payments {
 using PaymentManifestDownloadCallback =
     base::OnceCallback<void(const std::string&)>;
 
-// The interface for the downloader of the payment method manifest.
+// The interface for the downloader of the payment method manifest and web-app
+// manifest.
 //
 // The downloader does not follow redirects. A download succeeds only if all
 // HTTP response codes are 200 or 204.
-class PaymentMethodManifestDownloaderInterface {
+class PaymentManifestDownloaderInterface {
  public:
-  virtual ~PaymentMethodManifestDownloaderInterface() {}
+  virtual ~PaymentManifestDownloaderInterface() {}
 
   // Download a payment method manifest via two consecutive HTTP requests:
   //
@@ -68,11 +69,20 @@ class PaymentMethodManifestDownloaderInterface {
       const GURL& url,
       PaymentManifestDownloadCallback callback) = 0;
 
+  // Download a web app manifest via a single HTTP request:
+  //
+  // 1) GET request for the payment method name.
+  //
+  // |url| should be a valid URL with HTTPS scheme.
+  virtual void DownloadWebAppManifest(
+      const GURL& url,
+      PaymentManifestDownloadCallback callback) = 0;
+
  protected:
-  PaymentMethodManifestDownloaderInterface() {}
+  PaymentManifestDownloaderInterface() {}
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(PaymentMethodManifestDownloaderInterface);
+  DISALLOW_COPY_AND_ASSIGN(PaymentManifestDownloaderInterface);
 };
 
 // Downloader of the payment method manifest and web-app manifest based on the
@@ -81,9 +91,8 @@ class PaymentMethodManifestDownloaderInterface {
 //
 // The downloader does not follow redirects. A download succeeds only if all
 // HTTP response codes are 200 or 204.
-class PaymentManifestDownloader
-    : public net::URLFetcherDelegate,
-      public PaymentMethodManifestDownloaderInterface {
+class PaymentManifestDownloader : public net::URLFetcherDelegate,
+                                  public PaymentManifestDownloaderInterface {
  public:
   // |delegate| should not be null and must outlive this object.
   explicit PaymentManifestDownloader(
@@ -91,18 +100,15 @@ class PaymentManifestDownloader
 
   ~PaymentManifestDownloader() override;
 
-  // PaymentMethodManifestDownloaderInterface implementation.
+  // PaymentManifestDownloaderInterface implementation.
   void DownloadPaymentMethodManifest(
       const GURL& url,
       PaymentManifestDownloadCallback callback) override;
 
-  // Download a web app manifest via a single HTTP request:
-  //
-  // 1) GET request for the payment method name.
-  //
-  // |url| should be a valid URL with HTTPS scheme.
-  void DownloadWebAppManifest(const GURL& url,
-                              PaymentManifestDownloadCallback callback);
+  // PaymentManifestDownloaderInterface implementation.
+  void DownloadWebAppManifest(
+      const GURL& url,
+      PaymentManifestDownloadCallback callback) override;
 
  private:
   // Information about an ongoing download request.

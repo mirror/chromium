@@ -24,6 +24,15 @@ class CONTENT_EXPORT PaymentAppProviderImpl : public PaymentAppProvider {
                         int64_t registration_id,
                         payments::mojom::PaymentRequestEventDataPtr event_data,
                         InvokePaymentAppCallback callback) override;
+  void InvokeInstallablePaymentApp(
+      WebContents* web_contents,
+      payments::mojom::PaymentRequestEventDataPtr event_data,
+      std::string app_name,
+      std::string sw_js_url,
+      std::string sw_scope,
+      bool sw_use_cache,
+      std::vector<std::string> enabled_methods,
+      InvokePaymentAppCallback callback) override;
   void CanMakePayment(BrowserContext* browser_context,
                       int64_t registration_id,
                       payments::mojom::CanMakePaymentEventDataPtr event_data,
