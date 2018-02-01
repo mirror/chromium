@@ -1119,5 +1119,5 @@ IN_PROC_BROWSER_TEST_F(NavigationConsumingTest,
   )";
   EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
       contents, different_document_script, &did_open));
-  EXPECT_FALSE(did_open);
+  EXPECT_TRUE(did_open);
 }
