@@ -105,6 +105,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "910fe4c1_ea45b527",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-01T18:07:39Z",
+      "side": 0,
+      "message": "This is actually causing the failure now.\n\nWe were continuing with kWeakHandlingCollecton and kWeakPointersActStrong which made TraceCollectionIfEnable go into a path that actually traces. With the current set up we go into kNoWeaHandling which will not trace the values anymore.\n\nWe need a new way to do this here as TraceInCollection returns false (on purpose) for WeakMembers.",
+      "parentUuid": "f7adb812_9d97a1df",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
