@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b251c7_b6d06083",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_nameservers.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-01T01:26:42Z",
+      "side": 1,
+      "message": "How about:\nreturn nameservers.filter(nameserver \u003d\u003e !!nameserver);\n\nThat should be basically the same, right? (or could nameservers have more than MAX_NAMESERVERS items at this point)",
+      "revId": "f915f846aa70f36d5d4e1a3173887926c7cc65aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
