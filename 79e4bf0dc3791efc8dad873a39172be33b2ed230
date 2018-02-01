@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e237c5d8_7e14ea5e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T04:37:35Z",
+      "side": 1,
+      "message": "Hmm, was there a solid reason to replace setupScript with this more enum-based system (where the JS file has to know all the details of the actions, rather than just being given them from the tests)? Or just refactoring?\n\nTBH I thought the setupScript was the perfect level of abstraction; quite simple and you can pretty easily tell what the tests are doing. This new system is a bit over-engineered and arcane because you don\u0027t know what these actions mean without going and reading the JavaScript. I liked the previous one.",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084e0ddc_95b88944",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T04:37:35Z",
+      "side": 1,
+      "message": "Congratulations, you invented net::AppendQueryParameter (in net/base/url_util.h) :)",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990b4a74_2321f187",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T04:37:35Z",
+      "side": 1,
+      "message": "Just url.searchParams.\n\n(In fact, url.search is defined as a serialization of url.searchParams, so the above code parses the URL, serializes it, then re-parses it again.)",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9adc225_b6d9d4ab",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T04:37:35Z",
+      "side": 1,
+      "message": "Since params is only used once, just in-line it: url.searchParams.get(...)",
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f92ff81_402757f4",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T04:37:35Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "79e4bf0dc3791efc8dad873a39172be33b2ed230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
