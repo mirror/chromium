@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "758b2da9_84d6a309",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "nit: should be two-space indentation, rather than four\n(two space for function indent, four for line continuation - it\u0027s confusing, I know :/)",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 4
+      },
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caeec5b9_f8db1bba",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "nit: indentation off (should line up with the \u0027b\u0027 of button",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0d85e9_1c7cb337",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "nit: maybe just put this on the previous line?\n\u003cdiv id\u003d\"friendDiv\"\u003e\u003c/div\u003e",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b871d70_0bf780ff",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/oauth.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "Sometimes, it\u0027s nice to have the option to download the complete extension as part of a tutorial, rather than downloading a 50% version.  It helps to make sure that the code you added matches the intention, and that if something goes wrong, you can check the full version from the tutorial to see if it works.  How would you feel about either having the downloaded version be the full version, or supplying a \"start here\" stub and a complete version?",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5de33d_edeb46f6",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/oauth.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "nit: end line in a semi-colon",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abe024c_40ca64d9",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/oauth.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "here, too",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b212798_9989264d",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "nit: no quotes around JS keys",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf4d8b4_96232648",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "note: this will be an exception, because the quotes are needed to wrap something with a symbol (in this case, -)",
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011bd033_8bb47b73",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T19:28:34Z",
+      "side": 1,
+      "message": "one too many semicolons :)",
+      "range": {
+        "startLine": 355,
+        "startChar": 60,
+        "endLine": 355,
+        "endChar": 62
+      },
+      "revId": "2e59610d1aaf2939a7018a539d58fb1a3137395f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
