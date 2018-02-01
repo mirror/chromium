@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "223e8abf_b60ab8a0",
+        "filename": "third_party/gles1_conform",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "What\u0027s this?",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f567e1b_dfd8c567",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: |line_number| or |line_index|",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33348b0_01a5ff77",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "I know I suggested otherwise earlier, but if AdvanceOneLine were a class member, it wouldn\u0027t need the |default_line_height| and |alignment| arguments.",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a41b21_0d56de2d",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "I wonder if the views should be aligned by their baselines. Otherwise, I worry that large-ascent text blocks may look misaligned from large-descent text blocks, etc. For example, make a styled label with \"go[CTRL]od\", with an icon view for [CTRL]. Does the \u0027o\u0027 in \u0027go\u0027 have the same vertical position as the \u0027o\u0027 in \u0027od\u0027? It\u0027s possible that the Label and Link views take care of this automatically, with a common baseline and height set for the same font (ie. the height and baseline position doesn\u0027t depend on the text content). Then, we only have to care about baseline alignment for labels with different fonts/sizes, and optionally for the icon views. If my simple test looks okay, we can worry about the rest later.",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c254f7_d071be5f",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: views_in_a_line-\u003eclear();",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbe2a95_c92264fe",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: \"The current child view\u0027s position, relative to content bounds, in pixels.\"",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37cf322_8874ee4a",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: \"If the current\"",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afeda43_d05bb668",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: \"should equal\"",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3518f8_4e7179f8",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "Instead of passing in |insets.top()| with each call, can that value be added to the initial offset.y() value?",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001c8a95_48458921",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s more common to annotate like:\n  offset.x() !\u003d 0 || line \u003e 0 /* new_line */);",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945a7588_508c7be5",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "I think this should also DCHECK(custom_views_.count(style_info.custom_view) !\u003d 0);\n(ie. callers need to pass ownership of the view before it can be used)",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0228c146_3f8665ef",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "Actually, I wonder why we need to set the horizontal alignment of the child views at all, shouldn\u0027t their width equal the width of the text itself, meaning that there\u0027s no room for horizontal alignment to have any effect within the label itself?",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97eb3a10_8048d72f",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "Instead of clamping this value that records the width used for the view, clamp the actual width of the child view above: view_size.set_width(std::min(view_size.width(), width)); That should allow the custom view to handle the constrained space a bit better (ie. center an image instead of showing the left part).",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51706e3a_1bd19fde",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: \"// A custom view shown instead of the underlying text. Ownership of custom views must be passed to StyledLabel via AddCustomView().\"",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c4b3f3_22e1c3f9",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "It\u0027s a bummer that we need to store the un-flipped alignment here, to pass to child Labels, and also flip the value ourselves in HorizontalAdjustment... Consider this comment:\n  // The horizontal alignment. This value is not flipped for RTL, so the value\n  // can be passed to child Label views, which will flip the value themselves.\n  // The default behavior is to align left in LTR UI and right in RTL UI.\naside: It would be nice if we had ALIGN_TO_UI or passed in values already calculated from the UI directionality, instead of using ALIGN_LEFT to mean \u0027align left in LTR UI and align right in RTL UI\u0027.",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cce1bba_fdb27849",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: \"CustomView\"",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b0ea56_33d10e3e",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: Use 1000 instead of 100, it\u0027s possible that \"one \" could be wider than 100 pixels in some environments (ie. make this test less likely to break if default fonts or scaling changes)",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc38840_ddd68b9b",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "Are these static casts necessary? (remove them here and below if not)",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0decf650_41779ad1",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: \"LineHeightWithTallerCustomView\"",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44278f7d_6b8ad6fc",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-01T20:04:47Z",
+      "side": 1,
+      "message": "nit: CustomView",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
