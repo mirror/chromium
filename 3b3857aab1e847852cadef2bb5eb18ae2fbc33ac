@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6d9d9ba_3702e351",
+        "filename": "content/browser/background_sync/background_sync_network_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-02-01T17:27:42Z",
+      "side": 1,
+      "message": "Didn\u0027t doze start with N?",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "3b3857aab1e847852cadef2bb5eb18ae2fbc33ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
