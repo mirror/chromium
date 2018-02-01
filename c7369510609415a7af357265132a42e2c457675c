@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b67283d3_830a765b",
+        "filename": "extensions/browser/content_verify_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-01T00:08:18Z",
+      "side": 1,
+      "message": "FYI: This is a new method (after you\u0027ve reviewed it last time) that refactors more common code from each tests in this file.",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 64
+      },
+      "revId": "c7369510609415a7af357265132a42e2c457675c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
