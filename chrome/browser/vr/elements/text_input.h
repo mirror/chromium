@@ -20,7 +20,7 @@ class Text;
 
 class TextInput : public UiElement {
  public:
-  // Called when this element recieves focus.
+  // Called when this element receives focus.
   typedef base::RepeatingCallback<void(bool)> OnFocusChangedCallback;
   // Called when the user enters text while this element is focused.
   typedef base::RepeatingCallback<void(const TextInputInfo&)>
@@ -66,6 +66,8 @@ class TextInput : public UiElement {
   void LayOutChildren() final;
   bool SetCursorBlinkState(const base::TimeTicks& time);
   void ResetCursorBlinkCycle();
+
+  virtual TextInputInfo ProcessInput(const TextInputInfo& info);
 
   OnFocusChangedCallback focus_changed_callback_;
   OnInputEditedCallback input_edit_callback_;
