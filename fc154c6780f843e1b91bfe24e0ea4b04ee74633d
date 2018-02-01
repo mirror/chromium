@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a09eb8f_825fcfe4",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-01T19:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e10cdbc_46ef35d8",
+      "revId": "fc154c6780f843e1b91bfe24e0ea4b04ee74633d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db83b449_7e4a60c3",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "fc154c6780f843e1b91bfe24e0ea4b04ee74633d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf19a39_4f247ef8",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-01T19:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db83b449_7e4a60c3",
+      "revId": "fc154c6780f843e1b91bfe24e0ea4b04ee74633d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
