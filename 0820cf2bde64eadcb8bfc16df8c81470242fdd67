@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c001704b_f3cf1914",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-01T17:27:28Z",
+      "side": 1,
+      "message": "\"almost all signed in to Chrome users are syncing right now.\"\nThere is no difference between these two. Signed to Chrome and signed to Sync is the exact same thing, and there are no plans to change this in the future.\n\nWe use the term \"Chrome account\" everywhere currently so I would not want to rename this histogram to use \"Sync account\", it would be confusing.",
+      "parentUuid": "22ca8e5c_e931a05b",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a76a95d3_d9ef3f1b",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
