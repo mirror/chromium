@@ -16,6 +16,24 @@
       "revId": "84e0cd6fa19ed571dc354df5988b08d15b437dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba3b5e4_84c300ee",
+        "filename": "ui/touch_selection/touch_selection_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-01T03:20:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b09e26bf_46051403",
+      "revId": "84e0cd6fa19ed571dc354df5988b08d15b437dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
