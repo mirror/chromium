@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f93cbd_571cb617",
+        "filename": "chrome/browser/ui/test/test_app_window_icon_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-02-01T20:15:52Z",
+      "side": 1,
+      "message": "number of OnWindowPropertyChanged is not stable and this may also lead to flakiness. It is also not very easy to fix updating window icon because reason why we may need to update the icon can come from different layers. Instead I count here only real image updates.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68fe74ae_e8f6fe6d",
+        "filename": "chrome/test/data/extensions/platform_apps/app_icon/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-02-01T20:15:52Z",
+      "side": 1,
+      "message": "that was one reason of flakiness, we started next nest while previous one was initializing.\nNow we ready to go next (processNextCommand) after app is created",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cbc827_19922b18",
+        "filename": "chrome/test/data/extensions/platform_apps/app_icon/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-02-01T20:15:52Z",
+      "side": 1,
+      "message": "new test, to create app with custom icon on init.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "a0be6a8d307e0ecd42045f1517eb90f730061c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
