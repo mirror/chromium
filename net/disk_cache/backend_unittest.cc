@@ -23,6 +23,7 @@
 #include "base/trace_event/memory_allocator_dump.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "build/build_config.h"
 #include "net/base/cache_type.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
@@ -1043,7 +1044,15 @@ void DiskCacheBackendTest::BackendLoad() {
   int seed = static_cast<int>(Time::Now().ToInternalValue());
   srand(seed);
 
+#if defined(OS_FUCHSIA)
+  // Load tests with large numbers of file descriptors perform poorly on
+  // virtualized test execution environments.
+  // TODO(807882): Remove this workaround when virtualized test performance
+  // improves.
+  const int kNumEntries = 100;
+#else
   const int kNumEntries = 512;
+#endif  // defined(OS_FUCHSIA)
 
   disk_cache::Entry* entries[kNumEntries];
   for (int i = 0; i < kNumEntries; i++) {
@@ -4219,7 +4228,16 @@ TEST_F(DiskCacheBackendTest, SimpleFdLimit) {
   // created.
   SetCacheType(net::APP_CACHE);
   InitCache();
+
+#if defined(OS_FUCHSIA)
+  // Load tests with large numbers of file descriptors perform poorly on
+  // virtualized test execution environments.
+  // TODO(807882): Remove this workaround when virtualized test performance
+  // improves.
+  const int kNumEntries = 100;
+#else
   const int kNumEntries = 512;
+#endif
 
   disk_cache::Entry* entries[kNumEntries];
   std::string keys[kNumEntries];
