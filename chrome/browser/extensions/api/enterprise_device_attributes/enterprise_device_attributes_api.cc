@@ -11,6 +11,8 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/enterprise_device_attributes.h"
+#include "chromeos/system/statistics_provider.h"
+#include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 
 namespace extensions {
@@ -18,21 +20,11 @@ namespace extensions {
 namespace {
 
 // Checks for the current browser context if the user is affiliated.
-bool IsPermittedToGetDeviceId(content::BrowserContext* context) {
+bool IsPermittedToGetDeviceAttributes(content::BrowserContext* context) {
   const user_manager::User* user =
       chromeos::ProfileHelper::Get()->GetUserByProfile(
           Profile::FromBrowserContext(context));
   return user->IsAffiliated();
-}
-
-// Returns the directory device id for the permitted extensions or an empty
-// string.
-std::string GetDirectoryDeviceId(content::BrowserContext* context) {
-  return IsPermittedToGetDeviceId(context)
-             ? g_browser_process->platform_part()
-                   ->browser_policy_connector_chromeos()
-                   ->GetDirectoryApiID()
-             : std::string();
 }
 
 }  //  namespace
@@ -45,10 +37,54 @@ EnterpriseDeviceAttributesGetDirectoryDeviceIdFunction::
 
 ExtensionFunction::ResponseAction
 EnterpriseDeviceAttributesGetDirectoryDeviceIdFunction::Run() {
-  const std::string device_id = GetDirectoryDeviceId(browser_context());
+  std::string device_id;
+  if (IsPermittedToGetDeviceAttributes(browser_context())) {
+    device_id = g_browser_process->platform_part()
+                    ->browser_policy_connector_chromeos()
+                    ->GetDirectoryApiID();
+  }
   return RespondNow(ArgumentList(
       api::enterprise_device_attributes::GetDirectoryDeviceId::Results::Create(
           device_id)));
+}
+
+EnterpriseDeviceAttributesGetDeviceSerialNumberFunction::
+    EnterpriseDeviceAttributesGetDeviceSerialNumberFunction() {}
+
+EnterpriseDeviceAttributesGetDeviceSerialNumberFunction::
+    ~EnterpriseDeviceAttributesGetDeviceSerialNumberFunction() {}
+
+ExtensionFunction::ResponseAction
+EnterpriseDeviceAttributesGetDeviceSerialNumberFunction::Run() {
+  std::string serial_number;
+  chromeos::system::StatisticsProvider* statistics_provider =
+      chromeos::system::StatisticsProvider::GetInstance();
+  if (IsPermittedToGetDeviceAttributes(browser_context()) &&
+      statistics_provider) {
+    serial_number = statistics_provider->GetEnterpriseMachineID();
+  }
+  return RespondNow(ArgumentList(
+      api::enterprise_device_attributes::GetDeviceSerialNumber::Results::Create(
+          serial_number)));
+}
+
+EnterpriseDeviceAttributesGetDeviceAssetIdFunction::
+    EnterpriseDeviceAttributesGetDeviceAssetIdFunction() {}
+
+EnterpriseDeviceAttributesGetDeviceAssetIdFunction::
+    ~EnterpriseDeviceAttributesGetDeviceAssetIdFunction() {}
+
+ExtensionFunction::ResponseAction
+EnterpriseDeviceAttributesGetDeviceAssetIdFunction::Run() {
+  std::string asset_id;
+  if (IsPermittedToGetDeviceAttributes(browser_context())) {
+    asset_id = g_browser_process->platform_part()
+                   ->browser_policy_connector_chromeos()
+                   ->GetDeviceAssetID();
+  }
+  return RespondNow(ArgumentList(
+      api::enterprise_device_attributes::GetDeviceAssetId::Results::Create(
+          asset_id)));
 }
 
 }  // namespace extensions
