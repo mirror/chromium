@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3632a722_15d1bd06",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T19:01:29Z",
+      "side": 1,
+      "message": "For nostate-prefetch we\u0027d need PRERENDER_MODE_NOSTATE_PREFETCH instead. This may break the content::NOTIFICATION_LOAD_STOP observer or make it flake, no idea. We have no tests for delivery of it in nostate-prefetch, and generally would not want new commitments :)\n\nIn prerender_nostate_prefetch_browsertest we are able to wait for destroying the PrerenderContents, which happens after the finish navigation.\n\nI don\u0027t know how involved would be to attach MediaEngagementContentsObserver mechanics in those tests, may be far from ideal.",
+      "range": {
+        "startLine": 623,
+        "startChar": 37,
+        "endLine": 623,
+        "endChar": 59
+      },
+      "revId": "adb78a22183c944a7fb13498aea137741a22ab55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe9d84e_c0278168",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-01T19:01:29Z",
+      "side": 1,
+      "message": "I\u0027m not aware what these cleanup steps do, but seems like in the future skipping them may become a problem that would be hard to spot. One alternative is not to instantiate the observer at all in MediaEngagementService::CreateWebContentsObserver(). With nostate-prefetch no media is going to play anyway, so it may solve these teardown questions once and for all.",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "adb78a22183c944a7fb13498aea137741a22ab55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
