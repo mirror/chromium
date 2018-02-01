@@ -16,6 +16,40 @@
       "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ceacc4d_bb7fa23e",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-01T00:27:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this Bind call go inside the if (gpu_memory_buffer_) block? Because image_id \u003d 0 when there\u0027s no gmb.",
+      "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580707ba_79ca2a46",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-01T00:27:34Z",
+      "side": 1,
+      "message": "nit: Since you moved the BindTexture(target, texture_id) call out of these blocks, can you also move the BindTexture(target, 0) call out as well? From here and above.",
+      "revId": "47e6c0f6930cb0a7b70d891071b95d4692c296d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
