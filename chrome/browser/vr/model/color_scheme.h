@@ -130,6 +130,8 @@ struct ColorScheme {
   float fullscreen_factor = 0.0f;
 
   SkColor cursor;
+  SkColor text_selection_background;
+  SkColor text_selection_text;
 };
 
 }  // namespace vr

@@ -117,8 +117,9 @@ class TextTexture : public UiTexture {
     SetAndDirty(&cursor_enabled_, enabled);
   }
 
-  void SetCursorPosition(int position) {
-    SetAndDirty(&cursor_position_, position);
+  void SetSelection(int start, int end) {
+    SetAndDirty(&selection_start_, start);
+    SetAndDirty(&selection_end_, end);
   }
 
   int GetCursorPositionFromPoint(const gfx::PointF& point) const {
@@ -167,7 +168,9 @@ class TextTexture : public UiTexture {
   SkColor color_ = SK_ColorBLACK;
   TextFormatting formatting_;
   bool cursor_enabled_ = false;
-  int cursor_position_ = 0;
+  // int cursor_position_ = 0;
+  int selection_start_ = 0;
+  int selection_end_ = 0;
   gfx::Rect cursor_bounds_;
   bool shadows_enabled_ = false;
   std::vector<std::unique_ptr<gfx::RenderText>> lines_;
@@ -211,8 +214,8 @@ void Text::SetCursorEnabled(bool enabled) {
   texture_->SetCursorEnabled(enabled);
 }
 
-void Text::SetCursorPosition(int position) {
-  texture_->SetCursorPosition(position);
+void Text::SetSelection(int start, int end) {
+  texture_->SetSelection(start, end);
 }
 
 gfx::Rect Text::GetRawCursorBounds() const {
@@ -285,7 +288,8 @@ void TextTexture::LayOutText() {
                                      ? kWrappingBehaviorWrap
                                      : kWrappingBehaviorNoWrap;
   parameters.cursor_enabled = cursor_enabled_;
-  parameters.cursor_position = cursor_position_;
+  // parameters.cursor_position = cursor_position_;
+  parameters.cursor_position = selection_end_;
   parameters.shadows_enabled = shadows_enabled_;
   parameters.shadow_size = kTextShadowScaleFactor * font_height_dmms_;
 
@@ -294,8 +298,20 @@ void TextTexture::LayOutText() {
       // this function into this class.
       PrepareDrawStringRect(text_, fonts, &text_bounds, parameters);
 
-  if (cursor_enabled_)
-    cursor_bounds_ = lines_.front()->GetUpdatedCursorBounds();
+  if (cursor_enabled_) {
+    lines_.front()->set_focused(true);
+
+    if (selection_start_ != selection_end_) {
+      gfx::Range range(selection_start_, selection_end_);
+      lines_.front()->SetSelection(gfx::SelectionModel(
+          range, gfx::LogicalCursorDirection::CURSOR_FORWARD));
+      lines_.front()->set_selection_background_focused_color(SK_ColorGREEN);
+      lines_.front()->set_selection_color(SK_ColorYELLOW);
+      cursor_bounds_ = gfx::Rect();
+    } else {
+      cursor_bounds_ = lines_.front()->GetUpdatedCursorBounds();
+    }
+  }
 
   if (!formatting_.empty()) {
     DCHECK_EQ(parameters.wrapping_behavior, kWrappingBehaviorNoWrap);

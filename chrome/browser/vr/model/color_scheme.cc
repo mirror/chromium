@@ -132,6 +132,8 @@ void InitializeColorSchemes() {
       0xFFFAFAFA;
   normal_scheme.omnibox_voice_search_button_colors.background_down = 0xFFFAFAFA;
   normal_scheme.cursor = 0xFF5595FE;
+  normal_scheme.text_selection_background = 0xFFC6DAFC;
+  normal_scheme.text_selection_text = SK_ColorWHITE;
 
   normal_scheme.snackbar_foreground = 0xFFEEEEEE;
   normal_scheme.snackbar_background = 0xDD212121;

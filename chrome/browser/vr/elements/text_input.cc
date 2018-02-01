@@ -115,11 +115,13 @@ void TextInput::SetHintText(const base::string16& text) {
 }
 
 void TextInput::OnInputEdited(const TextInputInfo& info) {
-  input_edit_callback_.Run(info);
+  if (input_edit_callback_)
+    input_edit_callback_.Run(info);
 }
 
 void TextInput::OnInputCommitted(const TextInputInfo& info) {
-  input_commit_callback_.Run(info);
+  if (input_commit_callback_)
+    input_commit_callback_.Run(info);
 }
 
 void TextInput::SetTextColor(SkColor color) {
@@ -138,15 +140,17 @@ void TextInput::UpdateInput(const TextInputInfo& info) {
   if (text_info_ == info)
     return;
 
-  DCHECK_EQ(info.selection_start, info.selection_end);
-  text_info_ = info;
+  // Let subclasses handle, react to and possibly modify the input.
+  text_info_ = ProcessInput(info);
 
-  if (delegate_ && focused_)
-    delegate_->UpdateInput(info);
+  if (delegate_ && focused_) {
+    delegate_->UpdateInput(text_info_);
+  }
 
-  text_element_->SetText(info.text);
-  text_element_->SetCursorPosition(info.selection_end);
-  hint_element_->SetVisible(info.text.empty());
+  text_element_->SetText(text_info_.text);
+  text_element_->SetSelection(text_info_.selection_start,
+                              text_info_.selection_end);
+  hint_element_->SetVisible(text_info_.text.empty());
 }
 
 bool TextInput::OnBeginFrame(const base::TimeTicks& time,
@@ -176,8 +180,9 @@ void TextInput::LayOutChildren() {
 
 bool TextInput::SetCursorBlinkState(const base::TimeTicks& time) {
   base::TimeDelta delta = time - cursor_blink_start_ticks_;
-  bool visible =
-      focused_ && (delta.InMilliseconds() / kCursorBlinkHalfPeriodMs + 1) % 2;
+  bool has_selection = text_info_.selection_end != text_info_.selection_start;
+  bool visible = focused_ && !has_selection &&
+                 (delta.InMilliseconds() / kCursorBlinkHalfPeriodMs + 1) % 2;
   if (cursor_visible_ == visible)
     return false;
   cursor_visible_ = visible;
@@ -187,6 +192,10 @@ bool TextInput::SetCursorBlinkState(const base::TimeTicks& time) {
 
 void TextInput::ResetCursorBlinkCycle() {
   cursor_blink_start_ticks_ = base::TimeTicks::Now();
+}
+
+TextInputInfo TextInput::ProcessInput(const TextInputInfo& info) {
+  return info;
 }
 
 }  // namespace vr

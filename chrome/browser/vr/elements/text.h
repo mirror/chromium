@@ -90,7 +90,8 @@ class Text : public TexturedElement {
   // position is determined while laying out text, a parent may wish to supply
   // cursor parameters and determine where the cursor was last drawn.
   void SetCursorEnabled(bool enabled);
-  void SetCursorPosition(int position);
+  // void SetCursorPosition(int position);
+  void SetSelection(int start, int end);
 
   // Returns the most recently computed cursor position, in pixels.  This is
   // used for scene dirtiness and testing.
