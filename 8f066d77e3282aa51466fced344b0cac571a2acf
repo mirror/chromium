@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661d1740_52f6ceae",
+        "filename": "extensions/test/logging_timer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-01T19:13:05Z",
+      "side": 1,
+      "message": "Can we turn this into a getter and remove the field?\nbase::TimeDelta average_time() const {\n  return !num_samples ? TimeDelta() : total_time / num_samples;\n}",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "8f066d77e3282aa51466fced344b0cac571a2acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
