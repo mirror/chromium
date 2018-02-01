@@ -27,6 +27,7 @@ const SkColor kGoogleGreen300 = SkColorSetRGB(0x57, 0xBB, 0x8A);
 const SkColor kGoogleGreen700 = SkColorSetRGB(0x0B, 0x80, 0x43);
 const SkColor kGoogleYellow300 = SkColorSetRGB(0xF7, 0xCB, 0x4D);
 const SkColor kGoogleYellow700 = SkColorSetRGB(0xF0, 0x93, 0x00);
+const SkColor kGoogleYellow900 = SkColorSetRGB(0xEA, 0x61, 0x00);
 
 // An alpha value for designating a control's disabled state. In specs this is
 // sometimes listed as 0.38a.
