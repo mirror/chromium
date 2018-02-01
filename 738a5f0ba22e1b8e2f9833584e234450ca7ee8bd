@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431ab7b5_75046dbc",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ImeAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-01T19:06:11Z",
+      "side": 1,
+      "message": "exposing is effectively making the whole ime code public. not very comforting\n\nchangwan, can you look over this, and see if there is anything better that can be done here.\n\neg wouldn\u0027t it be better just have a way for embedder provide the service implementations instead?",
+      "revId": "738a5f0ba22e1b8e2f9833584e234450ca7ee8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
