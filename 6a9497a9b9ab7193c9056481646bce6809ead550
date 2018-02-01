@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "423d655f_e8e9f158",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4275,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9ad2aa_ab84b81b",
+      "range": {
+        "startLine": 4275,
+        "startChar": 22,
+        "endLine": 4275,
+        "endChar": 26
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9717493f_c38404dc",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f0783ede_2644e6b3",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9717493f_c38404dc",
+      "range": {
+        "startLine": 4320,
+        "startChar": 74,
+        "endLine": 4320,
+        "endChar": 108
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d3efb29_d4e1faa0",
         "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
         "patchSetId": 3
@@ -82,6 +130,30 @@
       "writtenOn": "2018-01-31T17:15:11Z",
       "side": 1,
       "message": "Can you move the logic to parse encryption_type?",
+      "range": {
+        "startLine": 590,
+        "startChar": 1,
+        "endLine": 590,
+        "endChar": 35
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9171772a_fc03dd82",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "What you mean?",
+      "parentUuid": "2d3efb29_d4e1faa0",
       "range": {
         "startLine": 590,
         "startChar": 1,
@@ -140,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "11ac3dd4_9a1f60d6",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cae5cbb_5e4b927b",
+      "range": {
+        "startLine": 88,
+        "startChar": 48,
+        "endLine": 88,
+        "endChar": 63
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35ce3d00_a7245b77",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Yep, I failed to make it integer.",
+      "parentUuid": "3861a6e8_66a64bc0",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e2bf1bc_db5cc6b6",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 3
@@ -160,6 +280,30 @@
       "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73261d1c_285a01a4",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e2bf1bc_db5cc6b6",
+      "range": {
+        "startLine": 111,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 67
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "5b56a31c_6a214650",
+        "filename": "chromeos/dbus/fake_auth_policy_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35729494_0975bcf8",
+      "range": {
+        "startLine": 202,
+        "startChar": 3,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82e91825_80a10fdd",
         "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
         "patchSetId": 3
@@ -206,6 +374,30 @@
       "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b384ab_b2956df8",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82e91825_80a10fdd",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 20
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "458b21b2_9e00052b",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a39e7ec_6fa872b2",
+      "range": {
+        "startLine": 125,
+        "startChar": 17,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bfd76a6_9e8d57f4",
         "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
         "patchSetId": 3
@@ -243,6 +459,30 @@
       "writtenOn": "2018-01-31T17:15:11Z",
       "side": 1,
       "message": "This logic should be somewhere else (when it\u0027s coming from UI?). AuthPolicyLoginHelper shouldn\u0027t have to know how the encryption types are encoded.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca156634_a962b9db",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-01T15:25:10Z",
+      "side": 1,
+      "message": "Maybe, but how could we specify that it\u0027s missing? E.g. now it\u0027s an empty string.",
+      "parentUuid": "9bfd76a6_9e8d57f4",
       "range": {
         "startLine": 158,
         "startChar": 0,
