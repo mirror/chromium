@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6cbe097_b0f2067b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:07:41Z",
+      "side": 1,
+      "message": "nit: s/of/the for this and the description below.",
+      "range": {
+        "startLine": 1977,
+        "startChar": 138,
+        "endLine": 1977,
+        "endChar": 140
+      },
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a351d416_a0122604",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-01T16:07:41Z",
+      "side": 1,
+      "message": "nit: The end of this sentence is a bit hard to read. How about \"... shown is not trusted. Also displays the offline page creation date.\"",
+      "range": {
+        "startLine": 1977,
+        "startChar": 175,
+        "endLine": 1977,
+        "endChar": 199
+      },
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
