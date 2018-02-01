@@ -16,7 +16,6 @@ ShellNativeAppWindowAura::ShellNativeAppWindowAura(
     AppWindow* app_window,
     const AppWindow::CreateParams& params)
     : ShellNativeAppWindow(app_window, params) {
-  // TODO(yoz): We might have to duplicate this for mac.
   gfx::Rect bounds = params.GetInitialWindowBounds(GetFrameInsets());
   bool position_specified =
       bounds.x() != AppWindow::BoundsSpecification::kUnspecifiedPosition &&

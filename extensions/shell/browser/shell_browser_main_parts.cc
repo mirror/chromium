@@ -35,12 +35,9 @@
 #include "extensions/shell/browser/shell_update_query_params_delegate.h"
 #include "extensions/shell/common/shell_extensions_client.h"
 #include "extensions/shell/common/switches.h"
+#include "ui/aura/env.h"
 #include "ui/base/ime/input_method_initializer.h"
 #include "ui/base/resource/resource_bundle.h"
-
-#if defined(USE_AURA)
-#include "ui/aura/env.h"
-#endif
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/audio/audio_devices_pref_handler_impl.h"
@@ -62,10 +59,6 @@
 #include "device/bluetooth/dbus/dbus_thread_manager_linux.h"
 #endif
 
-#if defined(OS_MACOSX)
-#include "extensions/shell/browser/shell_browser_main_parts_mac.h"
-#endif
-
 #if BUILDFLAG(ENABLE_NACL)
 #include "components/nacl/browser/nacl_browser.h"
 #include "components/nacl/browser/nacl_process_host.h"
@@ -73,7 +66,7 @@
 #include "extensions/shell/browser/shell_nacl_browser_delegate.h"
 #endif
 
-#if defined(USE_AURA) && defined(USE_X11)
+#if defined(USE_X11)
 #include "ui/events/devices/x11/touch_factory_x11.h"
 #endif
 
@@ -99,11 +92,8 @@ ShellBrowserMainParts::~ShellBrowserMainParts() {
 }
 
 void ShellBrowserMainParts::PreMainMessageLoopStart() {
-#if defined(USE_AURA) && defined(USE_X11)
+#if defined(USE_X11)
   ui::TouchFactory::SetTouchDeviceListFromCommandLine();
-#endif
-#if defined(OS_MACOSX)
-  MainPartsPreMainMessageLoopStartMac();
 #endif
 }
 
@@ -173,11 +163,9 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
   audio_controller_.reset(new ShellAudioController());
 #endif
 
-#if defined(USE_AURA)
   aura::Env::GetInstance()->set_context_factory(content::GetContextFactory());
   aura::Env::GetInstance()->set_context_factory_private(
       content::GetContextFactoryPrivate());
-#endif
 
   storage_monitor::StorageMonitor::Create();
 

@@ -12,15 +12,8 @@
 #include "base/strings/string_tokenizer.h"
 #include "build/build_config.h"
 #include "extensions/common/switches.h"
-#include "extensions/shell/browser/shell_extension_system.h"
-
-#if defined(USE_AURA)
 #include "extensions/shell/browser/shell_desktop_controller_aura.h"
-#endif
-
-#if defined(OS_MACOSX)
-#include "extensions/shell/browser/shell_desktop_controller_mac.h"
-#endif
+#include "extensions/shell/browser/shell_extension_system.h"
 
 namespace extensions {
 
@@ -103,13 +96,7 @@ void DefaultShellBrowserMainDelegate::Shutdown() {
 
 DesktopController* DefaultShellBrowserMainDelegate::CreateDesktopController(
     content::BrowserContext* context) {
-#if defined(USE_AURA)
   return new ShellDesktopControllerAura(context);
-#elif defined(OS_MACOSX)
-  return new ShellDesktopControllerMac();
-#else
-  return NULL;
-#endif
 }
 
 }  // namespace extensions

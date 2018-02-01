@@ -10,10 +10,7 @@
 #include "extensions/browser/app_window/app_window_registry.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/shell/test/shell_apitest.h"
-
-#if defined(USE_AURA)
-#include "ui/aura/window.h"  // nogncheck
-#endif
+#include "ui/aura/window.h"
 
 namespace extensions {
 
@@ -31,13 +28,8 @@ IN_PROC_BROWSER_TEST_F(ShellApiTest, LoadApp) {
       AppWindowRegistry::Get(browser_context())->app_windows().front();
   ASSERT_TRUE(app_window);
 
-  // TODO(yoz): Test for focus on Cocoa.
-  // app_window->GetBaseWindow()->IsActive() is possible, although on Mac,
-  // focus changes are asynchronous, so interactive_ui_tests are required.
-#if defined(USE_AURA)
-  // The web contents have focus.
+  EXPECT_TRUE(app_window->GetBaseWindow()->IsActive());
   EXPECT_TRUE(app_window->web_contents()->GetContentNativeView()->HasFocus());
-#endif
 }
 
 }  // namespace extensions

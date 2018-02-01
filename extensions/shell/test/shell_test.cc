@@ -21,24 +21,9 @@
 namespace extensions {
 
 AppShellTest::AppShellTest()
-    : browser_context_(nullptr),
-      extension_system_(nullptr) {
-#if defined(OS_MACOSX)
-  // TODO(phajdan.jr): Make browser tests self-contained on Mac; remove this.
-  // Set up the application path as though we we are inside the App Shell.app
-  // bundle, rather than the top-level extensions_browsertests, because we
-  // make many assumptions about where the executable is located.
-  base::FilePath app_shell_path;
-  CHECK(PathService::Get(base::FILE_EXE, &app_shell_path));
-  app_shell_path = app_shell_path.DirName();
-  app_shell_path = app_shell_path.Append(
-      FILE_PATH_LITERAL("App Shell.app/Contents/MacOS/App Shell"));
-  CHECK(PathService::Override(base::FILE_EXE, app_shell_path));
-#endif
-}
+    : browser_context_(nullptr), extension_system_(nullptr) {}
 
-AppShellTest::~AppShellTest() {
-}
+AppShellTest::~AppShellTest() = default;
 
 void AppShellTest::SetUp() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
