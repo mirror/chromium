@@ -7,6 +7,7 @@
 
 #include "core/paint/ObjectPaintProperties.h"
 #include "platform/graphics/paint/PropertyTreeState.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -101,6 +102,29 @@ class CORE_EXPORT FragmentData {
       EnsureRareData().pagination_offset = pagination_offset;
   }
 
+  bool IsClipPathCacheValid() const {
+    return rare_data_ ? rare_data_->is_clip_path_cache_valid : false;
+  }
+  void InvalidateClipPathCache();
+
+  Optional<FloatRect> LocalClipPathBoundingBox() const {
+    DCHECK(IsClipPathCacheValid());
+    return rare_data_ ? rare_data_->local_clip_path_bounding_box : WTF::nullopt;
+  }
+  const Path* LocalClipPath() const {
+    DCHECK(IsClipPathCacheValid());
+    return rare_data_ ? rare_data_->local_clip_path.get() : nullptr;
+  }
+  void SetClipPathCache(const Optional<FloatRect>& bounding_box,
+                        std::unique_ptr<const Path>);
+
+  const RefCountedPath* ClipPathForFragment() const {
+    return rare_data_ ? rare_data_->clip_path_for_fragment.get() : nullptr;
+  }
+  void SetClipPathForFragment(scoped_refptr<const RefCountedPath> path) {
+    EnsureRareData().clip_path_for_fragment = std::move(path);
+  }
+
   // Holds references to the paint property nodes created by this object.
   const ObjectPaintProperties* PaintProperties() const {
     return rare_data_ ? rare_data_->paint_properties.get() : nullptr;
@@ -164,6 +188,18 @@ class CORE_EXPORT FragmentData {
                              LocalBorderBoxProperties()->Effect());
   }
 
+  // This is the complete set of property nodes that can be used to
+  // paint mask-based clip-path.
+  PropertyTreeState ClipPathProperties() const {
+    DCHECK(rare_data_);
+    const auto* properties = rare_data_->paint_properties.get();
+    DCHECK(properties);
+    DCHECK(properties->MaskClip());
+    DCHECK(properties->ClipPath());
+    return PropertyTreeState(properties->MaskClip()->LocalTransformSpace(),
+                             properties->MaskClip(), properties->ClipPath());
+  }
+
   const TransformPaintPropertyNode* PreTransform() const;
   const TransformPaintPropertyNode* PostScrollTranslation() const;
   const ClipPaintPropertyNode* PreCssClip() const;
@@ -190,12 +226,16 @@ class CORE_EXPORT FragmentData {
     LayoutPoint location_in_backing;
     LayoutRect selection_visual_rect;
     LayoutRect partial_invalidation_rect;
+    bool is_clip_path_cache_valid = false;
+    Optional<FloatRect> local_clip_path_bounding_box;
+    std::unique_ptr<const Path> local_clip_path;
 
     // Fragment specific data.
     LayoutPoint pagination_offset;
     LayoutUnit logical_top_in_flow_thread;
     std::unique_ptr<ObjectPaintProperties> paint_properties;
     std::unique_ptr<PropertyTreeState> local_border_box_properties;
+    scoped_refptr<const RefCountedPath> clip_path_for_fragment;
   };
 
   RareData& EnsureRareData();

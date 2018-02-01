@@ -56,6 +56,15 @@ const ClipPaintPropertyNode* FragmentData::PreCssClip() const {
   if (const auto* properties = PaintProperties()) {
     if (properties->CssClip())
       return properties->CssClip()->Parent();
+    if (properties->ClipPathClip()) {
+      // SPv1 composited clip-path has an alternative clip tree structure.
+      // If the clip-path is parented by the mask clip, it is only used
+      // to clip mask layer chunks, and not in the clip inheritance chain.
+      if (properties->ClipPathClip()->Parent() != properties->MaskClip())
+        return properties->ClipPathClip()->Parent();
+    }
+    if (properties->MaskClip())
+      return properties->MaskClip()->Parent();
   }
   DCHECK(LocalBorderBoxProperties());
   return LocalBorderBoxProperties()->Clip();
@@ -90,6 +99,28 @@ const EffectPaintPropertyNode* FragmentData::PreFilter() const {
   }
   DCHECK(LocalBorderBoxProperties());
   return LocalBorderBoxProperties()->Effect();
+}
+
+void FragmentData::InvalidateClipPathCache() {
+  if (!rare_data_)
+    return;
+
+  rare_data_->is_clip_path_cache_valid = false;
+  rare_data_->local_clip_path_bounding_box = WTF::nullopt;
+  rare_data_->local_clip_path = nullptr;
+
+  for (FragmentData* fragment = this; fragment;
+       fragment = fragment->NextFragment()) {
+    if (fragment->rare_data_)
+      fragment->rare_data_->clip_path_for_fragment = nullptr;
+  }
+}
+
+void FragmentData::SetClipPathCache(const Optional<FloatRect>& bounding_box,
+                                    std::unique_ptr<const Path> path) {
+  EnsureRareData().is_clip_path_cache_valid = true;
+  rare_data_->local_clip_path_bounding_box = bounding_box;
+  rare_data_->local_clip_path = std::move(path);
 }
 
 }  // namespace blink
