@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d44166f_dfd03952",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-01T18:05:48Z",
+      "side": 1,
+      "message": "I am not excited about this change. Chromium is meant to build on a c++14-compliant compiler / std lib. If the system you want to build on doesn\u0027t have one, you can very simply do just like we do for official releases, that is use the clang/libc++ provided in third_party.",
+      "revId": "366f04d344575d34009c31ccf9681cabe6b5da7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
