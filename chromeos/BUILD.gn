@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/ui.gni")
+import("//chromeos/assistant/assistant.gni")
 import("//testing/test.gni")
 import("//third_party/protobuf/proto_library.gni")
 
@@ -511,6 +512,20 @@ component("chromeos") {
     "tpm/tpm_token_loader.cc",
     "tpm/tpm_token_loader.h",
   ]
+
+  if (enable_cros_libassistant) {
+    assert(enable_cros_assistant)
+    sources += [
+      "assistant/internal/internal_constants.cc",
+      "assistant/internal/internal_constants.h",
+      "assistant/internal/internal_util.cc",
+      "assistant/internal/internal_util.h",
+    ]
+
+    deps +=
+        [ "//libassistant/internal/assistant/controller:libassistant_static" ]
+  }
+
   defines = [ "CHROMEOS_IMPLEMENTATION" ]
   if (current_cpu == "arm" || current_cpu == "x86") {
     defines += [ "BINDER_IPC_32BIT" ]
