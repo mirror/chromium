@@ -129,7 +129,6 @@ bool SpdyUtils::CopyAndValidateTrailers(const QuicHeaderList& header_list,
 }
 
 // static
-// static
 string SpdyUtils::GetPromisedUrlFromHeaders(const SpdyHeaderBlock& headers) {
   // RFC 7540, Section  8.2.1:  The header fields in PUSH_PROMISE and any
   // subsequent CONTINUATION frames MUST be a valid and complete set of request

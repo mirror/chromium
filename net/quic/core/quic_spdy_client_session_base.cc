@@ -100,6 +100,13 @@ bool QuicSpdyClientSessionBase::HandlePromised(QuicStreamId /* associated_id */,
   }
 
   const string url = SpdyUtils::GetPromisedUrlFromHeaders(headers);
+  if (url.empty()) {
+    QUIC_DVLOG(1) << "Promise for stream " << promised_id
+                  << " has invalid headers.";
+    ResetPromised(promised_id, QUIC_INVALID_PROMISE_URL);
+    return false;
+  }
+
   QuicClientPromisedInfo* old_promised = GetPromisedByUrl(url);
   if (old_promised) {
     QUIC_DVLOG(1) << "Promise for stream " << promised_id
