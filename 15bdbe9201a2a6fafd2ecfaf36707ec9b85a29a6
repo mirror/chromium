@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae18db4_08fdf60f",
+        "filename": "docs/memory-infra/heap_profiler.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-02-01T18:01:38Z",
+      "side": 1,
+      "message": "That\u0027s not enough, \u0027arm_use_thumb \u003d false\u0027 is still needed.",
+      "range": {
+        "startLine": 37,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "15bdbe9201a2a6fafd2ecfaf36707ec9b85a29a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
