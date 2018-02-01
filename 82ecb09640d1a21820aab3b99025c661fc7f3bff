@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "888f33d9_f4115ef9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-01T22:37:10Z",
+      "side": 1,
+      "message": "You should also make sure that the mainTarget type is \u0027page\u0027 here.",
+      "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34d29127_c7d9fdb2",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/InspectorView.js",
         "patchSetId": 2
