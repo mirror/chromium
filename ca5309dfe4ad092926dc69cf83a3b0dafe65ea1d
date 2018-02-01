@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5288334f_bee58bb7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console-fetch-logging-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-02-01T22:21:53Z",
+      "side": 1,
+      "message": "can we filter this out?",
+      "range": {
+        "startLine": 6,
+        "startChar": 15,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "ca5309dfe4ad092926dc69cf83a3b0dafe65ea1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
