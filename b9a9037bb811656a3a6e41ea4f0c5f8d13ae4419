@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dc7f1f7_3ff888ec",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1967,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-02-01T23:50:47Z",
+      "side": 1,
+      "message": "We do partial deep comparison for filters. If the filter is not a reference filter, deep comparison is done. The cache for filter is specific to reference filters.",
+      "parentUuid": "ab0be3cb_2e500247",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "166d4df0_3389e5cd",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3ca9fc_7006287f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-02-01T23:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "166d4df0_3389e5cd",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7336314c_154a5f6d",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-02-01T23:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c6b030_aeba8aad",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a15d22_a4bcbb7d",
         "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "adb7b2aa_4a764698",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-02-01T23:50:47Z",
+      "side": 1,
+      "message": "These helper functions are sensitive to property tree hierarchy. I think it is better to keep them in one place to reduce the risk forgetting to update them when new nodes are added. WDYT?",
+      "parentUuid": "e5a15d22_a4bcbb7d",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f356b6b4_00a13434",
         "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2018-02-01T06:34:09Z",
       "side": 1,
       "message": "For the object, PaintInvalidation happens after PaintPropertyTreeBuilder, so this will affect PaintPropertyTreeBuilder in the next cycle. This doesn\u0027t seem intended?",
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77662b78_377ca762",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-02-01T23:50:47Z",
+      "side": 1,
+      "message": "You\u0027re right. Chris helped me debug this exact problem today. Now it\u0027s fixed!",
+      "parentUuid": "f356b6b4_00a13434",
       "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +232,30 @@
       "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d82bcbd_38369a22",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-02-01T23:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60488016_fae44254",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 20
+      },
+      "revId": "b9a9037bb811656a3a6e41ea4f0c5f8d13ae4419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
