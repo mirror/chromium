@@ -4,12 +4,15 @@
 
 #include "chrome/browser/ui/tabs/window_activity_watcher.h"
 
+#include <algorithm>
+
 #include "base/optional.h"
 #include "base/scoped_observer.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/browser_window_observer.h"
 #include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "services/metrics/public/cpp/metrics_utils.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
@@ -32,7 +35,6 @@ struct WindowMetrics {
   // ID for the window, unique within the Chrome session.
   SessionID::id_type window_id;
   WindowMetricsEvent::Type type;
-  // TODO(michaelpg): Observe the show state and log when it changes.
   WindowMetricsEvent::ShowState show_state;
 
   // True if this is the active (frontmost) window.
@@ -42,17 +44,25 @@ struct WindowMetrics {
   int tab_count;
 };
 
+// Returns the WindowMetricsEvent show state for the window.
+WindowMetricsEvent::ShowState GetWindowMetricsShowState(
+    const BrowserWindow& window) {
+  // In X11, these show states are not mutually exclusive; a window can be
+  // fullscreen, maximized, and minimized all at the same time. So order matters
+  // here.
+  if (window.IsMinimized())
+    return WindowMetricsEvent::SHOW_STATE_MINIMIZED;
+  if (window.IsFullscreen())
+    return WindowMetricsEvent::SHOW_STATE_FULLSCREEN;
+  if (window.IsMaximized())
+    return WindowMetricsEvent::SHOW_STATE_MAXIMIZED;
+  return WindowMetricsEvent::SHOW_STATE_NORMAL;
+}
+
 // Sets metric values that are dependent on the current window state.
 void UpdateMetrics(const Browser* browser, WindowMetrics* window_metrics) {
-  if (browser->window()->IsFullscreen())
-    window_metrics->show_state = WindowMetricsEvent::SHOW_STATE_FULLSCREEN;
-  else if (browser->window()->IsMinimized())
-    window_metrics->show_state = WindowMetricsEvent::SHOW_STATE_MINIMIZED;
-  else if (browser->window()->IsMaximized())
-    window_metrics->show_state = WindowMetricsEvent::SHOW_STATE_MAXIMIZED;
-  else
-    window_metrics->show_state = WindowMetricsEvent::SHOW_STATE_NORMAL;
-
+  DCHECK(browser->window());
+  window_metrics->show_state = GetWindowMetricsShowState(*browser->window());
   window_metrics->is_active = browser->window()->IsActive();
   window_metrics->tab_count = browser->tab_strip_model()->count();
 }
@@ -102,16 +112,25 @@ void LogWindowMetricsUkmEntry(const WindowMetrics& window_metrics) {
 
 // Observes a browser window's tab strip and logs a WindowMetrics UKM event for
 // the window upon changes to metrics like TabCount.
-class WindowActivityWatcher::BrowserWatcher : public TabStripModelObserver {
+class WindowActivityWatcher::BrowserWatcher : public TabStripModelObserver,
+                                              public BrowserWindowObserver {
  public:
   explicit BrowserWatcher(Browser* browser)
-      : browser_(browser), observer_(this) {
+      : browser_(browser), tab_strip_model_observer_(this) {
     DCHECK(!browser->profile()->IsOffTheRecord());
+    tab_strip_model_observer_.Add(browser->tab_strip_model());
+    browser->window()->AddObserver(this);
     MaybeLogWindowMetricsUkmEntry();
-    observer_.Add(browser->tab_strip_model());
   }
 
-  ~BrowserWatcher() override = default;
+  ~BrowserWatcher() override {
+    // BrowserWatcher is normally destroyed when its browser is being removed.
+    // Otherwise, we'd want to remove the BrowserWindow observer.
+    DCHECK(std::find(BrowserList::GetInstance()->begin(),
+                     BrowserList::GetInstance()->end(),
+                     browser_) == BrowserList::GetInstance()->end())
+        << "BrowserWatcher destroyed while browser still exists";
+  }
 
   // Logs a new WindowMetrics entry to the UKM recorder if the entry would be
   // different than the last one we logged.
@@ -139,6 +158,9 @@ class WindowActivityWatcher::BrowserWatcher : public TabStripModelObserver {
   }
 
  private:
+  // BrowserWindowObserver:
+  void OnShowStateChanged() override { MaybeLogWindowMetricsUkmEntry(); }
+
   // TabStripModelObserver:
   void TabInsertedAt(TabStripModel* tab_strip_model,
                      content::WebContents* contents,
@@ -158,8 +180,9 @@ class WindowActivityWatcher::BrowserWatcher : public TabStripModelObserver {
   // some metric value has changed.
   base::Optional<WindowMetrics> last_window_metrics_;
 
-  // Used to update the tab count for browser windows.
-  ScopedObserver<TabStripModel, TabStripModelObserver> observer_;
+  // Used to update tab count metrics for browser windows.
+  ScopedObserver<TabStripModel, TabStripModelObserver>
+      tab_strip_model_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserWatcher);
 };

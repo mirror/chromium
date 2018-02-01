@@ -531,6 +531,7 @@ void DesktopWindowTreeHostX11::ShowWindowWithState(
       SetFullscreen(true);
       break;
     default:
+      native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
       break;
   }
 
@@ -845,6 +846,8 @@ void DesktopWindowTreeHostX11::Restore() {
                      gfx::GetAtom("_NET_WM_STATE_MAXIMIZED_HORZ"));
   if (IsMinimized())
     ShowWindowWithState(ui::SHOW_STATE_NORMAL);
+  else
+    native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 }
 
 bool DesktopWindowTreeHostX11::IsMaximized() const {
@@ -1001,6 +1004,7 @@ void DesktopWindowTreeHostX11::SetFullscreen(bool fullscreen) {
     return;
   is_fullscreen_ = fullscreen;
   OnFullscreenStateChanged();
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
   if (is_fullscreen_)
     delayed_resize_task_.Cancel();
 
@@ -1015,8 +1019,12 @@ void DesktopWindowTreeHostX11::SetFullscreen(bool fullscreen) {
     Restore();
   ui::SetWMSpecState(xwindow_, fullscreen,
                      gfx::GetAtom("_NET_WM_STATE_FULLSCREEN"), x11::None);
-  if (unmaximize_and_remaximize)
+  if (unmaximize_and_remaximize) {
     Maximize();
+  } else {
+    // Only need to call this if we didn't just call Maximize().
+    native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
+  }
 
   // Try to guess the size we will have after the switch to/from fullscreen:
   // - (may) avoid transient states
@@ -1615,6 +1623,7 @@ void DesktopWindowTreeHostX11::OnWMStateUpdated() {
       content_window_->Show();
       compositor()->SetVisible(true);
     }
+    native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
   }
 
   if (restored_bounds_in_pixels_.IsEmpty()) {
@@ -1641,8 +1650,10 @@ void DesktopWindowTreeHostX11::OnWMStateUpdated() {
   is_always_on_top_ = ui::HasWMSpecProperty(
       window_properties_, gfx::GetAtom("_NET_WM_STATE_ABOVE"));
 
-  if (was_maximized != is_maximized)
+  if (was_maximized != is_maximized) {
     OnMaximizedStateChanged();
+    native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
+  }
 
   // Now that we have different window properties, we may need to relayout the
   // window. (The windows code doesn't need this because their window change is

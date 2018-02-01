@@ -52,6 +52,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window_observer.h"
 #include "chrome/browser/ui/browser_window_state.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
@@ -2565,6 +2566,14 @@ bool BrowserView::IsVisibleOnAllWorkspaces() const {
   return frame_->IsVisibleOnAllWorkspaces();
 }
 
+void BrowserView::AddObserver(BrowserWindowObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void BrowserView::RemoveObserver(BrowserWindowObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
 bool BrowserView::DoCutCopyPasteForWebContents(
     WebContents* contents,
     void (WebContents::*method)()) {
@@ -2624,6 +2633,11 @@ bool BrowserView::FindCommandIdForAccelerator(
     return false;
 
   return true;
+}
+
+void BrowserView::NotifyShowStateChanged() {
+  for (BrowserWindowObserver& observer : observers_)
+    observer.OnShowStateChanged();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

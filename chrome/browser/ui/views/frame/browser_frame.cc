@@ -214,6 +214,11 @@ void BrowserFrame::OnNativeWidgetWorkspaceChanged() {
   Widget::OnNativeWidgetWorkspaceChanged();
 }
 
+void BrowserFrame::OnNativeWidgetWindowShowStateChanged() {
+  browser_view_->NotifyShowStateChanged();
+  Widget::OnNativeWidgetWindowShowStateChanged();
+}
+
 void BrowserFrame::OnNativeThemeUpdated(ui::NativeTheme* observed_theme) {
   views::Widget::OnNativeThemeUpdated(observed_theme);
   browser_view_->NativeThemeUpdated(observed_theme);

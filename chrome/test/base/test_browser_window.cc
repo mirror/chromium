@@ -199,6 +199,10 @@ bool TestBrowserWindow::IsVisibleOnAllWorkspaces() const {
   return false;
 }
 
+void TestBrowserWindow::AddObserver(BrowserWindowObserver* observer) {}
+
+void TestBrowserWindow::RemoveObserver(BrowserWindowObserver* observer) {}
+
 // TestBrowserWindowOwner -----------------------------------------------------
 
 TestBrowserWindowOwner::TestBrowserWindowOwner(TestBrowserWindow* window)

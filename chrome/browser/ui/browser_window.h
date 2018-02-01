@@ -31,6 +31,7 @@
 #endif  // defined(OS_CHROMEOS)
 
 class Browser;
+class BrowserWindowObserver;
 class DownloadShelf;
 class ExclusiveAccessContext;
 class FindBar;
@@ -366,6 +367,10 @@ class BrowserWindow : public ui::BaseWindow {
   // currently resides in.
   virtual std::string GetWorkspace() const = 0;
   virtual bool IsVisibleOnAllWorkspaces() const = 0;
+
+  // Adds/removes window state observers.
+  virtual void AddObserver(BrowserWindowObserver* observer) = 0;
+  virtual void RemoveObserver(BrowserWindowObserver* observer) = 0;
 
  protected:
   friend class BrowserCloseManager;

@@ -107,6 +107,7 @@ class BrowserFrame
   const ui::NativeTheme* GetNativeTheme() const override;
   void SchedulePaintInRect(const gfx::Rect& rect) override;
   void OnNativeWidgetWorkspaceChanged() override;
+  void OnNativeWidgetWindowShowStateChanged() override;
   void OnNativeThemeUpdated(ui::NativeTheme* observed_theme) override;
 
   // Overridden from views::ContextMenuController:
