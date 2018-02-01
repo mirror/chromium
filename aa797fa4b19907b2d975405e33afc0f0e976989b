@@ -117,6 +117,30 @@
       "revId": "aa797fa4b19907b2d975405e33afc0f0e976989b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85aa7158_9c7dcd52",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-01T15:10:02Z",
+      "side": 1,
+      "message": "Thanks for clarifying. I think I\u0027ll keep it as-is for now, and would change if there is a rationale that could be explained to me. (Maybe \"always be as explicit as you can\" is a good guideline that might motivate this?)",
+      "parentUuid": "aadf0b26_7fc798bd",
+      "range": {
+        "startLine": 864,
+        "startChar": 39,
+        "endLine": 864,
+        "endChar": 40
+      },
+      "revId": "aa797fa4b19907b2d975405e33afc0f0e976989b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
