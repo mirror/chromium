@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd42219_0c0bdd15",
+        "filename": "storage/browser/blob/blob_url_loader_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T09:05:49Z",
+      "side": 1,
+      "message": "It feels super confusing to have both storage::BlobURLLoaderFactory and content::BlobURLLoaderFactory, could we have helpful comment here?\n\nOr maybe we can use the name like SingleBlobURLLoaderFactory (also with some helpful comment)?",
+      "revId": "cb227d67a205d87a95df1305ffcb7e464c176cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd7f296_d29ee0e6",
+        "filename": "third_party/WebKit/common/blob/blob_url_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-01T09:05:49Z",
+      "side": 1,
+      "message": "Maybe also document that the created factory keeps the resolved blob alive?",
+      "revId": "cb227d67a205d87a95df1305ffcb7e464c176cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
