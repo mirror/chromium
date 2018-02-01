@@ -9,6 +9,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "components/rappor/public/rappor_utils.h"
@@ -113,6 +114,8 @@ const char kHistogramTimeToInteractive[] =
     "PageLoad.Experimental.NavigationToInteractive";
 const char kHistogramInteractiveToInteractiveDetection[] =
     "PageLoad.Internal.InteractiveToInteractiveDetection";
+const char kHistogramFirstInputDelay[] =
+    "PageLoad.InteractiveTiming.FirstInputDelay";
 const char kHistogramParseStartToFirstMeaningfulPaint[] =
     "PageLoad.Experimental.PaintTiming.ParseStartToFirstMeaningfulPaint";
 const char kHistogramParseStartToFirstContentfulPaint[] =
@@ -527,6 +530,13 @@ void CorePageLoadMetricsObserver::OnPageInteractive(
   PAGE_LOAD_HISTOGRAM(internal::kHistogramInteractiveToInteractiveDetection,
                       interactive_to_detection);
   RecordTimeToInteractiveStatus(internal::TIME_TO_INTERACTIVE_RECORDED);
+}
+
+void CorePageLoadMetricsObserver::OnFirstInputDelayInPage(
+    const page_load_metrics::mojom::PageLoadTiming& timing,
+    const page_load_metrics::PageLoadExtraInfo& extra_info) {
+  UMA_HISTOGRAM_TIMES(internal::kHistogramFirstInputDelay,
+                      timing.interactive_timing->first_input_delay.value());
 }
 
 void CorePageLoadMetricsObserver::OnParseStart(
