@@ -14,12 +14,6 @@
 
 namespace metrics {
 
-namespace {
-
-const base::TimeDelta kZeroTime = base::TimeDelta::FromSeconds(0);
-
-}  // namespace
-
 ChromeVisibilityObserver::ChromeVisibilityObserver() : weak_factory_(this) {
   BrowserList::AddObserver(this);
   InitVisibilityGapTimeout();

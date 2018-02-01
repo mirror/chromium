@@ -16,8 +16,6 @@ namespace {
 DesktopSessionDurationTracker* g_desktop_session_duration_tracker_instance =
     nullptr;
 
-const base::TimeDelta kZeroTime = base::TimeDelta::FromSeconds(0);
-
 }  // namespace
 
 // static

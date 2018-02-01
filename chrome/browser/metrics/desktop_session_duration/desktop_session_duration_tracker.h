@@ -15,6 +15,8 @@
 
 namespace metrics {
 
+constexpr base::TimeDelta kZeroTime = base::TimeDelta::FromSeconds(0);
+
 // Class for tracking and recording session length on desktop based on browser
 // visibility, audio and user interaction.
 class DesktopSessionDurationTracker : public AudibleContentsTracker::Observer {
