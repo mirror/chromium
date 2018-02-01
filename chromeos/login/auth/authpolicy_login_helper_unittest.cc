@@ -60,7 +60,7 @@ TEST(AuthPolicyLoginHelper, JoinFollowedByRefreshDevicePolicy) {
       std::make_unique<FakeCryptohomeClient>());
   AuthPolicyLoginHelper helper;
   helper.JoinAdDomain(std::string(), std::string(), std::string(),
-                      std::string(),
+                      std::string(), std::string(),
                       base::BindOnce([](authpolicy::ErrorType error,
                                         const std::string& domain) {
                         EXPECT_EQ(authpolicy::ERROR_NONE, error);

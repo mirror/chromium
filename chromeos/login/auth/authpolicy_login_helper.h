@@ -11,6 +11,7 @@
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/values.h"
 #include "chromeos/dbus/auth_policy_client.h"
 
 namespace chromeos {
@@ -40,6 +41,8 @@ class CHROMEOS_EXPORT AuthPolicyLoginHelper {
   // Checks if device is locked for Active Directory management.
   static bool IsAdLocked();
 
+  static std::unique_ptr<base::ListValue> GetEncryptionTypesList();
+
   // Sets install attributes for Active Directory managed device. Persists it on
   // disk.
   static bool LockDeviceActiveDirectoryForTesting(const std::string& realm);
@@ -55,6 +58,7 @@ class CHROMEOS_EXPORT AuthPolicyLoginHelper {
   // get) D-BUS response.
   void JoinAdDomain(const std::string& machine_name,
                     const std::string& distinguished_name,
+                    const std::string& encryption_types,
                     const std::string& username,
                     const std::string& password,
                     JoinCallback callback);

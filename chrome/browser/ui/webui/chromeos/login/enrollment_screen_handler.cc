@@ -438,6 +438,14 @@ void EnrollmentScreenHandler::DeclareLocalizedValues(
                IDS_ENTERPRISE_ENROLLMENT_KIOSK_LICENSE_TYPE);
   builder->Add("licenseCountTemplate",
                IDS_ENTERPRISE_ENROLLMENT_LICENSES_REMAINING_TEMPLATE);
+
+  builder->Add("selectEncryption", IDS_AD_ENCRYPTION_SELECTION_SELECT);
+}
+
+void EnrollmentScreenHandler::GetAdditionalParameters(
+    base::DictionaryValue* parameters) {
+  parameters->Set("encryptionTypesList",
+                  AuthPolicyLoginHelper::GetEncryptionTypesList());
 }
 
 bool EnrollmentScreenHandler::IsOnEnrollmentScreen() const {
@@ -574,13 +582,14 @@ void EnrollmentScreenHandler::HandleCompleteLogin(
 void EnrollmentScreenHandler::HandleAdCompleteLogin(
     const std::string& machine_name,
     const std::string& distinguished_name,
+    const std::string& encryption_types,
     const std::string& user_name,
     const std::string& password) {
   observe_network_failure_ = false;
   DCHECK(controller_);
   DCHECK(authpolicy_login_helper_);
   authpolicy_login_helper_->JoinAdDomain(
-      machine_name, distinguished_name, user_name, password,
+      machine_name, distinguished_name, encryption_types, user_name, password,
       base::BindOnce(&EnrollmentScreenHandler::HandleAdDomainJoin,
                      weak_ptr_factory_.GetWeakPtr(), machine_name, user_name));
 }
@@ -638,6 +647,9 @@ void EnrollmentScreenHandler::HandleAdDomainJoin(
       return;
     case authpolicy::ERROR_SETTING_OU_FAILED:
       ShowError(IDS_AD_OU_SETTING_FAILED, true);
+      return;
+    case authpolicy::ERROR_KDC_DOES_NOT_SUPPORT_ENCRYPTION_TYPE:
+      ShowError(IDS_AD_NOT_SUPPORTED_ENCRYPTION, true);
       return;
 #if !defined(ARCH_CPU_X86_64)
     // Currently, the Active Directory integration is only supported on x86_64

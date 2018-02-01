@@ -25,9 +25,9 @@ Polymer({
      */
     disabled: {type: Boolean, value: false, observer: 'disabledChanged_'},
     /**
-     * Whether to show machine name input field.
+     * Whether the screen is for domain join.
      */
-    showMachineInput: {type: Boolean, value: false},
+    isDomainJoin: {type: Boolean, value: false},
     /**
      * The kerberos realm (AD Domain), the machine is part of.
      */
@@ -53,6 +53,9 @@ Polymer({
   /** @private Used for 'More options' dialog. */
   storedOrgUnit: String,
 
+  /** @private Used for 'More options' dialog. */
+  storedEncryptionIndex: Number,
+
   /** @private */
   realmChanged_: function() {
     this.adWelcomeMessage =
@@ -64,8 +67,15 @@ Polymer({
     this.$.gaiaCard.classList.toggle('disabled', this.disabled);
   },
 
+  ready: function() {
+    if (!this.isDomainJoin)
+      return;
+    Oobe.setupSelect(
+        this.$.encryptionList, loadTimeData.getValue('encryptionTypesList'));
+  },
+
   focus: function() {
-    if (this.showMachineInput &&
+    if (this.isDomainJoin &&
         /** @type {string} */ (this.$.machineNameInput.value) == '') {
       this.$.machineNameInput.focus();
     } else if (/** @type {string} */ (this.$.userInput.value) == '') {
@@ -119,7 +129,7 @@ Polymer({
 
   /** @private */
   onSubmit_: function() {
-    if (this.showMachineInput && !this.$.machineNameInput.checkValidity())
+    if (this.isDomainJoin && !this.$.machineNameInput.checkValidity())
       return;
     if (!this.$.userInput.checkValidity())
       return;
@@ -134,6 +144,10 @@ Polymer({
       'username': user,
       'password': this.$.passwordInput.value
     };
+    if (this.isDomainJoin) {
+      var select = this.$.encryptionList;
+      msg['encryption_types'] = select.options[select.selectedIndex].value;
+    }
     this.$.passwordInput.value = '';
     this.fire('authCompleted', msg);
   },
@@ -143,6 +157,7 @@ Polymer({
     this.disabled = true;
     this.fire('dialogShown');
     this.storedOrgUnit = this.$.orgUnitInput.value;
+    this.storedEncryptionIndex = this.$.encryptionList.selectedIndex;
     this.$$('#moreOptionsDlg').showModal();
     this.$$('#gaiaCard').classList.add('full-disabled');
   },
@@ -150,6 +165,7 @@ Polymer({
   /** @private */
   onMoreOptionsConfirmTap_: function() {
     this.storedOrgUnit = null;
+    this.storedEncryptionIndex = -1;
     this.$$('#moreOptionsDlg').close();
   },
 
@@ -162,6 +178,8 @@ Polymer({
   onMoreOptionsClosed_: function() {
     if (this.storedOrgUnit)
       this.$.orgUnitInput.value = this.storedOrgUnit;
+    if (this.storedEncryptionIndex != -1)
+      this.$.encryptionList.selectedIndex = this.storedEncryptionIndex;
     this.fire('dialogHidden');
     this.disabled = false;
     this.$$('#gaiaCard').classList.remove('full-disabled');

@@ -4271,6 +4271,9 @@
   <message name="IDS_AD_ORG_UNIT_HINT" desc="Hint for the Active Directory Organizational units input on the 'More options' dialog.">
     Computer OU (e.g. OU=Chromebooks,DC=example,DC=com)
   </message>
+  <message name="IDS_AD_ENCRYPTION_SELECTION_SELECT" desc="Title for kerberos encryption types selection.">
+    Select encryption types
+  </message>
   <message name="IDS_AD_CONFIRM_BUTTON" desc="Text on the 'Confirm' button on the 'More options' dialog.">
     Confirm
   </message>
@@ -4312,6 +4315,9 @@
   </message>
   <message name="IDS_AD_OU_SETTING_FAILED" desc="Alert message that user could not join the machine to specified organizational unit due to unknown reason.">
     Failed to join the machine to the domain. This might be due to issues with the organizational unit.
+  </message>
+  <message name="IDS_AD_NOT_SUPPORTED_ENCRYPTION" desc="Alert message that user could not join the machine to due to not supported encryption types.">
+    Failed to join the machine to the domain. The server does not support specified Kerberos encryption types.
   </message>
   <message name="IDS_AD_BOARD_NOT_SUPPORTED" desc="Alert message that the Chromebook model is not supported for Active Directory">
     Chrome <ph name="MS_AD_NAME">Microsoft® Active Directory®</ph> integration is only supported on x86_64 platforms. Chromebooks built on top of an ARM or x86 platform do not support this functionality.
