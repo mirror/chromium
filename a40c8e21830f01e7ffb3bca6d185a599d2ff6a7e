@@ -37,6 +37,92 @@
     },
     {
       "key": {
+        "uuid": "a8f694b9_2a5fbc64",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T19:42:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a07e5d60_6b58dd40",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ddf8867_20c3dc8f",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T19:42:49Z",
+      "side": 1,
+      "message": "Add dest\u003d\u0027isolate_map_files\u0027 and switch uses of args.isolate_map_file accordingly.",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb77790_b126aa26",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T19:42:49Z",
+      "side": 1,
+      "message": "This block is doing a bit more than it should. How about reworking it to:\n\n  if not self.args.isolate_map_files:\n    self.args.isolate_map_files \u003d [self.default_isolate_map]\n\n  for f in self.args.isolate_map_files:\n    if not self.Exists(f):\n      raise MBErr(\u0027isolate map file not found at %s\u0027 % f)",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12192961_629606d4",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T19:42:49Z",
+      "side": 1,
+      "message": "nit: simplify this \u0026 rework error reporting a bit by doing\n\n  isolate_maps \u003d {}\n  for isolate_map in self.args.isolate_map_files:\n    try:\n      isolate_maps.update(ast.literal_eval(self.ReadFile(isolate_map)))\n    except SyntaxError as e:\n      raise MBErr(\u0027Failed to parse isolate map file \"%s\": %s\u0027 % (isolate_map, e))\n  return isolate_maps",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5c5218_bc2f2246",
+        "filename": "tools/mb/mb_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-01T19:42:49Z",
+      "side": 1,
+      "message": "I would add a separate test for this rather than bolting it onto an existing test.",
+      "revId": "a40c8e21830f01e7ffb3bca6d185a599d2ff6a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffdad408_0584aff6",
         "filename": "tools/mb/mb_unittest.py",
         "patchSetId": 2
