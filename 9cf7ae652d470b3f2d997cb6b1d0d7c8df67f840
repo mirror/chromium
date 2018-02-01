@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "84c90291_1b975226",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-01T05:16:01Z",
+      "side": 1,
+      "message": "Sorry, the second block should read SetRGBARawNEON().\n\nLike:\n#if defined(ARM) || defined(RGBA_UTEST_ENABLED)\nvoid SetRGBARawRowNeon(...)\n#endif",
+      "parentUuid": "46ba9d86_90765a77",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25d5eeb1_693b6d18",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
