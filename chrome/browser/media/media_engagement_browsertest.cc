@@ -14,11 +14,17 @@
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 #include "chrome/browser/media/media_engagement_preloaded_list.h"
 #include "chrome/browser/media/media_engagement_service.h"
+#include "chrome/browser/prerender/prerender_handle.h"
+#include "chrome/browser/prerender/prerender_manager.h"
+#include "chrome/browser/prerender/prerender_manager_factory.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/component_updater/component_updater_service.h"
+#include "content/public/browser/notification_service.h"
+#include "content/public/browser/notification_types.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/browser_test_utils.h"
 #include "media/base/media_switches.h"
@@ -606,4 +612,52 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementPreloadBrowserTest,
 
   // The list should be loaded now.
   EXPECT_TRUE(MediaEngagementPreloadedList::GetInstance()->loaded());
+}
+
+class MediaEngagementPrerenderBrowserTest : public MediaEngagementBrowserTest {
+ public:
+  void SetUpOnMainThread() override {
+    MediaEngagementBrowserTest::SetUpOnMainThread();
+
+    prerender::PrerenderManager::SetOmniboxMode(
+        prerender::PrerenderManager::PRERENDER_MODE_ENABLED);
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(MediaEngagementPrerenderBrowserTest, Ignored) {
+  const GURL& url = http_server().GetURL("/engagement_test.html");
+
+  prerender::PrerenderManager* prerender_manager =
+      prerender::PrerenderManagerFactory::GetForBrowserContext(
+          browser()->profile());
+  ASSERT_TRUE(prerender_manager);
+
+  std::unique_ptr<prerender::PrerenderHandle> prerender_handle;
+
+  // Start the preload and wait for the page to be fully loaded.
+  {
+    content::WindowedNotificationObserver page_observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::NotificationService::AllSources());
+
+    prerender_handle = prerender_manager->AddPrerenderFromOmnibox(
+        url,
+        GetWebContents()->GetController().GetDefaultSessionStorageNamespace(),
+        gfx::Size(640, 480));
+
+    page_observer.Wait();
+  }
+
+  // Force the WebContents to shut down and wait so MEI will kick in.
+  {
+    content::WindowedNotificationObserver destroy_observer(
+        content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
+        content::NotificationService::AllSources());
+
+    prerender_handle->contents()->prerender_contents()->ClosePage();
+
+    destroy_observer.Wait();
+  }
+
+  ExpectScores(0, 0, 0, 0);
 }

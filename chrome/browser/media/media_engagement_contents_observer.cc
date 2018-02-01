@@ -11,6 +11,7 @@
 #include "chrome/browser/media/media_engagement_preloaded_list.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "chrome/browser/media/media_engagement_session.h"
+#include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
@@ -153,6 +154,10 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
       navigation_handle->IsSameDocument() || navigation_handle->IsErrorPage()) {
     return;
   }
+
+  // Ignore navigations coming from the prerenderer.
+  if (prerender::PrerenderContents::FromWebContents(web_contents()))
+    return;
 
   RegisterAudiblePlayersWithSession();
   ClearPlayerStates();
