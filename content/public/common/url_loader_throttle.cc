@@ -12,6 +12,10 @@ void URLLoaderThrottle::Delegate::SetPriority(net::RequestPriority priority) {}
 void URLLoaderThrottle::Delegate::PauseReadingBodyFromNet() {}
 void URLLoaderThrottle::Delegate::ResumeReadingBodyFromNet() {}
 
+void URLLoaderThrottle::Delegate::CancelWithError(int error_code) {
+  CancelWithErrorAndCustomReason(error_code, base::nullopt);
+}
+
 URLLoaderThrottle::Delegate::~Delegate() {}
 
 URLLoaderThrottle::~URLLoaderThrottle() {}

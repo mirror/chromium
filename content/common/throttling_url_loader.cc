@@ -19,12 +19,14 @@ class ThrottlingURLLoader::ForwardingThrottleDelegate
   ~ForwardingThrottleDelegate() override = default;
 
   // URLLoaderThrottle::Delegate:
-  void CancelWithError(int error_code) override {
+  void CancelWithErrorAndCustomReason(
+      int error_code,
+      const base::Optional<std::string>& custom_reason) override {
     if (!loader_)
       return;
 
     ScopedDelegateCall scoped_delegate_call(this);
-    loader_->CancelWithError(error_code);
+    loader_->CancelWithError(error_code, custom_reason);
   }
 
   void Resume() override {
@@ -183,12 +185,6 @@ void ThrottlingURLLoader::SetPriority(net::RequestPriority priority,
   }
 
   url_loader_->SetPriority(priority, intra_priority_value);
-}
-
-void ThrottlingURLLoader::DisconnectClient() {
-  client_binding_.Close();
-  url_loader_ = nullptr;
-  loader_cancelled_ = true;
 }
 
 network::mojom::URLLoaderClientEndpointsPtr ThrottlingURLLoader::Unbind() {
@@ -418,7 +414,7 @@ void ThrottlingURLLoader::OnComplete(
   // This is the last expected message. Pipe closure before this is an error
   // (see OnClientConnectionError). After this it is expected and should be
   // ignored.
-  DisconnectClient();
+  DisconnectClient(base::nullopt);
   forwarding_client_->OnComplete(status);
 }
 
@@ -427,10 +423,12 @@ void ThrottlingURLLoader::OnClientConnectionError() {
   // browser-side navigation this error on async loads will confuse the loading
   // of cross-origin iframes.
   if (is_synchronous_ || content::IsBrowserSideNavigationEnabled())
-    CancelWithError(net::ERR_ABORTED);
+    CancelWithError(net::ERR_ABORTED, base::nullopt);
 }
 
-void ThrottlingURLLoader::CancelWithError(int error_code) {
+void ThrottlingURLLoader::CancelWithError(
+    int error_code,
+    const base::Optional<std::string>& custom_description) {
   if (loader_cancelled_)
     return;
 
@@ -439,7 +437,7 @@ void ThrottlingURLLoader::CancelWithError(int error_code) {
   status.completion_time = base::TimeTicks::Now();
 
   deferred_stage_ = DEFERRED_NONE;
-  DisconnectClient();
+  DisconnectClient(custom_description);
   forwarding_client_->OnComplete(status);
 }
 
@@ -500,6 +498,21 @@ void ThrottlingURLLoader::ResumeReadingBodyFromNet(
   pausing_reading_body_from_net_throttles_.erase(iter);
   if (pausing_reading_body_from_net_throttles_.empty() && url_loader_)
     url_loader_->ResumeReadingBodyFromNet();
+}
+
+void ThrottlingURLLoader::DisconnectClient(
+    const base::Optional<std::string>& custom_description) {
+  client_binding_.Close();
+
+  if (custom_description) {
+    url_loader_.ResetWithReason(
+        network::mojom::URLLoader::kClientDisconnectReason,
+        custom_description.value());
+  } else {
+    url_loader_ = nullptr;
+  }
+
+  loader_cancelled_ = true;
 }
 
 ThrottlingURLLoader::ThrottleEntry::ThrottleEntry(

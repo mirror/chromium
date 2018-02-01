@@ -5,6 +5,9 @@
 #ifndef CONTENT_PUBLIC_COMMON_URL_LOADER_THROTTLE_H_
 #define CONTENT_PUBLIC_COMMON_URL_LOADER_THROTTLE_H_
 
+#include <string>
+
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/public/common/resource_type.h"
 #include "net/base/request_priority.h"
@@ -41,8 +44,11 @@ class CONTENT_EXPORT URLLoaderThrottle {
   // synchronously.
   class CONTENT_EXPORT Delegate {
    public:
-    // Cancels the resource load with the specified error code.
-    virtual void CancelWithError(int error_code) = 0;
+    // Cancels the resource load with the specified error code and optional
+    // reason description.
+    virtual void CancelWithErrorAndCustomReason(
+        int error_code,
+        const base::Optional<std::string>& custom_reason) = 0;
 
     // Resumes the deferred resource load. It is a no-op if the resource load is
     // not deferred or has already been canceled.
@@ -54,6 +60,10 @@ class CONTENT_EXPORT URLLoaderThrottle {
     // network.
     virtual void PauseReadingBodyFromNet();
     virtual void ResumeReadingBodyFromNet();
+
+    // A convenient helper to call CancelWithErrorAndCustomReason() with no
+    // custom reason.
+    void CancelWithError(int error_code);
 
    protected:
     virtual ~Delegate();
