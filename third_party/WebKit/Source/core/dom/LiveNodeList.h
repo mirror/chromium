@@ -42,9 +42,10 @@ class CORE_EXPORT LiveNodeList : public NodeList, public LiveNodeListBase {
   LiveNodeList(ContainerNode& owner_node,
                CollectionType collection_type,
                NodeListInvalidationType invalidation_type,
-               NodeListRootType root_type = NodeListRootType::kNode)
+               NodeListItemsRelationWithOwner items_relation_with_owner =
+                   NodeListItemsRelationWithOwner::kDescendants)
       : LiveNodeListBase(owner_node,
-                         root_type,
+                         items_relation_with_owner,
                          invalidation_type,
                          collection_type) {
     // Keep this in the child class because |registerNodeList| requires wrapper

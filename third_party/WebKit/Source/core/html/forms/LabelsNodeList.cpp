@@ -37,7 +37,7 @@ LabelsNodeList::LabelsNodeList(ContainerNode& owner_node)
     : LiveNodeList(owner_node,
                    kLabelsNodeListType,
                    kInvalidateForFormControls,
-                   NodeListRootType::kTreeScope) {}
+                   NodeListItemsRelationWithOwner::kAny) {}
 
 LabelsNodeList::~LabelsNodeList() = default;
 
