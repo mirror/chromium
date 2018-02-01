@@ -104,6 +104,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void OnMediaControlsEnabledChange() override {
     // There is no update because only the overlay is expected to change.
     RefreshCastButtonVisibilityWithoutUpdate();
+    RefreshPictureInPictureButtonVisibilityWithoutUpdate();
   }
 
   // Called by the fullscreen buttons to toggle fulllscreen on/off.
@@ -254,6 +255,10 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   bool WillRespondToMouseMoveEvents() override { return true; }
   void DefaultEventHandler(Event*) override;
   bool ContainsRelatedTarget(Event*);
+
+  // Internal Picture-in-Picture related methods.
+  void RefreshPictureInPictureButtonVisibility();
+  void RefreshPictureInPictureButtonVisibilityWithoutUpdate();
 
   // Internal cast related methods.
   void RemotePlaybackStateChanged();
