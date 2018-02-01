@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "318ee298_a8de8bb0",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T13:59:36Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t have the read access to the PR and thus hard to capture the discussion there.\nIt would be great if you could help me on the exact wording here, or a follow-up CL to update the comments.",
+      "parentUuid": "a2a137d0_b8083d44",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f55cabb_f5133cfb",
         "filename": "components/cbor/cbor_values.h",
         "patchSetId": 5
@@ -74,6 +92,24 @@
       "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b513bf_2e31fd18",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T13:59:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f55cabb_f5133cfb",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -149,6 +185,24 @@
       "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174bfe3_a8ce9313",
+        "filename": "components/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-01T13:59:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15b9100e_92f5af76",
+      "revId": "f6a293f9ed1e1de7153fe0084edb5bd01c3fdf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
