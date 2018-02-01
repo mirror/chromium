@@ -1514,6 +1514,25 @@ COMMON_GTESTS = {
       },
     ],
   },
+  # The gles1_conform_tests are closed-source and deliberately only run
+  # on the FYI waterfall.
+  'angle_gles1_conformance_tests': {
+    'tester_configs': [
+      {
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_ONLY,
+        'os_types': ['win', 'linux'],
+      }
+    ],
+    'disabled_tester_configs': [
+      {
+        'names': [
+          'Linux Ozone (Intel)',
+        ],
+      },
+    ],
+    'args': ['--use-gpu-in-tests', ]
+  },
   # The gles2_conform_tests are closed-source and deliberately only run
   # on the FYI waterfall and the optional tryservers.
   'gles2_conform_test': {
