@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "553f7157_805d28c5",
+        "filename": "ash/wm/overview/overview_window_mask.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-01T22:05:45Z",
+      "side": 1,
+      "message": "does scale change on the fly during the lifetime of this window mask? if not,\nyou may just pass the scale (or 1,1 for on scale)",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a7414f_7ea582e8",
+        "filename": "ash/wm/overview/overview_window_mask.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-01T22:05:45Z",
+      "side": 1,
+      "message": "is it possible to use PaintedLayer + Painter + SolidRoundRectPainter?\n\nhttps://cs.chromium.org/chromium/src/ui/views/painter.cc?rcl\u003d94f07a46b5ec3f38a29ec095a06b8ea967ce9173\u0026l\u003d317\n\nhttps://cs.chromium.org/chromium/src/ui/views/painter.cc?rcl\u003d94f07a46b5ec3f38a29ec095a06b8ea967ce9173\u0026l\u003d47",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd89a433_a08c5dc1",
         "filename": "ash/wm/overview/overview_window_mask.h",
         "patchSetId": 6
@@ -64,6 +98,40 @@
       "writtenOn": "2018-02-01T18:27:02Z",
       "side": 1,
       "message": "Can this be calculated from |top_inset_| in OverviewWindowMask? If not, can it be a variable in OverviewWindowMask?",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f8bfe2_501753e3",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-01T22:05:45Z",
+      "side": 1,
+      "message": "there is no |window| in this scope. Is it transform_window_.window() ?\nHow hard to put the backdrop under the window instead of using mask?",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbfed79_98af4e8d",
+        "filename": "ash/wm/overview/window_selector_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-01T22:05:45Z",
+      "side": 1,
+      "message": "DisableBackdrop()\nEnableBackdropIfNeeded(int offset);\n\nmay be cleaner?",
       "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
