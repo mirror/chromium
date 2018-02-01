@@ -10,9 +10,13 @@
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/strings/string16.h"
+#include "components/offline_pages/core/move_and_add_results.h"
+#include "components/offline_pages/core/offline_page_item.h"
 #include "url/gurl.h"
 
 namespace offline_pages {
+
+class SystemDownloadManager;
 
 // Interface of a class responsible for creation of the archive for offline use.
 //
@@ -86,6 +90,14 @@ class OfflinePageArchiver {
   virtual void CreateArchive(const base::FilePath& archives_dir,
                              const CreateArchiveParams& create_archive_params,
                              const CreateArchiveCallback& callback) = 0;
+
+  // Move the page to a public directory, and add the page to any system
+  // download manager (for instance, on android).  Results will be put into
+  // the move_results object.
+  static void PublishPage(OfflinePageItem offline_page,
+                          const base::FilePath public_directory,
+                          SystemDownloadManager* download_manager,
+                          scoped_refptr<MoveAndAddResults> move_results);
 };
 
 }  // namespace offline_pages

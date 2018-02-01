@@ -35,6 +35,7 @@
 #include "components/offline_pages/core/model/offline_page_model_taskified.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h"
+#include "components/offline_pages/core/system_download_manager_stub.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
 #include "content/public/browser/browser_thread.h"
@@ -94,6 +95,8 @@ const char kPageSizeAccessOfflineHistogramBase[] =
     "OfflinePages.PageSizeOnAccess.Offline.";
 const char kPageSizeAccessOnlineHistogramBase[] =
     "OfflinePages.PageSizeOnAccess.Online.";
+
+const int64_t kDownloadId = 42LL;
 
 class OfflinePageRequestJobTestDelegate
     : public OfflinePageRequestJob::Delegate {
@@ -315,11 +318,13 @@ std::unique_ptr<KeyedService> BuildTestOfflinePageModel(
   std::unique_ptr<ArchiveManager> archive_manager(
       new ArchiveManager(private_archives_dir, private_archives_dir,
                          public_archives_dir, task_runner));
+  std::unique_ptr<SystemDownloadManager> download_manager(
+      new SystemDownloadManagerStub(kDownloadId, true));
   std::unique_ptr<base::Clock> clock(new base::DefaultClock);
 
   return std::unique_ptr<KeyedService>(new OfflinePageModelTaskified(
-      std::move(metadata_store), std::move(archive_manager), task_runner,
-      std::move(clock)));
+      std::move(metadata_store), std::move(archive_manager),
+      std::move(download_manager), task_runner, std::move(clock)));
 }
 
 // Helper function to make a character array filled with |size| bytes of
