@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "fa901e48_17eaca6b",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-01T00:22:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c71fee9d_29424b65",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0609a7e6_5966e0e9",
         "filename": "chrome/browser/extensions/window_controller.h",
         "patchSetId": 3
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "I don\u0027t think that visibility (i.e., whether or not an extension can \"see\" a window) should be based on a passed-in filter that the extension specifies.  It so happens that it currently *is*, but I think that\u0027s largely a bug, and I hope to eventually remove this, if possible.  In the meantime, I\u0027d prefer callers to explicitly know whether they are allowing the extension to see dev tools windows, rather than adding/subtracting them through a default value, and I\u0027d prefer to not further conflate an optional filter with privilege.  I also don\u0027t quite think that we should have a filter arg here, since it would greatly ambiguate the difference between this and MatchesFilter() below.",
       "parentUuid": "0609a7e6_5966e0e9",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af931818_b1b64333",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-01T00:22:06Z",
+      "side": 1,
+      "message": "Yeah, I was hoping MatchesFilter could be made private then, but this is fine if you plan on removing the bool parameter subsequently.",
+      "parentUuid": "607da4fb_7ee8dad7",
       "range": {
         "startLine": 108,
         "startChar": 11,
