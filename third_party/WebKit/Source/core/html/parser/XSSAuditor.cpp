@@ -432,7 +432,7 @@ void XSSAuditor::Init(Document* document,
         xss_protection_header = kReflectedXSSInvalid;
         xss_protection_report_url = KURL();
       }
-      if (MixedContentChecker::IsMixedContent(document->GetSecurityOrigin(),
+      else if (MixedContentChecker::IsMixedContent(document->GetSecurityOrigin(),
                                               xss_protection_report_url)) {
         error_details = "insecure reporting URL for secure page";
         xss_protection_header = kReflectedXSSInvalid;
