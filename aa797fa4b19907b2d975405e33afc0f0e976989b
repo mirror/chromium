@@ -93,6 +93,30 @@
       "revId": "aa797fa4b19907b2d975405e33afc0f0e976989b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadf0b26_7fc798bd",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-01T14:58:09Z",
+      "side": 1,
+      "message": "1. It\u0027s a nit, so feel free to pass on this suggestion.\n2. It will work fine. In the past, some reviewers more experienced than me have asked me to use std::string(), so I\u0027m just passing that suggestion to you. Note that \"\" is used a lot in the codebase so it\u0027s OK to use it.",
+      "parentUuid": "3ea46ed0_78a70d63",
+      "range": {
+        "startLine": 864,
+        "startChar": 39,
+        "endLine": 864,
+        "endChar": 40
+      },
+      "revId": "aa797fa4b19907b2d975405e33afc0f0e976989b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
