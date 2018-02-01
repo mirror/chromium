@@ -60,36 +60,20 @@ namespace {
 
 // Converts the composite property of a BasePropertyIndexedKeyframe into a
 // vector of EffectModel::CompositeOperation enums.
-//
-// If the composite property cannot be extracted or parsed for some reason, an
-// exception will be thrown in |exception_state|.
 Vector<EffectModel::CompositeOperation> ParseCompositeProperty(
-    const BasePropertyIndexedKeyframe& keyframe,
-    ExceptionState& exception_state) {
+    const BasePropertyIndexedKeyframe& keyframe) {
   const CompositeOperationOrCompositeOperationSequence& composite =
       keyframe.composite();
   if (composite.IsCompositeOperation()) {
-    EffectModel::CompositeOperation composite_operation;
-    if (!EffectModel::StringToCompositeOperation(
-            composite.GetAsCompositeOperation(), composite_operation,
-            &exception_state)) {
-      DCHECK(exception_state.HadException());
-      return {};
-    }
-    return {composite_operation};
+    return {EffectModel::StringToCompositeOperation(
+        composite.GetAsCompositeOperation())};
   }
 
   Vector<EffectModel::CompositeOperation> result;
   for (const String& composite_operation_string :
        composite.GetAsCompositeOperationSequence()) {
-    EffectModel::CompositeOperation composite_operation;
-    if (!EffectModel::StringToCompositeOperation(composite_operation_string,
-                                                 composite_operation,
-                                                 &exception_state)) {
-      DCHECK(exception_state.HadException());
-      return {};
-    }
-    result.push_back(composite_operation);
+    result.push_back(
+        EffectModel::StringToCompositeOperation(composite_operation_string));
   }
   return result;
 }
@@ -167,11 +151,8 @@ KeyframeEffectModelBase* CreateEffectModel(
               kNotSupportedError, "Partial keyframes are not supported.");
           return nullptr;
         }
-        if (keyframe->Composite() != EffectModel::kCompositeReplace) {
-          exception_state.ThrowDOMException(
-              kNotSupportedError, "Additive animations are not supported.");
-          return nullptr;
-        }
+        // This should be enforced by EffectModel::StringToCompositeOperation.
+        DCHECK(keyframe->Composite() == EffectModel::kCompositeReplace);
       }
     }
   }
@@ -328,13 +309,8 @@ KeyframeEffectModelBase* EffectInput::ConvertArrayForm(
     }
 
     if (processed_keyframe.base_keyframe.hasComposite()) {
-      EffectModel::CompositeOperation composite_operation;
-      if (!EffectModel::StringToCompositeOperation(
-              processed_keyframe.base_keyframe.composite(), composite_operation,
-              &exception_state)) {
-        return nullptr;
-      }
-      keyframe->SetComposite(composite_operation);
+      keyframe->SetComposite(EffectModel::StringToCompositeOperation(
+          processed_keyframe.base_keyframe.composite()));
     }
 
     // 8.1. For each property-value pair in frame, parse the property value
@@ -440,9 +416,7 @@ KeyframeEffectModelBase* EffectInput::ConvertObjectForm(
     easings = property_indexed_keyframe.easing().GetAsStringSequence();
 
   Vector<EffectModel::CompositeOperation> composite_operations =
-      ParseCompositeProperty(property_indexed_keyframe, exception_state);
-  if (exception_state.HadException())
-    return nullptr;
+      ParseCompositeProperty(property_indexed_keyframe);
 
   // Next extract all animatable properties from the input argument and iterate
   // through them, processing each as a list of values for that property. This

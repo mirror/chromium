@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<title>Tests for parsing keyframe-specific composite values under blink feature flags</title>
+
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<div id="tester"></div>
+
+<script>
+function disableFeatureForTest(t, featureName) {
+  const featureNameOld = internals.runtimeFlags[featureName];
+  internals.runtimeFlags[featureName] = false;
+  t.add_cleanup(() => {
+    internals.runtimeFlags[featureName] = featureNameOld;
+  });
+}
+
+test(t => {
+  disableFeatureForTest(t, 'cssAdditiveAnimationsEnabled');
+  disableFeatureForTest(t, 'webAnimationsAPIEnabled');
+
+  const tester = document.getElementById('tester');
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'replace' ] }, 1000);
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'add' ] }, 1000);
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'accumulate' ] }, 1000);
+
+  assert_throws(new TypeError(), function() {
+    tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'foo' ] }, 1000);
+  });
+}, 'In stable Chrome, valid composite values should not throw');
+
+test(t => {
+  disableFeatureForTest(t, 'webAnimationsAPIEnabled');
+
+  const tester = document.getElementById('tester');
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'replace' ] }, 1000);
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'add' ] }, 1000);
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'accumulate' ] }, 1000);
+
+  assert_throws(new TypeError(), function() {
+    tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'foo' ] }, 1000);
+  });
+}, 'When just CSSAdditiveAnimations is enabled, valid composite values should not throw');
+
+test(t => {
+  disableFeatureForTest(t, 'cssAdditiveAnimationsEnabled');
+
+  const tester = document.getElementById('tester');
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'replace' ] }, 1000);
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'add' ] }, 1000);
+  tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'accumulate' ] }, 1000);
+
+  assert_throws(new TypeError(), function() {
+    tester.animate({ backgroundColor: [ 'red', 'blue' ], composite: [ 'foo' ] }, 1000);
+  });
+}, 'When just WebAnimationsAPI is enabled, valid composite values should not throw');
+</script>
