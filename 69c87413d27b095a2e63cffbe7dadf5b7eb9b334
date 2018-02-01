@@ -22,6 +22,30 @@
       "revId": "69c87413d27b095a2e63cffbe7dadf5b7eb9b334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4ebc1f_03dac9a8",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-01T17:29:55Z",
+      "side": 0,
+      "message": "I\u0027ve updated the cl description to better explain the motivation for this change.\n\n|granularity| remains always set to TextGranularity::kCharacter when you use the keyboard to navigate. By FrameSelection\u0027s public interface |Granularity()| I would expect to contain the granularity of the current selection. Certainly, kCharacter seems wrong.",
+      "parentUuid": "00f8c97e_32521401",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 397,
+        "endChar": 47
+      },
+      "revId": "69c87413d27b095a2e63cffbe7dadf5b7eb9b334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

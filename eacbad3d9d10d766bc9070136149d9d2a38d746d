@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c78dad0_0205d8f9",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-01T17:29:55Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll do that and make this change a dependent one. Please provide pointers for where you want tests (e.g. layout tests directory/file).",
+      "parentUuid": "20ba17e9_5e312463",
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b0886f_7574bbdb",
         "filename": "third_party/WebKit/public/web/WebAXEnums.h",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-01T01:42:07Z",
       "side": 1,
       "message": "Please make this liet to include only following granularities for web\ncompatibility, Firefox \u003d\u003d subset of Blink/WebKit:\n\n\"character\", \"word\", \"sentence\", \"line\", \"paragraph\", \"lineboundary\", \"sentenceboundary\", \"paragraphboundary\", or \"documentboundary\".\n\nExcluding entries in above list are:\n\"sentence\", \"paragraph\", \"sentenceboundary\", \"paragraphboundary\", or \"documentboundary\"\n\nSee https://developer.mozilla.org/en-US/docs/Web/API/Selection/modify\n\nOr adding suffix \"Deprecated\" to them?",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 39
+      },
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d4cd0c_1f57f7c4",
+        "filename": "third_party/WebKit/public/web/WebAXEnums.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-01T17:29:55Z",
+      "side": 1,
+      "message": "Are we driven by FF compat? As explained in the change description, things like paragraph would be extremely helpful. Perhaps it would be useful to have a meeting.",
+      "parentUuid": "40b0886f_7574bbdb",
       "range": {
         "startLine": 344,
         "startChar": 0,
