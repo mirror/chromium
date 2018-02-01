@@ -39,8 +39,9 @@
 }
 
 - (void)executeHandler {
-  _serializedPasswordsHandler("test serialized passwords");
+  _serializedPasswordsHandler("test serialized passwords string");
 }
+
 @end
 
 @interface FakePasswordFileWriter : NSObject<FileWriterProtocol>
@@ -162,13 +163,13 @@ TEST_F(PasswordExporterTest, PasswordFileWriteAuthFailed) {
   }
   // Serializing passwords hasn't finished.
   EXPECT_FALSE(PasswordFileExists());
-  EXPECT_TRUE(password_exporter_.isExporting);
+  EXPECT_EQ(ExportState::ONGOING, password_exporter_.exportState);
 
   [fake_password_serializer_bridge executeHandler];
 
   // Serializing password has finished, but reauthentication was not successful.
   EXPECT_FALSE(PasswordFileExists());
-  EXPECT_FALSE(password_exporter_.isExporting);
+  EXPECT_EQ(ExportState::IDLE, password_exporter_.exportState);
 }
 
 TEST_F(PasswordExporterTest,
@@ -186,7 +187,6 @@ TEST_F(PasswordExporterTest,
   // Use @try/@catch as -reject raises an exception.
   @try {
     [password_exporter_ startExportFlow:CreatePasswordList()];
-
     // Wait for all asynchronous tasks to complete.
     scoped_task_environment_.RunUntilIdle();
     EXPECT_OCMOCK_VERIFY(password_exporter_delegate_);
@@ -197,6 +197,7 @@ TEST_F(PasswordExporterTest,
     GTEST_FAIL();
   }
   EXPECT_FALSE(PasswordFileExists());
+  [fake_password_serializer_bridge executeHandler];
 }
 
 TEST_F(PasswordExporterTest, WritingFailedOutOfDiskSpace) {
@@ -218,7 +219,7 @@ TEST_F(PasswordExporterTest, WritingFailedOutOfDiskSpace) {
   scoped_task_environment_.RunUntilIdle();
 
   EXPECT_OCMOCK_VERIFY(password_exporter_delegate_);
-  EXPECT_FALSE(password_exporter_.isExporting);
+  EXPECT_EQ(ExportState::IDLE, password_exporter_.exportState);
 }
 
 TEST_F(PasswordExporterTest, WritingFailedUnknownError) {
@@ -239,7 +240,37 @@ TEST_F(PasswordExporterTest, WritingFailedUnknownError) {
   scoped_task_environment_.RunUntilIdle();
 
   EXPECT_OCMOCK_VERIFY(password_exporter_delegate_);
-  EXPECT_FALSE(password_exporter_.isExporting);
+  EXPECT_EQ(ExportState::IDLE, password_exporter_.exportState);
 }
+
+TEST_F(PasswordExporterTest, CancelledBeforeSerializationFinished) {
+  mock_reauthentication_module_.shouldSucceed = YES;
+  FakePasswordSerialzerBridge* fake_password_serializer_bridge =
+      [[FakePasswordSerialzerBridge alloc] init];
+  [password_exporter_
+      setPasswordSerializerBridge:fake_password_serializer_bridge];
+
+  [[password_exporter_delegate_ reject]
+      showActivityViewWithActivityItems:[OCMArg any]
+                      completionHandler:[OCMArg any]];
+
+  // Use @try/@catch as -reject raises an exception.
+  @try {
+    [password_exporter_ startExportFlow:CreatePasswordList()];
+    // Wait for all asynchronous tasks to complete.
+    scoped_task_environment_.RunUntilIdle();
+    EXPECT_OCMOCK_VERIFY(password_exporter_delegate_);
+  } @catch (NSException* exception) {
+    // The exception is raised when
+    // - showActivityViewWithActivityItems:completionHandler:
+    // is invoked. As this should not happen, mark the test as failed.
+    GTEST_FAIL();
+  }
+  EXPECT_FALSE(PasswordFileExists());
+}
+
+TEST_F(PasswordExporterTest, CancelledBeforeWriteToFileFinished) {}
+
+TEST_F(PasswordExporterTest, CancelledBeforeActivityViewPresented) {}
 
 }  // namespace
