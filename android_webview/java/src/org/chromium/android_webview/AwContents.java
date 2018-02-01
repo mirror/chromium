@@ -88,6 +88,7 @@ import org.chromium.content_public.browser.navigation_controller.UserAgentOverri
 import org.chromium.content_public.common.BrowserSideNavigationPolicy;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.content_public.common.Referrer;
+import org.chromium.content_public.common.UseZoomForDSFPolicy;
 import org.chromium.device.gamepad.GamepadList;
 import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.ActivityWindowAndroid;
@@ -3366,10 +3367,16 @@ public class AwContents implements SmartClipProvider {
             if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                 // Note this will trigger IPC back to browser even if nothing is
                 // hit.
-                float dipScale = getDeviceScaleFactor();
-                nativeRequestNewHitTestDataAt(mNativeAwContents,
-                        event.getX() / dipScale, event.getY() / dipScale,
-                        Math.max(event.getTouchMajor(), event.getTouchMinor()) / dipScale);
+                float eventX = event.getX();
+                float eventY = event.getY();
+                float touchMajor = Math.max(event.getTouchMajor(), event.getTouchMinor());
+                if (!UseZoomForDSFPolicy.isUseZoomForDSFEnabled()) {
+                    float dipScale = getDeviceScaleFactor();
+                    eventX /= dipScale;
+                    eventY /= dipScale;
+                    touchMajor /= dipScale;
+                }
+                nativeRequestNewHitTestDataAt(mNativeAwContents, eventX, eventY, touchMajor);
             }
 
             if (mOverScrollGlow != null) {
