@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7035869_2c9d1b78",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:36:29Z",
+      "side": 1,
+      "message": "constexpr should work here (this helps guarantee that no compiler will make a static initializer)",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc456cd_0e8a4b9c",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:36:29Z",
+      "side": 1,
+      "message": "nit: #include callback_forward.h (% comment below)",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d443b3a8_22a61062",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:36:29Z",
+      "side": 1,
+      "message": "this should be passed by value (no \u0026) -- non-const ref args are banned",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88961829_6ebc8185",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:36:29Z",
+      "side": 1,
+      "message": "IMO, if nothing else is going to use this menu, it would be nicer to just store a weak pointer to ProfileChooserView.\n \n ProfileChooserView* chooser_;  // Weak. Owns this.\n\nthen make EnableSync() public and have ExecuteCommand call it directly (or move appropriate bits of EnableSync() into ExecuteCommand)\n\n\ndoing this avoids the typedef, the base::Unretained, and makes the relationships clearer.\n\n\nThis is OK too, but there should be a comment around base::Unretained(..) to say why it is safe use (i.e. task not PostTasked and ProfileChooserView owns the menu).",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c787990_f7e4654b",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:36:29Z",
+      "side": 1,
+      "message": "std::move(callback), or just inline the base::BindOnce here so it remains an rvalue",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
