@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29c6fbc8_03af5c20",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T19:24:08Z",
+      "side": 1,
+      "message": "nit: no content:: needed",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aae5901_471d21df",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T19:24:08Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beef0f13_21232256",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T19:24:08Z",
+      "side": 1,
+      "message": "is this safe? You are posting a task to read the download_item, can it get deleted before the task gets executed?",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866bbefd_c7c28382",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T19:24:08Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e80296_3a1068e7",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-01T19:24:08Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
