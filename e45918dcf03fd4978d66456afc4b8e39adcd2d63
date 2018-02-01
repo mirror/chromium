@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f53f83dd_d69df266",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T22:19:04Z",
+      "side": 1,
+      "message": "You\u0027re free now, semicolon!",
+      "parentUuid": "ecf22dbe_69c3beba",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 3
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c820a40f_2d945de8",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 31
@@ -45,6 +69,30 @@
       "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42b69af_6c10a7e8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T22:19:04Z",
+      "side": 1,
+      "message": "Whoa. Yeah. Not sure how this got down there. Rebase mistake? Thanks for catching that.",
+      "parentUuid": "c820a40f_2d945de8",
+      "range": {
+        "startLine": 2050,
+        "startChar": 13,
+        "endLine": 2050,
+        "endChar": 49
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "92233ae0_71c88193",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T22:19:04Z",
+      "side": 1,
+      "message": "Great idea to combine setting the parent sequence number and nonce.\nDone + combining with the child sequence.",
+      "parentUuid": "e79472bb_85e5fc8e",
+      "range": {
+        "startLine": 628,
+        "startChar": 26,
+        "endLine": 628,
+        "endChar": 59
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10635a13_1fb7667b",
         "filename": "ui/aura/local/window_port_local.cc",
         "patchSetId": 31
@@ -128,6 +200,30 @@
       "writtenOn": "2018-02-01T20:19:43Z",
       "side": 1,
       "message": "Same idea... something like\n\nSetLocalSurfaceId(parent_local_surface_id_allocator_.UpdateChildSequenceNumber(child_seq_#));",
+      "range": {
+        "startLine": 166,
+        "startChar": 37,
+        "endLine": 166,
+        "endChar": 62
+      },
+      "revId": "e45918dcf03fd4978d66456afc4b8e39adcd2d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f12a4b2_0a57df0d",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-01T22:19:04Z",
+      "side": 1,
+      "message": "I think this one might not be quite as lovely. Your suggestion indicates that when someone calls SetLocalSurfaceId(), they can use the returned value from UpdateChildSequenceNumber(). But at the point where we call SetLocalSurfaceId(), we don\u0027t have access to the parent allocator.\n\nTrying to merge the lines given this...\n\nI believe you are saying over at [1], where we call:\nwindow_-\u003eSetLocalSurfaceIdChildSequenceNumber(\n        id_for_auto_resize.child_sequence_number());\nwindow_-\u003eSetLocalSurfaceId(id_for_auto_resize);\n\nWe could instead call something like window_-\u003eSetLocalSurfaceId(window_-\u003eSetLocalSurfaceIdChildSequenceNumber(...));\n\n\n\nI think a better option would be window_-\u003eSetLocalSurfaceIdWithNewChildSequenceNumber(id_for_auto_resize);\nIf this fits what you meant I\u0027ll go ahead with it.\n\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/861643/35/content/browser/renderer_host/render_widget_host_view_aura.cc",
+      "parentUuid": "10635a13_1fb7667b",
       "range": {
         "startLine": 166,
         "startChar": 37,
