@@ -9,6 +9,7 @@
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_context.h"
+#include "ui/gl/gl_enums.h"
 #include "ui/gl/gl_surface_egl.h"
 
 #define FOURCC(a, b, c, d)                                        \
@@ -35,8 +36,9 @@ bool ValidInternalFormat(unsigned internalformat, gfx::BufferFormat format) {
     case GL_RGB:
       return format == gfx::BufferFormat::BGR_565 ||
              format == gfx::BufferFormat::RGBX_8888 ||
-             format == gfx::BufferFormat::BGRX_8888 ||
-             format == gfx::BufferFormat::BGRX_1010102;
+             format == gfx::BufferFormat::BGRX_8888;
+    case GL_RGB10_A2_EXT:
+      return format == gfx::BufferFormat::BGRX_1010102;
     case GL_RGB_YCRCB_420_CHROMIUM:
       return format == gfx::BufferFormat::YVU_420;
     case GL_RGB_YCBCR_420V_CHROMIUM:
@@ -182,7 +184,8 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
     }
 
     if (!ValidInternalFormat(internalformat_, format)) {
-      LOG(ERROR) << "Invalid internalformat: " << internalformat_
+      LOG(ERROR) << "Invalid internalformat: "
+                 << GLEnums::GetStringEnum(internalformat_)
                  << " for format: " << gfx::BufferFormatToString(format);
       return false;
     }

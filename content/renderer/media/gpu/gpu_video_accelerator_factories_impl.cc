@@ -305,7 +305,7 @@ GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
     if (rendering_color_space_.IsHDR())
       return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
 
-#if defined(OS_MACOSX) || defined(OS_LINUX)
+#if defined(OS_MACOSX) || defined(OS_LINUX) || defined(OS_CHROMEOS)
     // TODO(mcasas): enable other platforms https://crbug.com/776093
     // https://crbug.com/803451.
     // TODO(mcasas): remove the |bit_depth| check when libyuv supports more than
