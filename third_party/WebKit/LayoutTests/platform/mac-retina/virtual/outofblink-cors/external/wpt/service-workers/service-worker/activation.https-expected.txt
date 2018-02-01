@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+FAIL loss of controllees triggers activation assert_equals: expected object "[object ServiceWorker]" but got object "[object ServiceWorker]"
+PASS finishing a request triggers activation
+PASS skipWaiting bypasses no controllee requirement
+PASS finishing a request triggers unregister
+Harness: the test ran to completion.
+
