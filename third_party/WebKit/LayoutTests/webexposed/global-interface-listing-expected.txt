@@ -3637,6 +3637,7 @@ interface HTMLVideoElement : HTMLMediaElement
     attribute @@toStringTag
     getter disablePictureInPicture
     getter height
+    getter onenterpictureinpicture
     getter poster
     getter videoHeight
     getter videoWidth
@@ -3654,6 +3655,7 @@ interface HTMLVideoElement : HTMLMediaElement
     method webkitExitFullscreen
     setter disablePictureInPicture
     setter height
+    setter onenterpictureinpicture
     setter poster
     setter width
 interface HashChangeEvent : Event
