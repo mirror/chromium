@@ -45,6 +45,30 @@
       "revId": "f0350b5a7133dc86f409301ad53fbf413aefcd4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b375b58c_ebdc1be1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-01T16:49:14Z",
+      "side": 1,
+      "message": "Note also, I think that you could use a method reference for this:\n\nCommandLineInitUtil.initCommandLine(COMMAND_LINE_FILE, manager::getCommandLineOnNonRootedEnabled)",
+      "parentUuid": "e78358cd_dd684b41",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "f0350b5a7133dc86f409301ad53fbf413aefcd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
