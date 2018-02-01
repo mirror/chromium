@@ -47,7 +47,7 @@
         close-text="$i18n{close}">
       <div slot="title">[[getTitleMessage_(isConfirmStep_)]]</div>
       <div slot="body">
-        <!-- Pin keyboard -->
+        <!-- PIN keyboard -->
         <div id="pinKeyboardDiv" class="settings-box continuation">
           <pin-keyboard id="pinKeyboard" on-pin-change="onPinChange_"
               on-submit="onPinSubmit_" value="{{pinKeyboardValue_}}"
@@ -65,7 +65,6 @@
         <paper-button class="cancel-button" on-tap="onCancelTap_">
           $i18n{cancel}
         </paper-button>
-
         <paper-button class="action-button" on-tap="onPinSubmit_"
             disabled$="[[!enableSubmit_]]">
           <span>[[getContinueMessage_(isConfirmStep_)]]</span>
