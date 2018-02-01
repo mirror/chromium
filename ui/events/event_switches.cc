@@ -17,6 +17,13 @@ const char kEnableScrollPrediction[] = "enable-scroll-prediction";
 const char kCompensateForUnstablePinchZoom[] =
     "compensate-for-unstable-pinch-zoom";
 
+// crbug.com/716668: As of today, we would block a touch event on main thread if
+// it hits a main thread touch action region. However, we could utilize the
+// white listed touch action computed from the compositor to allow or partially
+// allow the touch event. Enabling this feature allows us to utilize the white
+// listed touch action.
+const char kCompositorTouchAction[] = "compositor-touch-action";
+
 #if defined(OS_LINUX)
 // Tells chrome to interpret events from these devices as touch events. Only
 // available with XInput 2 (i.e. X server 1.8 or above). The id's of the
