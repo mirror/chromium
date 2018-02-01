@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_VIZ_HOST_HOST_FRAME_SINK_CLIENT_H_
 #define COMPONENTS_VIZ_HOST_HOST_FRAME_SINK_CLIENT_H_
 
+#include "base/time/time.h"
+
 namespace viz {
 
 class SurfaceInfo;
@@ -14,6 +16,10 @@ class HostFrameSinkClient {
   // Called when a CompositorFrame with a new SurfaceId activates for the first
   // time.
   virtual void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) = 0;
+
+  // Called when a CompositorFrame with dependencies activates. The time for
+  // synchronization is specified in |duration|.
+  virtual void OnSynchronizationEvent(base::TimeDelta duration) = 0;
 
   // Called when a CompositorFrame with a new frame token is provided.
   virtual void OnFrameTokenChanged(uint32_t frame_token) = 0;

@@ -65,7 +65,8 @@ DelegatedFrameHostAndroid::DelegatedFrameHostAndroid(
   DCHECK(view_);
   DCHECK(client_);
 
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager_->RegisterFrameSinkId(
+      frame_sink_id_, true /* report_synchronization_events */, this);
 #if DCHECK_IS_ON()
   host_frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id_,
                                                    "DelegatedFrameHostAndroid");
@@ -235,6 +236,13 @@ void DelegatedFrameHostAndroid::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
+}
+
+void DelegatedFrameHostAndroid::OnSynchronizationEvent(
+    base::TimeDelta duration) {
+  // TODO(fsamuel): Once surface synchronization and site isolation are turned
+  // on, we should track how long main frames spend blocked on OOPIFs and other
+  // embedded clients.
 }
 
 void DelegatedFrameHostAndroid::OnFrameTokenChanged(uint32_t frame_token) {

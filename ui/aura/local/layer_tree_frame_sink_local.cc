@@ -25,7 +25,8 @@ LayerTreeFrameSinkLocal::LayerTreeFrameSinkLocal(
       frame_sink_id_(frame_sink_id),
       host_frame_sink_manager_(host_frame_sink_manager),
       weak_factory_(this) {
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
+  host_frame_sink_manager_->RegisterFrameSinkId(
+      frame_sink_id_, false /* report_synchronization_events */, this);
 #if DCHECK_IS_ON()
   host_frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id_, debug_label);
 #endif
@@ -157,6 +158,9 @@ void LayerTreeFrameSinkLocal::OnNeedsBeginFrames(bool needs_begin_frames) {
 void LayerTreeFrameSinkLocal::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   surface_changed_callback_.Run(surface_info);
+}
+
+void LayerTreeFrameSinkLocal::OnSynchronizationEvent(base::TimeDelta duration) {
 }
 
 void LayerTreeFrameSinkLocal::OnFrameTokenChanged(uint32_t frame_token) {

@@ -80,7 +80,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
     // until then set ours invalid, as operations using it will be disregarded.
     frame_sink_id_ = viz::FrameSinkId();
   } else {
-    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+    GetHostFrameSinkManager()->RegisterFrameSinkId(
+        frame_sink_id_, false /* report_synchronization_events */, this);
 #if DCHECK_IS_ON()
     GetHostFrameSinkManager()->SetFrameSinkDebugLabel(
         frame_sink_id_, "RenderWidgetHostViewChildFrame");
@@ -917,6 +918,9 @@ void RenderWidgetHostViewChildFrame::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   SendSurfaceInfoToEmbedderImpl(surface_info);
 }
+
+void RenderWidgetHostViewChildFrame::OnSynchronizationEvent(
+    base::TimeDelta duration) {}
 
 void RenderWidgetHostViewChildFrame::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
