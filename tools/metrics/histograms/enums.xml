@@ -43445,6 +43445,7 @@ Full version information for the fingerprint enum values:
 Called by update_traffic_annotation_histograms.py.-->
 
   <int value="485305" label="data_reduction_proxy_config"/>
+  <int value="516551" label="socket_bio_adapter"/>
   <int value="727478" label="metrics_report_ukm"/>
   <int value="727528" label="metrics_report_uma"/>
   <int value="1112842" label="oauth2_mint_token_flow"/>
@@ -43588,6 +43589,7 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="84212388" label="omnibox_suggest_deletion"/>
   <int value="84575287" label="background_performance_tracer"/>
   <int value="84889397" label="cryptauth_enrollment_flow_setup"/>
+  <int value="87558948" label="cast_message_handler"/>
   <int value="87775794" label="adb_client_socket"/>
   <int value="88754904" label="captive_portal_service"/>
   <int value="88863520" label="autofill_query"/>
