@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9d1d1548_9324d37e",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:17:31Z",
+      "side": 1,
+      "message": "\u003e\u003e comment about separators?\n\n\u003e\u003e // DiceAccountsMenu adds separators at the top and between each item to....\n\u003e Done\n\nPing? (the extra separators are unusual - a comment explaining why would be good I think)",
+      "parentUuid": "53fb9fa8_e6d54f0f",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "586185be_5d102954",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 5

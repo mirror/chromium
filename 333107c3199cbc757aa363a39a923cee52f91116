@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a44f357_fc039ed9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-01T23:17:31Z",
+      "side": 1,
+      "message": "dice_accounts_menu_ \u003d std::make_unique\u003cDiceAccountsMenu\u003e(..",
+      "revId": "333107c3199cbc757aa363a39a923cee52f91116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c501175_efb52399",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
         "patchSetId": 7
