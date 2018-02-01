@@ -818,8 +818,7 @@ WebFrameScheduler* LocalFrame::FrameScheduler() {
   return frame_scheduler_.get();
 }
 
-scoped_refptr<base::SingleThreadTaskRunner> LocalFrame::GetTaskRunner(
-    TaskType type) {
+scoped_refptr<WebTaskRunner> LocalFrame::GetTaskRunner(TaskType type) {
   DCHECK(IsMainThread());
   return frame_scheduler_->GetTaskRunner(type);
 }

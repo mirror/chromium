@@ -128,13 +128,11 @@ void RemoteFrameView::FrameRectsChanged() {
   // Update the rect to reflect the position of the frame relative to the
   // containing local frame root. The position of the local root within
   // any remote frames, if any, is accounted for by the embedder.
-  IntRect screen_space_rect = frame_rect_;
+  IntRect new_rect = frame_rect_;
 
-  if (LocalFrameView* parent = ParentFrameView()) {
-    screen_space_rect =
-        parent->ConvertToRootFrame(parent->ContentsToFrame(screen_space_rect));
-  }
-  remote_frame_->Client()->FrameRectsChanged(frame_rect_, screen_space_rect);
+  if (LocalFrameView* parent = ParentFrameView())
+    new_rect = parent->ConvertToRootFrame(parent->ContentsToFrame(new_rect));
+  remote_frame_->Client()->FrameRectsChanged(new_rect);
 }
 
 void RemoteFrameView::UpdateGeometry() {

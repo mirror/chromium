@@ -52,7 +52,6 @@
 #include "modules/webdatabase/sqlite/SQLiteTransaction.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/heap/SafePoint.h"
 #include "platform/wtf/Atomics.h"
 #include "platform/wtf/Time.h"
@@ -249,7 +248,7 @@ Database::Database(DatabaseContext* database_context,
     name_ = "";
 
   {
-    RecursiveMutexLocker locker(GuidMutex());
+    MutexLocker locker(GuidMutex());
     guid_ = GuidForOriginAndName(GetSecurityOrigin()->ToString(), name);
     GuidCount().insert(guid_);
   }
@@ -427,7 +426,7 @@ void Database::CloseDatabase() {
   // See comment at the top this file regarding calling removeOpenDatabase().
   DatabaseTracker::Tracker().RemoveOpenDatabase(this);
   {
-    RecursiveMutexLocker locker(GuidMutex());
+    MutexLocker locker(GuidMutex());
 
     DCHECK(GuidCount().Contains(guid_));
     if (GuidCount().erase(guid_)) {
@@ -493,7 +492,7 @@ bool Database::PerformOpenAndVerify(bool should_set_version_in_new_database,
 
   String current_version;
   {
-    RecursiveMutexLocker locker(GuidMutex());
+    MutexLocker locker(GuidMutex());
 
     GuidVersionMap::iterator entry = GuidToVersionMap().find(guid_);
     if (entry != GuidToVersionMap().end()) {
@@ -707,13 +706,13 @@ void Database::SetExpectedVersion(const String& version) {
 }
 
 String Database::GetCachedVersion() const {
-  RecursiveMutexLocker locker(GuidMutex());
+  MutexLocker locker(GuidMutex());
   return GuidToVersionMap().at(guid_).IsolatedCopy();
 }
 
 void Database::SetCachedVersion(const String& actual_version) {
   // Update the in memory database version map.
-  RecursiveMutexLocker locker(GuidMutex());
+  MutexLocker locker(GuidMutex());
   UpdateGuidVersionMap(guid_, actual_version);
 }
 
@@ -991,7 +990,7 @@ bool Database::Opened() {
   return static_cast<bool>(AcquireLoad(&opened_));
 }
 
-base::SingleThreadTaskRunner* Database::GetDatabaseTaskRunner() const {
+WebTaskRunner* Database::GetDatabaseTaskRunner() const {
   return database_task_runner_.get();
 }
 

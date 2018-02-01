@@ -91,6 +91,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
+#include "public/web/WebDocumentLoader.h"
 #include "public/web/WebHistoryCommitType.h"
 
 namespace blink {
@@ -416,7 +417,7 @@ void DocumentLoader::LoadFailed(const ResourceError& error) {
   switch (state_) {
     case kNotStarted:
       probe::frameClearedScheduledClientNavigation(frame_);
-      FALLTHROUGH;
+    // Fall-through
     case kProvisional:
       state_ = kSentDidFinishLoad;
       GetLocalFrameClient().DispatchDidFailProvisionalLoad(error,
@@ -773,15 +774,14 @@ void DocumentLoader::AppendRedirect(const KURL& url) {
   redirect_chain_.push_back(url);
 }
 
-void DocumentLoader::StopLoading() {
+void DocumentLoader::DetachFromFrame() {
+  DCHECK(frame_);
+
+  // It never makes sense to have a document loader that is detached from its
+  // frame have any loads active, so go ahead and kill all the loads.
   fetcher_->StopFetching();
   if (frame_ && !SentDidFinishLoad())
     LoadFailed(ResourceError::CancelledError(Url()));
-}
-
-void DocumentLoader::DetachFromFrame() {
-  DCHECK(frame_);
-  StopLoading();
   fetcher_->ClearContext();
 
   // If that load cancellation triggered another detach, leave.
@@ -1040,6 +1040,9 @@ void DocumentLoader::InstallNewDocument(
   if (global_object_reuse_policy != WebGlobalObjectReusePolicy::kUseExisting)
     frame_->SetDOMWindow(LocalDOMWindow::Create(*frame_));
 
+  bool user_gesture_bit_set = frame_->HasBeenActivated() ||
+                              frame_->HasReceivedUserGestureBeforeNavigation();
+
   if (reason == InstallNewDocumentReason::kNavigation)
     WillCommitNavigation();
 
@@ -1052,18 +1055,32 @@ void DocumentLoader::InstallNewDocument(
           .WithNewRegistrationContext(),
       false);
 
-  // Clear the user activation state.
-  // TODO(crbug.com/736415): Clear this bit unconditionally for all frames.
-  if (frame_->IsMainFrame())
-    frame_->ClearActivation();
+  // Persist the user gesture state between frames.
+  bool user_gesture_before_value = false;
+  if (user_gesture_bit_set) {
+    user_gesture_before_value = WebDocumentLoader::ShouldPersistUserActivation(
+        WebSecurityOrigin(previous_security_origin),
+        WebSecurityOrigin(document->GetSecurityOrigin()));
 
-  // The DocumentLoader was flagged as activated if it needs to notify the frame
-  // that it was activated before navigation. Update the frame state based on
-  // the new value.
-  if (frame_->HasReceivedUserGestureBeforeNavigation() != user_activated_) {
-    frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(user_activated_);
+    // Clear the user gesture bit that is not persisted.
+    // TODO(crbug.com/736415): Clear this bit unconditionally for all frames.
+    if (frame_->IsMainFrame())
+      frame_->ClearActivation();
+  }
+
+  // If the load request was user activated, pretend that there was a gesture
+  // to carry over.
+  if (user_activated_)
+    user_gesture_before_value = true;
+
+  // If the user gesture before navigation bit has changed then update it on the
+  // frame.
+  if (frame_->HasReceivedUserGestureBeforeNavigation() !=
+      user_gesture_before_value) {
+    frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(
+        user_gesture_before_value);
     GetLocalFrameClient().SetHasReceivedUserGestureBeforeNavigation(
-        user_activated_);
+        user_gesture_before_value);
   }
 
   if (ShouldClearWindowName(*frame_, previous_security_origin, *document)) {

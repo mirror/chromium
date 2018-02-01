@@ -154,7 +154,7 @@ class CastWebContentsSurfaceHelper {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (currentInstanceId != null && currentInstanceId.equals(mInstanceId)) {
+                if (currentInstanceId.equals(mInstanceId)) {
                     Log.d(TAG, "Finishing.");
                     if (mShowInFragment) {
                         Intent in = new Intent();

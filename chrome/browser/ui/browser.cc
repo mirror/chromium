@@ -1666,9 +1666,7 @@ void Browser::WebContentsCreated(WebContents* source_contents,
   task_manager::WebContentsTags::CreateForTabContents(new_contents);
 }
 
-void Browser::RendererUnresponsive(
-    WebContents* source,
-    content::RenderProcessHost* render_process_host) {
+void Browser::RendererUnresponsive(WebContents* source) {
   // Ignore hangs if a tab is blocked.
   int index = tab_strip_model_->GetIndexOfWebContents(source);
   DCHECK_NE(TabStripModel::kNoTab, index);
@@ -1678,9 +1676,7 @@ void Browser::RendererUnresponsive(
   TabDialogs::FromWebContents(source)->ShowHungRendererDialog();
 }
 
-void Browser::RendererResponsive(
-    WebContents* source,
-    content::RenderProcessHost* render_process_host) {
+void Browser::RendererResponsive(WebContents* source) {
   TabDialogs::FromWebContents(source)->HideHungRendererDialog();
 }
 

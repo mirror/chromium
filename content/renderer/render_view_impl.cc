@@ -1045,11 +1045,7 @@ void RenderViewImpl::RemoveObserver(RenderViewObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-blink::WebView* RenderViewImpl::webview() {
-  return webview_;
-}
-
-const blink::WebView* RenderViewImpl::webview() const {
+blink::WebView* RenderViewImpl::webview() const {
   return webview_;
 }
 
@@ -1211,10 +1207,8 @@ void RenderViewImpl::OnUpdateTargetURLAck() {
 
 void RenderViewImpl::OnSetHistoryOffsetAndLength(int history_offset,
                                                  int history_length) {
-  // -1 <= history_offset < history_length <= kMaxSessionHistoryEntries(50).
-  DCHECK_LE(-1, history_offset);
-  DCHECK_LT(history_offset, history_length);
-  DCHECK_LE(history_length, kMaxSessionHistoryEntries);
+  DCHECK_GE(history_offset, -1);
+  DCHECK_GE(history_length, 0);
 
   history_list_offset_ = history_offset;
   history_list_length_ = history_length;
@@ -1825,8 +1819,8 @@ bool RenderViewImpl::Send(IPC::Message* message) {
   return RenderWidget::Send(message);
 }
 
-RenderWidget* RenderViewImpl::GetWidget() {
-  return this;
+RenderWidget* RenderViewImpl::GetWidget() const {
+  return const_cast<RenderWidget*>(static_cast<const RenderWidget*>(this));
 }
 
 RenderFrameImpl* RenderViewImpl::GetMainRenderFrame() {

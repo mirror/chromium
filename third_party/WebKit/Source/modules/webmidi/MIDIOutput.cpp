@@ -38,8 +38,6 @@
 #include "core/frame/UseCounter.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
-#include "core/timing/WorkerGlobalScopePerformance.h"
-#include "core/workers/WorkerGlobalScope.h"
 #include "media/midi/midi_service.mojom-blink.h"
 #include "modules/webmidi/MIDIAccess.h"
 
@@ -49,36 +47,11 @@ namespace blink {
 
 namespace {
 
-DOMUint8Array* ConvertUnsignedDataToUint8Array(
-    Vector<unsigned> unsigned_data,
-    ExceptionState& exception_state) {
-  DOMUint8Array* array = DOMUint8Array::Create(unsigned_data.size());
-  DOMUint8Array::ValueType* array_data = array->Data();
-  for (size_t i = 0; i < unsigned_data.size(); ++i) {
-    if (unsigned_data[i] > 0xff) {
-      exception_state.ThrowTypeError("The value at index " + String::Number(i) +
-                                     " (" + String::Number(unsigned_data[i]) +
-                                     ") is greater than 0xFF.");
-      return nullptr;
-    }
-    array_data[i] = unsigned_data[i];
-  }
-  return array;
-}
-
-double GetTimeOrigin(ExecutionContext* context) {
-  DCHECK(context);
-  PerformanceBase* performance = nullptr;
-  if (LocalDOMWindow* window = context->ExecutingWindow()) {
-    performance = DOMWindowPerformance::performance(*window);
-  } else {
-    DCHECK(context->IsWorkerGlobalScope());
-    performance = WorkerGlobalScopePerformance::performance(
-        *static_cast<WorkerGlobalScope*>(context));
-  }
-
-  DCHECK(performance);
-  return performance->timeOrigin();
+double Now(ExecutionContext* context) {
+  LocalDOMWindow* window = context ? context->ExecutingWindow() : nullptr;
+  Performance* performance =
+      window ? DOMWindowPerformance::performance(*window) : nullptr;
+  return performance ? performance->now() : 0.0;
 }
 
 class MessageValidator {
@@ -251,103 +224,81 @@ MIDIOutput::MIDIOutput(MIDIAccess* access,
 MIDIOutput::~MIDIOutput() = default;
 
 void MIDIOutput::send(NotShared<DOMUint8Array> array,
-                      double timestamp_in_milliseconds,
+                      double timestamp,
                       ExceptionState& exception_state) {
-  ExecutionContext* context = GetExecutionContext();
-  if (!context)
-    return;
+  DCHECK(array);
 
-  double timestamp;
-  if (timestamp_in_milliseconds == 0.0) {
-    timestamp = CurrentTimeTicksInMilliseconds();
-  } else {
-    timestamp = GetTimeOrigin(context) + timestamp_in_milliseconds;
+  if (timestamp == 0.0)
+    timestamp = Now(GetExecutionContext());
+
+  UseCounter::Count(*ToDocument(GetExecutionContext()),
+                    WebFeature::kMIDIOutputSend);
+
+  // Implicit open. It does nothing if the port is already opened.
+  // This should be performed even if |array| is invalid.
+  open();
+
+  if (MessageValidator::Validate(array.View(), exception_state,
+                                 midiAccess()->sysexEnabled())) {
+    if (IsOpening()) {
+      pending_data_.push_back(std::make_pair(Vector<uint8_t>(), timestamp));
+      pending_data_.back().first.Append(array.View()->Data(),
+                                        array.View()->length());
+    } else {
+      midiAccess()->SendMIDIData(port_index_, array.View()->Data(),
+                                 array.View()->length(), timestamp);
+    }
   }
-  SendInternal(array.View(), timestamp, exception_state);
 }
 
 void MIDIOutput::send(Vector<unsigned> unsigned_data,
-                      double timestamp_in_milliseconds,
+                      double timestamp,
                       ExceptionState& exception_state) {
-  if (!GetExecutionContext())
-    return;
+  if (timestamp == 0.0)
+    timestamp = Now(GetExecutionContext());
 
-  DOMUint8Array* array = ConvertUnsignedDataToUint8Array(
-      std::move(unsigned_data), exception_state);
-  if (!array) {
-    DCHECK(exception_state.HadException());
-    return;
+  DOMUint8Array* array = DOMUint8Array::Create(unsigned_data.size());
+  DOMUint8Array::ValueType* const array_data = array->Data();
+  const uint32_t array_length = array->length();
+
+  for (size_t i = 0; i < unsigned_data.size(); ++i) {
+    if (unsigned_data[i] > 0xff) {
+      exception_state.ThrowTypeError("The value at index " + String::Number(i) +
+                                     " (" + String::Number(unsigned_data[i]) +
+                                     ") is greater than 0xFF.");
+      return;
+    }
+    if (i < array_length)
+      array_data[i] = unsigned_data[i] & 0xff;
   }
 
-  send(NotShared<DOMUint8Array>(array), timestamp_in_milliseconds,
-       exception_state);
+  send(NotShared<DOMUint8Array>(array), timestamp, exception_state);
 }
 
 void MIDIOutput::send(NotShared<DOMUint8Array> data,
                       ExceptionState& exception_state) {
-  if (!GetExecutionContext())
-    return;
-
   DCHECK(data);
-  SendInternal(data.View(), CurrentTimeTicksInMilliseconds(), exception_state);
+  send(data, 0.0, exception_state);
 }
 
 void MIDIOutput::send(Vector<unsigned> unsigned_data,
                       ExceptionState& exception_state) {
-  if (!GetExecutionContext())
-    return;
-
-  DOMUint8Array* array = ConvertUnsignedDataToUint8Array(
-      std::move(unsigned_data), exception_state);
-  if (!array) {
-    DCHECK(exception_state.HadException());
-    return;
-  }
-
-  SendInternal(array, CurrentTimeTicksInMilliseconds(), exception_state);
+  send(unsigned_data, 0.0, exception_state);
 }
 
 void MIDIOutput::DidOpen(bool opened) {
-  if (!opened) {
-    pending_data_.clear();
-    return;
-  }
-
   while (!pending_data_.empty()) {
-    auto& front = pending_data_.front();
-    midiAccess()->SendMIDIData(port_index_, front.first->Data(),
-                               front.first->length(), front.second);
+    if (opened) {
+      auto& front = pending_data_.front();
+      midiAccess()->SendMIDIData(port_index_, front.first.data(),
+                                 front.first.size(), front.second);
+    }
     pending_data_.TakeFirst();
   }
 }
 
 void MIDIOutput::Trace(blink::Visitor* visitor) {
   MIDIPort::Trace(visitor);
-  visitor->Trace(pending_data_);
-}
-
-void MIDIOutput::SendInternal(DOMUint8Array* array,
-                              double platform_timestamp,
-                              ExceptionState& exception_state) {
-  DCHECK(GetExecutionContext());
-  DCHECK(array);
-  DCHECK_NE(0.0, platform_timestamp);
-  UseCounter::Count(GetExecutionContext(), WebFeature::kMIDIOutputSend);
-
-  // Implicit open. It does nothing if the port is already opened.
-  // This should be performed even if |array| is invalid.
-  open();
-
-  if (!MessageValidator::Validate(array, exception_state,
-                                  midiAccess()->sysexEnabled()))
-    return;
-
-  if (IsOpening()) {
-    pending_data_.emplace_back(array, platform_timestamp);
-  } else {
-    midiAccess()->SendMIDIData(port_index_, array->Data(), array->length(),
-                               platform_timestamp);
-  }
 }
 
 }  // namespace blink

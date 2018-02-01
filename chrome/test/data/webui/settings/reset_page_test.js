@@ -196,10 +196,7 @@ cr.define('settings_reset_page', function() {
           const dialog = resetPage.$$('settings-powerwash-dialog');
           assertTrue(!!dialog);
           MockInteractions.tap(dialog.$.powerwash);
-          return lifetimeBrowserProxy.whenCalled('factoryReset')
-              .then((requestTpmFirmwareUpdate) => {
-                assertFalse(requestTpmFirmwareUpdate);
-              });
+          return lifetimeBrowserProxy.whenCalled('factoryReset');
         });
       }
     });

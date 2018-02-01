@@ -66,8 +66,13 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
   ~FakeDesktopMediaPicker() override { expectation_->picker_deleted = true; }
 
   // DesktopMediaPicker interface.
-  void Show(const DesktopMediaPicker::Params& params,
+  void Show(content::WebContents* web_contents,
+            gfx::NativeWindow context,
+            gfx::NativeWindow parent,
+            const base::string16& app_name,
+            const base::string16& target_name,
             std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+            bool request_audio,
             const DoneCallback& done_callback) override {
     bool show_screens = false;
     bool show_windows = false;
@@ -91,8 +96,7 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
     EXPECT_EQ(expectation_->expect_screens, show_screens);
     EXPECT_EQ(expectation_->expect_windows, show_windows);
     EXPECT_EQ(expectation_->expect_tabs, show_tabs);
-    EXPECT_EQ(expectation_->expect_audio, params.request_audio);
-    EXPECT_EQ(params.modality, ui::ModalType::MODAL_TYPE_CHILD);
+    EXPECT_EQ(expectation_->expect_audio, request_audio);
 
     if (!expectation_->cancelled) {
       // Post a task to call the callback asynchronously.

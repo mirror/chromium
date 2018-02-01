@@ -171,6 +171,11 @@ enum CellType {
 @synthesize dispatcher = _dispatcher;
 @synthesize handsetCommandHandler = _handsetCommandHandler;
 
+- (instancetype)init {
+  NOTREACHED();
+  return nil;
+}
+
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                               loader:(id<UrlLoader>)loader
                           dispatcher:(id<ApplicationCommands>)dispatcher {

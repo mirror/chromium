@@ -55,10 +55,11 @@
 - (void)start {
   self.viewController = [[PrimaryToolbarViewController alloc] init];
   self.viewController.buttonFactory = [self buttonFactoryWithType:PRIMARY];
-  self.viewController.dispatcher = self.dispatcher;
 
   [self setUpLocationBar];
-  self.viewController.locationBarView = self.locationBarCoordinator.view;
+  self.viewController.locationBarView =
+      self.locationBarCoordinator.locationBarView;
+
   [super start];
 
   _fullscreenObserver =
@@ -71,11 +72,13 @@
 #pragma mark - PrimaryToolbarCoordinator
 
 - (id<VoiceSearchControllerDelegate>)voiceSearchDelegate {
-  return self.locationBarCoordinator;
+  // TODO(crbug.com/799446): This code should be moved to the location bar.
+  return nil;
 }
 
 - (id<QRScannerResultLoading>)QRScannerResultLoader {
-  return self.locationBarCoordinator;
+  // TODO(crbug.com/799446): This code should be moved to the location bar.
+  return nil;
 }
 
 - (id<TabHistoryUIUpdater>)tabHistoryUIUpdater {
@@ -95,7 +98,8 @@
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return [self.locationBarCoordinator isOmniboxFirstResponder];
+  return
+      [self.locationBarCoordinator.locationBarView.textField isFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {
@@ -109,27 +113,15 @@
 #pragma mark - FakeboxFocuser
 
 - (void)focusFakebox {
-  if (IsIPadIdiom()) {
-    // On iPhone there is no visible omnibox, so there's no need to indicate
-    // interaction was initiated from the fakebox.
-    [self.locationBarCoordinator focusOmniboxFromFakebox];
-  }
-
-  [self.locationBarCoordinator focusOmnibox];
+  // TODO(crbug.com/803372): Implement that.
 }
 
 - (void)onFakeboxBlur {
-  DCHECK(!IsIPadIdiom());
-  // Hide the toolbar if the NTP is currently displayed.
-  web::WebState* webState = self.webStateList->GetActiveWebState();
-  if (webState && IsVisibleUrlNewTabPage(webState)) {
-    self.viewController.view.hidden = YES;
-  }
+  // TODO(crbug.com/803372): Implement that.
 }
 
 - (void)onFakeboxAnimationComplete {
-  DCHECK(!IsIPadIdiom());
-  self.viewController.view.hidden = NO;
+  // TODO(crbug.com/803372): Implement that.
 }
 
 // TODO(crbug.com/786940): This protocol should move to the ViewController
@@ -164,16 +156,16 @@
 
   // Don't do anything for a live non-ntp tab.
   if (webState == self.webStateList->GetActiveWebState() && !isNTP) {
-    [self.locationBarCoordinator.view setHidden:NO];
+    [self.locationBarCoordinator.locationBarView setHidden:NO];
   } else {
     self.viewController.view.hidden = NO;
-    [self.locationBarCoordinator.view setHidden:YES];
+    [self.locationBarCoordinator.locationBarView setHidden:YES];
   }
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [super resetToolbarAfterSideSwipeSnapshot];
-  [self.locationBarCoordinator.view setHidden:NO];
+  [self.locationBarCoordinator.locationBarView setHidden:NO];
 }
 
 #pragma mark - Private

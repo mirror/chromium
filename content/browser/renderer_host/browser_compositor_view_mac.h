@@ -63,19 +63,12 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   void OnDidNotProduceFrame(const viz::BeginFrameAck& ack);
   void SetBackgroundColor(SkColor background_color);
   void SetDisplayColorSpace(const gfx::ColorSpace& color_space);
+  void OnNSViewWasResized();
+  bool HasFrameOfSize(const gfx::Size& desired_size);
   void UpdateVSyncParameters(const base::TimeTicks& timebase,
                              const base::TimeDelta& interval);
   void SetNeedsBeginFrames(bool needs_begin_frames);
   void SetWantsAnimateOnlyBeginFrames();
-
-  // Update the renderer's SurfaceId to reflect the current dimensions of the
-  // NSView. This will allocate a new SurfaceId if the dimensions have indeed
-  // changed.
-  void OnNSViewWasResized();
-
-  // Update the renderer's SurfaceId to reflect |size_dip| in anticipation of
-  // the NSView resizing during auto-resize.
-  void OnNSViewWillAutoResize(const gfx::Size& size_dip);
 
   // This is used to ensure that the ui::Compositor be attached to the
   // DelegatedFrameHost while the RWHImpl is visible.
@@ -125,10 +118,6 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   ui::Compositor* CompositorForTesting() const;
 
   void DidNavigate();
-
-  void BeginPauseForFrame(bool auto_resize_enabled);
-  void EndPauseForFrame();
-  bool ShouldContinueToPauseForFrame() const;
 
  private:
   // The state of |delegated_frame_host_| and |recyclable_compositor_| to
@@ -195,9 +184,7 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
       nullptr;
 
   // The surface for the delegated frame host, rendered into by the renderer
-  // process.
-  void UpdateDelegatedFrameHostSurface(const gfx::Size& size_dip,
-                                       float scale_factor);
+  // process. Updated by OnNSViewWasResized.
   viz::LocalSurfaceId delegated_frame_host_surface_id_;
   gfx::Size delegated_frame_host_size_pixels_;
   gfx::Size delegated_frame_host_size_dip_;
@@ -209,19 +196,6 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   viz::LocalSurfaceId compositor_surface_id_;
   gfx::Size compositor_size_pixels_;
   float compositor_scale_factor_ = 1.f;
-
-  // Used to disable screen updates while resizing (because frames are drawn in
-  // the GPU process, they can end up appearing on-screen before our window
-  // resizes).
-  enum class RepaintState {
-    // No repaint in progress.
-    None,
-    // Synchronously waiting for a new frame.
-    Paused,
-    // Screen updates are disabled while a new frame is swapped in.
-    ScreenUpdatesDisabled,
-  } repaint_state_ = RepaintState::None;
-  bool repaint_auto_resize_enabled_ = false;
 
   viz::ParentLocalSurfaceIdAllocator parent_local_surface_id_allocator_;
 

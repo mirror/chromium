@@ -35,7 +35,6 @@
 @property(nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
 @property(nonatomic, assign) BOOL bounces;
 @property(nonatomic, assign) BOOL scrollsToTop;
-@property(nonatomic, assign) BOOL clipsToBounds;
 @property(nonatomic, assign)
     UIScrollViewContentInsetAdjustmentBehavior contentInsetAdjustmentBehavior
         API_AVAILABLE(ios(11.0));

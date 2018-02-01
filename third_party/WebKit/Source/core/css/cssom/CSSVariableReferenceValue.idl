@@ -8,9 +8,8 @@
     Constructor(DOMString variable, optional CSSUnparsedValue fallback),
     Exposed=(Window,PaintWorklet),
     RuntimeEnabled=CSSTypedOM,
-    RaisesException=Constructor,
     ImplementedAs=CSSStyleVariableReferenceValue
 ] interface CSSVariableReferenceValue {
-    [RaisesException=Setter] attribute DOMString variable;
+    attribute DOMString variable;
     readonly attribute CSSUnparsedValue? fallback;
 };

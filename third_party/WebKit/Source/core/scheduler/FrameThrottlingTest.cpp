@@ -891,7 +891,8 @@ TEST_P(FrameThrottlingTest, DumpThrottledFrame) {
   // The dumped contents should not include the throttled frame.
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       GetDocument().Lifecycle());
-  WebString result = WebFrameContentDumper::DumpWebViewAsText(&WebView(), 1024);
+  WebString result = WebFrameContentDumper::DeprecatedDumpFrameTreeAsText(
+      WebView().MainFrameImpl(), 1024);
   EXPECT_NE(std::string::npos, result.Utf8().find("main"));
   EXPECT_EQ(std::string::npos, result.Utf8().find("throttled"));
 }

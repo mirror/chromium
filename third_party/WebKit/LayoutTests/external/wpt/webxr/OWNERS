@@ -1,4 +1,1 @@
-# TEAM: xr-dev@chromium.org
-# COMPONENT: Blink>WebVR
-# WPT-NOTIFY: true
 file://third_party/WebKit/Source/modules/xr/OWNERS

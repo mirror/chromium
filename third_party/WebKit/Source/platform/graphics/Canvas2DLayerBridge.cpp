@@ -472,10 +472,6 @@ void Canvas2DLayerBridge::SetIsHidden(bool hidden) {
   }
 }
 
-void Canvas2DLayerBridge::DrawFullImage(const cc::PaintImage& image) {
-  Canvas()->drawImage(image, 0, 0);
-}
-
 bool Canvas2DLayerBridge::WritePixels(const SkImageInfo& orig_info,
                                       const void* pixels,
                                       size_t row_bytes,

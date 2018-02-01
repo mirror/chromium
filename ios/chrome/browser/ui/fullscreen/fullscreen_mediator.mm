@@ -8,7 +8,6 @@
 #include "base/memory/ptr_util.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer.h"
-#import "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_to_top_animator.h"
@@ -42,18 +41,6 @@ void FullscreenMediator::ScrollToTop() {
     observer.FullscreenWillScrollToTop(controller_, scroll_to_top_animator_);
   }
   [scroll_to_top_animator_ startAnimation];
-}
-
-void FullscreenMediator::WillEnterForeground() {
-  DCHECK(!foreground_animator_);
-  CGFloat progress = model_->progress();
-  foreground_animator_ =
-      [[FullscreenForegroundAnimator alloc] initWithStartProgress:progress];
-  SetUpAnimator(&foreground_animator_);
-  for (auto& observer : observers_) {
-    observer.FullscreenWillEnterForeground(controller_, foreground_animator_);
-  }
-  [foreground_animator_ startAnimation];
 }
 
 void FullscreenMediator::Disconnect() {
@@ -107,22 +94,14 @@ void FullscreenMediator::FullscreenModelScrollEventEnded(
 }
 
 void FullscreenMediator::FullscreenModelWasReset(FullscreenModel* model) {
-  // Stop any in-progress animations.  Don't update the model because this
-  // callback occurs after the model's state is reset, and updating the model
-  // the with active animator's current value would overwrite the reset value.
   StopAnimating(false /* update_model */);
-  // Update observers for the reset progress value.
-  for (auto& observer : observers_) {
-    observer.FullscreenProgressUpdated(controller_, model_->progress());
-  }
 }
 
 void FullscreenMediator::SetUpAnimator(__strong FullscreenAnimator** animator) {
   DCHECK(animator);
   DCHECK(*animator);
   DCHECK(*animator == scroll_end_animator_ ||
-         *animator == scroll_to_top_animator_ ||
-         *animator == foreground_animator_);
+         *animator == scroll_to_top_animator_);
   [*animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
     DCHECK_EQ(finalPosition, UIViewAnimatingPositionEnd);
     model_->AnimationEndedWithProgress(
@@ -132,22 +111,16 @@ void FullscreenMediator::SetUpAnimator(__strong FullscreenAnimator** animator) {
 }
 
 void FullscreenMediator::StopAnimating(bool update_model) {
-  if (!scroll_end_animator_ && !scroll_to_top_animator_ &&
-      !foreground_animator_) {
+  if (!scroll_end_animator_ && !scroll_to_top_animator_)
     return;
-  }
 
   // At most one animator should be non-nil.
-  DCHECK_EQ((scroll_end_animator_ ? 1 : 0) + (scroll_to_top_animator_ ? 1 : 0) +
-                (foreground_animator_ ? 1 : 0),
-            1);
+  DCHECK(!!scroll_end_animator_ != !!scroll_to_top_animator_);
 
   if (scroll_end_animator_)
     StopAnimator(&scroll_end_animator_, update_model);
   if (scroll_to_top_animator_)
     StopAnimator(&scroll_to_top_animator_, update_model);
-  if (foreground_animator_)
-    StopAnimator(&foreground_animator_, update_model);
 }
 
 void FullscreenMediator::StopAnimator(__strong FullscreenAnimator** animator,
@@ -155,8 +128,7 @@ void FullscreenMediator::StopAnimator(__strong FullscreenAnimator** animator,
   DCHECK(animator);
   DCHECK(*animator);
   DCHECK(*animator == scroll_end_animator_ ||
-         *animator == scroll_to_top_animator_ ||
-         *animator == foreground_animator_);
+         *animator == scroll_to_top_animator_);
   DCHECK_EQ((*animator).state, UIViewAnimatingStateActive);
   if (update_model)
     model_->AnimationEndedWithProgress((*animator).currentProgress);

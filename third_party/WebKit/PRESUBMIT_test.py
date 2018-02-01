@@ -121,6 +121,7 @@ class CxxDependencyTest(unittest.TestCase):
     disallow_list = [
         'GURL',
         'base::Callback<void()>',
+        'base::OnceCallback<void()>',
         'content::RenderFrame',
         'gfx::Point',
         'gfx::Rect',
@@ -142,17 +143,6 @@ class CxxDependencyTest(unittest.TestCase):
     # References in comments should never be checked.
     def testCheckCommentsIgnored(self):
         filename = 'third_party/WebKit/Source/core/frame/frame.cc'
-        for item in self.allow_list:
-            errors = self.runCheck(filename, ['// %s' % item])
-            self.assertEqual([], errors)
-
-        for item in self.disallow_list:
-            errors = self.runCheck(filename, ['// %s' % item])
-            self.assertEqual([], errors)
-
-    # References in Test files should never be checked.
-    def testCheckTestsIgnored(self):
-        filename = 'third_party/WebKit/Source/core/frame/FrameTest.cc'
         for item in self.allow_list:
             errors = self.runCheck(filename, ['// %s' % item])
             self.assertEqual([], errors)

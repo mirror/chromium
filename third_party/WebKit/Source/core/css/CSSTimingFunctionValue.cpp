@@ -28,7 +28,6 @@
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-namespace cssvalue {
 
 String CSSCubicBezierTimingFunctionValue::CustomCSSText() const {
   return "cubic-bezier(" + String::Number(x1_) + ", " + String::Number(y1_) +
@@ -71,5 +70,4 @@ bool CSSFramesTimingFunctionValue::Equals(
   return frames_ == other.frames_;
 }
 
-}  // namespace cssvalue
 }  // namespace blink

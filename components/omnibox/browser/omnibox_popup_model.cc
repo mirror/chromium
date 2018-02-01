@@ -291,7 +291,8 @@ gfx::Image OmniboxPopupModel::GetMatchIcon(const AutocompleteMatch& match,
   }
 
   const auto& vector_icon_type =
-      AutocompleteMatch::TypeToVectorIcon(match.type, IsStarredMatch(match));
+      IsStarredMatch(match) ? omnibox::kStarIcon
+                            : AutocompleteMatch::TypeToVectorIcon(match.type);
   return gfx::Image(
       gfx::CreateVectorIcon(vector_icon_type, 16, vector_icon_color));
 }

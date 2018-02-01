@@ -40,6 +40,7 @@
 namespace blink {
 
 class FrameSelection;
+class LayoutUnit;
 class LayoutObject;
 struct CompositedSelection;
 
@@ -82,6 +83,11 @@ class CORE_EXPORT RenderedPosition {
 
   Position PositionAtLeftBoundaryOfBiDiRun() const;
   Position PositionAtRightBoundaryOfBiDiRun() const;
+
+  // TODO(editing-dev): This function doesn't use RenderedPosition
+  // instance anymore. Consider moving.
+  static IntRect AbsoluteRect(const PositionWithAffinity&,
+                              LayoutUnit* extra_width_to_end_of_line = nullptr);
 
   // TODO(editing-dev): This function doesn't use RenderedPosition
   // instance anymore. Consider moving.

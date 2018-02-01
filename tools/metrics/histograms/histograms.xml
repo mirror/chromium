@@ -21928,17 +21928,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Event.Touch.TouchAdjustment.AdjustToSameNode" enum="Boolean">
-  <owner>eirage@chromium.org</owner>
-  <summary>
-    Records if doing touch adjustment on touchstart have same hit test node as
-    doing touch adjustment on GestureTap. True for same node, false for
-    different node. This only records GestureTap events.
-
-    Team: input-dev@chromium.org.
-  </summary>
-</histogram>
-
 <histogram name="Event.Touch.TouchDispositionsAfterPageLoad"
     enum="TouchEventDispatchResultType">
   <obsolete>
@@ -23102,60 +23091,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The number of times Bookmark Apps are launched, grouped by
     extensions::AppLaunchSource. The equivalent histogram on Android is called
     Launch.HomeScreenSource.
-  </summary>
-</histogram>
-
-<histogram name="Extensions.BrowsingInstanceViolation.ExtensionType"
-    enum="ExtensionType">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    the extension type.
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
-  </summary>
-</histogram>
-
-<histogram
-    name="Extensions.BrowsingInstanceViolation.IsBackgroundSourceOrTarget"
-    enum="ExtensionViewTypeIsBackground">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    whether either the source or the target frame was of the extension view type
-    of VIEW_TYPE_BACKGROUND_CONTENTS.
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
-  </summary>
-</histogram>
-
-<histogram name="Extensions.BrowsingInstanceViolation.SourceExtensionViewType"
-    enum="ExtensionViewType">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    the extension view type of the source frame.
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
-  </summary>
-</histogram>
-
-<histogram name="Extensions.BrowsingInstanceViolation.TargetExtensionViewType"
-    enum="ExtensionViewType">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    the extension view type of the found frame.
-
-    This metric should help confirm or deny the theory that violating browsing
-    instance boundaries is only needed for looking up background contents /
-    pages (of VIEW_TYPE_BACKGROUND_CONTENTS type).
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
   </summary>
 </histogram>
 
@@ -58460,15 +58395,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PageLoad.Clients.ServiceWorker.PageTransition"
-    enum="CorePageTransition">
-  <owner>falken@chromium.org</owner>
-  <summary>
-    The core transition type for main frame page loads controlled by a service
-    worker.
-  </summary>
-</histogram>
-
 <histogram name="PageLoad.Clients.SubresourceFilter.ActivationDecision"
     enum="SubresourceFilterActivationDecision">
   <owner>bmcquade@chromium.org</owner>
@@ -60521,18 +60447,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PasswordManager.ExportedPasswordsPerUserInCSV">
-  <owner>cfroussios@chromium.org</owner>
-  <owner>ioanap@chromium.org</owner>
+  <owner>xunlu@chromium.org</owner>
   <owner>vabr@chromium.org</owner>
   <summary>The number of passwords exported in CSV format per user.</summary>
-</histogram>
-
-<histogram name="PasswordManager.ExportPasswordsToCSVResult"
-    enum="ExportPasswordsResult">
-  <owner>cfroussios@chromium.org</owner>
-  <owner>ioanap@chromium.org</owner>
-  <owner>vabr@chromium.org</owner>
-  <summary>The success or error type of exporting passwords into CSV.</summary>
 </histogram>
 
 <histogram name="PasswordManager.FilledCredentialWasFromAndroidApp"
@@ -61266,15 +61183,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     This metric reports a type of a sync password hash change event. Recorded
     when a sync password hash is saved or cleared.
-  </summary>
-</histogram>
-
-<histogram name="PasswordManager.TimeReadingExportedPasswords" units="ms">
-  <owner>cfroussios@chromium.org</owner>
-  <owner>ioanap@chromium.org</owner>
-  <owner>vabr@chromium.org</owner>
-  <summary>
-    The time it takes to fetch and serialise the passwords for export.
   </summary>
 </histogram>
 
@@ -71288,29 +71196,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram base="true"
     name="RendererScheduler.ExpectedQueueingTimeByFrameStatus"
     units="microseconds">
-  <obsolete>
-    Replaced with RendererScheduler.ExpectedQueueingTimeByFrameStatus2 as of Feb
-    2018. Buckets were changed.
-  </obsolete>
   <owner>npm@chromium.org</owner>
   <owner>tdresser@chromium.org</owner>
   <summary>
     Expected queueing time split by tasks according to their frame status, in
     microseconds. The sum of the split values will be equal to the total,
     reported on RendererScheduler.ExpectedTaskQueueingDuration2. Recorded for
-    each 1000 ms window.
-  </summary>
-</histogram>
-
-<histogram base="true"
-    name="RendererScheduler.ExpectedQueueingTimeByFrameStatus2"
-    units="microseconds">
-  <owner>npm@chromium.org</owner>
-  <owner>tdresser@chromium.org</owner>
-  <summary>
-    Expected queueing time split by tasks according to their frame status, in
-    microseconds. The sum of the split values will be equal to the total,
-    reported on RendererScheduler.ExpectedTaskQueueingDuration3. Recorded for
     each 1000 ms window.
   </summary>
 </histogram>
@@ -71332,29 +71223,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="RendererScheduler.ExpectedQueueingTimeByTaskQueue"
     units="microseconds">
-  <obsolete>
-    Replaced with RendererScheduler.ExpectedQueueingTimeByTaskQueue2 as of Feb
-    2018. Buckets were changed.
-  </obsolete>
   <owner>npm@chromium.org</owner>
   <owner>tdresser@chromium.org</owner>
   <summary>
     Expected queueing time split by tasks according to the type of their task
     queue, in microseconds. The sum of the split values should be equal to the
     total, reported on RendererScheduler.ExpectedTaskQueueingDuration2. Recorded
-    for each 1000 ms window.
-  </summary>
-</histogram>
-
-<histogram base="true"
-    name="RendererScheduler.ExpectedQueueingTimeByTaskQueue2"
-    units="microseconds">
-  <owner>npm@chromium.org</owner>
-  <owner>tdresser@chromium.org</owner>
-  <summary>
-    Expected queueing time split by tasks according to the type of their task
-    queue, in microseconds. The sum of the split values should be equal to the
-    total, reported on RendererScheduler.ExpectedTaskQueueingDuration3. Recorded
     for each 1000 ms window.
   </summary>
 </histogram>
@@ -71396,21 +71270,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="RendererScheduler.ExpectedTaskQueueingDuration2"
-    units="microseconds">
-  <obsolete>
-    Replaced with RendererScheduler.ExpectedTaskQueueingDuration3 as of Feb
-    2018. Buckets were changed.
-  </obsolete>
-  <owner>tdresser@chromium.org</owner>
-  <owner>npm@chromium.org</owner>
-  <summary>
-    The estimated queueing duration which would be observed for additional high
-    priority tasks posted to the RendererScheduler, in microseconds. Recorded
-    for each 1000 ms window.
-  </summary>
-</histogram>
-
-<histogram name="RendererScheduler.ExpectedTaskQueueingDuration3"
     units="microseconds">
   <owner>tdresser@chromium.org</owner>
   <owner>npm@chromium.org</owner>
@@ -79697,10 +79556,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="ServiceWorker.MainFramePageLoad.CoreTransition"
     enum="CorePageTransition">
-  <obsolete>
-    Deprecated 2018-01 in favor of
-    PageLoad.Clients.ServiceWorker.PageTransition.
-  </obsolete>
   <owner>horo@chromium.org</owner>
   <summary>
     The transition type for main frame page loads controlled by a service
@@ -79710,9 +79565,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="ServiceWorker.MainFramePageLoad.RedirectChainLength"
     units="urls">
-  <obsolete>
-    Deprecated 2018-01.
-  </obsolete>
   <owner>horo@chromium.org</owner>
   <summary>
     Total length of the server redirects during main frame page loads controlled
@@ -82551,16 +82403,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     units="ms">
   <owner>morlovich@chromium.org</owner>
   <summary>Time spent selecting entries for eviction.</summary>
-</histogram>
-
-<histogram name="SimpleCache.FileDescriptorLimiterAction"
-    enum="SimpleCache.FileDescriptorLimiterOp">
-  <owner>morlovich@chromium.org</owner>
-  <summary>
-    This even is emitted when SimpleCache is forced to either close some files
-    due to being over FD limit, or reopen files it had to close due to such
-    limit earlier.
-  </summary>
 </histogram>
 
 <histogram name="SimpleCache.FileDescriptorLimitHard" units="file descriptors">
@@ -95509,8 +95351,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The time interval between when the variations seed was downloaded and when
-    it was loaded for use. Not recorded for expired seeds, nor when the download
-    time is unknown (typically, for seeds imported via first run).
+    it was loaded for use. Not recorded for expired seeds.
+
+    TODO(isherman): Implement this metric for safe seeds as well. (It's
+    currently not implemented; but also, safe mode is not triggerable.)
   </summary>
 </histogram>
 
@@ -99532,15 +99376,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Number of IPv6 local Candidates gathered in a PeerConnection Session once
     the ICE address gathering process reaches the Completed status. To avoid
     miscounting, this only includes the first m line's first component.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.PeerConnection.KeyProtocol"
-    enum="PeerConnectionKeyProtocol">
-  <owner>hta@chromium.org</owner>
-  <summary>
-    What key exchange protocol (DTLS or SDES) is used to establish the crypto
-    keys for a PeerConnection's RTP transport.
   </summary>
 </histogram>
 
@@ -110615,8 +110450,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              frames."/>
   <affected-histogram
       name="RendererScheduler.ExpectedQueueingTimeByFrameStatus"/>
-  <affected-histogram
-      name="RendererScheduler.ExpectedQueueingTimeByFrameStatus2"/>
 </histogram_suffixes>
 
 <histogram_suffixes
@@ -110638,8 +110471,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Other"
       label="Expected Queueing Time from events in any other task queue."/>
   <affected-histogram name="RendererScheduler.ExpectedQueueingTimeByTaskQueue"/>
-  <affected-histogram
-      name="RendererScheduler.ExpectedQueueingTimeByTaskQueue2"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="RendererScheduler.MainThreadLoadSplit" separator=".">

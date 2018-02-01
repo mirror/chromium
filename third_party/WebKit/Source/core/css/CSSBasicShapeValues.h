@@ -39,7 +39,6 @@
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-namespace cssvalue {
 
 class CSSBasicShapeCircleValue final : public CSSValue {
  public:
@@ -217,7 +216,6 @@ DEFINE_CSS_VALUE_TYPE_CASTS(CSSBasicShapePolygonValue,
                             IsBasicShapePolygonValue());
 DEFINE_CSS_VALUE_TYPE_CASTS(CSSBasicShapeInsetValue, IsBasicShapeInsetValue());
 
-}  // namespace cssvalue
 }  // namespace blink
 
 #endif  // CSSBasicShapeValues_h

@@ -59,12 +59,6 @@ class SubresourceFilterAgentUnderTest : public SubresourceFilterAgent {
     OnSetSubresourceFilterForCommittedLoadCalled();
   }
 
-  void SetIsAdSubframeForDocument(bool is_ad_subframe) override {
-    is_ad_subframe_ = is_ad_subframe;
-  }
-
-  bool GetIsAdSubframe() { return is_ad_subframe_; }
-
   blink::WebDocumentSubresourceFilter* filter() {
     return last_injected_filter_.get();
   }
@@ -74,7 +68,6 @@ class SubresourceFilterAgentUnderTest : public SubresourceFilterAgent {
   }
 
  private:
-  bool is_ad_subframe_ = false;
   std::unique_ptr<blink::WebDocumentSubresourceFilter> last_injected_filter_;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterAgentUnderTest);
@@ -142,12 +135,10 @@ class SubresourceFilterAgentTest : public ::testing::Test {
     // No DidFinishLoad is called in this case.
   }
 
-  void StartLoadAndSetActivationState(ActivationState state,
-                                      bool is_ad_subframe = false) {
+  void StartLoadAndSetActivationState(ActivationState state) {
     agent_as_rfo()->DidStartProvisionalLoad(nullptr);
     EXPECT_TRUE(agent_as_rfo()->OnMessageReceived(
-        SubresourceFilterMsg_ActivateForNextCommittedLoad(0, state,
-                                                          is_ad_subframe)));
+        SubresourceFilterMsg_ActivateForNextCommittedLoad(0, state)));
     agent_as_rfo()->DidCommitProvisionalLoad(
         true /* is_new_navigation */, false /* is_same_document_navigation */);
   }
@@ -428,8 +419,7 @@ TEST_F(SubresourceFilterAgentTest,
   ActivationState state(ActivationLevel::ENABLED);
   state.measure_performance = true;
   EXPECT_TRUE(agent_as_rfo()->OnMessageReceived(
-      SubresourceFilterMsg_ActivateForNextCommittedLoad(
-          0, state, false /* is_ad_subframe */)));
+      SubresourceFilterMsg_ActivateForNextCommittedLoad(0, state)));
   agent_as_rfo()->DidFailProvisionalLoad(
       blink::WebURLError(net::ERR_FAILED, blink::WebURL()));
   agent_as_rfo()->DidStartProvisionalLoad(nullptr);
@@ -519,18 +509,6 @@ TEST_F(SubresourceFilterAgentTest,
   ExpectNoSignalAboutFirstSubresourceDisallowed();
 
   filter->ReportDisallowedLoad();
-}
-
-TEST_F(SubresourceFilterAgentTest, DryRun_DocumentIsAdSubframeTagging) {
-  base::HistogramTester histogram_tester;
-  ASSERT_NO_FATAL_FAILURE(
-      SetTestRulesetToDisallowURLsWithPathSuffix(kTestFirstURLPathSuffix));
-  ExpectSubresourceFilterGetsInjected();
-  StartLoadAndSetActivationState(ActivationState(ActivationLevel::DRYRUN),
-                                 true /* is_ad_subframe */);
-  ASSERT_TRUE(::testing::Mock::VerifyAndClearExpectations(agent()));
-
-  EXPECT_TRUE(agent()->GetIsAdSubframe());
 }
 
 }  // namespace subresource_filter

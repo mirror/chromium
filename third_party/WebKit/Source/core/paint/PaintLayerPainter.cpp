@@ -1097,7 +1097,6 @@ void PaintLayerPainter::PaintFragmentWithPhase(
                        ->AncestorClippingMaskLayer();
           break;
         }
-        FALLTHROUGH;
       default:
         clipping_rule = LayerClipRecorder::kIncludeSelfForBorderRadius;
         break;

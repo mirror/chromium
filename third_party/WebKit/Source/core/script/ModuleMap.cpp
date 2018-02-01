@@ -8,6 +8,7 @@
 #include "core/loader/modulescript/ModuleScriptLoaderClient.h"
 #include "core/script/Modulator.h"
 #include "core/script/ModuleScript.h"
+#include "platform/WebTaskRunner.h"
 
 namespace blink {
 

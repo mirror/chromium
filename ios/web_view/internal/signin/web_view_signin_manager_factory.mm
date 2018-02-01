@@ -11,7 +11,6 @@
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "ios/web_view/internal/app/application_context.h"
@@ -74,8 +73,7 @@ WebViewSigninManagerFactory::BuildServiceInstanceFor(
       WebViewOAuth2TokenServiceFactory::GetForBrowserState(browser_state),
       WebViewAccountTrackerServiceFactory::GetForBrowserState(browser_state),
       WebViewGaiaCookieManagerServiceFactory::GetForBrowserState(browser_state),
-      WebViewSigninErrorControllerFactory::GetForBrowserState(browser_state),
-      signin::AccountConsistencyMethod::kMirror);
+      WebViewSigninErrorControllerFactory::GetForBrowserState(browser_state));
   service->Initialize(ApplicationContext::GetInstance()->GetLocalState());
   return service;
 }

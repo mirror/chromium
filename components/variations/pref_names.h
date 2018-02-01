@@ -21,7 +21,6 @@ extern const char kVariationsPermutedEntropyCache[];
 extern const char kVariationsRestrictParameter[];
 extern const char kVariationsSafeCompressedSeed[];
 extern const char kVariationsSafeSeedDate[];
-extern const char kVariationsSafeSeedFetchTime[];
 extern const char kVariationsSafeSeedLocale[];
 extern const char kVariationsSafeSeedPermanentConsistencyCountry[];
 extern const char kVariationsSafeSeedSessionConsistencyCountry[];

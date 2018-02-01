@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_error_controller.h"
 #include "google_apis/gaia/gaia_oauth_client.h"
@@ -36,7 +37,6 @@ class ChromeSigninClient
   explicit ChromeSigninClient(
       Profile* profile, SigninErrorController* signin_error_controller);
   ~ChromeSigninClient() override;
-
   void DoFinalInit() override;
 
   // Utility method.
@@ -134,6 +134,7 @@ class ChromeSigninClient
 
   std::unique_ptr<gaia::GaiaOAuthClient> oauth_client_;
   std::unique_ptr<OAuth2TokenService::Request> oauth_request_;
+  AccountConsistencyModeManager account_consistency_mode_manager_;
 
   base::WeakPtrFactory<ChromeSigninClient> weak_ptr_factory_;
 

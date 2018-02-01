@@ -166,8 +166,7 @@ initWithDispatcher:
 #pragma mark - VoiceSearchControllerDelegate
 
 - (void)receiveVoiceSearchResult:(NSString*)voiceResult {
-  [self.toolbarCoordinator.voiceSearchControllerDelegate
-      receiveVoiceSearchResult:voiceResult];
+  [self.toolbarCoordinator receiveVoiceSearchResult:voiceResult];
 }
 
 #pragma mark - ActivityServicePositioner
@@ -180,9 +179,8 @@ initWithDispatcher:
 
 - (void)receiveQRScannerResult:(NSString*)qrScannerResult
                loadImmediately:(BOOL)load {
-  [self.toolbarCoordinator.QRScannerResultLoader
-      receiveQRScannerResult:qrScannerResult
-             loadImmediately:load];
+  [self.toolbarCoordinator receiveQRScannerResult:qrScannerResult
+                                  loadImmediately:load];
 }
 
 #pragma mark - BubbleViewAnchorPointProvider
@@ -214,10 +212,6 @@ initWithDispatcher:
 
 - (void)scrollFullscreenToTopWithAnimator:
     (FullscreenScrollToTopAnimator*)animator {
-}
-
-- (void)showToolbarForForgroundWithAnimator:
-    (FullscreenForegroundAnimator*)animator {
 }
 
 #pragma mark - ToolsMenuPresentationProvider

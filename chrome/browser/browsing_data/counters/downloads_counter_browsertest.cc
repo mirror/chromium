@@ -59,8 +59,11 @@ class DownloadsCounterTest : public InProcessBrowserTest,
   std::string AddDownload() {
     std::string guid = AddDownloadInternal(
         content::DownloadItem::COMPLETE,
-        download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-        content::DOWNLOAD_INTERRUPT_REASON_NONE, GURL(), std::string(), false);
+        content::DownloadDangerType::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+        content::DOWNLOAD_INTERRUPT_REASON_NONE,
+        GURL(),
+        std::string(),
+        false);
     guids_to_add_.insert(guid);
     return guid;
   }
@@ -68,36 +71,44 @@ class DownloadsCounterTest : public InProcessBrowserTest,
   std::string AddIncognitoDownload() {
     // Incognito downloads are not expected to be persisted. We don't need to
     // wait for a callback from them, so we don't add them to |guids_to_add_|.
-    return AddDownloadInternal(content::DownloadItem::COMPLETE,
-                               download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-                               content::DOWNLOAD_INTERRUPT_REASON_NONE, GURL(),
-                               std::string(), true);
+    return AddDownloadInternal(
+        content::DownloadItem::COMPLETE,
+        content::DownloadDangerType::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+        content::DOWNLOAD_INTERRUPT_REASON_NONE,
+        GURL(),
+        std::string(),
+        true);
   }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   std::string AddExtensionDownload() {
     // Extension downloads are not expected to be persisted. We don't need to
     // wait for a callback from them, so we don't add them to |guids_to_add_|.
-    return AddDownloadInternal(content::DownloadItem::COMPLETE,
-                               download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-                               content::DOWNLOAD_INTERRUPT_REASON_NONE, GURL(),
-                               extensions::Extension::kMimeType, false);
+    return AddDownloadInternal(
+        content::DownloadItem::COMPLETE,
+        content::DownloadDangerType::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+        content::DOWNLOAD_INTERRUPT_REASON_NONE,
+        GURL(),
+        extensions::Extension::kMimeType,
+        false);
   }
 
   std::string AddUserScriptDownload() {
     // User script downloads are not expected to be persisted. We don't need to
     // wait for a callback from them, so we don't add them to |guids_to_add_|.
-    return AddDownloadInternal(content::DownloadItem::COMPLETE,
-                               download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-                               content::DOWNLOAD_INTERRUPT_REASON_NONE,
-                               GURL("file:///download.user.js"),
-                               "text/javascript", false);
+    return AddDownloadInternal(
+        content::DownloadItem::COMPLETE,
+        content::DownloadDangerType::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+        content::DOWNLOAD_INTERRUPT_REASON_NONE,
+        GURL("file:///download.user.js"),
+        "text/javascript",
+        false);
   }
 #endif
 
   std::string AddDownloadWithProperties(
       content::DownloadItem::DownloadState state,
-      download::DownloadDangerType danger,
+      content::DownloadDangerType danger,
       content::DownloadInterruptReason reason) {
     std::string guid = AddDownloadInternal(
         state, danger, reason, GURL(), std::string(), false);
@@ -105,12 +116,13 @@ class DownloadsCounterTest : public InProcessBrowserTest,
     return guid;
   }
 
-  std::string AddDownloadInternal(content::DownloadItem::DownloadState state,
-                                  download::DownloadDangerType danger,
-                                  content::DownloadInterruptReason reason,
-                                  const GURL& url,
-                                  std::string mime_type,
-                                  bool incognito) {
+  std::string AddDownloadInternal(
+      content::DownloadItem::DownloadState state,
+      content::DownloadDangerType danger,
+      content::DownloadInterruptReason reason,
+      const GURL& url,
+      std::string mime_type,
+      bool incognito) {
     std::string guid = base::GenerateGUID();
 
     std::vector<GURL> url_chain;
@@ -272,21 +284,26 @@ IN_PROC_BROWSER_TEST_F(DownloadsCounterTest, Types) {
                           base::Unretained(this)));
 
   AddDownload();
-  AddDownloadWithProperties(content::DownloadItem::COMPLETE,
-                            download::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
-                            content::DOWNLOAD_INTERRUPT_REASON_NONE);
-  AddDownloadWithProperties(content::DownloadItem::COMPLETE,
-                            download::DOWNLOAD_DANGER_TYPE_USER_VALIDATED,
-                            content::DOWNLOAD_INTERRUPT_REASON_NONE);
-  AddDownloadWithProperties(content::DownloadItem::CANCELLED,
-                            download::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL,
-                            content::DOWNLOAD_INTERRUPT_REASON_NONE);
-  AddDownloadWithProperties(content::DownloadItem::INTERRUPTED,
-                            download::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL,
-                            content::DOWNLOAD_INTERRUPT_REASON_FILE_FAILED);
-  AddDownloadWithProperties(content::DownloadItem::INTERRUPTED,
-                            download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT,
-                            content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED);
+  AddDownloadWithProperties(
+      content::DownloadItem::COMPLETE,
+      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
+      content::DOWNLOAD_INTERRUPT_REASON_NONE);
+  AddDownloadWithProperties(
+      content::DownloadItem::COMPLETE,
+      content::DOWNLOAD_DANGER_TYPE_USER_VALIDATED,
+      content::DOWNLOAD_INTERRUPT_REASON_NONE);
+  AddDownloadWithProperties(
+      content::DownloadItem::CANCELLED,
+      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL,
+      content::DOWNLOAD_INTERRUPT_REASON_NONE);
+  AddDownloadWithProperties(
+      content::DownloadItem::INTERRUPTED,
+      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL,
+      content::DOWNLOAD_INTERRUPT_REASON_FILE_FAILED);
+  AddDownloadWithProperties(
+      content::DownloadItem::INTERRUPTED,
+      content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT,
+      content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED);
 
   WaitForDownloadHistory();
   counter.Restart();

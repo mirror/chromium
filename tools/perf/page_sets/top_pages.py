@@ -9,20 +9,14 @@ from page_sets.login_helpers import google_login
 
 class TopPages(page_module.Page):
 
-  def __init__(self,
-               url,
-               page_set,
-               shared_page_state_class,
-               name='',
-               extra_browser_args=None):
+  def __init__(self, url, page_set, shared_page_state_class, name=''):
     if name == '':
       name = url
     super(TopPages, self).__init__(
         url=url,
         page_set=page_set,
-        shared_page_state_class=shared_page_state_class,
         name=name,
-        extra_browser_args=extra_browser_args)
+        shared_page_state_class=shared_page_state_class)
 
 
 class GoogleWebSearchPage(TopPages):
@@ -31,14 +25,12 @@ class GoogleWebSearchPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(GoogleWebSearchPage, self).__init__(
         url='https://www.google.com/#hl=en&q=barack+obama',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     super(GoogleWebSearchPage, self).RunNavigateSteps(action_runner)
@@ -51,14 +43,12 @@ class GoogleImageSearchPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(GoogleImageSearchPage, self).__init__(
         'https://www.google.com/search?q=cats&tbm=isch',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest')
@@ -71,14 +61,12 @@ class GmailPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(GmailPage, self).__init__(
         url='https://mail.google.com/mail/',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest')
@@ -94,14 +82,12 @@ class GoogleCalendarPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(GoogleCalendarPage, self).__init__(
         url='https://www.google.com/calendar/',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest')
@@ -124,16 +110,14 @@ class GoogleDocPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Docs_(1_open_document_tab)',
-               extra_browser_args=None):
+               name='Docs_(1_open_document_tab)'):
     super(GoogleDocPage, self).__init__(
         # pylint: disable=line-too-long
         url=
         'https://docs.google.com/document/d/1X-IKNjtEnx-WW5JIKRLsyhz5sbsat3mfTpAPUSX3_s4/view',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest')
@@ -149,14 +133,12 @@ class GooglePlusPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(GooglePlusPage, self).__init__(
         url='https://plus.google.com/110031535020051778989/posts',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest')
@@ -170,14 +152,12 @@ class YoutubePage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(YoutubePage, self).__init__(
         url='http://www.youtube.com',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest')
@@ -192,14 +172,12 @@ class BlogspotPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Blogger',
-               extra_browser_args=None):
+               name='Blogger'):
     super(BlogspotPage, self).__init__(
         url='http://googlewebmastercentral.blogspot.com/',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     super(BlogspotPage, self).RunNavigateSteps(action_runner)
@@ -212,16 +190,14 @@ class WordpressPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Wordpress',
-               extra_browser_args=None):
+               name='Wordpress'):
     super(WordpressPage, self).__init__(
         # pylint: disable=line-too-long
         url=
         'http://en.blog.wordpress.com/2012/09/04/freshly-pressed-editors-picks-for-august-2012/',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     super(WordpressPage, self).RunNavigateSteps(action_runner)
@@ -237,14 +213,12 @@ class FacebookPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Facebook',
-               extra_browser_args=None):
+               name='Facebook'):
     super(FacebookPage, self).__init__(
         url='https://www.facebook.com/barackobama',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     super(FacebookPage, self).RunNavigateSteps(action_runner)
@@ -257,14 +231,12 @@ class LinkedinPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='LinkedIn',
-               extra_browser_args=None):
+               name='LinkedIn'):
     super(LinkedinPage, self).__init__(
         url='http://www.linkedin.com/in/linustorvalds',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
 
 class WikipediaPage(TopPages):
@@ -273,14 +245,12 @@ class WikipediaPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Wikipedia_(1_tab)',
-               extra_browser_args=None):
+               name='Wikipedia_(1_tab)'):
     super(WikipediaPage, self).__init__(
         url='http://en.wikipedia.org/wiki/Wikipedia',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
 
 class TwitterPage(TopPages):
@@ -289,14 +259,12 @@ class TwitterPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Twitter',
-               extra_browser_args=None):
+               name='Twitter'):
     super(TwitterPage, self).__init__(
         url='https://twitter.com/katyperry',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     super(TwitterPage, self).RunNavigateSteps(action_runner)
@@ -309,14 +277,12 @@ class PinterestPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Pinterest',
-               extra_browser_args=None):
+               name='Pinterest'):
     super(PinterestPage, self).__init__(
         url='http://pinterest.com',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
 
 class ESPNPage(TopPages):
@@ -325,14 +291,12 @@ class ESPNPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='ESPN',
-               extra_browser_args=None):
+               name='ESPN'):
     super(ESPNPage, self).__init__(
         url='http://espn.go.com',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
 
 class WeatherPage(TopPages):
@@ -341,14 +305,12 @@ class WeatherPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='Weather.com',
-               extra_browser_args=None):
+               name='Weather.com'):
     super(WeatherPage, self).__init__(
         url='http://www.weather.com/weather/right-now/Mountain+View+CA+94043',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
 
 class YahooGamesPage(TopPages):
@@ -357,14 +319,12 @@ class YahooGamesPage(TopPages):
   def __init__(self,
                page_set,
                shared_page_state_class=shared_page_state.SharedPageState,
-               name='',
-               extra_browser_args=None):
+               name=''):
     super(YahooGamesPage, self).__init__(
         url='http://games.yahoo.com',
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
-        name=name,
-        extra_browser_args=extra_browser_args)
+        name=name)
 
   def RunNavigateSteps(self, action_runner):
     super(YahooGamesPage, self).RunNavigateSteps(action_runner)

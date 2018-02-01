@@ -395,9 +395,7 @@ public class NetworkChangeNotifier {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return false;
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            @SuppressWarnings("deprecation")
-            boolean returnValue = ConnectivityManager.getProcessDefaultNetwork() != null;
-            return returnValue;
+            return ConnectivityManager.getProcessDefaultNetwork() != null;
         } else {
             return mConnectivityManager.getBoundNetworkForProcess() != null;
         }

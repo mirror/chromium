@@ -900,10 +900,7 @@ bool ConsumePosition(CSSParserTokenRange& range,
       PositionFromTwoValues(value1, value2, result_x, result_y);
       return true;
     }
-    if (*threeValuePosition == WebFeature::kThreeValuedPositionBackground)
-      context.Count(*threeValuePosition);
-    else
-      context.CountDeprecation(*threeValuePosition);
+    context.Count(*threeValuePosition);
   }
 
   CSSValue* values[5];
@@ -1482,16 +1479,6 @@ static CSSValue* ConsumeGeneratedImage(CSSParserTokenRange& range,
   }
   if (!result || !args.AtEnd())
     return nullptr;
-
-  WebFeature feature;
-  if (id == CSSValueWebkitCrossFade)
-    feature = WebFeature::kWebkitCrossFade;
-  else if (id == CSSValuePaint)
-    feature = WebFeature::kCSSPaintFunction;
-  else
-    feature = WebFeature::kCSSGradient;
-  context->Count(feature);
-
   range = range_copy;
   return result;
 }

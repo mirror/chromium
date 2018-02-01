@@ -95,7 +95,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
             mSigninPromoController = null;
         }
 
-        mSignInManager = SigninManager.get();
+        mSignInManager = SigninManager.get(mContext);
         mSignInManager.addSignInStateObserver(this);
 
         mPromoState = calculatePromoState();

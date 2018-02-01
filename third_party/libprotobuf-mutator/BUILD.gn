@@ -26,10 +26,7 @@ source_set("libprotobuf-mutator") {
       "src/src/text_format.cc",
       "src/src/utf8_fix.cc",
     ]
-
-    # Allow users of LPM to use protobuf reflection and other features from
-    # protobuf_full.
-    public_deps = [
+    deps = [
       "//third_party/protobuf:protobuf_full",
     ]
 

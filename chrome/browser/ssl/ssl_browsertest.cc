@@ -112,6 +112,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_state.h"
 #include "content/public/common/web_preferences.h"
@@ -148,8 +149,6 @@
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/network/public/cpp/features.h"
-#include "services/network/public/cpp/network_switches.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -446,7 +445,7 @@ void SetHSTSForHostName(Profile* profile) {
   std::string hostname = kHstsTestHostName;
   const base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
   bool include_subdomains = false;
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     mojo::ScopedAllowSyncCallForTesting allow_sync_call;
     content::StoragePartition* partition =
         content::BrowserContext::GetDefaultStoragePartition(profile);
@@ -1124,8 +1123,8 @@ class SSLUITestIgnoreCertErrorsBySPKIHTTPS : public SSLUITest {
         https_server_mismatched_.GetCertificate().get());
     // Browser will ignore certificate errors for chains matching one of the
     // public keys from the list.
-    command_line->AppendSwitchASCII(
-        network::switches::kIgnoreCertificateErrorsSPKIList, whitelist_flag);
+    command_line->AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
+                                    whitelist_flag);
   }
 };
 
@@ -1143,8 +1142,8 @@ class SSLUITestIgnoreCertErrorsBySPKIWSS : public SSLUITest {
         MakeCertSPKIFingerprint(wss_server_expired_.GetCertificate().get());
     // Browser will ignore certificate errors for chains matching one of the
     // public keys from the list.
-    command_line->AppendSwitchASCII(
-        network::switches::kIgnoreCertificateErrorsSPKIList, whitelist_flag);
+    command_line->AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
+                                    whitelist_flag);
   }
 };
 
@@ -1908,23 +1907,10 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, SHA1PrefsCanEnable) {
       browser()->tab_strip_model()->GetActiveWebContents(), AuthState::NONE);
 }
 
-// By default, trust in Symantec's Legacy PKI should be disabled.
 IN_PROC_BROWSER_TEST_P(SSLUITest, SymantecEnforcementIsNotDisabled) {
   bool net::SSLConfig::*member = &net::SSLConfig::symantec_enforcement_disabled;
   ASSERT_NO_FATAL_FAILURE(
       CheckSSLConfig(browser()->profile()->GetRequestContext(), member, false));
-}
-
-// Enables support for Symantec's Legacy PKI via policy, and then ensures that
-// the SSLConfig is configured to trust the Legacy PKI.
-IN_PROC_BROWSER_TEST_P(SSLUITest, SymantecPrefsCanEnable) {
-  bool net::SSLConfig::*member = &net::SSLConfig::symantec_enforcement_disabled;
-
-  ASSERT_NO_FATAL_FAILURE(
-      EnablePolicy(policy::key::kEnableSymantecLegacyInfrastructure,
-                   ssl_config::prefs::kCertEnableSymantecLegacyInfrastructure));
-  ASSERT_NO_FATAL_FAILURE(
-      CheckSSLConfig(browser()->profile()->GetRequestContext(), member, true));
 }
 
 // Visit a HTTP page which request WSS connection to a server providing invalid
@@ -6930,7 +6916,7 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, ManySubresources) {
   }
 }
 
-// Checks that SimpleURLLoader, which uses services/network/url_loader.cc, goes
+// Checks that SimpleURLLoader, which uses content/network/url_loader.cc, goes
 // through the new NetworkServiceClient interface to deliver cert error
 // notifications to the browser which then overrides the certificate error.
 IN_PROC_BROWSER_TEST_F(SSLUITestBase, SimpleURLLoaderCertError) {

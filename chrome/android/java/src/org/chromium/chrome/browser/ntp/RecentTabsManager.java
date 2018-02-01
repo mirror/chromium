@@ -100,7 +100,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
         mRecentlyClosedTabManager = sRecentlyClosedTabManagerForTests != null
                 ? sRecentlyClosedTabManagerForTests
                 : new RecentlyClosedBridge(profile);
-        mSignInManager = SigninManager.get();
+        mSignInManager = SigninManager.get(context);
         mContext = context;
 
         int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
@@ -348,7 +348,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
     @PromoState
     int getPromoType() {
         if (!ChromeSigninController.get().isSignedIn()) {
-            if (!SigninManager.get().isSignInAllowed()) {
+            if (!SigninManager.get(mContext).isSignInAllowed()) {
                 return PromoState.PROMO_NONE;
             }
             return PromoState.PROMO_SIGNIN_PERSONALIZED;

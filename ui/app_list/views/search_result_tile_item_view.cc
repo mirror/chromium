@@ -86,7 +86,8 @@ SearchResultTileItemView::SearchResultTileItemView(
     SearchResultContainerView* result_container,
     AppListViewDelegate* view_delegate,
     PaginationModel* pagination_model)
-    : result_container_(result_container),
+    : views::Button(this),
+      result_container_(result_container),
       view_delegate_(view_delegate),
       pagination_model_(pagination_model),
       is_play_store_app_search_enabled_(
@@ -308,12 +309,10 @@ void SearchResultTileItemView::OnFocus() {
   } else if (!IsSuggestedAppTile()) {
     ScrollRectToVisible(GetLocalBounds());
   }
-  SetBackgroundHighlighted(true);
   UpdateBackgroundColor();
 }
 
 void SearchResultTileItemView::OnBlur() {
-  SetBackgroundHighlighted(false);
   UpdateBackgroundColor();
 }
 
@@ -322,7 +321,7 @@ void SearchResultTileItemView::StateChanged(ButtonState old_state) {
 }
 
 void SearchResultTileItemView::PaintButtonContents(gfx::Canvas* canvas) {
-  if (!item_ || !background_highlighted())
+  if (!item_ || !HasFocus())
     return;
 
   gfx::Rect rect(GetContentsBounds());

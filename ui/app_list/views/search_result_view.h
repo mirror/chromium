@@ -11,13 +11,14 @@
 #include <string>
 #include <vector>
 
+#include "ash/app_list/model/search/search_result_observer.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/views/search_result_actions_view_delegate.h"
-#include "ui/app_list/views/search_result_base_view.h"
 #include "ui/views/context_menu_controller.h"
+#include "ui/views/controls/button/button.h"
 
 namespace gfx {
 class RenderText;
@@ -40,8 +41,10 @@ class SearchResultActionsView;
 
 // SearchResultView displays a SearchResult.
 class APP_LIST_EXPORT SearchResultView
-    : public SearchResultBaseView,
+    : public views::Button,
+      public views::ButtonListener,
       public views::ContextMenuController,
+      public SearchResultObserver,
       public SearchResultActionsViewDelegate {
  public:
   // Internal class name.
@@ -64,6 +67,9 @@ class APP_LIST_EXPORT SearchResultView
   base::string16 ComputeAccessibleName() const;
 
   void set_is_last_result(bool is_last) { is_last_result_ = is_last; }
+
+  void SetSelected(bool selected);
+  bool selected() const { return selected_; }
 
  private:
   friend class app_list::test::SearchResultListViewTest;

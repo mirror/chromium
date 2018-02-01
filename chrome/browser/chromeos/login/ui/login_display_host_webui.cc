@@ -74,7 +74,6 @@
 #include "chromeos/timezone/timezone_resolver.h"
 #include "components/keep_alive_registry/keep_alive_types.h"
 #include "components/keep_alive_registry/scoped_keep_alive.h"
-#include "components/language/core/common/locale_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -1288,8 +1287,8 @@ void ShowLoginWizard(OobeScreen first_screen) {
   }
 
   PrefService* prefs = g_browser_process->local_state();
-  std::string current_locale = prefs->GetString(prefs::kApplicationLocale);
-  language::ConvertToActualUILocale(&current_locale);
+  const std::string& current_locale =
+      prefs->GetString(prefs::kApplicationLocale);
   VLOG(1) << "Current locale: " << current_locale;
 
   if (ShouldShowSigninScreen(first_screen)) {

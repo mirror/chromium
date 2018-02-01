@@ -253,8 +253,7 @@ void OnSuggestionModelAdded(UiScene* scene,
   element_binding->bindings().push_back(
       VR_BIND(AutocompleteMatch::Type, SuggestionBinding, element_binding,
               model->model()->type, VectorIcon, p_icon,
-              view->SetIcon(AutocompleteMatch::TypeToVectorIcon(
-                  value, /*is_bookmark=*/false))));
+              view->SetIcon(AutocompleteMatch::TypeToVectorIcon(value))));
   element_binding->set_view(background.get());
   scene->AddUiElement(kOmniboxSuggestions, std::move(background));
 }

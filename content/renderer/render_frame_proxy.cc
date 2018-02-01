@@ -350,10 +350,10 @@ void RenderFrameProxy::SetChildFrameSurface(
 
   if (!enable_surface_synchronization_) {
     compositing_helper_->SetPrimarySurfaceId(surface_info.id(),
-                                             local_frame_size());
+                                             frame_rect().size());
   }
   compositing_helper_->SetFallbackSurfaceId(surface_info.id(),
-                                            local_frame_size());
+                                            frame_rect().size());
 }
 
 bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
@@ -556,10 +556,8 @@ void RenderFrameProxy::WasResized() {
 
   bool synchronized_params_changed =
       !sent_resize_params_ ||
-      sent_resize_params_->local_frame_size !=
-          pending_resize_params_.local_frame_size ||
-      sent_resize_params_->screen_space_rect.size() !=
-          pending_resize_params_.screen_space_rect.size() ||
+      sent_resize_params_->frame_rect.size() !=
+          pending_resize_params_.frame_rect.size() ||
       sent_resize_params_->screen_info != pending_resize_params_.screen_info ||
       sent_resize_params_->sequence_number !=
           pending_resize_params_.sequence_number;
@@ -568,27 +566,24 @@ void RenderFrameProxy::WasResized() {
     local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
 
   viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
-  if (enable_surface_synchronization_) {
-    compositing_helper_->SetPrimarySurfaceId(surface_id, local_frame_size());
-  }
+  if (enable_surface_synchronization_)
+    compositing_helper_->SetPrimarySurfaceId(surface_id, frame_rect().size());
 
   bool rect_changed =
-      !sent_resize_params_ || sent_resize_params_->screen_space_rect !=
-                                  pending_resize_params_.screen_space_rect;
+      !sent_resize_params_ ||
+      sent_resize_params_->frame_rect != pending_resize_params_.frame_rect;
   bool resize_params_changed = synchronized_params_changed || rect_changed;
 
 #if defined(USE_AURA)
-  if (rect_changed && mus_embedded_frame_) {
-    mus_embedded_frame_->SetWindowBounds(local_surface_id_,
-                                         gfx::Rect(local_frame_size()));
-  }
+  if (rect_changed && mus_embedded_frame_)
+    mus_embedded_frame_->SetWindowBounds(local_surface_id_, frame_rect());
 #endif
 
   if (resize_params_changed) {
     // Let the browser know about the updated view rect.
     Send(new FrameHostMsg_UpdateResizeParams(
-        routing_id_, screen_space_rect(), local_frame_size(), screen_info(),
-        auto_size_sequence_number(), surface_id));
+        routing_id_, frame_rect(), screen_info(), auto_size_sequence_number(),
+        surface_id));
     sent_resize_params_ = pending_resize_params_;
   }
 }
@@ -688,12 +683,8 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }
 
-void RenderFrameProxy::FrameRectsChanged(
-    const blink::WebRect& local_frame_rect,
-    const blink::WebRect& screen_space_rect) {
-  pending_resize_params_.screen_space_rect = gfx::Rect(screen_space_rect);
-  pending_resize_params_.local_frame_size =
-      gfx::Size(local_frame_rect.width, local_frame_rect.height);
+void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
+  pending_resize_params_.frame_rect = gfx::Rect(frame_rect);
   pending_resize_params_.screen_info = render_widget_->screen_info();
   WasResized();
 }

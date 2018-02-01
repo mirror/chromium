@@ -154,7 +154,7 @@ AnimationWorkletGlobalScope::Mutate(
 
 void AnimationWorkletGlobalScope::registerAnimator(
     const String& name,
-    const ScriptValue& constructor_value,
+    const ScriptValue& ctor_value,
     ExceptionState& exception_state) {
   DCHECK(IsContextThread());
   if (animator_definitions_.Contains(name)) {
@@ -172,9 +172,9 @@ void AnimationWorkletGlobalScope::registerAnimator(
   v8::Isolate* isolate = ScriptController()->GetScriptState()->GetIsolate();
   v8::Local<v8::Context> context = ScriptController()->GetContext();
 
-  DCHECK(constructor_value.V8Value()->IsFunction());
+  DCHECK(ctor_value.V8Value()->IsFunction());
   v8::Local<v8::Function> constructor =
-      v8::Local<v8::Function>::Cast(constructor_value.V8Value());
+      v8::Local<v8::Function>::Cast(ctor_value.V8Value());
 
   v8::Local<v8::Object> prototype;
   if (!V8ObjectParser::ParsePrototype(context, constructor, &prototype,

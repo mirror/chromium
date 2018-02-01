@@ -242,12 +242,13 @@ void ChromeRenderFrameObserver::RequestThumbnailForContextNode(
       if (gfx::PNGCodec::EncodeBGRASkBitmap(
               bitmap, kDiscardTransparencyForContextMenu, &data)) {
         thumbnail_data.swap(data);
+        break;
       }
-      break;
     case chrome::mojom::ImageFormat::JPEG:
-      if (gfx::JPEGCodec::Encode(bitmap, kDefaultQuality, &data))
+      if (gfx::JPEGCodec::Encode(bitmap, kDefaultQuality, &data)) {
         thumbnail_data.swap(data);
-      break;
+        break;
+      }
   }
   callback.Run(thumbnail_data, original_size);
 }

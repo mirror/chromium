@@ -9,6 +9,7 @@
 
 #include "base/location.h"
 #include "core/dom/ExecutionContext.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/TaskType.h"
 

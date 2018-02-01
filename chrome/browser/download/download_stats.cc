@@ -32,15 +32,17 @@ void RecordDownloadSource(ChromeDownloadSource source) {
 }
 
 void RecordDangerousDownloadWarningShown(
-    download::DownloadDangerType danger_type) {
-  UMA_HISTOGRAM_ENUMERATION("Download.DownloadWarningShown", danger_type,
-                            download::DOWNLOAD_DANGER_TYPE_MAX);
+    content::DownloadDangerType danger_type) {
+  UMA_HISTOGRAM_ENUMERATION("Download.DownloadWarningShown",
+                            danger_type,
+                            content::DOWNLOAD_DANGER_TYPE_MAX);
 }
 
 void RecordOpenedDangerousConfirmDialog(
-    download::DownloadDangerType danger_type) {
+    content::DownloadDangerType danger_type) {
   UMA_HISTOGRAM_ENUMERATION("Download.ShowDangerousDownloadConfirmationPrompt",
-                            danger_type, download::DOWNLOAD_DANGER_TYPE_MAX);
+                            danger_type,
+                            content::DOWNLOAD_DANGER_TYPE_MAX);
 }
 
 void RecordDownloadOpenMethod(ChromeDownloadOpenMethod open_method) {

@@ -35,7 +35,7 @@ class MODULES_EXPORT PaintWorkletGlobalScope final
 
   bool IsPaintWorkletGlobalScope() const final { return true; }
   void registerPaint(const String& name,
-                     const ScriptValue& constructor_value,
+                     const ScriptValue& ctor,
                      ExceptionState&);
 
   CSSPaintDefinition* FindDefinition(const String& name);

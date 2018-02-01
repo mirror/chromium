@@ -1093,7 +1093,6 @@ html element video
     property preload
     property readyState
     property remote
-    property requestPictureInPicture
     property seekable
     property seeking
     property setMediaKeys

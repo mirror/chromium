@@ -183,7 +183,7 @@ void ApplyStyleCommand::UpdateStartEnd(const Position& new_start,
     use_ending_selection_ = true;
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   const bool was_base_first =
-      StartingSelection().IsBaseFirst() || !SelectionIsDirectional();
+      StartingSelection().IsBaseFirst() || !StartingSelection().IsDirectional();
   const EphemeralRange range(new_start, new_end);
   SelectionInDOMTree::Builder builder;
   builder.SetIsDirectional(EndingSelection().IsDirectional());

@@ -98,9 +98,7 @@
     </style>
 
     <!-- Web app themes -->
-    <!-- Extend MainThemeBase rather than MainTheme to avoid values-v27 navigation bar colors from
-         being applied -->
-    <style name="WebappTheme" parent="MainThemeBase">
+    <style name="WebappTheme" parent="MainTheme">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
@@ -678,12 +676,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
         <item name="android:scaleType">center</item>
-    </style>
-    <!-- 18dp padding is added to each side to limit the image width to 20dp (56dp - 2 * 18dp). -->
-    <style name="HistoryListItemEndIcon" parent="ListItemEndIcon">
-        <item name="android:paddingStart">18dp</item>
-        <item name="android:paddingEnd">18dp</item>
-        <item name="android:scaleType">centerInside</item>
     </style>
     <style name="ListMenuStyle" parent="Widget.AppCompat.ListPopupWindow">
         <item name="android:popupBackground">@drawable/menu_bg</item>

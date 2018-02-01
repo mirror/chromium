@@ -32,7 +32,13 @@ std::string GetUserAgent() {
         switches::kUseMobileUserAgent)) {
     product += " Mobile";
   }
-  return content::BuildUserAgentFromProductAndExtraOSInfo(product, "; wv");
+  return content::BuildUserAgentFromProductAndExtraOSInfo(
+          product,
+          GetExtraOSUserAgentInfo());
+}
+
+std::string GetExtraOSUserAgentInfo() {
+  return "; wv";
 }
 
 void AwContentClient::AddAdditionalSchemes(Schemes* schemes) {

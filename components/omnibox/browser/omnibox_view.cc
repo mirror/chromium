@@ -107,8 +107,7 @@ const gfx::VectorIcon& OmniboxView::GetVectorIcon() const {
 
   return AutocompleteMatch::TypeToVectorIcon(
       model_ ? model_->CurrentTextType()
-             : AutocompleteMatchType::URL_WHAT_YOU_TYPED,
-      /*is_bookmark=*/false);
+             : AutocompleteMatchType::URL_WHAT_YOU_TYPED);
 }
 
 void OmniboxView::SetUserText(const base::string16& text) {

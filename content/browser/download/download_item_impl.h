@@ -172,7 +172,7 @@ class CONTENT_EXPORT DownloadItemImpl
       int64_t total_bytes,
       const std::string& hash,
       DownloadItem::DownloadState state,
-      download::DownloadDangerType danger_type,
+      DownloadDangerType danger_type,
       DownloadInterruptReason interrupt_reason,
       bool opened,
       base::Time last_access_time,
@@ -246,7 +246,7 @@ class CONTENT_EXPORT DownloadItemImpl
   bool GetFileExternallyRemoved() const override;
   void DeleteFile(const base::Callback<void(bool)>& callback) override;
   bool IsDangerous() const override;
-  download::DownloadDangerType GetDangerType() const override;
+  DownloadDangerType GetDangerType() const override;
   bool TimeRemaining(base::TimeDelta* remaining) const override;
   int64_t CurrentSpeed() const override;
   int PercentComplete() const override;
@@ -267,7 +267,7 @@ class CONTENT_EXPORT DownloadItemImpl
   bool IsTransient() const override;
   BrowserContext* GetBrowserContext() const override;
   WebContents* GetWebContents() const override;
-  void OnContentCheckCompleted(download::DownloadDangerType danger_type,
+  void OnContentCheckCompleted(DownloadDangerType danger_type,
                                DownloadInterruptReason reason) override;
   void SetOpenWhenComplete(bool open) override;
   void SetOpened(bool opened) override;
@@ -316,7 +316,7 @@ class CONTENT_EXPORT DownloadItemImpl
   // should be considered complete.
   virtual void MarkAsComplete();
 
-  download::DownloadSource download_source() const { return download_source_; }
+  DownloadSource download_source() const { return download_source_; }
 
   // DownloadDestinationObserver
   void DestinationUpdate(
@@ -511,7 +511,7 @@ class CONTENT_EXPORT DownloadItemImpl
   virtual void OnDownloadTargetDetermined(
       const base::FilePath& target_path,
       TargetDisposition disposition,
-      download::DownloadDangerType danger_type,
+      DownloadDangerType danger_type,
       const base::FilePath& intermediate_path,
       DownloadInterruptReason interrupt_reason);
 
@@ -578,7 +578,7 @@ class CONTENT_EXPORT DownloadItemImpl
   void TransitionTo(DownloadInternalState new_state);
 
   // Set the |danger_type_| and invoke observers if necessary.
-  void SetDangerType(download::DownloadDangerType danger_type);
+  void SetDangerType(DownloadDangerType danger_type);
 
   void SetFullPath(const base::FilePath& new_path);
 
@@ -659,8 +659,7 @@ class CONTENT_EXPORT DownloadItemImpl
   DownloadInternalState state_ = INITIAL_INTERNAL;
 
   // Current danger type for the download.
-  download::DownloadDangerType danger_type_ =
-      download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS;
+  DownloadDangerType danger_type_ = DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS;
 
   // The views of this item in the download shelf and download contents.
   base::ObserverList<Observer> observers_;
@@ -749,7 +748,7 @@ class CONTENT_EXPORT DownloadItemImpl
   bool fetch_error_body_ = false;
 
   // Source of the download, used in metrics.
-  download::DownloadSource download_source_ = download::DownloadSource::UNKNOWN;
+  DownloadSource download_source_ = DownloadSource::UNKNOWN;
 
   base::WeakPtrFactory<DownloadItemImpl> weak_ptr_factory_;
 

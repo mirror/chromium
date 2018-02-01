@@ -115,7 +115,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   // is |view_|.
   void SetVisibilityForChildViews(bool visible) const override;
 
-  void SetScreenSpaceRect(const gfx::Rect& screen_space_rect) override;
+  void SetRect(const gfx::Rect& frame_rect_in_pixels) override;
 
   // Exposed for tests.
   RenderWidgetHostViewBase* GetRootRenderWidgetHostViewForTesting() {
@@ -127,11 +127,10 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   // Resets the rect and the viz::LocalSurfaceId of the connector to ensure the
   // unguessable surface ID is not reused after a cross-process navigation.
-  void ResetScreenSpaceRect();
+  void ResetFrameRect();
 
   // Handlers for messages received from the parent frame.
-  void OnUpdateResizeParams(const gfx::Rect& screen_space_rect,
-                            const gfx::Size& local_frame_size,
+  void OnUpdateResizeParams(const gfx::Rect& frame_rect,
                             const ScreenInfo& screen_info,
                             uint64_t sequence_number,
                             const viz::SurfaceId& surface_id);
@@ -159,10 +158,9 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   bool is_scroll_bubbling_;
 
-  // The last pre-transform frame size received from the parent renderer.
-  // |last_received_local_frame_size_| may be in DIP if use zoom for DSF is
-  // off.
-  gfx::Size last_received_local_frame_size_;
+  // The last frame rect received from the parent renderer.
+  // |last_received_frame_rect_| may be in DIP if use zoom for DSF is off.
+  gfx::Rect last_received_frame_rect_;
 
   DISALLOW_COPY_AND_ASSIGN(CrossProcessFrameConnector);
 };

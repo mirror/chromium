@@ -207,7 +207,6 @@ QuicConnection::QuicConnection(
       largest_seen_packet_with_ack_(0),
       largest_seen_packet_with_stop_waiting_(0),
       max_undecryptable_packets_(0),
-      max_tracked_packets_(kMaxTrackedPackets),
       pending_version_negotiation_packet_(false),
       save_crypto_packets_as_termination_packets_(false),
       idle_timeout_connection_close_behavior_(
@@ -279,9 +278,7 @@ QuicConnection::QuicConnection(
       use_control_frame_manager_(
           GetQuicReloadableFlag(quic_use_control_frame_manager)) {
   QUIC_DLOG(INFO) << ENDPOINT
-                  << "Created connection with connection_id: " << connection_id
-                  << " and version: "
-                  << QuicVersionToString(transport_version());
+                  << "Created connection with connection_id: " << connection_id;
   framer_.set_visitor(this);
   stats_.connection_creation_time = clock_->ApproximateNow();
   // TODO(ianswett): Supply the NetworkChangeVisitor as a constructor argument
@@ -1057,7 +1054,6 @@ void QuicConnection::OnPacketComplete() {
   }
 
   ClearLastFrames();
-  CloseIfTooManyOutstandingSentPackets();
 }
 
 void QuicConnection::MaybeQueueAck(bool was_missing) {
@@ -1129,23 +1125,6 @@ void QuicConnection::MaybeQueueAck(bool was_missing) {
 
 void QuicConnection::ClearLastFrames() {
   should_last_packet_instigate_acks_ = false;
-}
-
-void QuicConnection::CloseIfTooManyOutstandingSentPackets() {
-  if (!GetQuicReloadableFlag(
-          quic_close_session_on_too_many_outstanding_sent_packets)) {
-    return;
-  }
-
-  // This occurs if we don't discard old packets we've seen fast enough. It's
-  // possible largest observed is less than leaset unacked.
-  if (sent_packet_manager_.GetLargestObserved() >
-      sent_packet_manager_.GetLeastUnacked() + max_tracked_packets_) {
-    CloseConnection(
-        QUIC_TOO_MANY_OUTSTANDING_SENT_PACKETS,
-        QuicStrCat("More than ", max_tracked_packets_, " outstanding."),
-        ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
-  }
 }
 
 const QuicFrame QuicConnection::GetUpdatedAckFrame() {
@@ -1228,7 +1207,7 @@ QuicConsumedData QuicConnection::SendStreamData(QuicStreamId id,
 bool QuicConnection::SendControlFrame(const QuicFrame& frame) {
   DCHECK(use_control_frame_manager_);
   if (!CanWrite(HAS_RETRANSMITTABLE_DATA) && frame.type != PING_FRAME) {
-    QUIC_DVLOG(1) << ENDPOINT << "Failed to send control frame: " << frame;
+    QUIC_DVLOG(1) << "Failed to send control frame: " << frame;
     // Do not check congestion window for ping.
     return false;
   }
@@ -2411,7 +2390,8 @@ QuicConnection::ScopedPacketFlusher::ScopedPacketFlusher(
   // If caller wants us to include an ack, check the delayed-ack timer to see if
   // there's ack info to be sent.
   if (ShouldSendAck(ack_mode)) {
-    if (!connection_->GetUpdatedAckFrame().ack_frame->packets.Empty()) {
+    if (!GetQuicReloadableFlag(quic_strict_ack_handling) ||
+        !connection_->GetUpdatedAckFrame().ack_frame->packets.Empty()) {
       QUIC_DVLOG(1) << "Bundling ack with outgoing packet.";
       connection_->SendAck();
     }

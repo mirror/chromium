@@ -271,7 +271,6 @@ std::unique_ptr<net::test_server::HttpResponse> WindowLocationHashHandlers(
 
   // Tap the back button in the HTML and verify the first URL is loaded.
   [ChromeEarlGrey tapWebViewElementWithID:kGoBackID];
-  [ChromeEarlGrey waitForWebViewContainingText:"pony"];
   [[EarlGrey selectElementWithMatcher:OmniboxText(firstURL.GetContent())]
       assertWithMatcher:grey_notNil()];
 

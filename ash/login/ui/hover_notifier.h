@@ -25,7 +25,7 @@ class HoverNotifier : public ui::EventHandler {
   ~HoverNotifier() override;
 
   // ui::EventHandler:
-  void OnEvent(ui::Event* event) override;
+  void OnMouseEvent(ui::MouseEvent* event) override;
 
  private:
   bool had_hover_ = false;

@@ -290,9 +290,6 @@ void NavigationItemImpl::ResetForCommit() {
 }
 
 void NavigationItemImpl::SetErrorRetryState(ErrorRetryState state) {
-  if (state == error_retry_state_)
-    return;
-
   switch (state) {
     case ErrorRetryState::kNoNavigationError:
       DCHECK_EQ(ErrorRetryState::kRetryFailedNavigationItem,

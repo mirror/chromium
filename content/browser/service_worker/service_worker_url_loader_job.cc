@@ -71,7 +71,7 @@ class ServiceWorkerURLLoaderJob::StreamWaiter
 };
 
 ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
-    URLLoaderRequestHandler::LoaderCallback callback,
+    LoaderCallback callback,
     Delegate* delegate,
     const network::ResourceRequest& resource_request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
@@ -101,8 +101,8 @@ void ServiceWorkerURLLoaderJob::FallbackToNetwork() {
   // call this synchronously here and don't wait for a separate async
   // StartRequest cue like what URLRequestJob case does.
   // TODO(kinuko): Make sure this is ok or we need to make this async.
-  if (loader_callback_)
-    std::move(loader_callback_).Run({});
+  if (!loader_callback_.is_null())
+    std::move(loader_callback_).Run(StartLoaderCallback());
 }
 
 void ServiceWorkerURLLoaderJob::FallbackToNetworkOrRenderer() {
@@ -117,6 +117,16 @@ void ServiceWorkerURLLoaderJob::ForwardToServiceWorker() {
 
 bool ServiceWorkerURLLoaderJob::ShouldFallbackToNetwork() {
   return response_type_ == ResponseType::FALLBACK_TO_NETWORK;
+}
+
+ui::PageTransition ServiceWorkerURLLoaderJob::GetPageTransition() {
+  NOTIMPLEMENTED();
+  return ui::PAGE_TRANSITION_LINK;
+}
+
+size_t ServiceWorkerURLLoaderJob::GetURLChainSize() const {
+  NOTIMPLEMENTED();
+  return 0;
 }
 
 void ServiceWorkerURLLoaderJob::FailDueToLostController() {

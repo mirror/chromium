@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/autofill/autofill_popup_controller.h"
 #include "chrome/browser/ui/autofill/autofill_popup_layout_model.h"
@@ -82,17 +81,12 @@ class MockAutofillPopupController : public autofill::AutofillPopupController {
   const base::string16& GetElidedValueAt(int i) const override {
     return suggestions_[i].value;
   }
-
-  const base::string16& GetElidedLabelAt(int row) const override {
-    return base::EmptyString16();
-  }
-
+  MOCK_CONST_METHOD1(GetElidedLabelAt, const base::string16&(int row));
   MOCK_METHOD3(GetRemovalConfirmationText,
                bool(int index, base::string16* title, base::string16* body));
   MOCK_METHOD1(RemoveSuggestion, bool(int index));
   MOCK_CONST_METHOD1(GetBackgroundColorIDForRow,
                      ui::NativeTheme::ColorId(int index));
-  MOCK_METHOD1(SetSelectedLine, void(base::Optional<int> selected_line));
   MOCK_CONST_METHOD0(selected_line, base::Optional<int>());
   const autofill::AutofillPopupLayoutModel& layout_model() const override {
     return *layout_model_;

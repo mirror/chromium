@@ -62,8 +62,8 @@ class MainThreadWorkletTest : public ::testing::Test {
         document->Url(), document->UserAgent(),
         document->GetContentSecurityPolicy()->Headers().get(),
         document->GetReferrerPolicy(), document->GetSecurityOrigin(),
-        document->IsSecureContext(), nullptr /* worker_clients */,
-        document->AddressSpace(), OriginTrialContext::GetTokens(document).get(),
+        nullptr /* worker_clients */, document->AddressSpace(),
+        OriginTrialContext::GetTokens(document).get(),
         nullptr /* worker_settings */, kV8CacheOptionsDefault);
     global_scope_ = new MainThreadWorkletGlobalScope(
         &page_->GetFrame(), std::move(creation_params), *reporting_proxy_);
@@ -133,7 +133,7 @@ TEST_F(MainThreadWorkletTest, UseCounter) {
 }
 
 TEST_F(MainThreadWorkletTest, TaskRunner) {
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+  scoped_refptr<WebTaskRunner> task_runner =
       global_scope_->GetTaskRunner(TaskType::kInternalTest);
   EXPECT_TRUE(task_runner->RunsTasksInCurrentSequence());
 }

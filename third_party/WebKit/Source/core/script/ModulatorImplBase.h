@@ -5,7 +5,6 @@
 #ifndef ModulatorImplBase_h
 #define ModulatorImplBase_h
 
-#include "base/single_thread_task_runner.h"
 #include "bindings/core/v8/ScriptModule.h"
 #include "core/script/Modulator.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -21,6 +20,7 @@ class ModuleMap;
 class ModuleScriptLoaderRegistry;
 class ModuleTreeLinkerRegistry;
 class ScriptState;
+class WebTaskRunner;
 
 // ModulatorImplBase is the base implementation of Modulator interface, which
 // represents "environment settings object" concept for module scripts.
@@ -45,9 +45,7 @@ class ModulatorImplBase : public Modulator {
   ScriptModuleResolver* GetScriptModuleResolver() override {
     return script_module_resolver_.Get();
   }
-  base::SingleThreadTaskRunner* TaskRunner() override {
-    return task_runner_.get();
-  }
+  WebTaskRunner* TaskRunner() override { return task_runner_.get(); }
   ReferrerPolicy GetReferrerPolicy() override;
   const SecurityOrigin* GetSecurityOriginForFetch() override;
 
@@ -79,7 +77,7 @@ class ModulatorImplBase : public Modulator {
   ScriptValue ExecuteModule(const ModuleScript*, CaptureEvalErrorFlag) override;
 
   scoped_refptr<ScriptState> script_state_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<WebTaskRunner> task_runner_;
   TraceWrapperMember<ModuleMap> map_;
   Member<ModuleScriptLoaderRegistry> loader_registry_;
   TraceWrapperMember<ModuleTreeLinkerRegistry> tree_linker_registry_;

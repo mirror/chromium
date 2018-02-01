@@ -723,10 +723,10 @@ public class SyncCustomizationFragment extends PreferenceFragment
 
         if (mCurrentSyncError == SYNC_OTHER_ERRORS) {
             final Account account = ChromeSigninController.get().getSignedInUser();
-            SigninManager.get().signOut(new Runnable() {
+            SigninManager.get(getActivity()).signOut(new Runnable() {
                 @Override
                 public void run() {
-                    SigninManager.get().signIn(account, null, null);
+                    SigninManager.get(getActivity()).signIn(account, null, null);
                 }
             });
             return;

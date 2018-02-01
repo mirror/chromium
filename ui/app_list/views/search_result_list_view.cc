@@ -38,10 +38,8 @@ SearchResultListView::SearchResultListView(AppListMainView* main_view,
   results_container_->SetLayoutManager(
       std::make_unique<views::BoxLayout>(views::BoxLayout::kVertical));
 
-  for (int i = 0; i < kMaxResults; ++i) {
-    search_result_views_.emplace_back(new SearchResultView(this));
-    results_container_->AddChildView(search_result_views_.back());
-  }
+  for (int i = 0; i < kMaxResults; ++i)
+    results_container_->AddChildView(new SearchResultView(this));
   AddChildView(results_container_);
 }
 
@@ -56,13 +54,14 @@ bool SearchResultListView::IsResultViewSelected(
              results_container_->child_at(selected_index())) == result_view;
 }
 
-SearchResultView* SearchResultListView::GetResultViewAt(size_t index) {
-  DCHECK(index >= 0 && index < search_result_views_.size());
-  return search_result_views_[index];
+SearchResultView* SearchResultListView::GetResultViewAt(int index) const {
+  DCHECK(index >= 0 && index < results_container_->child_count());
+  return static_cast<SearchResultView*>(results_container_->child_at(index));
 }
 
 void SearchResultListView::ListItemsRemoved(size_t start, size_t count) {
-  size_t last = std::min(start + count, search_result_views_.size());
+  size_t last = std::min(
+      start + count, static_cast<size_t>(results_container_->child_count()));
   for (size_t i = start; i < last; ++i)
     GetResultViewAt(i)->ClearResultNoRepaint();
 
@@ -86,15 +85,24 @@ int SearchResultListView::GetYSize() {
   return num_results();
 }
 
-views::View* SearchResultListView::GetSelectedView() {
+views::View* SearchResultListView::GetSelectedView() const {
   return IsValidSelectionIndex(selected_index())
              ? GetResultViewAt(selected_index())
              : nullptr;
 }
 
-SearchResultBaseView* SearchResultListView::GetFirstResultView() {
+views::View* SearchResultListView::GetFirstResultView() {
   DCHECK(results_container_->has_children());
-  return num_results() <= 0 ? nullptr : search_result_views_[0];
+  return num_results() <= 0 ? nullptr : results_container_->child_at(0);
+}
+
+void SearchResultListView::SetFirstResultSelected(bool selected) {
+  DCHECK(results_container_->has_children());
+  if (num_results() <= 0)
+    return;
+  SearchResultView* search_result_view =
+      static_cast<SearchResultView*>(results_container_->child_at(0));
+  search_result_view->SetSelected(selected);
 }
 
 int SearchResultListView::DoUpdate() {

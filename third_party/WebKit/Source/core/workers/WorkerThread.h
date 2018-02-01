@@ -30,7 +30,6 @@
 #include <memory>
 
 #include "base/memory/scoped_refptr.h"
-#include "base/single_thread_task_runner.h"
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/ThreadableLoadingContext.h"
@@ -42,11 +41,11 @@
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
+#include "platform/scheduler/util/thread_type.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/Optional.h"
 #include "public/platform/WebThread.h"
-#include "public/platform/WebThreadType.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "v8/include/v8.h"
 
@@ -195,14 +194,14 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   }
 
   // Can be called on both the main thread and the worker thread.
-  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(TaskType type) {
+  scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType type) {
     return global_scope_scheduler_->GetTaskRunner(type);
   }
 
  protected:
   WorkerThread(ThreadableLoadingContext*, WorkerReportingProxy&);
 
-  virtual WebThreadType GetThreadType() const = 0;
+  virtual scheduler::ThreadType GetThreadType() const = 0;
 
   // Official moment of creation of worker: when the worker thread is created.
   // (https://w3c.github.io/hr-time/#time-origin)

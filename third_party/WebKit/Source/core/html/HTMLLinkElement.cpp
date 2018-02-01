@@ -271,8 +271,7 @@ void HTMLLinkElement::DidSendDOMContentLoadedForLinkPrerender() {
   DispatchEvent(Event::Create(EventTypeNames::webkitprerenderdomcontentloaded));
 }
 
-scoped_refptr<base::SingleThreadTaskRunner>
-HTMLLinkElement::GetLoadingTaskRunner() {
+scoped_refptr<WebTaskRunner> HTMLLinkElement::GetLoadingTaskRunner() {
   return GetDocument().GetTaskRunner(TaskType::kNetworking);
 }
 

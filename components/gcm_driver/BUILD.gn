@@ -144,7 +144,6 @@ static_library("test_support") {
   }
 }
 
-# This is part of the components_unittests BUILD target.
 source_set("unit_tests") {
   testonly = true
 

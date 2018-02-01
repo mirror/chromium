@@ -214,7 +214,6 @@ management::ExtensionInfo CreateExtensionInfo(
       break;
     case Manifest::NUM_LOCATIONS:
       NOTREACHED();
-      FALLTHROUGH;
     case Manifest::INVALID_LOCATION:
     case Manifest::COMPONENT:
     case Manifest::EXTERNAL_COMPONENT:
@@ -389,10 +388,6 @@ ExtensionFunction::ResponseAction ManagementLaunchAppFunction::Run() {
   std::unique_ptr<management::LaunchApp::Params> params(
       management::LaunchApp::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
-
-  if (ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode())
-    return RespondNow(Error(keys::kNotAllowedInKioskError));
-
   const Extension* extension =
       ExtensionRegistry::Get(browser_context())
           ->GetExtensionById(params->id, ExtensionRegistry::EVERYTHING);
@@ -418,28 +413,24 @@ ExtensionFunction::ResponseAction ManagementSetEnabledFunction::Run() {
   std::unique_ptr<management::SetEnabled::Params> params(
       management::SetEnabled::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
-  extension_id_ = params->id;
-
-  if (ExtensionsBrowserClient::Get()->IsAppModeForcedForApp(extension_id_))
-    return RespondNow(Error(keys::kCannotChangePrimaryKioskAppError));
-
   ExtensionRegistry* registry = ExtensionRegistry::Get(browser_context());
   const ManagementAPIDelegate* delegate = ManagementAPI::GetFactoryInstance()
                                               ->Get(browser_context())
                                               ->GetDelegate();
 
-  const Extension* target_extension =
+  extension_id_ = params->id;
+
+  const Extension* extension =
       registry->GetExtensionById(extension_id_, ExtensionRegistry::EVERYTHING);
-  if (!target_extension || !target_extension->ShouldExposeViaManagementAPI())
+  if (!extension || !extension->ShouldExposeViaManagementAPI())
     return RespondNow(Error(keys::kNoExtensionError, extension_id_));
 
   bool enabled = params->enabled;
   const ManagementPolicy* policy =
       ExtensionSystem::Get(browser_context())->management_policy();
-  if (!policy->UserMayModifySettings(target_extension, nullptr) ||
-      (!enabled && policy->MustRemainEnabled(target_extension, nullptr)) ||
-      (enabled &&
-       policy->MustRemainDisabled(target_extension, nullptr, nullptr))) {
+  if (!policy->UserMayModifySettings(extension, nullptr) ||
+      (!enabled && policy->MustRemainEnabled(extension, nullptr)) ||
+      (enabled && policy->MustRemainDisabled(extension, nullptr, nullptr))) {
     return RespondNow(Error(keys::kUserCantModifyError, extension_id_));
   }
 
@@ -455,15 +446,14 @@ ExtensionFunction::ResponseAction ManagementSetEnabledFunction::Run() {
 
       AddRef();  // Matched in OnInstallPromptDone().
       install_prompt_ = delegate->SetEnabledFunctionDelegate(
-          GetSenderWebContents(), browser_context(), target_extension,
+          GetSenderWebContents(), browser_context(), extension,
           base::Bind(&ManagementSetEnabledFunction::OnInstallPromptDone, this));
       return RespondLater();
     }
     if (prefs->GetDisableReasons(extension_id_) &
         disable_reason::DISABLE_UNSUPPORTED_REQUIREMENT) {
       // Recheck the requirements.
-      requirements_checker_ =
-          std::make_unique<RequirementsChecker>(target_extension);
+      requirements_checker_ = std::make_unique<RequirementsChecker>(extension);
       requirements_checker_->Start(
           base::Bind(&ManagementSetEnabledFunction::OnRequirementsChecked,
                      this));  // This bind creates a reference.
@@ -514,9 +504,6 @@ ManagementUninstallFunctionBase::~ManagementUninstallFunctionBase() {
 ExtensionFunction::ResponseAction ManagementUninstallFunctionBase::Uninstall(
     const std::string& target_extension_id,
     bool show_confirm_dialog) {
-  if (ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode())
-    return RespondNow(Error(keys::kNotAllowedInKioskError));
-
   const ManagementAPIDelegate* delegate = ManagementAPI::GetFactoryInstance()
                                               ->Get(browser_context())
                                               ->GetDelegate();
@@ -654,9 +641,6 @@ void ManagementCreateAppShortcutFunction::OnCloseShortcutPrompt(bool created) {
 }
 
 ExtensionFunction::ResponseAction ManagementCreateAppShortcutFunction::Run() {
-  if (ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode())
-    return RespondNow(Error(keys::kNotAllowedInKioskError));
-
   if (!user_gesture())
     return RespondNow(Error(keys::kGestureNeededForCreateAppShortcutError));
 
@@ -705,9 +689,6 @@ ExtensionFunction::ResponseAction ManagementCreateAppShortcutFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction ManagementSetLaunchTypeFunction::Run() {
-  if (ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode())
-    return RespondNow(Error(keys::kNotAllowedInKioskError));
-
   if (!user_gesture())
     return RespondNow(Error(keys::kGestureNeededForSetLaunchTypeError));
 
@@ -775,9 +756,6 @@ void ManagementGenerateAppForLinkFunction::FinishCreateBookmarkApp(
 }
 
 ExtensionFunction::ResponseAction ManagementGenerateAppForLinkFunction::Run() {
-  if (ExtensionsBrowserClient::Get()->IsRunningInForcedAppMode())
-    return RespondNow(Error(keys::kNotAllowedInKioskError));
-
   if (!user_gesture())
     return RespondNow(Error(keys::kGestureNeededForGenerateAppForLinkError));
 

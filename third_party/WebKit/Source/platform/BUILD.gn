@@ -3,7 +3,6 @@
 # found in the LICENSE file.
 
 import("//build/buildflag_header.gni")
-import("//build/compiled_action.gni")
 import("//build/config/features.gni")
 import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
@@ -94,12 +93,26 @@ action("color_data") {
   ]
 }
 
-compiled_action("character_data") {
-  tool = ":character_data_generator"
-  outputs = [
-    "$blink_platform_output_dir/CharacterPropertyData.cpp",
+action("character_data") {
+  script = "../build/scripts/gperf.py"
+  deps = [
+    ":character_data_generator($host_toolchain)",
   ]
-  args = rebase_path(outputs, root_build_dir)
+  output_file = "$blink_platform_output_dir/CharacterPropertyData.cpp"
+  outputs = [
+    output_file,
+  ]
+
+  # Find character_data_generator, which is generated in a different directory
+  # when cross-compile.
+  generator = "./" + rebase_path(
+                  get_label_info(":character_data_generator($host_toolchain)",
+                                 "root_out_dir") + "/character_data_generator",
+                  root_build_dir)
+  args = [
+    generator,
+    rebase_path(output_file, root_build_dir),
+  ]
 }
 
 action("instrumentation_probes") {
@@ -395,7 +408,6 @@ jumbo_component("platform") {
     "WebThread.cpp",
     "WebThreadSupportingGC.cpp",
     "WebThreadSupportingGC.h",
-    "WebThreadType.cpp",
     "WebTouchEvent.cpp",
     "WindowsKeyboardCodes.h",
     "animation/AnimationTranslationUtil.cpp",
@@ -651,6 +663,8 @@ jumbo_component("platform") {
     "exported/WebNetworkStateNotifier.cpp",
     "exported/WebPrerender.cpp",
     "exported/WebPrerenderingSupport.cpp",
+    "exported/WebPresentationConnection.cpp",
+    "exported/WebPresentationConnectionCallbacks.cpp",
     "exported/WebPresentationReceiver.cpp",
     "exported/WebRTCAnswerOptions.cpp",
     "exported/WebRTCOfferOptions.cpp",
@@ -1204,8 +1218,6 @@ jumbo_component("platform") {
     "graphics/paint/PropertyTreeState.h",
     "graphics/paint/RasterInvalidationTracking.cpp",
     "graphics/paint/RasterInvalidationTracking.h",
-    "graphics/paint/RefCountedPropertyTreeState.cpp",
-    "graphics/paint/RefCountedPropertyTreeState.h",
     "graphics/paint/ScopedDisplayItemFragment.h",
     "graphics/paint/ScopedPaintChunkProperties.h",
     "graphics/paint/ScrollDisplayItem.cpp",
@@ -1297,8 +1309,6 @@ jumbo_component("platform") {
     "mhtml/MHTMLArchive.h",
     "mhtml/MHTMLParser.cpp",
     "mhtml/MHTMLParser.h",
-    "mojo/BigStringMojomTraits.cpp",
-    "mojo/BigStringMojomTraits.h",
     "mojo/BluetoothStructTraits.cpp",
     "mojo/BluetoothStructTraits.h",
     "mojo/CommonCustomTypesStructTraits.cpp",
@@ -1896,7 +1906,6 @@ jumbo_source_set("blink_platform_unittests_sources") {
     "json/JSONValuesTest.cpp",
     "mac/GraphicsContextCanvasTest.mm",
     "mac/VersionUtilMacTest.mm",
-    "mojo/BigStringMojomTraitsTest.cpp",
     "mojo/CommonCustomTypesStructTraitsTest.cpp",
     "mojo/GeometryStructTraitsTest.cpp",
     "mojo/InterfaceInvalidatorTest.cpp",

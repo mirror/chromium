@@ -53,11 +53,11 @@ class FakeTriggerer(trigger_gpu_test.GpuTestTriggerer):
   def parse_gpu_configs(self, args):
     pass
 
-  def query_swarming_for_gpu_configs(self, verbose):
+  def query_swarming_for_gpu_configs(self):
     # Sum up the total count of all bots.
     self._total_bots = sum(x['total'] for x in self._bot_statuses)
 
-  def run_swarming(self, args, verbose):
+  def run_swarming(self, args):
     self._swarming_runs.append(args)
 
 
@@ -119,7 +119,6 @@ class UnitTest(unittest.TestCase):
     args = Args()
     args.shards = 2
     args.dump_json = 'output.json'
-    args.gpu_trigger_script_verbose = False
     triggerer.trigger_tasks(
       args,
       [

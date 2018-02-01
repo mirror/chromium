@@ -80,11 +80,6 @@ class ZeroCopyRasterBufferImpl : public RasterBuffer {
     const gpu::Capabilities& caps =
         backing_->compositor_context_provider->ContextCapabilities();
 
-    if (backing_->returned_sync_token.HasData()) {
-      gl->WaitSyncTokenCHROMIUM(backing_->returned_sync_token.GetConstData());
-      backing_->returned_sync_token = gpu::SyncToken();
-    }
-
     if (!backing_->texture_id) {
       // Make a texture and a mailbox for export of the GpuMemoryBuffer to the
       // display compositor.
@@ -94,6 +89,7 @@ class ZeroCopyRasterBufferImpl : public RasterBuffer {
       backing_->mailbox = gpu::Mailbox::Generate();
       gl->ProduceTextureDirectCHROMIUM(backing_->texture_id,
                                        backing_->mailbox.name);
+      backing_->overlay_candidate = true;
 
       gl->BindTexture(backing_->texture_target, backing_->texture_id);
       gl->TexParameteri(backing_->texture_target, GL_TEXTURE_MIN_FILTER,
@@ -104,9 +100,7 @@ class ZeroCopyRasterBufferImpl : public RasterBuffer {
                         GL_CLAMP_TO_EDGE);
       gl->TexParameteri(backing_->texture_target, GL_TEXTURE_WRAP_T,
                         GL_CLAMP_TO_EDGE);
-    }
 
-    if (!backing_->image_id) {
       // If GpuMemoryBuffer allocation failed (https://crbug.com/554541), then
       // we don't have anything to give to the display compositor, but also no
       // way to report an error, so we just make a texture but don't bind
@@ -120,8 +114,8 @@ class ZeroCopyRasterBufferImpl : public RasterBuffer {
       gl->BindTexImage2DCHROMIUM(backing_->texture_target, backing_->image_id);
       gl->BindTexture(backing_->texture_target, 0);
     } else {
-      GLenum target = backing_->texture_target;
-      GLuint image_id = backing_->image_id;
+      uint32_t target = backing_->texture_target;
+      uint32_t image_id = backing_->image_id;
       gl->BindTexture(target, backing_->texture_id);
       gl->ReleaseTexImage2DCHROMIUM(target, image_id);
       gl->BindTexImage2DCHROMIUM(target, image_id);
@@ -147,7 +141,6 @@ class ZeroCopyRasterBufferImpl : public RasterBuffer {
       gpu_memory_buffer_ = gpu_memory_buffer_manager_->CreateGpuMemoryBuffer(
           resource_size_, viz::BufferFormat(resource_format_), kBufferUsage,
           gpu::kNullSurfaceHandle);
-      // GpuMemoryBuffer allocation can fail (https://crbug.com/554541).
       if (!gpu_memory_buffer_)
         return;
     }
@@ -208,6 +201,11 @@ ZeroCopyRasterBufferProvider::AcquireBufferForRaster(
   }
   ZeroCopyGpuBacking* backing =
       static_cast<ZeroCopyGpuBacking*>(resource.gpu_backing());
+  if (backing->returned_sync_token.HasData()) {
+    compositor_context_provider_->ContextGL()->WaitSyncTokenCHROMIUM(
+        backing->returned_sync_token.GetConstData());
+    backing->returned_sync_token = gpu::SyncToken();
+  }
 
   return std::make_unique<ZeroCopyRasterBufferImpl>(
       compositor_context_provider_, gpu_memory_buffer_manager_, resource,

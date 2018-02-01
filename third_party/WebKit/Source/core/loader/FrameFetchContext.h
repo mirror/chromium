@@ -31,7 +31,6 @@
 #ifndef FrameFetchContext_h
 #define FrameFetchContext_h
 
-#include "base/single_thread_task_runner.h"
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/BaseFetchContext.h"
@@ -55,6 +54,7 @@ class ResourceError;
 class ResourceResponse;
 class Settings;
 struct WebEnabledClientHints;
+class WebTaskRunner;
 
 class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
  public:
@@ -134,7 +134,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   bool IsMainFrame() const override;
   bool DefersLoading() const override;
   bool IsLoadComplete() const override;
+  bool PageDismissalEventBeingDispatched() const override;
   bool UpdateTimingInfoForIFrameNavigation(ResourceTimingInfo*) override;
+  void SendImagePing(const KURL&) override;
 
   const SecurityOrigin* GetSecurityOrigin() const override;
 
@@ -154,7 +156,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&,
-      scoped_refptr<base::SingleThreadTaskRunner>) override;
+      scoped_refptr<WebTaskRunner>) override;
 
   ResourceLoadScheduler::ThrottlingPolicy InitialLoadThrottlingPolicy()
       const override {
@@ -190,7 +192,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   // FetchContext overrides:
   WebFrameScheduler* GetFrameScheduler() const override;
-  scoped_refptr<base::SingleThreadTaskRunner> GetLoadingTaskRunner() override;
+  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override;

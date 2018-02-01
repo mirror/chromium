@@ -1461,23 +1461,12 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
   float dip_scale = view_.GetDipScale();
-  gfx::SizeF root_layer_size_dip = frame_metadata.root_layer_size;
-  gfx::SizeF scrollable_viewport_size_dip =
-      frame_metadata.scrollable_viewport_size;
-  gfx::Vector2dF root_scroll_offset_dip = frame_metadata.root_scroll_offset;
-  if (IsUseZoomForDSFEnabled()) {
-    float pix_to_dip = 1 / dip_scale;
-    root_layer_size_dip.Scale(pix_to_dip);
-    scrollable_viewport_size_dip.Scale(pix_to_dip);
-    root_scroll_offset_dip.Scale(pix_to_dip);
-  }
-
   float to_pix = IsUseZoomForDSFEnabled() ? 1.f : dip_scale;
   float top_controls_pix = frame_metadata.top_controls_height * to_pix;
-  // |top_content_offset| is in physical pixels if --use-zoom-for-dsf is
-  // enabled. Otherwise, it is in DIPs.
+  // |top_content_offset| is its CSS pixels * DSF if --use-zoom-for-dsf is
+  // enabled. Otherwise, it is in CSS pixels.
   // Note that the height of browser control is not affected by page scale
-  // factor. Thus, |top_content_offset| in CSS pixels is also in DIPs.
+  // factor. Thus, |top_content_offset| in CSS pixels is also in DIP pixels.
   float top_content_offset = frame_metadata.top_controls_height *
                              frame_metadata.top_controls_shown_ratio;
   float top_shown_pix = top_content_offset * to_pix;
@@ -1505,7 +1494,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
         frame_metadata.page_scale_factor);
 
     // Set parameters for adaptive handle orientation.
-    gfx::SizeF viewport_size(scrollable_viewport_size_dip);
+    gfx::SizeF viewport_size(frame_metadata.scrollable_viewport_size);
     viewport_size.Scale(frame_metadata.page_scale_factor);
     gfx::RectF viewport_rect(0.0f, frame_metadata.top_controls_height *
                                        frame_metadata.top_controls_shown_ratio,
@@ -1517,10 +1506,11 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
                                        : frame_metadata.root_background_color);
 
   // ViewAndroid::content_offset() must be in CSS scale
-  float top_content_offset_dip = IsUseZoomForDSFEnabled()
+  float top_content_offset_css = IsUseZoomForDSFEnabled()
                                      ? top_content_offset / dip_scale
                                      : top_content_offset;
-  view_.UpdateFrameInfo({scrollable_viewport_size_dip, top_content_offset});
+  view_.UpdateFrameInfo(
+      {frame_metadata.scrollable_viewport_size, top_content_offset});
 
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
   if (top_changed) {
@@ -1545,11 +1535,11 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   // All offsets and sizes except |top_shown_pix| are in CSS pixels.
   content_view_core_->UpdateFrameInfo(
-      root_scroll_offset_dip, frame_metadata.page_scale_factor,
+      frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
       frame_metadata.min_page_scale_factor,
-      frame_metadata.max_page_scale_factor, root_layer_size_dip,
-      scrollable_viewport_size_dip, top_content_offset_dip, top_shown_pix,
-      top_changed, is_mobile_optimized);
+      frame_metadata.max_page_scale_factor, frame_metadata.root_layer_size,
+      frame_metadata.scrollable_viewport_size, top_content_offset_css,
+      top_shown_pix, top_changed, is_mobile_optimized);
 
   EvictFrameIfNecessary();
 }
@@ -1733,6 +1723,12 @@ void RenderWidgetHostViewAndroid::EvictDelegatedFrame() {
   DestroyDelegatedContent();
 }
 
+bool RenderWidgetHostViewAndroid::HasAcceleratedSurface(
+    const gfx::Size& desired_size) {
+  NOTREACHED();
+  return false;
+}
+
 // TODO(jrg): Find out the implications and answer correctly here,
 // as we are returning the WebView and not root window bounds.
 gfx::Rect RenderWidgetHostViewAndroid::GetBoundsInRootWindow() {
@@ -1774,23 +1770,10 @@ RenderWidgetHostViewAndroid::GetRenderViewHostDelegateView() const {
 InputEventAckState RenderWidgetHostViewAndroid::FilterInputEvent(
     const blink::WebInputEvent& input_event) {
   if (overscroll_controller_ &&
-      blink::WebInputEvent::IsGestureEventType(input_event.GetType())) {
-    blink::WebGestureEvent gesture_event =
-        static_cast<const blink::WebGestureEvent&>(input_event);
-    if (overscroll_controller_->WillHandleGestureEvent(gesture_event)) {
-      // Terminate an active fling when a GSU generated from the fling progress
-      // (GSU with inertial state) is consumed by the overscroll_controller_ and
-      // overscrolling mode is not |OVERSCROLL_NONE|. The early fling
-      // termination generates a GSE which completes the overscroll action.
-      if (gesture_event.GetType() ==
-              blink::WebInputEvent::kGestureScrollUpdate &&
-          gesture_event.data.scroll_update.inertial_phase ==
-              blink::WebGestureEvent::kMomentumPhase) {
-        host_->StopFling();
-      }
-
-      return INPUT_EVENT_ACK_STATE_CONSUMED;
-    }
+      blink::WebInputEvent::IsGestureEventType(input_event.GetType()) &&
+      overscroll_controller_->WillHandleGestureEvent(
+          static_cast<const blink::WebGestureEvent&>(input_event))) {
+    return INPUT_EVENT_ACK_STATE_CONSUMED;
   }
 
   if (content_view_core_ && content_view_core_->FilterInputEvent(input_event))

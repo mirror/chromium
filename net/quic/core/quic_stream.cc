@@ -72,7 +72,8 @@ QuicStream::QuicStream(QuicStreamId id, QuicSession* session)
       add_random_padding_after_fin_(false),
       ack_listener_(nullptr),
       send_buffer_(
-          session->connection()->helper()->GetStreamSendBufferAllocator()),
+          session->connection()->helper()->GetStreamSendBufferAllocator(),
+          session->allow_multiple_acks_for_data()),
       buffered_data_threshold_(
           GetQuicFlag(FLAGS_quic_buffered_data_threshold)) {
   SetFromConfig();
@@ -589,8 +590,9 @@ bool QuicStream::OnStreamFrameAcked(QuicStreamOffset offset,
     return false;
   }
   // Indicates whether ack listener's OnPacketAcked should be called.
-  const bool new_data_acked =
-      newly_acked_length > 0 || (fin_acked && fin_outstanding_);
+  const bool new_data_acked = !session()->allow_multiple_acks_for_data() ||
+                              newly_acked_length > 0 ||
+                              (fin_acked && fin_outstanding_);
   if (fin_acked) {
     fin_outstanding_ = false;
     fin_lost_ = false;

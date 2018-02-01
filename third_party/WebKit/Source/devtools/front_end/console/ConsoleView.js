@@ -48,22 +48,27 @@ Console.ConsoleView = class extends UI.VBox {
     this._filter = new Console.ConsoleViewFilter(this._onFilterChanged.bind(this));
 
     var toolbar = new UI.Toolbar('', this.element);
-    this._splitWidget =
-        new UI.SplitWidget(true /* isVertical */, false /* secondIsSidebar */, 'console.sidebar.width', 100);
-    this._splitWidget.setMainWidget(this._searchableView);
-    this._splitWidget.setSidebarWidget(this._sidebar);
-    this._splitWidget.show(this.element);
-    this._splitWidget.hideSidebar();
-    this._splitWidget.enableShowModeSaving();
-    this._isSidebarOpen = this._splitWidget.showMode() === UI.SplitWidget.ShowMode.Both;
-    if (this._isSidebarOpen)
-      this._filter._levelMenuButton.setEnabled(false);
-    toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton('console sidebar'));
-    this._splitWidget.addEventListener(UI.SplitWidget.Events.ShowModeChanged, event => {
-      this._isSidebarOpen = event.data === UI.SplitWidget.ShowMode.Both;
-      this._filter._levelMenuButton.setEnabled(!this._isSidebarOpen);
-      this._onFilterChanged();
-    });
+    var isLogManagementEnabled = Runtime.experiments.isEnabled('logManagement');
+    if (isLogManagementEnabled) {
+      this._splitWidget =
+          new UI.SplitWidget(true /* isVertical */, false /* secondIsSidebar */, 'console.sidebar.width', 100);
+      this._splitWidget.setMainWidget(this._searchableView);
+      this._splitWidget.setSidebarWidget(this._sidebar);
+      this._splitWidget.show(this.element);
+      this._splitWidget.hideSidebar();
+      this._splitWidget.enableShowModeSaving();
+      this._isSidebarOpen = this._splitWidget.showMode() === UI.SplitWidget.ShowMode.Both;
+      if (this._isSidebarOpen)
+        this._filter._levelMenuButton.setEnabled(false);
+      toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton('console sidebar'));
+      this._splitWidget.addEventListener(UI.SplitWidget.Events.ShowModeChanged, event => {
+        this._isSidebarOpen = event.data === UI.SplitWidget.ShowMode.Both;
+        this._filter._levelMenuButton.setEnabled(!this._isSidebarOpen);
+        this._onFilterChanged();
+      });
+    } else {
+      this._searchableView.show(this.element);
+    }
     this._contentsElement = this._searchableView.element;
     this.element.classList.add('console-view');
 
@@ -120,6 +125,9 @@ Console.ConsoleView = class extends UI.VBox {
         this._filter._filterByExecutionContextSetting,
         Common.UIString('Only show messages from the current context (top, iframe, worker, extension)'),
         Common.UIString('Selected context only'));
+    var filterConsoleAPICheckbox = new UI.ToolbarSettingCheckbox(
+        Common.moduleSetting('consoleAPIFilterEnabled'), Common.UIString('Only show messages from console API methods'),
+        Common.UIString('User messages only'));
     var monitoringXHREnabledSetting = Common.moduleSetting('monitoringXHREnabled');
     this._timestampsSetting = Common.moduleSetting('consoleTimestampsEnabled');
     this._consoleHistoryAutocompleteSetting = Common.moduleSetting('consoleHistoryAutocomplete');
@@ -133,6 +141,8 @@ Console.ConsoleView = class extends UI.VBox {
     settingsToolbarLeft.appendToolbarItem(this._hideNetworkMessagesCheckbox);
     settingsToolbarLeft.appendToolbarItem(this._preserveLogCheckbox);
     settingsToolbarLeft.appendToolbarItem(filterByExecutionContextCheckbox);
+    if (!isLogManagementEnabled)
+      settingsToolbarLeft.appendToolbarItem(filterConsoleAPICheckbox);
 
     var settingsToolbarRight = new UI.Toolbar('', settingsPane.element);
     settingsToolbarRight.makeVertical();
@@ -1183,11 +1193,13 @@ Console.ConsoleViewFilter = class {
     this._messageLevelFiltersSetting = Console.ConsoleViewFilter.levelFilterSetting();
     this._hideNetworkMessagesSetting = Common.moduleSetting('hideNetworkMessages');
     this._filterByExecutionContextSetting = Common.moduleSetting('selectedContextFilterEnabled');
+    this._filterByConsoleAPISetting = Common.moduleSetting('consoleAPIFilterEnabled');
 
     this._messageURLFiltersSetting.addChangeListener(this._onFilterChanged.bind(this));
     this._messageLevelFiltersSetting.addChangeListener(this._onFilterChanged.bind(this));
     this._hideNetworkMessagesSetting.addChangeListener(this._onFilterChanged.bind(this));
     this._filterByExecutionContextSetting.addChangeListener(this._onFilterChanged.bind(this));
+    this._filterByConsoleAPISetting.addChangeListener(this._onFilterChanged.bind(this));
     UI.context.addFlavorChangeListener(SDK.ExecutionContext, this._onFilterChanged, this);
 
     var filterKeys = Object.values(Console.ConsoleFilter.FilterType);
@@ -1250,6 +1262,14 @@ Console.ConsoleViewFilter = class {
         key: Console.ConsoleFilter.FilterType.Source,
         text: ConsoleModel.ConsoleMessage.MessageSource.Network,
         negative: true
+      });
+    }
+
+    if (this._filterByConsoleAPISetting.get()) {
+      parsedFilters.push({
+        key: Console.ConsoleFilter.FilterType.Source,
+        text: ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI,
+        negative: false
       });
     }
 
@@ -1365,6 +1385,7 @@ Console.ConsoleViewFilter = class {
     this._messageURLFiltersSetting.set({});
     this._messageLevelFiltersSetting.set(Console.ConsoleFilter.defaultLevelsFilterValue());
     this._filterByExecutionContextSetting.set(false);
+    this._filterByConsoleAPISetting.set(false);
     this._hideNetworkMessagesSetting.set(false);
     this._textFilterUI.setValue('');
     this._onFilterChanged();

@@ -67,7 +67,7 @@ DatabaseTracker& DatabaseTracker::Tracker() {
 }
 
 DatabaseTracker::DatabaseTracker() {
-  SQLiteFileSystem::InitializeSQLite();
+  SQLiteFileSystem::RegisterSQLiteVFS();
 }
 
 bool DatabaseTracker::CanEstablishDatabase(DatabaseContext* database_context,

@@ -121,7 +121,6 @@ LayoutSize CalculateFillTileSize(const LayoutBoxModelObject& obj,
       // If the image has neither an intrinsic width nor an intrinsic height,
       // its size is determined as for 'contain'.
       type = EFillSizeType::kContain;
-      FALLTHROUGH;
     }
     case EFillSizeType::kContain:
     case EFillSizeType::kCover: {
@@ -528,7 +527,7 @@ LayoutRectOutsets BackgroundImageGeometry::ComputeDestRectAdjustment(
   switch (fill_layer.Clip()) {
     case EFillBox::kContent:
       dest_adjust += positioning_box_.PaddingOutsets();
-      FALLTHROUGH;
+    // fall through
     case EFillBox::kPadding:
       dest_adjust += positioning_box_.BorderBoxOutsets();
       break;

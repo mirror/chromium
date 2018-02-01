@@ -7,10 +7,8 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/metrics/field_trial_params.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/webstore_data_fetcher_delegate.h"
-#include "components/safe_browsing/features.h"
 #include "content/public/common/service_manager_connection.h"
 #include "extensions/common/extension_urls.h"
 #include "net/base/load_flags.h"
@@ -37,22 +35,18 @@ WebstoreDataFetcher::WebstoreDataFetcher(
       referrer_url_(referrer_url),
       id_(webstore_item_id),
       max_auto_retries_(0) {
-  upload_content_type_ =
-      base::FeatureList::IsEnabled(safe_browsing::kAppendRecentNavigationEvents)
-          ? "application/octet-stream"
-          : "application/json";
 }
 
 WebstoreDataFetcher::~WebstoreDataFetcher() {}
 
-void WebstoreDataFetcher::SetPostData(const std::string& data) {
-  post_data_ = data;
+void WebstoreDataFetcher::SetJsonPostData(const std::string& json) {
+  json_post_data_ = json;
 }
 
 void WebstoreDataFetcher::Start() {
   GURL webstore_data_url(extension_urls::GetWebstoreItemJsonDataURL(id_));
   net::URLFetcher::RequestType request_type =
-      post_data_.empty() ? net::URLFetcher::GET : net::URLFetcher::POST;
+      json_post_data_.empty() ? net::URLFetcher::GET : net::URLFetcher::POST;
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("webstore_data_fetcher", R"(
         semantics {
@@ -90,8 +84,10 @@ void WebstoreDataFetcher::Start() {
   webstore_data_url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
                                            net::LOAD_DISABLE_CACHE);
 
-  if (!post_data_.empty())
-    webstore_data_url_fetcher_->SetUploadData(upload_content_type_, post_data_);
+  if (!json_post_data_.empty()) {
+    webstore_data_url_fetcher_->SetUploadData("application/json",
+                                              json_post_data_);
+  }
 
   if (max_auto_retries_ > 0) {
     webstore_data_url_fetcher_->SetMaxRetriesOn5xx(max_auto_retries_);

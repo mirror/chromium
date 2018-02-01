@@ -885,7 +885,6 @@ jumbo_component("base") {
     "third_party/nspr/prtime.cc",
     "third_party/nspr/prtime.h",
     "third_party/superfasthash/superfasthash.c",
-    "thread_annotations.h",
     "threading/platform_thread.h",
     "threading/platform_thread_android.cc",
     "threading/platform_thread_internal_posix.cc",
@@ -2579,7 +2578,6 @@ if (enable_nocompile_tests) {
       "memory/weak_ptr_unittest.nc",
       "metrics/field_trial_params_unittest.nc",
       "metrics/histogram_unittest.nc",
-      "optional_unittest.nc",
       "strings/string16_unittest.nc",
       "task_scheduler/task_traits_unittest.nc",
     ]
@@ -2695,7 +2693,6 @@ if (is_android) {
       "android/java/src/org/chromium/base/SecureRandomInitializer.java",
       "android/java/src/org/chromium/base/StreamUtil.java",
       "android/java/src/org/chromium/base/StrictModeContext.java",
-      "android/java/src/org/chromium/base/Supplier.java",
       "android/java/src/org/chromium/base/SysUtils.java",
       "android/java/src/org/chromium/base/SystemMessageHandler.java",
       "android/java/src/org/chromium/base/ThreadUtils.java",
@@ -2791,6 +2788,8 @@ if (is_android) {
       "//third_party/ub-uiautomator:ub_uiautomator_java",
     ]
     java_files = [
+      "test/android/javatests/src/org/chromium/base/test/BaseChromiumInstrumentationTestRunner.java",
+      "test/android/javatests/src/org/chromium/base/test/BaseInstrumentationTestRunner.java",
       "test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
       "test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
       "test/android/javatests/src/org/chromium/base/test/BaseChromiumRunnerCommon.java",

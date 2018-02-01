@@ -38,6 +38,7 @@
 #include "base/memory/ptr_util.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/v8_void_function.h"
@@ -90,7 +91,6 @@
 #include "platform/peerconnection/RTCAnswerOptionsPlatform.h"
 #include "platform/peerconnection/RTCOfferOptionsPlatform.h"
 #include "platform/runtime_enabled_features.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
@@ -907,7 +907,7 @@ ScriptPromise RTCPeerConnection::generateCertificate(
 
   // Check if |keygenAlgorithm| contains the optional DOMTimeStamp |expires|
   // attribute.
-  Optional<DOMTimeStamp> expires;
+  Nullable<DOMTimeStamp> expires;
   if (keygen_algorithm.IsDictionary()) {
     Dictionary keygen_algorithm_dict = keygen_algorithm.GetAsDictionary();
     if (keygen_algorithm_dict.HasProperty("expires", exception_state)) {
@@ -920,7 +920,7 @@ ScriptPromise RTCPeerConnection::generateCertificate(
                 .ToLocalChecked()
                 ->Value();
         if (expires_double >= 0) {
-          expires = static_cast<DOMTimeStamp>(expires_double);
+          expires.Set(static_cast<DOMTimeStamp>(expires_double));
         }
       }
     }
@@ -934,7 +934,7 @@ ScriptPromise RTCPeerConnection::generateCertificate(
   const char* unsupported_params_string =
       "The 1st argument provided is an AlgorithmIdentifier with a supported "
       "algorithm name, but the parameters are not supported.";
-  Optional<WebRTCKeyParams> key_params;
+  Nullable<WebRTCKeyParams> key_params;
   switch (crypto_algorithm.Id()) {
     case kWebCryptoAlgorithmIdRsaSsaPkcs1v1_5:
       // name: "RSASSA-PKCS1-v1_5"
@@ -947,8 +947,8 @@ ScriptPromise RTCPeerConnection::generateCertificate(
               kWebCryptoAlgorithmIdSha256) {
         unsigned modulus_length =
             crypto_algorithm.RsaHashedKeyGenParams()->ModulusLengthBits();
-        key_params =
-            WebRTCKeyParams::CreateRSA(modulus_length, public_exponent);
+        key_params.Set(
+            WebRTCKeyParams::CreateRSA(modulus_length, public_exponent));
       } else {
         return ScriptPromise::RejectWithDOMException(
             script_state, DOMException::Create(kNotSupportedError,
@@ -960,7 +960,7 @@ ScriptPromise RTCPeerConnection::generateCertificate(
       // The only recognized "namedCurve" is "P-256".
       if (crypto_algorithm.EcKeyGenParams()->NamedCurve() ==
           kWebCryptoNamedCurveP256) {
-        key_params = WebRTCKeyParams::CreateECDSA(kWebRTCECCurveNistP256);
+        key_params.Set(WebRTCKeyParams::CreateECDSA(kWebRTCECCurveNistP256));
       } else {
         return ScriptPromise::RejectWithDOMException(
             script_state, DOMException::Create(kNotSupportedError,
@@ -975,14 +975,14 @@ ScriptPromise RTCPeerConnection::generateCertificate(
                                              "algorithm is not supported."));
       break;
   }
-  DCHECK(key_params.has_value());
+  DCHECK(!key_params.IsNull());
 
   std::unique_ptr<WebRTCCertificateGenerator> certificate_generator =
       Platform::Current()->CreateRTCCertificateGenerator();
 
   // |keyParams| was successfully constructed, but does the certificate
   // generator support these parameters?
-  if (!certificate_generator->IsSupportedKeyParams(key_params.value())) {
+  if (!certificate_generator->IsSupportedKeyParams(key_params.Get())) {
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(kNotSupportedError, unsupported_params_string));
@@ -997,15 +997,15 @@ ScriptPromise RTCPeerConnection::generateCertificate(
   // Generate certificate. The |certificateObserver| will resolve the promise
   // asynchronously upon completion. The observer will manage its own
   // destruction as well as the resolver's destruction.
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+  scoped_refptr<WebTaskRunner> task_runner =
       ExecutionContext::From(script_state)
           ->GetTaskRunner(blink::TaskType::kUnthrottled);
-  if (!expires) {
+  if (expires.IsNull()) {
     certificate_generator->GenerateCertificate(
-        key_params.value(), std::move(certificate_observer), task_runner);
+        key_params.Get(), std::move(certificate_observer), task_runner);
   } else {
     certificate_generator->GenerateCertificateWithExpiration(
-        key_params.value(), expires.value(), std::move(certificate_observer),
+        key_params.Get(), expires.Get(), std::move(certificate_observer),
         task_runner);
   }
 

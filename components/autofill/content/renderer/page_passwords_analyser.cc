@@ -320,7 +320,7 @@ void GuessAutocompleteAttributesForPasswordFields(
   switch (password_count) {
     case 3:
       (*autocomplete_suggestions)[password_inputs[0]] = "current-password";
-      FALLTHROUGH;  // To match the last two password fields.
+    // Fall-through here to match the last two password fields.
     case 2:
       (*autocomplete_suggestions)[password_inputs[password_count - 2]] =
           "new-password";
@@ -371,9 +371,8 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
     } else {
       // By default (if the other heuristics fail), the first text field
       // preceding a password field will be considered the username field.
-      for (username_field_guess = explicit_password_inputs[0] - 1;;
+      for (username_field_guess = password_inputs[0] - 1;;
            --username_field_guess) {
-        DCHECK(username_field_guess < signature.size());
         if (signature[username_field_guess] == kTextFieldSignature)
           break;
       }

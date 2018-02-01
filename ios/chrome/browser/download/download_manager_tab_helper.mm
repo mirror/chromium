@@ -43,9 +43,7 @@ void DownloadManagerTabHelper::Download(
     std::unique_ptr<web::DownloadTask> task) {
   task_ = std::move(task);
   task_->AddObserver(this);
-  [delegate_ downloadManagerTabHelper:this
-                    didCreateDownload:task_.get()
-                    webStateIsVisible:web_state_->IsVisible()];
+  [delegate_ downloadManagerTabHelper:this didCreateDownload:task_.get()];
 }
 
 void DownloadManagerTabHelper::WasShown(web::WebState* web_state) {

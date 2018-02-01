@@ -1,14 +1,18 @@
-<!doctype html>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
-<script src="../assert_selection.js"></script>
+<!DOCTYPE html>
+<html>
+<body>
+<script src="../../resources/dump-as-markup.js"></script>
+<div contenteditable="true" id="div">foo<span contenteditable="false"> bar</span></div>
 <script>
-// This tests for a bug where expansion for smart delete would not consider
-// editable boundaries. Only 'foo' should be deleted. You should see ' bar'.
-// <radr://problem/5390681>
-selection_test(
-    '<div contenteditable>^foo|<span contenteditable="false"> bar</span></div>',
-    'delete',
-    '<div contenteditable>|<span contenteditable="false"> bar</span></div>',
-    'Delete should consider editable boundaries');
+if (window.internals)
+    internals.settings.setEditingBehavior('mac');
+var div = document.getElementById("div");
+var sel = window.getSelection();
+sel.collapse(div, 0);
+sel.modify("extend", "forward", "word");
+document.execCommand("Delete");
+Markup.description("This tests for a bug where expansion for smart delete would not consider editable boundaries. Only 'foo' should be deleted. You should see ' bar'. <radr://problem/5390681>");
+Markup.dump(div);
 </script>
+</body>
+</html>

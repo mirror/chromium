@@ -47,7 +47,7 @@ public final class CastCrashUploader {
     private final String mCrashReportUploadUrl;
     private final String mUuid;
     private final String mApplicationFeedback;
-    private final Runnable mQueueAllCrashDumpUploadsRunnable = () -> checkForCrashDumps();
+    private final Runnable mQueueAllCrashDumpUploadsRunnable = () -> queueAllCrashDumpUploads();
 
     public CastCrashUploader(ScheduledExecutorService executorService,
             ElidedLogcatProvider logcatProvider, String crashDumpPath, String uuid,
@@ -92,20 +92,16 @@ public final class CastCrashUploader {
      * @param synchronous Whether or not this function should block on queued uploads
      * @param log Log to include, if any
      */
-    private void checkForCrashDumps() {
+    private void queueAllCrashDumpUploads() {
         if (mCrashDumpPath == null) return;
         Log.i(TAG, "Checking for crash dumps");
-        File crashDumpDirectory = new File(mCrashDumpPath);
 
-        int numCrashDumps = crashDumpDirectory.listFiles().length;
-        if (numCrashDumps > 0) {
-            Log.i(TAG, numCrashDumps + " crash dumps found");
-            mLogcatProvider.getElidedLogcat(
-                    (String logs) -> queueAllCrashDumpUploadsWithLogs(crashDumpDirectory, logs));
-        }
+        mLogcatProvider.getElidedLogcat((String logs) -> queueAllCrashDumpUploadsWithLogs(logs));
     }
 
-    private void queueAllCrashDumpUploadsWithLogs(File crashDumpDirectory, String logs) {
+    private void queueAllCrashDumpUploadsWithLogs(String logs) {
+        File crashDumpDirectory = new File(mCrashDumpPath);
+
         for (final File potentialDump : crashDumpDirectory.listFiles()) {
             String dumpName = potentialDump.getName();
             if (dumpName.matches(DUMP_FILE_REGEX)) {

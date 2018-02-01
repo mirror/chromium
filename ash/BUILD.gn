@@ -1125,6 +1125,11 @@ component("ash") {
     "//ash/touch_hud/mus:touch_hud",
   ]
 
+  # TODO(jamescook): Move to ash_unittests?
+  data = [
+    "display/test_data/",
+  ]
+
   # Usage of content should be in ash_content_unittests.
   assert_no_deps = [
     "//content/public/browser",
@@ -1637,11 +1642,6 @@ test("ash_unittests") {
     "//testing/buildbot/filters:ash_unittests_filters",
   ]
 
-  data = [
-    # See DisplayColorManagerTest.
-    "display/test_data/",
-  ]
-
   # Usage of content should be in ash_with_content.
   assert_no_deps = [
     "//content/public/browser",
@@ -1814,6 +1814,10 @@ static_library("test_support_common") {
     "test/ash_test_suite.h",
     "test/ash_test_views_delegate.cc",
     "test/ash_test_views_delegate.h",
+
+    # TODO(jamescook): Rename to TestChildModalWindow and move to //ash/wm
+    "test/child_modal_window.cc",
+    "test/child_modal_window.h",
     "test/ui_controls_factory_ash.cc",
     "test/ui_controls_factory_ash.h",
     "test_media_client.cc",
@@ -1832,8 +1836,6 @@ static_library("test_support_common") {
     "wm/lock_state_controller_test_api.h",
     "wm/test_activation_delegate.cc",
     "wm/test_activation_delegate.h",
-    "wm/test_child_modal_parent.cc",
-    "wm/test_child_modal_parent.h",
     "wm/test_overlay_delegate.cc",
     "wm/test_overlay_delegate.h",
     "wm/test_session_state_animator.cc",

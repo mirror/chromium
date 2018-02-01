@@ -6,7 +6,8 @@
   await dp.Page.onceLoadEventFired();
 
   testRunner.log('Enabling auto-discovery...');
-  dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+  await dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+  dp.Target.setAttachToFrames({value: true});
 
   let attachedEvent = (await dp.Target.onceAttachedToTarget()).params;
   testRunner.log('Got auto-attached.');

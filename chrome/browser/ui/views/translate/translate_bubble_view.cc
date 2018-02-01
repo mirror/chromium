@@ -628,7 +628,6 @@ views::View* TranslateBubbleView::CreateViewBeforeTranslate() {
           this,
           l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_OPTIONS_MENU_BUTTON));
   before_translate_options_button_->set_id(BUTTON_ID_OPTIONS_MENU);
-  before_translate_options_button_->set_request_focus_on_press(true);
   layout->AddView(before_translate_options_button_);
 
   return view;
@@ -728,8 +727,6 @@ views::View* TranslateBubbleView::CreateViewAfterTranslate() {
           this,
           l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_OPTIONS_MENU_BUTTON));
   options_menu_button->set_id(BUTTON_ID_OPTIONS_MENU);
-  options_menu_button->set_request_focus_on_press(true);
-
   layout->AddView(options_menu_button);
 
   return view;

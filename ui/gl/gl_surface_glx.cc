@@ -478,10 +478,6 @@ bool GLSurfaceGLX::InitializeExtensionSettingsOneOff() {
 
   if (!g_glx_get_msc_rate_oml_supported && g_glx_sgi_video_sync_supported) {
     Display* video_sync_display = gfx::OpenNewXDisplay();
-    if (!video_sync_display) {
-      LOG(ERROR) << "Could not open video sync display";
-      return false;
-    }
     if (!CreateDummyWindow(video_sync_display)) {
       LOG(ERROR) << "CreateDummyWindow(video_sync_display) failed";
       return false;
@@ -677,10 +673,10 @@ gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers(
     const PresentationCallback& callback) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
-  GLSurfacePresentationHelper::ScopedSwapBuffers scoped_swap_buffers(
-      presentation_helper_.get(), callback);
+  presentation_helper_->PreSwapBuffers(callback);
   glXSwapBuffers(g_display, GetDrawableHandle());
-  return scoped_swap_buffers.result();
+  presentation_helper_->PostSwapBuffers();
+  return gfx::SwapResult::SWAP_ACK;
 }
 
 gfx::Size NativeViewGLSurfaceGLX::GetSize() {
@@ -720,11 +716,10 @@ gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(
     int height,
     const PresentationCallback& callback) {
   DCHECK(g_driver_glx.ext.b_GLX_MESA_copy_sub_buffer);
-
-  GLSurfacePresentationHelper::ScopedSwapBuffers scoped_swap_buffers(
-      presentation_helper_.get(), callback);
+  presentation_helper_->PreSwapBuffers(callback);
   glXCopySubBufferMESA(g_display, GetDrawableHandle(), x, y, width, height);
-  return scoped_swap_buffers.result();
+  presentation_helper_->PostSwapBuffers();
+  return gfx::SwapResult::SWAP_ACK;
 }
 
 bool NativeViewGLSurfaceGLX::OnMakeCurrent(GLContext* context) {

@@ -26,6 +26,7 @@
 #include "modules/indexeddb/IDBDatabase.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "bindings/modules/v8/v8_idb_observer_callback.h"
@@ -44,7 +45,6 @@
 #include "platform/Histogram.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Atomics.h"
-#include "platform/wtf/Optional.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseException.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyPath.h"
@@ -492,10 +492,10 @@ void IDBDatabase::OnVersionChange(int64_t old_version, int64_t new_version) {
     return;
   }
 
-  Optional<unsigned long long> new_version_nullable;
-  if (new_version != IDBDatabaseMetadata::kNoVersion) {
-    new_version_nullable = new_version;
-  }
+  Nullable<unsigned long long> new_version_nullable =
+      (new_version == IDBDatabaseMetadata::kNoVersion)
+          ? Nullable<unsigned long long>()
+          : Nullable<unsigned long long>(new_version);
   EnqueueEvent(IDBVersionChangeEvent::Create(
       EventTypeNames::versionchange, old_version, new_version_nullable));
 }

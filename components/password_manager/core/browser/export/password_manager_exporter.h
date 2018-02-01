@@ -13,8 +13,11 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
-#include "base/time/time.h"
 #include "components/password_manager/core/browser/ui/export_progress_status.h"
+
+namespace autofill {
+struct PasswordForm;
+}
 
 namespace password_manager {
 
@@ -56,11 +59,6 @@ class PasswordManagerExporter {
                                                 int size));
 
  private:
-  // Caches the serialised password list. It proceeds to export, if all the
-  // parts are ready. |count| is the number of passwords which were serialised.
-  // |serialised| is the serialised list of passwords.
-  void SetSerialisedPasswordList(size_t count, const std::string& serialised);
-
   // Returns true if all the necessary data is available.
   bool IsReadyForExport();
 
@@ -68,13 +66,9 @@ class PasswordManagerExporter {
   // At the end, it clears cached fields.
   void Export();
 
-  // Callback after the passwords have been serialised. It reports the result to
-  // the UI and to metrics. |destination| is the folder we wrote to. |count| is
-  // the number of passwords exported. |success| is whether they were actually
-  // written.
-  void OnPasswordsExported(const base::FilePath& destination,
-                           int count,
-                           bool success);
+  // Callback after the passwords have been serialised.
+  void OnPasswordsSerialised(const base::FilePath& destination,
+                             const std::string& serialised);
 
   // Wrapper for the |on_progress_| callback, which caches |status|, so that
   // it can be provided by GetProgressStatus.
@@ -89,18 +83,13 @@ class PasswordManagerExporter {
   // The most recent progress status update, as was seen on |on_progress_|.
   ExportProgressStatus last_progress_status_;
 
-  // The password list that was read from the store and serialised.
-  std::string serialised_password_list_;
-  // The number of passwords that were serialised. Useful for metrics.
-  size_t password_count_;
+  // The password list that was read from the store. It will be cleared once
+  // exporting is complete.
+  std::vector<std::unique_ptr<autofill::PasswordForm>> password_list_;
 
   // The destination which was provided and where the password list will be
   // sent. It will be cleared once exporting is complete.
   base::FilePath destination_;
-
-  // The moment in time that we started reading and serialising the password
-  // list. Useful for metrics.
-  base::Time export_preparation_started_;
 
   // The function which does the actual writing. It should point to
   // base::WriteFile, unless it's changed for testing purposes.

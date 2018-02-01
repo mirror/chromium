@@ -11,7 +11,6 @@
 #include <string>
 
 #include "base/compiler_specific.h"
-#include "base/component_export.h"
 #include "base/memory/ref_counted.h"
 #include "net/url_request/url_request_status.h"
 #include "services/network/public/cpp/resource_response_info.h"
@@ -20,8 +19,7 @@
 namespace network {
 
 // Parameters for a resource response header.
-struct COMPONENT_EXPORT(NETWORK_CPP_BASE) ResourceResponseHead
-    : ResourceResponseInfo {
+struct ResourceResponseHead : ResourceResponseInfo {
   // TimeTicks::Now() when the browser received the request from the renderer.
   base::TimeTicks request_start;
   // TimeTicks::Now() when the browser sent the response to the renderer.
@@ -30,8 +28,7 @@ struct COMPONENT_EXPORT(NETWORK_CPP_BASE) ResourceResponseHead
 
 // Simple wrapper that refcounts ResourceResponseHead.
 // Inherited, rather than typedef'd, to allow forward declarations.
-struct COMPONENT_EXPORT(NETWORK_CPP_BASE) ResourceResponse
-    : public base::RefCountedThreadSafe<ResourceResponse> {
+struct ResourceResponse : public base::RefCountedThreadSafe<ResourceResponse> {
  public:
   ResourceResponseHead head;
 

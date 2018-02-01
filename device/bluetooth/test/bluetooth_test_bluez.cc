@@ -148,7 +148,6 @@ BluetoothDevice* BluetoothTestBlueZ::SimulateLowEnergyDevice(
       break;
     case 5:
       device_name = base::nullopt;
-      break;
     case 6:
       device_address = kTestDeviceAddress2;
       device_type = BLUETOOTH_TRANSPORT_DUAL;

@@ -26,7 +26,7 @@
 #include "core/html/track/vtt/VTTElement.h"
 
 #include "core/css/StyleChangeReason.h"
-#include "core/dom/Document.h"
+#include "core/html_element_factory.h"
 
 namespace blink {
 
@@ -82,37 +82,37 @@ Element* VTTElement::CloneElementWithoutAttributesAndChildren() {
 }
 
 HTMLElement* VTTElement::CreateEquivalentHTMLElement(Document& document) {
-  Element* html_element = nullptr;
+  HTMLElement* html_element = nullptr;
   switch (web_vtt_node_type_) {
     case kVTTNodeTypeClass:
     case kVTTNodeTypeLanguage:
     case kVTTNodeTypeVoice:
-      html_element =
-          document.CreateRawElement(HTMLNames::spanTag, kCreatedByParser);
+      html_element = HTMLElementFactory::createHTMLElement(
+          HTMLNames::spanTag.LocalName(), document);
       html_element->setAttribute(HTMLNames::titleAttr,
                                  getAttribute(VoiceAttributeName()));
       html_element->setAttribute(HTMLNames::langAttr,
                                  getAttribute(LangAttributeName()));
       break;
     case kVTTNodeTypeItalic:
-      html_element =
-          document.CreateRawElement(HTMLNames::iTag, kCreatedByParser);
+      html_element = HTMLElementFactory::createHTMLElement(
+          HTMLNames::iTag.LocalName(), document);
       break;
     case kVTTNodeTypeBold:
-      html_element =
-          document.CreateRawElement(HTMLNames::bTag, kCreatedByParser);
+      html_element = HTMLElementFactory::createHTMLElement(
+          HTMLNames::bTag.LocalName(), document);
       break;
     case kVTTNodeTypeUnderline:
-      html_element =
-          document.CreateRawElement(HTMLNames::uTag, kCreatedByParser);
+      html_element = HTMLElementFactory::createHTMLElement(
+          HTMLNames::uTag.LocalName(), document);
       break;
     case kVTTNodeTypeRuby:
-      html_element =
-          document.CreateRawElement(HTMLNames::rubyTag, kCreatedByParser);
+      html_element = HTMLElementFactory::createHTMLElement(
+          HTMLNames::rubyTag.LocalName(), document);
       break;
     case kVTTNodeTypeRubyText:
-      html_element =
-          document.CreateRawElement(HTMLNames::rtTag, kCreatedByParser);
+      html_element = HTMLElementFactory::createHTMLElement(
+          HTMLNames::rtTag.LocalName(), document);
       break;
     default:
       NOTREACHED();
@@ -120,7 +120,7 @@ HTMLElement* VTTElement::CreateEquivalentHTMLElement(Document& document) {
 
   html_element->setAttribute(HTMLNames::classAttr,
                              getAttribute(HTMLNames::classAttr));
-  return ToHTMLElement(html_element);
+  return html_element;
 }
 
 void VTTElement::SetIsPastNode(bool is_past_node) {

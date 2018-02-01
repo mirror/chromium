@@ -4,7 +4,6 @@
 
 #include "ash/system/user/tray_user.h"
 
-#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
@@ -22,9 +21,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/image/image.h"
-#include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/border.h"
-#include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/view.h"
@@ -33,14 +30,6 @@
 namespace {
 
 const int kUserLabelToIconPadding = 5;
-
-views::ImageView* CreateIcon() {
-  gfx::ImageSkia icon_image =
-      gfx::CreateVectorIcon(ash::kSystemMenuChildUserIcon, ash::kTrayIconColor);
-  auto* image = new views::ImageView;
-  image->SetImage(icon_image);
-  return image;
-}
 
 }  // namespace
 
@@ -96,10 +85,11 @@ void TrayUser::OnDefaultViewDestroyed() {
 }
 
 void TrayUser::UpdateAfterLoginStatusChange(LoginStatus status) {
-  SessionController* session = Shell::Get()->session_controller();
-  bool need_label = session->IsUserSupervised();
+  bool need_label = false;
   bool need_avatar = false;
-  bool need_icon = false;
+  SessionController* session = Shell::Get()->session_controller();
+  if (session->IsUserSupervised())
+    need_label = true;
   switch (status) {
     case LoginStatus::LOCKED:
     case LoginStatus::USER:
@@ -109,12 +99,7 @@ void TrayUser::UpdateAfterLoginStatusChange(LoginStatus status) {
       break;
     case LoginStatus::SUPERVISED:
       need_avatar = true;
-      if (session->IsUserChild()) {
-        need_label = false;
-        need_icon = true;
-      } else {
-        need_label = true;
-      }
+      need_label = true;
       break;
     case LoginStatus::GUEST:
       need_label = true;
@@ -126,33 +111,28 @@ void TrayUser::UpdateAfterLoginStatusChange(LoginStatus status) {
   }
 
   if ((need_avatar != (avatar_ != nullptr)) ||
-      (need_label != (label_ != nullptr)) ||
-      (need_icon != (icon_ != nullptr))) {
+      (need_label != (label_ != nullptr))) {
     delete label_;
     delete avatar_;
-    delete icon_;
-    label_ = nullptr;
-    avatar_ = nullptr;
-    icon_ = nullptr;
 
-    if (need_icon) {
-      icon_ = CreateIcon();
-      layout_view_->AddChildView(icon_);
-    }
     if (need_label) {
       label_ = new views::Label;
       SetupLabelForTray(label_);
       layout_view_->AddChildView(label_);
+    } else {
+      label_ = nullptr;
     }
     if (need_avatar) {
       avatar_ = new tray::RoundedImageView(kTrayRoundedBorderRadius);
       avatar_->SetPaintToLayer();
       avatar_->layer()->SetFillsBoundsOpaquely(false);
       layout_view_->AddChildView(avatar_);
+    } else {
+      avatar_ = nullptr;
     }
   }
 
-  if (label_ && session->IsUserSupervised()) {
+  if (session->IsUserSupervised()) {
     label_->SetText(
         l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SUPERVISED_LABEL));
   } else if (status == LoginStatus::GUEST) {
@@ -161,8 +141,7 @@ void TrayUser::UpdateAfterLoginStatusChange(LoginStatus status) {
 
   UpdateAvatarImage(status);
 
-  // Update layout after setting label_, icon_ and avatar_ with new login
-  // status.
+  // Update layout after setting label_ and avatar_ with new login status.
   UpdateLayoutOfItem();
 }
 

@@ -131,7 +131,7 @@ HttpNetworkSession::Params::Params()
       quic_max_migrations_to_non_default_network_on_path_degrading(
           kMaxMigrationsToNonDefaultNetworkOnPathDegrading),
       quic_allow_server_migration(false),
-      quic_allow_remote_alt_svc(true),
+      quic_allow_remote_alt_svc(false),
       quic_disable_bidirectional_streams(false),
       quic_force_hol_blocking(false),
       quic_race_cert_verification(false),
@@ -140,7 +140,7 @@ HttpNetworkSession::Params::Params()
       enable_token_binding(false),
       http_09_on_non_default_ports_enabled(false),
       disable_idle_sockets_close_on_memory_pressure(false) {
-  quic_supported_versions.push_back(QUIC_VERSION_41);
+  quic_supported_versions.push_back(QUIC_VERSION_39);
 }
 
 HttpNetworkSession::Params::Params(const Params& other) = default;

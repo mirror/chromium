@@ -39,6 +39,7 @@
 #include "base/macros.h"
 #include "core/exported/WebViewImpl.h"
 #include "core/frame/Settings.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/testing/UseMockScrollbarSettings.h"

@@ -8,6 +8,7 @@
 #include <deque>
 
 #include "platform/WebFrameScheduler.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
 
 namespace blink {
@@ -113,7 +114,7 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   WebFrameScheduler::FrameType GetFrameType() const override {
     return frame_type_;
   }
-  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(TaskType) override {
+  scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override {
     return nullptr;
   }
   WebViewScheduler* GetWebViewScheduler() const override {

@@ -225,7 +225,7 @@ class CORE_EXPORT FrameSelection final
   WTF::Optional<unsigned> LayoutSelectionEnd() const;
   void ClearLayoutSelection();
   std::pair<unsigned, unsigned> LayoutSelectionStartEndForNG(
-      const NGPhysicalTextFragment&) const;
+      const NGPhysicalTextFragment&);
 
   void Trace(blink::Visitor*);
 

@@ -552,10 +552,11 @@ TEST_P(AppListViewFocusTest, LinearFocusTraversalInHalfState) {
   forward_view_list.push_back(contents_view()
                                   ->search_result_answer_card_view_for_test()
                                   ->GetSearchAnswerContainerViewForTest());
-  SearchResultListView* list_view =
-      contents_view()->search_result_list_view_for_test();
+  views::View* results_container = contents_view()
+                                       ->search_result_list_view_for_test()
+                                       ->results_container_for_test();
   for (int i = 0; i < kListResults; ++i)
-    forward_view_list.push_back(list_view->GetResultViewAt(i));
+    forward_view_list.push_back(results_container->child_at(i));
   forward_view_list.push_back(search_box_view()->search_box());
   std::vector<views::View*> backward_view_list = forward_view_list;
   std::reverse(backward_view_list.begin(), backward_view_list.end());
@@ -705,10 +706,11 @@ TEST_F(AppListViewFocusTest, VerticalFocusTraversalInHalfState) {
   forward_view_list.push_back(contents_view()
                                   ->search_result_answer_card_view_for_test()
                                   ->GetSearchAnswerContainerViewForTest());
-  SearchResultListView* list_view =
-      contents_view()->search_result_list_view_for_test();
+  views::View* results_container = contents_view()
+                                       ->search_result_list_view_for_test()
+                                       ->results_container_for_test();
   for (int i = 0; i < kListResults; ++i)
-    forward_view_list.push_back(list_view->GetResultViewAt(i));
+    forward_view_list.push_back(results_container->child_at(i));
   forward_view_list.push_back(search_box_view()->search_box());
 
   // Test traversal triggered by down.
@@ -717,7 +719,7 @@ TEST_F(AppListViewFocusTest, VerticalFocusTraversalInHalfState) {
   std::vector<views::View*> backward_view_list;
   backward_view_list.push_back(search_box_view()->search_box());
   for (int i = kListResults - 1; i >= 0; --i)
-    backward_view_list.push_back(list_view->GetResultViewAt(i));
+    backward_view_list.push_back(results_container->child_at(i));
   backward_view_list.push_back(contents_view()
                                    ->search_result_answer_card_view_for_test()
                                    ->GetSearchAnswerContainerViewForTest());
@@ -948,10 +950,12 @@ TEST_F(AppListViewFocusTest, FirstResultSelectedAfterSearchResultsUpdated) {
   search_box_view()->search_box()->InsertText(base::ASCIIToUTF16("test"));
   const int kListResults = 2;
   SetUpSearchResults(0, kListResults, false);
-  SearchResultListView* list_view =
-      contents_view()->search_result_list_view_for_test();
+  const views::View* results_container =
+      contents_view()
+          ->search_result_list_view_for_test()
+          ->results_container_for_test();
   EXPECT_EQ(search_box_view()->search_box(), focused_view());
-  EXPECT_EQ(list_view->GetResultViewAt(0),
+  EXPECT_EQ(results_container->child_at(0),
             contents_view()->search_results_page_view()->first_result_view());
 
   // Populate both fake list results and tile results.
@@ -992,13 +996,15 @@ TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
   search_box_view()->search_box()->InsertText(base::ASCIIToUTF16("test1"));
   const int kListResults = 2;
   SetUpSearchResults(0, kListResults, false);
-  SearchResultListView* list_view =
-      contents_view()->search_result_list_view_for_test();
-  SearchResultBaseView* first_result_view =
+  const views::View* results_container =
+      contents_view()
+          ->search_result_list_view_for_test()
+          ->results_container_for_test();
+  views::View* first_result_view =
       contents_view()->search_results_page_view()->first_result_view();
   EXPECT_EQ(search_box_view()->search_box(), focused_view());
-  EXPECT_EQ(list_view->GetResultViewAt(0), first_result_view);
-  EXPECT_TRUE(first_result_view->background_highlighted());
+  EXPECT_EQ(results_container->child_at(0), first_result_view);
+  EXPECT_TRUE(static_cast<SearchResultView*>(first_result_view)->selected());
 
   // Type something else.
   search_box_view()->search_box()->InsertText(base::ASCIIToUTF16("test2"));
@@ -1009,8 +1015,8 @@ TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
   SimulateKeyPress(ui::VKEY_TAB, false);
   EXPECT_EQ(search_box_view()->close_button(), focused_view());
   SimulateKeyPress(ui::VKEY_TAB, false);
-  EXPECT_EQ(list_view->GetResultViewAt(0), focused_view());
-  EXPECT_TRUE(first_result_view->background_highlighted());
+  EXPECT_EQ(results_container->child_at(0), focused_view());
+  EXPECT_TRUE(static_cast<SearchResultView*>(first_result_view)->selected());
 
   // Update search results, both list and tile results are populated.
   const int kTileResults = 3;
@@ -1021,10 +1027,11 @@ TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
           ->tile_views_for_test();
   first_result_view =
       contents_view()->search_results_page_view()->first_result_view();
-  EXPECT_EQ(list_view->GetResultViewAt(0), focused_view());
+  EXPECT_EQ(results_container->child_at(0), focused_view());
   EXPECT_EQ(tile_views[0], first_result_view);
-  EXPECT_FALSE(first_result_view->HasFocus());
-  EXPECT_TRUE(list_view->GetResultViewAt(0)->background_highlighted());
+  EXPECT_FALSE(
+      static_cast<SearchResultTileItemView*>(first_result_view)->HasFocus());
+  EXPECT_TRUE(static_cast<SearchResultView*>(focused_view())->selected());
 }
 
 // Tests hitting Enter key when focus is on search box.

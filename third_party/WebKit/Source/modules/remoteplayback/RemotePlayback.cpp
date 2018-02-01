@@ -17,9 +17,13 @@
 #include "modules/presentation/PresentationAvailabilityState.h"
 #include "modules/presentation/PresentationController.h"
 #include "modules/remoteplayback/AvailabilityCallbackWrapper.h"
+#include "modules/remoteplayback/RemotePlaybackConnectionCallbacks.h"
 #include "platform/MemoryCoordinator.h"
 #include "platform/wtf/text/Base64.h"
 #include "public/platform/TaskType.h"
+#include "public/platform/modules/presentation/WebPresentationClient.h"
+#include "public/platform/modules/presentation/WebPresentationError.h"
+#include "public/platform/modules/presentation/WebPresentationInfo.h"
 
 namespace blink {
 
@@ -229,13 +233,12 @@ void RemotePlayback::PromptInternal() {
   DCHECK(RuntimeEnabledFeatures::RemotePlaybackBackendEnabled());
 
   if (RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled()) {
-    PresentationController* controller =
-        PresentationController::FromContext(GetExecutionContext());
-    if (controller && !availability_urls_.IsEmpty()) {
-      controller->GetPresentationService()->StartPresentation(
+    WebPresentationClient* client =
+        PresentationController::ClientFromContext(GetExecutionContext());
+    if (client && !availability_urls_.IsEmpty()) {
+      client->StartPresentation(
           availability_urls_,
-          WTF::Bind(&RemotePlayback::HandlePresentationResponse,
-                    WrapPersistent(this)));
+          std::make_unique<RemotePlaybackConnectionCallbacks>(this));
     } else {
       // TODO(yuryu): Wrapping PromptCancelled with base::OnceClosure as
       // InspectorInstrumentation requires a globally unique pointer to track
@@ -487,14 +490,28 @@ const Vector<KURL>& RemotePlayback::Urls() const {
 }
 
 void RemotePlayback::OnConnectionSuccess(
-    const mojom::blink::PresentationInfo& presentation_info) {
+    const WebPresentationInfo& presentation_info) {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
   presentation_id_ = presentation_info.id;
   presentation_url_ = presentation_info.url;
 
   StateChanged(WebRemotePlaybackState::kConnecting);
+}
 
-  // TODO(imcheng): Reset binding when remote playback stops.
+void RemotePlayback::OnConnectionError(const WebPresentationError& error) {
+  DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
+  presentation_id_ = "";
+  presentation_url_ = KURL();
+  if (error.error_type ==
+      WebPresentationError::kErrorTypePresentationRequestCancelled) {
+    PromptCancelled();
+    return;
+  }
+
+  StateChanged(WebRemotePlaybackState::kDisconnected);
+}
+
+void RemotePlayback::Init() {
   DCHECK(!presentation_connection_binding_.is_bound());
   auto* presentation_controller =
       PresentationController::FromContext(GetExecutionContext());
@@ -507,29 +524,6 @@ void RemotePlayback::OnConnectionSuccess(
       mojom::blink::PresentationInfo::New(presentation_url_, presentation_id_),
       std::move(connection_ptr),
       mojo::MakeRequest(&target_presentation_connection_));
-}
-
-void RemotePlayback::OnConnectionError(
-    const mojom::blink::PresentationError& error) {
-  DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
-  presentation_id_ = "";
-  presentation_url_ = KURL();
-  if (error.error_type ==
-      mojom::blink::PresentationErrorType::PRESENTATION_REQUEST_CANCELLED) {
-    PromptCancelled();
-    return;
-  }
-
-  StateChanged(WebRemotePlaybackState::kDisconnected);
-}
-
-void RemotePlayback::HandlePresentationResponse(
-    mojom::blink::PresentationInfoPtr presentation_info,
-    mojom::blink::PresentationErrorPtr error) {
-  if (presentation_info)
-    OnConnectionSuccess(*presentation_info);
-  else
-    OnConnectionError(*error);
 }
 
 void RemotePlayback::OnMessage(

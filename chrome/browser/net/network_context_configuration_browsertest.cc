@@ -27,11 +27,13 @@
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/simple_url_loader.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/simple_url_loader_test_helper.h"
+#include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "net/base/filename_util.h"
 #include "net/base/host_port_pair.h"
@@ -42,13 +44,11 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
-#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/resource_response_info.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
-#include "services/network/test/test_url_loader_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -93,7 +93,7 @@ class NetworkContextConfigurationBrowserTest
 
   void SetUpInProcessBrowserTestFixture() override {
     if (GetParam().network_service_state != NetworkServiceState::kDisabled)
-      feature_list_.InitAndEnableFeature(network::features::kNetworkService);
+      feature_list_.InitAndEnableFeature(features::kNetworkService);
   }
 
   void SetUpOnMainThread() override {
@@ -442,7 +442,7 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, DiskCache) {
   GURL test_url = GURL(content::kChromeUINetworkViewCacheURL + test_url_string);
   ASSERT_TRUE(test_url.is_valid()) << test_url_string;
 
-  network::TestURLLoaderClient client;
+  content::TestURLLoaderClient client;
   // Read from the cache directly, as the test server may theoretically have
   // been restarted on the same port by another test.
   network_context()->HandleViewCacheRequest(test_url,

@@ -22,23 +22,15 @@ Persistence.Persistence = class extends Common.Object {
 
     var linkDecorator = new Persistence.PersistenceUtils.LinkDecorator(this);
     Components.Linkifier.setLinkDecorator(linkDecorator);
-    this._mapping = null;
-    this.setAutomappingEnabled(true);
+    this._mapping =
+        new Persistence.Automapping(workspace, this._onBindingAdded.bind(this), this._onBindingRemoved.bind(this));
   }
 
   /**
    * @param {boolean} enabled
    */
   setAutomappingEnabled(enabled) {
-    if (enabled === !!this._mapping)
-      return;
-    if (!enabled) {
-      this._mapping.dispose();
-      this._mapping = null;
-    } else {
-      this._mapping = new Persistence.Automapping(
-          this._workspace, this._onBindingAdded.bind(this), this._onBindingRemoved.bind(this));
-    }
+    this._mapping.setEnabled(enabled);
   }
 
   /**
@@ -51,22 +43,16 @@ Persistence.Persistence = class extends Common.Object {
   /**
    * @param {!Persistence.PersistenceBinding} binding
    */
-  addBindingForTest(binding) {
-    this._innerAddBinding(binding);
-  }
-
-  /**
-   * @param {!Persistence.PersistenceBinding} binding
-   */
   removeBinding(binding) {
     this._innerRemoveBinding(binding);
   }
 
   /**
-   * @param {!Persistence.PersistenceBinding} binding
+   * @param {function(function(!Persistence.AutomappingBinding), function(!Persistence.AutomappingBinding)):!Persistence.MappingSystem} mappingFactory
    */
-  removeBindingForTest(binding) {
-    this._innerRemoveBinding(binding);
+  _setMappingForTest(mappingFactory) {
+    this._mapping.dispose();
+    this._mapping = mappingFactory(this._onBindingAdded.bind(this), this._onBindingRemoved.bind(this));
   }
 
   /**
@@ -361,10 +347,7 @@ Persistence.Persistence = class extends Common.Object {
   }
 
   dispose() {
-    if (this._mapping) {
-      this._mapping.dispose();
-      this._mapping = null;
-    }
+    this._mapping.dispose();
   }
 };
 

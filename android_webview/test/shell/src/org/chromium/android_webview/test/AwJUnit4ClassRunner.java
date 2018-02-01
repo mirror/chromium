@@ -4,6 +4,8 @@
 
 package org.chromium.android_webview.test;
 
+import android.support.test.InstrumentationRegistry;
+
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -57,7 +59,7 @@ public final class AwJUnit4ClassRunner extends BaseJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
-        CommandLineFlags.setUp(method.getMethod());
+        CommandLineFlags.setUp(InstrumentationRegistry.getTargetContext(), method.getMethod());
         if (method instanceof WebViewMultiProcessFrameworkMethod) {
             CommandLine.getInstance().appendSwitch(AwSwitches.WEBVIEW_SANDBOXED_RENDERER);
         }

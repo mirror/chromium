@@ -372,8 +372,8 @@ void UserMediaProcessor::SetupAudioInput() {
       current_request_info_->web_request().AudioConstraints(), &audio_controls);
   if (IsDeviceSource(audio_controls.stream_source)) {
     GetMediaDevicesDispatcher()->GetAudioInputCapabilities(base::BindOnce(
-        &UserMediaProcessor::SelectAudioDeviceSettings,
-        weak_factory_.GetWeakPtr(), current_request_info_->web_request()));
+        &UserMediaProcessor::SelectAudioSettings, weak_factory_.GetWeakPtr(),
+        current_request_info_->web_request()));
   } else {
     if (!IsValidAudioContentSource(audio_controls.stream_source)) {
       blink::WebString failed_constraint_name =
@@ -386,41 +386,14 @@ void UserMediaProcessor::SetupAudioInput() {
       return;
     }
     SelectAudioSettings(current_request_info_->web_request(),
-                        {AudioDeviceCaptureCapability()});
+                        AudioDeviceCaptureCapabilities());
   }
-}
-
-void UserMediaProcessor::SelectAudioDeviceSettings(
-    const blink::WebUserMediaRequest& web_request,
-    std::vector<blink::mojom::AudioInputDeviceCapabilitiesPtr>
-        audio_input_capabilities) {
-  AudioDeviceCaptureCapabilities capabilities;
-  for (const auto& device : audio_input_capabilities) {
-    MediaStreamAudioSource* audio_source = nullptr;
-    auto it =
-        std::find_if(local_sources_.begin(), local_sources_.end(),
-                     [&device](const blink::WebMediaStreamSource& web_source) {
-                       DCHECK(!web_source.IsNull());
-                       return web_source.Id().Utf8() == device->device_id;
-                     });
-    if (it != local_sources_.end()) {
-      MediaStreamSource* const source =
-          static_cast<MediaStreamSource*>(it->GetExtraData());
-      if (source->device().type == MEDIA_DEVICE_AUDIO_CAPTURE)
-        audio_source = static_cast<MediaStreamAudioSource*>(source);
-    }
-    if (audio_source)
-      capabilities.emplace_back(audio_source);
-    else
-      capabilities.emplace_back(device->device_id, device->parameters);
-  }
-
-  SelectAudioSettings(web_request, capabilities);
 }
 
 void UserMediaProcessor::SelectAudioSettings(
     const blink::WebUserMediaRequest& web_request,
-    const std::vector<AudioDeviceCaptureCapability>& capabilities) {
+    std::vector<blink::mojom::AudioInputDeviceCapabilitiesPtr>
+        audio_input_capabilities) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // The frame might reload or |web_request| might be cancelled while
   // capabilities are queried. Do nothing if a different request is being
@@ -430,7 +403,7 @@ void UserMediaProcessor::SelectAudioSettings(
 
   DCHECK(current_request_info_->stream_controls()->audio.requested);
   auto settings = SelectSettingsAudioCapture(
-      capabilities, web_request.AudioConstraints(),
+      std::move(audio_input_capabilities), web_request.AudioConstraints(),
       web_request.ShouldDisableHardwareNoiseSuppression());
   if (!settings.HasValue()) {
     blink::WebString failed_constraint_name =

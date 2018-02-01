@@ -114,22 +114,6 @@ def parse_args(args):
         ]))
 
     option_group_definitions.append(
-        ('Fuchsia-specific Options', [
-            optparse.make_option(
-                '--zircon-logging',
-                dest='zircon_logging',
-                action='store_true',
-                default=True,
-                help=('Log Zircon debug messages (enabled by default).')),
-            optparse.make_option(
-                '--no-zircon-logging',
-                dest='zircon_logging',
-                action='store_false',
-                default=True,
-                help=('Do not log Zircon debug messages.')),
-        ]))
-
-    option_group_definitions.append(
         ('Results Options', [
             optparse.make_option(
                 '--add-platform-exceptions',
@@ -426,17 +410,11 @@ def parse_args(args):
                 '--skipped',
                 action='store',
                 default=None,
-                help=('Control how tests marked SKIP are run. '
+                help=('control how tests marked SKIP are run. '
                       '"default" == Skip tests unless explicitly listed on the command line, '
                       '"ignore" == Run them anyway, '
                       '"only" == only run the SKIP tests, '
                       '"always" == always skip, even if listed on the command line.')),
-            optparse.make_option(
-                '--gtest_also_run_disabled_tests',
-                action='store_true',
-                default=False,  # Consistent with the default value of --skipped
-                help=('Equivalent to --skipped=ignore. This option overrides '
-                      '--skipped if both are given.')),
             optparse.make_option(
                 '--skip-failing-tests',
                 action='store_true',
@@ -591,9 +569,7 @@ def _set_up_derived_options(port, options, args):
         if not options.skipped:
             options.skipped = 'always'
 
-    if options.gtest_also_run_disabled_tests:
-        options.skipped = 'ignore'
-    elif not options.skipped:
+    if not options.skipped:
         options.skipped = 'default'
 
     if not options.total_shards and 'GTEST_TOTAL_SHARDS' in port.host.environ:

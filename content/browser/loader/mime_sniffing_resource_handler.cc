@@ -24,11 +24,11 @@
 #include "content/browser/loader/web_package_request_handler.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/download_item.h"
+#include "content/public/browser/download_save_info.h"
 #include "content/public/browser/download_url_parameters.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
-#include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/webplugininfo.h"
 #include "net/base/io_buffer.h"
@@ -229,12 +229,9 @@ void MimeSniffingResourceHandler::OnReadCompleted(
   const std::string& type_hint = response_->head.mime_type;
 
   std::string new_type;
-  bool made_final_decision = net::SniffMimeType(
-      read_buffer_->data(), bytes_read_, request()->url(), type_hint,
-      GetContentClient()->browser()->ForceSniffingFileUrlsForHtml()
-          ? net::ForceSniffFileUrlsForHtml::kEnabled
-          : net::ForceSniffFileUrlsForHtml::kDisabled,
-      &new_type);
+  bool made_final_decision =
+      net::SniffMimeType(read_buffer_->data(), bytes_read_, request()->url(),
+                         type_hint, &new_type);
 
   // SniffMimeType() returns false if there is not enough data to determine
   // the mime type. However, even if it returns false, it returns a new type

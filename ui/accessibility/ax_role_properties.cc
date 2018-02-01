@@ -3,17 +3,8 @@
 // found in the LICENSE file.
 
 #include "ui/accessibility/ax_role_properties.h"
-#include "build/build_config.h"
 
 namespace ui {
-
-namespace {
-#if defined(OS_WIN)
-static bool kExposeLayoutTableAsDataTable = true;
-#else
-static bool kExposeLayoutTableAsDataTable = false;
-#endif
-}  // namespace
 
 bool IsRoleClickable(ax::mojom::Role role) {
   switch (role) {
@@ -56,8 +47,6 @@ bool IsCellOrTableHeaderRole(ax::mojom::Role role) {
     case ax::mojom::Role::kColumnHeader:
     case ax::mojom::Role::kRowHeader:
       return true;
-    case ax::mojom::Role::kLayoutTableCell:
-      return kExposeLayoutTableAsDataTable;
     default:
       return false;
   }
@@ -69,8 +58,6 @@ bool IsTableLikeRole(ax::mojom::Role role) {
     case ax::mojom::Role::kGrid:
     case ax::mojom::Role::kTreeGrid:
       return true;
-    case ax::mojom::Role::kLayoutTable:
-      return kExposeLayoutTableAsDataTable;
     default:
       return false;
   }

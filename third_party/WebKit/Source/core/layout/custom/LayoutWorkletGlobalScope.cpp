@@ -53,10 +53,9 @@ void LayoutWorkletGlobalScope::Dispose() {
 }
 
 // https://drafts.css-houdini.org/css-layout-api/#dom-layoutworkletglobalscope-registerlayout
-void LayoutWorkletGlobalScope::registerLayout(
-    const String& name,
-    const ScriptValue& constructor_value,
-    ExceptionState& exception_state) {
+void LayoutWorkletGlobalScope::registerLayout(const String& name,
+                                              const ScriptValue& ctor_value,
+                                              ExceptionState& exception_state) {
   if (name.IsEmpty()) {
     exception_state.ThrowTypeError("The empty string is not a valid name.");
     return;
@@ -71,9 +70,9 @@ void LayoutWorkletGlobalScope::registerLayout(
 
   v8::Local<v8::Context> context = ScriptController()->GetContext();
 
-  DCHECK(constructor_value.V8Value()->IsFunction());
+  DCHECK(ctor_value.V8Value()->IsFunction());
   v8::Local<v8::Function> constructor =
-      v8::Local<v8::Function>::Cast(constructor_value.V8Value());
+      v8::Local<v8::Function>::Cast(ctor_value.V8Value());
 
   Vector<CSSPropertyID> native_invalidation_properties;
   Vector<AtomicString> custom_invalidation_properties;

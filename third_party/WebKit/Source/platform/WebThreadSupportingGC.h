@@ -6,6 +6,7 @@
 #define WebThreadSupportingGC_h
 
 #include <memory>
+#include "platform/WebTaskRunner.h"
 #include "platform/heap/GCTaskRunner.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
@@ -77,7 +78,7 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   }
 
  private:
-  WebThreadSupportingGC(const WebThreadCreationParams*, WebThread*);
+  WebThreadSupportingGC(const WebThreadCreationParams&, WebThread*);
 
   std::unique_ptr<GCTaskRunner> gc_task_runner_;
 

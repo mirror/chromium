@@ -2,29 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-function clobberJSON() {
-  JSON.parse = function() {
-    return "JSON.parse clobbered by content script.";
-  };
+JSON.parse = function() {
+  return "JSON.parse clobbered by content script.";
+};
 
-  JSON.stringify = function() {
-    return "JSON.stringify clobbered by content script.";
-  };
+JSON.stringify = function() {
+  return "JSON.stringify clobbered by content script.";
+};
 
-  Array.prototype.toJSON = function() {
-    return "Array.prototype.toJSON clobbered by content script.";
-  };
+Array.prototype.toJSON = function() {
+  return "Array.prototype.toJSON clobbered by content script.";
+};
 
-  Object.prototype.toJSON = function() {
-    return "Object.prototype.toJSON clobbered by content script.";
-  };
-}
-
-chrome.test.getConfig((config) => {
-  // We don't clobber JSON with native bindings. See https://crbug.com/792602.
-  if (!config.nativeCrxBindingsEnabled)
-    clobberJSON();
-});
+Object.prototype.toJSON = function() {
+  return "Object.prototype.toJSON clobbered by content script.";
+};
 
 // For complex connect tests.
 chrome.runtime.onConnect.addListener(function onConnect(port) {
@@ -107,13 +99,10 @@ function testConnectChildFrameAndNavigateSetup() {
   // Test will continue in frame.js
 }
 
-// Use a potentially-valid extension id.
-var fakeExtensionId = 'c'.repeat(32);
-
 // Tests sendMessage to an invalid extension.
 function testSendMessageFromTabError() {
   // try sending a request to a bad extension id
-  chrome.runtime.sendMessage(fakeExtensionId, {m: 1}, function(response) {
+  chrome.runtime.sendMessage("bad-extension-id", {m: 1}, function(response) {
     var success = (response === undefined && chrome.runtime.lastError);
     chrome.runtime.sendMessage({success: success});
   });
@@ -121,7 +110,7 @@ function testSendMessageFromTabError() {
 
 // Tests connecting to an invalid extension.
 function testConnectFromTabError() {
-  var port = chrome.runtime.connect(fakeExtensionId);
+  var port = chrome.runtime.connect("bad-extension-id");
   port.onDisconnect.addListener(function() {
     var success = (chrome.runtime.lastError ? true : false);
     chrome.runtime.sendMessage({success: success});

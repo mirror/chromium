@@ -62,8 +62,7 @@ StringMap_t ParseHeaders(const char* headers, int32_t headers_length) {
         // Found a non-whitespace, mark this as the start of the value.
         start = &headers[i];
         state = FINDING_VALUE;
-        // Fallthrough to start processing value without incrementing i.
-        [[clang::fallthrough]];
+      // Fallthrough to start processing value without incrementing i.
 
       case FINDING_VALUE:
         if (headers[i] == '\n') {

@@ -5,11 +5,13 @@
 #ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_CHILD_WORKER_GLOBAL_SCOPE_SCHEDULER_H_
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_CHILD_WORKER_GLOBAL_SCOPE_SCHEDULER_H_
 
-#include "base/single_thread_task_runner.h"
+#include "platform/PlatformExport.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "public/platform/TaskType.h"
 
 namespace blink {
+
+class WebTaskRunner;
 
 namespace scheduler {
 
@@ -27,11 +29,11 @@ class PLATFORM_EXPORT WorkerGlobalScopeScheduler {
   // Unregisters the task queues and cancels tasks in them.
   void Dispose();
 
-  // Returns a task runner that is suitable with the given task type. This can
+  // Returns a WebTaskRunner that is suitable with the given task type. This can
   // be called from any thread.
   //
   // This must be called only from TaskRunnerHelper::Get().
-  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(TaskType) const;
+  scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) const;
 
   // TODO(nhiroki): Add mechanism to throttle/suspend tasks in response to the
   // state of the parent document (https://crbug.com/670534).

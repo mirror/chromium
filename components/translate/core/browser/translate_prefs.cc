@@ -17,7 +17,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "components/language/core/common/locale_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -100,9 +99,6 @@ void ExpandLanguageCodes(const std::vector<std::string>& languages,
 
 const base::Feature kImprovedLanguageSettings{"ImprovedLanguageSettings",
                                               base::FEATURE_ENABLED_BY_DEFAULT};
-
-const base::Feature kRegionalLocalesAsDisplayUI{
-    "RegionalLocalesAsDisplayUI", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kTranslateRecentTarget{"TranslateRecentTarget",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
@@ -238,7 +234,7 @@ void TranslatePrefs::AddToLanguageList(const std::string& input_language,
   // language with the same base language.
   const bool should_block =
       !base::FeatureList::IsEnabled(kImprovedLanguageSettings) ||
-      !language::ContainsSameBaseLanguage(languages, chrome_language);
+      !ContainsSameBaseLanguage(languages, chrome_language);
 
   if (force_blocked || should_block) {
     BlockLanguage(input_language);
@@ -271,7 +267,7 @@ void TranslatePrefs::RemoveFromLanguageList(const std::string& input_language) {
     if (base::FeatureList::IsEnabled(kImprovedLanguageSettings)) {
       // We should unblock the language if this was the last one from the same
       // language family.
-      if (!language::ContainsSameBaseLanguage(languages, chrome_language)) {
+      if (!ContainsSameBaseLanguage(languages, chrome_language)) {
         UnblockLanguage(input_language);
       }
     }

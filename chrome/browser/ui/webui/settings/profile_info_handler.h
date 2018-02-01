@@ -32,6 +32,7 @@ class ProfileInfoHandler : public SettingsPageUIHandler,
                            public ProfileAttributesStorage::Observer {
  public:
   static const char kProfileInfoChangedEventName[];
+  static const char kProfileManagesSupervisedUsersChangedEventName[];
   static const char kProfileStatsCountReadyEventName[];
 
   explicit ProfileInfoHandler(Profile* profile);
@@ -55,9 +56,14 @@ class ProfileInfoHandler : public SettingsPageUIHandler,
  private:
   FRIEND_TEST_ALL_PREFIXES(ProfileInfoHandlerTest, GetProfileInfo);
   FRIEND_TEST_ALL_PREFIXES(ProfileInfoHandlerTest, PushProfileInfo);
+  FRIEND_TEST_ALL_PREFIXES(ProfileInfoHandlerTest,
+                           GetProfileManagesSupervisedUsers);
+  FRIEND_TEST_ALL_PREFIXES(ProfileInfoHandlerTest,
+                           PushProfileManagesSupervisedUsers);
 
   // Callbacks from the page.
   void HandleGetProfileInfo(const base::ListValue* args);
+  void HandleGetProfileManagesSupervisedUsers(const base::ListValue* args);
   void PushProfileInfo();
 
 #if !defined(OS_CHROMEOS)
@@ -67,6 +73,12 @@ class ProfileInfoHandler : public SettingsPageUIHandler,
   // there exists a stat that was not successfully retrieved.
   void PushProfileStatsCount(profiles::ProfileCategoryStats stats);
 #endif
+
+  // Pushes whether the current profile manages supervised users to JavaScript.
+  void PushProfileManagesSupervisedUsersStatus();
+
+  // Returns true if this profile manages supervised users.
+  bool IsProfileManagingSupervisedUsers() const;
 
   std::unique_ptr<base::DictionaryValue> GetAccountNameAndIcon() const;
 
@@ -80,6 +92,9 @@ class ProfileInfoHandler : public SettingsPageUIHandler,
 
   ScopedObserver<ProfileAttributesStorage, ProfileInfoHandler>
       profile_observer_;
+
+  // Used to listen for changes in the list of managed supervised users.
+  PrefChangeRegistrar profile_pref_registrar_;
 
   // Used to cancel callbacks when JavaScript becomes disallowed.
   base::WeakPtrFactory<ProfileInfoHandler> callback_weak_ptr_factory_;

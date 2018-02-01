@@ -8,9 +8,7 @@
 #include "base/mac/bundle_locations.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/values.h"
-#include "ios/web/navigation/placeholder_navigation_util.h"
 #import "ios/web/public/navigation_item.h"
-#import "ios/web/public/web_client.h"
 #include "net/base/url_util.h"
 #include "url/url_constants.h"
 
@@ -43,13 +41,8 @@ GURL CreateRestoreSessionUrl(
   restored_urls.GetList().reserve(items.size());
   restored_titles.GetList().reserve(items.size());
   for (size_t index = 0; index < items.size(); index++) {
-    GURL original_url = items[index]->GetURL();
-    GURL restored_url = original_url;
-    if (web::GetWebClient()->IsAppSpecificURL(original_url)) {
-      restored_url =
-          placeholder_navigation_util::CreatePlaceholderUrlForUrl(original_url);
-    }
-    restored_urls.GetList().push_back(base::Value(restored_url.spec()));
+    restored_urls.GetList().push_back(
+        base::Value(items[index]->GetURL().spec()));
     restored_titles.GetList().push_back(base::Value(items[index]->GetTitle()));
   }
   base::Value session(base::Value::Type::DICTIONARY);

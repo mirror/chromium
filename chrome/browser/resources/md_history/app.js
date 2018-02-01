@@ -168,13 +168,6 @@ Polymer({
                         .getSelectedItemCount();
   },
 
-  selectOrUnselectAll: function() {
-    const list = /** @type {HistoryListElement} */ (this.$.history);
-    const toolbar = /** @type {HistoryToolbarElement} */ (this.$.toolbar);
-    list.selectOrUnselectAll();
-    toolbar.count = list.getSelectedItemCount();
-  },
-
   /**
    * Listens for call to cancel selection and loops through all items to set
    * checkbox to be unselected.
@@ -225,9 +218,6 @@ Polymer({
       case 'delete-command':
         e.canExecute = this.$.toolbar.count > 0;
         break;
-      case 'select-all-command':
-        e.canExecute = !this.$.toolbar.searchField.isSearchFocused();
-        break;
     }
   },
 
@@ -240,8 +230,6 @@ Polymer({
       this.focusToolbarSearchField();
     else if (e.command.id == 'delete-command')
       this.deleteSelected();
-    else if (e.command.id == 'select-all-command')
-      this.selectOrUnselectAll();
   },
 
   /**

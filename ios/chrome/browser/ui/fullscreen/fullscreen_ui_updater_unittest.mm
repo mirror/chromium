@@ -5,7 +5,6 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
 
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_animator.h"
-#import "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_to_top_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
@@ -45,11 +44,6 @@
 
 - (void)scrollFullscreenToTopWithAnimator:
     (FullscreenScrollToTopAnimator*)animator {
-  _animator = animator;
-}
-
-- (void)showToolbarForForgroundWithAnimator:
-    (FullscreenForegroundAnimator*)animator {
   _animator = animator;
 }
 

@@ -88,18 +88,23 @@ char* WrapDlerror() {
 }
 
 void* WrapDlopen(const char* path, int mode) {
-  ScopedLockedGlobals globals;
+  ScopedGlobalLock lock;
 
   // NOTE: If |path| is NULL, the wrapper should return a handle
   // corresponding to the current executable. This can't be a crazy
   // library, so don't try to handle it with the crazy linker.
   if (path) {
+    LibraryList* lib_list = Globals::GetLibraries();
     Error error;
-    LibraryView* wrap = globals->libraries()->LoadLibrary(
-        path, mode, 0U /* load_address */, 0U /* file_offset */,
-        globals->search_path_list(), false, &error);
+    LibraryView* wrap = lib_list->LoadLibrary(path,
+                                              mode,
+                                              0U /* load_address */,
+                                              0U /* file_offset */,
+                                              Globals::GetSearchPaths(),
+                                              false,
+                                              &error);
     if (wrap) {
-      globals->valid_handles()->Add(wrap);
+      Globals::GetValidHandles()->Add(wrap);
       return wrap;
     }
   }
@@ -114,8 +119,8 @@ void* WrapDlopen(const char* path, int mode) {
 
   LibraryView* wrap_lib = new LibraryView();
   wrap_lib->SetSystem(system_lib, path ? path : "<executable>");
-  globals->libraries()->AddLibrary(wrap_lib);
-  globals->valid_handles()->Add(wrap_lib);
+  Globals::GetLibraries()->AddLibrary(wrap_lib);
+  Globals::GetValidHandles()->Add(wrap_lib);
   return wrap_lib;
 }
 
@@ -144,8 +149,8 @@ void* WrapDlsym(void* lib_handle, const char* symbol_name) {
   // when |lib_handle| corresponds to a crazy library, except that
   // it stops at system libraries that it depends on.
 
-  ScopedLockedGlobals globals;
-  if (!globals->valid_handles()->Has(lib_handle)) {
+  ScopedGlobalLock lock;
+  if (!Globals::GetValidHandles()->Has(lib_handle)) {
     // Note: the handle was not opened with the crazy linker, so fall back
     // to the system linker. That can happen in rare cases.
     void* result = ::dlsym(lib_handle, symbol_name);
@@ -173,7 +178,8 @@ void* WrapDlsym(void* lib_handle, const char* symbol_name) {
   }
 
   if (wrap_lib->IsCrazy()) {
-    void* addr = globals->libraries()->FindSymbolFrom(symbol_name, wrap_lib);
+    LibraryList* lib_list = Globals::GetLibraries();
+    void* addr = lib_list->FindSymbolFrom(symbol_name, wrap_lib);
     if (addr)
       return addr;
 
@@ -192,8 +198,9 @@ void* WrapDlsym(void* lib_handle, const char* symbol_name) {
 int WrapDladdr(void* address, Dl_info* info) {
   // First, perform search in crazy libraries.
   {
-    ScopedLockedGlobals globals;
-    LibraryView* wrap = globals->libraries()->FindLibraryForAddress(address);
+    ScopedGlobalLock lock;
+    LibraryList* lib_list = Globals::GetLibraries();
+    LibraryView* wrap = lib_list->FindLibraryForAddress(address);
     if (wrap && wrap->IsCrazy()) {
       size_t sym_size = 0;
 
@@ -222,8 +229,8 @@ int WrapDlclose(void* lib_handle) {
     return -1;
   }
 
-  ScopedLockedGlobals globals;
-  if (!globals->valid_handles()->Remove(lib_handle)) {
+  ScopedGlobalLock lock;
+  if (!Globals::GetValidHandles()->Remove(lib_handle)) {
     // This is a foreign handle that was not created by the crazy linker.
     // Fall-back to the system in this case.
     if (::dlclose(lib_handle) != 0) {
@@ -237,7 +244,8 @@ int WrapDlclose(void* lib_handle) {
 
   LibraryView* wrap_lib = reinterpret_cast<LibraryView*>(lib_handle);
   if (wrap_lib->IsSystem() || wrap_lib->IsCrazy()) {
-    globals->libraries()->UnloadLibrary(wrap_lib);
+    LibraryList* lib_list = Globals::GetLibraries();
+    lib_list->UnloadLibrary(wrap_lib);
     return 0;
   }
 
@@ -250,9 +258,10 @@ int WrapDlclose(void* lib_handle) {
 _Unwind_Ptr WrapDl_unwind_find_exidx(_Unwind_Ptr pc, int* pcount) {
   // First lookup in crazy libraries.
   {
-    ScopedLockedGlobals globals;
+    ScopedGlobalLock lock;
+    LibraryList* list = Globals::GetLibraries();
     _Unwind_Ptr result =
-        globals->libraries()->FindArmExIdx(reinterpret_cast<void*>(pc), pcount);
+        list->FindArmExIdx(reinterpret_cast<void*>(pc), pcount);
     if (result)
       return result;
   }
@@ -263,8 +272,9 @@ _Unwind_Ptr WrapDl_unwind_find_exidx(_Unwind_Ptr pc, int* pcount) {
 int WrapDl_iterate_phdr(int (*cb)(dl_phdr_info*, size_t, void*), void* data) {
   // First, iterate over crazy libraries.
   {
-    ScopedLockedGlobals globals;
-    int result = globals->libraries()->IteratePhdr(cb, data);
+    ScopedGlobalLock lock;
+    LibraryList* list = Globals::GetLibraries();
+    int result = list->IteratePhdr(cb, data);
     if (result)
       return result;
   }
@@ -288,9 +298,9 @@ void* GetDlCloseWrapperAddressForTesting() {
 // free()-ed by the caller. This returns nullptr is the array is empty.
 // On exit, sets |*p_count| to the number of items in the array.
 void** GetValidDlopenHandlesForTesting(size_t* p_count) {
-  ScopedLockedGlobals globals;
+  ScopedGlobalLock lock;
   const Vector<void*>& handles =
-      globals->valid_handles()->GetValuesForTesting();
+      Globals::GetValidHandles()->GetValuesForTesting();
   *p_count = handles.GetCount();
   if (handles.IsEmpty())
     return nullptr;

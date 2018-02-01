@@ -71,6 +71,18 @@ void ChromeBrowserPolicyConnector::OnResourceBundleCreated() {
   BrowserPolicyConnectorBase::OnResourceBundleCreated();
 }
 
+void ChromeBrowserPolicyConnector::InitPolicyProviders() {
+  std::vector<std::unique_ptr<ConfigurationPolicyProvider>> providers;
+  std::unique_ptr<ConfigurationPolicyProvider> platform_provider =
+      CreatePlatformProvider();
+  if (platform_provider) {
+    platform_provider_ = platform_provider.get();
+    providers.push_back(std::move(platform_provider));
+  }
+  BuildPolicyProviders(&providers);
+  SetPolicyProviders(std::move(providers));
+}
+
 void ChromeBrowserPolicyConnector::Init(
     PrefService* local_state,
     scoped_refptr<net::URLRequestContextGetter> request_context) {
@@ -90,19 +102,6 @@ ChromeBrowserPolicyConnector::GetPlatformProvider() {
   ConfigurationPolicyProvider* provider =
       BrowserPolicyConnectorBase::GetPolicyProviderForTesting();
   return provider ? provider : platform_provider_;
-}
-
-std::vector<std::unique_ptr<policy::ConfigurationPolicyProvider>>
-ChromeBrowserPolicyConnector::CreatePolicyProviders() {
-  auto providers = BrowserPolicyConnector::CreatePolicyProviders();
-  std::unique_ptr<ConfigurationPolicyProvider> platform_provider =
-      CreatePlatformProvider();
-  if (platform_provider) {
-    platform_provider_ = platform_provider.get();
-    // PlatformProvider should be before all other providers (highest priority).
-    providers.insert(providers.begin(), std::move(platform_provider));
-  }
-  return providers;
 }
 
 std::unique_ptr<ConfigurationPolicyProvider>
@@ -140,5 +139,8 @@ ChromeBrowserPolicyConnector::CreatePlatformProvider() {
   return nullptr;
 #endif
 }
+
+void ChromeBrowserPolicyConnector::BuildPolicyProviders(
+    std::vector<std::unique_ptr<ConfigurationPolicyProvider>>* providers) {}
 
 }  // namespace policy

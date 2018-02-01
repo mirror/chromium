@@ -22,8 +22,6 @@ void SetupCommonSandboxParameters(sandbox::SeatbeltExecClient* client);
 
 void SetupCDMSandboxParameters(sandbox::SeatbeltExecClient* client);
 
-void SetupPPAPISandboxParameters(sandbox::SeatbeltExecClient* client);
-
 void SetupUtilitySandboxParameters(sandbox::SeatbeltExecClient* client,
                                    const base::CommandLine& command_line);
 

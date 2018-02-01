@@ -1,5 +1,4 @@
 include_rules = [
-  "+services/network/network_service.h",
   "+services/network/public/cpp",
 ]
 

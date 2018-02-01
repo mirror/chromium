@@ -121,7 +121,6 @@ void RankerModelLoaderImpl::NotifyOfRankerActivity() {
       // There was no configured model path. Switch the state to IDLE and
       // fall through to consider the URL.
       state_ = LoaderState::IDLE;
-      FALLTHROUGH;
     case LoaderState::IDLE:
       if (model_url_.is_valid()) {
         StartLoadFromURL();
@@ -130,7 +129,6 @@ void RankerModelLoaderImpl::NotifyOfRankerActivity() {
       // There was no configured model URL. Switch the state to FINISHED and
       // fall through.
       state_ = LoaderState::FINISHED;
-      FALLTHROUGH;
     case LoaderState::FINISHED:
     case LoaderState::LOADING_FROM_FILE:
     case LoaderState::LOADING_FROM_URL:

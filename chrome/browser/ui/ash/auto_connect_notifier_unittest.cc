@@ -117,6 +117,7 @@ class AutoConnectNotifierTest : public chromeos::NetworkStateTest {
   }
 
   void TearDown() override {
+    display_service_.reset();
     auto_connect_notifier_.reset();
 
     ShutdownNetworkState();

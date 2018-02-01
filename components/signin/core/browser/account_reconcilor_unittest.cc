@@ -25,6 +25,7 @@
 #include "components/signin/core/browser/mirror_account_reconcilor_delegate.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_features.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
@@ -159,7 +160,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
       case signin::AccountConsistencyMethod::kDice:
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
         return std::make_unique<signin::DiceAccountReconcilorDelegate>(
-            signin_client, account_consistency);
+            signin_client);
 #else
         NOTREACHED();
         return nullptr;
@@ -274,6 +275,7 @@ class AccountReconcilorTest : public ::testing::Test {
  private:
   base::MessageLoop loop;
   signin::AccountConsistencyMethod account_consistency_;
+  std::unique_ptr<signin::ScopedAccountConsistency> scoped_account_consistency_;
   sync_preferences::TestingPrefServiceSyncable pref_service_;
   FakeProfileOAuth2TokenService token_service_;
   DiceTestSigninClient test_signin_client_;
@@ -386,6 +388,8 @@ void AccountReconcilorTest::SimulateCookieContentSettingsChanged(
 void AccountReconcilorTest::SetAccountConsistency(
     signin::AccountConsistencyMethod method) {
   account_consistency_ = method;
+  scoped_account_consistency_ =
+      std::make_unique<signin::ScopedAccountConsistency>(method);
 }
 
 TEST_F(AccountReconcilorTest, Basic) {
@@ -1023,6 +1027,7 @@ TEST_F(AccountReconcilorTest, DiceMigrationAfterNoop) {
                                                               "12345");
   AccountReconcilor* reconcilor = GetMockReconcilor();
   // Dice is not enabled by default.
+  ASSERT_FALSE(signin::IsDiceEnabledForProfile(pref_service()));
   EXPECT_FALSE(reconcilor->delegate_->IsAccountConsistencyEnforced());
 
   // No-op reconcile.
@@ -1050,6 +1055,7 @@ TEST_F(AccountReconcilorTest, DiceNoMigrationAfterReconcile) {
   AccountReconcilor* reconcilor = GetMockReconcilor();
 
   // Dice is not enabled by default.
+  ASSERT_FALSE(signin::IsDiceEnabledForProfile(pref_service()));
   EXPECT_FALSE(reconcilor->delegate_->IsAccountConsistencyEnforced());
 
   // Busy reconcile.

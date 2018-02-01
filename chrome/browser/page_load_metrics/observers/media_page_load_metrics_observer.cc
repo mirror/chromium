@@ -9,11 +9,11 @@
 
 namespace {
 
-const char kHistogramMediaPageLoadNetworkBytes[] =
+const char kHistogramNetworkBytes[] =
     "PageLoad.Clients.MediaPageLoad.Experimental.Bytes.Network";
-const char kHistogramMediaPageLoadCacheBytes[] =
+const char kHistogramCacheBytes[] =
     "PageLoad.Clients.MediaPageLoad.Experimental.Bytes.Cache";
-const char kHistogramMediaPageLoadTotalBytes[] =
+const char kHistogramTotalBytes[] =
     "PageLoad.Clients.MediaPageLoad.Experimental.Bytes.Total";
 
 }  // namespace
@@ -66,8 +66,7 @@ void MediaPageLoadMetricsObserver::MediaStartedPlaying(
 
 void MediaPageLoadMetricsObserver::RecordByteHistograms() {
   DCHECK(played_media_);
-  PAGE_BYTES_HISTOGRAM(kHistogramMediaPageLoadNetworkBytes, network_bytes_);
-  PAGE_BYTES_HISTOGRAM(kHistogramMediaPageLoadCacheBytes, cache_bytes_);
-  PAGE_BYTES_HISTOGRAM(kHistogramMediaPageLoadTotalBytes,
-                       network_bytes_ + cache_bytes_);
+  PAGE_BYTES_HISTOGRAM(kHistogramNetworkBytes, network_bytes_);
+  PAGE_BYTES_HISTOGRAM(kHistogramCacheBytes, cache_bytes_);
+  PAGE_BYTES_HISTOGRAM(kHistogramTotalBytes, network_bytes_ + cache_bytes_);
 }

@@ -20,8 +20,6 @@
 #include "ui/views/background.h"
 #include "ui/views/layout/box_layout.h"
 
-namespace message_center {
-
 namespace {
 
 // This value should be the same as the duration of reveal animation of
@@ -30,9 +28,12 @@ constexpr auto kBackgroundColorChangeDuration =
     base::TimeDelta::FromMilliseconds(360);
 
 // The initial background color of the view.
-constexpr SkColor kInitialBackgroundColor = kControlButtonBackgroundColor;
+constexpr SkColor kInitialBackgroundColor =
+    message_center::kControlButtonBackgroundColor;
 
 }  // anonymous namespace
+
+namespace message_center {
 
 const char NotificationControlButtonsView::kViewClassName[] =
     "NotificationControlButtonsView";
@@ -57,7 +58,7 @@ NotificationControlButtonsView::~NotificationControlButtonsView() = default;
 
 void NotificationControlButtonsView::ShowCloseButton(bool show) {
   if (show && !close_button_) {
-    close_button_ = std::make_unique<PaddedButton>(this);
+    close_button_ = std::make_unique<message_center::PaddedButton>(this);
     close_button_->set_owned_by_client();
     close_button_->SetImage(views::Button::STATE_NORMAL,
                             gfx::CreateVectorIcon(kNotificationCloseButtonIcon,
@@ -80,7 +81,7 @@ void NotificationControlButtonsView::ShowCloseButton(bool show) {
 
 void NotificationControlButtonsView::ShowSettingsButton(bool show) {
   if (show && !settings_button_) {
-    settings_button_ = std::make_unique<PaddedButton>(this);
+    settings_button_ = std::make_unique<message_center::PaddedButton>(this);
     settings_button_->set_owned_by_client();
     settings_button_->SetImage(
         views::Button::STATE_NORMAL,

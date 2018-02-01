@@ -29,7 +29,7 @@ void* LibraryView::LookupSymbol(const char* symbol_name) {
     return ::dlsym(system_, symbol_name);
 
   if (type_ == TYPE_CRAZY) {
-    LibraryList* lib_list = Globals::Get()->libraries();
+    LibraryList* lib_list = Globals::GetLibraries();
     return lib_list->FindSymbolFrom(symbol_name, this);
   }
 

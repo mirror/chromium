@@ -12,8 +12,6 @@
 
 namespace blink {
 
-class ExceptionState;
-
 // CSSStyleVariableReferenceValue represents a CSS var() value for CSS Typed OM.
 // The corresponding idl file is CSSVariableReferenceValue.idl.
 class CORE_EXPORT CSSStyleVariableReferenceValue final
@@ -21,19 +19,16 @@ class CORE_EXPORT CSSStyleVariableReferenceValue final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static CSSStyleVariableReferenceValue* Create(const String& variable,
-                                                ExceptionState&);
-
-  static CSSStyleVariableReferenceValue* Create(const String& variable,
-                                                CSSUnparsedValue* fallback,
-                                                ExceptionState&);
+  virtual ~CSSStyleVariableReferenceValue() = default;
 
   static CSSStyleVariableReferenceValue* Create(
       const String& variable,
-      CSSUnparsedValue* fallback = nullptr);
+      CSSUnparsedValue* fallback = nullptr) {
+    return new CSSStyleVariableReferenceValue(variable, fallback);
+  }
 
   const String& variable() const { return variable_; }
-  void setVariable(const String&, ExceptionState&);
+  void setVariable(const String& value) { variable_ = value; }
 
   CSSUnparsedValue* fallback() { return fallback_.Get(); }
   const CSSUnparsedValue* fallback() const { return fallback_.Get(); }

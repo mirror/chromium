@@ -139,11 +139,10 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   static RenderViewImpl* FromRoutingID(int routing_id);
 
   // May return NULL when the view is closing.
-  blink::WebView* webview();
-  const blink::WebView* webview() const;
+  blink::WebView* webview() const;
 
   // Returns the RenderWidget for this RenderView.
-  RenderWidget* GetWidget();
+  RenderWidget* GetWidget() const;
 
   const WebPreferences& webkit_preferences() const {
     return webkit_preferences_;
@@ -544,6 +543,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnSelectWordAroundCaret();
   void OnAudioStateChanged(bool is_audio_playing);
 #if defined(OS_ANDROID)
+  void OnUndoScrollFocusedEditableNodeIntoRect();
   void OnUpdateBrowserControlsState(bool enable_hiding,
                                     bool enable_showing,
                                     bool animate);

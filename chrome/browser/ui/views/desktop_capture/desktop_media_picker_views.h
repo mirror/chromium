@@ -25,9 +25,13 @@ class DesktopMediaPickerDialogView : public views::DialogDelegateView,
                                      public views::TabbedPaneListener {
  public:
   DesktopMediaPickerDialogView(
-      const DesktopMediaPicker::Params& params,
+      content::WebContents* parent_web_contents,
+      gfx::NativeWindow context,
       DesktopMediaPickerViews* parent,
-      std::vector<std::unique_ptr<DesktopMediaList>> source_lists);
+      const base::string16& app_name,
+      const base::string16& target_name,
+      std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+      bool request_audio);
   ~DesktopMediaPickerDialogView() override;
 
   // Called by parent (DesktopMediaPickerViews) when it's destroyed.
@@ -67,7 +71,6 @@ class DesktopMediaPickerDialogView : public views::DialogDelegateView,
   void OnSourceTypeSwitched(int index);
 
   DesktopMediaPickerViews* parent_;
-  ui::ModalType modality_;
 
   views::Label* description_label_;
 
@@ -89,8 +92,13 @@ class DesktopMediaPickerViews : public DesktopMediaPicker {
   void NotifyDialogResult(content::DesktopMediaID source);
 
   // DesktopMediaPicker overrides.
-  void Show(const DesktopMediaPicker::Params& params,
+  void Show(content::WebContents* web_contents,
+            gfx::NativeWindow context,
+            gfx::NativeWindow parent,
+            const base::string16& app_name,
+            const base::string16& target_name,
             std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+            bool request_audio,
             const DoneCallback& done_callback) override;
 
   DesktopMediaPickerDialogView* GetDialogViewForTesting() const {

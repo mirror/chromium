@@ -340,7 +340,7 @@ ChromeNativeAppWindowViewsAuraAsh::CreateNonClientFrameView(
 
   // Enter immersive mode if the app is opened in tablet mode with the hide
   // titlebars feature enabled.
-  if (ShouldUseImmersiveMode()) {
+  if (CanAutohideTitlebarsInTabletMode()) {
     immersive_fullscreen_controller_->SetEnabled(
         ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, true);
   }
@@ -361,7 +361,7 @@ void ChromeNativeAppWindowViewsAuraAsh::SetFullscreen(int fullscreen_types) {
   if (immersive_fullscreen_controller_.get()) {
     // Immersive mode should not change if we set fullscreen on a maximizable
     // app in tablet mode when the hide titlebars feature is enabled.
-    bool autohide_titlebars_enabled = ShouldUseImmersiveMode();
+    bool autohide_titlebars_enabled = CanAutohideTitlebarsInTabletMode();
 
     if (!autohide_titlebars_enabled) {
       // |immersive_fullscreen_controller_| should only be set if immersive
@@ -438,14 +438,15 @@ void ChromeNativeAppWindowViewsAuraAsh::OnTabletModeToggled(bool enabled) {
     return;
 
   if (enabled) {
-    if (ShouldUseImmersiveMode()) {
+    // Enter immersive mode if the widget can maximize and the hide titlebars
+    // in tablet mode feature is enabled.
+    if (CanAutohideTitlebarsInTabletMode()) {
       immersive_fullscreen_controller_->SetEnabled(
           ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, true);
     }
   } else {
-    // Apps which are resizeable have immersive mode enabled upon entry or
-    // creation in tablet mode. Disable immersive mode upon exiting tablet mode.
-    if (!widget()->IsFullscreen()) {
+    // Exit immersive mode if the widget is not in fullscreen and can maximize.
+    if (!widget()->IsFullscreen() && CanMaximize()) {
       immersive_fullscreen_controller_->SetEnabled(
           ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, false);
     }
@@ -571,38 +572,14 @@ bool ChromeNativeAppWindowViewsAuraAsh::CanTriggerOnMouse() const {
   return true;
 }
 
-void ChromeNativeAppWindowViewsAuraAsh::OnWidgetActivationChanged(
-    views::Widget* widget,
-    bool active) {
-  ChromeNativeAppWindowViewsAura::OnWidgetActivationChanged(widget, active);
-  // In splitview, minimized windows go back into the overview grid. If we
-  // minimize by using the minimize button on the immersive header, the
-  // overview window will calculate the title bar offset and the window will be
-  // missing its top portion. Prevent this by disabling immersive mode upon
-  // minimize.
-  // TODO(crbug.com/801619): This adds a little extra animation when minimizing
-  // or unminimizing window.
-  if (immersive_fullscreen_controller_) {
-    immersive_fullscreen_controller_->SetEnabled(
-        ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP,
-        ShouldUseImmersiveMode());
-  }
-}
-
 void ChromeNativeAppWindowViewsAuraAsh::OnMenuClosed() {
   menu_runner_.reset();
   menu_model_.reset();
 }
 
-bool ChromeNativeAppWindowViewsAuraAsh::ShouldUseImmersiveMode() const {
+bool ChromeNativeAppWindowViewsAuraAsh::CanAutohideTitlebarsInTabletMode()
+    const {
   TabletModeClient* client = TabletModeClient::Get();
-  // Windows in tablet mode which are resizable have their title bars hidden in
-  // ash for more size, so enable immersive mode so users have access to
-  // window controls. Non resizable windows do not gain size by hidding the
-  // title bar, so it is not hidden and thus there is no need for immersive
-  // mode.
-  // TODO(sammiequon): Investigate whether we should check resizability using
-  // WindowState instead of CanResize.
-  return client && client->tablet_mode_enabled() &&
-         client->auto_hide_title_bars() && CanResize() && !IsMinimized();
+  return CanMaximize() && client && client->tablet_mode_enabled() &&
+         client->auto_hide_title_bars();
 }

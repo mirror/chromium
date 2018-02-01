@@ -265,7 +265,6 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   // via WebPreference by embedders. (crbug.com/254993)
   Document* document = shadow_page_->GetDocument();
   const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
-  bool starter_secure_context = document->IsSecureContext();
 
   WorkerClients* worker_clients = WorkerClients::Create();
   CoreInitializer::GetInstance().ProvideLocalFileSystemToWorker(
@@ -304,8 +303,8 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
           url_, document->UserAgent(),
           content_security_policy ? content_security_policy->Headers().get()
                                   : nullptr,
-          referrer_policy, starter_origin, starter_secure_context,
-          worker_clients, main_script_loader_->ResponseAddressSpace(),
+          referrer_policy, starter_origin, worker_clients,
+          main_script_loader_->ResponseAddressSpace(),
           main_script_loader_->OriginTrialTokens(), std::move(worker_settings),
           kV8CacheOptionsDefault, std::move(pending_interface_provider_));
   String source_code = main_script_loader_->SourceText();

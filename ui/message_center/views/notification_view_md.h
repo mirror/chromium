@@ -36,7 +36,7 @@ class ProportionalImageView;
 // message next to each other within a single column.
 class ItemView : public views::View {
  public:
-  explicit ItemView(const NotificationItem& item);
+  explicit ItemView(const message_center::NotificationItem& item);
   ~ItemView() override;
 
   const char* GetClassName() const override;
@@ -139,15 +139,26 @@ class NotificationButtonMD : public views::LabelButton {
 
 class NotificationInputDelegate {
  public:
+  virtual void SetNormalImageToReplyButton() = 0;
+  virtual void SetPlaceholderImageToReplyButton() = 0;
   virtual void OnNotificationInputSubmit(size_t index,
                                          const base::string16& text) = 0;
   virtual ~NotificationInputDelegate() = default;
 };
 
-class NotificationInputTextfieldMD : public views::Textfield {
+class NotificationInputTextfieldMD : public views::Textfield,
+                                     public views::TextfieldController {
  public:
-  NotificationInputTextfieldMD(views::TextfieldController* controller);
+  NotificationInputTextfieldMD(NotificationInputDelegate* delegate);
   ~NotificationInputTextfieldMD() override;
+
+  void CheckUpdateImage();
+  bool HandleKeyEvent(views::Textfield* sender,
+                      const ui::KeyEvent& key_event) override;
+  bool HandleMouseEvent(views::Textfield* sender,
+                        const ui::MouseEvent& mouse_event) override;
+  bool HandleGestureEvent(views::Textfield* sender,
+                          const ui::GestureEvent& gesture_event) override;
 
   void set_index(size_t index) { index_ = index; }
   void set_placeholder(const base::string16& placeholder);
@@ -155,6 +166,10 @@ class NotificationInputTextfieldMD : public views::Textfield {
   size_t index() const { return index_; };
 
  private:
+  NotificationInputDelegate* const delegate_;
+
+  bool is_empty_ = true;
+
   // |index_| is the notification action index that should be passed as the
   // argument of ClickOnNotificationButtonWithReply.
   size_t index_ = 0;
@@ -174,27 +189,12 @@ class NotificationInputReplyButtonMD : public views::ImageButton {
   DISALLOW_COPY_AND_ASSIGN(NotificationInputReplyButtonMD);
 };
 
-class NotificationInputContainerMD : public views::InkDropHostView,
-                                     public views::ButtonListener,
-                                     public views::TextfieldController {
+class NotificationInputContainerMD : public views::View,
+                                     public views::ButtonListener {
  public:
   NotificationInputContainerMD(NotificationInputDelegate* delegate);
   ~NotificationInputContainerMD() override;
 
-  void AnimateBackground(const ui::LocatedEvent& event);
-
-  // Overridden from views::InkDropHostView:
-  void AddInkDropLayer(ui::Layer* ink_drop_layer) override;
-  void RemoveInkDropLayer(ui::Layer* ink_drop_layer) override;
-  std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
-  SkColor GetInkDropBaseColor() const override;
-
-  // Overridden from views::TextfieldController:
-  bool HandleKeyEvent(views::Textfield* sender,
-                      const ui::KeyEvent& key_event) override;
-  void OnAfterUserAction(views::Textfield* sender) override;
-
-  // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
   NotificationInputTextfieldMD* textfield() const { return textfield_; };
@@ -202,8 +202,6 @@ class NotificationInputContainerMD : public views::InkDropHostView,
 
  private:
   NotificationInputDelegate* const delegate_;
-
-  views::InkDropContainerView* const ink_drop_container_;
 
   NotificationInputTextfieldMD* const textfield_;
   NotificationInputReplyButtonMD* const button_;
@@ -247,6 +245,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   void OnSettingsButtonPressed() override;
 
   // Overridden from NotificationInputDelegate:
+  void SetNormalImageToReplyButton() override;
+  void SetPlaceholderImageToReplyButton() override;
   void OnNotificationInputSubmit(size_t index,
                                  const base::string16& text) override;
 
@@ -263,7 +263,6 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, ExpandLongMessage);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestAccentColor);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UseImageAsIcon);
-  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, NotificationWithoutIcon);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, InlineSettings);
 
   friend class NotificationViewMDTest;

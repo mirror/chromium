@@ -249,6 +249,48 @@ TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantFeatureDisabled) {
   EXPECT_EQ(net::SSL_PROTOCOL_VERSION_TLS1_2, ssl_config.version_max);
 }
 
+// Tests that Experiment2 TLS 1.3 can be enabled via field trials.
+TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantFeatureExperiment2) {
+  // Toggle the field trial.
+  variations::testing::VariationParamsManager variation_params(
+      "TLS13Variant", {{"variant", "experiment2"}});
+
+  TestingPrefServiceSimple local_state;
+  SSLConfigServiceManager::RegisterPrefs(local_state.registry());
+
+  std::unique_ptr<SSLConfigServiceManager> config_manager(
+      SSLConfigServiceManager::CreateDefaultManager(
+          &local_state, base::ThreadTaskRunnerHandle::Get()));
+  scoped_refptr<SSLConfigService> config_service(config_manager->Get());
+  ASSERT_TRUE(config_service.get());
+
+  SSLConfig ssl_config;
+  config_service->GetSSLConfig(&ssl_config);
+  EXPECT_EQ(net::SSL_PROTOCOL_VERSION_TLS1_3, ssl_config.version_max);
+  EXPECT_EQ(net::kTLS13VariantExperiment2, ssl_config.tls13_variant);
+}
+
+// Tests that Draft22 TLS 1.3 can be enabled via field trials.
+TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantFeatureDraft22) {
+  // Toggle the field trial.
+  variations::testing::VariationParamsManager variation_params(
+      "TLS13Variant", {{"variant", "draft22"}});
+
+  TestingPrefServiceSimple local_state;
+  SSLConfigServiceManager::RegisterPrefs(local_state.registry());
+
+  std::unique_ptr<SSLConfigServiceManager> config_manager(
+      SSLConfigServiceManager::CreateDefaultManager(
+          &local_state, base::ThreadTaskRunnerHandle::Get()));
+  scoped_refptr<SSLConfigService> config_service(config_manager->Get());
+  ASSERT_TRUE(config_service.get());
+
+  SSLConfig ssl_config;
+  config_service->GetSSLConfig(&ssl_config);
+  EXPECT_EQ(net::SSL_PROTOCOL_VERSION_TLS1_3, ssl_config.version_max);
+  EXPECT_EQ(net::kTLS13VariantDraft22, ssl_config.tls13_variant);
+}
+
 // Tests that Draft23 TLS 1.3 can be enabled via field trials.
 TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantFeatureDraft23) {
   // Toggle the field trial.
@@ -277,7 +319,7 @@ TEST_F(SSLConfigServiceManagerPrefTest, TLS13SSLVersionMax) {
 
   // Toggle the field trial.
   variations::testing::VariationParamsManager variation_params(
-      "TLS13Variant", {{"variant", "draft23"}});
+      "TLS13Variant", {{"variant", "experiment"}});
 
   TestingPrefServiceSimple local_state;
   local_state.SetUserPref(ssl_config::prefs::kSSLVersionMax,
@@ -303,7 +345,7 @@ TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantOverrideDisable) {
 
   // Toggle the field trial.
   variations::testing::VariationParamsManager variation_params(
-      "TLS13Variant", {{"variant", "draft23"}});
+      "TLS13Variant", {{"variant", "experiment"}});
 
   TestingPrefServiceSimple local_state;
   local_state.SetUserPref(ssl_config::prefs::kTLS13Variant,
@@ -334,7 +376,7 @@ TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantOverrideEnable) {
   local_state.SetUserPref(ssl_config::prefs::kSSLVersionMax,
                           std::make_unique<base::Value>("tls1.3"));
   local_state.SetUserPref(ssl_config::prefs::kTLS13Variant,
-                          std::make_unique<base::Value>("draft23"));
+                          std::make_unique<base::Value>("experiment2"));
   SSLConfigServiceManager::RegisterPrefs(local_state.registry());
 
   std::unique_ptr<SSLConfigServiceManager> config_manager(
@@ -347,7 +389,7 @@ TEST_F(SSLConfigServiceManagerPrefTest, TLS13VariantOverrideEnable) {
   SSLConfig ssl_config;
   config_service->GetSSLConfig(&ssl_config);
   EXPECT_EQ(net::SSL_PROTOCOL_VERSION_TLS1_3, ssl_config.version_max);
-  EXPECT_EQ(net::kTLS13VariantDraft23, ssl_config.tls13_variant);
+  EXPECT_EQ(net::kTLS13VariantExperiment2, ssl_config.tls13_variant);
 }
 
 // Tests that SHA-1 signatures for local trust anchors can be enabled.
@@ -398,56 +440,4 @@ TEST_F(SSLConfigServiceManagerPrefTest, SHA1ForLocalAnchors) {
   SSLConfig config4;
   config_service->GetSSLConfig(&config4);
   EXPECT_FALSE(config4.sha1_local_anchors_enabled);
-}
-
-// Tests that Symantec's legacy infrastructure can be enabled.
-TEST_F(SSLConfigServiceManagerPrefTest, SymantecLegacyInfrastructure) {
-  scoped_refptr<TestingPrefStore> local_state_store(new TestingPrefStore());
-
-  TestingPrefServiceSimple local_state;
-  SSLConfigServiceManager::RegisterPrefs(local_state.registry());
-
-  std::unique_ptr<SSLConfigServiceManager> config_manager(
-      SSLConfigServiceManager::CreateDefaultManager(
-          &local_state, base::ThreadTaskRunnerHandle::Get()));
-  ASSERT_TRUE(config_manager);
-  scoped_refptr<SSLConfigService> config_service(config_manager->Get());
-  ASSERT_TRUE(config_service);
-
-  // By default, Symantec's legacy infrastructure should be disabled when
-  // not using any pref service.
-  SSLConfig config1;
-  EXPECT_FALSE(config1.symantec_enforcement_disabled);
-
-  // Using a pref service without any preference set should result in
-  // Symantec's legacy infrastructure being disabled.
-  SSLConfig config2;
-  config_service->GetSSLConfig(&config2);
-  EXPECT_FALSE(config2.symantec_enforcement_disabled);
-
-  // Enabling the local preference should result in Symantec's legacy
-  // infrastructure being enabled.
-  local_state.SetUserPref(
-      ssl_config::prefs::kCertEnableSymantecLegacyInfrastructure,
-      std::make_unique<base::Value>(true));
-  // Pump the message loop to notify the SSLConfigServiceManagerPref that the
-  // preferences changed.
-  base::RunLoop().RunUntilIdle();
-
-  SSLConfig config3;
-  config_service->GetSSLConfig(&config3);
-  EXPECT_TRUE(config3.symantec_enforcement_disabled);
-
-  // Disabling the local preference should result in Symantec's legacy
-  // infrastructure being disabled.
-  local_state.SetUserPref(
-      ssl_config::prefs::kCertEnableSymantecLegacyInfrastructure,
-      std::make_unique<base::Value>(false));
-  // Pump the message loop to notify the SSLConfigServiceManagerPref that the
-  // preferences changed.
-  base::RunLoop().RunUntilIdle();
-
-  SSLConfig config4;
-  config_service->GetSSLConfig(&config4);
-  EXPECT_FALSE(config4.symantec_enforcement_disabled);
 }

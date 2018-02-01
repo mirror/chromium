@@ -27,7 +27,6 @@
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/geometry/vector3d_f.h"
-#include "ui/views/widget/widget.h"
 
 namespace ash {
 
@@ -215,14 +214,8 @@ void TabletModeController::RemoveObserver(TabletModeObserver* observer) {
   tablet_mode_observers_.RemoveObserver(observer);
 }
 
-bool TabletModeController::ShouldAutoHideTitlebars(views::Widget* widget) {
-  const bool allowed =
-      auto_hide_title_bars_ && IsTabletModeWindowManagerEnabled();
-  if (!allowed || !widget)
-    return allowed;
-
-  return widget->IsMaximized() ||
-         wm::GetWindowState(widget->GetNativeWindow())->IsSnapped();
+bool TabletModeController::ShouldAutoHideTitlebars() const {
+  return auto_hide_title_bars_ && IsTabletModeWindowManagerEnabled();
 }
 
 void TabletModeController::OnAccelerometerUpdated(

@@ -34,6 +34,7 @@
 #include "content/public/common/resource_type.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_url_loader_client.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/c/system/types.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -56,7 +57,6 @@
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
-#include "services/network/test/test_url_loader_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/page_transition_types.h"
 
@@ -83,9 +83,9 @@ class DummyUploadDataStream : public net::UploadDataStream {
   DISALLOW_COPY_AND_ASSIGN(DummyUploadDataStream);
 };
 
-class FakeUploadProgressTracker : public network::UploadProgressTracker {
+class FakeUploadProgressTracker : public UploadProgressTracker {
  public:
-  using network::UploadProgressTracker::UploadProgressTracker;
+  using UploadProgressTracker::UploadProgressTracker;
 
   net::UploadProgress GetUploadProgress() const override {
     return upload_progress_;
@@ -254,10 +254,9 @@ class MojoAsyncResourceHandlerWithStubOperations
     has_received_bad_message_ = true;
   }
 
-  std::unique_ptr<network::UploadProgressTracker> CreateUploadProgressTracker(
+  std::unique_ptr<UploadProgressTracker> CreateUploadProgressTracker(
       const base::Location& from_here,
-      network::UploadProgressTracker::UploadProgressReportCallback callback)
-      override {
+      UploadProgressTracker::UploadProgressReportCallback callback) override {
     DCHECK(!upload_progress_tracker_);
 
     auto upload_progress_tracker = std::make_unique<FakeUploadProgressTracker>(
@@ -416,7 +415,7 @@ class MojoAsyncResourceHandlerTestBase {
   ResourceDispatcherHostImpl rdh_;
   network::mojom::URLLoaderFactoryPtr url_loader_factory_;
   network::mojom::URLLoaderPtr url_loader_proxy_;
-  network::TestURLLoaderClient url_loader_client_;
+  TestURLLoaderClient url_loader_client_;
   std::unique_ptr<TestBrowserContext> browser_context_;
   net::TestDelegate url_request_delegate_;
   std::unique_ptr<net::URLRequest> request_;

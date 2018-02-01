@@ -56,6 +56,14 @@ void CommonInitFromCommandLine(const base::CommandLine& command_line,
   }
 }
 
+using GtkSetState = void (*)(GtkWidgetPath*, gint, GtkStateFlags);
+PROTECTED_MEMORY_SECTION base::ProtectedMemory<GtkSetState>
+    _gtk_widget_path_iter_set_state;
+
+using GtkSetObjectName = void (*)(GtkWidgetPath*, gint, const char*);
+PROTECTED_MEMORY_SECTION base::ProtectedMemory<GtkSetObjectName>
+    _gtk_widget_path_iter_set_object_name;
+
 }  // namespace
 
 namespace libgtkui {
@@ -236,14 +244,6 @@ float GetDeviceScaleFactor() {
   views::LinuxUI* linux_ui = views::LinuxUI::instance();
   return linux_ui ? linux_ui->GetDeviceScaleFactor() : 1;
 }
-
-using GtkSetState = void (*)(GtkWidgetPath*, gint, GtkStateFlags);
-PROTECTED_MEMORY_SECTION base::ProtectedMemory<GtkSetState>
-    _gtk_widget_path_iter_set_state;
-
-using GtkSetObjectName = void (*)(GtkWidgetPath*, gint, const char*);
-PROTECTED_MEMORY_SECTION base::ProtectedMemory<GtkSetObjectName>
-    _gtk_widget_path_iter_set_object_name;
 
 }  // namespace
 

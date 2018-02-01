@@ -13,10 +13,6 @@ bool StartQuicTestServer();
 
 void ShutdownQuicTestServer();
 
-// Shuts down the server dispatcher, which results in sending ConnectionClose
-// frames to all connected clients.
-void ShutdownQuicTestServerDispatcher();
-
 int GetQuicTestServerPort();
 
 extern const char kTestServerDomain[];
@@ -44,4 +40,4 @@ extern const char kSimpleHeaderValue[];
 
 }  // namespace grpc_support
 
-#endif  // COMPONENTS_GRPC_SUPPORT_TEST_QUIC_TEST_SERVER_H_
+#endif  // COMPONENTS_CRONET_IOS_TEST_QUIC_TEST_SERVER_H_

@@ -545,10 +545,11 @@ void NetworkingPrivateChromeOS::StartConnect(
     return;
   }
 
+  const bool check_error_state = false;
   NetworkHandler::Get()->network_connection_handler()->ConnectToNetwork(
       service_path, success_callback,
       base::Bind(&NetworkHandlerFailureCallback, failure_callback),
-      true /* check_error_state */, chromeos::ConnectCallbackMode::ON_STARTED);
+      check_error_state, chromeos::ConnectCallbackMode::ON_STARTED);
 }
 
 void NetworkingPrivateChromeOS::StartDisconnect(

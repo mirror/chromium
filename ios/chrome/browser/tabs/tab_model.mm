@@ -435,6 +435,11 @@ void RecordMainFrameNavigationMetric(web::WebState* web_state) {
   return self;
 }
 
+- (instancetype)init {
+  NOTREACHED();
+  return nil;
+}
+
 - (BOOL)restoreSessionWindow:(SessionWindowIOS*)window {
   return [self restoreSessionWindow:window persistState:YES];
 }

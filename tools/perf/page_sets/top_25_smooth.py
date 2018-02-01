@@ -30,15 +30,14 @@ def _CreatePageClassWithSmoothInteractions(page_cls):
 
 class TopSmoothPage(page_module.Page):
 
-  def __init__(self, url, page_set, name='', extra_browser_args=None):
+  def __init__(self, url, page_set, name=''):
     if name == '':
       name = url
     super(TopSmoothPage, self).__init__(
         url=url,
         page_set=page_set,
         name=name,
-        shared_page_state_class=shared_page_state.SharedDesktopPageState,
-        extra_browser_args=extra_browser_args)
+        shared_page_state_class=shared_page_state.SharedDesktopPageState)
 
   def RunPageInteractions(self, action_runner):
     action_runner.Wait(1)

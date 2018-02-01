@@ -213,10 +213,6 @@ const InternalRoleEntry kInternalRoles[] = {
     {kInlineTextBoxRole, "InlineTextBox"},
     {kInputTimeRole, "InputTime"},
     {kLabelRole, "Label"},
-    {kLayoutTableRole, "LayoutTable"},
-    {kLayoutTableCellRole, "LayoutCellTable"},
-    {kLayoutTableColumnRole, "LayoutColumnTable"},
-    {kLayoutTableRowRole, "LayoutRowTable"},
     {kLegendRole, "Legend"},
     {kLinkRole, "Link"},
     {kLineBreakRole, "LineBreak"},
@@ -1529,7 +1525,6 @@ bool AXObject::SupportsARIAExpanded() const {
     case kGroupRole:
     case kHeadingRole:
     case kImageRole:
-    case kLayoutTableRole:
     case kListRole:
     case kListBoxRole:
     case kListBoxOptionRole:
@@ -2417,7 +2412,6 @@ bool AXObject::NameFromContents(bool recursive) const {
     case kComboBoxMenuButtonRole:
     case kDisclosureTriangleRole:
     case kHeadingRole:
-    case kLayoutTableCellRole:
     case kLineBreakRole:
     case kLinkRole:
     case kListBoxOptionRole:
@@ -2469,9 +2463,6 @@ bool AXObject::NameFromContents(bool recursive) const {
     case kIframeRole:
     case kImageRole:
     case kInputTimeRole:
-    case kLayoutTableRole:
-    case kLayoutTableColumnRole:
-    case kLayoutTableRowRole:
     case kListBoxRole:
     case kLogRole:
     case kMainRole:

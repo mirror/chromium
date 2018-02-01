@@ -18,7 +18,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -53,8 +52,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
@@ -65,27 +62,6 @@ import java.util.Locale;
 public class SavePasswordsPreferences
         extends PreferenceFragment implements PasswordManagerHandler.PasswordListObserver,
                                               Preference.OnPreferenceClickListener {
-    // ExportState describes at which state a password export is.
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({EXPORT_STATE_INACTIVE, EXPORT_STATE_REQUESTED, EXPORT_STATE_CONFIRMED})
-    private @interface ExportState {}
-    /**
-     * EXPORT_STATE_INACTIVE: there is no currently running export. Either the user did not request
-     * one, or the last one completed (i.e., a share intent picker or an error message were
-     * displayed or the user cancelled it).
-     */
-    private static final int EXPORT_STATE_INACTIVE = 0;
-    /**
-     * EXPORT_STATE_REQUESTED: the user requested the export in the menu but did not authenticate
-     * and confirm it yet.
-     */
-    private static final int EXPORT_STATE_REQUESTED = 1;
-    /**
-     * EXPORT_STATE_CONFIRMED: the user confirmed the export and Chrome is still busy preparing the
-     * data for the share intent.
-     */
-    private static final int EXPORT_STATE_CONFIRMED = 2;
-
     // Keys for name/password dictionaries.
     public static final String PASSWORD_LIST_URL = "url";
     public static final String PASSWORD_LIST_NAME = "name";
@@ -94,11 +70,8 @@ public class SavePasswordsPreferences
     // Used to pass the password id into a new activity.
     public static final String PASSWORD_LIST_ID = "id";
 
-    // The key for saving |mSearchQuery| to instance bundle.
-    private static final String SAVED_STATE_SEARCH_QUERY = "saved-state-search-query";
-
-    // The key for saving |mExportState| to instance bundle.
-    private static final String SAVED_STATE_EXPORT_STATE = "saved-state-export-state";
+    // The key for saving |mExportRequested| to instance bundle.
+    private static final String SAVED_STATE_EXPORT_REQUESTED = "saved-state-export-requested";
 
     // The key for saving |mExportFileUri| to instance bundle.
     private static final String SAVED_STATE_EXPORT_FILE_URI = "saved-state-export-file-uri";
@@ -126,10 +99,14 @@ public class SavePasswordsPreferences
 
     private boolean mNoPasswords;
     private boolean mNoPasswordExceptions;
-
-    @ExportState
-    private int mExportState;
-
+    // True if the user triggered the password export flow and this fragment is waiting for the
+    // result of the user's reauthentication.
+    private boolean mExportRequested;
+    // True if the option to export passwords in the three-dots menu should be disabled due to an
+    // ongoing export.
+    private boolean mExportOptionSuspended = false;
+    // True if the user just finished the UI flow for confirming a password export.
+    private boolean mExportConfirmed;
     // When the user requests that passwords are exported and once the passwords are sent over from
     // native code and stored in a cache file, this variable contains the content:// URI for that
     // cache file, or an empty URI if there was a problem with storing to that file. During all
@@ -145,12 +122,6 @@ public class SavePasswordsPreferences
     private TextMessagePreference mEmptyView;
     private Menu mMenuForTesting;
 
-    // Contains the reference to the progress-bar dialog after the user confirms the password
-    // export and before the serialized passwords arrive, so that the dialog can be dismissed on the
-    // passwords' arrival. It is null during all other times.
-    @Nullable
-    private ProgressBarDialogFragment mProgressBarDialogFragment;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,12 +133,9 @@ public class SavePasswordsPreferences
 
         if (savedInstanceState == null) return;
 
-        if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_STATE)) {
-            mExportState = savedInstanceState.getInt(SAVED_STATE_EXPORT_STATE);
-            if (mExportState == EXPORT_STATE_CONFIRMED) {
-                // If export is underway, ensure that the UI is updated.
-                tryExporting();
-            }
+        if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
+            mExportRequested =
+                    savedInstanceState.getBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
         }
         if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_FILE_URI)) {
             String uriString = savedInstanceState.getString(SAVED_STATE_EXPORT_FILE_URI);
@@ -176,9 +144,6 @@ public class SavePasswordsPreferences
             } else {
                 mExportFileUri = Uri.parse(uriString);
             }
-        }
-        if (savedInstanceState.containsKey(SAVED_STATE_SEARCH_QUERY)) {
-            mSearchQuery = savedInstanceState.getString(SAVED_STATE_SEARCH_QUERY);
         }
     }
 
@@ -205,10 +170,6 @@ public class SavePasswordsPreferences
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
         searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
-        if (mSearchQuery != null) { // If a query was recovered, restore the search view.
-            searchItem.expandActionView();
-            searchView.setQuery(mSearchQuery, false);
-        }
         searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
@@ -218,7 +179,6 @@ public class SavePasswordsPreferences
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                searchView.setQuery(null, false);
                 filterPasswords(null); // Reset filter to bring back all preferences.
                 return true; // Continue collapsing.
             }
@@ -239,8 +199,7 @@ public class SavePasswordsPreferences
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.export_passwords)
-                .setEnabled(!mNoPasswords && mExportState == EXPORT_STATE_INACTIVE);
+        menu.findItem(R.id.export_passwords).setEnabled(!mNoPasswords && !mExportOptionSuspended);
         super.onPrepareOptionsMenu(menu);
     }
 
@@ -282,9 +241,6 @@ public class SavePasswordsPreferences
 
             @Override
             protected void onPostExecute(ExportResult result) {
-                // Don't display any UI if the user cancelled the export in the meantime.
-                if (mExportState == EXPORT_STATE_INACTIVE) return;
-
                 if (result.mError != null) {
                     showExportErrorAndAbort(result.mError);
                 } else {
@@ -300,9 +256,8 @@ public class SavePasswordsPreferences
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.export_passwords) {
-            assert mExportState == EXPORT_STATE_INACTIVE;
             // Disable re-triggering exporting until the current exporting finishes.
-            mExportState = EXPORT_STATE_REQUESTED;
+            mExportOptionSuspended = true;
 
             // Start fetching the serialized passwords now to use the time the user spends
             // reauthenticating and reading the warning message. If the user cancels the export or
@@ -321,11 +276,12 @@ public class SavePasswordsPreferences
                              R.string.password_export_set_lock_screen, Toast.LENGTH_LONG)
                         .show();
                 // Re-enable exporting, the current one was cancelled by Chrome.
-                mExportState = EXPORT_STATE_INACTIVE;
+                mExportOptionSuspended = false;
             } else if (ReauthenticationManager.authenticationStillValid(
                                ReauthenticationManager.REAUTH_SCOPE_BULK)) {
                 exportAfterReauth();
             } else {
+                mExportRequested = true;
                 ReauthenticationManager.displayReauthenticationFragment(
                         R.string.lockscreen_description_export, getView().getId(),
                         getFragmentManager(), ReauthenticationManager.REAUTH_SCOPE_BULK);
@@ -343,9 +299,11 @@ public class SavePasswordsPreferences
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == AlertDialog.BUTTON_POSITIVE) {
-                    mExportState = EXPORT_STATE_CONFIRMED;
+                    mExportConfirmed = true;
                     tryExporting();
                 }
+                // Re-enable exporting, the current one was either finished or dismissed.
+                mExportOptionSuspended = false;
             }
         });
         exportWarningDialogFragment.show(getFragmentManager(), null);
@@ -356,28 +314,10 @@ public class SavePasswordsPreferences
      * confirmation flow.
      */
     private void tryExporting() {
-        if (mExportState != EXPORT_STATE_CONFIRMED) return;
-        if (mExportFileUri == null) {
-            // The serialization has not finished. Until this finishes, a progress bar is
-            // displayed with an option to cancel the export.
-            assert mProgressBarDialogFragment == null;
-            mProgressBarDialogFragment = new ProgressBarDialogFragment();
-            mProgressBarDialogFragment.setCancelProgressHandler(
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (which == AlertDialog.BUTTON_NEGATIVE) {
-                                mExportState = EXPORT_STATE_INACTIVE;
-                            }
-                        }
-                    });
-            mProgressBarDialogFragment.show(getFragmentManager(), null);
-        } else {
-            // Note: if the serialization is quicker than the user interacting with the
-            // confirmation dialog, then there is no progress bar shown.
-            if (mProgressBarDialogFragment != null) mProgressBarDialogFragment.dismiss();
-            sendExportIntent();
-        }
+        // TODO(crbug.com/788701): Display a progress indicator if user
+        // confirmed but serialising is not done yet and dismiss it once called
+        // again with serialising done.
+        if (mExportConfirmed && mExportFileUri != null) sendExportIntent();
     }
 
     /**
@@ -385,11 +325,9 @@ public class SavePasswordsPreferences
      * @param description A string with a brief explanation of the error.
      */
     private void showExportErrorAndAbort(String description) {
-        // TODO(crbug.com/788701): Implement. Ensure that if ExportWarningDialogFragment is shown,
-        // then Chrome waits until the user closes it to avoid changing UI under their fingers.
-        if (mProgressBarDialogFragment != null) mProgressBarDialogFragment.dismiss();
+        // TODO(crbug.com/788701): Implement.
         // Re-enable exporting, the current one was just cancelled.
-        mExportState = EXPORT_STATE_INACTIVE;
+        mExportOptionSuspended = false;
     }
 
     /**
@@ -436,9 +374,7 @@ public class SavePasswordsPreferences
      * intent, so that the user can use a storage app to save the exported passwords.
      */
     private void sendExportIntent() {
-        assert mExportState == EXPORT_STATE_CONFIRMED;
-        mExportState = EXPORT_STATE_INACTIVE;
-
+        mExportConfirmed = false;
         if (mExportFileUri == Uri.EMPTY) return;
 
         Intent send = new Intent(Intent.ACTION_SEND);
@@ -554,8 +490,8 @@ public class SavePasswordsPreferences
         }
         mNoPasswords = profileCategory.getPreferenceCount() == 0;
         if (mNoPasswords) {
-            if (count == 0) displayEmptyScreenMessage(); // Show if the list was already empty.
-            getPreferenceScreen().removePreference(profileCategory);
+            displayManageAccountLink(); // Maybe the password is just not on the device.
+            displayEmptyScreenMessage();
         }
     }
 
@@ -611,15 +547,15 @@ public class SavePasswordsPreferences
     @Override
     public void onResume() {
         super.onResume();
-        if (mExportState == EXPORT_STATE_REQUESTED) {
-            // Resuming in the "requested" state means that the user just returned from the
-            // reauthentication activity. Depending on the result, either carry on with exporting or
-            // re-enable the export menu for future attempts.
+        if (mExportRequested) {
+            mExportRequested = false;
+            // Depending on the authentication result, either carry on with exporting or re-enable
+            // the export menu for future attempts.
             if (ReauthenticationManager.authenticationStillValid(
                         ReauthenticationManager.REAUTH_SCOPE_BULK)) {
                 exportAfterReauth();
             } else {
-                mExportState = EXPORT_STATE_INACTIVE;
+                mExportOptionSuspended = false;
             }
         }
         rebuildPasswordLists();
@@ -628,12 +564,9 @@ public class SavePasswordsPreferences
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(SAVED_STATE_EXPORT_STATE, mExportState);
+        outState.putBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
         if (mExportFileUri != null) {
             outState.putString(SAVED_STATE_EXPORT_FILE_URI, mExportFileUri.toString());
-        }
-        if (mSearchQuery != null) {
-            outState.putString(SAVED_STATE_SEARCH_QUERY, mSearchQuery);
         }
     }
 

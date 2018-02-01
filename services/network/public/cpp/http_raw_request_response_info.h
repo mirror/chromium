@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 
-#include "base/component_export.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_split.h"
 
@@ -18,9 +17,9 @@ namespace network {
 
 // Note: when modifying this structure, also update DeepCopy in
 // http_raw_request_response_info.cc.
-struct COMPONENT_EXPORT(NETWORK_CPP_BASE) HttpRawRequestResponseInfo
+struct HttpRawRequestResponseInfo
     : base::RefCounted<HttpRawRequestResponseInfo> {
-  using HeadersVector = base::StringPairs;
+  typedef base::StringPairs HeadersVector;
 
   HttpRawRequestResponseInfo();
 

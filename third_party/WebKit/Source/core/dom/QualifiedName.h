@@ -219,8 +219,6 @@ struct CORE_EXPORT QualifiedNameHash {
   static const bool safe_to_compare_to_empty_or_deleted = false;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const QualifiedName&);
-
 }  // namespace blink
 
 namespace WTF {

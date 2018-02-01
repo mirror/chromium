@@ -262,8 +262,8 @@ void StyleBuilderFunctions::applyValueCSSPropertyDisplay(
   }
 
   DCHECK(value.IsLayoutFunctionValue());
-  const cssvalue::CSSLayoutFunctionValue& layout_function_value =
-      cssvalue::ToCSSLayoutFunctionValue(value);
+  const CSSLayoutFunctionValue& layout_function_value =
+      ToCSSLayoutFunctionValue(value);
 
   EDisplay display = layout_function_value.IsInline()
                          ? EDisplay::kInlineLayoutCustom

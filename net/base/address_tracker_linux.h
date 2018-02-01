@@ -82,9 +82,6 @@ class NET_EXPORT_PRIVATE AddressTrackerLinux :
   // with exclusively talking to the kernel and not the C library.
   static char* GetInterfaceName(int interface_index, char* buf);
 
-  // Does |name| refer to a tunnel interface?
-  static bool IsTunnelInterfaceName(const char* name);
-
  private:
   friend class AddressTrackerLinuxTest;
 

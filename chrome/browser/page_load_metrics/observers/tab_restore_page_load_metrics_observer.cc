@@ -17,11 +17,11 @@
 
 namespace {
 
-const char kHistogramTabRestoreNetworkBytes[] =
+const char kHistogramNetworkBytes[] =
     "PageLoad.Clients.TabRestore.Experimental.Bytes.Network";
-const char kHistogramTabRestoreCacheBytes[] =
+const char kHistogramCacheBytes[] =
     "PageLoad.Clients.TabRestore.Experimental.Bytes.Cache";
-const char kHistogramTabRestoreTotalBytes[] =
+const char kHistogramTotalBytes[] =
     "PageLoad.Clients.TabRestore.Experimental.Bytes.Total";
 
 }  // namespace
@@ -70,10 +70,9 @@ void TabRestorePageLoadMetricsObserver::OnComplete(
 }
 
 void TabRestorePageLoadMetricsObserver::RecordByteHistograms() {
-  PAGE_BYTES_HISTOGRAM(kHistogramTabRestoreNetworkBytes, network_bytes_);
-  PAGE_BYTES_HISTOGRAM(kHistogramTabRestoreCacheBytes, cache_bytes_);
-  PAGE_BYTES_HISTOGRAM(kHistogramTabRestoreTotalBytes,
-                       network_bytes_ + cache_bytes_);
+  PAGE_BYTES_HISTOGRAM(kHistogramNetworkBytes, network_bytes_);
+  PAGE_BYTES_HISTOGRAM(kHistogramCacheBytes, cache_bytes_);
+  PAGE_BYTES_HISTOGRAM(kHistogramTotalBytes, network_bytes_ + cache_bytes_);
 }
 
 bool TabRestorePageLoadMetricsObserver::IsTabRestore(

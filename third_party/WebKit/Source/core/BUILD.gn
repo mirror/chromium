@@ -1098,7 +1098,6 @@ css_properties("make_core_generated_css_shorthand_property_classes") {
 css_properties("make_core_generated_css_property_names") {
   script = "../build/scripts/make_css_property_names.py"
   other_inputs = [
-    "../build/scripts/gperf.py",
     "../build/scripts/templates/CSSPropertyNames.cpp.tmpl",
     "../build/scripts/templates/CSSPropertyNames.h.tmpl",
   ]
@@ -1111,7 +1110,6 @@ css_properties("make_core_generated_css_property_names") {
 code_generator("make_core_generated_atrule_names") {
   script = "../build/scripts/core/css/parser/make_atrule_names.py"
   json_inputs = [ "css/parser/AtRuleNames.json5" ]
-  other_inputs = [ "../build/scripts/gperf.py" ]
   templates = [
     "../build/scripts/core/css/parser/templates/AtRuleDescriptors.cpp.tmpl",
     "../build/scripts/core/css/parser/templates/AtRuleDescriptors.h.tmpl",
@@ -1179,7 +1177,6 @@ code_generator("make_core_generated_css_value_keywords") {
     "css/CSSValueKeywords.json5",
     "css/SVGCSSValueKeywords.json5",
   ]
-  other_inputs = [ "../build/scripts/gperf.py" ]
   templates = [
     "../build/scripts/core/css/templates/CSSValueKeywords.cpp.tmpl",
     "../build/scripts/core/css/templates/CSSValueKeywords.h.tmpl",
@@ -1701,6 +1698,7 @@ jumbo_source_set("unit_tests") {
     "css/cssom/CSSResourceValueTest.cpp",
     "css/cssom/CSSStyleImageValueTest.cpp",
     "css/cssom/CSSUnitValueTest.cpp",
+    "css/cssom/CSSVariableReferenceValueTest.cpp",
     "css/cssom/FilteredComputedStylePropertyMapTest.cpp",
     "css/invalidation/InvalidationSetTest.cpp",
     "css/invalidation/StyleInvalidatorTest.cpp",
@@ -1714,7 +1712,6 @@ jumbo_source_set("unit_tests") {
     "css/parser/MediaConditionTest.cpp",
     "css/parser/SizesAttributeParserTest.cpp",
     "css/parser/SizesCalcParserTest.cpp",
-    "css/properties/CSSParsingUtilsTest.cpp",
     "css/resolver/FontBuilderTest.cpp",
     "css/resolver/FontStyleResolverTest.cpp",
     "css/resolver/MatchResultTest.cpp",
@@ -1817,7 +1814,6 @@ jumbo_source_set("unit_tests") {
     "frame/OriginsUsingFeaturesTest.cpp",
     "frame/PerformanceMonitorTest.cpp",
     "frame/RootFrameViewportTest.cpp",
-    "frame/RotationViewportAnchorTest.cpp",
     "frame/UseCounterTest.cpp",
     "frame/VisualViewportTest.cpp",
     "frame/csp/CSPDirectiveListTest.cpp",

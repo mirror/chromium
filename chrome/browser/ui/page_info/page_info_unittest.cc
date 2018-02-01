@@ -221,9 +221,18 @@ TEST_F(PageInfoTest, NonFactoryDefaultAndRecentlyChangedPermissionsShown) {
   // check for DSE settings (so expect 1 item), but isn't actually shown later
   // on because this test isn't testing with a default search engine origin.
   expected_visible_permissions.insert(CONTENT_SETTINGS_TYPE_GEOLOCATION);
-#endif
   EXPECT_EQ(expected_visible_permissions.size(),
             last_permission_info_list().size());
+  EXPECT_EQ(CONTENT_SETTINGS_TYPE_GEOLOCATION,
+            last_permission_info_list().back().type);
+#else
+  expected_visible_permissions.insert(CONTENT_SETTINGS_TYPE_PLUGINS);
+  // Flash is always visible on desktop - see https://crbug.com/791142.
+  EXPECT_EQ(expected_visible_permissions.size(),
+            last_permission_info_list().size());
+  EXPECT_EQ(CONTENT_SETTINGS_TYPE_PLUGINS,
+            last_permission_info_list().back().type);
+#endif
 
   // Change some default-ask settings away from the default.
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_GEOLOCATION,

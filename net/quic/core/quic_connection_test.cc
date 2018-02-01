@@ -1935,24 +1935,15 @@ TEST_P(QuicConnectionTest, LeastUnackedLower) {
 }
 
 TEST_P(QuicConnectionTest, TooManySentPackets) {
-  SetQuicReloadableFlag(quic_close_session_on_too_many_outstanding_sent_packets,
-                        true);
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
 
-  QuicPacketCount max_tracked_packets = 50;
-  QuicConnectionPeer::SetMaxTrackedPackets(&connection_, max_tracked_packets);
-
-  const int num_packets = max_tracked_packets + 5;
-
+  const int num_packets = kMaxTrackedPackets + 100;
   for (int i = 0; i < num_packets; ++i) {
     SendStreamDataToPeer(1, "foo", 3 * i, NO_FIN, nullptr);
   }
 
   // Ack packet 1, which leaves more than the limit outstanding.
   EXPECT_CALL(*send_algorithm_, OnCongestionEvent(true, _, _, _, _));
-  EXPECT_CALL(visitor_,
-              OnConnectionClosed(QUIC_TOO_MANY_OUTSTANDING_SENT_PACKETS, _,
-                                 ConnectionCloseSource::FROM_SELF));
 
   // Nack the first packet and ack the rest, leaving a huge gap.
   QuicAckFrame frame1 = ConstructAckFrame(num_packets, 1);
@@ -2132,6 +2123,8 @@ TEST_P(QuicConnectionTest, RecordSentTimeBeforePacketSent) {
 
 TEST_P(QuicConnectionTest, FramePacking) {
   // Send two stream frames in 1 packet by queueing them.
+  // If quic_strict_ack_handling is false, the packet
+  // also bundles an empty ack frame and a stop_waiting frame.
   connection_.SetDefaultEncryptionLevel(ENCRYPTION_FORWARD_SECURE);
   {
     QuicConnection::ScopedPacketFlusher flusher(&connection_,
@@ -2146,15 +2139,25 @@ TEST_P(QuicConnectionTest, FramePacking) {
   // Parse the last packet and ensure it's an ack and two stream frames from
   // two different streams.
   if (GetParam().no_stop_waiting) {
-    EXPECT_EQ(2u, writer_->frame_count());
+    EXPECT_EQ(GetQuicReloadableFlag(quic_strict_ack_handling) ? 2u : 3u,
+              writer_->frame_count());
     EXPECT_TRUE(writer_->stop_waiting_frames().empty());
   } else {
-    EXPECT_EQ(2u, writer_->frame_count());
-    EXPECT_TRUE(writer_->stop_waiting_frames().empty());
+    EXPECT_EQ(GetQuicReloadableFlag(quic_strict_ack_handling) ? 2u : 4u,
+              writer_->frame_count());
+
+    if (GetQuicReloadableFlag(quic_strict_ack_handling)) {
+      EXPECT_TRUE(writer_->stop_waiting_frames().empty());
+    } else {
+      EXPECT_FALSE(writer_->stop_waiting_frames().empty());
+    }
   }
 
-  EXPECT_TRUE(writer_->ack_frames().empty());
-
+  if (GetQuicReloadableFlag(quic_strict_ack_handling)) {
+    EXPECT_TRUE(writer_->ack_frames().empty());
+  } else {
+    EXPECT_FALSE(writer_->ack_frames().empty());
+  }
   ASSERT_EQ(2u, writer_->stream_frames().size());
   EXPECT_EQ(kClientDataStreamId1, writer_->stream_frames()[0]->stream_id);
   EXPECT_EQ(kClientDataStreamId2, writer_->stream_frames()[1]->stream_id);

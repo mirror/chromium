@@ -265,16 +265,16 @@ std::unique_ptr<Notification> Notification::CreateSystemNotification(
     const gfx::VectorIcon& small_image,
     SystemNotificationWarningLevel color_type) {
   DCHECK_EQ(NotifierId::SYSTEM_COMPONENT, notifier_id.type);
-  SkColor color = kSystemNotificationColorNormal;
+  SkColor color = message_center::kSystemNotificationColorNormal;
   switch (color_type) {
     case SystemNotificationWarningLevel::NORMAL:
-      color = kSystemNotificationColorNormal;
+      color = message_center::kSystemNotificationColorNormal;
       break;
     case SystemNotificationWarningLevel::WARNING:
-      color = kSystemNotificationColorWarning;
+      color = message_center::kSystemNotificationColorWarning;
       break;
     case SystemNotificationWarningLevel::CRITICAL_WARNING:
-      color = kSystemNotificationColorCriticalWarning;
+      color = message_center::kSystemNotificationColorCriticalWarning;
       break;
   }
   std::unique_ptr<Notification> notification = std::make_unique<Notification>(

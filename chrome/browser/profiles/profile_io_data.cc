@@ -78,7 +78,11 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/network/ignore_errors_cert_verifier.h"
+#include "content/public/network/network_service.h"
+#include "content/public/network/url_request_context_builder_mojo.h"
 #include "extensions/features/features.h"
 #include "net/cert/caching_cert_verifier.h"
 #include "net/cert/cert_verifier.h"
@@ -109,11 +113,7 @@
 #include "net/url_request/url_request_intercepting_job_factory.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory_impl.h"
-#include "services/network/network_service.h"
-#include "services/network/public/cpp/features.h"
-#include "services/network/public/cpp/ignore_errors_cert_verifier.h"
 #include "services/network/public/cpp/proxy_config_traits.h"
-#include "services/network/url_request_context_builder_mojo.h"
 #include "third_party/WebKit/public/public_features.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -1061,8 +1061,8 @@ void ProfileIOData::Init(
   extensions_request_context_->set_name("extensions");
 
   // Create the main request context.
-  std::unique_ptr<network::URLRequestContextBuilderMojo> builder =
-      base::MakeUnique<network::URLRequestContextBuilderMojo>();
+  std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
+      base::MakeUnique<content::URLRequestContextBuilderMojo>();
 
   builder->set_shared_http_user_agent_settings(
       chrome_http_user_agent_settings_.get());
@@ -1172,7 +1172,7 @@ void ProfileIOData::Init(
 #endif
     const base::CommandLine& command_line =
         *base::CommandLine::ForCurrentProcess();
-    cert_verifier = network::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+    cert_verifier = content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
         command_line, switches::kUserDataDir, std::move(cert_verifier));
     builder->SetCertVerifier(std::move(cert_verifier));
   }
@@ -1211,7 +1211,7 @@ void ProfileIOData::Init(
   builder->SetCreateHttpTransactionFactoryCallback(
       base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
 
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     main_request_context_owner_ = std::move(builder)->Create(
         std::move(profile_params_->main_network_context_params).get(),
         io_thread_globals->quic_disabled, io_thread->net_log());

@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -144,6 +145,7 @@ public class VrShellControllerInputTest {
      * fullscreen
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     @RetryOnFailure(message = "Very rarely, button press not registered (race condition?)")
     public void testAppButtonExitsFullscreen() throws InterruptedException, TimeoutException {
@@ -152,8 +154,7 @@ public class VrShellControllerInputTest {
         VrTransitionUtils.forceEnterVr();
         VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
         // Enter fullscreen
-        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen",
-                false /* goThroughRootAndroidView */);
+        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen");
         VrTestFramework.waitOnJavaScriptStep(mVrTestFramework.getFirstTabWebContents());
         Assert.assertTrue(DOMUtils.isFullscreen(mVrTestFramework.getFirstTabWebContents()));
 

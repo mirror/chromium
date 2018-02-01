@@ -48,8 +48,6 @@ public class MediaSessionTabHelper implements MediaImageCallback {
     static final int HIDE_NOTIFICATION_DELAY_MILLIS = 1000;
 
     private Tab mTab;
-    @VisibleForTesting
-    LargeIconBridge mLargeIconBridge;
     private Bitmap mPageMediaImage;
     @VisibleForTesting
     Bitmap mFavicon;
@@ -289,7 +287,12 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         @Override
         public void onFaviconUpdated(Tab tab, Bitmap icon) {
             assert tab == mTab;
-            updateFavicon(icon);
+
+            // Store the favicon only if notification is being shown. Otherwise the favicon is
+            // obtained from large icon bridge when needed.
+            if (isNotificationHiddingOrHidden() || mPageMediaImage != null) return;
+            if (!updateFavicon(icon)) return;
+            updateNotificationImage(mFavicon);
         }
 
         @Override
@@ -359,10 +362,6 @@ public class MediaSessionTabHelper implements MediaImageCallback {
             hideNotificationImmediately();
             mTab.removeObserver(this);
             mTab = null;
-            if (mLargeIconBridge != null) {
-                mLargeIconBridge.destroy();
-                mLargeIconBridge = null;
-            }
         }
     };
 
@@ -430,27 +429,24 @@ public class MediaSessionTabHelper implements MediaImageCallback {
     }
 
     /**
-     * Updates the best favicon if the given icon is better and the favicon is shown in
-     * notification.
+     * Updates the best favicon if the given icon is better.
+     * @return whether the best favicon is updated.
      */
-    private void updateFavicon(Bitmap icon) {
-        if (icon == null) return;
-
-        // Store the favicon only if notification is being shown. Otherwise the favicon is
-        // obtained from large icon bridge when needed.
-        if (isNotificationHiddingOrHidden() || mPageMediaImage != null) return;
+    private boolean updateFavicon(Bitmap icon) {
+        if (icon == null) return false;
 
         // Disable favicons in notifications for low memory devices on O
         // where the notification icon is optional.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && SysUtils.isLowEndDevice()) return;
+        if (SysUtils.isLowEndDevice() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            return false;
 
-        if (!MediaNotificationManager.isBitmapSuitableAsMediaImage(icon)) return;
+        if (!MediaNotificationManager.isBitmapSuitableAsMediaImage(icon)) return false;
         if (mFavicon != null && (icon.getWidth() < mFavicon.getWidth()
                                         || icon.getHeight() < mFavicon.getHeight())) {
-            return;
+            return false;
         }
         mFavicon = MediaNotificationManager.downscaleIconToIdealSize(icon);
-        updateNotificationImage(mFavicon);
+        return true;
     }
 
     /**
@@ -528,17 +524,20 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         if (webContents == null) return null;
         String pageUrl = webContents.getLastCommittedUrl();
         int size = MediaNotificationManager.MINIMAL_MEDIA_IMAGE_SIZE_PX;
-        if (mLargeIconBridge == null) {
-            mLargeIconBridge = new LargeIconBridge(mTab.getProfile());
-        }
+        if (mTab.getProfile() == null) return null;
+        LargeIconBridge bridge = new LargeIconBridge(mTab.getProfile());
         LargeIconBridge.LargeIconCallback callback = new LargeIconBridge.LargeIconCallback() {
             @Override
             public void onLargeIconAvailable(
                     Bitmap icon, int fallbackColor, boolean isFallbackColorDefault, int iconType) {
-                updateFavicon(icon);
+                if (isNotificationHiddingOrHidden() || mPageMediaImage != null) return;
+                if (updateFavicon(icon)) {
+                    updateNotificationImage(mFavicon);
+                }
+                bridge.destroy();
             }
         };
-        mLargeIconBridge.getLargeIconForUrl(pageUrl, size, callback);
+        if (!bridge.getLargeIconForUrl(pageUrl, size, callback)) bridge.destroy();
 
         return null;
     }

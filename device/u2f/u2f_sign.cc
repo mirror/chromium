@@ -6,18 +6,18 @@
 
 #include <utility>
 
+#include "device/u2f/u2f_discovery.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace device {
 
 U2fSign::U2fSign(std::string relying_party_id,
-                 service_manager::Connector* connector,
-                 const base::flat_set<U2fTransportProtocol>& protocols,
+                 std::vector<U2fDiscovery*> discoveries,
                  const std::vector<std::vector<uint8_t>>& registered_keys,
                  const std::vector<uint8_t>& challenge_hash,
                  const std::vector<uint8_t>& app_param,
                  SignResponseCallback completion_callback)
-    : U2fRequest(std::move(relying_party_id), connector, protocols),
+    : U2fRequest(std::move(relying_party_id), std::move(discoveries)),
       registered_keys_(registered_keys),
       challenge_hash_(challenge_hash),
       app_param_(app_param),
@@ -29,14 +29,13 @@ U2fSign::~U2fSign() = default;
 // static
 std::unique_ptr<U2fRequest> U2fSign::TrySign(
     std::string relying_party_id,
-    service_manager::Connector* connector,
-    const base::flat_set<U2fTransportProtocol>& protocols,
+    std::vector<U2fDiscovery*> discoveries,
     const std::vector<std::vector<uint8_t>>& registered_keys,
     const std::vector<uint8_t>& challenge_hash,
     const std::vector<uint8_t>& app_param,
     SignResponseCallback completion_callback) {
   std::unique_ptr<U2fRequest> request = std::make_unique<U2fSign>(
-      std::move(relying_party_id), connector, protocols, registered_keys,
+      std::move(relying_party_id), std::move(discoveries), registered_keys,
       challenge_hash, app_param, std::move(completion_callback));
   request->Start();
 

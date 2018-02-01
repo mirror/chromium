@@ -82,9 +82,7 @@ Response BrowserHandler::GetHistograms(
   DCHECK(out_histograms);
   *out_histograms = std::make_unique<Array<Browser::Histogram>>();
   for (const base::HistogramBase* const h :
-       base::StatisticsRecorder::Sort(base::StatisticsRecorder::WithName(
-           base::StatisticsRecorder::GetHistograms(),
-           in_query.fromMaybe("")))) {
+       base::StatisticsRecorder::GetSnapshot(in_query.fromMaybe(""))) {
     DCHECK(h);
     (*out_histograms)->addItem(Convert(*h));
   }

@@ -175,6 +175,7 @@ static_library("browser") {
   deps = [
     ":hash_password_manager",
     ":proto",
+    "//base",
     "//base:i18n",
     "//components/autofill/core/browser",
     "//components/autofill/core/browser/proto",
@@ -425,7 +426,6 @@ fuzzer_test("csv_reader_fuzzer") {
   ]
   deps = [
     ":browser",
-    "//base:i18n",
     "//components/autofill/core/common:common",
   ]
   seed_corpus = "import/password_csv_reader_corpus"

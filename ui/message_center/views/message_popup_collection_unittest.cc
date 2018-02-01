@@ -33,22 +33,23 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
-namespace message_center {
-
 namespace {
 
-std::unique_ptr<Notification> CreateTestNotification(std::string id,
-                                                     std::string text) {
-  return std::make_unique<Notification>(
-      NOTIFICATION_TYPE_BASE_FORMAT, id, base::UTF8ToUTF16("test title"),
-      base::ASCIIToUTF16(text), gfx::Image(),
+std::unique_ptr<message_center::Notification> CreateTestNotification(
+    std::string id,
+    std::string text) {
+  return std::make_unique<message_center::Notification>(
+      message_center::NOTIFICATION_TYPE_BASE_FORMAT, id,
+      base::UTF8ToUTF16("test title"), base::ASCIIToUTF16(text), gfx::Image(),
       base::string16() /* display_source */, GURL(),
-      NotifierId(NotifierId::APPLICATION, id), RichNotificationData(),
-      new NotificationDelegate());
+      message_center::NotifierId(message_center::NotifierId::APPLICATION, id),
+      message_center::RichNotificationData(),
+      new message_center::NotificationDelegate());
 }
 
 // Provides an aura window context for widget creation.
-class TestPopupAlignmentDelegate : public DesktopPopupAlignmentDelegate {
+class TestPopupAlignmentDelegate
+    : public message_center::DesktopPopupAlignmentDelegate {
  public:
   explicit TestPopupAlignmentDelegate(gfx::NativeWindow context)
       : context_(context) {}
@@ -69,6 +70,7 @@ class TestPopupAlignmentDelegate : public DesktopPopupAlignmentDelegate {
 
 }  // namespace
 
+namespace message_center {
 namespace test {
 
 class MessagePopupCollectionTest : public views::ViewsTestBase {
@@ -144,7 +146,7 @@ class MessagePopupCollectionTest : public views::ViewsTestBase {
         NOTIFICATION_TYPE_BASE_FORMAT, id, base::UTF8ToUTF16("test title"),
         base::UTF8ToUTF16("test message"), gfx::Image(),
         base::string16() /* display_source */, GURL(), NotifierId(),
-        RichNotificationData(), new NotificationDelegate()));
+        message_center::RichNotificationData(), new NotificationDelegate()));
     MessageCenter::Get()->AddNotification(std::move(notification));
     return id;
   }
@@ -665,7 +667,7 @@ TEST_F(MessagePopupCollectionTest, CloseNonClosableNotifications) {
       base::UTF8ToUTF16("test title"), base::UTF8ToUTF16("test message"),
       gfx::Image(), base::string16() /* display_source */, GURL(),
       NotifierId(NotifierId::APPLICATION, kNotificationId),
-      RichNotificationData(), new NotificationDelegate()));
+      message_center::RichNotificationData(), new NotificationDelegate()));
   notification->set_pinned(true);
 
   // Add a pinned notification.
@@ -750,35 +752,6 @@ TEST_F(MessagePopupCollectionTest, ChangingNotificationSize) {
   CloseAllToasts();
   WaitForTransitionsDone();
 }
-
-// Regression test for https://crbug.com/804389 where notifications are added
-// and removed at the same time when UpdateWidgets is called.
-#if defined(OS_CHROMEOS)
-TEST_F(MessagePopupCollectionTest, AddedAndRemovedAtSameTime) {
-  collection()->IncrementDeferCounter();
-  std::vector<std::string> notification_ids;
-  for (size_t i = 0; i < kMaxVisiblePopupNotifications; ++i)
-    notification_ids.push_back(AddNotification());
-  collection()->DecrementDeferCounter();
-  WaitForTransitionsDone();
-
-  // Depending on the timing of ScopedNotificationsIterationLock, it is possible
-  // that a new notificaiton is added before the observer method of
-  // MarkSinglePopupAsShown are called.
-  // To reproduce the similar state in the unit test, it removes observer.
-  // TODO(tetsui): Remove this workaround with ScopedNotificationsIterationLock.
-  MessageCenter::Get()->RemoveObserver(collection());
-  for (auto& notification_id : notification_ids)
-    MessageCenter::Get()->MarkSinglePopupAsShown(notification_id, false);
-  MessageCenter::Get()->AddObserver(collection());
-
-  AddNotification();
-  WaitForTransitionsDone();
-
-  CloseAllToasts();
-  WaitForTransitionsDone();
-}
-#endif
 
 }  // namespace test
 }  // namespace message_center

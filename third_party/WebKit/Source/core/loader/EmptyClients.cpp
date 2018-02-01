@@ -63,8 +63,7 @@ class EmptyFrameScheduler : public WebFrameScheduler {
  public:
   EmptyFrameScheduler() { DCHECK(IsMainThread()); }
 
-  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(
-      TaskType type) override {
+  scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType type) override {
     return Platform::Current()->MainThread()->GetWebTaskRunner();
   }
 

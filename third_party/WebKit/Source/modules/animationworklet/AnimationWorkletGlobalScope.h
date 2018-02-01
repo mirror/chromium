@@ -48,7 +48,7 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
 
   // Registers a animator definition with the given name and constructor.
   void registerAnimator(const String& name,
-                        const ScriptValue& constructor_value,
+                        const ScriptValue& ctorValue,
                         ExceptionState&);
 
   AnimatorDefinition* FindDefinitionForTest(const String& name);

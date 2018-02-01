@@ -608,21 +608,6 @@ DeprecationInfo GetDeprecationInfo(WebFeature feature) {
       return {"ChromeLoadTimesWasAlternateProtocolAvailable", Unknown,
               chromeLoadTimesNextHopProtocol};
 
-    case WebFeature::kDataUriHasOctothorpe:
-      return {"DataUriHasOctothorpe", M67,
-              replacedWillBeRemoved(
-                  "Using unescaped '#' characters in a data URI body", "'%23'",
-                  M67, "5656049583390720")};
-
-    case WebFeature::kThreeValuedPositionBasicShape:
-    case WebFeature::kThreeValuedPositionGradient:
-    case WebFeature::kThreeValuedPositionObjectPosition:
-    case WebFeature::kThreeValuedPositionPerspectiveOrigin:
-      return {
-          "ThreeValuedPosition", M68,
-          replacedWillBeRemoved("Expressing a position using 3 parts",
-                                "<position> syntax", M68, "5116559680864256")};
-
     // Features that aren't deprecated don't have a deprecation message.
     default:
       return {"NotDeprecated", Unknown, ""};

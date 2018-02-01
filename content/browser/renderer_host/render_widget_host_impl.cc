@@ -684,24 +684,10 @@ void RenderWidgetHostImpl::WasShown(const ui::LatencyInfo& latency_info) {
   SendScreenRects();
   RestartHangMonitorTimeoutIfNecessary();
 
-  base::Optional<ResizeParams> resize_params;
-
-  // If there is a pending resize, send it along with the WasShown message.
-  if (CanResize()) {
-    ResizeParams params;
-    if (GetResizeParams(&params))
-      resize_params = params;
-  }
-
   // Always repaint on restore.
-  constexpr bool needs_repainting = true;
+  bool needs_repainting = true;
   needs_repainting_on_restore_ = false;
-
-  bool success = Send(new ViewMsg_WasShown(routing_id_, needs_repainting,
-                                           latency_info, resize_params));
-
-  if (success && resize_params)
-    DidSendResizeParams(*resize_params);
+  Send(new ViewMsg_WasShown(routing_id_, needs_repainting, latency_info));
 
   process_->WidgetRestored();
 
@@ -710,6 +696,23 @@ void RenderWidgetHostImpl::WasShown(const ui::LatencyInfo& latency_info) {
       NOTIFICATION_RENDER_WIDGET_VISIBILITY_CHANGED,
       Source<RenderWidgetHost>(this),
       Details<bool>(&is_visible));
+
+  // It's possible for our size to be out of sync with the renderer. The
+  // following is one case that leads to this:
+  // 1. WasResized -> Send ViewMsg_Resize to render
+  // 2. WasResized -> do nothing as resize_ack_pending_ is true
+  // 3. WasHidden
+  // 4. OnResizeOrRepaintACK from (1) processed. Does NOT invoke WasResized as
+  //    view is hidden. Now renderer/browser out of sync with what they think
+  //    size is.
+  // By invoking WasResized the renderer is updated as necessary. WasResized
+  // does nothing if the sizes are already in sync.
+  //
+  // TODO: ideally ViewMsg_WasShown would take a size. This way, the renderer
+  // could handle both the restore and resize at once. This isn't that big a
+  // deal as RenderWidget::WasShown delays updating, so that the resize from
+  // WasResized is usually processed before the renderer is painted.
+  WasResized();
 }
 
 #if defined(OS_ANDROID)
@@ -815,7 +818,8 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
 void RenderWidgetHostImpl::SetInitialRenderSizeParams(
     const ResizeParams& resize_params) {
   resize_ack_pending_ = resize_params.needs_resize_ack;
-  old_resize_params_ = resize_params;
+
+  old_resize_params_ = std::make_unique<ResizeParams>(resize_params);
 }
 
 void RenderWidgetHostImpl::WasResized() {
@@ -823,16 +827,29 @@ void RenderWidgetHostImpl::WasResized() {
 }
 
 void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
-  if (!CanResize())
+  // Skip if the |delegate_| has already been detached because
+  // it's web contents is being deleted.
+  if (resize_ack_pending_ || !process_->HasConnection() || !view_ ||
+      !renderer_initialized_ || auto_resize_enabled_ || !delegate_) {
     return;
+  }
 
-  ResizeParams params;
-  if (!GetResizeParams(&params))
+  std::unique_ptr<ResizeParams> params(new ResizeParams);
+  if (!GetResizeParams(params.get()))
     return;
-  params.scroll_focused_node_into_view = scroll_focused_node_into_view;
+  params->scroll_focused_node_into_view = scroll_focused_node_into_view;
 
-  if (Send(new ViewMsg_Resize(routing_id_, params)))
-    DidSendResizeParams(params);
+  bool width_changed =
+      !old_resize_params_ ||
+      old_resize_params_->new_size.width() != params->new_size.width();
+  if (Send(new ViewMsg_Resize(routing_id_, *params))) {
+    resize_ack_pending_ = params->needs_resize_ack;
+    next_resize_needs_resize_ack_ = false;
+    old_resize_params_.swap(params);
+  }
+
+  if (delegate_)
+    delegate_->RenderWidgetWasResized(this, width_changed);
 }
 
 void RenderWidgetHostImpl::GotFocus() {
@@ -927,26 +944,54 @@ void RenderWidgetHostImpl::PauseForPendingResizeOrRepaints() {
   TRACE_EVENT0("browser",
       "RenderWidgetHostImpl::PauseForPendingResizeOrRepaints");
 
+  if (!CanPauseForPendingResizeOrRepaints())
+    return;
+
+  WaitForSurface();
+}
+
+bool RenderWidgetHostImpl::CanPauseForPendingResizeOrRepaints() {
   // Do not pause if the view is hidden.
   if (is_hidden())
-    return;
+    return false;
 
   // Do not pause if there is not a paint or resize already coming.
   if (!repaint_ack_pending_ && !resize_ack_pending_)
-    return;
+    return false;
 
   if (!renderer_compositor_frame_sink_.is_bound())
-    return;
+    return false;
 
-  if (!view_)
-    return;
+  return true;
+}
 
+void RenderWidgetHostImpl::WaitForSurface() {
   // How long to (synchronously) wait for the renderer to respond with a
   // new frame when our current frame doesn't exist or is the wrong size.
   // This timeout impacts the "choppiness" of our window resize.
   const int kPaintMsgTimeoutMS = 167;
 
-  TRACE_EVENT0("renderer_host", "RenderWidgetHostImpl::WaitForSurface");
+  if (!view_)
+    return;
+
+  // The view_size will be current_size_ for auto-sized views and otherwise the
+  // size of the view_. (For auto-sized views, current_size_ is updated during
+  // ResizeACK messages.)
+  gfx::Size view_size = current_size_;
+  if (!auto_resize_enabled_) {
+    // Get the desired size from the current view bounds.
+    gfx::Rect view_rect = view_->GetViewBounds();
+    if (view_rect.IsEmpty())
+      return;
+    view_size = view_rect.size();
+  }
+
+  TRACE_EVENT2("renderer_host",
+               "RenderWidgetHostImpl::WaitForSurface",
+               "width",
+               base::IntToString(view_size.width()),
+               "height",
+               base::IntToString(view_size.height()));
 
   // We should not be asked to paint while we are hidden.  If we are hidden,
   // then it means that our consumer failed to call WasShown.
@@ -959,8 +1004,18 @@ void RenderWidgetHostImpl::PauseForPendingResizeOrRepaints() {
       &in_get_backing_store_, true);
 
   // We might have a surface that we can use already.
-  if (!view_->ShouldContinueToPauseForFrame())
+  if (view_->HasAcceleratedSurface(view_size))
     return;
+
+  // Request that the renderer produce a frame of the right size, if it
+  // hasn't been requested already.
+  if (!repaint_ack_pending_ && !resize_ack_pending_) {
+    repaint_start_time_ = TimeTicks::Now();
+    repaint_ack_pending_ = true;
+    TRACE_EVENT_ASYNC_BEGIN0(
+        "renderer_host", "RenderWidgetHostImpl::repaint_ack_pending_", this);
+    Send(new ViewMsg_Repaint(routing_id_, view_size));
+  }
 
   // Pump a nested run loop until we time out or get a frame of the right
   // size.
@@ -970,7 +1025,11 @@ void RenderWidgetHostImpl::PauseForPendingResizeOrRepaints() {
   while (1) {
     TRACE_EVENT0("renderer_host", "WaitForSurface::WaitForSingleTaskToRun");
     if (ui::WindowResizeHelperMac::Get()->WaitForSingleTaskToRun(time_left)) {
-      if (!view_->ShouldContinueToPauseForFrame())
+      // For auto-resized views, current_size_ determines the view_size and it
+      // may have changed during the handling of an ResizeACK message.
+      if (auto_resize_enabled_)
+        view_size = current_size_;
+      if (view_->HasAcceleratedSurface(view_size))
         break;
     }
     time_left = timeout_time - TimeTicks::Now();
@@ -1143,17 +1202,7 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
 
   bool scroll_update_needs_wrapping = false;
   if (gesture_event.GetType() == blink::WebInputEvent::kGestureScrollBegin) {
-    // When a user starts scrolling while a fling is active, the GSB will arrive
-    // when is_in_gesture_scroll_[gesture_event.source_device] is still true.
-    // This is because the fling controller defers handling the GFC event
-    // arrived before the GSB and doesn't send a GSE to end the fling; Instead,
-    // it waits for a second GFS to arrive and boost the current active fling if
-    // possible. While GFC handling is deferred the controller suppresses the
-    // GSB and GSU events instead of sending them to the renderer and continues
-    // to progress the fling. So, the renderer doesn't receive two GSB events
-    // without any GSE in between.
-    DCHECK(!is_in_gesture_scroll_[gesture_event.source_device] ||
-           FlingCancellationIsDeferred());
+    DCHECK(!is_in_gesture_scroll_[gesture_event.source_device]);
     is_in_gesture_scroll_[gesture_event.source_device] = true;
   } else if (gesture_event.GetType() ==
              blink::WebInputEvent::kGestureScrollEnd) {
@@ -1201,17 +1250,8 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
       }
 
       is_in_touchpad_gesture_fling_ = true;
-    } else if (gesture_event.source_device ==
-               blink::WebGestureDevice::kWebGestureDeviceTouchscreen) {
-      DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
-
-      // The FlingController handles GFS with touchscreen source and sends GSU
-      // events with inertial state to the renderer to progress the fling.
-      // is_in_gesture_scroll must stay true till the fling progress is
-      // finished. Then the FlingController will generate and send a GSE which
-      // shows the end of a scroll sequence and resets is_in_gesture_scroll_.
-    } else {
-      // Autoscroll fling is still handled on renderer.
+    } else {  // gesture_event.source_device !=
+              // blink::WebGestureDevice::kWebGestureDeviceTouchpad
       DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
       is_in_gesture_scroll_[gesture_event.source_device] = false;
     }
@@ -2943,13 +2983,6 @@ void RenderWidgetHostImpl::StopFling() {
     input_router_->StopFling();
 }
 
-bool RenderWidgetHostImpl::FlingCancellationIsDeferred() const {
-  if (input_router_)
-    return input_router_->FlingCancellationIsDeferred();
-
-  return false;
-}
-
 void RenderWidgetHostImpl::OnRenderFrameMetadata(
     const cc::RenderFrameMetadata& metadata) {
   last_render_frame_metadata_ = metadata;
@@ -2991,26 +3024,6 @@ bool RenderWidgetHostImpl::SurfacePropertiesMismatch(
   // For non-Android or when surface synchronization is not enabled, just use a
   // basic comparison.
   return first != second;
-}
-
-bool RenderWidgetHostImpl::CanResize() {
-  // Don't resize if the |delegate_| has already been detached because its
-  // WebContents is being deleted.
-  return !resize_ack_pending_ && process_->HasConnection() && view_ &&
-         renderer_initialized_ && !auto_resize_enabled_ && delegate_ &&
-         !is_hidden_;
-}
-
-void RenderWidgetHostImpl::DidSendResizeParams(
-    const ResizeParams& resize_params) {
-  resize_ack_pending_ = resize_params.needs_resize_ack;
-  next_resize_needs_resize_ack_ = false;
-  bool width_changed =
-      !old_resize_params_ ||
-      old_resize_params_->new_size.width() != resize_params.new_size.width();
-  old_resize_params_ = resize_params;
-  if (delegate_)
-    delegate_->RenderWidgetWasResized(this, width_changed);
 }
 
 }  // namespace content

@@ -127,7 +127,7 @@ std::string QuicUrlUtilsImpl::GetPushPromiseUrl(QuicStringPiece scheme,
   //
   // Note: url::CanonicalizeScheme() will have added the ':' to
   // |canonical_scheme|.
-  GURL origin_url(canonical_scheme + "//" + std::string(authority));
+  GURL origin_url(canonical_scheme + "//" + authority.as_string());
   if (!origin_url.is_valid() || !origin_url.SchemeIsHTTPOrHTTPS() ||
       // The following checks are merely defense in depth.
       origin_url.SchemeIsSuborigin() || origin_url.has_username() ||
@@ -140,7 +140,7 @@ std::string QuicUrlUtilsImpl::GetPushPromiseUrl(QuicStringPiece scheme,
   // Attempt to parse the path.
   std::string spec = origin_url.GetWithEmptyPath().spec();
   spec.pop_back();  // Remove the '/', as ":path" must contain it.
-  spec.append(std::string(path));
+  spec.append(path.as_string());
 
   // Attempt to parse the full URL, with the path as well. Ensure there is no
   // fragment to the query.

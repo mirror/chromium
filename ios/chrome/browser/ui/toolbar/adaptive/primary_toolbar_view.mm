@@ -24,8 +24,6 @@
 
 // Container for the location bar, redefined as readwrite.
 @property(nonatomic, strong, readwrite) UIView* locationBarContainer;
-// The height of the container for the location bar, redefined as readwrite.
-@property(nonatomic, strong, readwrite) NSLayoutConstraint* locationBarHeight;
 
 // StackView containing the leading buttons (relative to the location bar). It
 // should only contain ToolbarButtons. Redefined as readwrite.
@@ -68,7 +66,7 @@
 @implementation PrimaryToolbarView
 
 @synthesize locationBarView = _locationBarView;
-@synthesize locationBarHeight = _locationBarHeight;
+@synthesize topSafeAnchor = _topSafeAnchor;
 @synthesize buttonFactory = _buttonFactory;
 @synthesize allButtons = _allButtons;
 @synthesize progressBar = _progressBar;
@@ -103,6 +101,7 @@
     return;
   }
   DCHECK(self.buttonFactory);
+  DCHECK(self.topSafeAnchor);
 
   self.backgroundColor =
       self.buttonFactory.toolbarConfiguration.backgroundColor;
@@ -114,12 +113,6 @@
   [self setUpProgressBar];
 
   [self setUpConstraints];
-}
-
-#pragma mark - UIView
-
-- (CGSize)intrinsicContentSize {
-  return CGSizeMake(UIViewNoIntrinsicMetric, kToolbarHeight);
 }
 
 #pragma mark - Setup
@@ -196,14 +189,11 @@
         constraintEqualToAnchor:safeArea.leadingAnchor],
     [self.leadingStackView.bottomAnchor
         constraintEqualToAnchor:safeArea.bottomAnchor],
-    [self.leadingStackView.heightAnchor
-        constraintEqualToConstant:kToolbarHeight],
+    [self.leadingStackView.topAnchor
+        constraintEqualToAnchor:self.topSafeAnchor],
   ]];
 
   // LocationBar constraints.
-  self.locationBarHeight = [self.locationBarContainer.heightAnchor
-      constraintEqualToConstant:kToolbarHeight -
-                                2 * kLocationBarVerticalMargin];
   [NSLayoutConstraint activateConstraints:@[
     [self.locationBarContainer.leadingAnchor
         constraintEqualToAnchor:self.leadingStackView.trailingAnchor],
@@ -212,7 +202,12 @@
     [self.locationBarContainer.bottomAnchor
         constraintEqualToAnchor:self.bottomAnchor
                        constant:-kLocationBarVerticalMargin],
-    self.locationBarHeight,
+    [self.locationBarContainer.topAnchor
+        constraintEqualToAnchor:self.topSafeAnchor
+                       constant:kLocationBarVerticalMargin],
+    [self.locationBarContainer.heightAnchor
+        constraintEqualToConstant:kToolbarHeight -
+                                  2 * kLocationBarVerticalMargin],
   ]];
 
   // Trailing StackView constraints.
@@ -221,8 +216,8 @@
         constraintEqualToAnchor:safeArea.trailingAnchor],
     [self.trailingStackView.bottomAnchor
         constraintEqualToAnchor:safeArea.bottomAnchor],
-    [self.trailingStackView.heightAnchor
-        constraintEqualToConstant:kToolbarHeight],
+    [self.trailingStackView.topAnchor
+        constraintEqualToAnchor:self.topSafeAnchor],
   ]];
 
   // locationBarView constraints, if present.
@@ -267,12 +262,6 @@
         arrayByAddingObjectsFromArray:self.trailingStackViewButtons];
   }
   return _allButtons;
-}
-
-#pragma mark - AdaptiveToolbarView
-
-- (ToolbarButton*)omniboxButton {
-  return nil;
 }
 
 @end

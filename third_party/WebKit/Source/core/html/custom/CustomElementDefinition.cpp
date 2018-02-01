@@ -6,7 +6,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Attr.h"
-#include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/custom/CustomElement.h"
@@ -92,14 +91,13 @@ void CustomElementDefinition::CheckConstructorResult(
 
 HTMLElement* CustomElementDefinition::CreateElementForConstructor(
     Document& document) {
-  HTMLElement* element = HTMLElementFactory::CreateRawHTMLElement(
-      Descriptor().LocalName(), document, kCreatedByCreateElement);
-  if (!element) {
-    element =
-        HTMLElement::Create(QualifiedName(g_null_atom, Descriptor().LocalName(),
-                                          HTMLNames::xhtmlNamespaceURI),
-                            document);
-  }
+  // TODO(kojii): When HTMLElementFactory has an option not to queue
+  // upgrade, call that instead of HTMLElement. HTMLElement is enough
+  // for now, but type extension will require HTMLElementFactory.
+  HTMLElement* element =
+      HTMLElement::Create(QualifiedName(g_null_atom, Descriptor().LocalName(),
+                                        HTMLNames::xhtmlNamespaceURI),
+                          document);
   // TODO(davaajav): write this as one call to setCustomElementState instead of
   // two
   element->SetCustomElementState(CustomElementState::kUndefined);
@@ -123,13 +121,14 @@ HTMLElement* CustomElementDefinition::CreateElementAsync(
     // prefix set to prefix, local name set to localName, custom element
     // state set to "undefined", custom element definition set to null,
     // is value set to is, and node document set to document.
-    auto* result = document.CreateRawElement(tag_name, flags);
+    auto* result = HTMLElementFactory::CreateRawHTMLElement(
+        tag_name.LocalName(), document, flags);
     result->SetCustomElementState(CustomElementState::kUndefined);
 
     // 5.4. Otherwise, enqueue a custom element upgrade reaction given
     // result and definition.
     EnqueueUpgradeReaction(result);
-    return ToHTMLElement(result);
+    return result;
   }
 
   // 6. If definition is non-null, then:

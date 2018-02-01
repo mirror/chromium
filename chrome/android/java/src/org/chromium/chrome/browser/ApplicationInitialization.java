@@ -28,6 +28,8 @@ public final class ApplicationInitialization {
      */
     public static void enableFullscreenFlags(
             Resources resources, Context context, int resControlContainerHeight) {
+        ((ChromeApplication) context.getApplicationContext()).initCommandLine();
+
         CommandLine commandLine = CommandLine.getInstance();
         if (commandLine.hasSwitch(ChromeSwitches.DISABLE_FULLSCREEN)) return;
 

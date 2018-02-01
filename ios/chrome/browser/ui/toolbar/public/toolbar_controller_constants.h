@@ -13,8 +13,6 @@
 
 // Height of the toolbar.
 extern const CGFloat kToolbarHeight;
-// Height of the toolbar when in fullscreen.
-extern const CGFloat kToolbarHeightFullscreen;
 
 // The time delay before non-initial button images are loaded.
 extern const int64_t kNonInitialImageAdditionDelayNanosec;

@@ -1042,8 +1042,8 @@ FloatQuad PaintLayerScrollableArea::LocalToVisibleContentQuad(
   return local_object->LocalToAncestorQuad(quad, box, flags);
 }
 
-scoped_refptr<base::SingleThreadTaskRunner>
-PaintLayerScrollableArea::GetTimerTaskRunner() const {
+scoped_refptr<WebTaskRunner> PaintLayerScrollableArea::GetTimerTaskRunner()
+    const {
   return GetLayoutBox()->GetFrame()->GetTaskRunner(TaskType::kUnspecedTimer);
 }
 

@@ -7,8 +7,7 @@
 typedef (CanvasRenderingContext2D or
          WebGLRenderingContext or
          WebGL2RenderingContext or
-         ImageBitmapRenderingContext or
-         XRPresentationContext) RenderingContext;
+         ImageBitmapRenderingContext) RenderingContext;
 
 [
     ImplementedAs=HTMLCanvasElementModule

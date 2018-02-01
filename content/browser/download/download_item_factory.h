@@ -56,7 +56,7 @@ public:
       int64_t total_bytes,
       const std::string& hash,
       DownloadItem::DownloadState state,
-      download::DownloadDangerType danger_type,
+      DownloadDangerType danger_type,
       DownloadInterruptReason interrupt_reason,
       bool opened,
       base::Time last_access_time,

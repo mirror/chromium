@@ -43,6 +43,7 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
+#include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -177,6 +178,12 @@ mojom::FetchCacheMode DetermineFrameCacheMode(Frame* frame,
                             ResourceType::kIsNotMainResource, load_type);
 }
 
+bool IsClientHintsAllowed(const KURL& url) {
+  return (url.ProtocolIs("http") || url.ProtocolIs("https")) &&
+         (SecurityOrigin::IsSecure(url) ||
+          SecurityOrigin::Create(url)->IsLocalhost());
+}
+
 }  // namespace
 
 struct FrameFetchContext::FrozenState final
@@ -293,8 +300,7 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-scoped_refptr<base::SingleThreadTaskRunner>
-FrameFetchContext::GetLoadingTaskRunner() {
+scoped_refptr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
   if (IsDetached())
     return FetchContext::GetLoadingTaskRunner();
   return GetFrame()->GetTaskRunner(TaskType::kNetworking);
@@ -522,11 +528,14 @@ void FrameFetchContext::DispatchDidReceiveResponse(
                               ->Loader()
                               .GetProvisionalDocumentLoader()) {
     FrameClientHintsPreferencesContext hints_context(GetFrame());
-    document_loader_->GetClientHintsPreferences()
-        .UpdateFromAcceptClientHintsHeader(
-            response.HttpHeaderField(HTTPNames::Accept_CH), response.Url(),
-            &hints_context);
-
+    if (!blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() ||
+        IsClientHintsAllowed(response.Url())) {
+      // If the persistent client hint feature is enabled, then client hints
+      // should be allowed only on secure URLs.
+      document_loader_->GetClientHintsPreferences()
+          .UpdateFromAcceptClientHintsHeader(
+              response.HttpHeaderField(HTTPNames::Accept_CH), &hints_context);
+    }
     // When response is received with a provisional docloader, the resource
     // haven't committed yet, and we cannot load resources, only preconnect.
     resource_loading_policy = LinkLoader::kDoNotLoadResources;
@@ -798,6 +807,11 @@ bool FrameFetchContext::IsLoadComplete() const {
   return document_ && document_->LoadEventFinished();
 }
 
+bool FrameFetchContext::PageDismissalEventBeingDispatched() const {
+  return document_ && document_->PageDismissalEventBeingDispatched() !=
+                          Document::kNoDismissal;
+}
+
 bool FrameFetchContext::UpdateTimingInfoForIFrameNavigation(
     ResourceTimingInfo* info) {
   if (IsDetached())
@@ -816,6 +830,12 @@ bool FrameFetchContext::UpdateTimingInfoForIFrameNavigation(
   if (MasterDocumentLoader()->LoadType() == kFrameLoadTypeInitialHistoryLoad)
     return false;
   return true;
+}
+
+void FrameFetchContext::SendImagePing(const KURL& url) {
+  if (IsDetached())
+    return;
+  PingLoader::LoadImage(GetFrame(), url);
 }
 
 const SecurityOrigin* FrameFetchContext::GetSecurityOrigin() const {
@@ -842,7 +862,7 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled()) {
     // If the feature is enabled, then client hints are allowed only on secure
     // URLs.
-    if (!ClientHintsPreferences::IsClientHintsAllowed(request.Url()))
+    if (!IsClientHintsAllowed(request.Url()))
       return;
 
     // Check if |url| is allowed to run JavaScript. If not, client hints are not
@@ -1175,6 +1195,9 @@ bool FrameFetchContext::ShouldSendClientHint(
 
 void FrameFetchContext::ParseAndPersistClientHints(
     const ResourceResponse& response) {
+  if (!IsClientHintsAllowed(response.Url()))
+    return;
+
   ClientHintsPreferences hints_preferences;
   WebEnabledClientHints enabled_client_hints;
   TimeDelta persist_duration;
@@ -1196,7 +1219,7 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<WebTaskRunner> task_runner) {
   DCHECK(!IsDetached());
   WrappedResourceRequest webreq(request);
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
@@ -1247,7 +1270,7 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
 }
 
 void FrameFetchContext::RecordDataUriWithOctothorpe() {
-  CountDeprecation(WebFeature::kDataUriHasOctothorpe);
+  UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
 }
 
 ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(

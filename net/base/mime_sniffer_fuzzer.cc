@@ -52,10 +52,6 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   // exploring GURL space with invalid inputs.
   std::string url_string = GetNextArgument(&input);
   std::string mime_type_hint = GetNextArgument(&input);
-  net::ForceSniffFileUrlsForHtml force_sniff_file_urls_for_html =
-      GetNextArgument(&input).size() == 0
-          ? net::ForceSniffFileUrlsForHtml::kDisabled
-          : net::ForceSniffFileUrlsForHtml::kEnabled;
 
   // Do nothing if input is too long.
   if (input.length() > kMaxSniffLength)
@@ -63,7 +59,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   std::string result;
   net::SniffMimeType(input.data(), input.length(), GURL(url_string),
-                     mime_type_hint, force_sniff_file_urls_for_html, &result);
+                     mime_type_hint, &result);
 
   net::SniffMimeTypeFromLocalData(input.data(), input.length(), &result);
 

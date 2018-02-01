@@ -47,8 +47,8 @@ class ScopedAllowWaitForDebugURL;
 class SessionStorageDatabase;
 class SoftwareOutputDeviceMus;
 class SynchronousCompositor;
+class SynchronousCompositorBrowserFilter;
 class SynchronousCompositorHost;
-class SynchronousCompositorSyncCallBridge;
 class TextInputClientMac;
 }  // namespace content
 namespace cronet {
@@ -121,10 +121,6 @@ class ScreenMus;
 
 namespace viz {
 class ServerGpuMemoryBufferManager;
-}
-
-namespace webrtc {
-class DesktopConfigurationMonitor;
 }
 
 namespace base {
@@ -280,7 +276,6 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
   friend class rlz_lib::FinancialPing;
   friend class shell_integration::LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
-  friend class webrtc::DesktopConfigurationMonitor;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
@@ -304,7 +299,6 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitivesOutsideBlockingScope {
       ThreadRestrictionsTest,
       ScopedAllowBaseSyncPrimitivesOutsideBlockingScopeResetsState);
   friend class ::KeyStorageLinux;
-  friend class content::SynchronousCompositorSyncCallBridge;
   friend class midi::TaskService;  // https://crbug.com/796830
 
   ScopedAllowBaseSyncPrimitivesOutsideBlockingScope()
@@ -408,6 +402,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::ScopedAllowWaitForAndroidLayoutTests;
   friend class content::ScopedAllowWaitForDebugURL;
   friend class content::SynchronousCompositor;
+  friend class content::SynchronousCompositorBrowserFilter;
   friend class content::SynchronousCompositorHost;
   friend class ::HistogramSynchronizer;
   friend class internal::TaskTracker;

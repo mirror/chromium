@@ -39,7 +39,7 @@ bool FakeMessageCenter::IsQuietMode() const {
   return false;
 }
 
-Notification* FakeMessageCenter::FindVisibleNotificationById(
+message_center::Notification* FakeMessageCenter::FindVisibleNotificationById(
     const std::string& id) {
   for (auto* notification : GetVisibleNotifications()) {
     if (id == notification->id())

@@ -24,8 +24,6 @@
 - (void)start {
   self.viewController = [[SecondaryToolbarViewController alloc] init];
   self.viewController.buttonFactory = [self buttonFactoryWithType:SECONDARY];
-  self.viewController.dispatcher = self.dispatcher;
-
   [super start];
 }
 

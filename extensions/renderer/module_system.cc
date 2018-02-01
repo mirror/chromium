@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
@@ -17,7 +16,6 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/extension.h"
-#include "extensions/common/extension_features.h"
 #include "extensions/common/extensions_client.h"
 #include "extensions/renderer/console.h"
 #include "extensions/renderer/safe_builtins.h"
@@ -170,9 +168,7 @@ ModuleSystem::ModuleSystem(ScriptContext* context, const SourceMap* source_map)
       context_(context),
       source_map_(source_map),
       natives_enabled_(0),
-      exception_handler_(new DefaultExceptionHandler(context)),
-      lazily_initialize_handlers_(
-          base::FeatureList::IsEnabled(features::kNativeCrxBindings)) {
+      exception_handler_(new DefaultExceptionHandler(context)) {
   v8::Local<v8::Object> global(context->v8_context()->Global());
   v8::Isolate* isolate = context->isolate();
   SetPrivate(global, kModulesField, v8::Object::New(isolate));
@@ -351,9 +347,7 @@ void ModuleSystem::RegisterNativeHandler(
     const std::string& name,
     std::unique_ptr<NativeHandler> native_handler) {
   ClobberExistingNativeHandler(name);
-  if (!lazily_initialize_handlers_)
-    native_handler->Initialize();
-
+  native_handler->Initialize();
   native_handler_map_[name] = std::move(native_handler);
 }
 
@@ -615,10 +609,6 @@ v8::MaybeLocal<v8::Object> ModuleSystem::RequireNativeFromString(
           "Couldn't find native for requireNative(" + native_name + ")");
     return v8::MaybeLocal<v8::Object>();
   }
-
-  if (lazily_initialize_handlers_ && !i->second->IsInitialized())
-    i->second->Initialize();
-
   return i->second->NewInstance();
 }
 

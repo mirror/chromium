@@ -734,9 +734,6 @@ extern const char kQuicDescription[];
 extern const char kReducedReferrerGranularityName[];
 extern const char kReducedReferrerGranularityDescription[];
 
-extern const char kRegionalLocalesAsDisplayUIName[];
-extern const char kRegionalLocalesAsDisplayUIDescription[];
-
 extern const char kRemoveUsageOfDeprecatedGaiaSigninEndpointName[];
 extern const char kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription[];
 
@@ -870,7 +867,9 @@ extern const char kTLS13VariantName[];
 extern const char kTLS13VariantDescription[];
 extern const char kTLS13VariantDisabled[];
 extern const char kTLS13VariantDeprecated[];
+extern const char kTLS13VariantDraft22[];
 extern const char kTLS13VariantDraft23[];
+extern const char kTLS13VariantExperiment2[];
 
 extern const char kSuggestionsWithSubStringMatchName[];
 extern const char kSuggestionsWithSubStringMatchDescription[];
@@ -937,9 +936,6 @@ extern const char kTranslateRankerEnforcementDescription[];
 
 extern const char kTrySupportedChannelLayoutsName[];
 extern const char kTrySupportedChannelLayoutsDescription[];
-
-extern const char kUnifiedConsentName[];
-extern const char kUnifiedConsentDescription[];
 
 extern const char kUiPartialSwapName[];
 extern const char kUiPartialSwapDescription[];
@@ -1812,9 +1808,6 @@ extern const char kAshEnableKeyboardShortcutViewerDescription[];
 
 extern const char kAshEnableMirroredScreenName[];
 extern const char kAshEnableMirroredScreenDescription[];
-
-extern const char kAshEnableNewOverviewUiName[];
-extern const char kAshEnableNewOverviewUiDescription[];
 
 extern const char kAshEnablePersistentWindowBoundsName[];
 extern const char kAshEnablePersistentWindowBoundsDescription[];

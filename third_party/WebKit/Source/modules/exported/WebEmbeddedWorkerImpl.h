@@ -37,6 +37,7 @@
 #include "core/workers/WorkerClients.h"
 #include "modules/ModulesExport.h"
 #include "modules/serviceworkers/ServiceWorkerContentSettingsProxy.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
 #include "public/web/WebEmbeddedWorker.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"

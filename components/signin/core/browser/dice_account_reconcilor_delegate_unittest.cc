@@ -7,26 +7,25 @@
 #include <vector>
 
 #include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace signin {
-
 TEST(DiceAccountReconcilorDelegateTest, RevokeTokens) {
   sync_preferences::TestingPrefServiceSyncable pref_service;
+  signin::RegisterAccountConsistencyProfilePrefs(pref_service.registry());
   TestSigninClient client(&pref_service);
+  signin::DiceAccountReconcilorDelegate delegate(&client);
   {
     // Dice is enabled, don't revoke.
-    DiceAccountReconcilorDelegate delegate(&client,
-                                           AccountConsistencyMethod::kDice);
+    signin::ScopedAccountConsistencyDice scoped_dice;
     EXPECT_FALSE(delegate.ShouldRevokeAllSecondaryTokensBeforeReconcile(
         std::vector<gaia::ListedAccount>()));
   }
   {
-    DiceAccountReconcilorDelegate delegate(
-        &client, AccountConsistencyMethod::kDiceMigration);
+    signin::ScopedAccountConsistencyDiceMigration scoped_dice_migration;
     // Gaia accounts are not empty, don't revoke.
     gaia::ListedAccount gaia_account;
     gaia_account.id = "other";
@@ -37,5 +36,3 @@ TEST(DiceAccountReconcilorDelegateTest, RevokeTokens) {
         std::vector<gaia::ListedAccount>()));
   }
 }
-
-}  // namespace signin

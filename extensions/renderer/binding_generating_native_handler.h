@@ -26,7 +26,6 @@ class BindingGeneratingNativeHandler : public NativeHandler {
                                  const std::string& bind_to);
 
   void Initialize() final;
-  bool IsInitialized() final;
   v8::Local<v8::Object> NewInstance() override;
 
  private:

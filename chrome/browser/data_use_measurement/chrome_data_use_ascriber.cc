@@ -269,7 +269,7 @@ void ChromeDataUseAscriber::OnUrlRequestCompletedOrDestroyed(
         pending_navigation_data_use_map_.end();
   }
 
-  entry->OnUrlRequestDestroyed(request);
+  DataUseAscriber::OnUrlRequestDestroyed(request);
   request->RemoveUserData(
       DataUseRecorderEntryAsUserData::kDataUseAscriberUserDataKey);
 
@@ -328,16 +328,10 @@ void ChromeDataUseAscriber::RenderFrameDeleted(int render_process_id,
 
     if (main_render_frame_entry_map_.end() != main_frame_it) {
       DataUseRecorderEntry entry = main_frame_it->second.data_use_recorder;
-
-      // Stop tracking requests for the old frame.
-      std::vector<net::URLRequest*> pending_url_requests;
-      entry->GetPendingURLRequests(&pending_url_requests);
-      for (net::URLRequest* request : pending_url_requests) {
-        OnUrlRequestCompletedOrDestroyed(request);
+      if (entry->IsDataUseComplete()) {
+        NotifyPageLoadConcluded(entry);
+        data_use_recorders_.erase(entry);
       }
-      DCHECK(entry->IsDataUseComplete());
-      NotifyPageLoadConcluded(entry);
-      data_use_recorders_.erase(entry);
       main_render_frame_entry_map_.erase(main_frame_it);
     }
   }
@@ -478,18 +472,10 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
         AscribeRecorderWithRequest(request, entry);
       }
     }
-
-    // Stop tracking requests for the old frame.
-    pending_url_requests.clear();
-    old_frame_entry->GetPendingURLRequests(&pending_url_requests);
-    for (net::URLRequest* request : pending_url_requests) {
-      OnUrlRequestCompletedOrDestroyed(request);
+    if (old_frame_entry->IsDataUseComplete()) {
+      NotifyPageLoadConcluded(old_frame_entry);
+      data_use_recorders_.erase(old_frame_entry);
     }
-    DCHECK(old_frame_entry->IsDataUseComplete());
-
-    NotifyPageLoadConcluded(old_frame_entry);
-    data_use_recorders_.erase(old_frame_entry);
-
     entry->set_is_visible(main_frame_it->second.is_visible);
     main_frame_it->second.data_use_recorder = entry;
     NotifyPageLoadCommit(entry);

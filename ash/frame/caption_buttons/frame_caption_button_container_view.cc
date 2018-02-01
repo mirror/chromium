@@ -31,21 +31,20 @@ namespace ash {
 
 namespace {
 
-// Duration of the animation of the position of buttons to the left of
-// |size_button_|.
+// Duration of the animation of the position of |minimize_button_|.
 const int kPositionAnimationDurationMs = 500;
 
 // Duration of the animation of the alpha of |size_button_|.
 const int kAlphaAnimationDurationMs = 250;
 
 // Delay during |tablet_mode_animation_| hide to wait before beginning to
-// animate the position of buttons to the left of |size_button_|.
+// animate the position of |minimize_button_|.
 const int kHidePositionDelayMs = 100;
 
 // Duration of |tablet_mode_animation_| hiding.
 // Hiding size button 250
 // |------------------------|
-// Delay 100      Slide other buttons 500
+// Delay 100      Slide minimize button 500
 // |---------|-------------------------------------------------|
 const int kHideAnimationDurationMs =
     kHidePositionDelayMs + kPositionAnimationDurationMs;
@@ -55,7 +54,7 @@ const int kHideAnimationDurationMs =
 const int kShowAnimationAlphaDelayMs = 100;
 
 // Duration of |tablet_mode_animation_| showing.
-// Slide other buttons 500
+// Slide minimize button 500
 // |-------------------------------------------------|
 // Delay 100   Show size button 250
 // |---------|-----------------------|
@@ -83,7 +82,7 @@ float SizeButtonHideDuration() {
 }
 
 // Value of |tablet_mode_animation_| hiding to begin animating the position of
-// buttons to the left of |size_button_|.
+// |minimize_button_|.
 float HidePositionStartValue() {
   return 1.0f -
          static_cast<float>(kHidePositionDelayMs) / kHideAnimationDurationMs;
@@ -222,7 +221,7 @@ void FrameCaptionButtonContainerView::Layout() {
   views::View::Layout();
 
   // This ensures that the first frame of the animation to show the size button
-  // pushes the buttons to the left of the size button into the center.
+  // pushes the minimize button into the center.
   if (tablet_mode_animation_->is_animating())
     AnimationProgressed(tablet_mode_animation_.get());
 }
@@ -251,19 +250,19 @@ void FrameCaptionButtonContainerView::AnimationProgressed(
     const gfx::Animation* animation) {
   double current_value = animation->GetCurrentValue();
   int size_alpha = 0;
-  int x_slide = 0;
+  int minimize_x = 0;
   if (tablet_mode_animation_->IsShowing()) {
-    double scaled_value_alpha =
+    double scaled_value =
         CapAnimationValue((current_value - SizeButtonShowStartValue()) /
                           SizeButtonShowDuration());
     double tweened_value_alpha =
-        gfx::Tween::CalculateValue(gfx::Tween::EASE_OUT, scaled_value_alpha);
+        gfx::Tween::CalculateValue(gfx::Tween::EASE_OUT, scaled_value);
     size_alpha = gfx::Tween::LinearIntValueBetween(tweened_value_alpha, 0, 255);
 
     double tweened_value_slide =
         gfx::Tween::CalculateValue(gfx::Tween::EASE_OUT, current_value);
-    x_slide = gfx::Tween::LinearIntValueBetween(tweened_value_slide,
-                                                size_button_->width(), 0);
+    minimize_x = gfx::Tween::LinearIntValueBetween(tweened_value_slide,
+                                                   size_button_->x(), 0);
   } else {
     double scaled_value_alpha =
         CapAnimationValue((1.0f - current_value) / SizeButtonHideDuration());
@@ -273,21 +272,13 @@ void FrameCaptionButtonContainerView::AnimationProgressed(
 
     double scaled_value_position = CapAnimationValue(
         (HidePositionStartValue() - current_value) / HidePositionStartValue());
-    double tweened_value_slide =
+    double tweened_value_position =
         gfx::Tween::CalculateValue(gfx::Tween::EASE_OUT, scaled_value_position);
-    x_slide = gfx::Tween::LinearIntValueBetween(tweened_value_slide, 0,
-                                                size_button_->width());
+    minimize_x = gfx::Tween::LinearIntValueBetween(tweened_value_position, 0,
+                                                   size_button_->x());
   }
   size_button_->SetAlpha(size_alpha);
-
-  // Slide all buttons to the left of the size button. Usually this is just the
-  // minimize button but it can also include a PWA menu button.
-  int previous_x = 0;
-  for (int i = 0; i < child_count() && child_at(i) != size_button_; ++i) {
-    views::View* button = child_at(i);
-    button->SetX(previous_x + x_slide);
-    previous_x += button->width();
-  }
+  minimize_button_->SetX(minimize_x);
 }
 
 void FrameCaptionButtonContainerView::SetButtonIcon(FrameCaptionButton* button,

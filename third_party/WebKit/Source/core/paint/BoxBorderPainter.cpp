@@ -345,7 +345,7 @@ void DrawBleedAdjustedDRRect(GraphicsContext& context,
         context.FillDRRect(adjusted_outer, inner, color);
         break;
       }
-      FALLTHROUGH;
+    // fall through
     default:
       context.FillDRRect(outer, inner, color);
       break;

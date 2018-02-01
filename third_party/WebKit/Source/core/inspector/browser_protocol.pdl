@@ -4633,9 +4633,6 @@ domain Page
       optional string headerTemplate
       # HTML template for the print footer. Should use the same format as the `headerTemplate`.
       optional string footerTemplate
-      # Whether or not to prefer page size as defined by css. Defaults to false,
-      # in which case the content will be scaled to fit the paper size.
-      optional boolean preferCSSPageSize
     returns
       # Base64-encoded pdf data.
       string data
@@ -5458,6 +5455,11 @@ domain Target
       optional SessionID sessionId
       # Deprecated.
       deprecated optional TargetID targetId
+
+  experimental command setAttachToFrames
+    parameters
+      # Whether to attach to frames.
+      boolean value
 
   # Controls whether to automatically attach to new targets which are considered to be related to
   # this one. When turned on, attaches to all existing related targets as well. When turned off,

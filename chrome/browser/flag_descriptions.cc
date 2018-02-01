@@ -1180,13 +1180,6 @@ const char kReducedReferrerGranularityDescription[] =
     "reduce the amount of information in the 'referer' header for cross-origin "
     "requests.";
 
-extern const char kRegionalLocalesAsDisplayUIName[] =
-    "Allow regional locales as display UI";
-extern const char kRegionalLocalesAsDisplayUIDescription[] =
-    "This flag allows regional locales to be selected as display UI by the "
-    "user in Language Settings. The actual locale of the system is derived "
-    "from the user selection based on some simple fallback logic.";
-
 const char kRemoveUsageOfDeprecatedGaiaSigninEndpointName[] =
     "Remove usage of the deprecated GAIA sign-in endpoint";
 const char kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription[] =
@@ -1473,7 +1466,9 @@ const char kTLS13VariantName[] = "TLS 1.3";
 const char kTLS13VariantDescription[] = "Sets the TLS 1.3 variant used.";
 const char kTLS13VariantDisabled[] = "Disabled";
 const char kTLS13VariantDeprecated[] = "Disabled (Deprecated Setting)";
+const char kTLS13VariantDraft22[] = "Enabled (Draft 22)";
 const char kTLS13VariantDraft23[] = "Enabled (Draft 23)";
+const char kTLS13VariantExperiment2[] = "Enabled (Experiment 2)";
 
 const char kTopDocumentIsolationName[] = "Top document isolation";
 const char kTopDocumentIsolationDescription[] =
@@ -1534,12 +1529,6 @@ const char kTrySupportedChannelLayoutsDescription[] =
     "default hardware layout are available. Turning this on will allow the OS "
     "to do stereo to surround expansion if supported. May expose third party "
     "driver bugs, use with caution.";
-
-const char kUnifiedConsentName[] = "Unified Consent";
-const char kUnifiedConsentDescription[] =
-    "Enables a unified management of user consent for privacy-related "
-    "features. This includes new confirmation screens and improved settings "
-    "pages.";
 
 const char kUiPartialSwapName[] = "Partial swap";
 const char kUiPartialSwapDescription[] = "Sets partial swap behavior.";
@@ -2943,10 +2932,6 @@ const char kAshEnableMirroredScreenName[] = "Enable mirrored screen mode.";
 const char kAshEnableMirroredScreenDescription[] =
     "Enable the mirrored screen mode. This mode flips the screen image "
     "horizontally.";
-
-const char kAshEnableNewOverviewUiName[] = "Enable new overview UI.";
-const char kAshEnableNewOverviewUiDescription[] =
-    "Enables the new overview mode UI.";
 
 const char kAshEnablePersistentWindowBoundsName[] =
     "Enable persistent window bounds in multi-displays scenario.";

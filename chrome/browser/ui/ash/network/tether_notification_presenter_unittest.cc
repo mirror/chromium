@@ -45,6 +45,10 @@ class TetherNotificationPresenterTest : public BrowserWithTestWindowTest {
 
     // NetworkConnect:
     void DisconnectFromNetworkId(const std::string& network_id) override {}
+    bool MaybeShowConfigureUI(const std::string& network_id,
+                              const std::string& connect_error) override {
+      return false;
+    }
     void SetTechnologyEnabled(const chromeos::NetworkTypePattern& technology,
                               bool enabled_state) override {}
     void ShowMobileSetup(const std::string& network_id) override {}
@@ -103,6 +107,11 @@ class TetherNotificationPresenterTest : public BrowserWithTestWindowTest {
     test_settings_ui_delegate_ = new TestSettingsUiDelegate();
     notification_presenter_->SetSettingsUiDelegateForTesting(
         base::WrapUnique(test_settings_ui_delegate_));
+  }
+
+  void TearDown() override {
+    display_service_.reset();
+    BrowserWithTestWindowTest::TearDown();
   }
 
   std::string GetActiveHostNotificationId() {

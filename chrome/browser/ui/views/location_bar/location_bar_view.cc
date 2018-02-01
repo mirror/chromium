@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 
+#include "base/feature_list.h"
 #include "base/i18n/rtl.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -56,6 +57,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
 #include "components/favicon/content/content_favicon_driver.h"
+#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
 #include "components/prefs/pref_service.h"
@@ -373,6 +375,33 @@ views::View* LocationBarView::GetSecurityBubbleAnchorView() {
   return location_icon_view()->GetImageView();
 }
 
+void LocationBarView::GetOmniboxPopupPositioningInfo(
+    gfx::Point* top_left_screen_coord,
+    int* popup_width,
+    int* left_margin,
+    int* right_margin,
+    int top_edge_overlap) {
+  // The popup contents are always sized matching the location bar size.
+  const int popup_contents_left = x();
+  const int popup_contents_right = bounds().right();
+
+  // The popup itself may either be the same width as the contents, or as wide
+  // as the toolbar.
+  bool narrow_popup =
+      base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown);
+  const int popup_left = narrow_popup ? popup_contents_left : 0;
+  const int popup_right =
+      narrow_popup ? popup_contents_right : parent()->width();
+
+  *top_left_screen_coord =
+      gfx::Point(popup_left, parent()->height() - top_edge_overlap);
+  views::View::ConvertPointToScreen(parent(), top_left_screen_coord);
+
+  *popup_width = popup_right - popup_left;
+  *left_margin = popup_contents_left - popup_left;
+  *right_margin = popup_right - popup_contents_right;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // LocationBarView, public LocationBar implementation:
 
@@ -618,7 +647,6 @@ void LocationBarView::Update(const WebContents* contents) {
       ShouldShowLocationIconText(),
       !contents && ShouldAnimateLocationIconTextVisibilityChange());
   OnChanged();  // NOTE: Calls Layout().
-  last_update_security_level_ = GetToolbarModel()->GetSecurityLevel(false);
 }
 
 void LocationBarView::ResetTabState(WebContents* contents) {
@@ -878,13 +906,10 @@ bool LocationBarView::ShouldShowLocationIconText() const {
 }
 
 bool LocationBarView::ShouldAnimateLocationIconTextVisibilityChange() const {
+  // Text for extension URLs should not be animated (their security level is
+  // SecurityLevel::NONE).
   using SecurityLevel = security_state::SecurityLevel;
   SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
-  // Do not animate transitions from HTTP_SHOW_WARNING to DANGEROUS, since the
-  // transition can look confusing/messy.
-  if (level == SecurityLevel::DANGEROUS &&
-      last_update_security_level_ == SecurityLevel::HTTP_SHOW_WARNING)
-    return false;
   return level == SecurityLevel::DANGEROUS ||
          level == SecurityLevel::HTTP_SHOW_WARNING;
 }

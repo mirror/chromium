@@ -9,7 +9,6 @@
 #include <memory>
 #include <vector>
 
-#include "base/component_export.h"
 #include "base/containers/span.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -30,7 +29,7 @@ class IOBufferWithSize;
 
 namespace network {
 
-class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocket : public mojom::UDPSocket {
+class UDPSocket : public mojom::UDPSocket {
  public:
   // Number of Send()/SendTo() requests that are queued internally. Public for
   // testing.

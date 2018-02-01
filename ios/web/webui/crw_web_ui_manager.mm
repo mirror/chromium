@@ -65,6 +65,11 @@ const char kScriptCommandPrefix[] = "webui";
   web::WebStateImpl* _webState;
 }
 
+- (instancetype)init {
+  NOTREACHED();
+  return self;
+}
+
 - (instancetype)initWithWebState:(web::WebStateImpl*)webState {
   if (self = [super init]) {
     DCHECK(webState);

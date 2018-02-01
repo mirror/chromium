@@ -34,7 +34,6 @@
 #include <memory>
 #include <utility>
 
-#include "base/single_thread_task_runner.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreInitializer.h"
@@ -103,6 +102,10 @@ bool IsMainFrame(WebLocalFrameImpl* frame) {
   // though |frame| is meant to be main frame.  See http://crbug.com/526162.
   return frame->ViewImpl() && !frame->Parent();
 }
+
+// TODO(dgozman): somehow get this from a mojo config.
+// See kMaximumMojoMessageSize in services/service_manager/embedder/main.cc.
+const size_t kMaxDevToolsMessageChunkSize = 128 * 1024 * 1024 / 8;
 
 bool ShouldInterruptForMethod(const String& method) {
   // Keep in sync with DevToolsSession::ShouldSendOnIO.
@@ -256,7 +259,7 @@ class WebDevToolsAgentImpl::Session::IOSession
     : public mojom::blink::DevToolsSession {
  public:
   IOSession(scoped_refptr<base::SingleThreadTaskRunner> session_task_runner,
-            scoped_refptr<base::SingleThreadTaskRunner> agent_task_runner,
+            scoped_refptr<WebTaskRunner> agent_task_runner,
             CrossThreadWeakPersistent<WebDevToolsAgentImpl::Session> session,
             mojom::blink::DevToolsSessionRequest request)
       : session_task_runner_(session_task_runner),
@@ -297,7 +300,7 @@ class WebDevToolsAgentImpl::Session::IOSession
 
  private:
   scoped_refptr<base::SingleThreadTaskRunner> session_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> agent_task_runner_;
+  scoped_refptr<WebTaskRunner> agent_task_runner_;
   CrossThreadWeakPersistent<WebDevToolsAgentImpl::Session> session_;
   mojo::Binding<mojom::blink::DevToolsSession> binding_;
 
@@ -361,7 +364,22 @@ void WebDevToolsAgentImpl::Session::SendProtocolMessage(int session_id,
   // protocol response in any of them.
   if (LayoutTestSupport::IsRunningLayoutTest() && call_id)
     agent_->FlushProtocolNotifications();
-  host_ptr_->DispatchProtocolMessage(response, call_id, state);
+
+  bool single_chunk = response.length() < kMaxDevToolsMessageChunkSize;
+  for (size_t pos = 0; pos < response.length();
+       pos += kMaxDevToolsMessageChunkSize) {
+    mojom::blink::DevToolsMessageChunkPtr chunk =
+        mojom::blink::DevToolsMessageChunk::New();
+    chunk->is_first = pos == 0;
+    chunk->is_last = pos + kMaxDevToolsMessageChunkSize >= response.length();
+    chunk->call_id = chunk->is_last ? call_id : 0;
+    chunk->post_state =
+        chunk->is_last && !state.IsNull() ? state : g_empty_string;
+    chunk->data = single_chunk
+                      ? response
+                      : response.Substring(pos, kMaxDevToolsMessageChunkSize);
+    host_ptr_->DispatchProtocolMessage(std::move(chunk));
+  }
 }
 
 void WebDevToolsAgentImpl::Session::DispatchProtocolMessageInternal(

@@ -35,7 +35,6 @@
 #include "ui/gl/gl_image_dxgi.h"
 #include "ui/gl/gl_image_memory.h"
 #include "ui/gl/gl_surface_egl.h"
-#include "ui/gl/gl_surface_presentation_helper.h"
 #include "ui/gl/scoped_make_current.h"
 
 #ifndef EGL_ANGLE_flexible_surface_compatibility
@@ -1206,16 +1205,10 @@ bool DirectCompositionSurfaceWin::Initialize(gl::GLSurfaceFormat format) {
     return false;
   }
 
-  if (!RecreateRootSurface())
-    return false;
-
-  presentation_helper_ =
-      std::make_unique<gl::GLSurfacePresentationHelper>(vsync_provider_.get());
-  return true;
+  return RecreateRootSurface();
 }
 
 void DirectCompositionSurfaceWin::Destroy() {
-  presentation_helper_ = nullptr;
   if (default_surface_) {
     if (!eglDestroySurface(GetDisplay(), default_surface_)) {
       DLOG(ERROR) << "eglDestroySurface failed with error "
@@ -1261,15 +1254,12 @@ bool DirectCompositionSurfaceWin::Resize(const gfx::Size& size,
 
 gfx::SwapResult DirectCompositionSurfaceWin::SwapBuffers(
     const PresentationCallback& callback) {
-  gl::GLSurfacePresentationHelper::ScopedSwapBuffers scoped_swap_buffers(
-      presentation_helper_.get(), callback);
   ui::ScopedReleaseCurrent release_current;
-  root_surface_->SwapBuffers(PresentationCallback());
+  root_surface_->SwapBuffers(callback);
   layer_tree_->CommitAndClearPendingOverlays();
   child_window_.ClearInvalidContents();
-  if (!release_current.Restore())
-    scoped_swap_buffers.set_result(gfx::SwapResult::SWAP_FAILED);
-  return scoped_swap_buffers.result();
+  return release_current.Restore() ? gfx::SwapResult::SWAP_ACK
+                                   : gfx::SwapResult::SWAP_FAILED;
 }
 
 gfx::SwapResult DirectCompositionSurfaceWin::PostSubBuffer(
@@ -1308,8 +1298,6 @@ bool DirectCompositionSurfaceWin::SupportsPostSubBuffer() {
 }
 
 bool DirectCompositionSurfaceWin::OnMakeCurrent(gl::GLContext* context) {
-  if (presentation_helper_)
-    presentation_helper_->OnMakeCurrent(context, this);
   if (root_surface_)
     return root_surface_->OnMakeCurrent(context);
   return true;

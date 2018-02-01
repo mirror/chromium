@@ -20,9 +20,9 @@
 #include "content/browser/appcache/appcache_url_request_job.h"
 #include "content/browser/service_worker/service_worker_request_handler.h"
 #include "content/common/navigation_subresource_loader_params.h"
+#include "content/public/common/content_features.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
-#include "services/network/public/cpp/features.h"
 
 namespace content {
 
@@ -180,7 +180,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
 
   // We don't fallback for responses that we delivered.
   if (job_.get()) {
-    if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
       DCHECK(!job_->IsDeliveringNetworkResponse());
       return nullptr;
     } else if (job_->IsDeliveringAppCacheResponse() ||
@@ -347,7 +347,7 @@ void AppCacheRequestHandler::OnPrepareToRestartURLRequest() {
 std::unique_ptr<AppCacheJob> AppCacheRequestHandler::CreateJob(
     net::NetworkDelegate* network_delegate) {
   std::unique_ptr<AppCacheJob> job;
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     job.reset(new AppCacheURLLoaderJob(request_->AsURLLoaderRequest(),
                                        storage(), std::move(loader_callback_)));
   } else {
@@ -475,13 +475,13 @@ void AppCacheRequestHandler::OnMainResponseFound(
 // NetworkService loading:
 void AppCacheRequestHandler::RunLoaderCallbackForMainResource(
     LoaderCallback callback,
-    SingleRequestURLLoaderFactory::RequestHandler handler) {
+    StartLoaderCallback start_loader_callback) {
   // For now let |this| always also return the subresource loader
   // if (and only if) this returns a non-null |start_loader_callback|
   // for handling the main resource.
-  if (handler)
+  if (start_loader_callback)
     should_create_subresource_loader_ = true;
-  std::move(callback).Run(std::move(handler));
+  std::move(callback).Run(std::move(start_loader_callback));
 }
 
 // Sub-resource handling ----------------------------------------------
@@ -591,9 +591,10 @@ void AppCacheRequestHandler::MaybeCreateLoader(
   MaybeLoadResource(nullptr);
   // If a job is created, the job assumes ownership of the callback and
   // the responsibility to call it. If no job is created, we call it with
-  // a null callback to let our client know we have no loader for this request.
+  // an empty StartLoaderCallback to let our client we have no loader for
+  // this resource request.
   if (loader_callback_)
-    std::move(loader_callback_).Run({});
+    std::move(loader_callback_).Run(StartLoaderCallback());
 }
 
 bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
@@ -609,12 +610,12 @@ bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
   loader_callback_ = base::BindOnce(
       [](network::mojom::URLLoaderPtr* loader,
          network::mojom::URLLoaderClientRequest* client_request,
-         bool* was_called,
-         SingleRequestURLLoaderFactory::RequestHandler handler) {
+         bool* was_called, StartLoaderCallback start_function) {
         *was_called = true;
         network::mojom::URLLoaderClientPtr client;
         *client_request = mojo::MakeRequest(&client);
-        std::move(handler).Run(mojo::MakeRequest(loader), std::move(client));
+        std::move(start_function)
+            .Run(mojo::MakeRequest(loader), std::move(client));
       },
       loader, client_request, &was_called);
   request_->AsURLLoaderRequest()->set_response(response);
@@ -661,7 +662,7 @@ void AppCacheRequestHandler::MaybeFallbackForSubresourceResponse(
   request_->AsURLLoaderRequest()->set_response(response);
   MaybeLoadFallbackForResponse(nullptr);
   if (loader_callback_)
-    std::move(loader_callback_).Run({});
+    std::move(loader_callback_).Run(StartLoaderCallback());
 }
 
 void AppCacheRequestHandler::MaybeFallbackForSubresourceRedirect(
@@ -672,7 +673,7 @@ void AppCacheRequestHandler::MaybeFallbackForSubresourceRedirect(
   loader_callback_ = std::move(loader_callback);
   MaybeLoadFallbackForRedirect(nullptr, redirect_info.new_url);
   if (loader_callback_)
-    std::move(loader_callback_).Run({});
+    std::move(loader_callback_).Run(StartLoaderCallback());
 }
 
 void AppCacheRequestHandler::MaybeFollowSubresourceRedirect(
@@ -684,7 +685,7 @@ void AppCacheRequestHandler::MaybeFollowSubresourceRedirect(
   request_->AsURLLoaderRequest()->UpdateWithRedirectInfo(redirect_info);
   MaybeLoadResource(nullptr);
   if (loader_callback_)
-    std::move(loader_callback_).Run({});
+    std::move(loader_callback_).Run(StartLoaderCallback());
 }
 
 // static

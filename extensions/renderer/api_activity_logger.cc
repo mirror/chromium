@@ -23,8 +23,9 @@ namespace {
 bool g_log_for_testing = false;
 }
 
-APIActivityLogger::APIActivityLogger(ScriptContext* context)
-    : ObjectBackedNativeHandler(context) {}
+APIActivityLogger::APIActivityLogger(ScriptContext* context,
+                                     Dispatcher* dispatcher)
+    : ObjectBackedNativeHandler(context), dispatcher_(dispatcher) {}
 
 APIActivityLogger::~APIActivityLogger() {}
 
@@ -37,21 +38,17 @@ void APIActivityLogger::AddRoutes() {
 }
 
 // static
-bool APIActivityLogger::IsLoggingEnabled() {
-  const Dispatcher* dispatcher =
-      ExtensionsRendererClient::Get()->GetDispatcher();
-  return (dispatcher &&  // dispatcher can be null in unittests.
-          dispatcher->activity_logging_enabled()) ||
-         g_log_for_testing;
-}
-
-// static
 void APIActivityLogger::LogAPICall(
     v8::Local<v8::Context> context,
     const std::string& call_name,
     const std::vector<v8::Local<v8::Value>>& arguments) {
-  if (!IsLoggingEnabled())
+  const Dispatcher* dispatcher =
+      ExtensionsRendererClient::Get()->GetDispatcher();
+  if ((!dispatcher ||  // dispatcher can be null in unittests.
+       !dispatcher->activity_logging_enabled()) &&
+      !g_log_for_testing) {
     return;
+  }
 
   ScriptContext* script_context =
       ScriptContextSet::GetContextByV8Context(context);
@@ -75,16 +72,6 @@ void APIActivityLogger::LogAPICall(
               std::move(value_args), std::string());
 }
 
-void APIActivityLogger::LogEvent(ScriptContext* script_context,
-                                 const std::string& event_name,
-                                 std::unique_ptr<base::ListValue> arguments) {
-  if (!IsLoggingEnabled())
-    return;
-
-  LogInternal(EVENT, script_context->GetExtensionID(), event_name,
-              std::move(arguments), std::string());
-}
-
 void APIActivityLogger::set_log_for_testing(bool log) {
   g_log_for_testing = log;
 }
@@ -97,7 +84,7 @@ void APIActivityLogger::LogForJS(
   CHECK(args[1]->IsString());
   CHECK(args[2]->IsArray());
 
-  if (!IsLoggingEnabled())
+  if (!dispatcher_->activity_logging_enabled())
     return;
 
   v8::Isolate* isolate = args.GetIsolate();
@@ -139,7 +126,6 @@ void APIActivityLogger::LogInternal(const CallType call_type,
                                     const std::string& call_name,
                                     std::unique_ptr<base::ListValue> arguments,
                                     const std::string& extra) {
-  DCHECK(IsLoggingEnabled());
   ExtensionHostMsg_APIActionOrEvent_Params params;
   params.api_call = call_name;
   params.arguments.Swap(arguments.get());

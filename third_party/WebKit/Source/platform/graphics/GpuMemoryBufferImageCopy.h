@@ -26,6 +26,7 @@ class PLATFORM_EXPORT GpuMemoryBufferImageCopy {
 
   int last_width_ = 0;
   int last_height_ = 0;
+  GLuint draw_frame_buffer_;
   gpu::gles2::GLES2Interface* gl_;
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer_;
 

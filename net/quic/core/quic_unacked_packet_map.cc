@@ -36,7 +36,7 @@ void QuicUnackedPacketMap::AddSentPacket(SerializedPacket* packet,
   DCHECK_GE(packet_number, least_unacked_ + unacked_packets_.size());
   while (least_unacked_ + unacked_packets_.size() < packet_number) {
     unacked_packets_.push_back(QuicTransmissionInfo());
-    unacked_packets_.back().state = NEVER_SENT;
+    unacked_packets_.back().is_unackable = true;
   }
 
   const bool has_crypto_handshake =
@@ -124,7 +124,7 @@ void QuicUnackedPacketMap::TransferRetransmissionInfo(
   // encryption changes.
   if (transmission_type == ALL_INITIAL_RETRANSMISSION ||
       transmission_type == ALL_UNACKED_RETRANSMISSION) {
-    transmission_info->state = UNACKABLE;
+    transmission_info->is_unackable = true;
   } else {
     transmission_info->retransmission = new_packet_number;
   }
@@ -182,7 +182,7 @@ bool QuicUnackedPacketMap::IsPacketUsefulForMeasuringRtt(
     const QuicTransmissionInfo& info) const {
   // Packet can be used for RTT measurement if it may yet be acked as the
   // largest observed packet by the receiver.
-  return QuicUtils::IsAckable(info.state) && packet_number > largest_observed_;
+  return !info.is_unackable && packet_number > largest_observed_;
 }
 
 bool QuicUnackedPacketMap::IsPacketUsefulForCongestionControl(

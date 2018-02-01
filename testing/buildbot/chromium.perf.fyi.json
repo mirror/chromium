@@ -464,21 +464,21 @@
     "isolated_scripts": [
       {
         "args": [
-          "dummy_benchmark.histogram_benchmark_1",
+          "smoothness.maps",
           "-v",
           "--output-format=histograms",
           "--output-format=json-test-results",
           "--xvfb",
-          "--browser=reference"
+          "--browser=release"
         ],
-        "isolate_name": "telemetry_perf_tests_experimental",
+        "isolate_name": "telemetry_perf_tests",
         "merge": {
           "args": [],
           "script": "//tools/perf/upload_perf_results.py"
         },
-        "name": "benchmark1 dummy_benchmark.histogram_benchmark_1",
+        "name": "benchmark1 smoothness.maps",
         "override_compile_targets": [
-          "telemetry_perf_tests_experimental"
+          "telemetry_perf_tests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -496,21 +496,21 @@
       },
       {
         "args": [
-          "dummy_benchmark.stable_benchmark_1",
+          "blink_perf.css",
           "-v",
           "--output-format=histograms",
           "--output-format=json-test-results",
           "--xvfb",
-          "--browser=reference"
+          "--browser=release"
         ],
-        "isolate_name": "telemetry_perf_tests_experimental",
+        "isolate_name": "telemetry_perf_tests",
         "merge": {
           "args": [],
           "script": "//tools/perf/upload_perf_results.py"
         },
-        "name": "benchmark2 dummy_benchmark.stable_benchmark_1",
+        "name": "benchmark2 blink_perf.css",
         "override_compile_targets": [
-          "telemetry_perf_tests_experimental"
+          "telemetry_perf_tests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -532,7 +532,7 @@
           "--output-format=histograms",
           "--output-format=json-test-results",
           "--xvfb",
-          "--browser=reference"
+          "--browser=release"
         ],
         "isolate_name": "performance_test_suite",
         "merge": {

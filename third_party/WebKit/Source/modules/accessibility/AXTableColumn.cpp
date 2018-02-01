@@ -120,12 +120,6 @@ bool AXTableColumn::ComputeAccessibilityIsIgnored(
   return true;
 }
 
-AccessibilityRole AXTableColumn::RoleValue() const {
-  return parent_ && parent_->IsAXTable() && ToAXTable(parent_)->IsDataTable()
-             ? kColumnRole
-             : kLayoutTableColumnRole;
-}
-
 void AXTableColumn::AddChildren() {
   DCHECK(!IsDetached());
   DCHECK(!have_children_);

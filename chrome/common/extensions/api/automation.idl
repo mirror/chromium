@@ -119,10 +119,6 @@
     inlineTextBox,
     inputTime,
     labelText,
-    layoutTable,
-    layoutTableCell,
-    layoutTableColumn,
-    layoutTableRow,
     legend,
     lineBreak,
     link,
@@ -615,12 +611,6 @@
     // The corresponding row header for this cell.
     AutomationNode? tableRowHeader;
 
-    // The column index of this column node.
-    long? tableColumnIndex;
-
-    // The row index of this row node.
-    long? tableRowIndex;
-
     //
     // Live region attributes.
     //
@@ -686,7 +676,7 @@
     DOMString? language;
 
     // Input restriction, if any, such as readonly or disabled:
-    // undefined - enabled control or other object that is not disabled
+    // undefined - enabled control or other object that is not disabled 
     // Restriction.DISABLED - disallows input in itself + any descendants
     // Restriction.READONLY - allow focus/selection but not input
     DOMString? restriction;

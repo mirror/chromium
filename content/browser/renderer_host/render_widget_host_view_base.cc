@@ -651,10 +651,4 @@ RenderWidgetHostViewBase::GetWindowTreeClientFromRenderer() {
 
 #endif
 
-#if defined(OS_MACOSX)
-bool RenderWidgetHostViewBase::ShouldContinueToPauseForFrame() {
-  return false;
-}
-#endif
-
 }  // namespace content

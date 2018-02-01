@@ -108,7 +108,6 @@ component("net") {
     "base/auth.cc",
     "base/auth.h",
     "base/completion_callback.h",
-    "base/completion_once_callback.h",
     "base/escape.cc",
     "base/escape.h",
     "base/hash_value.cc",
@@ -1234,8 +1233,6 @@ component("net") {
       "quic/core/crypto/quic_tls_adapter.h",
       "quic/core/crypto/scoped_evp_aead_ctx.cc",
       "quic/core/crypto/scoped_evp_aead_ctx.h",
-      "quic/core/crypto/transport_parameters.cc",
-      "quic/core/crypto/transport_parameters.h",
       "quic/core/frames/quic_ack_frame.cc",
       "quic/core/frames/quic_ack_frame.h",
       "quic/core/frames/quic_blocked_frame.cc",
@@ -2611,8 +2608,6 @@ static_library("test_support") {
     "test/channel_id_test_util.h",
     "test/ct_test_util.cc",
     "test/ct_test_util.h",
-    "test/embedded_test_server/controllable_http_response.cc",
-    "test/embedded_test_server/controllable_http_response.h",
     "test/embedded_test_server/default_handlers.cc",
     "test/embedded_test_server/default_handlers.h",
     "test/embedded_test_server/embedded_test_server.cc",
@@ -5066,7 +5061,6 @@ test("net_unittests") {
     "quic/core/crypto/quic_crypto_server_config_test.cc",
     "quic/core/crypto/quic_random_test.cc",
     "quic/core/crypto/quic_tls_adapter_test.cc",
-    "quic/core/crypto/transport_parameters_test.cc",
     "quic/core/frames/quic_frames_test.cc",
     "quic/core/packet_number_indexed_queue_test.cc",
     "quic/core/quic_alarm_test.cc",
@@ -5629,7 +5623,6 @@ test("net_unittests") {
       "proxy_resolution/proxy_resolver_v8_unittest.cc",
       "url_request/url_request_job_unittest.cc",
     ]
-    deps += [ "//url:url_java" ]
   }
 
   # Unit tests that are not supported by the current ICU alternatives on iOS.

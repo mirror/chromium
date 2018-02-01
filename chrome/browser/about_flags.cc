@@ -107,7 +107,6 @@
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
-#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/service_manager/sandbox/switches.h"
 #include "third_party/libaom/av1_features.h"
@@ -710,15 +709,13 @@ const FeatureEntry::Choice kTLS13VariantChoices[] = {
     // The NoSessionID variant was deprecated.
     {flag_descriptions::kTLS13VariantDeprecated, switches::kTLS13Variant,
      switches::kTLS13VariantDisabled},
-    // The Experiment2 variant was deprecated.
-    {flag_descriptions::kTLS13VariantDeprecated, switches::kTLS13Variant,
-     switches::kTLS13VariantDisabled},
+    {flag_descriptions::kTLS13VariantExperiment2, switches::kTLS13Variant,
+     switches::kTLS13VariantExperiment2},
     // The Experiment3 variant was deprecated.
     {flag_descriptions::kTLS13VariantDeprecated, switches::kTLS13Variant,
      switches::kTLS13VariantDisabled},
-    // The Draft22 variant was deprecated.
-    {flag_descriptions::kTLS13VariantDeprecated, switches::kTLS13Variant,
-     switches::kTLS13VariantDisabled},
+    {flag_descriptions::kTLS13VariantDraft22, switches::kTLS13Variant,
+     switches::kTLS13VariantDraft22},
     {flag_descriptions::kTLS13VariantDraft23, switches::kTLS13Variant,
      switches::kTLS13VariantDraft23},
 };
@@ -3087,7 +3084,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-renderer-side-resource-scheduler",
      flag_descriptions::kRendererSideResourceSchedulerName,
      flag_descriptions::kRendererSideResourceSchedulerDescription, kOsAll,
-     FEATURE_VALUE_TYPE(network::features::kRendererSideResourceScheduler)},
+     FEATURE_VALUE_TYPE(features::kRendererSideResourceScheduler)},
 
 #if defined(OS_CHROMEOS)
     {"force-tablet-mode", flag_descriptions::kUiModeName,
@@ -3335,7 +3332,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"network-service", flag_descriptions::kEnableNetworkServiceName,
      flag_descriptions::kEnableNetworkServiceDescription, kOsAll,
-     FEATURE_VALUE_TYPE(network::features::kNetworkService)},
+     FEATURE_VALUE_TYPE(features::kNetworkService)},
 
     {"network-service-in-process",
      flag_descriptions::kEnableNetworkServiceInProcessName,
@@ -3344,7 +3341,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"out-of-blink-cors", flag_descriptions::kEnableOutOfBlinkCORSName,
      flag_descriptions::kEnableOutOfBlinkCORSDescription, kOsAll,
-     FEATURE_VALUE_TYPE(network::features::kOutOfBlinkCORS)},
+     FEATURE_VALUE_TYPE(features::kOutOfBlinkCORS)},
 
     {"keep-alive-renderer-for-keepalive-requests",
      flag_descriptions::kKeepAliveRendererForKeepaliveRequestsName,
@@ -3485,11 +3482,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kImprovedLanguageSettingsName,
      flag_descriptions::kImprovedLanguageSettingsDescription, kOsAll,
      FEATURE_VALUE_TYPE(translate::kImprovedLanguageSettings)},
-
-    {"enable-regional-locales-as-display-ui",
-     flag_descriptions::kRegionalLocalesAsDisplayUIName,
-     flag_descriptions::kRegionalLocalesAsDisplayUIDescription, kOsAll,
-     FEATURE_VALUE_TYPE(translate::kRegionalLocalesAsDisplayUI)},
 
     {"enable-module-scripts-dynamic-import",
      flag_descriptions::kModuleScriptsDynamicImportName,
@@ -3692,16 +3684,7 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableDisplayZoomSettingName,
      flag_descriptions::kEnableDisplayZoomSettingDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableDisplayZoomSetting)},
-
-    {"ash-enable-new-overview-ui",
-     flag_descriptions::kAshEnableNewOverviewUiName,
-     flag_descriptions::kAshEnableNewOverviewUiDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ash::switches::kAshEnableNewOverviewUi)},
 #endif  // defined(OS_CHROMEOS)
-
-    {"unified-consent", flag_descriptions::kUnifiedConsentName,
-     flag_descriptions::kUnifiedConsentDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kUnifiedConsent)},
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag

@@ -13,7 +13,6 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -44,8 +43,9 @@ import java.util.concurrent.Callable;
  * Unit tests for {@ThreadedInputConnectionFactory}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = Build.VERSION_CODES.LOLLIPOP)
+@Config(manifest = Config.NONE)
 public class ThreadedInputConnectionFactoryTest {
+
     /**
      * A testable version of ThreadedInputConnectionFactory.
      */

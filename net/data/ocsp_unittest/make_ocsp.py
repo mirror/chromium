@@ -82,8 +82,7 @@ def CreateExtension():
   return ext
 
 
-ROOT_CA = CreateCert('Test CA', None)
-CA = CreateCert('Test Intermediate CA', ROOT_CA)
+CA = CreateCert('Test CA', None)
 CA_LINK = CreateCert('Test OCSP Signer', CA, True)
 CA_BADLINK = CreateCert('Test False OCSP Signer', CA, False)
 CERT = CreateCert('Test Cert', CA)
@@ -212,10 +211,6 @@ def Create(signer=None,
 
   sa = rfc2459.AlgorithmIdentifier()
   sa.setComponentByName('algorithm', SigAlgOid(sigAlg))
-  # TODO(mattm): If pyasn1 gives an error
-  # "Component value is tag-incompatible: Null() vs Any()", try hacking
-  # pyasn1_modules/rfc2459.py's AlgorithmIdentifier to specify univ.Null as the
-  # type for 'parameters'. (Which is an ugly hack, but lets the script work.)
   sa.setComponentByName('parameters', univ.Null())
 
   basic = rfc2560.BasicOCSPResponse()

@@ -28,7 +28,6 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/memory/scoped_refptr.h"
-#include "base/single_thread_task_runner.h"
 #include "core/CoreExport.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
@@ -54,7 +53,7 @@ class CORE_EXPORT FontResource final : public Resource {
   void SetRevalidatingRequest(const ResourceRequest&) override;
 
   void AllClientsAndObserversRemoved() override;
-  void StartLoadLimitTimers(base::SingleThreadTaskRunner*);
+  void StartLoadLimitTimers(WebTaskRunner*);
 
   String OtsParsingMessage() const { return ots_parsing_message_; }
 

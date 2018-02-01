@@ -15,19 +15,14 @@
 
 namespace blink {
 
-const TimeDelta IdlenessDetector::kNetworkQuietWindow;
-const TimeDelta IdlenessDetector::kNetworkQuietWatchdog;
-
 void IdlenessDetector::Shutdown() {
   Stop();
   local_frame_ = nullptr;
 }
 
 void IdlenessDetector::WillCommitLoad() {
-  in_network_2_quiet_period_ = false;
-  in_network_0_quiet_period_ = false;
-  network_2_quiet_ = TimeTicks();
-  network_0_quiet_ = TimeTicks();
+  network_2_quiet_ = -1;
+  network_0_quiet_ = -1;
   network_2_quiet_start_time_ = TimeTicks();
   network_0_quiet_start_time_ = TimeTicks();
 }
@@ -41,10 +36,8 @@ void IdlenessDetector::DomContentLoadedEventFired() {
     task_observer_added_ = true;
   }
 
-  in_network_2_quiet_period_ = true;
-  in_network_0_quiet_period_ = true;
-  network_2_quiet_ = TimeTicks();
-  network_0_quiet_ = TimeTicks();
+  network_2_quiet_ = 0;
+  network_0_quiet_ = 0;
 
   if (::resource_coordinator::IsPageAlmostIdleSignalEnabled()) {
     if (auto* frame_resource_coordinator =
@@ -66,10 +59,10 @@ void IdlenessDetector::OnWillSendRequest(ResourceFetcher* fetcher) {
   // fetcher, thus we need to add 1 as the total request count.
   int request_count = fetcher->ActiveRequestCount() + 1;
   // If we are above the allowed number of active requests, reset timers.
-  if (in_network_2_quiet_period_ && request_count > 2)
-    network_2_quiet_ = TimeTicks();
-  if (in_network_0_quiet_period_ && request_count > 0)
-    network_0_quiet_ = TimeTicks();
+  if (network_2_quiet_ >= 0 && request_count > 2)
+    network_2_quiet_ = 0;
+  if (network_0_quiet_ >= 0 && request_count > 0)
+    network_0_quiet_ = 0;
 }
 
 // This function is called when the number of active connections is decreased.
@@ -84,7 +77,7 @@ void IdlenessDetector::OnDidLoadResource() {
     return;
 
   // If we already reported quiet time, bail out.
-  if (!in_network_0_quiet_period_ && !in_network_2_quiet_period_)
+  if (network_0_quiet_ < 0 && network_2_quiet_ < 0)
     return;
 
   int request_count =
@@ -94,25 +87,25 @@ void IdlenessDetector::OnDidLoadResource() {
     return;
 
   TimeTicks timestamp = CurrentTimeTicks();
+  double timestamp_seconds = TimeTicksInSeconds(timestamp);
   // Arriving at =2 updates the quiet_2 base timestamp.
   // Arriving at <2 sets the quiet_2 base timestamp only if
   // it was not already set.
-  if (request_count == 2 && in_network_2_quiet_period_) {
-    network_2_quiet_ = timestamp;
+  if (request_count == 2 && network_2_quiet_ >= 0) {
+    network_2_quiet_ = timestamp_seconds;
     network_2_quiet_start_time_ = timestamp;
-  } else if (request_count < 2 && in_network_2_quiet_period_ &&
-             network_2_quiet_.is_null()) {
-    network_2_quiet_ = timestamp;
+  } else if (request_count < 2 && network_2_quiet_ == 0) {
+    network_2_quiet_ = timestamp_seconds;
     network_2_quiet_start_time_ = timestamp;
   }
 
-  if (request_count == 0 && in_network_0_quiet_period_) {
-    network_0_quiet_ = timestamp;
+  if (request_count == 0 && network_0_quiet_ >= 0) {
+    network_0_quiet_ = timestamp_seconds;
     network_0_quiet_start_time_ = timestamp;
   }
 
   if (!network_quiet_timer_.IsActive()) {
-    network_quiet_timer_.StartOneShot(kNetworkQuietWatchdog, FROM_HERE);
+    network_quiet_timer_.StartOneShot(kNetworkQuietWatchdogSeconds, FROM_HERE);
   }
 }
 
@@ -124,13 +117,12 @@ TimeTicks IdlenessDetector::GetNetworkIdleTime() {
   return network_0_quiet_start_time_;
 }
 
-void IdlenessDetector::WillProcessTask(double start_time_seconds) {
-  // If we have idle time and we are kNetworkQuietWindow seconds past it, emit
-  // idle signals.
-  TimeTicks start_time = TimeTicksFromSeconds(start_time_seconds);
+void IdlenessDetector::WillProcessTask(double start_time) {
+  // If we have idle time and we are kNetworkQuietWindowSeconds seconds past it,
+  // emit idle signals.
   DocumentLoader* loader = local_frame_->Loader().GetDocumentLoader();
-  if (in_network_2_quiet_period_ && !network_2_quiet_.is_null() &&
-      start_time - network_2_quiet_ > kNetworkQuietWindow) {
+  if (network_2_quiet_ > 0 &&
+      start_time - network_2_quiet_ > kNetworkQuietWindowSeconds) {
     probe::lifecycleEvent(local_frame_, loader, "networkAlmostIdle",
                           TimeTicksInSeconds(network_2_quiet_start_time_));
     if (::resource_coordinator::IsPageAlmostIdleSignalEnabled()) {
@@ -140,31 +132,25 @@ void IdlenessDetector::WillProcessTask(double start_time_seconds) {
       }
     }
     local_frame_->GetDocument()->Fetcher()->OnNetworkQuiet();
-    in_network_2_quiet_period_ = false;
-    network_2_quiet_ = TimeTicks();
+    network_2_quiet_ = -1;
   }
 
-  if (in_network_0_quiet_period_ && !network_0_quiet_.is_null() &&
-      start_time - network_0_quiet_ > kNetworkQuietWindow) {
+  if (network_0_quiet_ > 0 &&
+      start_time - network_0_quiet_ > kNetworkQuietWindowSeconds) {
     probe::lifecycleEvent(local_frame_, loader, "networkIdle",
                           TimeTicksInSeconds(network_0_quiet_start_time_));
-    in_network_0_quiet_period_ = false;
-    network_0_quiet_ = TimeTicks();
+    network_0_quiet_ = -1;
   }
 
-  if (!in_network_0_quiet_period_ && !in_network_2_quiet_period_)
+  if (network_0_quiet_ < 0 && network_2_quiet_ < 0)
     Stop();
 }
 
-void IdlenessDetector::DidProcessTask(double start_time_seconds,
-                                      double end_time_seconds) {
-  TimeTicks start_time = TimeTicksFromSeconds(start_time_seconds);
-  TimeTicks end_time = TimeTicksFromSeconds(end_time_seconds);
-
+void IdlenessDetector::DidProcessTask(double start_time, double end_time) {
   // Shift idle timestamps with the duration of the task, we were not idle.
-  if (in_network_2_quiet_period_ && !network_2_quiet_.is_null())
+  if (network_2_quiet_ > 0)
     network_2_quiet_ += end_time - start_time;
-  if (in_network_0_quiet_period_ && !network_0_quiet_.is_null())
+  if (network_0_quiet_ > 0)
     network_0_quiet_ += end_time - start_time;
 }
 
@@ -185,9 +171,8 @@ void IdlenessDetector::Stop() {
 
 void IdlenessDetector::NetworkQuietTimerFired(TimerBase*) {
   // TODO(lpy) Reduce the number of timers.
-  if ((in_network_0_quiet_period_ && !network_0_quiet_.is_null()) ||
-      (in_network_2_quiet_period_ && !network_2_quiet_.is_null())) {
-    network_quiet_timer_.StartOneShot(kNetworkQuietWatchdog, FROM_HERE);
+  if (network_0_quiet_ > 0 || network_2_quiet_ > 0) {
+    network_quiet_timer_.StartOneShot(kNetworkQuietWatchdogSeconds, FROM_HERE);
   }
 }
 

@@ -829,8 +829,6 @@ void HTMLMediaElement::InvokeLoadAlgorithm() {
   have_fired_loaded_data_ = false;
   display_mode_ = kUnknown;
 
-  autoplay_policy_->StopAutoplayMutedWhenVisible();
-
   // 1 - Abort any already-running instance of the resource selection algorithm
   // for this element.
   load_state_ = kWaitingForSource;
@@ -2326,13 +2324,13 @@ ScriptPromise HTMLMediaElement::playForBindings(ScriptState* script_state) {
   ScriptPromise promise = resolver->Promise();
   play_promise_resolvers_.push_back(resolver);
 
-  Optional<ExceptionCode> code = Play();
-  if (code) {
+  Nullable<ExceptionCode> code = Play();
+  if (!code.IsNull()) {
     DCHECK(!play_promise_resolvers_.IsEmpty());
     play_promise_resolvers_.pop_back();
 
     String message;
-    switch (code.value()) {
+    switch (code.Get()) {
       case kNotAllowedError:
         message = "play() can only be initiated by a user gesture.";
         RecordPlayPromiseRejected(
@@ -2345,24 +2343,24 @@ ScriptPromise HTMLMediaElement::playForBindings(ScriptState* script_state) {
       default:
         NOTREACHED();
     }
-    resolver->Reject(DOMException::Create(code.value(), message));
+    resolver->Reject(DOMException::Create(code.Get(), message));
     return promise;
   }
 
   return promise;
 }
 
-Optional<ExceptionCode> HTMLMediaElement::Play() {
+Nullable<ExceptionCode> HTMLMediaElement::Play() {
   BLINK_MEDIA_LOG << "play(" << (void*)this << ")";
 
-  Optional<ExceptionCode> exception_code = autoplay_policy_->RequestPlay();
+  Nullable<ExceptionCode> exception_code = autoplay_policy_->RequestPlay();
 
   if (exception_code == kNotAllowedError) {
     // If we're already playing, then this play would do nothing anyway.
     // Call playInternal to handle scheduling the promise resolution.
     if (!paused_) {
       PlayInternal();
-      return WTF::nullopt;
+      return nullptr;
     }
     return exception_code;
   }
@@ -2372,11 +2370,11 @@ Optional<ExceptionCode> HTMLMediaElement::Play() {
   if (error_ && error_->code() == MediaError::kMediaErrSrcNotSupported)
     return kNotSupportedError;
 
-  DCHECK(!exception_code.has_value());
+  DCHECK(exception_code.IsNull());
 
   PlayInternal();
 
-  return WTF::nullopt;
+  return nullptr;
 }
 
 void HTMLMediaElement::PlayInternal() {
@@ -3863,8 +3861,7 @@ void HTMLMediaElement::SetAudioSourceNode(
   DCHECK(IsMainThread());
   audio_source_node_ = source_node;
 
-  // No need to lock the |audio_source_node| because it locks itself when
-  // setFormat() is invoked.
+  AudioSourceProviderClientLockScope scope(*this);
   GetAudioSourceProvider().SetClient(audio_source_node_);
 }
 

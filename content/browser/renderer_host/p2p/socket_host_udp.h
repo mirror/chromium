@@ -89,6 +89,8 @@ class CONTENT_EXPORT P2PSocketHostUdp : public P2PSocketHost {
 
   void OnError();
 
+  void SetSendBufferSize();
+
   void DoRead();
   void OnRecv(int result);
   void HandleReadResult(int result);
@@ -117,6 +119,9 @@ class CONTENT_EXPORT P2PSocketHostUdp : public P2PSocketHost {
   // response or relay allocation request or response.
   ConnectedPeerSet connected_peers_;
   P2PMessageThrottler* throttler_;
+
+  // Keep track of the send socket buffer size under experiment.
+  size_t send_buffer_size_;
 
   net::NetLog* net_log_;
 

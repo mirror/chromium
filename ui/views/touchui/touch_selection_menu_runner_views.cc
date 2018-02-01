@@ -10,8 +10,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/display/display.h"
-#include "ui/display/screen.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/rect.h"
@@ -122,16 +120,7 @@ TouchSelectionMenuRunnerViews::Menu::Menu(TouchSelectionMenuRunnerViews* owner,
   SetAnchorRect(adjusted_anchor_rect);
 
   BubbleDialogDelegateView::CreateBubble(this);
-  Widget* widget = GetWidget();
-  gfx::Rect bounds = widget->GetWindowBoundsInScreen();
-  gfx::Rect work_area = display::Screen::GetScreen()
-                            ->GetDisplayNearestPoint(bounds.origin())
-                            .work_area();
-  if (!work_area.IsEmpty()) {
-    bounds.AdjustToFit(work_area);
-    widget->SetBounds(bounds);
-  }
-  widget->Show();
+  GetWidget()->Show();
 }
 
 bool TouchSelectionMenuRunnerViews::Menu::IsMenuAvailable(

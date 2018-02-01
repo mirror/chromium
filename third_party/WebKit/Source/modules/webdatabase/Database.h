@@ -26,7 +26,6 @@
 #ifndef Database_h
 #define Database_h
 
-#include "base/single_thread_task_runner.h"
 #include "modules/webdatabase/DatabaseBasicTypes.h"
 #include "modules/webdatabase/DatabaseError.h"
 #include "modules/webdatabase/SQLTransactionBackend.h"
@@ -118,7 +117,7 @@ class Database final : public ScriptWrappable {
     return database_context_.Get();
   }
   ExecutionContext* GetExecutionContext() const;
-  base::SingleThreadTaskRunner* GetDatabaseTaskRunner() const;
+  WebTaskRunner* GetDatabaseTaskRunner() const;
 
  private:
   class DatabaseOpenTask;
@@ -182,10 +181,10 @@ class Database final : public ScriptWrappable {
   scoped_refptr<const SecurityOrigin> database_thread_security_origin_;
   Member<DatabaseContext>
       database_context_;  // Associated with m_executionContext.
-  // TaskRunnerHelper::get is not thread-safe, so we save SingleThreadTaskRunner
-  // for TaskType::DatabaseAccess for later use as the constructor runs in the
-  // main thread.
-  scoped_refptr<base::SingleThreadTaskRunner> database_task_runner_;
+  // TaskRunnerHelper::get is not thread-safe, so we save WebTaskRunner for
+  // TaskType::DatabaseAccess for later use as the constructor runs in the main
+  // thread.
+  scoped_refptr<WebTaskRunner> database_task_runner_;
 
   String name_;
   String expected_version_;

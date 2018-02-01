@@ -101,7 +101,8 @@ public class EarlyTraceEvent {
         // Checking for the trace config filename touches the disk.
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
-            if (CommandLine.getInstance().hasSwitch("trace-startup")) {
+            if (CommandLine.isInitialized()
+                    && CommandLine.getInstance().hasSwitch("trace-startup")) {
                 shouldEnable = true;
             } else {
                 try {

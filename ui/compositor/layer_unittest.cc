@@ -26,8 +26,8 @@
 #include "build/build_config.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"
+#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
-#include "cc/animation/single_ticker_animation_player.h"
 #include "cc/layers/layer.h"
 #include "cc/test/pixel_test_utils.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -1842,7 +1842,6 @@ TEST_F(LayerWithDelegateTest, ExternalContent) {
   // The layer is already showing solid color content, so the cc layer won't
   // change.
   scoped_refptr<cc::Layer> before = child->cc_layer_for_testing();
-
   child->SetShowSolidColorContent();
   EXPECT_TRUE(child->cc_layer_for_testing());
   EXPECT_EQ(before.get(), child->cc_layer_for_testing());
@@ -1850,18 +1849,9 @@ TEST_F(LayerWithDelegateTest, ExternalContent) {
   // Showing surface content changes the underlying cc layer.
   before = child->cc_layer_for_testing();
   child->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
-  scoped_refptr<cc::Layer> after = child->cc_layer_for_testing();
-  const auto* surface = static_cast<cc::SurfaceLayer*>(after.get());
-  EXPECT_TRUE(after.get());
-  EXPECT_NE(before.get(), after.get());
-  EXPECT_EQ(base::nullopt, surface->deadline_in_frames());
-
-  child->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseSpecifiedDeadline(4u));
-  EXPECT_EQ(4u, surface->deadline_in_frames());
+                               SK_ColorWHITE);
+  EXPECT_TRUE(child->cc_layer_for_testing());
+  EXPECT_NE(before.get(), child->cc_layer_for_testing());
 
   // Changing to painted content should change the underlying cc layer.
   before = child->cc_layer_for_testing();
@@ -1876,8 +1866,7 @@ TEST_F(LayerWithDelegateTest, ExternalContentMirroring) {
   viz::SurfaceId surface_id(
       viz::FrameSinkId(0, 1),
       viz::LocalSurfaceId(2, base::UnguessableToken::Create()));
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(10, 10), SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+  layer->SetShowPrimarySurface(surface_id, gfx::Size(10, 10), SK_ColorWHITE);
 
   const auto mirror = layer->Mirror();
   auto* const cc_layer = mirror->cc_layer_for_testing();
@@ -1889,13 +1878,11 @@ TEST_F(LayerWithDelegateTest, ExternalContentMirroring) {
   surface_id =
       viz::SurfaceId(viz::FrameSinkId(1, 2),
                      viz::LocalSurfaceId(3, base::UnguessableToken::Create()));
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE);
 
   // The mirror should continue to use the same cc_layer.
   EXPECT_EQ(cc_layer, mirror->cc_layer_for_testing());
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE);
 
   // Surface updates propagate to the mirror.
   EXPECT_EQ(surface_id, surface->primary_surface_id());
@@ -1916,8 +1903,7 @@ TEST_F(LayerWithDelegateTest, LayerFiltersSurvival) {
   // Showing surface content changes the underlying cc layer.
   scoped_refptr<cc::Layer> before = layer->cc_layer_for_testing();
   layer->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+                               SK_ColorWHITE);
   EXPECT_EQ(layer->layer_grayscale(), 0.5f);
   EXPECT_TRUE(layer->cc_layer_for_testing());
   EXPECT_NE(before.get(), layer->cc_layer_for_testing());
@@ -1936,40 +1922,40 @@ TEST_F(LayerWithRealCompositorTest, AddRemoveThreadedAnimations) {
   auto* player1 = l1->GetAnimator()->GetAnimationPlayerForTesting();
   auto* player2 = l2->GetAnimator()->GetAnimationPlayerForTesting();
 
-  EXPECT_FALSE(player1->animation_ticker()->has_any_animation());
+  EXPECT_FALSE(player1->has_any_animation());
 
   // Trigger a threaded animation.
   l1->SetOpacity(0.5f);
 
-  EXPECT_TRUE(player1->animation_ticker()->has_any_animation());
+  EXPECT_TRUE(player1->has_any_animation());
 
   // Ensure we can remove a pending threaded animation.
   l1->GetAnimator()->StopAnimating();
 
-  EXPECT_FALSE(player1->animation_ticker()->has_any_animation());
+  EXPECT_FALSE(player1->has_any_animation());
 
   // Trigger another threaded animation.
   l1->SetOpacity(0.2f);
 
-  EXPECT_TRUE(player1->animation_ticker()->has_any_animation());
+  EXPECT_TRUE(player1->has_any_animation());
 
   root->Add(l1.get());
   GetCompositor()->SetRootLayer(root.get());
 
   // Now l1 is part of a tree.
-  EXPECT_TRUE(player1->animation_ticker()->has_any_animation());
+  EXPECT_TRUE(player1->has_any_animation());
 
   l1->SetOpacity(0.1f);
   // IMMEDIATELY_SET_NEW_TARGET is a default preemption strategy for conflicting
   // animations.
-  EXPECT_FALSE(player1->animation_ticker()->has_any_animation());
+  EXPECT_FALSE(player1->has_any_animation());
 
   // Adding a layer to an existing tree.
   l2->SetOpacity(0.5f);
-  EXPECT_TRUE(player2->animation_ticker()->has_any_animation());
+  EXPECT_TRUE(player2->has_any_animation());
 
   l1->Add(l2.get());
-  EXPECT_TRUE(player2->animation_ticker()->has_any_animation());
+  EXPECT_TRUE(player2->has_any_animation());
 }
 
 // Tests that in-progress threaded animations complete when a Layer's

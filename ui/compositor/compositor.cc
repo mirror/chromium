@@ -186,9 +186,6 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
     settings.enable_latency_recovery = false;
   }
 
-  settings.always_request_presentation_time =
-      command_line->HasSwitch(cc::switches::kAlwaysRequestPresentationTime);
-
   base::TimeTicks before_create = base::TimeTicks::Now();
 
   animation_host_ = cc::AnimationHost::CreateMainInstance();

@@ -23,8 +23,11 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
+import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
+import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
+import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
@@ -98,9 +101,15 @@ public class PopupZoomerTest {
                 WebContents webContents = mActivityTestRule.getContentViewCore().getWebContents();
                 mContentViewCore = (ContentViewCoreImpl) ContentViewCore.create(context, "");
                 mContentViewCore.setWebContentsForTesting((WebContentsImpl) webContents);
-                mPopupZoomer = createPopupZoomerForTest(InstrumentationRegistry.getTargetContext(),
-                        mActivityTestRule.getContentViewCore().getContainerView());
+                ViewGroup containerView = mActivityTestRule.getContentViewCore().getContainerView();
+                ImeAdapter imeAdapter = ImeAdapter.fromWebContents(webContents);
+                imeAdapter.setInputMethodManagerWrapperForTest(
+                        TestInputMethodManagerWrapper.create(imeAdapter));
+                mPopupZoomer = createPopupZoomerForTest(
+                        InstrumentationRegistry.getTargetContext(), containerView);
                 TapDisambiguator.fromWebContents(webContents).setPopupZoomerForTest(mPopupZoomer);
+                mContentViewCore.setTextSuggestionHostForTesting(new TextSuggestionHost(
+                        context, (WebContentsImpl) webContents, null, containerView));
             }
         });
     }

@@ -63,7 +63,7 @@ ScriptModuleResolver* DummyModulator::GetScriptModuleResolver() {
   return resolver_.Get();
 }
 
-base::SingleThreadTaskRunner* DummyModulator::TaskRunner() {
+WebTaskRunner* DummyModulator::TaskRunner() {
   NOTREACHED();
   return nullptr;
 };

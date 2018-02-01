@@ -26,6 +26,7 @@
 #endif  // OS_ANDROID
 
 namespace variations {
+
 namespace {
 
 // The ECDSA public key of the variations server for verifying variations seed
@@ -39,11 +40,6 @@ const uint8_t kPublicKey[] = {
   0x71, 0xc9, 0x80, 0x87, 0xde, 0x35, 0x0d, 0x25, 0x71, 0x09, 0x7f, 0xb4, 0x15,
   0x2b, 0xff, 0x82, 0x4d, 0xd3, 0xfe, 0xc5, 0xef, 0x20, 0xc6, 0xa3, 0x10, 0xbf,
 };
-
-// A sentinel value that may be stored as the latest variations seed value in
-// prefs to indicate that the latest seed is identical to the safe seed. Used to
-// avoid duplicating storage space.
-constexpr char kIdenticalToSafeSeedSentinel[] = "safe_seed_content";
 
 // Verifies a variations seed (the serialized proto bytes) with the specified
 // base-64 encoded signature that was received from the server and returns the
@@ -214,8 +210,7 @@ bool VariationsSeedStore::StoreSeedData(
 }
 
 bool VariationsSeedStore::LoadSafeSeed(VariationsSeed* seed,
-                                       ClientFilterableState* client_state,
-                                       base::Time* seed_fetch_time) {
+                                       ClientFilterableState* client_state) {
   std::string unused_seed_data;
   std::string unused_base64_seed_signature;
   LoadSeedResult result = LoadSeedImpl(SeedType::SAFE, seed, &unused_seed_data,
@@ -232,15 +227,13 @@ bool VariationsSeedStore::LoadSafeSeed(VariationsSeed* seed,
       prefs::kVariationsSafeSeedPermanentConsistencyCountry);
   client_state->session_consistency_country = local_state_->GetString(
       prefs::kVariationsSafeSeedSessionConsistencyCountry);
-  *seed_fetch_time = local_state_->GetTime(prefs::kVariationsSafeSeedFetchTime);
   return true;
 }
 
 bool VariationsSeedStore::StoreSafeSeed(
     const std::string& seed_data,
     const std::string& base64_seed_signature,
-    const ClientFilterableState& client_state,
-    base::Time seed_fetch_time) {
+    const ClientFilterableState& client_state) {
   std::string base64_seed_data;
   StoreSeedResult result = VerifyAndCompressSeedData(
       seed_data, base64_seed_signature, false /* fetched_insecurely */,
@@ -250,43 +243,11 @@ bool VariationsSeedStore::StoreSafeSeed(
   if (result != StoreSeedResult::SUCCESS)
     return false;
 
-  // The sentinel value should only ever be saved in place of the latest seed --
-  // it should never be saved in place of the safe seed.
-  DCHECK_NE(base64_seed_data, kIdenticalToSafeSeedSentinel);
-
-  // As a performance optimization, avoid an expensive no-op of overwriting the
-  // previous safe seed with an identical copy.
-  std::string previous_safe_seed =
-      local_state_->GetString(prefs::kVariationsSafeCompressedSeed);
-  if (base64_seed_data != previous_safe_seed) {
-    // It's theoretically possible to overwrite an existing safe seed value,
-    // which was identical to the latest seed, with a new value. This could
-    // happen, for example, if:
-    //   (1) Seed A is received from the server and saved as both the safe and
-    //       latest seed value.
-    //   (2) Seed B is received from the server and saved as the latest seed
-    //       value.
-    //   (3) The user restarts Chrome, which is now running with the
-    //       configuration from seed B.
-    //   (4) Seed A is received again from the server, perhaps due to a
-    //       rollback.
-    // In this situation, seed A should be saved as the latest seed, while seed
-    // B should be saved as the safe seed, i.e. the previously saved values
-    // should be swapped. Indeed, it is guaranteed that the latest seed value
-    // should be overwritten in this case, as a seed should not be considered
-    // safe unless a new seed can be both received *and saved* from the server.
-    std::string latest_seed =
-        local_state_->GetString(prefs::kVariationsCompressedSeed);
-    if (latest_seed == kIdenticalToSafeSeedSentinel) {
-      local_state_->SetString(prefs::kVariationsCompressedSeed,
-                              previous_safe_seed);
-    }
-    local_state_->SetString(prefs::kVariationsSafeCompressedSeed,
-                            base64_seed_data);
-  }
-
+  local_state_->SetString(prefs::kVariationsSafeCompressedSeed,
+                          base64_seed_data);
   local_state_->SetString(prefs::kVariationsSafeSeedSignature,
                           base64_seed_signature);
+
   local_state_->SetTime(prefs::kVariationsSafeSeedDate,
                         client_state.reference_date);
   local_state_->SetString(prefs::kVariationsSafeSeedLocale,
@@ -295,37 +256,7 @@ bool VariationsSeedStore::StoreSafeSeed(
                           client_state.permanent_consistency_country);
   local_state_->SetString(prefs::kVariationsSafeSeedSessionConsistencyCountry,
                           client_state.session_consistency_country);
-
-  // As a space optimization, overwrite the stored latest seed data with an
-  // alias to the safe seed, if they are identical.
-  if (base64_seed_data ==
-      local_state_->GetString(prefs::kVariationsCompressedSeed)) {
-    local_state_->SetString(prefs::kVariationsCompressedSeed,
-                            kIdenticalToSafeSeedSentinel);
-
-    // Moreover, in this case, the last fetch time for the safe seed should
-    // match the latest seed's.
-    seed_fetch_time = GetLastFetchTime();
-  }
-  local_state_->SetTime(prefs::kVariationsSafeSeedFetchTime, seed_fetch_time);
-
   return true;
-}
-
-base::Time VariationsSeedStore::GetLastFetchTime() const {
-  return local_state_->GetTime(prefs::kVariationsLastFetchTime);
-}
-
-void VariationsSeedStore::RecordLastFetchTime() {
-  base::Time now = base::Time::Now();
-  local_state_->SetTime(prefs::kVariationsLastFetchTime, now);
-
-  // If the latest and safe seeds are identical, update the fetch time for the
-  // safe seed as well.
-  if (local_state_->GetString(prefs::kVariationsCompressedSeed) ==
-      kIdenticalToSafeSeedSentinel) {
-    local_state_->SetTime(prefs::kVariationsSafeSeedFetchTime, now);
-  }
 }
 
 void VariationsSeedStore::UpdateSeedDateAndLogDayChange(
@@ -366,7 +297,6 @@ const std::string& VariationsSeedStore::GetLatestSerialNumber() {
 void VariationsSeedStore::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kVariationsCompressedSeed, std::string());
   registry->RegisterStringPref(prefs::kVariationsCountry, std::string());
-  registry->RegisterTimePref(prefs::kVariationsLastFetchTime, base::Time());
   registry->RegisterTimePref(prefs::kVariationsSeedDate, base::Time());
   registry->RegisterStringPref(prefs::kVariationsSeedSignature, std::string());
 
@@ -374,7 +304,6 @@ void VariationsSeedStore::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kVariationsSafeCompressedSeed,
                                std::string());
   registry->RegisterTimePref(prefs::kVariationsSafeSeedDate, base::Time());
-  registry->RegisterTimePref(prefs::kVariationsSafeSeedFetchTime, base::Time());
   registry->RegisterStringPref(prefs::kVariationsSafeSeedLocale, std::string());
   registry->RegisterStringPref(
       prefs::kVariationsSafeSeedPermanentConsistencyCountry, std::string());
@@ -398,7 +327,6 @@ bool VariationsSeedStore::SignatureVerificationEnabled() {
 void VariationsSeedStore::ClearPrefs(SeedType seed_type) {
   if (seed_type == SeedType::LATEST) {
     local_state_->ClearPref(prefs::kVariationsCompressedSeed);
-    local_state_->ClearPref(prefs::kVariationsLastFetchTime);
     local_state_->ClearPref(prefs::kVariationsSeedDate);
     local_state_->ClearPref(prefs::kVariationsSeedSignature);
     return;
@@ -407,7 +335,6 @@ void VariationsSeedStore::ClearPrefs(SeedType seed_type) {
   DCHECK_EQ(seed_type, SeedType::SAFE);
   local_state_->ClearPref(prefs::kVariationsSafeCompressedSeed);
   local_state_->ClearPref(prefs::kVariationsSafeSeedDate);
-  local_state_->ClearPref(prefs::kVariationsSafeSeedFetchTime);
   local_state_->ClearPref(prefs::kVariationsSafeSeedLocale);
   local_state_->ClearPref(
       prefs::kVariationsSafeSeedPermanentConsistencyCountry);
@@ -496,13 +423,6 @@ LoadSeedResult VariationsSeedStore::ReadSeedData(SeedType seed_type,
   if (base64_seed_data.empty())
     return LoadSeedResult::EMPTY;
 
-  // As a space optimization, the latest seed might not be stored directly, but
-  // rather aliased to the safe seed.
-  if (seed_type == SeedType::LATEST &&
-      base64_seed_data == kIdenticalToSafeSeedSentinel) {
-    return ReadSeedData(SeedType::SAFE, seed_data);
-  }
-
   // If the decode process fails, assume the pref value is corrupt and clear it.
   std::string decoded_data;
   if (!base::Base64Decode(base64_seed_data, &decoded_data)) {
@@ -548,13 +468,6 @@ bool VariationsSeedStore::StoreSeedDataNoDelta(
   // Update the saved country code only if one was returned from the server.
   if (!country_code.empty())
     local_state_->SetString(prefs::kVariationsCountry, country_code);
-
-  // As a space optimization, store an alias to the safe seed if the contents
-  // are identical.
-  if (base64_seed_data ==
-      local_state_->GetString(prefs::kVariationsSafeCompressedSeed)) {
-    base64_seed_data = kIdenticalToSafeSeedSentinel;
-  }
 
   local_state_->SetString(prefs::kVariationsCompressedSeed, base64_seed_data);
   UpdateSeedDateAndLogDayChange(date_fetched);

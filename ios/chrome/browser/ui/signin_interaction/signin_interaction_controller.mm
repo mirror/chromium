@@ -57,6 +57,11 @@ using signin_ui::CompletionCallback;
 @synthesize dispatcher = dispatcher_;
 @synthesize presenter = presenter_;
 
+- (id)init {
+  NOTREACHED();
+  return nil;
+}
+
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                 presentationProvider:(id<SigninInteractionPresenting>)presenter
                          accessPoint:(signin_metrics::AccessPoint)accessPoint

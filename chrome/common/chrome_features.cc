@@ -37,13 +37,6 @@ const base::Feature kShow10_9ObsoleteInfobar{"Show109ObsoleteInfobar",
 const base::Feature kFullscreenToolbarReveal{"FullscreenToolbarReveal",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
-#if BUILDFLAG(MAC_VIEWS_BROWSER)
-// Causes Views browser builds to use Views browser windows by default rather
-// than Cocoa browser windows.
-const base::Feature kViewsBrowserWindows{"ViewsBrowserWindows",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
-#endif
-
 // Use toolkit-views for profile chooser menu.
 const base::Feature kViewsProfileChooser{"ViewsProfileChooser",
                                          base::FEATURE_ENABLED_BY_DEFAULT};
@@ -552,10 +545,6 @@ const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
 // Enable TopSites to source and sort its site data using site engagement.
 const base::Feature kTopSitesFromSiteEngagement{
     "TopSitesFromSiteEngagement", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Improved and unified consent for privacy-related features.
-const base::Feature kUnifiedConsent{"UnifiedConsent",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables using the local NTP if Google is the default search engine.
 const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",

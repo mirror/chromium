@@ -119,14 +119,13 @@ class TestBidirectionalStreamCallback {
   static TestBidirectionalStreamCallback* FromStream(
       bidirectional_stream* stream) {
     DCHECK(stream);
-    return reinterpret_cast<TestBidirectionalStreamCallback*>(
-        stream->annotation);
+    return (TestBidirectionalStreamCallback*)stream->annotation;
   }
 
   virtual bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) {
     DCHECK_EQ(stream, this->stream);
     response_step = step;
-    DVLOG(3) << "Step: " << step;
+    DLOG(WARNING) << "Step: " << step;
 
     if (step != cancel_from_step)
       return false;
@@ -539,8 +538,9 @@ TEST_P(BidirectionalStreamTest, StreamFailBeforeReadIsExecutedOnNetworkThread) {
       : public TestBidirectionalStreamCallback {
     bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) override {
       if (step == ResponseStep::ON_READ_COMPLETED) {
-        // Shut down the server dispatcher, and the stream should error out.
-        ShutdownQuicTestServerDispatcher();
+        // Shut down the server, and the stream should error out.
+        // The second call to ShutdownQuicTestServer is no-op.
+        ShutdownQuicTestServer();
       }
       return TestBidirectionalStreamCallback::MaybeCancel(stream, step);
     }
@@ -582,8 +582,9 @@ TEST_P(BidirectionalStreamTest, StreamFailAfterStreamReadyCallback) {
       : public TestBidirectionalStreamCallback {
     bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) override {
       if (step == ResponseStep::ON_STREAM_READY) {
-        // Shut down the server dispatcher, and the stream should error out.
-        ShutdownQuicTestServerDispatcher();
+        // Shut down the server, and the stream should error out.
+        // The second call to ShutdownQuicTestServer is no-op.
+        ShutdownQuicTestServer();
       }
       return TestBidirectionalStreamCallback::MaybeCancel(stream, step);
     }
@@ -611,8 +612,9 @@ TEST_P(BidirectionalStreamTest,
       : public TestBidirectionalStreamCallback {
     bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) override {
       if (step == ResponseStep::ON_WRITE_COMPLETED) {
-        // Shut down the server dispatcher, and the stream should error out.
-        ShutdownQuicTestServerDispatcher();
+        // Shut down the server, and the stream should error out.
+        // The second call to ShutdownQuicTestServer is no-op.
+        ShutdownQuicTestServer();
       }
       return TestBidirectionalStreamCallback::MaybeCancel(stream, step);
     }

@@ -176,15 +176,8 @@ void APIEventHandler::InvalidateCustomEvent(v8::Local<v8::Context> context,
   EventEmitter* emitter = nullptr;
   APIEventPerContextData* data =
       APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
-  // This could happen if a port (or JS) invalidates an event following
-  // context destruction.
-  // TODO(devlin): Is it better to fail gracefully here, or track all these
-  // down for determinism?
-  if (!data)
-    return;
-
-  if (!gin::Converter<EventEmitter*>::FromV8(context->GetIsolate(), event,
-                                             &emitter)) {
+  if (!data || !gin::Converter<EventEmitter*>::FromV8(context->GetIsolate(),
+                                                      event, &emitter)) {
     NOTREACHED();
     return;
   }

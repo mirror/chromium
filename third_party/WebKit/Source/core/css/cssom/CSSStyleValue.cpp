@@ -60,7 +60,7 @@ CSSStyleValue* CSSStyleValue::parse(const ExecutionContext* execution_context,
   return style_value_vector[0];
 }
 
-Optional<CSSStyleValueVector> CSSStyleValue::parseAll(
+Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
     const ExecutionContext* execution_context,
     const String& property_name,
     const String& value,
@@ -68,7 +68,7 @@ Optional<CSSStyleValueVector> CSSStyleValue::parseAll(
   CSSStyleValueVector style_value_vector = ParseCSSStyleValue(
       execution_context, property_name, value, exception_state);
   if (style_value_vector.IsEmpty())
-    return WTF::nullopt;
+    return nullptr;
 
   return style_value_vector;
 }

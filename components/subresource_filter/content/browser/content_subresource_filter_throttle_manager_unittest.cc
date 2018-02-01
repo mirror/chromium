@@ -157,8 +157,7 @@ class ContentSubresourceFilterThrottleManagerTest
   }
 
   void ExpectActivationSignalForFrame(content::RenderFrameHost* rfh,
-                                      bool expect_activation,
-                                      bool expect_is_ad_subframe = false) {
+                                      bool expect_activation) {
     content::MockRenderProcessHost* render_process_host =
         static_cast<content::MockRenderProcessHost*>(rfh->GetProcess());
     const IPC::Message* message =
@@ -166,12 +165,10 @@ class ContentSubresourceFilterThrottleManagerTest
             SubresourceFilterMsg_ActivateForNextCommittedLoad::ID);
     ASSERT_EQ(expect_activation, !!message);
     if (expect_activation) {
-      std::tuple<ActivationState, bool> args;
+      std::tuple<ActivationState> args;
       SubresourceFilterMsg_ActivateForNextCommittedLoad::Read(message, &args);
       ActivationLevel level = std::get<0>(args).activation_level;
       EXPECT_NE(ActivationLevel::DISABLED, level);
-      bool is_ad_subframe = std::get<1>(args);
-      EXPECT_EQ(expect_is_ad_subframe, is_ad_subframe);
     }
     render_process_host->sink().ClearMessages();
   }
@@ -187,14 +184,12 @@ class ContentSubresourceFilterThrottleManagerTest
             url, render_frame_host);
   }
 
-  content::RenderFrameHost* CreateSubframeWithTestNavigation(
-      const GURL& url,
-      content::RenderFrameHost* parent) {
+  void CreateSubframeWithTestNavigation(const GURL& url,
+                                        content::RenderFrameHost* parent) {
     content::RenderFrameHost* subframe =
         content::RenderFrameHostTester::For(parent)->AppendChild(
             base::StringPrintf("subframe-%s", url.spec().c_str()));
     CreateTestNavigation(url, subframe);
-    return subframe;
   }
 
   void SimulateStartAndExpectResult(
@@ -351,8 +346,7 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
   // But it should still be activated.
-  ExpectActivationSignalForFrame(child, true /* expect_activation */,
-                                 true /* is_ad_subframe */);
+  ExpectActivationSignalForFrame(child, true /* expect_activation */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -719,105 +713,6 @@ TEST_F(ContentSubresourceFilterThrottleManagerTest, LogActivation) {
   // supported.
   tester.ExpectTotalCount("SubresourceFilter.PageLoad.Activation.CPUDuration",
                           base::ThreadTicks::IsSupported() ? 2 : 0);
-}
-
-// Check to make sure we don't send an IPC with the ad tag bit for ad frames
-// that are successfully filtered.
-TEST_P(ContentSubresourceFilterThrottleManagerTest,
-       ActivateMainFrameAndFilterSubframeNavigationTaggedAsAd) {
-  // Commit a navigation that triggers page level activation.
-  NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
-                                 false /* is_ad_subframe */);
-
-  // A disallowed subframe navigation should be successfully filtered.
-  content::RenderFrameHost* subframe = CreateSubframeWithTestNavigation(
-      GURL("https://www.example.com/disallowed.html"), main_rfh());
-
-  SimulateStartAndExpectResult(
-      content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
-
-  EXPECT_EQ(1, disallowed_notification_count());
-
-  // Since the IPC is not actually sent, is_ad_subframe is not really checked
-  // but adding it here since we do tag even if its not a dryrun scenario.
-  ExpectActivationSignalForFrame(subframe, false /* expect_activation */,
-                                 true /* is_ad_subframe */);
-}
-
-TEST_P(ContentSubresourceFilterThrottleManagerTest,
-       DryRun_FrameTaggingAsAdPropagatesToChildFrame) {
-  NavigateAndCommitMainFrame(GURL(kTestURLWithDryRun));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
-
-  // A disallowed subframe navigation should not be filtered in dry-run mode.
-  CreateSubframeWithTestNavigation(
-      GURL("https://www.example.com/disallowed.html"), main_rfh());
-  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::RenderFrameHost* child =
-      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  EXPECT_TRUE(child);
-
-  // But it should still be activated.
-  ExpectActivationSignalForFrame(child, true /* expect_activation */,
-                                 true /* is_ad_subframe */);
-  EXPECT_TRUE(throttle_manager()->IsFrameTaggedAsAdForTesting(child));
-
-  // Create a subframe which is allowed as per ruleset but should still be
-  // tagged as ad because of its parent.
-  CreateSubframeWithTestNavigation(
-      GURL("https://www.example.com/allowed_by_ruleset.html"), child);
-  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::RenderFrameHost* grandchild =
-      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  EXPECT_TRUE(grandchild);
-  ExpectActivationSignalForFrame(grandchild, true /* expect_activation */,
-                                 true /* is_ad_subframe */);
-  EXPECT_TRUE(throttle_manager()->IsFrameTaggedAsAdForTesting(grandchild));
-
-  // Verify that a 2nd level nested frame should also be tagged.
-  CreateSubframeWithTestNavigation(
-      GURL("https://www.example.com/great_grandchild_allowed_by_ruleset.html"),
-      child);
-  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::RenderFrameHost* greatGrandchild =
-      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  EXPECT_TRUE(greatGrandchild);
-  ExpectActivationSignalForFrame(greatGrandchild, true /* expect_activation */,
-                                 true /* is_ad_subframe */);
-  EXPECT_TRUE(throttle_manager()->IsFrameTaggedAsAdForTesting(greatGrandchild));
-
-  EXPECT_EQ(0, disallowed_notification_count());
-}
-
-TEST_P(ContentSubresourceFilterThrottleManagerTest,
-       DryRun_AllowedsFrameNotTaggedAsAd) {
-  NavigateAndCommitMainFrame(GURL(kTestURLWithDryRun));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
-
-  CreateSubframeWithTestNavigation(
-      GURL("https://www.example.com/allowed_by_ruleset.html"), main_rfh());
-  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::RenderFrameHost* child =
-      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  EXPECT_TRUE(child);
-  ExpectActivationSignalForFrame(child, true /* expect_activation */,
-                                 false /* is_ad_subframe */);
-  EXPECT_FALSE(throttle_manager()->IsFrameTaggedAsAdForTesting(child));
-
-  // Create a subframe which is allowed as per ruleset and should not be tagged
-  // as ad because its parent is not tagged as well.
-  CreateSubframeWithTestNavigation(
-      GURL("https://www.example.com/also_allowed_by_ruleset.html"), child);
-  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::RenderFrameHost* grandchild =
-      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  EXPECT_TRUE(grandchild);
-  ExpectActivationSignalForFrame(grandchild, true /* expect_activation */,
-                                 false /* is_ad_subframe */);
-  EXPECT_FALSE(throttle_manager()->IsFrameTaggedAsAdForTesting(grandchild));
-
-  EXPECT_EQ(0, disallowed_notification_count());
 }
 
 // TODO(csharrison): Make sure the following conditions are exercised in tests:

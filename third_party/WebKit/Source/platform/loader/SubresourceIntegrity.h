@@ -28,8 +28,6 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
       kSRIElementWithNonMatchingIntegrityAttribute,
       kSRIElementIntegrityAttributeButIneligible,
       kSRIElementWithUnparsableIntegrityAttribute,
-      kSRISignatureCheck,
-      kSRISignatureSuccess,
     };
 
     void AddUseCount(UseCounterFeature);

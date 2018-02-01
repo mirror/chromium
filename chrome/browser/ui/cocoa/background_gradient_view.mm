@@ -105,7 +105,7 @@
       return [NSColor blackColor];
   }
   return themeProvider->GetNSColor(
-      ThemeProperties::COLOR_TOOLBAR_BOTTOM_SEPARATOR);
+             ThemeProperties::COLOR_DETACHED_BOOKMARK_BAR_SEPARATOR);
 }
 
 - (NSColor*)backgroundImageColor {

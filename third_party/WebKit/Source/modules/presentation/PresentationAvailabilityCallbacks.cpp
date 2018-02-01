@@ -9,30 +9,21 @@
 #include "modules/presentation/PresentationAvailability.h"
 #include "modules/presentation/PresentationError.h"
 #include "modules/presentation/PresentationRequest.h"
+#include "public/platform/modules/presentation/WebPresentationError.h"
 
 namespace blink {
 
-namespace {
-
-DOMException* CreateAvailabilityNotSupportedError() {
-  static const WebString& not_supported_error = blink::WebString::FromUTF8(
-      "getAvailability() isn't supported at the moment. It can be due to "
-      "a permanent or temporary system limitation. It is recommended to "
-      "try to blindly start a presentation in that case.");
-  return DOMException::Create(kNotSupportedError, not_supported_error);
-}
-
-}  // namespace
-
-PresentationAvailabilityCallbacks::PresentationAvailabilityCallbacks(
+PresentationAvailabilityCallbacksImpl::PresentationAvailabilityCallbacksImpl(
     PresentationAvailabilityProperty* resolver,
     const Vector<KURL>& urls)
-    : resolver_(resolver), urls_(urls) {}
+    : resolver_(resolver), urls_(urls) {
+  DCHECK(resolver_);
+}
 
-PresentationAvailabilityCallbacks::~PresentationAvailabilityCallbacks() =
-    default;
+PresentationAvailabilityCallbacksImpl::
+    ~PresentationAvailabilityCallbacksImpl() = default;
 
-void PresentationAvailabilityCallbacks::Resolve(bool value) {
+void PresentationAvailabilityCallbacksImpl::OnSuccess(bool value) {
   if (!resolver_->GetExecutionContext() ||
       resolver_->GetExecutionContext()->IsContextDestroyed())
     return;
@@ -40,11 +31,12 @@ void PresentationAvailabilityCallbacks::Resolve(bool value) {
       PresentationAvailability::Take(resolver_.Get(), urls_, value));
 }
 
-void PresentationAvailabilityCallbacks::RejectAvailabilityNotSupported() {
+void PresentationAvailabilityCallbacksImpl::OnError(
+    const WebPresentationError& error) {
   if (!resolver_->GetExecutionContext() ||
       resolver_->GetExecutionContext()->IsContextDestroyed())
     return;
-  resolver_->Reject(CreateAvailabilityNotSupportedError());
+  resolver_->Reject(PresentationError::Take(error));
 }
 
 }  // namespace blink

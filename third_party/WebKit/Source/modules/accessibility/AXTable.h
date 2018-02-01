@@ -82,16 +82,11 @@ class MODULES_EXPORT AXTable : public AXLayoutObject {
   AXObjectVector columns_;
 
   Member<AXObject> header_container_;
+  bool is_ax_table_;
 
   bool HasARIARole() const;
-  bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
-
-  virtual bool ComputeIsDataTable() const;
   virtual bool IsTableExposableThroughAccessibility() const;
-
- private:
-  bool is_ax_table_;
-  bool is_data_table_;
+  bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
 
   DISALLOW_COPY_AND_ASSIGN(AXTable);
 };

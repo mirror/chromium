@@ -19,8 +19,13 @@ class DesktopMediaPickerCocoa : public DesktopMediaPicker {
   ~DesktopMediaPickerCocoa() override;
 
   // Overridden from DesktopMediaPicker:
-  void Show(const DesktopMediaPicker::Params& params,
+  void Show(content::WebContents* web_contents,
+            gfx::NativeWindow context,
+            gfx::NativeWindow parent,
+            const base::string16& app_name,
+            const base::string16& target_name,
             std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+            bool request_audio,
             const DoneCallback& done_callback) override;
 
  private:

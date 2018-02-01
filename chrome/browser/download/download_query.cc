@@ -30,7 +30,7 @@
 #include "third_party/re2/src/re2/re2.h"
 #include "url/gurl.h"
 
-using download::DownloadDangerType;
+using content::DownloadDangerType;
 using content::DownloadItem;
 
 namespace {
@@ -96,7 +96,7 @@ std::string GetEndTime(const DownloadItem& item) {
 
 bool GetDangerAccepted(const DownloadItem& item) {
   return (item.GetDangerType() ==
-          download::DOWNLOAD_DANGER_TYPE_USER_VALIDATED);
+          content::DOWNLOAD_DANGER_TYPE_USER_VALIDATED);
 }
 
 bool GetExists(const DownloadItem& item) {

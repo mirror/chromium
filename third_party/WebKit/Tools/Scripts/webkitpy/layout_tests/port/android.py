@@ -116,6 +116,13 @@ KPTR_RESTRICT_PATH = '/proc/sys/kernel/kptr_restrict'
 PERF_TEST_PATH_PREFIX = '/all-perf-tests'
 LAYOUT_TEST_PATH_PREFIX = '/all-tests'
 
+# All ports the Android forwarder to forward.
+# 8000, 8080 and 8443 are for http/https tests;
+# 8880 is for websocket tests (see apache_http.py and pywebsocket.py).
+# 8001, 8081 and 8444 are for http/https WPT;
+# 9001 and 9444 are for websocket WPT (see wptserve.py).
+FORWARD_PORTS = '8000 8001 8080 8081 8443 8444 8880 9001 9444'
+
 # We start netcat processes for each of the three stdio streams. In doing so,
 # we attempt to use ports starting from 10201. This starting value is
 # completely arbitrary.
@@ -943,7 +950,7 @@ class ChromiumAndroidDriver(driver.Driver):
 
         self._log_debug('Starting forwarder')
         forwarder.Forwarder.Map(
-            [(p, p) for p in base.Port.SERVER_PORTS],
+            [(p, p) for p in FORWARD_PORTS.split()],
             self._device)
         forwarder.Forwarder.Map(
             [(forwarder.DYNAMIC_DEVICE_PORT, p)
@@ -1099,8 +1106,10 @@ class ChromiumAndroidDriver(driver.Driver):
     def _command_from_driver_input(self, driver_input):
         command = super(ChromiumAndroidDriver, self)._command_from_driver_input(driver_input)
         if command.startswith('/'):
-            command = 'http://127.0.0.1:8000/all-tests/' + \
-                self._port.relative_test_filename(command)
+            fs = self._port.host.filesystem
+            # FIXME: what happens if command lies outside of the layout_tests_dir on the host?
+            relative_test_filename = fs.relpath(command, fs.dirname(self._port.layout_tests_dir()))
+            command = DEVICE_WEBKIT_BASE_DIR + relative_test_filename
         return command
 
     def _read_prompt(self, deadline):

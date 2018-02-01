@@ -485,7 +485,6 @@ public class ToolbarPhone extends ToolbarLayout
         // native is loaded.
         if (mLocationBar.useModernDesign()) {
             mNewTabButton.setIsModern();
-            if (mToolbarShadow != null) mToolbarShadow.setImageDrawable(getToolbarShadowDrawable());
             initLocationBarBackground();
         }
 
@@ -1115,10 +1114,7 @@ public class ToolbarPhone extends ToolbarLayout
             mToolbarButtonsContainer.setTranslationY(0);
             if (mHomeButton != null) mHomeButton.setTranslationY(0);
         }
-        if (!mToolbarShadowPermanentlyHidden) {
-            mToolbarShadow.setAlpha(
-                    mLocationBar.useModernDesign() && mUrlBar.hasFocus() ? 0.f : 1.f);
-        }
+        if (!mToolbarShadowPermanentlyHidden) mToolbarShadow.setAlpha(1f);
         mLocationBar.setAlpha(1);
         mForceDrawLocationBarBackground = false;
         mLocationBarBackgroundAlpha = 255;
@@ -1486,17 +1482,9 @@ public class ToolbarPhone extends ToolbarLayout
         // This is a workaround for http://crbug.com/574928. Since Jelly Bean is the lowest version
         // we support now and the next deprecation target, we decided to simply workaround.
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-            mToolbarShadow.setImageDrawable(getToolbarShadowDrawable());
+            mToolbarShadow.setImageDrawable(
+                    ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.toolbar_shadow));
         }
-    }
-
-    /**
-     * @return The {@link Drawable} to use for the toolbar shadow.
-     */
-    private Drawable getToolbarShadowDrawable() {
-        return ApiCompatibilityUtils.getDrawable(getResources(),
-                mLocationBar.useModernDesign() ? R.drawable.modern_toolbar_shadow
-                                               : R.drawable.toolbar_shadow);
     }
 
     @Override
@@ -1953,13 +1941,6 @@ public class ToolbarPhone extends ToolbarLayout
             animator.setInterpolator(BakedBezierInterpolator.FADE_OUT_CURVE);
             animators.add(animator);
         }
-
-        if (mLocationBar.useModernDesign()) {
-            animator = ObjectAnimator.ofFloat(mToolbarShadow, ALPHA, 0);
-            animator.setDuration(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
-            animator.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
-            animators.add(animator);
-        }
     }
 
     private void populateUrlClearFocusingAnimatorSet(List<Animator> animators) {
@@ -2031,13 +2012,6 @@ public class ToolbarPhone extends ToolbarLayout
                 animators.add(animator);
             }
         }
-
-        if (mLocationBar.useModernDesign() && !isLocationBarShownInNTP()) {
-            animator = ObjectAnimator.ofFloat(mToolbarShadow, ALPHA, 1);
-            animator.setDuration(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
-            animator.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
-            animators.add(animator);
-        }
     }
 
     @Override
@@ -2046,9 +2020,15 @@ public class ToolbarPhone extends ToolbarLayout
 
         triggerUrlFocusAnimation(hasFocus);
 
-        if (hasFocus) dismissTabSwitcherCallout();
+        if (mToolbarShadowPermanentlyHidden) return;
 
-        transitionShadowDrawable(hasFocus);
+        TransitionDrawable shadowDrawable = (TransitionDrawable) mToolbarShadow.getDrawable();
+        if (hasFocus) {
+            dismissTabSwitcherCallout();
+            shadowDrawable.startTransition(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
+        } else {
+            shadowDrawable.reverseTransition(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
+        }
     }
 
     protected void triggerUrlFocusAnimation(final boolean hasFocus) {
@@ -2273,24 +2253,10 @@ public class ToolbarPhone extends ToolbarLayout
     protected void handleFindToolbarStateChange(boolean showing) {
         setVisibility(showing ? View.GONE : View.VISIBLE);
 
-        transitionShadowDrawable(showing);
-    }
-
-    /**
-     * Transition the shadow drawable, if a transition drawable is being used.
-     * @param startTransition Whether the transition, showing the second layer on top of the first,
-     *                        should begin. See {@link TransitionDrawable#startTransition(int)}.
-     *                        If false, the transition will be reversed.
-     *                        See {@link TransitionDrawable#reverseTransition(int)}.
-     */
-    private void transitionShadowDrawable(boolean startTransition) {
         if (mToolbarShadowPermanentlyHidden) return;
 
-        // Modern does not use a transition drawable for the shadow.
-        if (mLocationBar.useModernDesign()) return;
-
         TransitionDrawable shadowDrawable = (TransitionDrawable) mToolbarShadow.getDrawable();
-        if (startTransition) {
+        if (showing) {
             shadowDrawable.startTransition(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
         } else {
             shadowDrawable.reverseTransition(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);

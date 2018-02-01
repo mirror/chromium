@@ -7,10 +7,11 @@
 
 #include <memory>
 
+#include "ash/app_list/model/search/search_result_observer.h"
 #include "base/macros.h"
 #include "ui/app_list/app_list_export.h"
-#include "ui/app_list/views/search_result_base_view.h"
 #include "ui/views/context_menu_controller.h"
+#include "ui/views/controls/button/button.h"
 
 namespace views {
 class ImageView;
@@ -28,8 +29,10 @@ class PaginationModel;
 // A tile view that displays a search result. It hosts view for search result
 // that has SearchResult::DisplayType DISPLAY_TILE or DISPLAY_RECOMMENDATION.
 class APP_LIST_EXPORT SearchResultTileItemView
-    : public SearchResultBaseView,
-      public views::ContextMenuController {
+    : public views::Button,
+      public views::ButtonListener,
+      public views::ContextMenuController,
+      public SearchResultObserver {
  public:
   SearchResultTileItemView(SearchResultContainerView* result_container,
                            AppListViewDelegate* view_delegate,

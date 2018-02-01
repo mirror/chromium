@@ -24,7 +24,6 @@
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
-#include "content/browser/frame_host/navigation_request.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -48,6 +47,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -55,7 +55,6 @@
 #include "content/test/content_browser_test_utils_internal.h"
 #include "content/test/did_commit_provisional_load_interceptor.h"
 #include "net/dns/mock_host_resolver.h"
-#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/url_request/url_request_failed_job.h"
@@ -7855,120 +7854,6 @@ IN_PROC_BROWSER_TEST_F(
   EXPECT_EQ(0U, entry->root_node()->children[0]->children.size());
 }
 
-class NavigationControllerControllableResponseBrowserTest
-    : public ContentBrowserTest {
- protected:
-  void SetUpOnMainThread() override {
-    host_resolver()->AddRule("*", "127.0.0.1");
-    content::SetupCrossSiteRedirector(embedded_test_server());
-  }
-};
-
-IN_PROC_BROWSER_TEST_F(NavigationControllerControllableResponseBrowserTest,
-                       ReloadDisablePreviewReloadsOriginalRequestURL) {
-  const std::string kOriginalPath = "/original.html";
-  const std::string kRedirectPath = "/redirect.html";
-  net::test_server::ControllableHttpResponse original_response1(
-      embedded_test_server(), kOriginalPath);
-  net::test_server::ControllableHttpResponse original_response2(
-      embedded_test_server(), kOriginalPath);
-  net::test_server::ControllableHttpResponse redirect_response1(
-      embedded_test_server(), kRedirectPath);
-  net::test_server::ControllableHttpResponse redirect_response2(
-      embedded_test_server(), kRedirectPath);
-
-  EXPECT_TRUE(embedded_test_server()->Start());
-
-  const GURL kOriginalURL =
-      embedded_test_server()->GetURL("a.com", kOriginalPath);
-  const GURL kRedirectURL =
-      embedded_test_server()->GetURL("b.com", kRedirectPath);
-  const GURL kReloadRedirectURL =
-      embedded_test_server()->GetURL("c.com", kRedirectPath);
-
-  // First navigate to the initial URL. This page will have a cross-site
-  // redirect to a 2nd domain.
-  shell()->LoadURL(kOriginalURL);
-  original_response1.WaitForRequest();
-  original_response1.Send(
-      "HTTP/1.1 302 FOUND\r\n"
-      "Location: " +
-      kRedirectURL.spec() +
-      "\r\n"
-      "\r\n");
-  original_response1.Done();
-  redirect_response1.WaitForRequest();
-  redirect_response1.Send(
-      "HTTP/1.1 200 OK\r\n"
-      "Content-Type: text/html; charset=utf-8\r\n"
-      "\r\n");
-  redirect_response1.Send(
-      "<html>"
-      "<body></body>"
-      "</html>");
-  redirect_response1.Done();
-  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
-  EXPECT_EQ(kRedirectURL, shell()->web_contents()->GetVisibleURL());
-
-  if (content::AreAllSitesIsolatedForTesting()) {
-    RenderFrameHostImpl* rfh =
-        static_cast<WebContentsImpl*>(shell()->web_contents())->GetMainFrame();
-    EXPECT_EQ(GURL("http://b.com"), rfh->GetSiteInstance()->GetSiteURL());
-  }
-
-  // Now simulate a 'Show original' reload via ReloadType::DISABLE_PREVIEWS.
-  // This reload will have a cross-site redirect to a 3rd domain.
-  TestNavigationManager reload(shell()->web_contents(), kOriginalURL);
-  shell()->web_contents()->GetController().Reload(ReloadType::DISABLE_PREVIEWS,
-                                                  false);
-  EXPECT_TRUE(reload.WaitForRequestStart());
-
-  // Verify reload is using the original request URL and no previews allowed.
-  EXPECT_EQ(kOriginalURL, reload.GetNavigationHandle()->GetURL());
-  NavigationRequest* navigation_request =
-      static_cast<WebContentsImpl*>(shell()->web_contents())
-          ->GetFrameTree()
-          ->root()
-          ->navigation_request();
-  CHECK(navigation_request);
-  EXPECT_EQ(content::PREVIEWS_NO_TRANSFORM,
-            navigation_request->common_params().previews_state);
-
-  reload.ResumeNavigation();
-  original_response2.WaitForRequest();
-  original_response2.Send(
-      "HTTP/1.1 302 FOUND\r\n"
-      "Location: " +
-      kReloadRedirectURL.spec() +
-      "\r\n"
-      "\r\n");
-  original_response2.Done();
-  redirect_response2.WaitForRequest();
-
-  // Verify now using new redirect URL.
-  EXPECT_EQ(kReloadRedirectURL, reload.GetNavigationHandle()->GetURL());
-
-  redirect_response2.Send(
-      "HTTP/1.1 200 OK\r\n"
-      "Content-Type: text/html; charset=utf-8\r\n"
-      "\r\n");
-  redirect_response2.Send(
-      "<html>"
-      "<body></body>"
-      "</html>");
-  redirect_response2.Done();
-  EXPECT_TRUE(reload.WaitForResponse());
-  reload.WaitForNavigationFinished();
-  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
-  EXPECT_EQ(kReloadRedirectURL, shell()->web_contents()->GetVisibleURL());
-
-  if (content::AreAllSitesIsolatedForTesting()) {
-    RenderFrameHostImpl* rfh =
-        static_cast<WebContentsImpl*>(shell()->web_contents())->GetMainFrame();
-    EXPECT_EQ(GURL("http://c.com"), rfh->GetSiteInstance()->GetSiteURL());
-  }
-}
-
 // This test reproduces issue 769645. It happens when the user reloads the page
 // and an "unload" event triggers a back navigation. If the reload navigation
 // has reached the ReadyToCommit stage but has not committed, the back
@@ -7976,10 +7861,9 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerControllableResponseBrowserTest,
 // See https://crbug.com/769645.
 // See https://crbug.com/773683.
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest, HistoryBackInUnloadCancelsReload) {
-  net::test_server::ControllableHttpResponse response_1(embedded_test_server(),
-                                                        "/main_document");
-  net::test_server::ControllableHttpResponse response_2(
-      embedded_test_server(), "/main_document?attribute=1");
+  ControllableHttpResponse response_1(embedded_test_server(), "/main_document");
+  ControllableHttpResponse response_2(embedded_test_server(),
+                                      "/main_document?attribute=1");
 
   EXPECT_TRUE(embedded_test_server()->Start());
 

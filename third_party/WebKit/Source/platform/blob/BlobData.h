@@ -33,7 +33,6 @@
 
 #include <memory>
 #include "base/gtest_prod_util.h"
-#include "base/thread_annotations.h"
 #include "platform/FileMetadata.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Forward.h"
@@ -215,7 +214,7 @@ class PLATFORM_EXPORT BlobDataHandle
   // Blob interface from multiple threads store a InterfacePtrInfo combined with
   // a mutex, and make sure any access to the mojo interface is done protected
   // by the mutex.
-  mojom::blink::BlobPtrInfo blob_info_ GUARDED_BY(blob_info_mutex_);
+  mojom::blink::BlobPtrInfo blob_info_;
   Mutex blob_info_mutex_;
 };
 

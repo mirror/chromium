@@ -15,6 +15,8 @@
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/modules/presentation/WebPresentationConnection.h"
+#include "public/platform/modules/presentation/WebPresentationInfo.h"
 #include "public/platform/modules/presentation/presentation.mojom-blink.h"
 
 namespace WTF {
@@ -62,6 +64,10 @@ class PresentationConnection : public EventTargetWithInlineData,
   DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(close);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(terminate);
+
+  // Returns true if and only if the the presentation info matches this
+  // connection.
+  bool Matches(const WebPresentationInfo&) const;
 
   // Returns true if this connection's id equals to |id| and its url equals to
   // |url|.
@@ -152,13 +158,14 @@ class PresentationConnection : public EventTargetWithInlineData,
 
 // Represents the controller side of a connection of either a 1-UA or 2-UA
 // presentation.
-class ControllerPresentationConnection final : public PresentationConnection {
+class ControllerPresentationConnection final
+    : public PresentationConnection,
+      public WebPresentationConnection {
  public:
   // For CallbackPromiseAdapter.
-  static ControllerPresentationConnection* Take(
-      ScriptPromiseResolver*,
-      const mojom::blink::PresentationInfo&,
-      PresentationRequest*);
+  static ControllerPresentationConnection* Take(ScriptPromiseResolver*,
+                                                const WebPresentationInfo&,
+                                                PresentationRequest*);
   static ControllerPresentationConnection* Take(
       PresentationController*,
       const mojom::blink::PresentationInfo&,
@@ -172,8 +179,8 @@ class ControllerPresentationConnection final : public PresentationConnection {
 
   virtual void Trace(blink::Visitor*);
 
-  // Initializes Mojo message pipes and registers with the PresentationService.
-  void Init();
+  // WebPresentationConnection implementation.
+  void Init() override;
 
  private:
   // PresentationConnection implementation.

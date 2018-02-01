@@ -21,7 +21,7 @@
 
 namespace base {
 
-#if defined(ADDRESS_SANITIZER) && defined(OS_ANDROID)
+#if defined(ADDRESS_SANITIZER)
 // On ASAN builds, the working directory for the test is /, which is not
 // readable. See crbug.com/804348.
 #define MAYBE_Read DISABLED_Read

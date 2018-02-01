@@ -6,15 +6,13 @@ package org.chromium.chrome.browser.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -25,8 +23,7 @@ import org.chromium.chrome.R;
  * anchor a popup on press and will rely on a delegate for both querying the items and returning the
  * results.
  */
-public class ListMenuButton
-        extends TintedImageButton implements AnchoredPopupWindow.LayoutObserver {
+public class ListMenuButton extends TintedImageButton {
     private final static int INVALID_RES_ID = 0;
 
     /** A class that represents a single item in the popup menu. */
@@ -95,7 +92,7 @@ public class ListMenuButton
 
     private final int mMenuWidth;
 
-    private AnchoredPopupWindow mPopupMenu;
+    private ListPopupWindow mPopupMenu;
     private Delegate mDelegate;
 
     /**
@@ -153,13 +150,6 @@ public class ListMenuButton
         super.onDetachedFromWindow();
     }
 
-    @Override
-    public void onPreLayoutChange(
-            boolean positionBelow, int x, int y, int width, int height, Rect anchorRect) {
-        mPopupMenu.setAnimationStyle(
-                positionBelow ? R.style.OverflowMenuAnim : R.style.OverflowMenuAnimBottom);
-    }
-
     private void showMenu() {
         if (mDelegate == null) throw new IllegalStateException("Delegate was not set.");
 
@@ -174,9 +164,8 @@ public class ListMenuButton
         // changed.
         dismiss();
 
-        // Create the adapter for the ListView.
-        ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(
-                getContext(), R.layout.list_menu_item, items) {
+        mPopupMenu = new ListPopupWindow(getContext(), null, 0, R.style.ListMenuStyle);
+        mPopupMenu.setAdapter(new ArrayAdapter<Item>(getContext(), R.layout.list_menu_item, items) {
             @Override
             public boolean areAllItemsEnabled() {
                 return false;
@@ -193,40 +182,28 @@ public class ListMenuButton
                 view.setEnabled(isEnabled(position));
 
                 // Set the compound drawable at the end for items with a valid endIconId,
-                // otherwise clear the compound drawable if the endIconId is 0.
+                // otherwise clear the compoud drawable if the endIconId is 0.
                 ApiCompatibilityUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         (TextView) view, 0, 0, items[position].getEndIconId(), 0);
 
                 return view;
             }
-        };
+        });
+        mPopupMenu.setAnchorView(this);
+        mPopupMenu.setWidth(mMenuWidth);
+        mPopupMenu.setVerticalOffset(-getHeight());
+        mPopupMenu.setModal(true);
 
-        // Create the content view and set up its ListView.
-        ViewGroup contentView = (ViewGroup) LayoutInflater.from(getContext())
-                                        .inflate(R.layout.app_menu_layout, null);
-        ListView list = (ListView) contentView.findViewById(R.id.app_menu_list);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener((parent, view, position, id) -> {
+        mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
             if (mDelegate != null) mDelegate.onItemSelected(items[position]);
 
             // TODO(crbug.com/600642): Somehow the on click event can be triggered way after we
             // dismiss the popup.
             if (mPopupMenu != null) mPopupMenu.dismiss();
         });
-        list.setDivider(null);
-
-        // Create the popup window and set properties.
-        ViewRectProvider rectProvider = new ViewRectProvider(this);
-        rectProvider.setIncludePadding(true);
-        mPopupMenu = new AnchoredPopupWindow(getContext(), this,
-                ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.menu_bg), contentView,
-                rectProvider);
-        mPopupMenu.setOverlapAnchor(true);
-        mPopupMenu.setMaxWidth(mMenuWidth);
-        mPopupMenu.setFocusable(true);
-        mPopupMenu.setLayoutObserver(this);
-        mPopupMenu.addOnDismissListener(() -> { mPopupMenu = null; });
+        mPopupMenu.setOnDismissListener(() -> { mPopupMenu = null; });
 
         mPopupMenu.show();
+        mPopupMenu.getListView().setDivider(null);
     }
 }

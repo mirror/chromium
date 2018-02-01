@@ -103,14 +103,23 @@ HTMLElement* CustomElement::CreateCustomElementSync(
   return CreateCustomElementSync(document, tag_name, definition);
 }
 
+HTMLElement* CustomElement::CreateCustomElementSync(
+    Document& document,
+    const AtomicString& local_name,
+    CustomElementDefinition* definition) {
+  return CreateCustomElementSync(
+      document,
+      QualifiedName(g_null_atom, local_name, HTMLNames::xhtmlNamespaceURI),
+      definition);
+}
+
 // https://dom.spec.whatwg.org/#concept-create-element
 HTMLElement* CustomElement::CreateCustomElementSync(
     Document& document,
     const QualifiedName& tag_name,
     CustomElementDefinition* definition) {
   DCHECK(ShouldCreateCustomElement(tag_name) ||
-         ShouldCreateCustomizedBuiltinElement(tag_name))
-      << tag_name;
+         ShouldCreateCustomizedBuiltinElement(tag_name));
   HTMLElement* element;
 
   if (definition && definition->Descriptor().IsAutonomous()) {
@@ -160,8 +169,8 @@ HTMLElement* CustomElement::CreateUndefinedElement(
     SECURITY_DCHECK(v0element->IsHTMLElement());
     element = ToHTMLElement(v0element);
   } else if (should_create_builtin) {
-    element = ToHTMLElement(
-        document.CreateRawElement(tag_name, kCreatedByCreateElement));
+    element = HTMLElementFactory::createHTMLElement(
+        tag_name.LocalName(), document, kCreatedByCreateElement);
   } else {
     element = HTMLElement::Create(tag_name, document);
   }

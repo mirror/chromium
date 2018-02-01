@@ -248,9 +248,6 @@ class SimpleSynchronousEntry {
     return entry_file_key_;
   }
 
-  NET_EXPORT_PRIVATE base::FilePath GetFilenameForSubfile(
-      SimpleFileTracker::SubFile sub_file) const;
-
  private:
   FRIEND_TEST_ALL_PREFIXES(::DiskCacheBackendTest,
                            SimpleCacheEnumerationLongKeys);
@@ -427,7 +424,7 @@ class SimpleSynchronousEntry {
 
   void RecordSyncCreateResult(CreateEntryResult result, bool had_index);
 
-  base::FilePath GetFilenameFromFileIndex(int file_index) const;
+  base::FilePath GetFilenameFromFileIndex(int file_index);
 
   bool sparse_file_open() const { return sparse_file_open_; }
 

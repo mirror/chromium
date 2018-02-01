@@ -6,15 +6,12 @@
 
 #import "base/logging.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
-#import "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_to_top_animator.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller+subclassing.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/util/named_guide.h"
@@ -52,15 +49,11 @@
   if (!onNTP)
     return;
 
-  self.view.backgroundColor =
-      self.buttonFactory.toolbarConfiguration.NTPBackgroundColor;
   self.view.locationBarContainer.hidden = YES;
 }
 
 - (void)resetAfterSideSwipeSnapshot {
   [super resetAfterSideSwipeSnapshot];
-  self.view.backgroundColor =
-      self.buttonFactory.toolbarConfiguration.backgroundColor;
   self.view.locationBarContainer.hidden = NO;
 }
 
@@ -72,6 +65,12 @@
   self.view =
       [[PrimaryToolbarView alloc] initWithButtonFactory:self.buttonFactory];
 
+  if (@available(iOS 11, *)) {
+    self.view.topSafeAnchor = self.view.safeAreaLayoutGuide.topAnchor;
+  } else {
+    self.view.topSafeAnchor = self.topLayoutGuide.bottomAnchor;
+  }
+
   // This method cannot be called from the init as the topSafeAnchor can only be
   // set to topLayoutGuide after the view creation on iOS 10.
   [self.view setUp];
@@ -80,11 +79,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Adds the layout guide to the buttons.
+  // Adds the layout guide to the buttons. Adds the priorities such as the
+  // layout guide constraints does not conflict with others set by other
+  // toolbar.
   self.view.toolsMenuButton.guideName = kTabSwitcherGuide;
+  self.view.toolsMenuButton.constraintPriority =
+      kPrimaryToolbarTrailingButtonPriority;
   self.view.forwardLeadingButton.guideName = kForwardButtonGuide;
+  self.view.forwardLeadingButton.constraintPriority =
+      kPrimaryToolbarLeadingButtonPriority;
   self.view.forwardTrailingButton.guideName = kForwardButtonGuide;
+  self.view.forwardTrailingButton.constraintPriority =
+      kPrimaryToolbarTrailingButtonPriority;
   self.view.backButton.guideName = kBackButtonGuide;
+  self.view.backButton.constraintPriority =
+      kPrimaryToolbarLeadingButtonPriority;
 
   // Add navigation popup menu triggers.
   [self addLongPressGestureToView:self.view.backButton];
@@ -129,16 +138,9 @@
 #pragma mark - FullscreenUIElement
 
 - (void)updateForFullscreenProgress:(CGFloat)progress {
-  CGFloat alphaValue = fmax(progress * 2 - 1, 0);
-  self.view.leadingStackView.alpha = alphaValue;
-  self.view.trailingStackView.alpha = alphaValue;
-  self.view.locationBarHeight.constant =
-      AlignValueToPixel(kToolbarHeightFullscreen +
-                        (kToolbarHeight - kToolbarHeightFullscreen) * progress -
-                        2 * kLocationBarVerticalMargin);
-  self.view.locationBarContainer.backgroundColor =
-      [self.buttonFactory.toolbarConfiguration.omniboxBackgroundColor
-          colorWithAlphaComponent:alphaValue];
+  self.view.leadingStackView.alpha = progress;
+  self.view.trailingStackView.alpha = progress;
+  // TODO(crbug.com/804731): Update the location bar constraints.
 }
 
 - (void)updateForFullscreenEnabled:(BOOL)enabled {
@@ -153,11 +155,6 @@
 
 - (void)scrollFullscreenToTopWithAnimator:
     (FullscreenScrollToTopAnimator*)animator {
-  [self addFullscreenAnimationsToAnimator:animator];
-}
-
-- (void)showToolbarForForgroundWithAnimator:
-    (FullscreenForegroundAnimator*)animator {
   [self addFullscreenAnimationsToAnimator:animator];
 }
 

@@ -245,8 +245,6 @@ Polymer({
   onClearAndReset_: function() {
     this.browserProxy.setOriginPermissions(
         this.origin, this.getCategoryList_(), settings.ContentSetting.DEFAULT);
-    if (this.getCategoryList_().includes(settings.ContentSettingsTypes.PLUGINS))
-      this.browserProxy.clearFlashPref(this.origin);
 
     if (this.storedData_ != '')
       this.onClearStorage_();

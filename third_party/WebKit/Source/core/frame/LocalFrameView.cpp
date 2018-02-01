@@ -128,6 +128,9 @@
 #include "public/platform/WebDisplayItemList.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebScrollIntoViewParams.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 // Used to check for dirty layouts violating document lifecycle rules.
@@ -153,6 +156,42 @@ constexpr int kLetterPortraitPageHeight = 792;
 }  // namespace
 
 namespace blink {
+namespace {
+
+class ScopedUsHistogramAndUkmTimer {
+  STACK_ALLOCATED();
+
+ public:
+  explicit ScopedUsHistogramAndUkmTimer(LocalFrameView* view,
+                                        CustomCountHistogram& counter,
+                                        const char* ukm_metric)
+      : view_(view),
+        start_time_(CurrentTimeTicks()),
+        counter_(&counter),
+        ukm_metric_(ukm_metric) {}
+
+  ~ScopedUsHistogramAndUkmTimer() {
+    int64_t elapsed = (CurrentTimeTicks() - start_time_).InMicroseconds();
+    counter_->Count(elapsed);
+    view_->RecordUkmPerformanceMetric(ukm_metric_, elapsed);
+  }
+
+ private:
+  Member<LocalFrameView> view_;
+  const TimeTicks start_time_;
+  CustomCountHistogram* counter_;
+  const char* ukm_metric_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedUsHistogramAndUkmTimer);
+};
+
+#define SCOPED_UMA_AND_UKM_TIMER(uma_name, ukm_name)                \
+  DEFINE_STATIC_LOCAL_IMPL(CustomCountHistogram, scoped_us_counter, \
+                           (uma_name, 0, 10000000, 50), false);     \
+  ScopedUsHistogramAndUkmTimer timer(this, scoped_us_counter, ukm_name);
+
+}  // namespace
+
 using namespace HTMLNames;
 
 // The maximum number of updatePlugins iterations that should be done before
@@ -650,8 +689,7 @@ FloatQuad LocalFrameView::LocalToVisibleContentQuad(
   return result;
 }
 
-scoped_refptr<base::SingleThreadTaskRunner> LocalFrameView::GetTimerTaskRunner()
-    const {
+scoped_refptr<WebTaskRunner> LocalFrameView::GetTimerTaskRunner() const {
   return frame_->GetTaskRunner(TaskType::kUnspecedTimer);
 }
 
@@ -3289,7 +3327,7 @@ void LocalFrameView::PrePaint() {
   });
 
   {
-    SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PrePaint.UpdateTime");
+    SCOPED_UMA_AND_UKM_TIMER("Blink.PrePaint.UpdateTime", "PrePaint");
     PrePaintTreeWalk().Walk(*this);
   }
 
@@ -3300,7 +3338,7 @@ void LocalFrameView::PrePaint() {
 
 void LocalFrameView::PaintTree() {
   TRACE_EVENT0("blink", "LocalFrameView::paintTree");
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Paint.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.Paint.UpdateTime", "Paint");
 
   DCHECK(GetFrame() == GetPage()->MainFrame() ||
          (!GetFrame().Tree().Parent()->IsLocalFrame()));
@@ -3383,7 +3421,7 @@ void LocalFrameView::PushPaintArtifactToCompositor(
         paint_artifact_compositor_->GetWebLayer(), &GetFrame());
   }
 
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.Compositing.UpdateTime", "Compositing");
 
   paint_artifact_compositor_->Update(paint_controller_->GetPaintArtifact(),
                                      composited_element_ids);
@@ -3398,7 +3436,7 @@ std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
 }
 
 void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursive() {
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.StyleAndLayout.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.StyleAndLayout.UpdateTime", "StyleAndLayout");
   UpdateStyleAndLayoutIfNeededRecursiveInternal();
 }
 
@@ -3657,19 +3695,13 @@ LayoutPoint LocalFrameView::ConvertFromLayoutObject(
 LayoutPoint LocalFrameView::ConvertToLayoutObject(
     const LayoutObject& layout_object,
     const LayoutPoint& frame_point) const {
-  return LayoutPoint(
-      ConvertToLayoutObject(layout_object, FloatPoint(frame_point)));
-}
-
-FloatPoint LocalFrameView::ConvertToLayoutObject(
-    const LayoutObject& layout_object,
-    const FloatPoint& frame_point) const {
-  FloatPoint point = frame_point;
+  LayoutPoint point = frame_point;
 
   // Convert from LocalFrameView coords into page ("absolute") coordinates.
-  point += FloatSize(ScrollX(), ScrollY());
+  point += LayoutSize(ScrollX(), ScrollY());
 
-  return layout_object.AbsoluteToLocal(point, kUseTransforms);
+  return LayoutPoint(
+      layout_object.AbsoluteToLocal(FloatPoint(point), kUseTransforms));
 }
 
 IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
@@ -3742,18 +3774,6 @@ LayoutRect LocalFrameView::DocumentToAbsolute(
                     rect_in_document.Size());
 }
 
-LayoutPoint LocalFrameView::AbsoluteToDocument(
-    const LayoutPoint& point_in_absolute) const {
-  return point_in_absolute +
-         LayoutSize(GetLayoutView()->GetScrollableArea()->GetScrollOffset());
-}
-
-LayoutRect LocalFrameView::AbsoluteToDocument(
-    const LayoutRect& rect_in_absolute) const {
-  return LayoutRect(AbsoluteToDocument(rect_in_absolute.Location()),
-                    rect_in_absolute.Size());
-}
-
 IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
     const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
@@ -3804,31 +3824,17 @@ LayoutPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
 
 LayoutPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
     const LayoutPoint& parent_point) const {
-  return LayoutPoint(
-      ConvertFromContainingEmbeddedContentView(DoublePoint(parent_point)));
-}
-
-FloatPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
-    const FloatPoint& parent_point) const {
-  return FloatPoint(
-      ConvertFromContainingEmbeddedContentView(DoublePoint(parent_point)));
-}
-
-DoublePoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
-    const DoublePoint& parent_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
     auto* layout_object = frame_->OwnerLayoutObject();
     if (!layout_object)
       return parent_point;
 
-    DoublePoint point = DoublePoint(parent->ConvertToLayoutObject(
-        *layout_object, FloatPoint(parent_point)));
+    LayoutPoint point =
+        parent->ConvertToLayoutObject(*layout_object, parent_point);
     // Subtract borders and padding
-    point.Move(
-        (-layout_object->BorderLeft() - layout_object->PaddingLeft())
-            .ToDouble(),
-        (-layout_object->BorderTop() - layout_object->PaddingTop()).ToDouble());
+    point.Move((-layout_object->BorderLeft() - layout_object->PaddingLeft()),
+               (-layout_object->BorderTop() - layout_object->PaddingTop()));
     return point;
   }
 
@@ -3844,7 +3850,7 @@ IntPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
 IntPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
     const IntPoint& parent_point) const {
   return RoundedIntPoint(
-      ConvertFromContainingEmbeddedContentView(DoublePoint(parent_point)));
+      ConvertFromContainingEmbeddedContentView(LayoutPoint(parent_point)));
 }
 
 void LocalFrameView::SetInitialTracksPaintInvalidationsForTesting(
@@ -5118,11 +5124,24 @@ LayoutPoint LocalFrameView::ConvertFromRootFrame(
 
 FloatPoint LocalFrameView::ConvertFromRootFrame(
     const FloatPoint& point_in_root_frame) const {
-  if (LocalFrameView* parent = ParentFrameView()) {
-    FloatPoint parent_point = parent->ConvertFromRootFrame(point_in_root_frame);
-    return ConvertFromContainingEmbeddedContentView(parent_point);
+  // FrameViews / windows are required to be IntPoint aligned, but we may
+  // need to convert FloatPoint values within them (eg. for event
+  // co-ordinates).
+  IntPoint floored_point = FlooredIntPoint(point_in_root_frame);
+  FloatPoint parent_point = ConvertFromRootFrame(floored_point);
+  FloatSize window_fraction = point_in_root_frame - floored_point;
+  // Use linear interpolation handle any fractional value (eg. for iframes
+  // subject to a transform beyond just a simple translation).
+  // FIXME: Add FloatPoint variants of all co-ordinate space conversion APIs.
+  if (!window_fraction.IsEmpty()) {
+    const int kFactor = 1000;
+    IntPoint parent_line_end = ConvertFromRootFrame(
+        floored_point + RoundedIntSize(window_fraction.ScaledBy(kFactor)));
+    FloatSize parent_fraction =
+        (parent_line_end - parent_point).ScaledBy(1.0f / kFactor);
+    parent_point.Move(parent_fraction);
   }
-  return point_in_root_frame;
+  return parent_point;
 }
 
 IntPoint LocalFrameView::ConvertFromContainingEmbeddedContentViewToScrollbar(
@@ -5754,6 +5773,16 @@ ScrollbarTheme& LocalFrameView::GetPageScrollbarTheme() const {
   DCHECK(page);
 
   return page->GetScrollbarTheme();
+}
+
+void LocalFrameView::RecordUkmPerformanceMetric(const char* metric_name,
+                                                int64_t value) {
+  ukm::UkmRecorder* ukm_recorder = frame_->GetDocument()->UkmRecorder();
+  DCHECK(ukm_recorder);
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
+      frame_->GetDocument()->UkmSourceID(), "Blink.UpdateTime");
+  builder->AddMetric(metric_name, value);
 }
 
 }  // namespace blink

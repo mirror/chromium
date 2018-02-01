@@ -4,6 +4,7 @@
 
 package org.chromium.base.test.util;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import org.junit.Assert;
@@ -87,9 +88,10 @@ public final class CommandLineFlags {
      * and {@link CommandLineFlags.Remove} to the {@link org.chromium.base.CommandLine}. Note that
      * trying to remove a flag set externally, i.e. by the command-line flags file, will not work.
      */
-    public static void setUp(AnnotatedElement element) {
+    public static void setUp(Context targetContext, AnnotatedElement element) {
+        Assert.assertNotNull("Unable to get a non-null target context.", targetContext);
         CommandLine.reset();
-        CommandLineInitUtil.initCommandLine(getTestCmdLineFile());
+        CommandLineInitUtil.initCommandLine(targetContext, getTestCmdLineFile());
         Set<String> enableFeatures = new HashSet<String>();
         Set<String> disableFeatures = new HashSet<String>();
         Set<String> flags = getFlags(element);
@@ -179,7 +181,13 @@ public final class CommandLineFlags {
     }
 
     public static PreTestHook getRegistrationHook() {
-        return (targetContext, testMethod) -> CommandLineFlags.setUp(testMethod);
+        return new PreTestHook() {
+            @Override
+            public void run(Context targetContext, Method testMethod) {
+                CommandLineFlags.setUp(targetContext, testMethod);
+            }
+
+        };
     }
 
     public static String getTestCmdLineFile() {

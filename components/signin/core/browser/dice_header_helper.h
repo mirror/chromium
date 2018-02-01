@@ -8,7 +8,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 
 class GURL;
@@ -21,8 +20,15 @@ extern const char kDiceProtocolVersion[];
 // SigninHeaderHelper implementation managing the Dice header.
 class DiceHeaderHelper : public SigninHeaderHelper {
  public:
-  explicit DiceHeaderHelper(bool signed_in_with_auth_error,
-                            AccountConsistencyMethod account_consistency);
+  // Signout mode for Gaia.
+  enum class SignoutMode {
+    // Gaia does not show a signout confirmation dialog.
+    kNoSignoutConfirmation,
+    // Gaia shows a signout confirmation dialog for the Sync account.
+    kShowSignoutConfirmation
+  };
+
+  explicit DiceHeaderHelper(bool signed_in_with_auth_error);
   ~DiceHeaderHelper() override {}
 
   // Returns the parameters contained in the X-Chrome-ID-Consistency-Response
@@ -41,14 +47,14 @@ class DiceHeaderHelper : public SigninHeaderHelper {
   // account.
   // |show_signout_confirmation| is true if Gaia must display the signout
   // confirmation dialog.
-  std::string BuildRequestHeader(const std::string& sync_account_id);
+  std::string BuildRequestHeader(const std::string& sync_account_id,
+                                 SignoutMode signout_mode);
 
  private:
   // SigninHeaderHelper implementation:
   bool IsUrlEligibleForRequestHeader(const GURL& url) override;
 
   bool signed_in_with_auth_error_;
-  AccountConsistencyMethod account_consistency_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceHeaderHelper);
 };

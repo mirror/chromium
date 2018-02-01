@@ -40,8 +40,7 @@ class AnimationWorkletTestPlatform : public TestingPlatformSupport {
  public:
   AnimationWorkletTestPlatform()
       : thread_(old_platform_->CreateThread(
-            WebThreadCreationParams(WebThreadType::kTestThread)
-                .SetThreadName("Compositor"))) {}
+            WebThreadCreationParams("Compositor"))) {}
 
   WebThread* CompositorThread() const override { return thread_.get(); }
 
@@ -95,7 +94,7 @@ class AnimationWorkletThreadTest : public PageTestBase {
             document->Url(), document->UserAgent(),
             nullptr /* content_security_policy_parsed_headers */,
             document->GetReferrerPolicy(), document->GetSecurityOrigin(),
-            document->IsSecureContext(), clients, document->AddressSpace(),
+            clients, document->AddressSpace(),
             OriginTrialContext::GetTokens(document).get(),
             nullptr /* worker_settings */, kV8CacheOptionsDefault),
         WTF::nullopt, WorkerInspectorProxy::PauseOnWorkerStart::kDontPause,

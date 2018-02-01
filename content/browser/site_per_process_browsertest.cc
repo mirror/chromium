@@ -31,7 +31,6 @@
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/bind_test_util.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -82,7 +81,6 @@
 #include "content/shell/browser/shell.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/test/content_browser_test_utils_internal.h"
-#include "content/test/did_commit_provisional_load_interceptor.h"
 #include "ipc/constants.mojom.h"
 #include "ipc/ipc_security_test_util.h"
 #include "media/base/media_switches.h"
@@ -92,7 +90,6 @@
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
-#include "services/network/public/cpp/features.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
@@ -497,21 +494,6 @@ bool ConvertJSONToPoint(const std::string& str, gfx::PointF* point) {
 }
 #endif  // defined (OS_ANDROID)
 
-void OpenURLBlockUntilNavigationComplete(Shell* shell, const GURL& url) {
-  WaitForLoadStop(shell->web_contents());
-  TestNavigationObserver same_tab_observer(shell->web_contents(), 1);
-
-  OpenURLParams params(
-      url,
-      content::Referrer(shell->web_contents()->GetLastCommittedURL(),
-                        blink::kWebReferrerPolicyAlways),
-      WindowOpenDisposition::CURRENT_TAB, ui::PAGE_TRANSITION_LINK,
-      true /* is_renderer_initiated */);
-  shell->OpenURLFromTab(shell->web_contents(), params);
-
-  same_tab_observer.Wait();
-}
-
 }  // namespace
 
 //
@@ -873,51 +855,6 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, TitleAfterCrossSiteIframe) {
   EXPECT_EQ(expected_title, entry->GetTitle());
 }
 
-// Test that the physical backing size and view bounds for a scaled out-of-
-// process iframe are set and updated correctly.
-IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, PhysicalBackingSizeTest) {
-  GURL main_url(embedded_test_server()->GetURL(
-      "a.com", "/frame_tree/page_with_scaled_frame.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), main_url));
-
-  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
-                            ->GetFrameTree()
-                            ->root();
-
-  ASSERT_EQ(1U, root->child_count());
-
-  FrameTreeNode* parent_iframe_node = root->child_at(0);
-
-  EXPECT_EQ(
-      " Site A ------------ proxies for B\n"
-      "   +--Site A ------- proxies for B\n"
-      "        +--Site B -- proxies for A\n"
-      "Where A = http://a.com/\n"
-      "      B = http://baz.com/",
-      DepictFrameTree(root));
-
-  FrameTreeNode* nested_iframe_node = parent_iframe_node->child_at(0);
-  RenderFrameProxyHost* proxy_to_parent =
-      nested_iframe_node->render_manager()->GetProxyToParent();
-  CrossProcessFrameConnector* connector =
-      proxy_to_parent->cross_process_frame_connector();
-  RenderWidgetHostViewBase* rwhv_nested =
-      static_cast<RenderWidgetHostViewBase*>(
-          nested_iframe_node->current_frame_host()
-              ->GetRenderWidgetHost()
-              ->GetView());
-
-  WaitForChildFrameSurfaceReady(nested_iframe_node->current_frame_host());
-
-  // Verify that applying a CSS scale transform does not impact the size of the
-  // content of the nested iframe.
-  EXPECT_EQ(gfx::Size(50, 50), connector->screen_space_rect_in_dip().size());
-  EXPECT_EQ(gfx::Size(100, 100), rwhv_nested->GetViewBounds().size());
-  EXPECT_EQ(gfx::Size(100, 100), connector->local_frame_size_in_dip());
-  EXPECT_EQ(connector->local_frame_size_in_pixels(),
-            rwhv_nested->GetPhysicalBackingSize());
-}
-
 // Test that the view bounds for an out-of-process iframe are set and updated
 // correctly, including accounting for local frame offsets in the parent and
 // scroll positions.
@@ -953,6 +890,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ViewBoundsInNestedFrameTest) {
           nested_iframe_node->current_frame_host()
               ->GetRenderWidgetHost()
               ->GetView());
+
   WaitForChildFrameSurfaceReady(nested_iframe_node->current_frame_host());
 
   float scale_factor = GetPageScaleFactor(shell());
@@ -2177,7 +2115,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
   // cross-site, which will lead to a committed net error.
   GURL url_b = embedded_test_server()->GetURL("b.com", "/title3.html");
   bool network_service =
-      base::FeatureList::IsEnabled(network::features::kNetworkService);
+      base::FeatureList::IsEnabled(features::kNetworkService);
   std::unique_ptr<URLLoaderInterceptor> url_loader_interceptor;
   if (network_service) {
     url_loader_interceptor = std::make_unique<URLLoaderInterceptor>(
@@ -3321,7 +3259,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessAutoplayBrowserTest,
       "test.example.com", "/media/autoplay/autoplay-disabled.html"));
 
   // Load a page with an iframe that has autoplay.
-  OpenURLBlockUntilNavigationComplete(shell(), main_url);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), main_url, 1);
   FrameTreeNode* root = web_contents()->GetFrameTree()->root();
 
   // Navigate the subframes to cross-origin pages.
@@ -3335,7 +3273,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessAutoplayBrowserTest,
   EXPECT_TRUE(AutoplayAllowed(root->child_at(0)->child_at(0), false));
 
   // Navigate to a new page on the same origin.
-  OpenURLBlockUntilNavigationComplete(shell(), secondary_url);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), secondary_url, 1);
   root = web_contents()->GetFrameTree()->root();
 
   // Navigate the subframes to cross-origin pages.
@@ -3349,7 +3287,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessAutoplayBrowserTest,
   EXPECT_TRUE(AutoplayAllowed(root->child_at(0)->child_at(0), false));
 
   // Navigate to a page with autoplay disabled.
-  OpenURLBlockUntilNavigationComplete(shell(), disabled_url);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), disabled_url, 1);
   NavigateFrameAndWait(root->child_at(0), foo_url);
 
   // Test that autoplay is no longer allowed.
@@ -3357,7 +3295,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessAutoplayBrowserTest,
   EXPECT_FALSE(AutoplayAllowed(root->child_at(0), false));
 
   // Navigate to another origin and make sure autoplay is disabled.
-  OpenURLBlockUntilNavigationComplete(shell(), foo_url);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), foo_url, 1);
   NavigateFrameAndWait(root->child_at(0), bar_url);
   EXPECT_FALSE(AutoplayAllowed(shell(), false));
   EXPECT_FALSE(AutoplayAllowed(shell(), false));
@@ -10314,163 +10252,6 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   EXPECT_NE(third_shell_instance,
             child->current_frame_host()->GetSiteInstance());
   EXPECT_NE(third_shell_instance->GetProcess(), bar_process);
-}
-
-namespace {
-
-// Intercepts the next DidCommitProvisionalLoad message for |deferred_url| in
-// any frame of the |web_contents|, and holds off on dispatching it until
-// *after* the DidCommitProvisionalLoad message for the next navigation in the
-// |web_contents| has been dispatched.
-//
-// Reversing the order in which the commit messages are dispatched simulates a
-// busy renderer that takes a very long time to actually commit the navigation
-// to |deferred_url| after receiving FrameNavigationControl::CommitNavigation;
-// whereas there is a fast cross-site navigation taking place in the same
-// frame which starts second but finishes first.
-class CommitMessageOrderReverser : public DidCommitProvisionalLoadInterceptor {
- public:
-  using DidStartDeferringCommitCallback =
-      base::OnceCallback<void(RenderFrameHost*)>;
-
-  CommitMessageOrderReverser(
-      WebContents* web_contents,
-      const GURL& deferred_url,
-      DidStartDeferringCommitCallback deferred_url_triggered_action)
-      : DidCommitProvisionalLoadInterceptor(web_contents),
-        deferred_url_(deferred_url),
-        deferred_url_triggered_action_(
-            std::move(deferred_url_triggered_action)) {}
-  ~CommitMessageOrderReverser() override = default;
-
-  void WaitForBothCommits() { outer_run_loop.Run(); }
-
- protected:
-  void WillDispatchDidCommitProvisionalLoad(
-      RenderFrameHost* render_frame_host,
-      ::FrameHostMsg_DidCommitProvisionalLoad_Params* params,
-      service_manager::mojom::InterfaceProviderRequest*
-          interface_provider_request) override {
-    // The DidCommitProvisionalLoad message is dispatched once this method
-    // returns, so to defer committing the the navigation to |deferred_url_|,
-    // run a nested message loop until the subsequent other commit message is
-    // dispatched.
-    if (params->url == deferred_url_) {
-      std::move(deferred_url_triggered_action_).Run(render_frame_host);
-
-      base::MessageLoop::ScopedNestableTaskAllower allow(
-          base::MessageLoop::current());
-      base::RunLoop nested_run_loop;
-      nested_loop_quit_ = nested_run_loop.QuitClosure();
-      nested_run_loop.Run();
-      outer_run_loop.Quit();
-    } else if (nested_loop_quit_) {
-      std::move(nested_loop_quit_).Run();
-    }
-  }
-
- private:
-  base::RunLoop outer_run_loop;
-  base::OnceClosure nested_loop_quit_;
-
-  const GURL deferred_url_;
-  DidStartDeferringCommitCallback deferred_url_triggered_action_;
-
-  DISALLOW_COPY_AND_ASSIGN(CommitMessageOrderReverser);
-};
-
-}  // namespace
-
-// Regression test for https://crbug.com/877239, simulating the following
-// scenario:
-//
-//  1) http://a.com/empty.html is loaded in a main frame.
-//  2) Dynamically by JS, a same-site child frame is added:
-//       <iframe 'src=http://a.com/title1.html'/>.
-//  3) The initial byte of the response for `title1.html` arrives, causing
-//     FrameMsg_CommitNavigation to be sent to the same renderer.
-//  4) Just before processing this message, however, `main.html` navigates
-//     the iframe to http://baz.com/title2.html, which results in mojom::Frame::
-//     BeginNavigation being called on the RenderFrameHost.
-//  5) Suppose that immediately afterwards, `main.html` enters a busy-loop.
-//  6) The cross site navigation in the child frame starts, the first response
-//     byte arrives quickly, and thus the navigation commits quickly.
-//  6.1) FrameTreeNode::has_committed_real_load is set to true for the child.
-//  6.2) The same-site RenderFrame in the child FrameTreeNode is swapped out,
-//       i.e. FrameMsg_SwapOut is sent.
-//  7) The renderer for site instance `a.com` exits from the busy loop,
-//     and starts processing messages in order:
-//  7.1) The first being processed is FrameMsg_CommitNavigation, so a
-//       provisional load is created and immediately committed to
-//       http://a.com/title1.html.
-//  7.2) Because at the time the same-site child RenderFrame was created,
-//       there had been no real load committed in the child frame, and because
-//       the navigation from the initial empty document to the first real
-//       document was same-origin, the global object is reused and the
-//       RemoteInterfaceProvider of the RenderFrame is not rebound.
-//  7.3) The obsoleted load in the same-site child frame commits, calling
-//       mojom::Frame::DidCommitProvisionalLoad, however, with
-//       |interface_provider_request| being null.
-//  8) RenderFrameHostImpl::DidCommitProvisionalLoad sees that a real load was
-//     already committed in the frame, but |interface_provider_request| is
-//     missing. However, it also sees that the frame was waiting for a swap-out
-//     ACK, so ignores the commit, and does not kill the renderer process.
-//
-// In the simulation of this scenario, we simulate (5) not by delaying
-// renderer-side processing of the CommmitNavigation message, but by delaying
-// browser-side processing of the response to it, of DidCommitProvisionalLoad.
-IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       InterfaceProviderRequestIsOptionalForRaceyFirstCommits) {
-  const GURL kMainFrameUrl(
-      embedded_test_server()->GetURL("a.com", "/empty.html"));
-  const GURL kSubframeSameSiteUrl(
-      embedded_test_server()->GetURL("a.com", "/title1.html"));
-  const GURL kCrossSiteSubframeUrl(
-      embedded_test_server()->GetURL("baz.com", "/title2.html"));
-
-  const auto kAddSameSiteDynamicSubframe = base::StringPrintf(
-      "var f = document.createElement(\"iframe\");"
-      "f.src=\"%s\";"
-      "document.body.append(f);",
-      kSubframeSameSiteUrl.spec().c_str());
-  const auto kNavigateSubframeCrossSite = base::StringPrintf(
-      "f.src = \"%s\";", kCrossSiteSubframeUrl.spec().c_str());
-  const std::string kExtractSubframeUrl =
-      "window.domAutomationController.send(f.src);";
-
-  ASSERT_TRUE(NavigateToURL(shell(), kMainFrameUrl));
-
-  const auto* main_rfh_site_instance =
-      shell()->web_contents()->GetMainFrame()->GetSiteInstance();
-
-  auto did_start_deferring_commit_callback =
-      base::BindLambdaForTesting([&](RenderFrameHost* subframe_rfh) {
-        // Verify that the subframe starts out as same-process with its parent.
-        ASSERT_EQ(main_rfh_site_instance, subframe_rfh->GetSiteInstance());
-
-        // Trigger the second commit now that we are deferring the first one.
-        ASSERT_TRUE(ExecuteScript(shell(), kNavigateSubframeCrossSite));
-      });
-
-  CommitMessageOrderReverser commit_order_reverser(
-      shell()->web_contents(), kSubframeSameSiteUrl /* deferred_url */,
-      did_start_deferring_commit_callback);
-
-  ASSERT_TRUE(ExecuteScript(shell(), kAddSameSiteDynamicSubframe));
-  commit_order_reverser.WaitForBothCommits();
-
-  // Verify that:
-  //  - The cross-site navigation in the sub-frame was committed and the
-  //    same-site navigation was ignored.
-  //  - The parent frame thinks so, too.
-  //  - The renderer process corresponding to the sub-frame with the ignored
-  //    commit was not killed. This is verified implicitly: this is the same
-  //    renderer process where the parent RenderFrame lives, so if the call to
-  //    ExecuteScriptAndExtractString succeeds here, the process is still alive.
-  std::string actual_subframe_url;
-  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), kExtractSubframeUrl,
-                                            &actual_subframe_url));
-  EXPECT_EQ(kCrossSiteSubframeUrl.spec(), actual_subframe_url);
 }
 
 }  // namespace content

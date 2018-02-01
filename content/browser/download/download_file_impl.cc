@@ -27,7 +27,6 @@
 #include "crypto/sha2.h"
 #include "mojo/public/c/system/types.h"
 #include "net/base/io_buffer.h"
-#include "services/network/public/cpp/features.h"
 
 namespace content {
 
@@ -119,7 +118,7 @@ void DownloadFileImpl::SourceStream::TruncateLengthWithWrittenDataBlock(
     return;
   }
 
-  if (length_ == download::DownloadSaveInfo::kLengthFullContent ||
+  if (length_ == DownloadSaveInfo::kLengthFullContent ||
       length_ > offset - offset_) {
     length_ = offset - offset_;
   }
@@ -194,7 +193,7 @@ DownloadFileImpl::SourceStream::Read(scoped_refptr<net::IOBuffer>* data,
 }
 
 DownloadFileImpl::DownloadFileImpl(
-    std::unique_ptr<download::DownloadSaveInfo> save_info,
+    std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<DownloadManager::InputStream> stream,
     uint32_t download_id,
@@ -208,7 +207,7 @@ DownloadFileImpl::DownloadFileImpl(
 }
 
 DownloadFileImpl::DownloadFileImpl(
-    std::unique_ptr<download::DownloadSaveInfo> save_info,
+    std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     uint32_t download_id,
     base::WeakPtr<DownloadDestinationObserver> observer)
@@ -345,8 +344,7 @@ bool DownloadFileImpl::CalculateBytesToWrite(SourceStream* source_stream,
     }
   }
 
-  if (source_stream->length() !=
-          download::DownloadSaveInfo::kLengthFullContent &&
+  if (source_stream->length() != DownloadSaveInfo::kLengthFullContent &&
       source_stream->bytes_written() +
               static_cast<int64_t>(bytes_available_to_write) >
           source_stream->length()) {
@@ -399,8 +397,7 @@ bool DownloadFileImpl::ShouldRetryFailedRename(DownloadInterruptReason reason) {
 DownloadInterruptReason DownloadFileImpl::HandleStreamCompletionStatus(
     SourceStream* source_stream) {
   DownloadInterruptReason reason = source_stream->GetCompletionStatus();
-  if (source_stream->length() ==
-          download::DownloadSaveInfo::kLengthFullContent &&
+  if (source_stream->length() == DownloadSaveInfo::kLengthFullContent &&
       !received_slices_.empty() &&
       (source_stream->offset() == received_slices_.back().offset +
                                       received_slices_.back().received_bytes) &&
@@ -528,7 +525,7 @@ void DownloadFileImpl::Resume() {
   DCHECK(is_paused_);
   is_paused_ = false;
 
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService))
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
     return;
 
   for (auto& stream : source_streams_) {
@@ -542,8 +539,7 @@ void DownloadFileImpl::Resume() {
 void DownloadFileImpl::StreamActive(SourceStream* source_stream,
                                     MojoResult result) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService) &&
-      is_paused_)
+  if (base::FeatureList::IsEnabled(features::kNetworkService) && is_paused_)
     return;
 
   base::TimeTicks start(base::TimeTicks::Now());
@@ -653,8 +649,7 @@ void DownloadFileImpl::NotifyObserver(SourceStream* source_stream,
     source_stream->set_finished(true);
     if (should_terminate)
       CancelRequest(source_stream->offset());
-    if (source_stream->length() ==
-        download::DownloadSaveInfo::kLengthFullContent) {
+    if (source_stream->length() == DownloadSaveInfo::kLengthFullContent) {
       SetPotentialFileLength(source_stream->offset() +
                              source_stream->bytes_written());
     }
@@ -796,7 +791,7 @@ void DownloadFileImpl::HandleStreamError(SourceStream* source_stream,
       int64_t upper_range = source_stream->offset() + source_stream->length();
       if ((!preceding_neighbor->is_finished() &&
            (preceding_neighbor->length() ==
-                download::DownloadSaveInfo::kLengthFullContent ||
+                DownloadSaveInfo::kLengthFullContent ||
             preceding_neighbor->offset() + preceding_neighbor->length() >=
                 upper_range)) ||
           (preceding_neighbor->offset() + preceding_neighbor->bytes_written() >=

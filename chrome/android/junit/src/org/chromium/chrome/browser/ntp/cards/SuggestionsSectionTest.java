@@ -563,7 +563,6 @@ public class SuggestionsSectionTest {
         verify(sectionOnFailureRunnable, times(1)).run();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     @Feature("Ntp")
     public void testFetchMoreNoSuggestions() {
@@ -936,7 +935,9 @@ public class SuggestionsSectionTest {
 
     @SafeVarargs
     private static <T> Set<T> setOf(T... elements) {
-        return new TreeSet<>(Arrays.asList(elements));
+        Set<T> set = new TreeSet<>();
+        set.addAll(Arrays.asList(elements));
+        return set;
     }
 
     private static List<SnippetArticle> getSuggestions(TreeNode root) {
@@ -963,7 +964,6 @@ public class SuggestionsSectionTest {
         return section;
     }
 
-    @SuppressWarnings("unchecked")
     private void verifyAction(
             SuggestionsSection section, @ContentSuggestionsAdditionalAction int action) {
         if (action != ContentSuggestionsAdditionalAction.NONE) {

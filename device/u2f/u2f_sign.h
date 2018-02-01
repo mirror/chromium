@@ -9,17 +9,13 @@
 #include <string>
 #include <vector>
 
-#include "base/containers/flat_set.h"
 #include "base/optional.h"
 #include "device/u2f/sign_response_data.h"
 #include "device/u2f/u2f_request.h"
-#include "device/u2f/u2f_transport_protocol.h"
-
-namespace service_manager {
-class Connector;
-}
 
 namespace device {
+
+class U2fDiscovery;
 
 class U2fSign : public U2fRequest {
  public:
@@ -28,8 +24,7 @@ class U2fSign : public U2fRequest {
                               base::Optional<SignResponseData> response_data)>;
 
   U2fSign(std::string relying_party_id,
-          service_manager::Connector* connector,
-          const base::flat_set<U2fTransportProtocol>& protocols,
+          std::vector<U2fDiscovery*> discoveries,
           const std::vector<std::vector<uint8_t>>& registered_keys,
           const std::vector<uint8_t>& challenge_hash,
           const std::vector<uint8_t>& app_param,
@@ -38,8 +33,7 @@ class U2fSign : public U2fRequest {
 
   static std::unique_ptr<U2fRequest> TrySign(
       std::string relying_party_id,
-      service_manager::Connector* connector,
-      const base::flat_set<U2fTransportProtocol>& protocols,
+      std::vector<U2fDiscovery*> discoveries,
       const std::vector<std::vector<uint8_t>>& registered_keys,
       const std::vector<uint8_t>& challenge_hash,
       const std::vector<uint8_t>& app_param,

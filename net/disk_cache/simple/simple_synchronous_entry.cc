@@ -114,11 +114,6 @@ SimpleFileTracker::SubFile SubFileForFileIndex(int file_index) {
                          : SimpleFileTracker::SubFile::FILE_1;
 }
 
-int FileIndexForSubFile(SimpleFileTracker::SubFile sub_file) {
-  DCHECK_NE(SimpleFileTracker::SubFile::FILE_SPARSE, sub_file);
-  return sub_file == SimpleFileTracker::SubFile::FILE_0 ? 0 : 1;
-}
-
 }  // namespace
 
 using simple_util::GetEntryHashKey;
@@ -1569,19 +1564,9 @@ void SimpleSynchronousEntry::RecordSyncCreateResult(CreateEntryResult result,
   }
 }
 
-FilePath SimpleSynchronousEntry::GetFilenameFromFileIndex(
-    int file_index) const {
+FilePath SimpleSynchronousEntry::GetFilenameFromFileIndex(int file_index) {
   return path_.AppendASCII(
       GetFilenameFromEntryFileKeyAndFileIndex(entry_file_key_, file_index));
-}
-
-base::FilePath SimpleSynchronousEntry::GetFilenameForSubfile(
-    SimpleFileTracker::SubFile sub_file) const {
-  if (sub_file == SimpleFileTracker::SubFile::FILE_SPARSE)
-    return path_.AppendASCII(
-        GetSparseFilenameFromEntryFileKey(entry_file_key_));
-  else
-    return GetFilenameFromFileIndex(FileIndexForSubFile(sub_file));
 }
 
 bool SimpleSynchronousEntry::OpenSparseFileIfExists(

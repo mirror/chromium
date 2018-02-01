@@ -62,17 +62,14 @@ std::unique_ptr<policy::ConfigurationPolicyHandlerList> BuildHandlerList(
 }  // namespace
 
 AwBrowserPolicyConnector::AwBrowserPolicyConnector()
-    : BrowserPolicyConnectorBase(base::Bind(&BuildHandlerList)) {}
-
-AwBrowserPolicyConnector::~AwBrowserPolicyConnector() = default;
-
-std::vector<std::unique_ptr<policy::ConfigurationPolicyProvider>>
-AwBrowserPolicyConnector::CreatePolicyProviders() {
+   : BrowserPolicyConnectorBase(base::Bind(&BuildHandlerList)) {
   std::vector<std::unique_ptr<policy::ConfigurationPolicyProvider>> providers;
   providers.push_back(
       std::make_unique<policy::android::AndroidCombinedPolicyProvider>(
           GetSchemaRegistry()));
-  return providers;
+  SetPolicyProviders(std::move(providers));
 }
+
+AwBrowserPolicyConnector::~AwBrowserPolicyConnector() {}
 
 }  // namespace android_webview

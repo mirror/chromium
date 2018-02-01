@@ -9,7 +9,6 @@
 
 #include <string>
 
-#include "base/component_export.h"
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -27,7 +26,7 @@ namespace network {
 
 // NOTE: when modifying this structure, also update ResourceResponse::DeepCopy
 // in resource_response.cc.
-struct COMPONENT_EXPORT(NETWORK_CPP_BASE) ResourceResponseInfo {
+struct ResourceResponseInfo {
   ResourceResponseInfo();
   ResourceResponseInfo(const ResourceResponseInfo& other);
   ~ResourceResponseInfo();

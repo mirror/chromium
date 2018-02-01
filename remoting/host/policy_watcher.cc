@@ -376,7 +376,8 @@ std::unique_ptr<PolicyWatcher> PolicyWatcher::CreateFromPolicyLoader(
   policy::PolicyServiceImpl::Providers providers;
   providers.push_back(policy_provider.get());
   std::unique_ptr<policy::PolicyServiceImpl> policy_service =
-      std::make_unique<policy::PolicyServiceImpl>(std::move(providers));
+      std::make_unique<policy::PolicyServiceImpl>();
+  policy_service->SetProviders(providers);
 
   policy::PolicyService* borrowed_policy_service = policy_service.get();
   return base::WrapUnique(new PolicyWatcher(

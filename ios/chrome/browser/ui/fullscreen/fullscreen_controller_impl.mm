@@ -8,8 +8,8 @@
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
-#import "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_list_observer.h"
+#import "ios/chrome/browser/ui/fullscreen/system_notification_fullscreen_disabler.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -19,12 +19,11 @@ FullscreenControllerImpl::FullscreenControllerImpl()
     : FullscreenController(),
       broadcaster_([[ChromeBroadcaster alloc] init]),
       model_(std::make_unique<FullscreenModel>()),
-      mediator_(std::make_unique<FullscreenMediator>(this, model_.get())),
       bridge_(
           [[ChromeBroadcastOberverBridge alloc] initWithObserver:model_.get()]),
-      notification_observer_([[FullscreenSystemNotificationObserver alloc]
-          initWithController:this
-                    mediator:mediator_.get()]) {
+      disabler_([[SystemNotificationFullscreenDisabler alloc]
+          initWithController:this]),
+      mediator_(std::make_unique<FullscreenMediator>(this, model_.get())) {
   DCHECK(broadcaster_);
   [broadcaster_ addObserver:bridge_
                 forSelector:@selector(broadcastContentScrollOffset:)];
@@ -77,7 +76,7 @@ void FullscreenControllerImpl::DecrementDisabledCounter() {
 
 void FullscreenControllerImpl::Shutdown() {
   mediator_->Disconnect();
-  [notification_observer_ disconnect];
+  [disabler_ disconnect];
   if (web_state_list_observer_)
     web_state_list_observer_->Disconnect();
   [broadcaster_ removeObserver:bridge_

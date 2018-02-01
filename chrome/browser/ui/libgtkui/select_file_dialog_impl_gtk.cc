@@ -296,11 +296,9 @@ GtkWidget* SelectFileDialogImplGTK::CreateFileOpenHelper(
     const std::string& title,
     const base::FilePath& default_path,
     gfx::NativeWindow parent) {
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
-      title.c_str(), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL,
-      GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, nullptr);
-  G_GNUC_END_IGNORE_DEPRECATIONS;
+      title.c_str(), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, "_Cancel",
+      GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, nullptr);
   SetGtkTransientForAura(dialog, parent);
   AddFilters(GTK_FILE_CHOOSER(dialog));
 
@@ -333,18 +331,16 @@ GtkWidget* SelectFileDialogImplGTK::CreateSelectFolderDialog(
             ? l10n_util::GetStringUTF8(IDS_SELECT_UPLOAD_FOLDER_DIALOG_TITLE)
             : l10n_util::GetStringUTF8(IDS_SELECT_FOLDER_DIALOG_TITLE);
   }
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
   std::string accept_button_label =
       (type == SELECT_UPLOAD_FOLDER)
           ? l10n_util::GetStringUTF8(
                 IDS_SELECT_UPLOAD_FOLDER_DIALOG_UPLOAD_BUTTON)
-          : GTK_STOCK_OPEN;
+          : "_Open";
 
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
       title_string.c_str(), nullptr, GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, accept_button_label.c_str(),
+      "_Cancel", GTK_RESPONSE_CANCEL, accept_button_label.c_str(),
       GTK_RESPONSE_ACCEPT, nullptr);
-  G_GNUC_END_IGNORE_DEPRECATIONS;
   SetGtkTransientForAura(dialog, parent);
 
   if (!default_path.empty()) {
@@ -398,12 +394,9 @@ GtkWidget* SelectFileDialogImplGTK::CreateSaveAsDialog(
       !title.empty() ? title
                      : l10n_util::GetStringUTF8(IDS_SAVE_AS_DIALOG_TITLE);
 
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
-      title_string.c_str(), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE,
-      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE,
-      GTK_RESPONSE_ACCEPT, nullptr);
-  G_GNUC_END_IGNORE_DEPRECATIONS;
+      title_string.c_str(), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, "_Cancel",
+      GTK_RESPONSE_CANCEL, "_Save", GTK_RESPONSE_ACCEPT, nullptr);
   SetGtkTransientForAura(dialog, parent);
 
   AddFilters(GTK_FILE_CHOOSER(dialog));

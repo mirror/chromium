@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.browser.MediaSession;
 import org.chromium.content_public.browser.WebContents;
@@ -37,15 +36,6 @@ public class MediaNotificationTestTabHolder {
 
     MediaSessionTabHelper mMediaSessionTabHelper;
 
-    // Mock LargeIconBridge that always returns false.
-    private class TestLargeIconBridge extends LargeIconBridge {
-        @Override
-        public boolean getLargeIconForUrl(
-                final String pageUrl, int desiredSizePx, final LargeIconCallback callback) {
-            return false;
-        }
-    }
-
     public MediaNotificationTestTabHolder(int tabId, String url, String title) {
         MockitoAnnotations.initMocks(this);
 
@@ -67,7 +57,6 @@ public class MediaNotificationTestTabHolder {
 
         MediaSessionTabHelper.sOverriddenMediaSession = mMediaSession;
         mMediaSessionTabHelper = new MediaSessionTabHelper(mTab);
-        mMediaSessionTabHelper.mLargeIconBridge = new TestLargeIconBridge();
 
         simulateNavigation(url, false);
         simulateTitleUpdated(title);

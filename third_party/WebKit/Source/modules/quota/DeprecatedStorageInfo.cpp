@@ -34,6 +34,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "modules/quota/DeprecatedStorageQuota.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScriptState.h"
 #include "public/platform/TaskType.h"
 

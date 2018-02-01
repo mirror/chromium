@@ -62,9 +62,7 @@ enum class FeaturePolicyFeature {
   // Controls the layout size of intrinsically sized images and videos. When
   // disabled, default size (300 x 150) is used to prevent relayout.
   kUnsizedMedia,
-  // Controls access to Picture-in-Picture.
-  kPictureInPicture,
-  LAST_FEATURE = kPictureInPicture
+  LAST_FEATURE = kUnsizedMedia
 };
 
 }  // namespace blink

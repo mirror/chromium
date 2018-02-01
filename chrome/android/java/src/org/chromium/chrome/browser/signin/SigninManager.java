@@ -14,7 +14,6 @@ import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Callback;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.Promise;
@@ -185,19 +184,20 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
      * <p/>
      * Can only be accessed on the main thread.
      *
+     * @param context the ApplicationContext is retrieved from the context used as an argument.
      * @return a singleton instance of the SigninManager.
      */
-    public static SigninManager get() {
+    public static SigninManager get(Context context) {
         ThreadUtils.assertOnUiThread();
         if (sSigninManager == null) {
-            sSigninManager = new SigninManager();
+            sSigninManager = new SigninManager(context);
         }
         return sSigninManager;
     }
 
-    private SigninManager() {
+    private SigninManager(Context context) {
         ThreadUtils.assertOnUiThread();
-        mContext = ContextUtils.getApplicationContext();
+        mContext = context.getApplicationContext();
         mNativeSigninManagerAndroid = nativeInit();
         mSigninAllowedByPolicy = nativeIsSigninAllowedByPolicy(mNativeSigninManagerAndroid);
 

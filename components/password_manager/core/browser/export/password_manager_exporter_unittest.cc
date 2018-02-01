@@ -10,13 +10,11 @@
 #include <vector>
 
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/histogram_tester.h"
 #include "base/test/mock_callback.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/export/password_csv_writer.h"
-#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/ui/credential_provider_interface.h"
 #include "components/password_manager/core/browser/ui/export_progress_status.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -32,8 +30,6 @@ using ::testing::ReturnArg;
 using ::testing::SaveArg;
 using ::testing::StrEq;
 using ::testing::StrictMock;
-
-using password_manager::metrics_util::ExportPasswordsResult;
 
 // A callback that matches the signature of base::WriteFile
 using WriteCallback =
@@ -121,7 +117,6 @@ class PasswordManagerExporterTest : public testing::Test {
   password_manager::PasswordManagerExporter exporter_;
   StrictMock<base::MockCallback<WriteCallback>> mock_write_file_;
   base::FilePath destination_path_;
-  base::HistogramTester histogram_tester_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerExporterTest);
@@ -148,13 +143,6 @@ TEST_F(PasswordManagerExporterTest, PasswordExportSetPasswordListFirst) {
   exporter_.SetDestination(destination_path_);
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.TimeReadingExportedPasswords", 1);
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportPasswordsToCSVResult",
-      ExportPasswordsResult::SUCCESS, 1);
 }
 
 TEST_F(PasswordManagerExporterTest, PasswordExportSetDestinationFirst) {
@@ -178,13 +166,6 @@ TEST_F(PasswordManagerExporterTest, PasswordExportSetDestinationFirst) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.TimeReadingExportedPasswords", 1);
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportPasswordsToCSVResult",
-      ExportPasswordsResult::SUCCESS, 1);
 }
 
 TEST_F(PasswordManagerExporterTest, WriteFileFailed) {
@@ -206,11 +187,6 @@ TEST_F(PasswordManagerExporterTest, WriteFileFailed) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", 0);
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportPasswordsToCSVResult",
-      ExportPasswordsResult::WRITE_FAILED, 1);
 }
 
 // Test that GetProgressStatus() returns the last ExportProgressStatus sent
@@ -246,19 +222,11 @@ TEST_F(PasswordManagerExporterTest, DontExportWithOnlyDestination) {
   fake_credential_provider_.SetPasswordList(password_list);
 
   EXPECT_CALL(mock_write_file_, Run(_, _, _)).Times(0);
-  EXPECT_CALL(
-      mock_on_progress_,
-      Run(password_manager::ExportProgressStatus::IN_PROGRESS, IsEmpty()));
+  EXPECT_CALL(mock_on_progress_, Run(_, _)).Times(0);
 
   exporter_.SetDestination(destination_path_);
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", 0);
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.TimeReadingExportedPasswords", 0);
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.ExportPasswordsToCSVResult", 0);
 }
 
 TEST_F(PasswordManagerExporterTest, CancelAfterPasswords) {
@@ -270,20 +238,12 @@ TEST_F(PasswordManagerExporterTest, CancelAfterPasswords) {
   EXPECT_CALL(
       mock_on_progress_,
       Run(password_manager::ExportProgressStatus::FAILED_CANCELLED, IsEmpty()));
-  EXPECT_CALL(
-      mock_on_progress_,
-      Run(password_manager::ExportProgressStatus::IN_PROGRESS, IsEmpty()));
 
   exporter_.PreparePasswordsForExport();
   exporter_.Cancel();
   exporter_.SetDestination(destination_path_);
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", 0);
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportPasswordsToCSVResult",
-      ExportPasswordsResult::USER_ABORTED, 1);
 }
 
 TEST_F(PasswordManagerExporterTest, CancelAfterDestination) {
@@ -294,9 +254,6 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestination) {
   EXPECT_CALL(mock_write_file_, Run(_, _, _)).Times(0);
   EXPECT_CALL(
       mock_on_progress_,
-      Run(password_manager::ExportProgressStatus::IN_PROGRESS, IsEmpty()));
-  EXPECT_CALL(
-      mock_on_progress_,
       Run(password_manager::ExportProgressStatus::FAILED_CANCELLED, IsEmpty()));
 
   exporter_.SetDestination(destination_path_);
@@ -304,11 +261,6 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestination) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectTotalCount(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", 0);
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportPasswordsToCSVResult",
-      ExportPasswordsResult::USER_ABORTED, 1);
 }
 
 // Test that PasswordManagerExporter is reusable, after an export has been
@@ -339,8 +291,6 @@ TEST_F(PasswordManagerExporterTest, CancelAfterPasswordsThenExport) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
 }
 
 // Test that PasswordManagerExporter is reusable, after an export has been
@@ -363,8 +313,7 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestinationThenExport) {
       Run(password_manager::ExportProgressStatus::FAILED_CANCELLED, IsEmpty()));
   EXPECT_CALL(
       mock_on_progress_,
-      Run(password_manager::ExportProgressStatus::IN_PROGRESS, IsEmpty()))
-      .Times(2);
+      Run(password_manager::ExportProgressStatus::IN_PROGRESS, IsEmpty()));
   EXPECT_CALL(
       mock_on_progress_,
       Run(password_manager::ExportProgressStatus::SUCCEEDED, IsEmpty()));
@@ -375,8 +324,6 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestinationThenExport) {
   exporter_.SetDestination(destination_path_);
 
   scoped_task_environment_.RunUntilIdle();
-  histogram_tester_.ExpectUniqueSample(
-      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
 }
 
 }  // namespace

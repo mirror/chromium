@@ -40,7 +40,7 @@ class MODULES_EXPORT PaintWorklet : public Worklet,
                              const IntSize& container_size,
                              const CSSStyleValueVector*);
 
-  typedef HeapHashMap<String, Member<DocumentPaintDefinition>>
+  typedef HeapHashMap<String, TraceWrapperMember<DocumentPaintDefinition>>
       DocumentDefinitionMap;
   DocumentDefinitionMap& GetDocumentDefinitionMap() {
     return document_definition_map_;

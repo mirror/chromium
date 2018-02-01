@@ -8,13 +8,16 @@
 
 namespace mojo {
 
-Vector<scoped_refptr<blink::BlobDataHandle>> StructTraits<
+Vector<blink::mojom::blink::SerializedBlobPtr> StructTraits<
     blink::mojom::blink::CloneableMessage::DataView,
     blink::BlinkCloneableMessage>::blobs(blink::BlinkCloneableMessage& input) {
-  Vector<scoped_refptr<blink::BlobDataHandle>> result;
+  Vector<blink::mojom::blink::SerializedBlobPtr> result;
   result.ReserveInitialCapacity(input.message->BlobDataHandles().size());
-  for (const auto& blob : input.message->BlobDataHandles())
-    result.push_back(blob.value);
+  for (const auto& blob : input.message->BlobDataHandles()) {
+    result.push_back(blink::mojom::blink::SerializedBlob::New(
+        blob.value->Uuid(), blob.value->GetType(), blob.value->size(),
+        blob.value->CloneBlobPtr().PassInterface()));
+  }
   return result;
 }
 
@@ -27,11 +30,14 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
   out->message = blink::SerializedScriptValue::Create(
       reinterpret_cast<const char*>(message_data.data()), message_data.size());
 
-  Vector<scoped_refptr<blink::BlobDataHandle>> blobs;
+  Vector<blink::mojom::blink::SerializedBlobPtr> blobs;
   if (!data.ReadBlobs(&blobs))
     return false;
   for (auto& blob : blobs) {
-    out->message->BlobDataHandles().Set(blob->Uuid(), blob);
+    out->message->BlobDataHandles().Set(
+        blob->uuid,
+        blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
+                                      blob->size, std::move(blob->blob)));
   }
   out->sender_stack_trace_id = v8_inspector::V8StackTraceId(
       static_cast<uintptr_t>(data.stack_trace_id()),

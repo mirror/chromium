@@ -806,7 +806,10 @@ bool CompositedLayerMapping::UpdateGraphicsLayerConfiguration(
       ScrollingLayer()->SetMaskLayer(first_come_first_served);
       first_come_first_served = nullptr;
     }
-    graphics_layer_->SetContentsClippingMaskLayer(first_come_first_served);
+    if (is_accelerated_contents) {
+      graphics_layer_->SetContentsClippingMaskLayer(first_come_first_served);
+      first_come_first_served = nullptr;
+    }
   }
 
   UpdateBackgroundColor();
@@ -1651,13 +1654,8 @@ void CompositedLayerMapping::UpdateScrollingLayerGeometry(
   bool overflow_clip_rect_offset_changed =
       old_scrolling_layer_offset != scrolling_layer_->OffsetFromLayoutObject();
 
-  IntSize scroll_size =
-      PixelSnappedIntRect(
-          LayoutRect(
-              LayoutPoint(owning_layer_.SubpixelAccumulation()),
-              LayoutSize(layout_box.ScrollWidth(), layout_box.ScrollHeight())))
-          .Size();
-
+  IntSize scroll_size(layout_box.PixelSnappedScrollWidth(),
+                      layout_box.PixelSnappedScrollHeight());
   if (overflow_clip_rect_offset_changed)
     scrolling_contents_layer_->SetNeedsDisplay();
 

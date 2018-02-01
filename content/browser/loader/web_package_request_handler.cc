@@ -33,12 +33,12 @@ void WebPackageRequestHandler::MaybeCreateLoader(
     const network::ResourceRequest& resource_request,
     ResourceContext* resource_context,
     LoaderCallback callback) {
-  // TODO(https://crbug.com/803774): Ask WebPackageFetchManager to get the
+  // TODO(https://crbug.com/80374): Ask WebPackageFetchManager to get the
   // ongoing matching SignedExchangeHandler which was created by a
   // WebPackagePrefetcher.
 
   if (!web_package_loader_) {
-    std::move(callback).Run({});
+    std::move(callback).Run(StartLoaderCallback());
     return;
   }
 
@@ -61,7 +61,7 @@ bool WebPackageRequestHandler::MaybeCreateLoaderForResponse(
   network::mojom::URLLoaderClientPtr client;
   *client_request = mojo::MakeRequest(&client);
 
-  // TODO(https://crbug.com/803774): Consider creating a new ThrottlingURLLoader
+  // TODO(https://crbug.com/80374): Consider creating a new ThrottlingURLLoader
   // or reusing the existing ThrottlingURLLoader by reattaching URLLoaderClient,
   // to support SafeBrowsing checking of the content of the WebPackage.
   web_package_loader_ = base::MakeUnique<WebPackageLoader>(

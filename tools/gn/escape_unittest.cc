@@ -35,7 +35,7 @@ TEST(Escape, WindowsCommand) {
   // Backslashes at the end of the string get escaped.
   EXPECT_EQ("\"foo$ bar\\\\\\\\\"", EscapeString("foo bar\\\\", opts, nullptr));
 
-  // Backslashes preceding quotes are escaped, and the quote is escaped.
+  // Backslashes preceeding quotes are escaped, and the quote is escaped.
   EXPECT_EQ("\"foo\\\\\\\"$ bar\"", EscapeString("foo\\\" bar", opts, nullptr));
 }
 

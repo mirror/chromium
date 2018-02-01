@@ -71,7 +71,7 @@ class MESSAGE_CENTER_PUBLIC_EXPORT HandleNotificationClickDelegate
   explicit HandleNotificationClickDelegate(
       const base::RepeatingClosure& closure);
 
-  // NotificationDelegate overrides:
+  // message_center::NotificationDelegate overrides:
   void Click() override;
   void ButtonClick(int button_index) override;
 

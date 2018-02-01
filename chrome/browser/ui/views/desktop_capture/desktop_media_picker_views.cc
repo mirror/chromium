@@ -51,11 +51,14 @@ DesktopMediaID::Id AcceleratedWidgetToDesktopMediaId(
 }  // namespace
 
 DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
-    const DesktopMediaPicker::Params& params,
+    content::WebContents* parent_web_contents,
+    gfx::NativeWindow context,
     DesktopMediaPickerViews* parent,
-    std::vector<std::unique_ptr<DesktopMediaList>> source_lists)
+    const base::string16& app_name,
+    const base::string16& target_name,
+    std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+    bool request_audio)
     : parent_(parent),
-      modality_(params.modality),
       description_label_(new views::Label()),
       audio_share_checkbox_(nullptr),
       pane_(new views::TabbedPane()) {
@@ -179,20 +182,19 @@ DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
     }
   }
 
-  if (params.app_name == params.target_name) {
-    description_label_->SetText(l10n_util::GetStringFUTF16(
-        IDS_DESKTOP_MEDIA_PICKER_TEXT, params.app_name));
-  } else {
+  if (app_name == target_name) {
     description_label_->SetText(
-        l10n_util::GetStringFUTF16(IDS_DESKTOP_MEDIA_PICKER_TEXT_DELEGATED,
-                                   params.app_name, params.target_name));
+        l10n_util::GetStringFUTF16(IDS_DESKTOP_MEDIA_PICKER_TEXT, app_name));
+  } else {
+    description_label_->SetText(l10n_util::GetStringFUTF16(
+        IDS_DESKTOP_MEDIA_PICKER_TEXT_DELEGATED, app_name, target_name));
   }
 
   DCHECK(!source_types_.empty());
   pane_->SetFocusBehavior(views::View::FocusBehavior::NEVER);
   AddChildView(pane_);
 
-  if (params.request_audio) {
+  if (request_audio) {
     audio_share_checkbox_ = new views::Checkbox(
         l10n_util::GetStringUTF16(IDS_DESKTOP_MEDIA_PICKER_AUDIO_SHARE));
     audio_share_checkbox_->SetChecked(true);
@@ -201,18 +203,18 @@ DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
   // Focus on the first non-null media_list.
   OnSourceTypeSwitched(0);
 
-  // If |params.web_contents| is set and it's not a background page then the
+  // If |parent_web_contents| is set and it's not a background page then the
   // picker will be shown modal to the web contents. Otherwise the picker is
   // shown in a separate window.
   views::Widget* widget = nullptr;
   bool modal_dialog =
-      params.web_contents &&
-      !params.web_contents->GetDelegate()->IsNeverVisible(params.web_contents);
+      parent_web_contents &&
+      !parent_web_contents->GetDelegate()->IsNeverVisible(parent_web_contents);
   if (modal_dialog) {
     widget =
-        constrained_window::ShowWebModalDialogViews(this, params.web_contents);
+        constrained_window::ShowWebModalDialogViews(this, parent_web_contents);
   } else {
-    widget = DialogDelegate::CreateDialogWidget(this, params.context, nullptr);
+    widget = DialogDelegate::CreateDialogWidget(this, context, nullptr);
     widget->Show();
   }
   chrome::RecordDialogCreation(chrome::DialogIdentifier::DESKTOP_MEDIA_PICKER);
@@ -279,7 +281,7 @@ gfx::Size DesktopMediaPickerDialogView::CalculatePreferredSize() const {
 }
 
 ui::ModalType DesktopMediaPickerDialogView::GetModalType() const {
-  return modality_;
+  return ui::MODAL_TYPE_CHILD;
 }
 
 base::string16 DesktopMediaPickerDialogView::GetWindowTitle() const {
@@ -424,12 +426,18 @@ DesktopMediaPickerViews::~DesktopMediaPickerViews() {
 }
 
 void DesktopMediaPickerViews::Show(
-    const DesktopMediaPicker::Params& params,
+    content::WebContents* web_contents,
+    gfx::NativeWindow context,
+    gfx::NativeWindow parent,
+    const base::string16& app_name,
+    const base::string16& target_name,
     std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+    bool request_audio,
     const DoneCallback& done_callback) {
   callback_ = done_callback;
-  dialog_ =
-      new DesktopMediaPickerDialogView(params, this, std::move(source_lists));
+  dialog_ = new DesktopMediaPickerDialogView(
+      web_contents, context, this, app_name, target_name,
+      std::move(source_lists), request_audio);
 }
 
 void DesktopMediaPickerViews::NotifyDialogResult(DesktopMediaID source) {

@@ -117,7 +117,7 @@ void AppliedDecorationPainter::Paint() {
     case ETextDecorationStyle::kDotted:
     case ETextDecorationStyle::kDashed:
       context_.SetShouldAntialias(decoration_info_.antialias);
-      FALLTHROUGH;
+    // Fall through
     default:
       context_.DrawLineForText(start_point_, decoration_info_.width);
 

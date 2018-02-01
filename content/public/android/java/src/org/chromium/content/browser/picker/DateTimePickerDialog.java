@@ -261,9 +261,7 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
                         return locales.get(0);
                     }
                 }
-                @SuppressWarnings("deprecation")
-                Locale locale = getConfiguration().locale;
-                return locale;
+                return getConfiguration().locale;
             }
         }
     }

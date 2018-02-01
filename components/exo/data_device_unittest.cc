@@ -114,9 +114,9 @@ class TestFileHelper : public FileHelper {
                       GURL* out) override {
     return true;
   }
-  bool GetUrlsFromPickle(const std::string& app_id,
-                         const base::Pickle& pickle,
-                         std::vector<GURL>* out_urls) override {
+  bool GetUrlFromFileSystemUrl(const std::string& app_id,
+                               const GURL& url,
+                               GURL* out) override {
     return false;
   }
 

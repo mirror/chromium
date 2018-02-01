@@ -32,7 +32,6 @@
 #define ImageBitmapFactories_h
 
 #include <memory>
-#include "base/single_thread_task_runner.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/image_bitmap_source.h"
@@ -55,6 +54,7 @@ class EventTarget;
 class ExecutionContext;
 class ImageBitmapSource;
 class ImageBitmapOptions;
+class WebTaskRunner;
 
 typedef HTMLImageElementOrSVGImageElementOrHTMLVideoElementOrHTMLCanvasElementOrBlobOrImageDataOrImageBitmapOrOffscreenCanvas
     ImageBitmapSourceUnion;
@@ -132,7 +132,7 @@ class ImageBitmapFactories final
 
     void ScheduleAsyncImageBitmapDecoding(DOMArrayBuffer*);
     void DecodeImageOnDecoderThread(
-        scoped_refptr<base::SingleThreadTaskRunner>,
+        scoped_refptr<WebTaskRunner>,
         DOMArrayBuffer*,
         const String& premultiply_alpha_option,
         const String& color_space_conversion_option);

@@ -9,7 +9,6 @@
 #include "content/browser/loader/signed_exchange_handler.h"
 #include "content/public/common/content_features.h"
 #include "net/http/http_util.h"
-#include "services/network/public/cpp/features.h"
 
 namespace content {
 
@@ -72,7 +71,7 @@ WebPackageLoader::WebPackageLoader(
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
   url_loader_.Bind(std::move(endpoints->url_loader));
 
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     // We don't propagate the response to the navigation request and its
     // throttles, therefore we need to call this here internally in order to
     // move it forward.
@@ -129,7 +128,7 @@ void WebPackageLoader::OnReceiveCachedMetadata(
 }
 
 void WebPackageLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
-  // TODO(https://crbug.com/803774): Implement this to progressively update the
+  // TODO(https://crbug.com/80374): Implement this to progressively update the
   // encoded data length in DevTools.
 }
 
@@ -146,8 +145,8 @@ void WebPackageLoader::OnStartLoadingResponseBody(
 
 void WebPackageLoader::OnComplete(
     const network::URLLoaderCompletionStatus& status) {
-  // TODO(https://crbug.com/803774): Copy the data length information and pass
-  // to |client_| when OnHTTPExchangeFinished() is called.
+  // TODO(https://crbug.com/80374): Copy the data length information and pass to
+  // |client_| when OnHTTPExchangeFinished() is called.
 }
 
 void WebPackageLoader::FollowRedirect() {
@@ -157,7 +156,7 @@ void WebPackageLoader::FollowRedirect() {
 void WebPackageLoader::ProceedWithResponse() {
   // TODO(https://crbug.com/791049): Remove this when NetworkService is
   // enabled by default.
-  DCHECK(!base::FeatureList::IsEnabled(network::features::kNetworkService));
+  DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
   DCHECK(pending_body_.is_valid());
   DCHECK(client_);
   client_->OnStartLoadingResponseBody(std::move(pending_body_));
@@ -168,15 +167,15 @@ void WebPackageLoader::ProceedWithResponse() {
 
 void WebPackageLoader::SetPriority(net::RequestPriority priority,
                                    int intra_priority_value) {
-  // TODO(https://crbug.com/803774): Implement this.
+  // TODO(https://crbug.com/80374): Implement this.
 }
 
 void WebPackageLoader::PauseReadingBodyFromNet() {
-  // TODO(https://crbug.com/803774): Implement this.
+  // TODO(https://crbug.com/80374): Implement this.
 }
 
 void WebPackageLoader::ResumeReadingBodyFromNet() {
-  // TODO(https://crbug.com/803774): Implement this.
+  // TODO(https://crbug.com/80374): Implement this.
 }
 
 void WebPackageLoader::ConnectToClient(
@@ -192,7 +191,7 @@ void WebPackageLoader::OnHTTPExchangeFound(
     const network::ResourceResponseHead& resource_response,
     base::Optional<net::SSLInfo> ssl_info,
     mojo::ScopedDataPipeConsumerHandle body) {
-  // TODO(https://crbug.com/803774): Handle no-GET request_method as a error.
+  // TODO(https://crbug.com/80374): Handle no-GET request_method as a error.
   DCHECK(original_response_timing_info_);
   forwarding_client_->OnReceiveRedirect(
       CreateRedirectInfo(request_url),
@@ -203,7 +202,7 @@ void WebPackageLoader::OnHTTPExchangeFound(
   client_->OnReceiveResponse(resource_response, std::move(ssl_info),
                              nullptr /* downloaded_file */);
 
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     // Need to wait until ProceedWithResponse() is called.
     pending_body_ = std::move(body);
   } else {
@@ -214,7 +213,7 @@ void WebPackageLoader::OnHTTPExchangeFound(
 void WebPackageLoader::OnHTTPExchangeFinished(
     const network::URLLoaderCompletionStatus& status) {
   if (pending_body_.is_valid()) {
-    DCHECK(!base::FeatureList::IsEnabled(network::features::kNetworkService));
+    DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
     // If ProceedWithResponse() was not called yet, need to call OnComplete()
     // after ProceedWithResponse() is called.
     pending_completion_status_ = status;

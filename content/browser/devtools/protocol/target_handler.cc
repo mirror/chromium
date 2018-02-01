@@ -314,6 +314,13 @@ Response TargetHandler::SetAutoAttach(
   return browser_only_ ? Response::OK() : Response::FallThrough();
 }
 
+Response TargetHandler::SetAttachToFrames(bool value) {
+  auto_attacher_.SetAttachToFrames(value);
+  if (!auto_attacher_.ShouldThrottleFramesNavigation())
+    ClearThrottles();
+  return Response::OK();
+}
+
 Response TargetHandler::SetRemoteLocations(
     std::unique_ptr<protocol::Array<Target::RemoteLocation>>) {
   return Response::Error("Not supported");

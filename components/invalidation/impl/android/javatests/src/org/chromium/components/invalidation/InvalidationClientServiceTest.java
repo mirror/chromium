@@ -7,7 +7,6 @@ package org.chromium.components.invalidation;
 import android.accounts.Account;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.test.ServiceTestCase;
 
@@ -72,7 +71,7 @@ public class InvalidationClientServiceTest extends
     public void setUp() throws Exception {
         super.setUp();
         mStartServiceIntents = new ArrayList<>();
-        setContext(new AdvancedMockContext(InstrumentationRegistry.getTargetContext()) {
+        setContext(new AdvancedMockContext(getContext()) {
             @Override
             public ComponentName startService(Intent intent) {
                 mStartServiceIntents.add(intent);

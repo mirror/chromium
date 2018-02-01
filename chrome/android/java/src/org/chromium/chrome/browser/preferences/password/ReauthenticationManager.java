@@ -26,12 +26,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 public final class ReauthenticationManager {
     // Used for various ways to override checks provided by this class.
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({OVERRIDE_STATE_NOT_OVERRIDDEN, OVERRIDE_STATE_AVAILABLE, OVERRIDE_STATE_UNAVAILABLE})
-    public @interface OverrideState {}
-    public static final int OVERRIDE_STATE_NOT_OVERRIDDEN = 0;
-    public static final int OVERRIDE_STATE_AVAILABLE = 1;
-    public static final int OVERRIDE_STATE_UNAVAILABLE = 2;
+    public enum OverrideState { NOT_OVERRIDDEN, AVAILABLE, UNAVAILABLE }
 
     // Used to specify the scope of the reauthentication -- either to grant bulk access like, e.g.,
     // exporting passwords, or just one-at-a-time, like, e.g., viewing a single password.
@@ -59,13 +54,11 @@ public final class ReauthenticationManager {
 
     // Used in tests to override the result of checking for screen lock set-up. This allows the
     // tests to be independent of a particular device configuration.
-    @OverrideState
-    private static int sScreenLockSetUpOverride = OVERRIDE_STATE_NOT_OVERRIDDEN;
+    private static OverrideState sScreenLockSetUpOverride = OverrideState.NOT_OVERRIDDEN;
 
     // Used in tests to override the result of checking for availability of the screen-locking API.
     // This allows the tests to be independent of a particular device configuration.
-    @OverrideState
-    private static int sApiOverride = OVERRIDE_STATE_NOT_OVERRIDDEN;
+    private static OverrideState sApiOverride = OverrideState.NOT_OVERRIDDEN;
 
     // Used in tests to avoid displaying the OS reauth dialog.
     private static boolean sSkipSystemReauth = false;
@@ -90,14 +83,14 @@ public final class ReauthenticationManager {
     }
 
     @VisibleForTesting
-    public static void setScreenLockSetUpOverride(@OverrideState int screenLockSetUpOverride) {
+    public static void setScreenLockSetUpOverride(OverrideState screenLockSetUpOverride) {
         sScreenLockSetUpOverride = screenLockSetUpOverride;
     }
 
     @VisibleForTesting
-    public static void setApiOverride(@OverrideState int apiOverride) {
+    public static void setApiOverride(OverrideState apiOverride) {
         // Ensure that tests don't accidentally try to launch the OS-provided lock screen.
-        if (apiOverride == OVERRIDE_STATE_AVAILABLE) {
+        if (apiOverride == OverrideState.AVAILABLE) {
             PasswordReauthenticationFragment.preventLockingForTesting();
         }
 
@@ -115,11 +108,11 @@ public final class ReauthenticationManager {
      */
     public static boolean isReauthenticationApiAvailable() {
         switch (sApiOverride) {
-            case OVERRIDE_STATE_NOT_OVERRIDDEN:
+            case NOT_OVERRIDDEN:
                 return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-            case OVERRIDE_STATE_AVAILABLE:
+            case AVAILABLE:
                 return true;
-            case OVERRIDE_STATE_UNAVAILABLE:
+            case UNAVAILABLE:
                 return false;
         }
         // This branch is not reachable.
@@ -176,12 +169,12 @@ public final class ReauthenticationManager {
      */
     public static boolean isScreenLockSetUp(Context context) {
         switch (sScreenLockSetUpOverride) {
-            case OVERRIDE_STATE_NOT_OVERRIDDEN:
+            case NOT_OVERRIDDEN:
                 return ((KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE))
                         .isKeyguardSecure();
-            case OVERRIDE_STATE_AVAILABLE:
+            case AVAILABLE:
                 return true;
-            case OVERRIDE_STATE_UNAVAILABLE:
+            case UNAVAILABLE:
                 return false;
         }
         // This branch is not reachable.

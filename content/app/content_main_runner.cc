@@ -52,7 +52,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/common/zygote_features.h"
 #include "gin/v8_initializer.h"
 #include "media/base/media.h"
 #include "media/media_features.h"
@@ -301,18 +300,18 @@ struct MainFunction {
   int (*function)(const MainFunctionParams&);
 };
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#if defined(OS_LINUX)
 // On platforms that use the zygote, we have a special subset of
 // subprocesses that are launched via the zygote.  This function
 // fills in some process-launching bits around ZygoteMain().
 // Returns the exit code of the subprocess.
 int RunZygote(ContentMainDelegate* delegate) {
   static const MainFunction kMainFunctions[] = {
-    {switches::kRendererProcess, RendererMain},
-    {switches::kUtilityProcess, UtilityMain},
+    { switches::kRendererProcess,    RendererMain },
 #if BUILDFLAG(ENABLE_PLUGINS)
-    {switches::kPpapiPluginProcess, PpapiPluginMain},
+    { switches::kPpapiPluginProcess, PpapiPluginMain },
 #endif
+    { switches::kUtilityProcess,     UtilityMain },
   };
 
   std::vector<std::unique_ptr<ZygoteForkDelegate>> zygote_fork_delegates;
@@ -358,7 +357,7 @@ int RunZygote(ContentMainDelegate* delegate) {
   NOTREACHED() << "Unknown zygote process type: " << process_type;
   return 1;
 }
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
+#endif  // defined(OS_LINUX)
 
 static void RegisterMainThreadFactories() {
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER) && !defined(CHROME_MULTIPLE_DLL_CHILD)
@@ -424,12 +423,13 @@ int RunNamedProcessTypeMain(
     }
   }
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
   // Zygote startup is special -- see RunZygote comments above
   // for why we don't use ZygoteMain directly.
   if (process_type == switches::kZygoteProcess)
     return RunZygote(delegate);
-#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
+#endif
 
   // If it's a process we don't know about, the embedder should know.
   if (delegate)

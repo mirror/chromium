@@ -76,12 +76,6 @@ unpacker.app = {
   volumeLoadedPromises: {},
 
   /**
-   * A map to indicate whether a volume's metadata load is finished.
-   * @type {!Object<!unpacker.types.FileSystemId, boolean>}
-   */
-  volumeLoadFinished: {},
-
-  /**
    * A Promise used to postpone all calls to fileSystemProvider API after
    * the NaCl module loads.
    * @type {?Promise}
@@ -345,7 +339,6 @@ unpacker.app = {
     delete unpacker.app.volumes[fileSystemId];
     // Allow mount after clean.
     delete unpacker.app.volumeLoadedPromises[fileSystemId];
-    delete unpacker.app.volumeLoadFinished[fileSystemId];
 
     if (Object.keys(unpacker.app.volumes).length === 0 &&
         unpacker.app.mountProcessCounter === 0) {
@@ -713,8 +706,7 @@ unpacker.app = {
                     // Decrement the counter that indicates the number of
                     // ongoing mount process.
                     unpacker.app.mountProcessCounter--;
-                    if (error.message === 'EXISTS' ||
-                        error.message === 'ALREADY_LOADING') {
+                    if (error.message === 'EXISTS') {
                       if (opt_onError)
                         opt_onError(fileSystemId);
                       return;
@@ -747,26 +739,10 @@ unpacker.app = {
                       opt_onSuccess(fileSystemId);
                   };
 
-                  // Prevent loading a zip file duplicatedly when the extension
-                  // is currently loading the same file.
-                  if (unpacker.app.volumeLoadedPromises[fileSystemId] &&
-                      !unpacker.app.volumeLoadFinished[fileSystemId]) {
-                    onError({message: 'ALREADY_LOADING'}, fileSystemId);
-                    chrome.notifications.create(
-                        fileSystemId, {
-                          type: 'basic',
-                          iconUrl: chrome.runtime.getManifest().icons[128],
-                          title: entry.name,
-                          message: stringData['ZIP_ARCHIVER_MOUNTING_MESSAGE'],
-                        },
-                        function() {});
-                    return;
-                  }
                   var loadPromise = unpacker.app.loadVolume_(
                       fileSystemId, entry, {}, null /* passphrase */);
                   loadPromise
                       .then(function() {
-                        unpacker.app.volumeLoadFinished[fileSystemId] = true;
                         chrome.fileSystemProvider.mount(
                             {
                               fileSystemId: fileSystemId,
@@ -788,7 +764,6 @@ unpacker.app = {
                       });
 
                   unpacker.app.volumeLoadedPromises[fileSystemId] = loadPromise;
-                  unpacker.app.volumeLoadFinished[fileSystemId] = false;
                 }.bind(null, item.entry));
           });
         })

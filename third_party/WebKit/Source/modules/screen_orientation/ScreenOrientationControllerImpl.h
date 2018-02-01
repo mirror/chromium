@@ -5,20 +5,19 @@
 #ifndef ScreenOrientationControllerImpl_h
 #define ScreenOrientationControllerImpl_h
 
-#include <memory>
 #include "core/dom/Document.h"
 #include "core/frame/PlatformEventController.h"
 #include "core/frame/ScreenOrientationController.h"
-#include "device/screen_orientation/public/interfaces/screen_orientation.mojom-blink.h"
 #include "modules/ModulesExport.h"
 #include "public/platform/modules/screen_orientation/WebLockOrientationCallback.h"
 #include "public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 #include "public/platform/modules/screen_orientation/WebScreenOrientationType.h"
+#include <memory>
 
 namespace blink {
 
 class ScreenOrientation;
-class ScreenOrientationDelegate;
+class WebScreenOrientationClient;
 
 class MODULES_EXPORT ScreenOrientationControllerImpl final
     : public ScreenOrientationController,
@@ -39,18 +38,15 @@ class MODULES_EXPORT ScreenOrientationControllerImpl final
   void unlock() override;
   bool MaybeHasActiveLock() const override;
 
-  static void ProvideTo(LocalFrame&);
+  static void ProvideTo(LocalFrame&, WebScreenOrientationClient*);
   static ScreenOrientationControllerImpl* From(LocalFrame&);
-
-  void SetScreenOrientationAssociatedPtrForTests(
-      device::mojom::blink::ScreenOrientationAssociatedPtr);
 
   virtual void Trace(blink::Visitor*);
 
  private:
   friend class MediaControlsOrientationLockAndRotateToFullscreenDelegateTest;
 
-  explicit ScreenOrientationControllerImpl(LocalFrame&);
+  ScreenOrientationControllerImpl(LocalFrame&, WebScreenOrientationClient*);
 
   static WebScreenOrientationType ComputeOrientation(const IntRect&, uint16_t);
 
@@ -75,7 +71,7 @@ class MODULES_EXPORT ScreenOrientationControllerImpl final
   bool IsActiveAndVisible() const;
 
   Member<ScreenOrientation> orientation_;
-  std::unique_ptr<ScreenOrientationDelegate> delegate_;
+  WebScreenOrientationClient* client_;
   TaskRunnerTimer<ScreenOrientationControllerImpl> dispatch_event_timer_;
   bool active_lock_ = false;
 };

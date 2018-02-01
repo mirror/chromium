@@ -5,13 +5,25 @@
 #ifndef PresentationError_h
 #define PresentationError_h
 
-#include "core/dom/DOMException.h"
-#include "public/platform/modules/presentation/presentation.mojom-blink.h"
+#include "platform/heap/Handle.h"
+#include "platform/wtf/Allocator.h"
+#include "public/platform/modules/presentation/WebPresentationError.h"
 
 namespace blink {
 
-// Creates a DOMException using the given PresentationError.
-DOMException* CreatePresentationError(const mojom::blink::PresentationError&);
+class DOMException;
+
+// A container of methods taking care of WebPresentationError in WebCallbacks
+// subclasses.
+class PresentationError final {
+  STATIC_ONLY(PresentationError);
+
+ public:
+  // For CallbackPromiseAdapter.
+  using WebType = const WebPresentationError&;
+
+  static DOMException* Take(const WebPresentationError&);
+};
 
 }  // namespace blink
 

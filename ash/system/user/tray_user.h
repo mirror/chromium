@@ -18,7 +18,6 @@ class Size;
 
 namespace views {
 class Label;
-class ImageView;
 }
 
 namespace ash {
@@ -86,7 +85,6 @@ class ASH_EXPORT TrayUser : public SystemTrayItem, public SessionObserver {
   views::View* layout_view_ = nullptr;
   tray::RoundedImageView* avatar_ = nullptr;
   views::Label* label_ = nullptr;
-  views::ImageView* icon_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(TrayUser);
 };

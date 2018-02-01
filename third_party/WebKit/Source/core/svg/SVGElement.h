@@ -317,7 +317,7 @@ inline bool Node::HasTagName(const SVGQualifiedName& name) const {
   return IsSVGElement() && ToSVGElement(*this).HasTagName(name);
 }
 
-// This requires IsSVG*Element(const SVGElement&).
+// This requires isSVG*Element(const SVGElement&).
 #define DEFINE_SVGELEMENT_TYPE_CASTS_WITH_FUNCTION(thisType)               \
   inline bool Is##thisType(const thisType* element);                       \
   inline bool Is##thisType(const thisType& element);                       \
@@ -325,10 +325,14 @@ inline bool Node::HasTagName(const SVGQualifiedName& name) const {
     return element && Is##thisType(*element);                              \
   }                                                                        \
   inline bool Is##thisType(const Node& node) {                             \
-    return node.IsSVGElement() && Is##thisType(ToSVGElement(node));        \
+    return node.IsSVGElement() ? Is##thisType(ToSVGElement(node)) : false; \
   }                                                                        \
   inline bool Is##thisType(const Node* node) {                             \
     return node && Is##thisType(*node);                                    \
+  }                                                                        \
+  template <typename T>                                                    \
+  inline bool Is##thisType(const T* node) {                                \
+    return Is##thisType(node);                                             \
   }                                                                        \
   template <typename T>                                                    \
   inline bool Is##thisType(const Member<T>& node) {                        \

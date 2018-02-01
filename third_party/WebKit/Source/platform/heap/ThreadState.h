@@ -405,16 +405,11 @@ class PLATFORM_EXPORT ThreadState {
   void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
   NO_SANITIZE_ADDRESS void CopyStackUntilSafePointScope();
 
-  // A region of non-weak PersistentNodes allocated on the given thread.
+  // A region of PersistentNodes allocated on the given thread.
   PersistentRegion* GetPersistentRegion() const {
     return persistent_region_.get();
   }
-
-  // A region of PersistentNodes for WeakPersistents allocated on the given
-  // thread.
-  PersistentRegion* GetWeakPersistentRegion() const {
-    return weak_persistent_region_.get();
-  }
+  // A region of PersistentNodes not owned by any particular thread.
 
   // Visit local thread stack and trace all pointers conservatively.
   void VisitStack(Visitor*);
@@ -423,11 +418,8 @@ class PLATFORM_EXPORT ThreadState {
   // real machine stack if there is one.
   void VisitAsanFakeStackForPointer(Visitor*, Address);
 
-  // Visit all non-weak persistents allocated on this thread.
+  // Visit all persistents allocated on this thread.
   void VisitPersistents(Visitor*);
-
-  // Visit all weak persistents allocated on this thread.
-  void VisitWeakPersistents(Visitor*);
 
   struct GCSnapshotInfo {
     STACK_ALLOCATED();
@@ -482,7 +474,7 @@ class PLATFORM_EXPORT ThreadState {
     accumulated_sweeping_time_ += time;
   }
 
-  void FreePersistentNode(PersistentRegion*, PersistentNode*);
+  void FreePersistentNode(PersistentNode*);
 
   using PersistentClearCallback = void (*)(void*);
 
@@ -623,7 +615,6 @@ class PLATFORM_EXPORT ThreadState {
   std::unique_ptr<ThreadHeap> heap_;
   ThreadIdentifier thread_;
   std::unique_ptr<PersistentRegion> persistent_region_;
-  std::unique_ptr<PersistentRegion> weak_persistent_region_;
   BlinkGC::StackState stack_state_;
   intptr_t* start_of_stack_;
   intptr_t* end_of_stack_;

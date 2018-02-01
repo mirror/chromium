@@ -32,8 +32,8 @@ LayoutWorkletGlobalScopeProxy::LayoutWorkletGlobalScopeProxy(
       document->Url(), document->UserAgent(),
       document->GetContentSecurityPolicy()->Headers().get(),
       document->GetReferrerPolicy(), document->GetSecurityOrigin(),
-      document->IsSecureContext(), nullptr /* worker_clients */,
-      document->AddressSpace(), OriginTrialContext::GetTokens(document).get(),
+      nullptr /* worker_clients */, document->AddressSpace(),
+      OriginTrialContext::GetTokens(document).get(),
       nullptr /* worker_settings */, kV8CacheOptionsDefault);
   global_scope_ =
       LayoutWorkletGlobalScope::Create(frame, std::move(creation_params),
@@ -44,7 +44,7 @@ void LayoutWorkletGlobalScopeProxy::FetchAndInvokeScript(
     const KURL& module_url_record,
     WorkletModuleResponsesMap* module_responses_map,
     network::mojom::FetchCredentialsMode credentials_mode,
-    scoped_refptr<base::SingleThreadTaskRunner> outside_settings_task_runner,
+    scoped_refptr<WebTaskRunner> outside_settings_task_runner,
     WorkletPendingTasks* pending_tasks) {
   DCHECK(IsMainThread());
   global_scope_->FetchAndInvokeScript(

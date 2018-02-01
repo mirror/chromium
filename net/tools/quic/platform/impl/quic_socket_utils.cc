@@ -274,8 +274,6 @@ WriteResult QuicSocketUtils::WritePacket(
 
 // static
 int QuicSocketUtils::CreateUDPSocket(const QuicSocketAddress& address,
-                                     int32_t receive_buffer_size,
-                                     int32_t send_buffer_size,
                                      bool* overflow_supported) {
   int address_family = address.host().AddressFamilyToInt();
   int fd = socket(address_family, SOCK_DGRAM | SOCK_NONBLOCK, IPPROTO_UDP);
@@ -293,11 +291,11 @@ int QuicSocketUtils::CreateUDPSocket(const QuicSocketAddress& address,
     *overflow_supported = true;
   }
 
-  if (!SetReceiveBufferSize(fd, receive_buffer_size)) {
+  if (!SetReceiveBufferSize(fd, kDefaultSocketReceiveBuffer)) {
     return -1;
   }
 
-  if (!SetSendBufferSize(fd, send_buffer_size)) {
+  if (!SetSendBufferSize(fd, kDefaultSocketReceiveBuffer)) {
     return -1;
   }
 

@@ -42,6 +42,9 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
   // class to notify observers.
   void OnResourceBundleCreated();
 
+  // TODO(sky): remove. Temporary until resolve ordering.
+  void InitPolicyProviders();
+
   void Init(
       PrefService* local_state,
       scoped_refptr<net::URLRequestContextGetter> request_context) override;
@@ -49,9 +52,12 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
   ConfigurationPolicyProvider* GetPlatformProvider();
 
  protected:
-  // BrowserPolicyConnector:
-  std::vector<std::unique_ptr<policy::ConfigurationPolicyProvider>>
-  CreatePolicyProviders() override;
+  // Called from Init() to build the list of ConfigurationPolicyProviders that
+  // is supplied to SetPolicyProviders(). This implementation does nothing
+  // and is provided for subclasses. NOTE: |providers| may already contain
+  // some providers, generally subclasses should append.
+  virtual void BuildPolicyProviders(
+      std::vector<std::unique_ptr<ConfigurationPolicyProvider>>* providers);
 
  private:
   std::unique_ptr<ConfigurationPolicyProvider> CreatePlatformProvider();

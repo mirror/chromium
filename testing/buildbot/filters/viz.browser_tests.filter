@@ -10,10 +10,6 @@
 -ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus0
 -ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus1
 
-# viz::HostFrameSinkManager::CreateCompositorFrameSinkSupport crash.
-# http://crbug.com/807465
--ArcAccessibilityHelperBridgeBrowserTest.PreferenceChange
-
 # PictureLayerTilingSet::ComputeSkewport crash crbug.com/796594
 -LoginFeedbackTest.Basic
 
@@ -38,9 +34,6 @@
 -PDFExtensionTest.ContextMenuCoordinates
 -WebViewTests/WebViewTest.InterstitialPageFocusedWidget/1
 -WebViewTests/WebViewTest.ReloadAfterCrash/1
-
-# Flaky timeouts. http://crbug.com/807773
--PDFExtensionClipboardTest.*
 
 # WebViewBrowserTest::ScrollWaiter Doesn't Work in Viz crbug.com/796336
 -WebViewScrollBubbling/WebViewGuestScrollTouchTest.TestGuestGestureScrollsBubble/0

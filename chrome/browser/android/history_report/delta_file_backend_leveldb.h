@@ -12,7 +12,6 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/trace_event/memory_dump_provider.h"
 
 class GURL;
 
@@ -25,10 +24,10 @@ namespace history_report {
 class DeltaFileEntryWithData;
 
 // Backend for delta file.
-class DeltaFileBackend : public base::trace_event::MemoryDumpProvider {
+class DeltaFileBackend {
  public:
   explicit DeltaFileBackend(const base::FilePath& dir);
-  ~DeltaFileBackend() override;
+  ~DeltaFileBackend();
 
   // Adds new addition entry to delta file
   void PageAdded(const GURL& url);
@@ -50,10 +49,6 @@ class DeltaFileBackend : public base::trace_event::MemoryDumpProvider {
 
   // Dumps internal state to string. For debuging.
   std::string Dump();
-
-  // base::trace_event::MemoryDumpProvider implementation:
-  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
-                    base::trace_event::ProcessMemoryDump* pmd) override;
 
  private:
   // Starts delta file backend.

@@ -12,6 +12,7 @@
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/signin/core/browser/chrome_connected_header_helper.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "net/base/escape.h"
@@ -78,11 +79,10 @@ bool SettingsAllowSigninCookies(
 std::string BuildMirrorRequestCookieIfPossible(
     const GURL& url,
     const std::string& account_id,
-    AccountConsistencyMethod account_consistency,
     const content_settings::CookieSettings* cookie_settings,
     int profile_mode_mask) {
-  return ChromeConnectedHeaderHelper::BuildRequestCookieIfPossible(
-      url, account_id, account_consistency, cookie_settings, profile_mode_mask);
+  return signin::ChromeConnectedHeaderHelper::BuildRequestCookieIfPossible(
+      url, account_id, cookie_settings, profile_mode_mask);
 }
 
 bool SigninHeaderHelper::AppendOrRemoveRequestHeader(
@@ -147,11 +147,11 @@ void AppendOrRemoveMirrorRequestHeader(
     net::URLRequest* request,
     const GURL& redirect_url,
     const std::string& account_id,
-    AccountConsistencyMethod account_consistency,
     const content_settings::CookieSettings* cookie_settings,
+    bool is_mirror_enabled,
     int profile_mode_mask) {
   const GURL& url = redirect_url.is_empty() ? request->url() : redirect_url;
-  ChromeConnectedHeaderHelper chrome_connected_helper(account_consistency);
+  ChromeConnectedHeaderHelper chrome_connected_helper(is_mirror_enabled);
   std::string chrome_connected_header_value;
   if (chrome_connected_helper.ShouldBuildRequestHeader(url, cookie_settings)) {
     chrome_connected_header_value = chrome_connected_helper.BuildRequestHeader(
@@ -168,17 +168,20 @@ bool AppendOrRemoveDiceRequestHeader(
     const std::string& account_id,
     bool sync_enabled,
     bool sync_has_auth_error,
-    AccountConsistencyMethod account_consistency,
+    BooleanPrefMember* dice_pref_member,
     const content_settings::CookieSettings* cookie_settings) {
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   const GURL& url = redirect_url.is_empty() ? request->url() : redirect_url;
-  DiceHeaderHelper dice_helper(
-      !account_id.empty() && sync_has_auth_error && sync_enabled,
-      account_consistency);
+  DiceHeaderHelper dice_helper(!account_id.empty() && sync_has_auth_error &&
+                               sync_enabled);
   std::string dice_header_value;
   if (dice_helper.ShouldBuildRequestHeader(url, cookie_settings)) {
+    DiceHeaderHelper::SignoutMode signout_mode =
+        IsDiceEnabled(dice_pref_member)
+            ? DiceHeaderHelper::SignoutMode::kShowSignoutConfirmation
+            : DiceHeaderHelper::SignoutMode::kNoSignoutConfirmation;
     dice_header_value = dice_helper.BuildRequestHeader(
-        sync_enabled ? account_id : std::string());
+        sync_enabled ? account_id : std::string(), signout_mode);
   }
   return dice_helper.AppendOrRemoveRequestHeader(
       request, redirect_url, kDiceRequestHeader, dice_header_value);

@@ -140,7 +140,18 @@ void BlobURLLoader::DidRead(int num_bytes) {
 
 void BlobURLLoader::OnComplete(net::Error error_code,
                                uint64_t total_written_bytes) {
-  network::URLLoaderCompletionStatus status(error_code);
+  if (error_code != net::OK && !sent_headers_) {
+    net::HttpStatusCode status_code =
+        storage::BlobURLRequestJob::NetErrorToHttpStatusCode(error_code);
+    network::ResourceResponseHead response;
+    response.headers = storage::BlobURLRequestJob::GenerateHeaders(
+        status_code, nullptr, nullptr, 0, 0);
+    client_->OnReceiveResponse(response, base::nullopt, nullptr);
+  }
+  network::URLLoaderCompletionStatus status;
+  // TODO(kinuko): We should probably set the error_code here,
+  // while it makes existing tests fail. https://crbug.com/732750
+  status.completion_time = base::TimeTicks::Now();
   status.encoded_body_length = total_written_bytes;
   status.decoded_body_length = total_written_bytes;
   client_->OnComplete(status);
@@ -163,7 +174,7 @@ void BlobURLLoader::HeadersCompleted(net::HttpStatusCode status_code,
   response.mime_type = mime_type;
 
   // TODO(jam): some of this code can be shared with
-  // services/network/url_loader.h
+  // content/network/url_loader.h
   client_->OnReceiveResponse(response, base::nullopt, nullptr);
   sent_headers_ = true;
 

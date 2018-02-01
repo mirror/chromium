@@ -8,7 +8,6 @@
 #include <memory>
 #include <vector>
 
-#include "base/component_export.h"
 #include "base/macros.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 
@@ -18,7 +17,7 @@ class UDPSocket;
 
 // Helper class that handles UDPSocketRequest. It takes care of destroying the
 // UDPSocket implementation instances when mojo pipes are broken.
-class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocketFactory {
+class UDPSocketFactory {
  public:
   UDPSocketFactory();
   virtual ~UDPSocketFactory();

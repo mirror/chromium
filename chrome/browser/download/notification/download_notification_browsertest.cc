@@ -478,7 +478,7 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadDangerousFile) {
   base::FilePath filename = download_item()->GetFileNameToReportUser();
 
   // Checks the download status.
-  EXPECT_EQ(download::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
+  EXPECT_EQ(content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
             download_item()->GetDangerType());
   EXPECT_TRUE(download_item()->IsDangerous());
 
@@ -500,7 +500,7 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadDangerousFile) {
   EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
 
   // Checks the download status.
-  EXPECT_EQ(download::DOWNLOAD_DANGER_TYPE_USER_VALIDATED,
+  EXPECT_EQ(content::DOWNLOAD_DANGER_TYPE_USER_VALIDATED,
             download_item()->GetDangerType());
   EXPECT_FALSE(download_item()->IsDangerous());
 
@@ -529,7 +529,7 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DiscardDangerousFile) {
   base::FilePath filename = download_item()->GetFileNameToReportUser();
 
   // Checks the download status.
-  EXPECT_EQ(download::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
+  EXPECT_EQ(content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
             download_item()->GetDangerType());
   EXPECT_TRUE(download_item()->IsDangerous());
 
@@ -1160,11 +1160,6 @@ class MultiProfileDownloadNotificationTest
                                     kTestAccounts[DUMMY_ACCOUNT_INDEX].email);
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile,
                                     kTestAccounts[DUMMY_ACCOUNT_INDEX].hash);
-    // Don't require policy for our sessions - this is required because
-    // this test creates a secondary profile synchronously, so we need to
-    // let the policy code know not to expect cached policy.
-    command_line->AppendSwitchASCII(chromeos::switches::kProfileRequiresPolicy,
-                                    "false");
   }
 
   // Logs in to the primary profile.

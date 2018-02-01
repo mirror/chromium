@@ -15,6 +15,8 @@ class SingleThreadTaskRunner;
 
 namespace blink {
 
+class WebTaskRunner;
+
 namespace scheduler {
 
 class RendererScheduler;
@@ -35,8 +37,8 @@ scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunnerForTesting();
 scoped_refptr<base::SingleThreadTaskRunner>
 GetSingleThreadTaskRunnerForTesting();
 
-// Creates a task runner for testing.
-scoped_refptr<base::SingleThreadTaskRunner> CreateWebTaskRunnerForTesting();
+// Creates a WebTaskRunner for testing.
+scoped_refptr<WebTaskRunner> CreateWebTaskRunnerForTesting();
 
 }  // namespace scheduler
 }  // namespace blink

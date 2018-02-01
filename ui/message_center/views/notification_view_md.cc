@@ -30,7 +30,6 @@
 #include "ui/message_center/views/padded_button.h"
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/strings/grit/ui_strings.h"
-#include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -111,12 +110,12 @@ constexpr int kCompactTitleMessageViewSpacing = 12;
 constexpr int kProgressBarHeight = 4;
 
 constexpr int kMessageViewWidthWithIcon =
-    kNotificationWidth - kIconViewSize.width() -
+    message_center::kNotificationWidth - kIconViewSize.width() -
     kLeftContentPaddingWithIcon.left() - kLeftContentPaddingWithIcon.right() -
     kContentRowPadding.left() - kContentRowPadding.right();
 
 constexpr int kMessageViewWidth =
-    kNotificationWidth - kLeftContentPadding.left() -
+    message_center::kNotificationWidth - kLeftContentPadding.left() -
     kLeftContentPadding.right() - kContentRowPadding.left() -
     kContentRowPadding.right();
 
@@ -162,7 +161,7 @@ class ClickActivator : public ui::EventHandler {
 
 // ItemView ////////////////////////////////////////////////////////////////////
 
-ItemView::ItemView(const NotificationItem& item) {
+ItemView::ItemView(const message_center::NotificationItem& item) {
   SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
 
@@ -172,8 +171,8 @@ ItemView::ItemView(const NotificationItem& item) {
   title->SetFontList(font_list);
   title->set_collapse_when_hidden(true);
   title->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  title->SetEnabledColor(kRegularTextColorMD);
-  title->SetBackgroundColor(kDimTextBackgroundColor);
+  title->SetEnabledColor(message_center::kRegularTextColorMD);
+  title->SetBackgroundColor(message_center::kDimTextBackgroundColor);
   AddChildView(title);
 
   views::Label* message = new views::Label(l10n_util::GetStringFUTF16(
@@ -182,7 +181,7 @@ ItemView::ItemView(const NotificationItem& item) {
   message->set_collapse_when_hidden(true);
   message->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   message->SetEnabledColor(kDimTextColorMD);
-  message->SetBackgroundColor(kDimTextBackgroundColor);
+  message->SetBackgroundColor(message_center::kDimTextBackgroundColor);
   AddChildView(message);
 }
 
@@ -313,7 +312,8 @@ LargeImageContainerView::LargeImageContainerView()
     : image_view_(new LargeImageView()) {
   SetLayoutManager(std::make_unique<views::FillLayout>());
   SetBorder(views::CreateEmptyBorder(kLargeImageContainerPadding));
-  SetBackground(views::CreateSolidBackground(kImageBackgroundColor));
+  SetBackground(
+      views::CreateSolidBackground(message_center::kImageBackgroundColor));
   AddChildView(image_view_);
 }
 
@@ -370,9 +370,9 @@ NotificationButtonMD::CreateInkDropHighlight() const {
 // NotificationInputTextfieldMD ////////////////////////////////////////////////
 
 NotificationInputTextfieldMD::NotificationInputTextfieldMD(
-    views::TextfieldController* controller)
-    : index_(0) {
-  set_controller(controller);
+    NotificationInputDelegate* delegate)
+    : delegate_(delegate), index_(0) {
+  set_controller(this);
   SetTextColor(kInputTextColor);
   SetBackgroundColor(SK_ColorTRANSPARENT);
   set_placeholder_text_color(kInputPlaceholderColor);
@@ -380,6 +380,41 @@ NotificationInputTextfieldMD::NotificationInputTextfieldMD(
 }
 
 NotificationInputTextfieldMD::~NotificationInputTextfieldMD() = default;
+
+void NotificationInputTextfieldMD::CheckUpdateImage() {
+  if (is_empty_ && !text().empty()) {
+    is_empty_ = false;
+    delegate_->SetNormalImageToReplyButton();
+  } else if (!is_empty_ && text().empty()) {
+    is_empty_ = true;
+    delegate_->SetPlaceholderImageToReplyButton();
+  }
+}
+
+bool NotificationInputTextfieldMD::HandleKeyEvent(views::Textfield* sender,
+                                                  const ui::KeyEvent& event) {
+  CheckUpdateImage();
+  if (event.type() == ui::ET_KEY_PRESSED &&
+      event.key_code() == ui::VKEY_RETURN) {
+    delegate_->OnNotificationInputSubmit(index_, text());
+    return true;
+  }
+  return event.type() == ui::ET_KEY_RELEASED;
+}
+
+bool NotificationInputTextfieldMD::HandleMouseEvent(
+    views::Textfield* sender,
+    const ui::MouseEvent& event) {
+  CheckUpdateImage();
+  return event.type() == ui::ET_MOUSE_RELEASED;
+}
+
+bool NotificationInputTextfieldMD::HandleGestureEvent(
+    views::Textfield* sender,
+    const ui::GestureEvent& event) {
+  CheckUpdateImage();
+  return false;
+}
 
 void NotificationInputTextfieldMD::set_placeholder(
     const base::string16& placeholder) {
@@ -421,80 +456,16 @@ void NotificationInputReplyButtonMD::SetPlaceholderImage() {
 NotificationInputContainerMD::NotificationInputContainerMD(
     NotificationInputDelegate* delegate)
     : delegate_(delegate),
-      ink_drop_container_(new views::InkDropContainerView()),
-      textfield_(new NotificationInputTextfieldMD(this)),
+      textfield_(new NotificationInputTextfieldMD(delegate)),
       button_(new NotificationInputReplyButtonMD(this)) {
   auto* layout = SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
-  SetBackground(views::CreateSolidBackground(kActionsRowBackgroundColor));
-
-  SetInkDropMode(InkDropMode::ON);
-  set_ink_drop_visible_opacity(1);
-
-  ink_drop_container_->SetPaintToLayer();
-  ink_drop_container_->layer()->SetFillsBoundsOpaquely(false);
-  AddChildView(ink_drop_container_);
+  SetBackground(views::CreateSolidBackground(kInputContainerBackgroundColor));
 
   AddChildView(textfield_);
   layout->SetFlexForView(textfield_, 1);
 
   AddChildView(button_);
-}
-
-NotificationInputContainerMD::~NotificationInputContainerMD() = default;
-
-void NotificationInputContainerMD::AnimateBackground(
-    const ui::LocatedEvent& event) {
-  if (View::HitTestPoint(event.location()))
-    AnimateInkDrop(views::InkDropState::ACTION_PENDING,
-                   ui::LocatedEvent::FromIfValid(&event));
-}
-
-void NotificationInputContainerMD::AddInkDropLayer(ui::Layer* ink_drop_layer) {
-  textfield_->SetPaintToLayer();
-  textfield_->layer()->SetFillsBoundsOpaquely(false);
-  button_->SetPaintToLayer();
-  button_->layer()->SetFillsBoundsOpaquely(false);
-  ink_drop_container_->AddInkDropLayer(ink_drop_layer);
-  InstallInkDropMask(ink_drop_layer);
-}
-
-void NotificationInputContainerMD::RemoveInkDropLayer(
-    ui::Layer* ink_drop_layer) {
-  textfield_->DestroyLayer();
-  button_->DestroyLayer();
-  ResetInkDropMask();
-  ink_drop_container_->RemoveInkDropLayer(ink_drop_layer);
-}
-
-std::unique_ptr<views::InkDropRipple>
-NotificationInputContainerMD::CreateInkDropRipple() const {
-  return std::make_unique<views::FloodFillInkDropRipple>(
-      size(), GetInkDropCenterBasedOnLastEvent(), GetInkDropBaseColor(),
-      ink_drop_visible_opacity());
-}
-
-SkColor NotificationInputContainerMD::GetInkDropBaseColor() const {
-  return kInputContainerBackgroundColor;
-}
-
-bool NotificationInputContainerMD::HandleKeyEvent(views::Textfield* sender,
-                                                  const ui::KeyEvent& event) {
-  if (event.type() == ui::ET_KEY_PRESSED &&
-      event.key_code() == ui::VKEY_RETURN) {
-    delegate_->OnNotificationInputSubmit(textfield_->index(),
-                                         textfield_->text());
-    return true;
-  }
-  return event.type() == ui::ET_KEY_RELEASED;
-}
-
-void NotificationInputContainerMD::OnAfterUserAction(views::Textfield* sender) {
-  if (textfield_->text().empty()) {
-    button_->SetPlaceholderImage();
-  } else {
-    button_->SetNormalImage();
-  }
 }
 
 void NotificationInputContainerMD::ButtonPressed(views::Button* sender,
@@ -504,6 +475,8 @@ void NotificationInputContainerMD::ButtonPressed(views::Button* sender,
                                          textfield_->text());
   }
 }
+
+NotificationInputContainerMD::~NotificationInputContainerMD() = default;
 
 // InlineSettingsRadioButton ///////////////////////////////////////////////////
 
@@ -771,7 +744,6 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
   // |expand_button| can be focused by TAB.
   if (sender == header_row_) {
     if (IsExpandable()) {
-      set_manually_expanded_or_collapsed();
       ToggleExpanded();
       Layout();
       SchedulePaint();
@@ -788,7 +760,6 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
       inline_reply_->textfield()->set_placeholder(
           action_buttons_[i]->placeholder());
       inline_reply_->textfield()->RequestFocus();
-      inline_reply_->AnimateBackground(*event.AsLocatedEvent());
       inline_reply_->SetVisible(true);
       action_buttons_row_->SetVisible(false);
       Layout();
@@ -807,6 +778,14 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
   }
 }
 
+void NotificationViewMD::SetNormalImageToReplyButton() {
+  inline_reply_->button()->SetNormalImage();
+}
+
+void NotificationViewMD::SetPlaceholderImageToReplyButton() {
+  inline_reply_->button()->SetPlaceholderImage();
+}
+
 void NotificationViewMD::OnNotificationInputSubmit(size_t index,
                                                    const base::string16& text) {
   MessageCenter::Get()->ClickOnNotificationButtonWithReply(notification_id(),
@@ -823,9 +802,10 @@ void NotificationViewMD::RequestFocusOnCloseButton() {
 
 void NotificationViewMD::CreateOrUpdateContextTitleView(
     const Notification& notification) {
-  header_row_->SetAccentColor(notification.accent_color() == SK_ColorTRANSPARENT
-                                  ? kNotificationDefaultAccentColor
-                                  : notification.accent_color());
+  header_row_->SetAccentColor(
+      notification.accent_color() == SK_ColorTRANSPARENT
+          ? message_center::kNotificationDefaultAccentColor
+          : notification.accent_color());
   header_row_->SetTimestamp(notification.timestamp());
 
   base::string16 app_name = notification.display_source();
@@ -931,8 +911,8 @@ void NotificationViewMD::CreateOrUpdateProgressBarView(
   if (!progress_bar_view_) {
     progress_bar_view_ = new views::ProgressBar(kProgressBarHeight,
                                                 /* allow_round_corner */ false);
-    progress_bar_view_->SetBorder(
-        views::CreateEmptyBorder(kProgressBarTopPadding, 0, 0, 0));
+    progress_bar_view_->SetBorder(views::CreateEmptyBorder(
+        message_center::kProgressBarTopPadding, 0, 0, 0));
     left_content_->AddChildView(progress_bar_view_);
   }
 
@@ -994,13 +974,8 @@ void NotificationViewMD::CreateOrUpdateListItemViews(
 
 void NotificationViewMD::CreateOrUpdateIconView(
     const Notification& notification) {
-  const bool use_image_for_icon = notification.icon().IsEmpty();
-
-  gfx::ImageSkia icon = use_image_for_icon ? notification.image().AsImageSkia()
-                                           : notification.icon().AsImageSkia();
-
   if (notification.type() == NOTIFICATION_TYPE_PROGRESS ||
-      notification.type() == NOTIFICATION_TYPE_MULTIPLE || icon.isNull()) {
+      notification.type() == NOTIFICATION_TYPE_MULTIPLE) {
     DCHECK(!icon_view_ || right_content_->Contains(icon_view_));
     delete icon_view_;
     icon_view_ = nullptr;
@@ -1012,6 +987,12 @@ void NotificationViewMD::CreateOrUpdateIconView(
     right_content_->AddChildView(icon_view_);
   }
 
+  const bool use_image_for_icon = notification.icon().IsEmpty();
+  gfx::ImageSkia icon;
+  if (use_image_for_icon)
+    icon = notification.image().AsImageSkia();
+  else
+    icon = notification.icon().AsImageSkia();
   icon_view_->SetImage(icon, icon.size());
 
   // Hide the icon on the right side when the notification is expanded.
@@ -1062,7 +1043,8 @@ void NotificationViewMD::CreateOrUpdateActionButtonViews(
   for (size_t i = 0; i < buttons.size(); ++i) {
     ButtonInfo button_info = buttons[i];
     if (new_buttons) {
-      bool is_inline_reply = button_info.type == ButtonType::TEXT;
+      bool is_inline_reply =
+          button_info.type == message_center::ButtonType::TEXT;
       NotificationButtonMD* button = new NotificationButtonMD(
           this, is_inline_reply, button_info.title, button_info.placeholder);
       action_buttons_.push_back(button);
@@ -1195,9 +1177,10 @@ void NotificationViewMD::UpdateViewForExpandedState(bool expanded) {
       list_items_count_ -
       (expanded ? item_views_.size() : kMaxLinesForMessageView));
 
-  right_content_->SetVisible(icon_view_ &&
-                             (!hide_icon_on_expanded_ || !expanded));
-  if (right_content_->visible()) {
+  if (icon_view_)
+    icon_view_->SetVisible(!hide_icon_on_expanded_ || !expanded);
+
+  if (icon_view_ && icon_view_->visible()) {
     left_content_->SetBorder(
         views::CreateEmptyBorder(kLeftContentPaddingWithIcon));
 

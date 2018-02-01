@@ -34,18 +34,11 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
     // Excuse Polymer paper-input elements.
     'aria-valid-attr-value': function(nodeResult) {
       const describerId = nodeResult.element.getAttribute('aria-describedby');
-      return describerId === '' && nodeResult.element.tagName == 'INPUT';
+      return describerId === '' && nodeResult.element.id === 'input';
     },
     'button-name': function(nodeResult) {
       const node = nodeResult.element;
       return node.classList.contains('icon-expand-more');
-    },
-    'tabindex': function(nodeResult) {
-      // TODO(hcarmona): investigate why we need this exception.
-      // This fails when paper-input is updated, but tabindex is correct upon
-      // manual inspection. Filtering out the failure so we can continue Polymer
-      // migration.
-      return nodeResult.element.getAttribute('tabindex') == '0';
     },
   },
 });

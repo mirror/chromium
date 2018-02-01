@@ -355,13 +355,11 @@ void BrowserPolicyConnectorChromeOS::OnDeviceCloudPolicyManagerDisconnected() {
   RestartDeviceCloudPolicyInitializer();
 }
 
-std::vector<std::unique_ptr<policy::ConfigurationPolicyProvider>>
-BrowserPolicyConnectorChromeOS::CreatePolicyProviders() {
-  auto providers = ChromeBrowserPolicyConnector::CreatePolicyProviders();
+void BrowserPolicyConnectorChromeOS::BuildPolicyProviders(
+    std::vector<std::unique_ptr<ConfigurationPolicyProvider>>* providers) {
   for (auto& provider_ptr : providers_for_init_)
-    providers.push_back(std::move(provider_ptr));
+    providers->push_back(std::move(provider_ptr));
   providers_for_init_.clear();
-  return providers;
 }
 
 void BrowserPolicyConnectorChromeOS::SetTimezoneIfPolicyAvailable() {

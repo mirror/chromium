@@ -31,7 +31,7 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
       : DedicatedWorkerThread(nullptr /* ThreadableLoadingContext */,
                               worker_object_proxy) {
     worker_backing_thread_ = WorkerBackingThread::CreateForTest(
-        WebThreadCreationParams(WebThreadType::kTestThread));
+        WebThreadCreationParams("Test thread"));
   }
 
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
@@ -71,7 +71,7 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
 
   void TestTaskRunner() {
     EXPECT_TRUE(IsCurrentThread());
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+    scoped_refptr<WebTaskRunner> task_runner =
         GlobalScope()->GetTaskRunner(TaskType::kInternalTest);
     EXPECT_TRUE(task_runner->RunsTasksInCurrentSequence());
     PostCrossThreadTask(
@@ -132,9 +132,9 @@ class DedicatedWorkerMessagingProxyForTest
         std::make_unique<GlobalScopeCreationParams>(
             script_url, "fake user agent", headers.get(),
             kReferrerPolicyDefault, security_origin_.get(),
-            false /* starter_secure_context */, nullptr /* worker_clients */,
-            mojom::IPAddressSpace::kLocal, nullptr /* origin_trial_tokens */,
-            std::move(worker_settings), kV8CacheOptionsDefault),
+            nullptr /* worker_clients */, mojom::IPAddressSpace::kLocal,
+            nullptr /* origin_trial_tokens */, std::move(worker_settings),
+            kV8CacheOptionsDefault),
         WorkerBackingThreadStartupData(
             WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
             WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow));

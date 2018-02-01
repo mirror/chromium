@@ -373,8 +373,6 @@ class CORE_EXPORT LocalFrameView final
                                       const LayoutPoint&) const;
   LayoutPoint ConvertToLayoutObject(const LayoutObject&,
                                     const LayoutPoint&) const;
-  FloatPoint ConvertToLayoutObject(const LayoutObject&,
-                                   const FloatPoint&) const;
 
   bool IsFrameViewScrollCorner(LayoutScrollbarPart* scroll_corner) const {
     return scroll_corner_ == scroll_corner;
@@ -487,7 +485,7 @@ class CORE_EXPORT LocalFrameView final
   FloatQuad LocalToVisibleContentQuad(const FloatQuad&,
                                       const LayoutObject*,
                                       unsigned = 0) const final;
-  scoped_refptr<base::SingleThreadTaskRunner> GetTimerTaskRunner() const final;
+  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final;
 
   LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
                             const WebScrollIntoViewParams& params) override;
@@ -710,9 +708,6 @@ class CORE_EXPORT LocalFrameView final
   FloatPoint DocumentToAbsolute(const FloatPoint&) const;
   LayoutPoint DocumentToAbsolute(const LayoutPoint&) const;
   LayoutRect DocumentToAbsolute(const LayoutRect&) const;
-
-  LayoutPoint AbsoluteToDocument(const LayoutPoint&) const;
-  LayoutRect AbsoluteToDocument(const LayoutRect&) const;
 
   // Handles painting of the contents of the view as well as the scrollbars.
   void Paint(GraphicsContext&,
@@ -973,6 +968,11 @@ class CORE_EXPORT LocalFrameView final
   // scrollable area, or gains/loses a composited layer.
   void ScrollableAreasDidChange();
 
+  // Records a UKM metric for the current URL. metric_name is a metric
+  // that must be defined in ukm.xml; metric_value is in usec.
+  void RecordUkmPerformanceMetric(const char* metric_name,
+                                  int64_t metric_value);
+
  protected:
   // Scroll the content via the compositor.
   bool ScrollContentsFastPath(const IntSize& scroll_delta);
@@ -1089,9 +1089,6 @@ class CORE_EXPORT LocalFrameView final
   IntPoint ConvertFromContainingEmbeddedContentView(const IntPoint&) const;
   LayoutPoint ConvertFromContainingEmbeddedContentView(
       const LayoutPoint&) const;
-  FloatPoint ConvertFromContainingEmbeddedContentView(const FloatPoint&) const;
-  DoublePoint ConvertFromContainingEmbeddedContentView(
-      const DoublePoint&) const;
 
   void DidChangeGlobalRootScroller() override;
 

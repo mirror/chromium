@@ -9,24 +9,23 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_client.h"
 
 namespace signin {
 
 DiceAccountReconcilorDelegate::DiceAccountReconcilorDelegate(
-    SigninClient* signin_client,
-    AccountConsistencyMethod account_consistency)
-    : signin_client_(signin_client), account_consistency_(account_consistency) {
+    SigninClient* signin_client)
+    : signin_client_(signin_client) {
   DCHECK(signin_client_);
 }
 
 bool DiceAccountReconcilorDelegate::IsReconcileEnabled() const {
-  return DiceMethodGreaterOrEqual(
-      account_consistency_, AccountConsistencyMethod::kDicePrepareMigration);
+  return IsDicePrepareMigrationEnabled();
 }
 
 bool DiceAccountReconcilorDelegate::IsAccountConsistencyEnforced() const {
-  return account_consistency_ == AccountConsistencyMethod::kDice;
+  return IsDiceEnabledForProfile(signin_client_->GetPrefs());
 }
 
 // - On first execution, the candidates are examined in this order:
@@ -103,10 +102,8 @@ bool DiceAccountReconcilorDelegate::
         const std::vector<gaia::ListedAccount>& gaia_accounts) {
   // During the Dice migration step, before Dice is actually enabled, chrome
   // tokens must be cleared when the cookies are cleared.
-  return DiceMethodGreaterOrEqual(
-             account_consistency_,
-             AccountConsistencyMethod::kDicePrepareMigration) &&
-         (account_consistency_ != AccountConsistencyMethod::kDice) &&
+  return signin::IsDicePrepareMigrationEnabled() &&
+         !signin::IsDiceEnabledForProfile(signin_client_->GetPrefs()) &&
          gaia_accounts.empty();
 }
 
@@ -116,11 +113,8 @@ void DiceAccountReconcilorDelegate::OnReconcileFinished(
   last_known_first_account_ = first_account;
 
   // Migration happens on startup if the last reconcile was a no-op.
-  if (DiceMethodGreaterOrEqual(
-          account_consistency_,
-          AccountConsistencyMethod::kDicePrepareMigration)) {
+  if (IsDicePrepareMigrationEnabled())
     signin_client_->SetReadyForDiceMigration(reconcile_is_noop);
-  }
 }
 
 }  // namespace signin

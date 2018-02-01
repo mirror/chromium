@@ -553,8 +553,7 @@ class CONTENT_EXPORT RenderWidget
   void OnDisableDeviceEmulation();
   virtual void OnWasHidden();
   virtual void OnWasShown(bool needs_repainting,
-                          const ui::LatencyInfo& latency_info,
-                          const base::Optional<ResizeParams>& resize_params);
+                          const ui::LatencyInfo& latency_info);
   void OnCreateVideoAck(int32_t video_id);
   void OnUpdateVideoAck(int32_t video_id);
   void OnRequestMoveAck();
@@ -963,11 +962,6 @@ class CONTENT_EXPORT RenderWidget
   mojo::Binding<mojom::Widget> widget_binding_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-
-  // Keep track of whether we committed after the latest resize that needs to be
-  // acked was received. This helps us make sure we don't ack a resize before
-  // it's committed.
-  bool did_commit_after_resize_ = false;
 
   base::WeakPtrFactory<RenderWidget> weak_ptr_factory_;
 

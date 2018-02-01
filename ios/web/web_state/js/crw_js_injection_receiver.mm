@@ -21,6 +21,11 @@
   NSMutableDictionary* _managers;
 }
 
+- (id)init {
+  NOTREACHED();
+  return [super init];
+}
+
 - (id)initWithEvaluator:(id<CRWJSInjectionEvaluator>)evaluator {
   DCHECK(evaluator);
   self = [super init];

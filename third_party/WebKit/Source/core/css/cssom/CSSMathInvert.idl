@@ -9,5 +9,5 @@
   Exposed=(Window,PaintWorklet),
   RuntimeEnabled=CSSTypedOM
 ] interface CSSMathInvert : CSSMathValue {
-  readonly attribute CSSNumberish value;
+  attribute CSSNumberish value;
 };

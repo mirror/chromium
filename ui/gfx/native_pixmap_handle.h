@@ -22,16 +22,8 @@ namespace gfx {
 // NativePixmapPlane is used to carry the plane related information for GBM
 // buffer. More fields can be added if they are plane specific.
 struct GFX_EXPORT NativePixmapPlane {
-  // This is the same value as DRM_FORMAT_MOD_INVALID, which is not a valid
-  // modifier. We use this to indicate that layout information
-  // (tiling/compression) if any will be communicated out of band.
-  static constexpr uint64_t kNoModifier = 0x00ffffffffffffffULL;
-
   NativePixmapPlane();
-  NativePixmapPlane(int stride,
-                    int offset,
-                    uint64_t size,
-                    uint64_t modifier = kNoModifier);
+  NativePixmapPlane(int stride, int offset, uint64_t size, uint64_t modifier);
   NativePixmapPlane(const NativePixmapPlane& other);
   ~NativePixmapPlane();
 

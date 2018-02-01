@@ -19,9 +19,6 @@ namespace ios {
 class ChromeBrowserState;
 }  // namespace ios
 
-@protocol ReauthenticationProtocol;
-@class PasswordExporter;
-
 @interface SavePasswordsCollectionViewController
     : SettingsRootCollectionViewController
 
@@ -37,18 +34,10 @@ class ChromeBrowserState;
 
 @interface SavePasswordsCollectionViewController (
     Testing)<PasswordDetailsCollectionViewControllerDelegate>
-
 // Callback called when the async request launched from
 // |getLoginsFromPasswordStore| finishes.
 - (void)onGetPasswordStoreResults:
     (const std::vector<std::unique_ptr<autofill::PasswordForm>>&)result;
-
-// Initializes the password exporter with a (fake) |reauthenticationModule|.
-- (void)setReauthenticationModuleForExporter:
-    (id<ReauthenticationProtocol>)reauthenticationModule;
-
-// Returns the password exporter to allow setting fake testing objects on it.
-- (PasswordExporter*)getPasswordExporter;
 
 @end
 

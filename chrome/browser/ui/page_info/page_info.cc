@@ -181,13 +181,9 @@ bool ShouldShowPermission(
   if (info.type == CONTENT_SETTINGS_TYPE_GEOLOCATION)
     return true;
 #else
-  // Flash is shown if the user has ever changed its setting for |site_url|.
-  if (info.type == CONTENT_SETTINGS_TYPE_PLUGINS &&
-      content_settings->GetWebsiteSetting(site_url, site_url,
-                                          CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
-                                          std::string(), nullptr) != nullptr) {
+  // Flash will always be shown. See https://crbug.com/791142.
+  if (info.type == CONTENT_SETTINGS_TYPE_PLUGINS)
     return true;
-  }
 #endif
 
 #if !defined(OS_ANDROID)

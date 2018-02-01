@@ -67,9 +67,9 @@ public class SignInPreference
      */
     void registerForUpdates() {
         AccountManagerFacade.get().addObserver(this);
-        SigninManager.get().addSignInAllowedObserver(this);
+        SigninManager.get(getContext()).addSignInAllowedObserver(this);
         mProfileDataCache.addObserver(this);
-        FirstRunSignInProcessor.updateSigninManagerFirstRunCheckDone();
+        FirstRunSignInProcessor.updateSigninManagerFirstRunCheckDone(getContext());
         AndroidSyncSettings.registerObserver(getContext(), this);
         ProfileSyncService syncService = ProfileSyncService.get();
         if (syncService != null) {
@@ -85,7 +85,7 @@ public class SignInPreference
      */
     void unregisterForUpdates() {
         AccountManagerFacade.get().removeObserver(this);
-        SigninManager.get().removeSignInAllowedObserver(this);
+        SigninManager.get(getContext()).removeSignInAllowedObserver(this);
         mProfileDataCache.removeObserver(this);
         AndroidSyncSettings.unregisterObserver(getContext(), this);
         ProfileSyncService syncService = ProfileSyncService.get();
@@ -108,7 +108,7 @@ public class SignInPreference
      * Updates the title, summary, and image based on the current sign-in state.
      */
     private void update() {
-        if (SigninManager.get().isSigninDisabledByPolicy()) {
+        if (SigninManager.get(getContext()).isSigninDisabledByPolicy()) {
             setupSigninDisabled();
             return;
         }

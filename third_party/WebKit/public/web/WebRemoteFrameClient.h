@@ -36,8 +36,7 @@ class WebRemoteFrameClient {
                         bool should_replace_current_entry) {}
   virtual void Reload(WebFrameLoadType, ClientRedirectPolicy) {}
 
-  virtual void FrameRectsChanged(const WebRect& local_frame_rect,
-                                 const WebRect& screen_space_rect) {}
+  virtual void FrameRectsChanged(const WebRect&) {}
 
   virtual void UpdateRemoteViewportIntersection(
       const WebRect& viewport_intersection) {}

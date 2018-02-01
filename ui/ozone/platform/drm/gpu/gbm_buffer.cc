@@ -311,9 +311,8 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBufferFromFds(
     }
   }
 
-  scoped_refptr<GbmBuffer> buffer(
-      new GbmBuffer(gbm, bo, format, gbm_flags, planes[0].modifier,
-                    std::move(fds), size, std::move(planes)));
+  scoped_refptr<GbmBuffer> buffer(new GbmBuffer(
+      gbm, bo, format, gbm_flags, 0, std::move(fds), size, std::move(planes)));
 
   return buffer;
 }

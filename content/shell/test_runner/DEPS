@@ -3,7 +3,6 @@ include_rules = [
   "+content/public/test",
   "+device/gamepad/public/cpp",
   "+device/sensors/public/cpp",
-  "+device/screen_orientation/public/interfaces",
   "+gin",
   "+gpu/command_buffer/client",
   "+media/midi/midi_service.mojom.h",

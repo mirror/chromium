@@ -4,16 +4,26 @@
 
 #include "extensions/browser/scoped_ignore_content_verifier_for_test.h"
 
-#include "extensions/browser/content_verify_job.h"
-
 namespace extensions {
 
 ScopedIgnoreContentVerifierForTest::ScopedIgnoreContentVerifierForTest() {
-  ContentVerifyJob::SetIgnoreVerificationForTests(true);
+  ContentVerifyJob::SetDelegateForTests(this);
 }
 
 ScopedIgnoreContentVerifierForTest::~ScopedIgnoreContentVerifierForTest() {
-  ContentVerifyJob::SetIgnoreVerificationForTests(false);
+  ContentVerifyJob::SetDelegateForTests(nullptr);
+}
+
+ContentVerifyJob::FailureReason ScopedIgnoreContentVerifierForTest::BytesRead(
+    const std::string& extension_id,
+    int count,
+    const char* data) {
+  return ContentVerifyJob::NONE;
+}
+
+ContentVerifyJob::FailureReason ScopedIgnoreContentVerifierForTest::DoneReading(
+    const std::string& extension_id) {
+  return ContentVerifyJob::NONE;
 }
 
 }  // namespace extensions

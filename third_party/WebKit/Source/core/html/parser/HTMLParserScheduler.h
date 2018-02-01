@@ -30,7 +30,6 @@
 
 #include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
-#include "base/single_thread_task_runner.h"
 #include "core/html/parser/NestingLevelIncrementer.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/wtf/Allocator.h"
@@ -38,6 +37,7 @@
 namespace blink {
 
 class HTMLDocumentParser;
+class WebTaskRunner;
 
 class PumpSession : public NestingLevelIncrementer {
   STACK_ALLOCATED();
@@ -68,7 +68,7 @@ class HTMLParserScheduler final
  public:
   static HTMLParserScheduler* Create(
       HTMLDocumentParser* parser,
-      scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner) {
+      scoped_refptr<WebTaskRunner> loading_task_runner) {
     return new HTMLParserScheduler(parser, std::move(loading_task_runner));
   }
   ~HTMLParserScheduler();
@@ -94,14 +94,13 @@ class HTMLParserScheduler final
   void Trace(blink::Visitor*);
 
  private:
-  HTMLParserScheduler(HTMLDocumentParser*,
-                      scoped_refptr<base::SingleThreadTaskRunner>);
+  HTMLParserScheduler(HTMLDocumentParser*, scoped_refptr<WebTaskRunner>);
 
   bool ShouldYield(const SpeculationsPumpSession&, bool starting_script) const;
   void ContinueParsing();
 
   Member<HTMLDocumentParser> parser_;
-  scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner_;
+  scoped_refptr<WebTaskRunner> loading_task_runner_;
 
   TaskHandle cancellable_continue_parse_task_handle_;
   bool is_paused_with_active_timer_;

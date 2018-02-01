@@ -7,34 +7,37 @@
 
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
-#include "public/platform/modules/presentation/presentation.mojom-blink.h"
+#include "public/platform/WebCallbacks.h"
+#include "public/platform/modules/presentation/WebPresentationConnectionCallbacks.h"
 
 namespace blink {
 
 class ControllerPresentationConnection;
 class PresentationRequest;
 class ScriptPromiseResolver;
+struct WebPresentationError;
+struct WebPresentationInfo;
 
-// PresentationConnectionCallbacks resolves or rejects the provided resolver's
-// underlying promise depending on the result passed to the callback. On
-// success, the promise will be resolved with a newly created
-// ControllerPresentationConnection. In the case of reconnect, the callback may
-// take an existing connection object with which the promise will be resolved
-// on success.
-class PresentationConnectionCallbacks final {
+// PresentationConnectionCallbacks extends WebCallbacks to resolve the
+// underlying promise depending on the result passed to the callback. It takes
+// the PresentationRequest object that originated the call in its constructor
+// and will pass it to the created PresentationConnection.
+class PresentationConnectionCallbacks final
+    : public WebPresentationConnectionCallbacks {
  public:
   PresentationConnectionCallbacks(ScriptPromiseResolver*, PresentationRequest*);
   PresentationConnectionCallbacks(ScriptPromiseResolver*,
                                   ControllerPresentationConnection*);
-  ~PresentationConnectionCallbacks() = default;
+  ~PresentationConnectionCallbacks() override = default;
 
-  void HandlePresentationResponse(mojom::blink::PresentationInfoPtr,
-                                  mojom::blink::PresentationErrorPtr);
+  // WebCallbacks implementation
+  void OnSuccess(const WebPresentationInfo&) override;
+  void OnError(const WebPresentationError&) override;
+
+  // WebPresentationConnectionCallbacks implementation
+  WebPresentationConnection* GetConnection() override;
 
  private:
-  void OnSuccess(const mojom::blink::PresentationInfo&);
-  void OnError(const mojom::blink::PresentationError&);
-
   Persistent<ScriptPromiseResolver> resolver_;
   Persistent<PresentationRequest> request_;
   WeakPersistent<ControllerPresentationConnection> connection_;

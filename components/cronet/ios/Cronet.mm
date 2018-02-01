@@ -13,7 +13,6 @@
 #include "base/mac/scoped_block.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/synchronization/lock.h"
-#include "components/cronet/cronet_global_state.h"
 #include "components/cronet/ios/accept_languages_table.h"
 #include "components/cronet/ios/cronet_environment.h"
 #include "components/cronet/ios/cronet_metrics.h"
@@ -368,7 +367,17 @@ class CronetHttpProtocolHandlerDelegate
 }
 
 + (void)start {
-  cronet::EnsureInitialized();
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    if (![NSThread isMainThread]) {
+      dispatch_sync(dispatch_get_main_queue(), ^(void) {
+        cronet::CronetEnvironment::Initialize();
+      });
+    } else {
+      cronet::CronetEnvironment::Initialize();
+    }
+  });
+
   [self startInternal];
 }
 

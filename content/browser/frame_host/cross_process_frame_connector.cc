@@ -84,7 +84,7 @@ void CrossProcessFrameConnector::SetView(RenderWidgetHostViewChildFrame* view) {
     view_->SetFrameConnectorDelegate(nullptr);
   }
 
-  ResetScreenSpaceRect();
+  ResetFrameRect();
   view_ = view;
 
   // Attach ourselves to the new view and size it appropriately. Also update
@@ -209,8 +209,7 @@ void CrossProcessFrameConnector::BubbleScrollEvent(
   auto* event_router =
       parent_view->GetRenderWidgetHostImpl()->delegate()->GetInputEventRouter();
 
-  gfx::Vector2d offset_from_parent =
-      screen_space_rect_in_dip_.OffsetFromOrigin();
+  gfx::Vector2d offset_from_parent = frame_rect_in_dip_.OffsetFromOrigin();
   blink::WebGestureEvent resent_gesture_event(event);
   // TODO(kenrb, wjmaclean): Do we need to account for transforms here?
   // See https://crbug.com/626020.
@@ -268,14 +267,13 @@ void CrossProcessFrameConnector::UnlockMouse() {
 }
 
 void CrossProcessFrameConnector::OnUpdateResizeParams(
-    const gfx::Rect& screen_space_rect,
-    const gfx::Size& local_frame_size,
+    const gfx::Rect& frame_rect,
     const ScreenInfo& screen_info,
     uint64_t sequence_number,
     const viz::SurfaceId& surface_id) {
-  // If the |screen_space_rect| or |screen_info| of the frame has changed, then
-  // the viz::LocalSurfaceId must also change.
-  if ((last_received_local_frame_size_ != local_frame_size ||
+  // If the |frame_rect| or |screen_info| of the frame has changed, then the
+  // viz::LocalSurfaceId must also change.
+  if ((last_received_frame_rect_.size() != frame_rect.size() ||
        screen_info_ != screen_info) &&
       local_surface_id_ == surface_id.local_surface_id()) {
     bad_message::ReceivedBadMessage(
@@ -285,10 +283,9 @@ void CrossProcessFrameConnector::OnUpdateResizeParams(
   }
 
   screen_info_ = screen_info;
-  last_received_local_frame_size_ = local_frame_size;
+  last_received_frame_rect_ = frame_rect;
   local_surface_id_ = surface_id.local_surface_id();
-  SetScreenSpaceRect(screen_space_rect);
-  SetLocalFrameSize(local_frame_size);
+  SetRect(frame_rect);
 
   if (!view_)
     return;
@@ -425,21 +422,21 @@ void CrossProcessFrameConnector::SetVisibilityForChildViews(
       ->SetVisibilityForChildViews(visible);
 }
 
-void CrossProcessFrameConnector::SetScreenSpaceRect(
-    const gfx::Rect& screen_space_rect) {
-  gfx::Rect old_rect = screen_space_rect;
-  FrameConnectorDelegate::SetScreenSpaceRect(screen_space_rect);
+void CrossProcessFrameConnector::SetRect(
+    const gfx::Rect& frame_rect_in_pixels) {
+  gfx::Rect old_rect = frame_rect_in_pixels_;
+  FrameConnectorDelegate::SetRect(frame_rect_in_pixels);
 
   if (view_) {
-    view_->SetBounds(screen_space_rect_in_dip_);
+    view_->SetBounds(frame_rect_in_dip_);
 
     // Other local root frames nested underneath this one implicitly have their
     // view rects changed when their ancestor is repositioned, and therefore
     // need to have their screen rects updated.
     FrameTreeNode* proxy_node =
         frame_proxy_in_parent_renderer_->frame_tree_node();
-    if (old_rect.x() != screen_space_rect_in_pixels_.x() ||
-        old_rect.y() != screen_space_rect_in_pixels_.y()) {
+    if (old_rect.x() != frame_rect_in_pixels_.x() ||
+        old_rect.y() != frame_rect_in_pixels_.y()) {
       for (FrameTreeNode* node :
            proxy_node->frame_tree()->SubtreeNodes(proxy_node)) {
         if (node != proxy_node && node->current_frame_host()->is_local_root())
@@ -449,10 +446,10 @@ void CrossProcessFrameConnector::SetScreenSpaceRect(
   }
 }
 
-void CrossProcessFrameConnector::ResetScreenSpaceRect() {
+void CrossProcessFrameConnector::ResetFrameRect() {
   local_surface_id_ = viz::LocalSurfaceId();
-  screen_space_rect_in_pixels_ = gfx::Rect();
-  screen_space_rect_in_dip_ = gfx::Rect();
+  frame_rect_in_pixels_ = gfx::Rect();
+  frame_rect_in_dip_ = gfx::Rect();
 }
 
 void CrossProcessFrameConnector::OnUpdateRenderThrottlingStatus(

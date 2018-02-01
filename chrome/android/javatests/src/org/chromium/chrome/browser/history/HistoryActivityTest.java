@@ -673,9 +673,10 @@ public class HistoryActivityTest {
         SigninTestUtil.setUpAuthForTest(InstrumentationRegistry.getInstrumentation());
         final Account account = SigninTestUtil.addTestAccount();
         ThreadUtils.runOnUiThreadBlocking(() -> {
-            SigninManager.get().onFirstRunCheckDone();
-            SigninManager.get().addSignInStateObserver(mTestObserver);
-            SigninManager.get().signIn(account, null, null);
+            SigninManager.get(mActivityTestRule.getActivity()).onFirstRunCheckDone();
+            SigninManager.get(mActivityTestRule.getActivity())
+                    .addSignInStateObserver(mTestObserver);
+            SigninManager.get(mActivityTestRule.getActivity()).signIn(account, null, null);
         });
 
         mTestObserver.onSigninStateChangedCallback.waitForCallback(
@@ -736,7 +737,7 @@ public class HistoryActivityTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                SigninManager.get().signOut(null);
+                SigninManager.get(mActivityTestRule.getActivity()).signOut(null);
             }
         });
         mTestObserver.onSigninStateChangedCallback.waitForCallback(currentCallCount, 1);
@@ -746,7 +747,8 @@ public class HistoryActivityTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                SigninManager.get().removeSignInStateObserver(mTestObserver);
+                SigninManager.get(mActivityTestRule.getActivity())
+                        .removeSignInStateObserver(mTestObserver);
             }
         });
         SigninTestUtil.tearDownAuthForTest();

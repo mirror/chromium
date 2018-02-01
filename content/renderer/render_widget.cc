@@ -853,24 +853,14 @@ void RenderWidget::OnWasHidden() {
   SetHidden(true);
   for (auto& observer : render_frames_)
     observer.WasHidden();
-
-  // Ack the resize if we have to, so that the next time we're visible we get a
-  // fresh ResizeParams right away; otherwise we'll start painting based on a
-  // stale ResizeParams.
-  DidResizeOrRepaintAck();
 }
 
-void RenderWidget::OnWasShown(
-    bool needs_repainting,
-    const ui::LatencyInfo& latency_info,
-    const base::Optional<ResizeParams>& resize_params) {
+void RenderWidget::OnWasShown(bool needs_repainting,
+                              const ui::LatencyInfo& latency_info) {
   TRACE_EVENT0("renderer", "RenderWidget::OnWasShown");
   // During shutdown we can just ignore this message.
   if (!GetWebWidget())
     return;
-
-  if (resize_params)
-    OnResize(*resize_params);
 
   was_shown_time_ = base::TimeTicks::Now();
   // See OnWasHidden
@@ -1025,10 +1015,7 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   // tab_capture_performancetest.cc.
   TRACE_EVENT0("gpu", "RenderWidget::DidCommitAndDrawCompositorFrame");
 
-  // If we haven't commited yet, then this method was called as a response to a
-  // previous commit and should not be used to ack the resize.
-  if (did_commit_after_resize_)
-    DidResizeOrRepaintAck();
+  DidResizeOrRepaintAck();
 
   for (auto& observer : render_frames_)
     observer.DidCommitAndDrawCompositorFrame();
@@ -1037,9 +1024,7 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   DidInitiatePaint();
 }
 
-void RenderWidget::DidCommitCompositorFrame() {
-  did_commit_after_resize_ = true;
-}
+void RenderWidget::DidCommitCompositorFrame() {}
 
 void RenderWidget::DidCompletePageScaleAnimation() {}
 
@@ -1327,12 +1312,6 @@ void RenderWidget::Resize(const ResizeParams& params) {
   bool screen_info_changed = screen_info_ != params.screen_info;
 
   screen_info_ = params.screen_info;
-
-  // If this resize needs to be acked, make sure we ack it only after we commit.
-  // It is possible to get DidCommitAndDraw calls that belong to the previous
-  // commit, in which case we should not ack this resize.
-  if (params.needs_resize_ack)
-    did_commit_after_resize_ = false;
 
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   if (render_thread)
@@ -2166,14 +2145,11 @@ void RenderWidget::SetHidden(bool hidden) {
     RendererWindowTreeClient::Get(routing_id_)->SetVisible(!hidden);
 #endif
 
-  // RenderThreadImpl::current() could be null in tests.
-  if (RenderThreadImpl::current()) {
-    if (is_hidden_) {
-      RenderThreadImpl::current()->WidgetHidden();
-      first_update_visual_state_after_hidden_ = true;
-    } else {
-      RenderThreadImpl::current()->WidgetRestored();
-    }
+  if (is_hidden_) {
+    RenderThreadImpl::current()->WidgetHidden();
+    first_update_visual_state_after_hidden_ = true;
+  } else {
+    RenderThreadImpl::current()->WidgetRestored();
   }
 
   if (render_widget_scheduling_state_)

@@ -100,7 +100,7 @@ class WebAssociatedURLLoaderImpl::ClientAdapter final
       const WebAssociatedURLLoaderOptions&,
       network::mojom::FetchRequestMode,
       network::mojom::FetchCredentialsMode,
-      scoped_refptr<base::SingleThreadTaskRunner>);
+      scoped_refptr<WebTaskRunner>);
 
   // ThreadableLoaderClient
   void DidSendData(unsigned long long /*bytesSent*/,
@@ -144,7 +144,7 @@ class WebAssociatedURLLoaderImpl::ClientAdapter final
                 const WebAssociatedURLLoaderOptions&,
                 network::mojom::FetchRequestMode,
                 network::mojom::FetchCredentialsMode,
-                scoped_refptr<base::SingleThreadTaskRunner>);
+                scoped_refptr<WebTaskRunner>);
 
   void NotifyError(TimerBase*);
 
@@ -169,7 +169,7 @@ WebAssociatedURLLoaderImpl::ClientAdapter::Create(
     const WebAssociatedURLLoaderOptions& options,
     network::mojom::FetchRequestMode fetch_request_mode,
     network::mojom::FetchCredentialsMode credentials_mode,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<WebTaskRunner> task_runner) {
   return WTF::WrapUnique(new ClientAdapter(loader, client, options,
                                            fetch_request_mode, credentials_mode,
                                            task_runner));
@@ -181,7 +181,7 @@ WebAssociatedURLLoaderImpl::ClientAdapter::ClientAdapter(
     const WebAssociatedURLLoaderOptions& options,
     network::mojom::FetchRequestMode fetch_request_mode,
     network::mojom::FetchCredentialsMode credentials_mode,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    scoped_refptr<WebTaskRunner> task_runner)
     : loader_(loader),
       client_(client),
       options_(options),
@@ -395,7 +395,7 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
   new_request.ToMutableResourceRequest().SetCORSPreflightPolicy(
       options_.preflight_policy);
 
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner;
+  scoped_refptr<WebTaskRunner> task_runner;
   if (observer_) {
     task_runner = ToDocument(observer_->LifecycleContext())
                       ->GetTaskRunner(TaskType::kUnspecedLoading);
@@ -467,8 +467,7 @@ void WebAssociatedURLLoaderImpl::SetDefersLoading(bool defers_loading) {
     loader_->SetDefersLoading(defers_loading);
 }
 
-void WebAssociatedURLLoaderImpl::SetLoadingTaskRunner(
-    base::SingleThreadTaskRunner*) {
+void WebAssociatedURLLoaderImpl::SetLoadingTaskRunner(blink::WebTaskRunner*) {
   // TODO(alexclarke): Maybe support this one day if it proves worthwhile.
 }
 

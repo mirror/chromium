@@ -1660,7 +1660,6 @@ void LayerTreeHostImpl::DidPresentCompositorFrame(uint32_t presentation_token,
                                                   base::TimeTicks time,
                                                   base::TimeDelta refresh,
                                                   uint32_t flags) {
-  TRACE_EVENT_MARK_WITH_TIMESTAMP0("cc,benchmark", "FramePresented", time);
   std::vector<int> source_frames;
   auto iter = presentation_token_to_frame_.begin();
   for (; iter != presentation_token_to_frame_.end() &&
@@ -2626,6 +2625,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     *raster_buffer_provider = std::make_unique<GpuRasterBufferProvider>(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
+        settings_.resource_settings.use_gpu_memory_buffer_resources,
         msaa_sample_count, settings_.preferred_tile_format, oop_raster_enabled);
     return;
   }
@@ -2667,7 +2667,9 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   *raster_buffer_provider = std::make_unique<OneCopyRasterBufferProvider>(
       GetTaskRunner(), compositor_context_provider, worker_context_provider,
       resource_provider_.get(), max_copy_texture_chromium_size,
-      settings_.use_partial_raster, settings_.max_staging_buffer_usage_in_bytes,
+      settings_.use_partial_raster,
+      settings_.resource_settings.use_gpu_memory_buffer_resources,
+      settings_.max_staging_buffer_usage_in_bytes,
       settings_.preferred_tile_format);
 }
 

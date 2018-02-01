@@ -9,6 +9,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fetch/BlobBytesConsumer.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/blob/BlobData.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/TaskType.h"

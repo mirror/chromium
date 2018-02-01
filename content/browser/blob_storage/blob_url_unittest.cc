@@ -22,6 +22,7 @@
 #include "content/browser/blob_storage/blob_url_loader_factory.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
@@ -35,7 +36,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_job_factory_impl.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/network/test/test_url_loader_client.h"
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_data_snapshot.h"
@@ -162,7 +162,6 @@ class BlobURLRequestJobTest : public testing::TestWithParam<RequestTestType> {
         blob_data_(new BlobDataBuilder("uuid")),
         blob_uuid_(blob_data_->uuid()),
         response_error_code_(net::OK),
-        expected_error_code_(net::OK),
         expected_status_code_(0) {}
 
   void SetUp() override {
@@ -261,15 +260,14 @@ class BlobURLRequestJobTest : public testing::TestWithParam<RequestTestType> {
 
   void TestSuccessNonrangeRequest(const std::string& expected_response,
                                   int64_t expected_content_length) {
-    expected_error_code_ = net::OK;
     expected_status_code_ = 200;
     expected_response_ = expected_response;
     TestRequest("GET", net::HttpRequestHeaders());
     EXPECT_EQ(expected_content_length, response_headers_->GetContentLength());
   }
 
-  void TestErrorRequest(int expected_error_code) {
-    expected_error_code_ = expected_error_code;
+  void TestErrorRequest(int expected_status_code) {
+    expected_status_code_ = expected_status_code;
     expected_response_ = "";
     TestRequest("GET", net::HttpRequestHeaders());
     EXPECT_TRUE(response_metadata_.empty());
@@ -290,7 +288,7 @@ class BlobURLRequestJobTest : public testing::TestWithParam<RequestTestType> {
         request.headers = extra_headers;
 
         network::mojom::URLLoaderPtr url_loader;
-        network::TestURLLoaderClient url_loader_client;
+        TestURLLoaderClient url_loader_client;
         scoped_refptr<BlobURLLoaderFactory> factory =
             BlobURLLoaderFactory::Create(
                 base::BindOnce(&BlobURLRequestJobTest::GetStorageContext,
@@ -340,7 +338,7 @@ class BlobURLRequestJobTest : public testing::TestWithParam<RequestTestType> {
             MakeRequest(&blob_ptr));
 
         network::mojom::URLLoaderPtr url_loader;
-        network::TestURLLoaderClient url_loader_client;
+        TestURLLoaderClient url_loader_client;
         blob_ptr->CreateLoader(MakeRequest(&url_loader), extra_headers,
                                url_loader_client.CreateInterfacePtr());
         url_loader_client.RunUntilComplete();
@@ -357,11 +355,9 @@ class BlobURLRequestJobTest : public testing::TestWithParam<RequestTestType> {
     }
 
     // Verify response.
-    EXPECT_EQ(expected_error_code_, response_error_code_);
-    if (response_error_code_ == net::OK) {
-      EXPECT_EQ(expected_status_code_, response_headers_->response_code());
-      EXPECT_EQ(expected_response_, response_);
-    }
+    EXPECT_EQ(net::OK, response_error_code_);
+    EXPECT_EQ(expected_status_code_, response_headers_->response_code());
+    EXPECT_EQ(expected_response_, response_);
   }
 
   void BuildComplicatedData(std::string* expected_result) {
@@ -450,7 +446,6 @@ class BlobURLRequestJobTest : public testing::TestWithParam<RequestTestType> {
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
   std::string response_metadata_;
 
-  int expected_error_code_;
   int expected_status_code_;
   std::string expected_response_;
 };
@@ -486,14 +481,14 @@ TEST_P(BlobURLRequestJobTest, TestGetNonExistentFileRequest) {
       temp_file1_.InsertBeforeExtension(FILE_PATH_LITERAL("-na"));
   blob_data_->AppendFile(non_existent_file, 0,
                          std::numeric_limits<uint64_t>::max(), base::Time());
-  TestErrorRequest(net::ERR_FILE_NOT_FOUND);
+  TestErrorRequest(404);
 }
 
 TEST_P(BlobURLRequestJobTest, TestGetChangedFileRequest) {
   base::Time old_time =
       temp_file_modification_time1_ - base::TimeDelta::FromSeconds(10);
   blob_data_->AppendFile(temp_file1_, 0, 3, old_time);
-  TestErrorRequest(net::ERR_FILE_NOT_FOUND);
+  TestErrorRequest(404);
 }
 
 TEST_P(BlobURLRequestJobTest, TestGetSlicedFileRequest) {
@@ -533,7 +528,7 @@ TEST_P(BlobURLRequestJobTest, TestGetNonExistentFileSystemFileRequest) {
   blob_data_->AppendFileSystemFile(non_existent_file, 0,
                                    std::numeric_limits<uint64_t>::max(),
                                    base::Time(), file_system_context_);
-  TestErrorRequest(net::ERR_FILE_NOT_FOUND);
+  TestErrorRequest(404);
 }
 
 TEST_P(BlobURLRequestJobTest, TestGetInvalidFileSystemFileRequest) {
@@ -542,7 +537,7 @@ TEST_P(BlobURLRequestJobTest, TestGetInvalidFileSystemFileRequest) {
   blob_data_->AppendFileSystemFile(invalid_file, 0,
                                    std::numeric_limits<uint64_t>::max(),
                                    base::Time(), file_system_context_);
-  TestErrorRequest(net::ERR_FAILED);
+  TestErrorRequest(500);
 }
 
 TEST_P(BlobURLRequestJobTest, TestGetChangedFileSystemFileRequest) {
@@ -551,7 +546,7 @@ TEST_P(BlobURLRequestJobTest, TestGetChangedFileSystemFileRequest) {
                         base::TimeDelta::FromSeconds(10);
   blob_data_->AppendFileSystemFile(temp_file_system_file1_, 0, 3, old_time,
                                    file_system_context_);
-  TestErrorRequest(net::ERR_FILE_NOT_FOUND);
+  TestErrorRequest(404);
 }
 
 TEST_P(BlobURLRequestJobTest, TestGetSlicedFileSystemFileRequest) {
@@ -698,7 +693,7 @@ TEST_P(BlobURLRequestJobTest, TestZeroSizeSideData) {
 TEST_P(BlobURLRequestJobTest, BrokenBlob) {
   blob_handle_ = blob_context_.AddBrokenBlob(
       "uuid", "", "", storage::BlobStatus::ERR_INVALID_CONSTRUCTION_ARGUMENTS);
-  TestErrorRequest(net::ERR_FAILED);
+  TestErrorRequest(500);
 }
 
 // The parameter's value determines whether BlobURLLoaderFactory is used.

@@ -70,7 +70,7 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
 
   AppCacheURLLoaderJob(AppCacheURLLoaderRequest* appcache_request,
                        AppCacheStorage* storage,
-                       URLLoaderRequestHandler::LoaderCallback loader_callback);
+                       LoaderCallback loader_callback);
 
   // Invokes the loader callback which is expected to setup the mojo binding.
   void CallLoaderCallback();
@@ -121,7 +121,7 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
 
   // The Callback to be invoked in the network service land to indicate if
   // the resource request can be serviced via the AppCache.
-  URLLoaderRequestHandler::LoaderCallback loader_callback_;
+  LoaderCallback loader_callback_;
 
   // The AppCacheRequest instance, used to inform the loader job about range
   // request headers. Not owned by this class.

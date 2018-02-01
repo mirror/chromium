@@ -4,25 +4,30 @@
 
 #include "modules/presentation/PresentationError.h"
 
+#include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
+#include "public/platform/modules/presentation/WebPresentationError.h"
 
 namespace blink {
 
-DOMException* CreatePresentationError(
-    const mojom::blink::PresentationError& error) {
+// static
+DOMException* PresentationError::Take(const WebPresentationError& error) {
   ExceptionCode code = kUnknownError;
   switch (error.error_type) {
-    case mojom::blink::PresentationErrorType::NO_AVAILABLE_SCREENS:
-    case mojom::blink::PresentationErrorType::NO_PRESENTATION_FOUND:
+    case WebPresentationError::kErrorTypeNoAvailableScreens:
+    case WebPresentationError::kErrorTypeNoPresentationFound:
       code = kNotFoundError;
       break;
-    case mojom::blink::PresentationErrorType::PRESENTATION_REQUEST_CANCELLED:
+    case WebPresentationError::kErrorTypePresentationRequestCancelled:
       code = kNotAllowedError;
       break;
-    case mojom::blink::PresentationErrorType::PREVIOUS_START_IN_PROGRESS:
+    case WebPresentationError::kErrorTypeAvailabilityNotSupported:
+      code = kNotSupportedError;
+      break;
+    case WebPresentationError::kErrorTypePreviousStartInProgress:
       code = kOperationError;
       break;
-    case mojom::blink::PresentationErrorType::UNKNOWN:
+    case WebPresentationError::kErrorTypeUnknown:
       code = kUnknownError;
       break;
   }

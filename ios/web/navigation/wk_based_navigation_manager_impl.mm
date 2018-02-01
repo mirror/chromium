@@ -40,21 +40,9 @@ void SetNavigationItemInWKItem(WKBackForwardListItem* wk_item,
 
 web::NavigationItemImpl* GetNavigationItemFromWKItem(
     WKBackForwardListItem* wk_item) {
-  if (!wk_item)
-    return nullptr;
-
-  // Fix URL: this is specifically for the location.replace case. WebKit has
-  // updated the wk_item.URL. Update NavigationItem::GetURL() here so all
-  // clients of web layer (e.g. omnibox) will get the updated URL.
-  web::NavigationItemImpl* item = [[CRWNavigationItemHolder
-      holderForBackForwardListItem:wk_item] navigationItem];
-  GURL wk_url = net::GURLWithNSURL(wk_item.URL);
-  if (item && item->GetURL() != wk_url &&
-      !web::placeholder_navigation_util::IsPlaceholderUrl(wk_url) &&
-      !web::IsRestoreSessionUrl(wk_url)) {
-    item->SetURL(wk_url);
-  }
-  return item;
+  return wk_item ? [[CRWNavigationItemHolder
+                       holderForBackForwardListItem:wk_item] navigationItem]
+                 : nullptr;
 }
 
 }  // namespace
@@ -442,8 +430,8 @@ void WKBasedNavigationManagerImpl::Restore(
   params.transition_type = ui::PAGE_TRANSITION_RELOAD;
   LoadURLWithParams(params);
 
-  // This pending item will become the first item in the restored history.
-  GetPendingItemImpl()->SetVirtualURL(items[0]->GetVirtualURL());
+  GetPendingItemImpl()->SetVirtualURL(
+      items[last_committed_item_index]->GetVirtualURL());
 }
 
 NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(

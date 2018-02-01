@@ -16,8 +16,6 @@
 
 namespace app_list {
 
-class SearchResultBaseView;
-
 // The search results page for the app list.
 class APP_LIST_EXPORT SearchResultPageView
     : public AppListPage,
@@ -51,7 +49,7 @@ class APP_LIST_EXPORT SearchResultPageView
 
   views::View* contents_view() { return contents_view_; }
 
-  SearchResultBaseView* first_result_view() const { return first_result_view_; }
+  views::View* first_result_view() const { return first_result_view_; }
 
  private:
   // Separator between SearchResultContainerView.
@@ -70,7 +68,7 @@ class APP_LIST_EXPORT SearchResultPageView
   views::View* const contents_view_;
 
   // The first search result's view or nullptr if there's no search result.
-  SearchResultBaseView* first_result_view_ = nullptr;
+  views::View* first_result_view_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(SearchResultPageView);
 };

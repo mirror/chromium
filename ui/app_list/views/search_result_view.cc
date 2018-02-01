@@ -42,7 +42,7 @@ constexpr SkColor kDefaultTextColor =
 // URL color.
 constexpr SkColor kUrlColor = SkColorSetARGBMacro(0xFF, 0x33, 0x67, 0xD6);
 // Row selected color, #000 8%.
-constexpr SkColor kRowHighlightedColor =
+constexpr SkColor kRowSelectedColor =
     SkColorSetARGBMacro(0x14, 0x00, 0x00, 0x00);
 
 int GetIconViewWidth() {
@@ -55,7 +55,8 @@ int GetIconViewWidth() {
 const char SearchResultView::kViewClassName[] = "ui/app_list/SearchResultView";
 
 SearchResultView::SearchResultView(SearchResultListView* list_view)
-    : list_view_(list_view),
+    : views::Button(this),
+      list_view_(list_view),
       icon_(new views::ImageView),
       badge_icon_(new views::ImageView),
       actions_view_(new SearchResultActionsView(this)),
@@ -131,6 +132,18 @@ base::string16 SearchResultView::ComputeAccessibleName() const {
   accessible_name += result_->details();
 
   return accessible_name;
+}
+
+void SearchResultView::SetSelected(bool selected) {
+  if (selected_ == selected)
+    return;
+  selected_ = selected;
+
+  if (selected_) {
+    ScrollRectToVisible(GetLocalBounds());
+    NotifyAccessibilityEvent(ax::mojom::Event::kSelection, true);
+  }
+  SchedulePaint();
 }
 
 void SearchResultView::UpdateAccessibleName() {
@@ -282,8 +295,8 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
 
   // Possibly call FillRect a second time (these colours are partially
   // transparent, so the previous FillRect is not redundant).
-  if (background_highlighted())
-    canvas->FillRect(content_rect, kRowHighlightedColor);
+  if (selected())
+    canvas->FillRect(content_rect, kRowSelectedColor);
 
   gfx::Rect border_bottom = gfx::SubtractRects(rect, content_rect);
   canvas->FillRect(border_bottom, kResultBorderColor);
@@ -315,13 +328,13 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 void SearchResultView::OnFocus() {
-  ScrollRectToVisible(GetLocalBounds());
-  NotifyAccessibilityEvent(ax::mojom::Event::kSelection, true);
-  SetBackgroundHighlighted(true);
+  SetSelected(true);
+  Button::OnFocus();
 }
 
 void SearchResultView::OnBlur() {
-  SetBackgroundHighlighted(false);
+  SetSelected(false);
+  Button::OnBlur();
 }
 
 void SearchResultView::ButtonPressed(views::Button* sender,

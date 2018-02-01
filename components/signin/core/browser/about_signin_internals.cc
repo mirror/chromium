@@ -22,6 +22,7 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_internals_util.h"
@@ -163,9 +164,8 @@ void ClearPref(PrefService* prefs, TimedSigninStatusField field) {
   prefs->ClearPref(time_pref);
 }
 
-std::string GetAccountConsistencyDescription(
-    signin::AccountConsistencyMethod method) {
-  switch (method) {
+std::string GetAccountConsistencyDescription() {
+  switch (signin::GetAccountConsistencyMethod()) {
     case signin::AccountConsistencyMethod::kDisabled:
       return "None";
     case signin::AccountConsistencyMethod::kMirror:
@@ -190,15 +190,13 @@ AboutSigninInternals::AboutSigninInternals(
     AccountTrackerService* account_tracker,
     SigninManagerBase* signin_manager,
     SigninErrorController* signin_error_controller,
-    GaiaCookieManagerService* cookie_manager_service,
-    signin::AccountConsistencyMethod account_consistency)
+    GaiaCookieManagerService* cookie_manager_service)
     : token_service_(token_service),
       account_tracker_(account_tracker),
       signin_manager_(signin_manager),
       client_(nullptr),
       signin_error_controller_(signin_error_controller),
-      cookie_manager_service_(cookie_manager_service),
-      account_consistency_(account_consistency) {}
+      cookie_manager_service_(cookie_manager_service) {}
 
 AboutSigninInternals::~AboutSigninInternals() {}
 
@@ -314,17 +312,16 @@ void AboutSigninInternals::NotifyObservers() {
   std::unique_ptr<base::DictionaryValue> signin_status_value =
       signin_status_.ToValue(account_tracker_, signin_manager_,
                              signin_error_controller_, token_service_,
-                             cookie_manager_service_, client_,
-                             account_consistency_);
+                             cookie_manager_service_, client_);
 
   for (auto& observer : signin_observers_)
     observer.OnSigninStateChanged(signin_status_value.get());
 }
 
 std::unique_ptr<base::DictionaryValue> AboutSigninInternals::GetSigninStatus() {
-  return signin_status_.ToValue(
-      account_tracker_, signin_manager_, signin_error_controller_,
-      token_service_, cookie_manager_service_, client_, account_consistency_);
+  return signin_status_.ToValue(account_tracker_, signin_manager_,
+                                signin_error_controller_, token_service_,
+                                cookie_manager_service_, client_);
 }
 
 void AboutSigninInternals::OnAccessTokenRequested(
@@ -524,8 +521,7 @@ AboutSigninInternals::SigninStatus::ToValue(
     SigninErrorController* signin_error_controller,
     ProfileOAuth2TokenService* token_service,
     GaiaCookieManagerService* cookie_manager_service,
-    SigninClient* signin_client,
-    signin::AccountConsistencyMethod account_consistency) {
+    SigninClient* signin_client) {
   auto signin_status = std::make_unique<base::DictionaryValue>();
   auto signin_info = std::make_unique<base::ListValue>();
 
@@ -535,7 +531,7 @@ AboutSigninInternals::SigninStatus::ToValue(
   AddSectionEntry(basic_info, "Chrome Version",
                   signin_client->GetProductVersion());
   AddSectionEntry(basic_info, "Account Consistency",
-                  GetAccountConsistencyDescription(account_consistency));
+                  GetAccountConsistencyDescription());
   AddSectionEntry(basic_info, "Signin Status",
       signin_manager->IsAuthenticated() ? "Signed In" : "Not Signed In");
   OAuth2TokenServiceDelegate::LoadCredentialsState load_tokens_state =
@@ -656,7 +652,7 @@ AboutSigninInternals::SigninStatus::ToValue(
   signin_status->Set("accountInfo", std::move(account_info));
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  if (account_consistency == signin::AccountConsistencyMethod::kDice) {
+  if (signin::IsDiceEnabledForProfile(signin_client->GetPrefs())) {
     auto dice_info = std::make_unique<base::DictionaryValue>();
     dice_info->SetBoolean("isSignedIn", signin_manager->IsAuthenticated());
     signin_status->Set("dice", std::move(dice_info));

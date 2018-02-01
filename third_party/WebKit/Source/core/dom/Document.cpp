@@ -953,13 +953,7 @@ Element* Document::createElement(const AtomicString& local_name,
 
   // 2. localName converted to ASCII lowercase
   const AtomicString& converted_local_name = ConvertLocalName(local_name);
-  QualifiedName q_name(g_null_atom, converted_local_name,
-                       IsXHTMLDocument() || IsHTMLDocument()
-                           ? HTMLNames::xhtmlNamespaceURI
-                           : g_null_atom);
 
-  // TODO(tkent): Share the code with createElementNS(namespace_uri,
-  // qualified_name, string_or_options, exception_state).
   bool is_v1 = string_or_options.IsDictionary() || !RegistrationContext();
   bool create_v1_builtin =
       string_or_options.IsDictionary() &&
@@ -974,7 +968,7 @@ Element* Document::createElement(const AtomicString& local_name,
 
   // 4. Let definition be result of lookup up custom element definition
   CustomElementDefinition* definition = nullptr;
-  if (is_v1 && q_name.NamespaceURI() == HTMLNames::xhtmlNamespaceURI) {
+  if (is_v1) {
     // Is the runtime flag enabled for customized builtin elements?
     const CustomElementDescriptor desc =
         RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
@@ -998,12 +992,20 @@ Element* Document::createElement(const AtomicString& local_name,
   Element* element;
 
   if (definition) {
-    element = CustomElement::CreateCustomElementSync(*this, q_name, definition);
+    element = CustomElement::CreateCustomElementSync(
+        *this, converted_local_name, definition);
   } else if (V0CustomElement::IsValidName(local_name) &&
              RegistrationContext()) {
-    element = RegistrationContext()->CreateCustomTagElement(*this, q_name);
+    element = RegistrationContext()->CreateCustomTagElement(
+        *this,
+        QualifiedName(g_null_atom, converted_local_name, xhtmlNamespaceURI));
   } else {
-    element = CreateRawElement(q_name, kCreatedByCreateElement);
+    element =
+        CreateRawElement(QualifiedName(g_null_atom, converted_local_name,
+                                       IsXHTMLDocument() || IsHTMLDocument()
+                                           ? HTMLNames::xhtmlNamespaceURI
+                                           : g_null_atom),
+                         kCreatedByCreateElement);
   }
 
   // 8. If 'is' is non-null, set 'is' attribute
@@ -1078,7 +1080,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   // 2.
   const AtomicString& is =
       AtomicString(GetTypeExtension(this, string_or_options, exception_state));
-  const AtomicString& name = should_create_builtin ? is : q_name.LocalName();
+  const AtomicString& name = should_create_builtin ? is : qualified_name;
 
   if (!IsValidElementName(this, qualified_name)) {
     exception_state.ThrowDOMException(
@@ -1089,9 +1091,11 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
 
   // 3. Let definition be result of lookup up custom element definition
   CustomElementDefinition* definition = nullptr;
-  if (is_v1 && namespace_uri == HTMLNames::xhtmlNamespaceURI) {
+  if (is_v1) {
     const CustomElementDescriptor desc =
-        CustomElementDescriptor(name, q_name.LocalName());
+        RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
+            ? CustomElementDescriptor(name, qualified_name)
+            : CustomElementDescriptor(qualified_name, qualified_name);
     if (CustomElementRegistry* registry = CustomElement::Registry(*this))
       definition = registry->DefinitionFor(desc);
 
@@ -1106,7 +1110,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   // 5. Let element be the result of creating an element
   Element* element;
 
-  if (definition) {
+  if (CustomElement::ShouldCreateCustomElement(q_name) || create_v1_builtin) {
     element = CustomElement::CreateCustomElementSync(*this, q_name, definition);
   } else if (V0CustomElement::IsValidName(q_name.LocalName()) &&
              RegistrationContext()) {
@@ -7257,8 +7261,7 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
   return &GetFrame()->GetInterfaceProvider();
 }
 
-scoped_refptr<base::SingleThreadTaskRunner> Document::GetTaskRunner(
-    TaskType type) {
+scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
   DCHECK(IsMainThread());
 
   if (ContextDocument() && ContextDocument()->GetFrame())

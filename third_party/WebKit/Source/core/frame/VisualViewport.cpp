@@ -667,8 +667,7 @@ IntRect VisualViewport::VisibleContentRect(
   return rect;
 }
 
-scoped_refptr<base::SingleThreadTaskRunner> VisualViewport::GetTimerTaskRunner()
-    const {
+scoped_refptr<WebTaskRunner> VisualViewport::GetTimerTaskRunner() const {
   return MainFrame()->GetTaskRunner(TaskType::kUnspecedTimer);
 }
 

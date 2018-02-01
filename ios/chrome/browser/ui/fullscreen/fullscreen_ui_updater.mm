@@ -36,9 +36,3 @@ void FullscreenUIUpdater::FullscreenWillScrollToTop(
     FullscreenScrollToTopAnimator* animator) {
   [ui_element_ scrollFullscreenToTopWithAnimator:animator];
 }
-
-void FullscreenUIUpdater::FullscreenWillEnterForeground(
-    FullscreenController* controller,
-    FullscreenForegroundAnimator* animator) {
-  [ui_element_ showToolbarForForgroundWithAnimator:animator];
-}

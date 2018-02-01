@@ -14,7 +14,7 @@
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
 #include "platform/scheduler/util/task_duration_metric_reporter.h"
 #include "platform/scheduler/util/thread_load_tracker.h"
-#include "public/platform/WebThreadType.h"
+#include "platform/scheduler/util/thread_type.h"
 
 namespace blink {
 namespace scheduler {

@@ -193,7 +193,6 @@
 #include "ppapi/features/features.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/constants.mojom.h"
-#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/resource_coordinator/public/cpp/process_resource_coordinator.h"
@@ -1950,7 +1949,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   associated_registry->AddInterface(base::Bind(
       &RenderProcessHostImpl::CreateRendererHost, base::Unretained(this)));
 
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     AddUIThreadInterface(
         registry.get(),
         base::Bind(&RenderProcessHostImpl::CreateURLLoaderFactory,
@@ -2002,7 +2001,7 @@ void RenderProcessHostImpl::GetAssociatedInterface(
 
 void RenderProcessHostImpl::GetBlobURLLoaderFactory(
     network::mojom::URLLoaderFactoryRequest request) {
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;
   }
@@ -2058,7 +2057,7 @@ void RenderProcessHostImpl::CreateRendererHost(
 
 void RenderProcessHostImpl::CreateURLLoaderFactory(
     network::mojom::URLLoaderFactoryRequest request) {
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;
   }
@@ -2638,7 +2637,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kVModule,
     // Please keep these in alphabetical order. Compositor switches here should
     // also be added to chrome/browser/chromeos/login/chrome_restart_request.cc.
-    cc::switches::kAlwaysRequestPresentationTime,
     cc::switches::kCheckDamageEarly,
     cc::switches::kDisableCompositedAntialiasing,
     cc::switches::kDisableThreadedAnimation,
