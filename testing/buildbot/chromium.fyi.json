@@ -4714,7 +4714,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 10
         },
         "test": "content_browsertests"
       }

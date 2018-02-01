@@ -1109,6 +1109,9 @@
         '--enable-features=NetworkService',
         '--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter',
       ],
+      'swarming': {
+        'shards': 10,
+      },
       'test': 'content_browsertests',
     },
   },
