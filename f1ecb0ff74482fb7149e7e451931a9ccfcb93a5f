@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ba928d_112ba3b9",
+        "filename": "chromeos/dbus/fake_update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T07:23:48Z",
+      "side": 1,
+      "message": "could you use base::TimeDelta? Ditto for below.\n\nnit: s/const/constexpr/. Ditto for below.",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f329030e_0886e87e",
+        "filename": "chromeos/dbus/fake_update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T07:23:48Z",
+      "side": 1,
+      "message": "nit/style: Could you move this method to below to be consistent with the declaration order?",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a423db00_1a95dd18",
+        "filename": "chromeos/dbus/fake_update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T07:23:48Z",
+      "side": 1,
+      "message": "nit/style/optiona: We use ?: for this kind of cases to ensure .Run is called once slightly more explicitly.\n\ncallback.Run(get_current_channel ? current_channel_ : target_channel_);",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35c13a4_adf3bebb",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T07:23:48Z",
+      "side": 1,
+      "message": "Could you use enum class?\n\nAlso, could you move this to nested enum of FakeUpdateEngineClient?\nAs mentioned in the last CL review, specifically, NONE sounds too generic.",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8129e7_4f9703ae",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T07:23:48Z",
+      "side": 1,
+      "message": "As you implemented actual status update emulation. Is it possible to get rid of this approach?\nSo that you\u0027d be able to get rid of UPDATE_STATUS enum value.",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f031b664_ddf59214",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-01T07:23:48Z",
+      "side": 1,
+      "message": "IIUC, you\u0027re just returning the same instance?\nThen, simply \"return new FakeUpdateEngineClient(NONE);\" ?",
+      "revId": "f1ecb0ff74482fb7149e7e451931a9ccfcb93a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
