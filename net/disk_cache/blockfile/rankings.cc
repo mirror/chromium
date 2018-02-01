@@ -83,7 +83,7 @@ enum CrashLocation {
 };
 
 #ifndef NDEBUG
-void TerminateSelf() {
+[[noreturn]] void TerminateSelf() {
 #if defined(OS_WIN)
   // Windows does more work on _exit() than we would like, so we force exit.
   TerminateProcess(GetCurrentProcess(), 0);
