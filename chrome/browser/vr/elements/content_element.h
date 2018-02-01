@@ -46,6 +46,7 @@ class ContentElement : public UiElement {
   void SetOverlayTextureId(unsigned int texture_id);
   void SetOverlayTextureLocation(UiElementRenderer::TextureLocation location);
   void SetProjectionMatrix(const gfx::Transform& matrix);
+  void SetDelegate(ContentInputDelegate* delegate);
 
  private:
   ContentInputDelegate* delegate_ = nullptr;

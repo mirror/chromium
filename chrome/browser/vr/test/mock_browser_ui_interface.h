@@ -39,6 +39,12 @@ class MockBrowserUiInterface : public BrowserUiInterface {
   MOCK_METHOD1(OnSpeechRecognitionStateChanged, void(int new_state));
   void SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions) {}
   MOCK_METHOD0(OnAssetsComponentReady, void());
+  MOCK_METHOD4(SetAlertDialogEnabled,
+               void(bool enabled,
+                    ContentInputDelegate* delegate,
+                    int width,
+                    int height));
+  MOCK_METHOD2(SetAlertDialogSize, void(int width, int height));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBrowserUiInterface);
