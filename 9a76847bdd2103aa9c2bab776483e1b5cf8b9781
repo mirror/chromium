@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6d553b4_4c5df691",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T06:13:31Z",
+      "side": 1,
+      "message": "Remove \"Tests are added...\". This should be true for any CL and doesn\u0027t need to be stated.\n\n(Reminds me of the old days when there was \"TEST\u003d\" but nobody knew what it was for, and lots of CLs had an entirely useless \"TEST\u003dRun unit tests\" ;)).",
+      "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21785ec_61fe53f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T06:13:31Z",
+      "side": 1,
+      "message": "Add:\n\nThe weak_manager of AppBannerInfobarDelegateAndroid was not being set in the constructor for native app banners. Now it is set correctly.",
+      "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b66e1c_baa36b1f",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-01T06:13:31Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used in the above tests?",
+      "revId": "9a76847bdd2103aa9c2bab776483e1b5cf8b9781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
