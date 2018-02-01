@@ -24,6 +24,7 @@ if (is_chromeos) {
       "cert_store.mojom",
       "clipboard.mojom",
       "crash_collector.mojom",
+      "cups_print.mojom",
       "enterprise_reporting.mojom",
       "file_system.mojom",
       "ime.mojom",
