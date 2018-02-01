@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb0b3cb_f7055d70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-01T20:07:54Z",
+      "side": 1,
+      "message": "typo - fchdir",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "3a38247a762dfa01a72b22961da902cf29180d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
