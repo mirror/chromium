@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "012f5829_11443655",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-02-01T19:15:03Z",
+      "side": 1,
+      "message": "I was thinking a lot about how to make this simpler, but the canonical representation of a URL with path \"/\" includes a trailing \u0027/\u0027, and the canonical representation of a path relative to root starts with a \u0027/\u0027, I figured this is better than chopping off either the trailing \u0027/\u0027 from the definition of |kDefaultUrl| or the first \u0027/\u0027 from the paths at call sites.",
+      "range": {
+        "startLine": 521,
+        "startChar": 0,
+        "endLine": 521,
+        "endChar": 60
+      },
+      "revId": "3534391046294af55595eb1bf5af5435f64a4142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8147e7b_6b67b8fa",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-02-01T19:15:03Z",
+      "side": 1,
+      "message": "While GetPromisedUrlFromHeaders() does check for method, it returns an empty URL on failure, so there is no useful debug information in that case.  Granted the string only shows up in NetLog (RST_STREAM does not carry opaque data, only GOAWAY does).  Would you prefer me to remove this check?",
+      "range": {
+        "startLine": 1612,
+        "startChar": 0,
+        "endLine": 1612,
+        "endChar": 77
+      },
+      "revId": "3534391046294af55595eb1bf5af5435f64a4142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc6ffe1b_fe30c1e3",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-02-01T19:15:03Z",
+      "side": 1,
+      "message": "While it is unfortunate, it is not unprecedented for net/spdy to depend on net/quic.  If you can think of a good place to move this method, let me know.  There is no net/spdy/core/spdy_http_utils or similar, and a public method of SpdyHeaderBlock does not feel quite right.",
+      "range": {
+        "startLine": 1620,
+        "startChar": 12,
+        "endLine": 1620,
+        "endChar": 48
+      },
+      "revId": "3534391046294af55595eb1bf5af5435f64a4142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09530b4f_63fa90e8",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-02-01T19:15:03Z",
+      "side": 1,
+      "message": "GetPromisedUrlFromHeaders either returns the spec for a valid URL, or the empty string, so possibly_invalid_spec is always empty at this point.  Also, it fails not only on invalid URL but in other cases too (like invalid method).",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 63
+      },
+      "revId": "3534391046294af55595eb1bf5af5435f64a4142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
