@@ -86,7 +86,7 @@ class MediaStreamAudioProcessorTest : public ::testing::Test {
                 media::CHANNEL_LAYOUT_STEREO,
                 48000,
                 16,
-                512) {}
+                480) {}
 
  protected:
   // Helper method to save duplicated code.
@@ -285,8 +285,7 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestAllSampleRates) {
   static const int kSupportedSampleRates[] =
       { 8000, 16000, 22050, 32000, 44100, 48000 };
   for (size_t i = 0; i < arraysize(kSupportedSampleRates); ++i) {
-    int buffer_size = (kSupportedSampleRates[i] / 100)  < 128 ?
-        kSupportedSampleRates[i] / 100 : 128;
+    int buffer_size = kSupportedSampleRates[i] / 100;
     media::AudioParameters params(
         media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
         media::CHANNEL_LAYOUT_STEREO, kSupportedSampleRates[i], 16,
@@ -437,7 +436,7 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestWithKeyboardMicChannel) {
 
   media::AudioParameters params(media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
                                 media::CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC,
-                                48000, 16, 512);
+                                48000, 16, 480);
   audio_processor->OnCaptureFormatChanged(params);
 
   ProcessDataAndVerifyFormat(audio_processor.get(),
