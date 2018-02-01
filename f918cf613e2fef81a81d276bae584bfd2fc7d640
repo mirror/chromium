@@ -19,6 +19,42 @@
     },
     {
       "key": {
+        "uuid": "82df4e10_cc109f9e",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2018-02-01T06:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0488038b_df907b26",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "662efe28_f83fd1f0",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2018-02-01T06:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0488038b_df907b26",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53cd8184_b2287ed0",
         "filename": "tools/gn/input_conversion.cc",
         "patchSetId": 5
@@ -33,6 +69,24 @@
       "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62ccb54_2a1429d3",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2018-02-01T06:50:35Z",
+      "side": 1,
+      "message": "We would need a JSON parser with SAX style API like https://github.com/Tencent/rapidjson but I don\u0027t know if it\u0027s feasible to include this library in third_party for use in GN?",
+      "parentUuid": "53cd8184_b2287ed0",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +107,42 @@
     },
     {
       "key": {
+        "uuid": "df4d02de_9ea3c57b",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2018-02-01T06:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fba09c3e_cbb4b377",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f1dc9f_72dadcf9",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2018-02-01T06:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fba09c3e_cbb4b377",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9861b13_7bbd2bdf",
         "filename": "tools/gn/input_conversion_unittest.cc",
         "patchSetId": 5
@@ -67,6 +157,24 @@
       "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33685802_d2d0a4fe",
+        "filename": "tools/gn/input_conversion_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2018-02-01T06:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9861b13_7bbd2bdf",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
