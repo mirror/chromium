@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "chrome/browser/vr/elements/textured_element.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/text_input_delegate.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -20,7 +21,7 @@ class Text;
 
 class TextInput : public UiElement {
  public:
-  // Called when this element recieves focus.
+  // Called when this element receives focus.
   typedef base::RepeatingCallback<void(bool)> OnFocusChangedCallback;
   // Called when the user enters text while this element is focused.
   typedef base::RepeatingCallback<void(const TextInputInfo&)>
@@ -45,8 +46,8 @@ class TextInput : public UiElement {
 
   void SetHintText(const base::string16& text);
   void SetTextColor(SkColor color);
-  void SetCursorColor(SkColor color);
   void SetHintColor(SkColor color);
+  void SetSelectionColors(const TextSelectionColors& colors);
   void SetTextInputDelegate(TextInputDelegate* text_input_delegate);
 
   void set_input_committed_callback(const OnInputCommittedCallback& callback) {
@@ -62,10 +63,15 @@ class TextInput : public UiElement {
   Text* get_text_element() { return text_element_; }
   Rect* get_cursor_element() { return cursor_element_; }
 
+ protected:
+  TextInputInfo text_info() const { return text_info_; }
+
  private:
   void LayOutChildren() final;
   bool SetCursorBlinkState(const base::TimeTicks& time);
   void ResetCursorBlinkCycle();
+
+  virtual TextInputInfo ProcessInput(const TextInputInfo& info);
 
   OnFocusChangedCallback focus_changed_callback_;
   OnInputEditedCallback input_edit_callback_;

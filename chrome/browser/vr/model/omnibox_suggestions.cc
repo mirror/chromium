@@ -6,6 +6,8 @@
 
 namespace vr {
 
+OmniboxSuggestion::OmniboxSuggestion() {}
+
 OmniboxSuggestion::OmniboxSuggestion(
     const base::string16& new_contents,
     const base::string16& new_description,
@@ -14,13 +16,17 @@ OmniboxSuggestion::OmniboxSuggestion(
     const AutocompleteMatch::ACMatchClassifications&
         new_description_classifications,
     AutocompleteMatch::Type new_type,
-    GURL new_destination)
+    GURL new_destination,
+    const base::string16& new_input,
+    const base::string16& new_inline_autocompletion)
     : contents(new_contents),
       description(new_description),
       contents_classifications(new_contents_classifications),
       description_classifications(new_description_classifications),
       type(new_type),
-      destination(new_destination) {}
+      destination(new_destination),
+      input(new_input),
+      inline_autocompletion(new_inline_autocompletion) {}
 
 OmniboxSuggestion::~OmniboxSuggestion() = default;
 
@@ -31,6 +37,18 @@ OmniboxSuggestion::OmniboxSuggestion(const OmniboxSuggestion& other) {
   description_classifications = other.description_classifications;
   type = other.type;
   destination = other.destination;
+  input = other.input;
+  inline_autocompletion = other.inline_autocompletion;
+}
+
+bool OmniboxSuggestion::operator==(const OmniboxSuggestion& other) const {
+  return contents == other.contents &&
+         // contents_classifications == other.contents_classifications &&
+         description == other.description &&
+         // description_classifications == other.description_classifications &&
+         type == other.type && destination == other.destination &&
+         input == other.input &&
+         inline_autocompletion == other.inline_autocompletion;
 }
 
 OmniboxSuggestions::OmniboxSuggestions() {}

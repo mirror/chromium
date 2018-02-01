@@ -207,7 +207,7 @@ void VrGLThread::SetVoiceSearchActive(bool active) {
       base::Bind(&VrShell::SetVoiceSearchActive, weak_vr_shell_, active));
 }
 
-void VrGLThread::StartAutocomplete(const base::string16& string) {
+void VrGLThread::StartAutocomplete(const vr::AutocompleteRequest& string) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE,
