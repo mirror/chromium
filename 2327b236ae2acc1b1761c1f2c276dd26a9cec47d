@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9b5f2a_46c0812c",
+        "filename": "chrome/browser/net/chrome_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T21:17:11Z",
+      "side": 1,
+      "message": "Is it guaranteed that request.initiator() is not nullopt?",
+      "range": {
+        "startLine": 457,
+        "startChar": 26,
+        "endLine": 457,
+        "endChar": 62
+      },
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebe9f3c_88449235",
+        "filename": "chrome/browser/net/chrome_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T21:17:11Z",
+      "side": 1,
+      "message": "It seems like this would be better just forwarded along to ChromeExtensionsNetworkDelegate? (extensions_delegate_ member here)\n\nThat class already has the info map, etc.",
+      "range": {
+        "startLine": 450,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 0
+      },
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171c3950_440bfa2d",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T21:17:11Z",
+      "side": 1,
+      "message": "I know this pattern is used elsewhere, but it\u0027s really kinda silly.  Prefer just:\nvar testUrl \u003d \u0027http://localhost:\u0027 + config.testServer.port + \u0027/extensions/body1.html\u0027;\n\n(note also the test_url -\u003e testUrl, and preferring single-quotes to double-quotes)",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a9fef1_528b6694",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T21:17:11Z",
+      "side": 1,
+      "message": "nitty nit: we usually prefer to not mix var with const/let - prefer let here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 3
+      },
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f71e46_9a703aae",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-01T21:17:11Z",
+      "side": 1,
+      "message": "nit: makeRequests",
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
