@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29ec163e_1db52a6b",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T04:03:43Z",
+      "side": 1,
+      "message": "I understand why you want to use base here, but if you look at surrounding code we don\u0027t do that. That\u0027s because code in src/base gets the base namespace. Use ui::win (you could use ui::base::win), but I think you\u0027ll find that painful. So I recommend just ui::win.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "69ba56579ceedc0d3d4206e25cc0cb56666f2d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
