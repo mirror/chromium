@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/display/manager/chromeos/default_touch_transform_setter.h"
+#include "ui/display/manager/internal/default_touch_transform_setter.h"
 
 #include "ui/events/devices/device_data_manager.h"
 #include "ui/events/devices/touch_device_transform.h"

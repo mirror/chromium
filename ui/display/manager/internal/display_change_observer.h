@@ -11,8 +11,8 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
 #include "ui/display/manager/display_manager_export.h"
+#include "ui/display/manager/internal/display_configurator.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/events/devices/input_device_event_observer.h"
 

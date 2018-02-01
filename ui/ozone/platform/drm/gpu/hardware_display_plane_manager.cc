@@ -121,13 +121,9 @@ bool HardwareDisplayPlaneManager::Initialize(DrmDevice* drm) {
           auto* header = reinterpret_cast<const drm_format_modifier_blob*>(data);
           auto* formats =
               reinterpret_cast<const uint32_t*>(data + header->formats_offset);
-          auto* modifiers = reinterpret_cast<const drm_format_modifier*>(
-              data + header->modifiers_offset);
 
           for (uint32_t k = 0; k < header->count_formats; k++)
             supported_formats.push_back(formats[k]);
-          for (uint32_t k = 0; k < header->count_modifiers; k++)
-            supported_format_modifiers.push_back(modifiers[k]);
         }
       }
     }
