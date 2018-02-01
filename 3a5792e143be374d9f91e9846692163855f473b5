@@ -33,6 +33,23 @@
       "revId": "3a5792e143be374d9f91e9846692163855f473b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d644b2bf_610aa9d1",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-02-01T12:59:57Z",
+      "side": 1,
+      "message": "Nit: Newline afterwards, to make it pretty. ;)",
+      "revId": "3a5792e143be374d9f91e9846692163855f473b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
