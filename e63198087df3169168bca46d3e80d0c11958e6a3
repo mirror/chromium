@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfaf20c7_d3137d4d",
+        "filename": "chrome/browser/lifetime/application_lifetime_android.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:16:15Z",
+      "side": 1,
+      "message": "Can this be in the internal namespace to reinforce no one should be including or using this other than application_lifetime.cc? At a minimum be sure and document that.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "e63198087df3169168bca46d3e80d0c11958e6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99320377_d20e36e5",
+        "filename": "chrome/browser/lifetime/termination_notification.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-01T00:16:15Z",
+      "side": 1,
+      "message": "I think the code is slowly getting better, but I still feel like there is too much platform specific code. My earlier comment still applies here: https://chromium-review.googlesource.com/c/chromium/src/+/812482/14/chrome/browser/chrome_browser_main_posix.cc#102 . Why does this code need to call the ChromeOS specific functions? Why can\u0027t it call the ones in application_lifetime and have it end up in the appropriate platform implementation?",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "e63198087df3169168bca46d3e80d0c11958e6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
