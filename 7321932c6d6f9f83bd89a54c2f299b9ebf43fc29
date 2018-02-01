@@ -16,6 +16,40 @@
       "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6506604_fca798f3",
+        "filename": "content/renderer/render_thread_impl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-01T00:20:36Z",
+      "side": 1,
+      "message": "nit: querry-\u003equery",
+      "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07055baa_9d45db9b",
+        "filename": "content/test/content_test_suite.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-01T00:20:36Z",
+      "side": 1,
+      "message": "nit: this pattern is in many places... maybe it\u0027s useful to move to a common function?",
+      "revId": "7321932c6d6f9f83bd89a54c2f299b9ebf43fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
