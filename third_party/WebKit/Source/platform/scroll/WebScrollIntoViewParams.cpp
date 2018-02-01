@@ -32,7 +32,8 @@ STATIC_ASSERT_ENUM(AlignmentBehavior::kClosestEdge,
 
 ASSERT_SIZE(Type, ScrollType)
 STATIC_ASSERT_ENUM(Type::kUser, ScrollType::kUserScroll);
-STATIC_ASSERT_ENUM(Type::kProgrammatic, ScrollType::kProgrammaticScroll);
+STATIC_ASSERT_ENUM(Type::kScript, ScrollType::kScriptScroll);
+STATIC_ASSERT_ENUM(Type::kBrowser, ScrollType::kBrowserScroll);
 STATIC_ASSERT_ENUM(Type::kClamping, ScrollType::kClampingScroll);
 STATIC_ASSERT_ENUM(Type::kAnchoring, ScrollType::kAnchoringScroll);
 STATIC_ASSERT_ENUM(Type::kSequenced, ScrollType::kSequencedScroll);

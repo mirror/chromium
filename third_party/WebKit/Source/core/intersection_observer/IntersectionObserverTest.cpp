@@ -97,7 +97,7 @@ TEST_F(IntersectionObserverTest, ResumePostsTask) {
   // When document is not suspended, beginFrame() will generate notifications
   // and post a task to deliver them.
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 300), kProgrammaticScroll);
+      ScrollOffset(0, 300), kScriptScroll);
   Compositor().BeginFrame();
   EXPECT_EQ(observer_delegate->CallCount(), 1);
   testing::RunPendingTasks();
@@ -108,7 +108,7 @@ TEST_F(IntersectionObserverTest, ResumePostsTask) {
   // available via takeRecords();
   GetDocument().PauseScheduledTasks();
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 0), kProgrammaticScroll);
+      ScrollOffset(0, 0), kScriptScroll);
   Compositor().BeginFrame();
   EXPECT_EQ(observer_delegate->CallCount(), 2);
   testing::RunPendingTasks();
@@ -118,7 +118,7 @@ TEST_F(IntersectionObserverTest, ResumePostsTask) {
   // Generate a notification while document is suspended; then resume document.
   // Notification should happen in a post task.
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 300), kProgrammaticScroll);
+      ScrollOffset(0, 300), kScriptScroll);
   Compositor().BeginFrame();
   testing::RunPendingTasks();
   EXPECT_EQ(observer_delegate->CallCount(), 2);
@@ -157,7 +157,7 @@ TEST_F(IntersectionObserverTest, DisconnectClearsNotifications) {
   // If disconnect() is called while an observer has unsent notifications,
   // those notifications should be discarded.
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 300), kProgrammaticScroll);
+      ScrollOffset(0, 300), kScriptScroll);
   Compositor().BeginFrame();
   observer->disconnect();
   testing::RunPendingTasks();

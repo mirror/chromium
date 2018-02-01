@@ -11681,7 +11681,7 @@ TEST_P(WebFrameSimTest, TestScrollFocusedEditableElementIntoView) {
   FloatRect inputRect(200, 600, 100, 20);
 
   frame_view->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 0),
-                                                   kProgrammaticScroll);
+                                                   kScriptScroll);
 
   ASSERT_EQ(FloatPoint(), visual_viewport.VisibleRectInDocument().Location());
 
@@ -11691,7 +11691,7 @@ TEST_P(WebFrameSimTest, TestScrollFocusedEditableElementIntoView) {
 
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
       ToFloatSize(WebView().FakePageScaleAnimationTargetPositionForTesting()),
-      kProgrammaticScroll);
+      kScriptScroll);
 
   EXPECT_TRUE(visual_viewport.VisibleRectInDocument().Contains(inputRect));
 
@@ -11713,7 +11713,7 @@ TEST_P(WebFrameSimTest, TestScrollFocusedEditableElementIntoView) {
   WebView().ScrollFocusedEditableElementIntoView();
   frame_view->GetScrollableArea()->SetScrollOffset(
       ToFloatSize(WebView().FakePageScaleAnimationTargetPositionForTesting()),
-      kProgrammaticScroll);
+      kScriptScroll);
 
   EXPECT_TRUE(visual_viewport.VisibleRectInDocument().Contains(inputRect));
   EXPECT_EQ(1, WebView().FakePageScaleAnimationPageScaleForTesting());

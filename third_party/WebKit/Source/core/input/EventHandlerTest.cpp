@@ -120,7 +120,7 @@ TEST_F(EventHandlerTest, dragSelectionAfterScroll) {
 
   LocalFrameView* frame_view = GetDocument().View();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 400), kProgrammaticScroll);
+      ScrollOffset(0, 400), kScriptScroll);
 
   WebMouseEvent mouse_down_event(WebInputEvent::kMouseDown, WebFloatPoint(0, 0),
                                  WebFloatPoint(100, 200),

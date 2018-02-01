@@ -63,14 +63,14 @@ void RootFrameViewport::RestoreToAnchor(const ScrollOffset& target_offset) {
   // Clamp the scroll offset of each viewport now so that we force any invalid
   // offsets to become valid so we can compute the correct deltas.
   VisualViewport().SetScrollOffset(VisualViewport().GetScrollOffset(),
-                                   kProgrammaticScroll);
+                                   kBrowserScroll);
   LayoutViewport().SetScrollOffset(LayoutViewport().GetScrollOffset(),
-                                   kProgrammaticScroll);
+                                   kBrowserScroll);
 
   ScrollOffset delta = target_offset - GetScrollOffset();
 
   VisualViewport().SetScrollOffset(VisualViewport().GetScrollOffset() + delta,
-                                   kProgrammaticScroll);
+                                   kBrowserScroll);
 
   delta = target_offset - GetScrollOffset();
 
@@ -85,11 +85,11 @@ void RootFrameViewport::RestoreToAnchor(const ScrollOffset& target_offset) {
 
   LayoutViewport().SetScrollOffset(
       ScrollOffset(LayoutViewport().ScrollOffsetInt() + layout_delta),
-      kProgrammaticScroll);
+      kBrowserScroll);
 
   delta = target_offset - GetScrollOffset();
   VisualViewport().SetScrollOffset(VisualViewport().GetScrollOffset() + delta,
-                                   kProgrammaticScroll);
+                                   kBrowserScroll);
 }
 
 void RootFrameViewport::DidUpdateVisualViewport() {
@@ -220,7 +220,7 @@ void RootFrameViewport::SetScrollOffset(const ScrollOffset& offset,
   if (scroll_behavior == kScrollBehaviorAuto)
     scroll_behavior = ScrollBehaviorStyle();
 
-  if (scroll_type == kProgrammaticScroll &&
+  if (scroll_type == kBrowserScroll &&
       !LayoutViewport().IsProgrammaticallyScrollable())
     return;
 
@@ -256,7 +256,7 @@ LayoutRect RootFrameViewport::ScrollIntoView(
 
   if (new_scroll_offset != GetScrollOffset()) {
     if (params.is_for_scroll_sequence) {
-      DCHECK(params.GetScrollType() == kProgrammaticScroll);
+      DCHECK(params.GetScrollType() == kBrowserScroll);
       ScrollBehavior behavior =
           DetermineScrollBehavior(params.GetScrollBehavior(),
                                   GetLayoutBox()->Style()->GetScrollBehavior());

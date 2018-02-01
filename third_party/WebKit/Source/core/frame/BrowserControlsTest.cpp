@@ -280,7 +280,7 @@ TEST_F(BrowserControlsTest, MAYBE(ScrollDownThenUp)) {
   web_view->ResizeWithBrowserControls(web_view->Size(), 50.f, 0, true);
   web_view->GetBrowserControls().SetShownRatio(1);
   GetFrame()->View()->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 100),
-                                                           kProgrammaticScroll);
+                                                           kScriptScroll);
 
   web_view->HandleInputEvent(GenerateEvent(WebInputEvent::kGestureScrollBegin));
   EXPECT_FLOAT_EQ(50.f, web_view->GetBrowserControls().ContentOffset());
@@ -336,7 +336,7 @@ TEST_F(BrowserControlsTest, MAYBE(ScrollUpThenDown)) {
   web_view->ResizeWithBrowserControls(web_view->Size(), 50.f, 0, false);
   web_view->GetBrowserControls().SetShownRatio(0);
   GetFrame()->View()->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 100),
-                                                           kProgrammaticScroll);
+                                                           kScriptScroll);
 
   web_view->HandleInputEvent(GenerateEvent(WebInputEvent::kGestureScrollBegin));
   EXPECT_FLOAT_EQ(0.f, web_view->GetBrowserControls().ContentOffset());
@@ -474,7 +474,7 @@ TEST_F(BrowserControlsTest, MAYBE(ScrollableSubregionScrollFirst)) {
   web_view->ResizeWithBrowserControls(web_view->Size(), 50.f, 0, true);
   web_view->GetBrowserControls().SetShownRatio(1);
   GetFrame()->View()->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 50),
-                                                           kProgrammaticScroll);
+                                                           kScriptScroll);
 
   // Test scroll down
   // Scroll down should scroll the overflow div first but browser controls and
@@ -530,7 +530,7 @@ TEST_F(BrowserControlsTest, MAYBE(ScrollableIframeScrollFirst)) {
   web_view->ResizeWithBrowserControls(web_view->Size(), 50.f, 0, true);
   web_view->GetBrowserControls().SetShownRatio(1);
   GetFrame()->View()->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 50),
-                                                           kProgrammaticScroll);
+                                                           kScriptScroll);
 
   // Test scroll down
   // Scroll down should scroll the iframe first but browser controls and main
@@ -608,7 +608,7 @@ TEST_F(BrowserControlsTest, MAYBE(ZeroHeightMeansNoEffect)) {
   web_view->ResizeWithBrowserControls(web_view->Size(), 0, 0, false);
   web_view->GetBrowserControls().SetShownRatio(0);
   GetFrame()->View()->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 100),
-                                                           kProgrammaticScroll);
+                                                           kScriptScroll);
 
   EXPECT_FLOAT_EQ(0.f, web_view->GetBrowserControls().ContentOffset());
 
@@ -666,7 +666,7 @@ TEST_F(BrowserControlsTest, MAYBE(StateConstraints)) {
   WebViewImpl* web_view = Initialize();
   web_view->ResizeWithBrowserControls(web_view->Size(), 50.f, 0, false);
   GetFrame()->View()->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 100),
-                                                           kProgrammaticScroll);
+                                                           kScriptScroll);
 
   // Setting permitted state should change the content offset to match the
   // constraint.
@@ -1066,7 +1066,7 @@ TEST_F(BrowserControlsTest,
         GenerateEvent(WebInputEvent::kGestureScrollUpdate, 0, 80));
 
     GetVisualViewport().ClampToBoundaries();
-    view->SetScrollOffset(view->GetScrollOffset(), kProgrammaticScroll);
+    view->SetScrollOffset(view->GetScrollOffset(), kScriptScroll);
 
     ASSERT_EQ(80.f, web_view->GetBrowserControls().ContentOffset());
     EXPECT_EQ(expected_root_offset, root_viewport->GetScrollOffset().Height());

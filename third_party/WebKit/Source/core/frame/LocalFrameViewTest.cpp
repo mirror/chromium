@@ -121,7 +121,7 @@ TEST_P(LocalFrameViewTest, HideTooltipWhenScrollPositionChanges) {
               MockSetToolTip(GetDocument().GetFrame(), String(), _))
       .Times(0);
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(2, 2), kProgrammaticScroll);
+      ScrollOffset(2, 2), kScriptScroll);
 }
 
 // NoOverflowInIncrementVisuallyNonEmptyPixelCount tests fail if the number of
@@ -156,7 +156,7 @@ TEST_P(LocalFrameViewTest,
 
   // This call should not crash.
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0, 100), kProgrammaticScroll);
+      ScrollOffset(0, 100), kScriptScroll);
 }
 
 TEST_P(LocalFrameViewTest, StyleChangeUpdatesViewportConstrainedObjects) {

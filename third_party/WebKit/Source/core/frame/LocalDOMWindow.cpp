@@ -1168,7 +1168,7 @@ void LocalDOMWindow::scrollBy(double x,
   ScrollOffset scaled_delta(x * GetFrame()->PageZoomFactor(),
                             y * GetFrame()->PageZoomFactor());
 
-  viewport->SetScrollOffset(current_offset + scaled_delta, kProgrammaticScroll,
+  viewport->SetScrollOffset(current_offset + scaled_delta, kScriptScroll,
                             scroll_behavior);
 }
 
@@ -1208,8 +1208,7 @@ void LocalDOMWindow::scrollTo(double x, double y) const {
   ScrollOffset layout_offset(x * GetFrame()->PageZoomFactor(),
                              y * GetFrame()->PageZoomFactor());
   ScrollableArea* viewport = view->LayoutViewportScrollableArea();
-  viewport->SetScrollOffset(layout_offset, kProgrammaticScroll,
-                            kScrollBehaviorAuto);
+  viewport->SetScrollOffset(layout_offset, kScriptScroll, kScrollBehaviorAuto);
 }
 
 void LocalDOMWindow::scrollTo(const ScrollToOptions& scroll_to_options) const {
@@ -1253,8 +1252,8 @@ void LocalDOMWindow::scrollTo(const ScrollToOptions& scroll_to_options) const {
   ScrollableArea::ScrollBehaviorFromString(scroll_to_options.behavior(),
                                            scroll_behavior);
 
-  viewport->SetScrollOffset(ScrollOffset(scaled_x, scaled_y),
-                            kProgrammaticScroll, scroll_behavior);
+  viewport->SetScrollOffset(ScrollOffset(scaled_x, scaled_y), kScriptScroll,
+                            scroll_behavior);
 }
 
 void LocalDOMWindow::moveBy(int x, int y) const {

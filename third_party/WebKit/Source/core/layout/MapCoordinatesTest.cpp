@@ -559,7 +559,7 @@ TEST_P(MapCoordinatesTest, FixedPosInFixedPosScrollView) {
   ASSERT_TRUE(view->IsLayoutView());
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 50), kProgrammaticScroll);
+      ScrollOffset(0.0, 50), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(50, GetDocument()
                     .View()
@@ -595,7 +595,7 @@ TEST_P(MapCoordinatesTest, FixedPosInAbsolutePosScrollView) {
   ASSERT_TRUE(view->IsLayoutView());
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 50), kProgrammaticScroll);
+      ScrollOffset(0.0, 50), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(50, GetDocument()
                     .View()
@@ -625,7 +625,7 @@ TEST_P(MapCoordinatesTest, FixedPosInTransform) {
   )HTML");
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 50), kProgrammaticScroll);
+      ScrollOffset(0.0, 50), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(50, GetDocument()
                     .View()
@@ -667,7 +667,7 @@ TEST_P(MapCoordinatesTest, FixedPosInContainPaint) {
   )HTML");
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 50), kProgrammaticScroll);
+      ScrollOffset(0.0, 50), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(50, GetDocument()
                     .View()
@@ -713,7 +713,7 @@ TEST_P(MapCoordinatesTest, FixedPosInIFrameWhenMainFrameScrolled) {
       "position:fixed}</style><div id=target></div>");
 
   GetDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 1000), kProgrammaticScroll);
+      ScrollOffset(0.0, 1000), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   Element* target = ChildDocument().getElementById("target");
@@ -744,7 +744,7 @@ TEST_P(MapCoordinatesTest, IFrameTransformed) {
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   ChildDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 1000), kProgrammaticScroll);
+      ScrollOffset(0.0, 1000), kScriptScroll);
   ChildDocument().View()->UpdateAllLifecyclePhases();
 
   Element* target = ChildDocument().getElementById("target");
@@ -780,7 +780,7 @@ TEST_P(MapCoordinatesTest, FixedPosInScrolledIFrameWithTransform) {
 
   GetDocument().View()->UpdateAllLifecyclePhases();
   ChildDocument().View()->LayoutViewportScrollableArea()->SetScrollOffset(
-      ScrollOffset(0.0, 1000), kProgrammaticScroll);
+      ScrollOffset(0.0, 1000), kScriptScroll);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   Element* target = ChildDocument().getElementById("target");
