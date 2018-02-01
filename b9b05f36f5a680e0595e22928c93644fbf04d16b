@@ -441,6 +441,30 @@
     },
     {
       "key": {
+        "uuid": "158aa3c8_327279b9",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-01T11:05:46Z",
+      "side": 1,
+      "message": "\u003e \u003e This is probably because the pattern with a NoDestructor wouldn\u0027t be thread-safe during initialization.\n\u003e \n\u003e We have threadsafe statics enabled now, which is why LazyInstance is deprecated.\n\nOh right, yeah my bad NoDestructor works too (prefered)\n\n\u003e We would need to pass TLSDestructorFunc\n\nWe can put TLSDestructorFunc in a template parameter of Slot IMO, I\u0027d assume it\u0027s never a dynamic choice?",
+      "parentUuid": "6e248920_ccc74c1a",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
