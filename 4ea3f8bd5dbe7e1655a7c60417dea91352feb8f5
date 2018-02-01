@@ -34,6 +34,24 @@
       "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac34477_1ec096e5",
+        "filename": "media/gpu/windows/d3d11_video_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-01T18:58:43Z",
+      "side": 1,
+      "message": "Thanks, that was my suspicion. However, two points:\n1. The mojo decoder service does provide these bound with a weak ptr: https://cs.chromium.org/chromium/src/media/mojo/services/mojo_video_decoder_service.cc?l\u003d170\n2. Is that your responsibility to fix? Typically this would mean the init_cb and output_cb should be provided with the expectation that they may be called after a destruction process leaves them dangling (as is done in this case).",
+      "parentUuid": "705100be_110fa035",
+      "revId": "4ea3f8bd5dbe7e1655a7c60417dea91352feb8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
