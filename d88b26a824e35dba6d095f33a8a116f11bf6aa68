@@ -16,6 +16,24 @@
       "revId": "d88b26a824e35dba6d095f33a8a116f11bf6aa68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7ad8cf_e8f19221",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-01T05:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c86612_da117741",
+      "revId": "d88b26a824e35dba6d095f33a8a116f11bf6aa68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
