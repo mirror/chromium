@@ -311,6 +311,13 @@ class UnboundWidgetInputHandler : public mojom::WidgetInputHandler {
       std::unique_ptr<content::InputEvent> event) override {
     DLOG(WARNING) << "Input request on unbound interface";
   }
+  void AttachSynchronousCompositor(
+      mojom::SynchronousCompositorControlHostPtr control_host,
+      mojom::SynchronousCompositorHostAssociatedPtrInfo host,
+      mojom::SynchronousCompositorAssociatedRequest compositor_request)
+      override {
+    NOTREACHED() << "Input request on unbound interface";
+  }
 };
 
 }  // namespace
@@ -559,6 +566,9 @@ void RenderWidgetHostImpl::Init() {
 void RenderWidgetHostImpl::InitForFrame() {
   DCHECK(process_->HasConnection());
   renderer_initialized_ = true;
+
+  if (view_)
+    view_->InitForFrame();
 }
 
 void RenderWidgetHostImpl::ShutdownAndDestroyWidget(bool also_delete) {
