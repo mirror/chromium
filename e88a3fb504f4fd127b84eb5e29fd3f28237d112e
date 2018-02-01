@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5914b57f_2df1f1c7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-focus.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-02-01T23:52:24Z",
+      "side": 0,
+      "message": "This test case actually should not care about scroll position at all.  The condition is clicking outside of the message list, which happens when you click below the prompt (suggesting that viewport must be at the bottom).",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "e88a3fb504f4fd127b84eb5e29fd3f28237d112e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
