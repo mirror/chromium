@@ -46,6 +46,7 @@
 #include "platform/mediastream/MediaStreamCenter.h"
 #include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebMediaStreamTrack.h"
 
 namespace blink {
@@ -307,6 +308,16 @@ void MediaStreamTrack::SetConstraints(const WebMediaConstraints& constraints) {
 void MediaStreamTrack::getCapabilities(MediaTrackCapabilities& capabilities) {
   if (image_capture_)
     capabilities = image_capture_->GetMediaTrackCapabilities();
+
+  auto platform_capabilities = component_->Source()->GetCapabilities();
+  capabilities.setDeviceId(platform_capabilities.device_id);
+  size_t size = platform_capabilities.echo_cancellation.size();
+  if (size > 0) {
+    Vector<bool> echo_cancellation(size);
+    for (size_t i = 0; i < size; i++)
+      echo_cancellation[i] = platform_capabilities.echo_cancellation[i];
+    capabilities.setEchoCancellation(echo_cancellation);
+  }
 }
 
 void MediaStreamTrack::getConstraints(MediaTrackConstraints& constraints) {
