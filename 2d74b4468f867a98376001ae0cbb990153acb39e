@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "57c9467e_9cb28aba",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_unpremultiply_and_dither_copy.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T22:39:45Z",
+      "side": 1,
+      "message": "We documented other internal-only extensions. You wrote this, it\u0027s useful to have it somewhere :)",
+      "parentUuid": "a76421eb_ab94a97c",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 42
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bb4f47_6464809f",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_unpremultiply_and_dither_copy.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T22:39:45Z",
+      "side": 1,
+      "message": "This isn\u0027t really a thing... a cube map texture would have a target of TEXTURE_CUBE_MAP, but would have a set of images for each of those targets. I don\u0027t think the code you have supports cube maps as is (you\u0027d need to do 6 copies, one for each face, or provide the target to select the face). Then again, we wouldn\u0027t use this on cube maps (we don\u0027t use them for raster/compositor) so maybe I\u0027d just disallow cube maps for this use case.",
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ca023af_fe45dc05",
         "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
         "patchSetId": 4
@@ -36,6 +77,30 @@
       "writtenOn": "2018-02-02T17:43:52Z",
       "side": 1,
       "message": "Wasn\u0027t 100% sure how you had suggested I address this fn being missing on passthrough command buffer. Were you thinking I basically use \"extension_flag\" to get a flag on feature info, then pass that through to gpu::Capabilities in the renderer?",
+      "range": {
+        "startLine": 4644,
+        "startChar": 18,
+        "endLine": 4644,
+        "endChar": 56
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fa837e_272f4259",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 4644,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T22:39:45Z",
+      "side": 1,
+      "message": "yeah, basically.\n1- we would want to expose whether it\u0027s supported or not to the client side. So we would typically both add the extension to the list of supported extensions (that\u0027d be done in FeatureInfo), and set a bit on gpu::Capabilities for convenience and avoiding round-trips (we\u0027d do that in GLES2DecoderImpl).\n2- extension_flag is used in validation code to make sure the command is only used when the feature flag is set (which we would when the extension is present, similarly in FeatureInfo).\n\nThen we just have to make sure we only expose the extension/set the feature flag when not on passthrough.",
+      "parentUuid": "4ca023af_fe45dc05",
       "range": {
         "startLine": 4644,
         "startChar": 18,
@@ -65,6 +130,64 @@
         "endLine": 458,
         "endChar": 10
       },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850c57d9_d7064103",
+        "filename": "gpu/command_buffer/service/gles2_cmd_copy_texture_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T22:39:45Z",
+      "side": 1,
+      "message": "sg",
+      "parentUuid": "80400891_f0832c38",
+      "range": {
+        "startLine": 458,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 10
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d0fd2d_e3938cf6",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20706,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T22:39:45Z",
+      "side": 1,
+      "message": "The first argument to GetLevelType would be the \"image\" target (i.e. the target for glTexImage2D), not the texture target (i.e. the target for glBindTexture, which is what you got in source_target). They are different for cube maps.\n\nI don\u0027t think this function is well defined for cube maps, unless either you explicitly specify the image target, or you want to copy all 6 faces. At the same time, we don\u0027t use cube maps for raster/compositor, so I don\u0027t think we need to support that use case. Maybe it is simpler to just limit the function to GL_TEXTURE_2D/GL_TEXTURE_RECTANGLE targets.",
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacf32c0_46ecbb5a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20723,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T22:39:45Z",
+      "side": 1,
+      "message": "If the texture was created with glTexStorage2D or something like that, you would have a sized internal format (e.g. GL_RGBA8), so I think you want to account for that. I thought that\u0027s what you intended with the checks on l.20718, which seem redundant with this (if dest_internal_format is GL_RGBA, then format will always be GL_RGBA).",
       "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
