@@ -16,6 +16,24 @@
       "revId": "6e89becd3638d77ce39e85aea1f2200ac83b4af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b6e40a_29464da5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-02T20:12:56Z",
+      "side": 1,
+      "message": "This is because longpress selection is triggering handle events, this CL makes the HandleObserver less related to handle events, so fixed the bug as a side effect.",
+      "parentUuid": "2ece7a4f_68d59848",
+      "revId": "6e89becd3638d77ce39e85aea1f2200ac83b4af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
