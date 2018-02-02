@@ -70,6 +70,30 @@
       "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d3ded6_d47cfb0a",
+        "filename": "services/network/network_context.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T18:58:41Z",
+      "side": 1,
+      "message": "CreateURLLoaderFactory is used, regardless of whether the network service is enabled.  If you\u0027re using SimpleURLLoaders, that\u0027s how you get the URLLoaderFactory to pass to it.\n\nSee https://cs.chromium.org/chromium/src/content/browser/storage_partition_impl.cc?sq\u003dpackage:chromium\u0026l\u003d656 (Note that there\u0027s no magic depending on whether the network service is enabled or not, unlike in GetNetworkContext)",
+      "parentUuid": "237b0f45_276999e2",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
