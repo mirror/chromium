@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa303e62_eb4b25e2",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-02T14:48:31Z",
+      "side": 1,
+      "message": "How about a separate class for the FakeSystemInfo?",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95fd0df3_f1034d3a",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 24
@@ -117,6 +134,23 @@
       "side": 1,
       "message": "I\u0027m planning to delete this after switching to service-based implementation, old code path will be deprecated.\nSo I can make it a Feature, but what is a benefit (vs pulling in another header in here)?",
       "parentUuid": "aa22e794_225a8bdd",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4954302b_58755058",
+        "filename": "services/audio/public/cpp/audio_system_factory.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-02T14:48:31Z",
+      "side": 1,
+      "message": "\"Instance\" isn\u0027t really needed in the name IMO, but up to you.",
       "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
