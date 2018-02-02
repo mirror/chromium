@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d34ff0b_bde5b65c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1174429
+      },
+      "writtenOn": "2018-02-02T09:41:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e477903e_b672a0d8",
+      "range": {
+        "startLine": 589,
+        "startChar": 41,
+        "endLine": 589,
+        "endChar": 43
+      },
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8493350a_b51f5311",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe68025f_4d074b4a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1174429
+      },
+      "writtenOn": "2018-02-02T09:41:39Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "8493350a_b51f5311",
+      "range": {
+        "startLine": 590,
+        "startChar": 5,
+        "endLine": 590,
+        "endChar": 33
+      },
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -80,6 +128,24 @@
       "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c0c1d4_d7eb9bc7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1174429
+      },
+      "writtenOn": "2018-02-02T09:41:39Z",
+      "side": 1,
+      "message": "That\u0027s a good question. I looks like what happens is what alex described:\n\nOn the renderer side:\nThe navigation to about:blank makes \u0027self\u0027 to be set to the opener\u0027s origin.\n\nOn the browser side.\nAfter the DidCommitProvisionalLoad, SetLastCommittedOrigin() is called. \u0027self\u0027 is also set to be the opener\u0027s origin.\n\nI put some log:\n```\n\nwindow.open(\"http://example.com\")    \n* [browser]  render_frame_host_impl.cc(599) RenderFrameHostImpl (constructor) SetSelf \u003d http://www.internetfirstpage.com\n* [renderer] ContentSecurityPolicy.cpp(167) SetupSelf \"http://www.internetfirstpage.com\"\n* [renderer] ContentSecurityPolicy.cpp(167) SetupSelf \"http://example.com\"\n* [renderer] ContentSecurityPolicy.cpp(167) SetupSelf \"http://example.com\"\n* [browser]  render_frame_host_impl.cc(1426) SetLastCommittedOrigin http://example.com\n\nOn the new window:\nlocation.href \u003d \"about:blank\"\n* [renderer] ContentSecurityPolicy.cpp(167) SetupSelf \"http://www.internetfirstpage.com\"\n* [browser]  render_frame_host_impl.cc(1426)] SetLastCommittedOrigin http://www.internetfirstpage.com\n\n```",
+      "parentUuid": "5ced06e1_796ab0f7",
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
