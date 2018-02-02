@@ -2740,7 +2740,16 @@ void Document::Shutdown() {
   // in LocalFrame::CreateView(). See also https://crbug.com/673170 and the
   // comment in LocalFrameView::Dispose().
   HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
-  if (owner_element)
+
+  // If the current EmbeddedContentView is of RemoteFrameView type we should not
+  // remove it (https://crbug.com/807772).
+  bool clear_embedded_content_view =
+      owner_element &&
+      !(owner_element->ContentFrame() &&
+        owner_element->ContentFrame() != frame_ &&
+        owner_element->OwnedEmbeddedContentView() &&
+        owner_element->OwnedEmbeddedContentView()->IsFrameView());
+  if (clear_embedded_content_view)
     owner_element->SetEmbeddedContentView(nullptr);
 
   markers_->PrepareForDestruction();
