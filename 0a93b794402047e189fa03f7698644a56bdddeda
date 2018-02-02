@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "134a2df9_8c20546a",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d752a1b4_528396a9",
+      "range": {
+        "startLine": 466,
+        "startChar": 19,
+        "endLine": 466,
+        "endChar": 40
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "425de7e4_e2308e20",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb3b8b5_022a3dea",
+      "range": {
+        "startLine": 466,
+        "startChar": 41,
+        "endLine": 466,
+        "endChar": 56
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d994fede_7f3b4251",
         "filename": "third_party/zlib/google/zip_reader.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3ef93d_ce3999fe",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done, thanks",
+      "parentUuid": "d994fede_7f3b4251",
+      "range": {
+        "startLine": 270,
+        "startChar": 5,
+        "endLine": 270,
+        "endChar": 44
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a94ee73f_ae16daf2",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "371b7136_caa34550",
+      "range": {
+        "startLine": 344,
+        "startChar": 27,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9dd102_0d0e77c9",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 6
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "2b87a88e_c10e29fc",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done, but I\u0027m not sure I understand this direction. What\u0027s the benefit of listing the files in a comment instead over listing them in ASSERT_FALSE(base::PathExists)s statements?",
+      "parentUuid": "ba9dd102_0d0e77c9",
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07bcf1f8_ddf61643",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 6
@@ -125,6 +239,24 @@
       "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e33b472_dcb09dae",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07bcf1f8_ddf61643",
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +280,30 @@
       "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a427de2_5f262e1c",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-02T20:34:21Z",
+      "side": 1,
+      "message": "Done, though personally I find that introducing too many aliases in tests makes them less readable.",
+      "parentUuid": "5f6d4328_5c859354",
+      "range": {
+        "startLine": 379,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 80
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
