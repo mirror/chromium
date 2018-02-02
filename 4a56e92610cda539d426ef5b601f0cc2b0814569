@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f65f7180_37b080c2",
+        "filename": "chrome/browser/chromeos/policy/temp_certs_cache_nss.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T13:40:49Z",
+      "side": 1,
+      "message": "nit: Probably, rename the argument too - IIUC, you\u0027re proposing to pass here not only authority certs?\nIf you agree, then ditto for |untrusted_authority_certs_| and in other places (like the unit test).",
+      "range": {
+        "startLine": 22,
+        "startChar": 38,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "4a56e92610cda539d426ef5b601f0cc2b0814569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
