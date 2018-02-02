@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "7167002c_78ed4882",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "base::nullopt works here, fwiw",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d341d348_f817c302",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "Ditto: pass by const pointer",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87153e2c_8d936f53",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 19
@@ -36,6 +70,75 @@
       "writtenOn": "2018-02-02T21:04:52Z",
       "side": 1,
       "message": "This comment seems to have gotten very stale. :/",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdcb6b3_5486d894",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2996,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "+1, I mentioned this in an earlier review comment: would be nice to clean this comment up and separate into different returns for handling different cases",
+      "parentUuid": "87153e2c_8d936f53",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bcdd8c_49db8443",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "DCHECK(web_frame_-\u003eClient())\n\nIn almost all cases, if LocalFrameClientImpl is reachable, so is WebFrameClient.",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa0ea22_bd400fcc",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "Is it important to distinguish between no size and 0x0 here? I guess there are actually 0x0 iframes? \u003d/",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765f8e42_caf0da95",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "Add a brief comment here why it\u0027s useful to block further parsing.",
       "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

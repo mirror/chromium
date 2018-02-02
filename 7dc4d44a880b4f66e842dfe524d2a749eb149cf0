@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "df72bbe8_82e9928b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a0ec858_86c3220e",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "294b1d5a_e359bcc6",
         "filename": "content/browser/frame_host/render_frame_proxy_host.h",
         "patchSetId": 12
@@ -124,6 +142,24 @@
       "side": 1,
       "message": "Done. I added the comment, but ended up removing the overload when refactoring to use base::Optional.",
       "parentUuid": "294b1d5a_e359bcc6",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13a45325_c037527e",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "Note that the recommendations for Optional specifically discourage this: https://chromium.googlesource.com/chromium/src/+/master/docs/optional.md#When-not-to-use\n\n(Instead pass by pointer and use nullptr to represent the empty optional)",
+      "parentUuid": "0dcbd147_45fb1188",
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -211,6 +247,24 @@
       "side": 1,
       "message": "Do you have any suggestions?\n\nThe way it\u0027s currently implemented, this is being sent for all local frames, including the main frame, whenever the frame rect changes. In practice, the browser process isn\u0027t using the size of the main frame, but I didn\u0027t special case it.",
       "parentUuid": "53aaf186_122953d0",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3999bec_02f620af",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "I guess the comment should clarify what a frame rect is. For example, is it merely the size of the containing iframe element? What does this value mean for the main frame? et cetera",
+      "parentUuid": "426df62f_f25854d2",
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -351,6 +405,24 @@
       "side": 1,
       "message": "This is a bit complicated.\n\nProcessDataBuffer injects data into the parser (it calls parser-\u003eAppendBytes). When the parser is parsing the input, if it encounters a \u003cscript\u003e tag it\u0027ll execute the script before continuing parsing. Inside this script, we may have something like a sync XHR or a modal dialog, which causes a nested message loop. If we get a DataReceived() IPC inside this nested message loop, we need to protect the parser so we don\u0027t append data in the wrong order. That\u0027s why we also need to call ProcessDataBuffer at the end of this block.\n\nI haven\u0027t verified that the scenario above can happen (we also use a background parser most of the time), but that\u0027s what the comment inside DocumentLoader::DataReceived suggests.\n\nAs for unifying the buffers, I couldn\u0027t come up with a clever solution to make this possible while preserving the state/API surface between the DocumentLoader and the parser. I did consider blocking the parser on the HTMLDocumentParser side, but it turned out to be complicated to synchronize the state between the parser/html construction on the main thread and the background parser.",
       "parentUuid": "86273abb_37001cf7",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d237f756_3f25816d",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T23:58:47Z",
+      "side": 1,
+      "message": "I guess I\u0027m wondering: why can\u0027t we just reuse the existing buffering mechanism for this? If in_data_received_ was a counter instead of a bool, could we just increment it by 1 to avoid further bytes from being fed into the parser? Then, no matter who resumes, it Just Works (since resume only takes affect once the block counter reaches 0).\n\nWe\u0027d have to move the resume logic into an explicit function to be invoked still (by the top-level DataReceived call), but it seems like it should work.",
+      "parentUuid": "68c26c0b_6cc81532",
       "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
