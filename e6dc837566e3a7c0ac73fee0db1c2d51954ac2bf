@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcf8c225_0236c116",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-02T09:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5b9fce0_55d22075",
+      "revId": "e6dc837566e3a7c0ac73fee0db1c2d51954ac2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63696c8d_c605fd83",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T07:48:34Z",
       "side": 1,
       "message": "Not needed?",
+      "revId": "e6dc837566e3a7c0ac73fee0db1c2d51954ac2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39818da_fa33c20f",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-02T09:02:06Z",
+      "side": 1,
+      "message": "Need for testing::ElementsAreArray.",
+      "parentUuid": "63696c8d_c605fd83",
       "revId": "e6dc837566e3a7c0ac73fee0db1c2d51954ac2bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
