@@ -154,6 +154,9 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
   // createLocalChild(). We should update the Blink interface so it also takes
   // the origin. Then it will be clear that the replication call is only needed
   // for the case of setting up a main frame proxy.
+  LOG(INFO) << replicated_state.origin.Serialize();
+  LOG(INFO) << replicated_state.feature_policy_header.size();
+
   proxy->SetReplicatedState(replicated_state);
 
   return proxy.release();

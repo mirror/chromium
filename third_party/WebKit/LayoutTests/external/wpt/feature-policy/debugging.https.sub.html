@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<body>
+  <script src=/resources/testharness.js></script>
+  <script src=/resources/testharnessreport.js></script>
+  <script src=/feature-policy/resources/featurepolicy.js></script>
+  <script>
+  /*
+  fullscreen is allowed for all at the top-level document. It can be disabled by
+  subframes.
+  */
+  'use strict';
+  const same_origin = 'http://{{domains[]}}:{{ports[http][0]}}';
+  const cross_origin = 'http://{{domains[www]}}:{{ports[http][0]}}';
+  const same_origin_src = '/feature-policy/resources/debugging-debugging.https.sub.html';
+  const cross_origin_src = cross_origin + same_origin_src;
+
+  debug_subframe_header_policy('fullscreen', '*', cross_origin_src,
+      {local_all: true, local_self: true, local_none: false,
+      remote_all: true, remote_self: true, remote_none: false},
+      'Test nested header policy with remote iframe on policy "fullscreen *"');
+
+  // Run the exact test for the second time will cause it to fail.
+  debug_subframe_header_policy('fullscreen', '*', cross_origin_src,
+      {local_all: true, local_self: true, local_none: false,
+      remote_all: true, remote_self: true, remote_none: false},
+      'Test nested header policy with remote iframe on policy "fullscreen *"');
+  </script>
+</body>
