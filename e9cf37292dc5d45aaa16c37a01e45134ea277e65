@@ -16,6 +16,24 @@
       "revId": "e9cf37292dc5d45aaa16c37a01e45134ea277e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfe4abf_05043fe4",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-02-02T22:00:12Z",
+      "side": 1,
+      "message": "I like the DCHECK idea better...then it would actually catch incorrect usage rather than suppress it.",
+      "parentUuid": "ec072e20_c1d0443c",
+      "revId": "e9cf37292dc5d45aaa16c37a01e45134ea277e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
