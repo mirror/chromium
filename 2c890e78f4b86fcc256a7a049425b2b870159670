@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1bd2f4e_46d7ef90",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-02T00:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d74cc867_208c80d6",
+      "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2667a7a0_1a01c75a",
         "filename": "ui/gfx/mac/io_surface.cc",
         "patchSetId": 5
@@ -56,6 +74,24 @@
       "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0709a53_f5aab8d8",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-02T00:49:07Z",
+      "side": 1,
+      "message": "Would it? I just saw that the Release() in the Traits does\n    CFRelease(object);\nand what we want is CGColorSpaceRelease(). Glad to remove \nthis chunky unique_ptr though.\n\nhttps://cs.chromium.org/chromium/src/base/mac/scoped_cftyperef.h?type\u003dcs\u0026q\u003dScopedCFTypeRef\u0026sq\u003dpackage:chromium\u0026l\u003d38\n\nOh wait, I\u0027m just re-reading the documentation\nhttps://developer.apple.com/documentation/coregraphics/1408855-cgcolorspacerelease?language\u003dobjc\nsays :\n\u003e Discussion\n\u003e This function is equivalent to CFRelease, except that it does not \n\u003e cause an error if the cs parameter is NULL.\n\nSo I can use ScopedCFTypeRef, yay!",
+      "parentUuid": "025940d0_121f20b7",
+      "revId": "2c890e78f4b86fcc256a7a049425b2b870159670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
