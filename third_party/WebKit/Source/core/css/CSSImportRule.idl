@@ -23,8 +23,7 @@
 [
     Exposed=Window
 ] interface CSSImportRule : CSSRule {
-    readonly attribute DOMString href;
-    // TODO(foolip): media should have [PutForwards=mediaText].
-    [SameObject] readonly attribute MediaList media;
+    readonly attribute USVString href;
+    [SameObject, PutForwards=mediaText] readonly attribute MediaList media;
     [SameObject] readonly attribute CSSStyleSheet styleSheet;
 };
