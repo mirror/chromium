@@ -805,6 +805,24 @@
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d230b12a_12c50df3",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T00:34:20Z",
+      "side": 1,
+      "message": "\"If you need to do #1 because chrome isn\u0027t necessarily running (and so you can\u0027t share reporting with chrome)\"\n\nI am afraid this is what I am facing now.",
+      "parentUuid": "93b777fa_d7961c19",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
