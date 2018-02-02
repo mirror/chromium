@@ -94,6 +94,7 @@ source_set("exo") {
 
   if (is_chromeos) {
     deps += [ "//chromeos" ]
+    defines = [ "INTERNAL_WINDOW_MODE" ]
   }
 }
 
