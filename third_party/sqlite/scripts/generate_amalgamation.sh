@@ -16,3 +16,6 @@ cp -f $FILES ../../amalgamation
 
 cd ..
 rm -rf bld
+
+../scripts/extract_sqlite_api.py ../amalgamation/sqlite3.h \
+                                 ../amalgamation/rename_exports.h
