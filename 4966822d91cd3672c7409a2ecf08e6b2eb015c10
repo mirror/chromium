@@ -16,6 +16,24 @@
       "revId": "4966822d91cd3672c7409a2ecf08e6b2eb015c10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f20d72_0f05da96",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-02-02T05:35:26Z",
+      "side": 1,
+      "message": "I think we had a similar discussion on this subject with hidehiko@ on another CL. This style aligns with the choice we made there not to return the requests directly in the spirit of treating the fake like a fake (i.e. see the two functions above, get_id_for_disk_migrated_to_dircrypto(), etc.)\n\nI agree that the name is a bit long but I think it is a compromise between conciseness and clarity, with this particular case leaning more toward the clarity side at the expense of conciseness :)",
+      "parentUuid": "3fdb4818_b576628c",
+      "revId": "4966822d91cd3672c7409a2ecf08e6b2eb015c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
