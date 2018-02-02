@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5a5361_c897eb6a",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T00:06:48Z",
+      "side": 1,
+      "message": "I thought about completely removing the dropdown-item class, and just have\n\u003cslot\u003e\u003c/slot\u003e\n\nso that cr-action-menu consumes every child, but there is a complication with this case that has an item that is consumed, but it is not a dropdown-item, so I prefer to explore a cleanup in a follow up CL.",
+      "range": {
+        "startLine": 288,
+        "startChar": 12,
+        "endLine": 288,
+        "endChar": 28
+      },
+      "revId": "48db1f8823eafbf50131d59dd70ac4c7452b88c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
