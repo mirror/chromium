@@ -34,6 +34,7 @@
 #include "base/allocator/partition_allocator/partition_alloc.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/CheckedNumeric.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/allocator/Partitions.h"
 namespace WTF {
@@ -50,6 +51,9 @@ typedef WTF::Vector<PartitionEntry, kMaxPartitions> PartitionVector;
 
 base::PartitionRootGeneric* FindOrCreatePartition(void* partition_key) {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(PartitionVector, partitions, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(WTF::Mutex, mutex, ());
+
+  WTF::MutexLocker locker(mutex);
   for (auto& entry : partitions) {
     if (entry.first == partition_key) {
       return entry.second->root();
