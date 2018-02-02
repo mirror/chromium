@@ -46,6 +46,30 @@
       "revId": "0970adc03bd3589eec4ef3f08e33231444ea37bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c56137_23dd4d6b",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-02T00:12:02Z",
+      "side": 1,
+      "message": "SGTM. Done.",
+      "parentUuid": "5ba0b2aa_efaf3197",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 34
+      },
+      "revId": "0970adc03bd3589eec4ef3f08e33231444ea37bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
