@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52e8208e_6a2fc260",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Don\u0027t add {} for if/else.",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63fe22e0_a7c1a831",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Should be private with an accessor.",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacb0fd6_7a73066d",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Make this gfx::Rect child_rect(200, 100).",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adf56c8_0d4e7765",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "return CompositorFrameBuilder().AddRenderPass(std::move(pass)).Build();",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e13c9b3_379bea6c",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Define inside the test case scope (preferably on the line before it\u0027s used) since it\u0027s only used there.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 48
+      },
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843cbbd4_a97b7a2c",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "Explain the two different cases that this test hits (eg. no embedded surface and one embedded surface).",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee54739_748b9e22",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Change this to mojo::MakeRequest(\u0026sink_info) and delete |sink_request|.",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadff7e9_aa34fc39",
+        "filename": "components/viz/client/client_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Change this to mojo::MakeRequest(\u0026client) and delete |client_request|.",
+      "range": {
+        "startLine": 194,
+        "startChar": 37,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6178c93b_fc3ba2d5",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "nit: Remove this line.",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2461c4c8_4469a37e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "IsVizHitTestingEnabled() is always true here now that I think about it.\n\nparams.use_viz_hit_test \u003d true;",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca436af_866abcfe",
+        "filename": "ui/aura/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T16:36:20Z",
+      "side": 1,
+      "message": "Looks like you missed this one?",
+      "revId": "d6e91b133f0b35315befe33f865d2580d8f458ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
