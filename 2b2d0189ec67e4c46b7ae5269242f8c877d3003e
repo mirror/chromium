@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "69b225f0_29f63439",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T19:14:14Z",
+      "side": 1,
+      "message": "Not sure how you\u0027d have conversion methods like this in common? common can\u0027t depend on core, while core can depend on common. It also seems fairly normal to have conversions from core or platform types to Web types in core or platform directly, which or more or less the same situation?",
+      "parentUuid": "dc8cc37f_8ce6f381",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "2b2d0189ec67e4c46b7ae5269242f8c877d3003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edf84f67_384c98ef",
         "filename": "third_party/WebKit/common/message_port/cloneable_message_struct_traits.cc",
         "patchSetId": 12

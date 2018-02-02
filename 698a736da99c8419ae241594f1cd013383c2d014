@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fafd459_cff6ea20",
+        "filename": "content/common/content_param_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T19:14:14Z",
+      "side": 1,
+      "message": "That\u0027s what I thought too, but as it turns out a const mojo::StructPtr actually returns a non-const reference to its underlying struct, so there is no problem with destructively reading from a const SerializedBlobPtr\u0026... That definitely makes the code easier to read.",
+      "parentUuid": "1c8e8e33_0985ef10",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 53
+      },
+      "revId": "698a736da99c8419ae241594f1cd013383c2d014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09483c31_41fa5370",
         "filename": "content/common/content_param_traits.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "698a736da99c8419ae241594f1cd013383c2d014",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245b7a03_72d3d9d5",
+        "filename": "content/common/content_param_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T19:14:14Z",
+      "side": 1,
+      "message": "Ah yes, good point. Done.",
+      "parentUuid": "09483c31_41fa5370",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 3
+      },
+      "revId": "698a736da99c8419ae241594f1cd013383c2d014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
