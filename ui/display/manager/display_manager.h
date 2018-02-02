@@ -354,6 +354,14 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     mixed_mirror_mode_params_ = mixed_params;
   }
 
+  void dec_screen_capture_active_counter() { --screen_capture_active_counter_; }
+
+  void inc_screen_capture_active_counter() { ++screen_capture_active_counter_; }
+
+  bool screen_capture_is_active() const {
+    return screen_capture_active_counter_ > 0;
+  }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -645,6 +653,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   bool unified_desktop_enabled_ = false;
 
   bool internal_display_has_accelerometer_ = false;
+
+  // Set during screen capture to enable software compositing of mouse cursor,
+  // this is a counter to enable multiple active sessions at once.
+  int screen_capture_active_counter_ = 0;
 
   base::Closure created_mirror_window_;
 
