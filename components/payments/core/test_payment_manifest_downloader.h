@@ -6,6 +6,7 @@
 #define COMPONENTS_PAYMENTS_CORE_TEST_PAYMENT_MANIFEST_DOWNLOADER_H_
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "base/macros.h"
@@ -45,14 +46,19 @@ namespace payments {
 //   // Actual URL downloaded is https://127.0.0.1:9090/webpay.
 //   downloader.DownloadPaymentMethodManifest(
 //       "https://bobpay.com/webpay", callback);
-class TestDownloader : public PaymentMethodManifestDownloaderInterface {
+class TestDownloader : public PaymentManifestDownloader {
  public:
   explicit TestDownloader(
       const scoped_refptr<net::URLRequestContextGetter>& context);
   ~TestDownloader() override;
 
-  // PaymentMethodManifestDownloaderInterface implementation.
+  // PaymentManifestDownloader implementation.
   void DownloadPaymentMethodManifest(
+      const GURL& url,
+      PaymentManifestDownloadCallback callback) override;
+
+  // PaymentManifestDownloader implementation.
+  void DownloadWebAppManifest(
       const GURL& url,
       PaymentManifestDownloadCallback callback) override;
 
@@ -91,9 +97,6 @@ class TestDownloader : public PaymentMethodManifestDownloaderInterface {
   void AddTestServerURL(const std::string& prefix, const GURL& test_server_url);
 
  private:
-  // The actual downloader.
-  PaymentManifestDownloader impl_;
-
   // The mapping from the URL prefix to the URL of the test server to be used.
   // Example 1:
   //
