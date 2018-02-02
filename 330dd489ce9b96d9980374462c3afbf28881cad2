@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "babe309c_6704201f",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T02:13:20Z",
+      "side": 1,
+      "message": "This is kinda long. I tried something like\nauto primary \u003d landscape ? width() : height();\nauto primaryPhantom \u003d landscape ? phatom_bounds.width() : phantom_bounds.height();\n....\n\nand then\ngfx::Vector scale \u003d (primaryPhantom/primary, 1.0);\nFlipVector(\u0026scale);\ntransform.ApplyScale(scale);\n\nbecause all the transforms are inversed using height instead of width but i found that even more confusing to read",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
