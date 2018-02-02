@@ -34,6 +34,23 @@
       "revId": "6e89becd3638d77ce39e85aea1f2200ac83b4af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea67a5e_f9e739fc",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-02T20:14:18Z",
+      "side": 1,
+      "message": "boliu@, it\u0027s this line to fixed that bug, to check if the current drag is not from longpress_drag_selector.",
+      "revId": "6e89becd3638d77ce39e85aea1f2200ac83b4af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
