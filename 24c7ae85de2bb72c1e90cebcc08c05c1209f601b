@@ -16,6 +16,24 @@
       "revId": "24c7ae85de2bb72c1e90cebcc08c05c1209f601b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541597c9_ad13ab00",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-02T16:40:15Z",
+      "side": 1,
+      "message": "No that\u0027s not ruled out. However there\u0027s a limited time-window for this to happen. The navigation to A2 must be started after we\u0027ve sent the same-document back to A1 to the renderer process, and it must reach ReadyToCommit before we get the response back from the renderer process that A1 needs to be restarted as cross-document. The effect is that we will simply commit a cross-document navigation to A1 in that case.\n\nSince this kind of race already happens without the fallback (eg we ask to navigate to A1 and A1#foo in a row), I\u0027m not sure we want to have a fallback to go the other direction. Especially since we will end up committing the navigation in that case, instead of dropping it if we don\u0027t have a fallback to go from same-document to cross-document.",
+      "parentUuid": "2d34808b_04e8ae5a",
+      "revId": "24c7ae85de2bb72c1e90cebcc08c05c1209f601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
