@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94e76fa_783d0247",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_TAO_zero.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 9
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef51916_de59cb42",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_buffer_full_when_populate_entries.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "Do we need this log?",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd843b1_5cdae378",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_buffer_full_when_populate_entries.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "Is it worth a comment to indicate why this is 5?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574ffe66_262b9be5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_buffer_full_when_populate_entries.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "Can we give this a better name? buffer_full_count perhaps?",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b34985_30eac857",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_buffer_full_when_populate_entries.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "Optional: generally would be buffer_full_callback.\nI don\u0027t care strongly though.",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d378c8_f1d19249",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_buffer_full_when_shrink_buffer_size.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "buffer_full_count",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 13
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d86b9b4_0145c2d4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_store_and_clear_during_callback.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:47:45Z",
+      "side": 1,
+      "message": "If we\u0027re updating style here anyways, might as well switch to a range based for loop.",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 50
+      },
+      "revId": "db498fb1f558e34d3b4d421b4584977041ad430a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
