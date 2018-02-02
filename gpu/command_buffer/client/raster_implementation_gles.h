@@ -10,6 +10,7 @@
 #include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "gpu/raster_export.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 namespace gpu {
 
@@ -140,10 +141,12 @@ class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
                            GLint pixel_config) override;
   void RasterCHROMIUM(const cc::DisplayItemList* list,
                       cc::ImageProvider* provider,
-                      const gfx::Vector2d& translate,
+                      const gfx::Size& content_size,
+                      const gfx::Rect& full_raster_rect,
                       const gfx::Rect& playback_rect,
                       const gfx::Vector2dF& post_translate,
-                      GLfloat post_scale) override;
+                      GLfloat post_scale,
+                      bool requires_clear) override;
   void EndRasterCHROMIUM() override;
 
   // Raster via GrContext.
@@ -152,6 +155,7 @@ class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
 
  private:
   gles2::GLES2Interface* gl_;
+  SkColor background_color_;
   ContextSupport* support_;
   bool use_texture_storage_;
   bool use_texture_storage_image_;
