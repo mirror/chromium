@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f0a97e3_19e560af",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-02T20:37:47Z",
+      "side": 1,
+      "message": "nit: SetSelectionIndices to be clear that we\u0027re setting the index not the selection text.",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 19
+      },
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24edabe7_6756e304",
         "filename": "chrome/browser/vr/model/color_scheme.cc",
         "patchSetId": 2
@@ -13,6 +36,52 @@
       "writtenOn": "2018-02-02T19:22:11Z",
       "side": 1,
       "message": "Will selection colors change in incog?",
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3765a829_7ffb98db",
+        "filename": "chrome/browser/vr/model/text_input_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-02T20:37:47Z",
+      "side": 1,
+      "message": "why are we talking abs here? Shouldn\u0027t selection end always be \u003e selection start?",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93aa9353_34114f56",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-02T20:37:47Z",
+      "side": 1,
+      "message": "Were you planning on removing this? Looks like we\u0027ve added it to tests but missed removing from here?",
+      "range": {
+        "startLine": 1877,
+        "startChar": 6,
+        "endLine": 1877,
+        "endChar": 21
+      },
       "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
