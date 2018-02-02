@@ -742,16 +742,18 @@ TEST_F(NGLayoutSelectionTest, SelectOnOneText) {
 
   LayoutObject* const foo =
       GetDocument().body()->firstChild()->GetLayoutObject();
-  EXPECT_EQ(std::make_pair(0u, 0u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(foo)));
+  EXPECT_EQ(
+      LayoutSelectionStatus(SelectionState::kNone, 0u, 0u),
+      Selection().LayoutSelectionStartEndForNG(GetNGPhysicalTextFragment(foo)));
   LayoutObject* const bar = GetDocument()
                                 .body()
                                 ->firstChild()
                                 ->nextSibling()
                                 ->firstChild()
                                 ->GetLayoutObject();
-  EXPECT_EQ(std::make_pair(4u, 5u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(bar)));
+  EXPECT_EQ(
+      LayoutSelectionStatus(SelectionState::kStartAndEnd, 4u, 5u),
+      Selection().LayoutSelectionStartEndForNG(GetNGPhysicalTextFragment(bar)));
 }
 
 TEST_F(NGLayoutSelectionTest, FirstLetterInAnotherBlockFlow) {
@@ -767,12 +769,14 @@ TEST_F(NGLayoutSelectionTest, FirstLetterInAnotherBlockFlow) {
   Node* const foo = GetDocument().body()->firstChild()->nextSibling();
   const LayoutTextFragment* const foo_f =
       ToLayoutTextFragment(AssociatedLayoutObjectOf(*foo, 0));
-  EXPECT_EQ(std::make_pair(0u, 1u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(foo_f)));
+  EXPECT_EQ(LayoutSelectionStatus(SelectionState::kStart, 0u, 1u),
+            Selection().LayoutSelectionStartEndForNG(
+                GetNGPhysicalTextFragment(foo_f)));
   const LayoutTextFragment* const foo_oo =
       ToLayoutTextFragment(AssociatedLayoutObjectOf(*foo, 1));
-  EXPECT_EQ(std::make_pair(1u, 2u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(foo_oo)));
+  EXPECT_EQ(LayoutSelectionStatus(SelectionState::kEnd, 1u, 2u),
+            Selection().LayoutSelectionStartEndForNG(
+                GetNGPhysicalTextFragment(foo_oo)));
 }
 
 TEST_F(NGLayoutSelectionTest, TwoNGBlockFlows) {
@@ -788,16 +792,18 @@ TEST_F(NGLayoutSelectionTest, TwoNGBlockFlows) {
   TEST_NO_NEXT_LAYOUT_OBJECT();
   LayoutObject* const foo =
       GetDocument().body()->firstChild()->firstChild()->GetLayoutObject();
-  EXPECT_EQ(std::make_pair(1u, 3u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(foo)));
+  EXPECT_EQ(
+      LayoutSelectionStatus(SelectionState::kStart, 1u, 3u),
+      Selection().LayoutSelectionStartEndForNG(GetNGPhysicalTextFragment(foo)));
   LayoutObject* const bar = GetDocument()
                                 .body()
                                 ->firstChild()
                                 ->nextSibling()
                                 ->firstChild()
                                 ->GetLayoutObject();
-  EXPECT_EQ(std::make_pair(0u, 2u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(bar)));
+  EXPECT_EQ(
+      LayoutSelectionStatus(SelectionState::kEnd, 0u, 2u),
+      Selection().LayoutSelectionStartEndForNG(GetNGPhysicalTextFragment(bar)));
 }
 
 TEST_F(NGLayoutSelectionTest, MixedBlockFlowsAsSibling) {
@@ -814,8 +820,9 @@ TEST_F(NGLayoutSelectionTest, MixedBlockFlowsAsSibling) {
   TEST_NO_NEXT_LAYOUT_OBJECT();
   LayoutObject* const foo =
       GetDocument().body()->firstChild()->firstChild()->GetLayoutObject();
-  EXPECT_EQ(std::make_pair(1u, 3u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(foo)));
+  EXPECT_EQ(
+      LayoutSelectionStatus(SelectionState::kStart, 1u, 3u),
+      Selection().LayoutSelectionStartEndForNG(GetNGPhysicalTextFragment(foo)));
   EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
 }
 
@@ -851,8 +858,9 @@ TEST_F(NGLayoutSelectionTest, MixedBlockFlowsDecendant) {
   TEST_NO_NEXT_LAYOUT_OBJECT();
   LayoutObject* const foo =
       GetDocument().body()->firstChild()->firstChild()->GetLayoutObject();
-  EXPECT_EQ(std::make_pair(1u, 3u), Selection().LayoutSelectionStartEndForNG(
-                                        GetNGPhysicalTextFragment(foo)));
+  EXPECT_EQ(
+      LayoutSelectionStatus(SelectionState::kStart, 1u, 3u),
+      Selection().LayoutSelectionStartEndForNG(GetNGPhysicalTextFragment(foo)));
   EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
 }
 
