@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c41d83_d9a15bf8",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-02T18:17:34Z",
+      "side": 1,
+      "message": "Probably the N can be made a feature param so we can control from a server-side config, but that can be done in a future CL.",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "4bfd78954ff45e12007d158a5ab417c5988256a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a707da8e_431efea9",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-02T18:17:34Z",
+      "side": 1,
+      "message": "Nit: g_",
+      "revId": "4bfd78954ff45e12007d158a5ab417c5988256a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
