@@ -22,6 +22,30 @@
       "revId": "49225dcd177a41246f3375225a5b45c9c6f24a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08831e7a_9d61a060",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T13:42:12Z",
+      "side": 1,
+      "message": "That\u0027s a good idea, or at any rate wrapping up the SharedMemoryHandle uses makes sense.\n\nMaybe it would short-circuit some work to ask Ken what he thinks would work best in terms of mojo process-passing details?",
+      "parentUuid": "1b0e86ea_69b5e6ec",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "49225dcd177a41246f3375225a5b45c9c6f24a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
