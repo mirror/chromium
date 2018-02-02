@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff72146_36a4562d",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-02T02:37:17Z",
+      "side": 0,
+      "message": "Option 1.\nI think deleting this line is all you need to do.\n\nA bot will import everything else. It will automatically add entries to NeverFixTests for the failing tests, that we can then tidy up (as you have).\n\nOption 2.\nA couple of times I have added a single line to NeverFixTests for the directory at the same time as I deleted a line from W3CImportExpectations. Then I waited for the bot, then I changed NeverFixTests / TestExpectations to run all tests except those that fail/timeout.",
+      "revId": "97658ebcea02e8e508a2957012c72fc9ee7bd04c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
