@@ -3594,7 +3594,8 @@ void AXPlatformNodeWin::HandleSpecialTextOffset(LONG* offset) {
     GetSelectionOffsets(&selection_start, &selection_end);
     if (selection_end < 0)
       *offset = 0;
-    *offset = static_cast<LONG>(selection_end);
+    else
+      *offset = static_cast<LONG>(selection_end);
   }
 }
 
