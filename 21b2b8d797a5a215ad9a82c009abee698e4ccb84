@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f68312f9_7a2769c8",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T20:43:30Z",
+      "side": 1,
+      "message": "Is there a reason the build files have too live outside the code? Can\u0027t the internal directory have it\u0027s own build file? Far easier to keep the build file with the code so that you don\u0027t have to worry about keeping two separate things in sync.",
+      "parentUuid": "997adf28_5e0feb23",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 49
+      },
+      "revId": "21b2b8d797a5a215ad9a82c009abee698e4ccb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3595b7_6f72a9af",
         "filename": "chromeos/services/assistant/BUILD.gn",
         "patchSetId": 7
