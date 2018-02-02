@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6abb6dd8_cfeb42d7",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T19:55:51Z",
+      "side": 1,
+      "message": "I tried this, but custom_views_ is unique_ptr, can not search the raw ptr.",
+      "parentUuid": "0ae9ddab_77b2c882",
+      "revId": "48600904ee3c59456666fe787986b4465e383a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf83d893_9ff7cc46",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "48600904ee3c59456666fe787986b4465e383a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a21392_bd180ee1",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf83d893_9ff7cc46",
+      "revId": "48600904ee3c59456666fe787986b4465e383a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
