@@ -28,6 +28,8 @@ class ImageButton;
 
 namespace ash {
 
+class OverviewWindowMask;
+class RoundedRectView;
 class WindowSelector;
 class WindowGrid;
 
@@ -129,6 +131,14 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   // |window_|'s bounds change.
   void UpdateWindowDimensionsType();
 
+  // Windows which have extreme bounds have a backdrop, so that the window does
+  // not appear to be floating. |vertical_offset| is used to adjust the mask for
+  // the window since the window transform used to calculate the mask does not
+  // account for the now hidden title bar. This function does nothing if the
+  // window is not one with extreme bounds.
+  void EnableBackdropIfNeeded(int vertical_offset);
+  void DisableBackdrop();
+
   // Sets if the item is dimmed in the overview. Changing the value will also
   // change the visibility of the transform windows.
   void SetDimmed(bool dimmed);
@@ -149,6 +159,8 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   void HandleDragEvent(const gfx::Point& location_in_screen);
   void ActivateDraggedWindow();
   void ResetDraggedWindowGesture();
+
+  RoundedRectView* GetBackdropViewForTesting();
 
  private:
   class CaptionContainerView;
@@ -264,6 +276,13 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   // Pointer to the WindowGrid that contains |this|. Guaranteed to be non-null
   // for the lifetime of |this|.
   WindowGrid* window_grid_;
+
+  // Mask applied to the backdrop which is shown when the original window has
+  // extreme bounds (one dimension is more than twice the other). The backdrop
+  // is part of |caption_container_view_|, which is on top of the transformed
+  // window. |backdrop_mask_| is responsible for masking out the section where
+  // the transformed window is, so that it does not looked blurred out.
+  std::unique_ptr<OverviewWindowMask> backdrop_mask_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowSelectorItem);
 };

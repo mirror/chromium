@@ -856,6 +856,8 @@ component("ash") {
     "wm/overview/overview_utils.h",
     "wm/overview/overview_window_drag_controller.cc",
     "wm/overview/overview_window_drag_controller.h",
+    "wm/overview/overview_window_mask.cc",
+    "wm/overview/overview_window_mask.h",
     "wm/overview/rounded_rect_view.cc",
     "wm/overview/rounded_rect_view.h",
     "wm/overview/scoped_hide_overview_windows.cc",

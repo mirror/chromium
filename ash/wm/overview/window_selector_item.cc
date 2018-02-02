@@ -15,6 +15,7 @@
 #include "ash/wm/overview/overview_animation_type.h"
 #include "ash/wm/overview/overview_utils.h"
 #include "ash/wm/overview/overview_window_drag_controller.h"
+#include "ash/wm/overview/overview_window_mask.h"
 #include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
 #include "ash/wm/overview/scoped_transform_overview_window.h"
@@ -138,6 +139,10 @@ constexpr SkColor kCloseButtonInkDropRippleHighlightColor =
 
 // The font delta of the overview window title.
 constexpr int kLabelFontDelta = 2;
+
+// Values of the backdrop.
+constexpr int kBackdropRoundingDp = 4;
+constexpr SkColor kBackdropColor = SkColorSetARGBMacro(0x24, 0xFF, 0xFF, 0xFF);
 
 // Convenience method to fade in a Window with predefined animation settings.
 // Note: The fade in animation will occur after a delay where the delay is how
@@ -462,6 +467,12 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
         title_label_(title_label),
         cannot_snap_label_(cannot_snap_label),
         close_button_(close_button) {
+    backdrop_view_ = new RoundedRectView(kBackdropRoundingDp, kBackdropColor);
+    backdrop_view_->SetPaintToLayer();
+    backdrop_view_->layer()->SetFillsBoundsOpaquely(false);
+    backdrop_view_->SetVisible(false);
+    AddChildView(backdrop_view_);
+
     if (image_view_)
       background_->AddChildView(image_view_);
     background_->AddChildView(title_label_);
@@ -496,6 +507,8 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
 
   ShieldButton* listener_button() { return listener_button_; }
 
+  RoundedRectView* backdrop_view() { return backdrop_view_; }
+
   void SetCannotSnapLabelVisibility(bool visible) {
     AnimateSplitviewLabelOpacity(cannot_snap_container_->layer(), visible);
   }
@@ -527,6 +540,16 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
     cannot_snap_container_->SetBoundsRect(cannot_snap_bounds);
 
     const int visible_height = close_button_->GetPreferredSize().height();
+    gfx::Rect backdrop_bounds = bounds;
+    backdrop_bounds.Inset(0, visible_height, 0, 0);
+    backdrop_view_->SetBoundsRect(backdrop_bounds);
+    // Update the bounds of the mask to match the updated backdrop bounds, if
+    // the mask exists.
+    if (backdrop_view_->layer()->layer_mask_layer()) {
+      backdrop_view_->layer()->layer_mask_layer()->SetBounds(
+          backdrop_view_->layer()->bounds());
+    }
+
     gfx::Rect background_bounds(gfx::Rect(bounds.size()));
     background_bounds.set_height(visible_height);
     background_->SetBoundsRect(background_bounds);
@@ -568,6 +591,7 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
   views::Label* cannot_snap_label_;
   RoundedRectView* cannot_snap_container_;
   views::ImageButton* close_button_;
+  RoundedRectView* backdrop_view_;
 
   DISALLOW_COPY_AND_ASSIGN(CaptionContainerView);
 };
@@ -720,6 +744,41 @@ void WindowSelectorItem::UpdateWindowDimensionsType() {
   transform_window_.UpdateWindowDimensionsType();
 }
 
+void WindowSelectorItem::EnableBackdropIfNeeded(int vertical_offset) {
+  RoundedRectView* backdrop = caption_container_view_->backdrop_view();
+  // Normal windows have no backdrop.
+  if (GetWindowDimensionsType() ==
+      ScopedTransformOverviewWindow::GridWindowFillMode::kNormal) {
+    backdrop->SetVisible(false);
+    return;
+  }
+
+  // |backdrop| is part of widget which is stacked above |window|. To ensure
+  // that the window is not covered by |backdrop|, apply a mask the size of
+  // window. |window| will be transformed so that it is fit in the center of
+  // |backrop|'s bounds, after applying the given |vertical_offset|.
+  aura::Window* window = GetWindow();
+  ui::Layer* mask_parent = caption_container_view_->backdrop_view()->layer();
+  gfx::RectF bounds(window->bounds());
+  window->transform().TransformRect(&bounds);
+  const gfx::Size size(static_cast<int>(bounds.width()),
+                       static_cast<int>(bounds.height()) - vertical_offset);
+  gfx::Rect crop_bounds(mask_parent->bounds().size());
+  crop_bounds.ClampToCenteredSize(size);
+
+  backdrop_mask_ = std::make_unique<OverviewWindowMask>(
+      gfx::Vector2dF(1.f, 1.f), /*inverted=*/true);
+  backdrop_mask_->layer()->SetBounds(mask_parent->bounds());
+  backdrop_mask_->set_crop_bounds(crop_bounds);
+  mask_parent->SetMaskLayer(backdrop_mask_->layer());
+}
+
+void WindowSelectorItem::DisableBackdrop() {
+  caption_container_view_->backdrop_view()->SetVisible(false);
+  backdrop_mask_.reset();
+  caption_container_view_->backdrop_view()->layer()->SetMaskLayer(nullptr);
+}
+
 void WindowSelectorItem::SetDimmed(bool dimmed) {
   dimmed_ = dimmed;
   SetOpacity(dimmed ? kDimmedItemOpacity : 1.0f);
@@ -790,6 +849,10 @@ void WindowSelectorItem::ActivateDraggedWindow() {
 void WindowSelectorItem::ResetDraggedWindowGesture() {
   DCHECK_EQ(this, window_selector_->window_drag_controller()->item());
   window_selector_->ResetDraggedWindowGesture();
+}
+
+RoundedRectView* WindowSelectorItem::GetBackdropViewForTesting() {
+  return caption_container_view_->backdrop_view();
 }
 
 gfx::Rect WindowSelectorItem::GetTargetBoundsInScreen() const {
