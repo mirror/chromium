@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c6f267e0_7e0c7938",
+        "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroup.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-02T18:47:19Z",
+      "side": 1,
+      "message": "To summarize my current understanding of the effect of this CL, then:\n\n1. No effect on layout code\n2. Increases the size of the last column to contain all remaining content (this is\nthe effect of MultiColumnFragmentainerGroup.cpp:56-57 right?), which is similar to\nputting all content into the last column and overflowing\n\nIs this correct?",
+      "parentUuid": "b18e895b_b1670361",
+      "revId": "bc9d0888becc49428b2d8a3347de480718bdf896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "891b97af_8154039e",
         "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroupTest.cpp",
         "patchSetId": 4
