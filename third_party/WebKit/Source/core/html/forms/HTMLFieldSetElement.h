@@ -25,6 +25,8 @@
 #define HTMLFieldSetElement_h
 
 #include "core/CoreExport.h"
+#include "core/dom/Document.h"
+#include "core/dom/DocumentElementCounts.h"
 #include "core/html/forms/HTMLFormControlElement.h"
 
 namespace blink {
@@ -33,6 +35,7 @@ class HTMLCollection;
 
 class CORE_EXPORT HTMLFieldSetElement final : public HTMLFormControlElement {
   DEFINE_WRAPPERTYPEINFO();
+  COUNTER_CHANGE_OVERLOADS(HTMLFieldSetElement);
 
  public:
   static HTMLFieldSetElement* Create(Document&);

@@ -31,6 +31,7 @@
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/html/forms/ValidityState.h"
 #include "core/html_names.h"
+#include "platform/bindings/V8PerIsolateData.h"
 
 namespace blink {
 
@@ -169,6 +170,10 @@ void ListedElement::ResetFormOwner() {
   HTMLElement* element = ToHTMLElement(this);
   const AtomicString& form_id(element->FastGetAttribute(formAttr));
   HTMLFormElement* nearest_form = element->FindFormAncestor();
+
+  if (!form_ && !nearest_form && form_id.IsNull())
+    return;
+
   // 1. If the element's form owner is not null, and either the element is not
   // reassociateable or its form content attribute is not present, and the
   // element's form owner is its nearest form element ancestor after the
