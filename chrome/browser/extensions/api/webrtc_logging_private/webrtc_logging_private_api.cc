@@ -524,6 +524,8 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   return true;
 }
 
+bool WebrtcLoggingPrivateStartEventLoggingFunction::RunAsync() {}
+
 bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
 #if defined(OS_LINUX) || defined(OS_CHROMEOS)
   // Unlike other WebrtcLoggingPrivate functions that take a RequestInfo object,

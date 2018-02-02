@@ -14616,6 +14616,7 @@ Called by update_net_error_codes.py.-->
   <int value="1211" label="SYSTEM_DISPLAY_SETMIRRORMODE"/>
   <int value="1212" label="TTSENGINE_UPDATEVOICES"/>
   <int value="1213" label="PASSWORDSPRIVATE_REQUESTEXPORTPROGRESSSTATUS"/>
+  <int value="1214" label="WEBRTCLOGGINGPRIVATE_STARTEVENTLOGGING"/>
 </enum>
 
 <enum name="ExtensionIconState">
