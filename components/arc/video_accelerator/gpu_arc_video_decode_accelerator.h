@@ -19,6 +19,7 @@
 namespace arc {
 
 class ProtectedBufferManager;
+// TODO(hiroh): Remove.
 class ProtectedBufferHandle;
 
 // GpuArcVideoDecodeAccelerator is executed in the GPU process.
@@ -57,6 +58,7 @@ class GpuArcVideoDecodeAccelerator
   void Initialize(mojom::VideoDecodeAcceleratorConfigPtr config,
                   mojom::VideoDecodeClientPtr client,
                   InitializeCallback callback) override;
+  // TODO(hiroh): Remove.
   void AllocateProtectedBuffer(
       mojo::ScopedHandle handle,
       uint64_t size,
@@ -161,6 +163,7 @@ class GpuArcVideoDecodeAccelerator
   // AssignPictureBuffers() for protected output buffers.
   // |protected_output_handles_| is indexed by |picture_buffer_id| in
   // ImportBufferForPicture().
+  // TODO(hiroh): Remove them.
   std::vector<std::unique_ptr<ProtectedBufferHandle>> protected_input_handles_;
   std::vector<std::unique_ptr<ProtectedBufferHandle>> protected_output_handles_;
 

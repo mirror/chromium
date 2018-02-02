@@ -1,0 +1,17 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Next MinVersion: 1
+
+import "protected_buffer_allocator.mojom";
+
+// Next method ID: 1
+interface ProtectedBufferHost {
+  CreateProtectedBufferAllocator@0(ProtectedBufferAllocator& pb_allocator);
+};
+
+// Next method ID: 1
+interface ProtectedBufferInstance {
+  Init@0(ProtectedBufferHost host_ptr) => ();
+};

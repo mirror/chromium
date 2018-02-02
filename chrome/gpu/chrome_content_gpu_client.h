@@ -40,6 +40,10 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
       const std::string& cdm_guid) override;
 #endif
 
+#if defined(OS_CHROMEOS)
+  static void ResetActivePBAFlag();
+#endif
+
  private:
 #if defined(OS_CHROMEOS)
   void CreateArcVideoDecodeAccelerator(
@@ -50,6 +54,11 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
 
   void CreateProtectedBufferManager(
       ::arc::mojom::ProtectedBufferManagerRequest request);
+
+  void CreateProtectedBufferAllocator(
+      ::arc::mojom::ProtectedBufferAllocatorRequest request);
+
+  static bool no_active_pba_;
 #endif
 
   // Used to profile process startup.

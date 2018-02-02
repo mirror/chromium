@@ -1,0 +1,25 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module arc.mojom;
+
+[Extensible]
+enum ProtectedBufferType {
+  SHARED_MEMORY = 0,
+  NATIVE_PIXMAP = 1,
+};
+
+struct ProtectedBufferMetadata {
+  size_t size; // for SHARED_MEMORY
+  uint32_t pixel_format; // for NATIVE_PIXMAP
+  Size picture_size; // for NATIVE_PIXMAP
+};
+
+interface ProtectedBufferAllocator {
+  AllocateProtectedBuffer@1(ProtectedBufferType type,
+                            handle handle_fd,
+                            ProtectedBufferMetadata metadata) => (bool result);
+
+  DeallocateProtectedBuffer@2(handle handle_fd) => (bool result);
+};
