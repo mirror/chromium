@@ -249,6 +249,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1e764b6_7600d767",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T12:29:26Z",
+      "side": 0,
+      "message": "I know that these things should be forbidden. We have cases though that fall into 2. and need the dispatch there.\n\nDigging this one up can take a few hours. I already spent ~1 full day on just digging up what we have here.",
+      "parentUuid": "2079ab9b_a3a1c175",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
