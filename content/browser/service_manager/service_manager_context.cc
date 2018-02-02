@@ -116,7 +116,6 @@ void StartServiceInUtilityProcess(
     service_manager::mojom::PIDReceiverPtr pid_receiver,
     service_manager::mojom::ConnectResult query_result,
     const std::string& sandbox_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   service_manager::SandboxType sandbox_type =
       service_manager::UtilitySandboxTypeFromString(sandbox_string);
 
@@ -163,7 +162,11 @@ void QueryAndStartServiceInUtilityProcess(
     base::Optional<std::string> process_group,
     service_manager::mojom::ServiceRequest request,
     service_manager::mojom::PIDReceiverPtr pid_receiver) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (service_name.compare("data_decoder") == 0)
+    return;
+
+  LOG(ERROR) << "ABCD, servie_name:" << service_name;
+  LOG(ERROR) << "ABCD, process_name:" << process_name;
   ServiceManagerContext::GetConnectorForIOThread()->QueryService(
       service_manager::Identity(service_name),
       base::BindOnce(&StartServiceInUtilityProcess, service_name, process_name,
@@ -177,7 +180,6 @@ void StartServiceInGpuProcess(
     const std::string& service_name,
     service_manager::mojom::ServiceRequest request,
     service_manager::mojom::PIDReceiverPtr pid_receiver) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   GpuProcessHost* process_host = GpuProcessHost::Get();
   if (!process_host) {
     DLOG(ERROR) << "GPU process host not available.";
@@ -330,25 +332,26 @@ std::unique_ptr<service_manager::Service> CreateNetworkService() {
 class ServiceManagerContext::InProcessServiceManagerContext
     : public base::RefCountedThreadSafe<InProcessServiceManagerContext> {
  public:
-  InProcessServiceManagerContext() {}
+  InProcessServiceManagerContext(
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
+    task_runner_ = task_runner;
+  }
 
   void Start(
       service_manager::mojom::ServicePtrInfo packaged_services_service_info,
       std::unique_ptr<BuiltinManifestProvider> manifest_provider) {
-    BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
-        ->PostTask(
-            FROM_HERE,
-            base::BindOnce(&InProcessServiceManagerContext::StartOnIOThread,
-                           this, base::Passed(&manifest_provider),
-                           base::Passed(&packaged_services_service_info)));
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&InProcessServiceManagerContext::StartOnIOThread, this,
+                       base::Passed(&manifest_provider),
+                       base::Passed(&packaged_services_service_info)));
   }
 
   void ShutDown() {
-    BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
-        ->PostTask(
-            FROM_HERE,
-            base::BindOnce(&InProcessServiceManagerContext::ShutDownOnIOThread,
-                           this));
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&InProcessServiceManagerContext::ShutDownOnIOThread,
+                       this));
   }
 
  private:
@@ -395,13 +398,16 @@ class ServiceManagerContext::InProcessServiceManagerContext
     manifest_provider_.reset();
   }
 
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   std::unique_ptr<BuiltinManifestProvider> manifest_provider_;
   std::unique_ptr<service_manager::ServiceManager> service_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(InProcessServiceManagerContext);
 };
 
-ServiceManagerContext::ServiceManagerContext() {
+ServiceManagerContext::ServiceManagerContext(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : task_runner_(task_runner) {
   service_manager::mojom::ServiceRequest packaged_services_request;
   if (service_manager::ServiceManagerIsRemote()) {
     auto invitation =
@@ -436,7 +442,7 @@ ServiceManagerContext::ServiceManagerContext() {
       manifest_provider->AddServiceManifest(manifest.name,
                                             manifest.resource_id);
     }
-    in_process_context_ = new InProcessServiceManagerContext;
+    in_process_context_ = new InProcessServiceManagerContext(task_runner_);
 
     service_manager::mojom::ServicePtr packaged_services_service;
     packaged_services_request = mojo::MakeRequest(&packaged_services_service);
@@ -445,14 +451,11 @@ ServiceManagerContext::ServiceManagerContext() {
   }
 
   packaged_services_connection_ = ServiceManagerConnection::Create(
-      std::move(packaged_services_request),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+      std::move(packaged_services_request), task_runner_);
 
   service_manager::mojom::ServicePtr root_browser_service;
   ServiceManagerConnection::SetForProcess(ServiceManagerConnection::Create(
-      mojo::MakeRequest(&root_browser_service),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
-  auto* browser_connection = ServiceManagerConnection::GetForProcess();
+      mojo::MakeRequest(&root_browser_service), task_runner_));
 
   service_manager::mojom::PIDReceiverPtr pid_receiver;
   packaged_services_connection_->GetConnector()->StartService(
@@ -460,6 +463,7 @@ ServiceManagerContext::ServiceManagerContext() {
                                 service_manager::mojom::kRootUserID),
       std::move(root_browser_service), mojo::MakeRequest(&pid_receiver));
   pid_receiver->SetPID(base::GetCurrentProcId());
+  auto* browser_connection = ServiceManagerConnection::GetForProcess();
 
   service_manager::EmbeddedServiceInfo device_info;
 
@@ -557,8 +561,7 @@ ServiceManagerContext::ServiceManagerContext() {
     if (network_service_in_process) {
       service_manager::EmbeddedServiceInfo network_service_info;
       network_service_info.factory = base::BindRepeating(CreateNetworkService);
-      network_service_info.task_runner =
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+      network_service_info.task_runner = task_runner_;
       packaged_services_connection_->AddEmbeddedService(
           mojom::kNetworkServiceName, network_service_info);
     } else {
@@ -568,7 +571,7 @@ ServiceManagerContext::ServiceManagerContext() {
   } else {
     // Create the in-process NetworkService object so that its getter is
     // available on the IO thread.
-    GetNetworkService();
+    GetNetworkService(task_runner_);
   }
 
   if (features::IsVideoCaptureServiceEnabledForOutOfProcess()) {
@@ -632,13 +635,12 @@ ServiceManagerContext::~ServiceManagerContext() {
     in_process_context_->ShutDown();
   if (ServiceManagerConnection::GetForProcess())
     ServiceManagerConnection::DestroyForProcess();
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(&DestroyConnectorOnIOThread));
+  task_runner_->PostTask(FROM_HERE,
+                         base::BindOnce(&DestroyConnectorOnIOThread));
 }
 
 // static
 service_manager::Connector* ServiceManagerContext::GetConnectorForIOThread() {
-  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   return g_io_thread_connector.Get().get();
 }
 

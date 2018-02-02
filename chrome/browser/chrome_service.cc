@@ -59,31 +59,28 @@ class ChromeService::IOThreadContext : public service_manager::Service {
   }
   ~IOThreadContext() override = default;
 
-  void BindConnector(
-      service_manager::mojom::ConnectorRequest connector_request) {
+  void BindConnector(service_manager::mojom::ConnectorRequest connector_request,
+                     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
     // NOTE: It's not safe to modify |connector_request_| here since it's read
     // on the IO thread. Post a task instead. As long as this task is posted
     // before any code attempts to connect to the chrome service, there's no
     // race.
-    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
-        ->PostTask(FROM_HERE,
-                   base::BindOnce(&IOThreadContext::BindConnectorOnIOThread,
-                                  base::Unretained(this),
-                                  std::move(connector_request)));
+    task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(&IOThreadContext::BindConnectorOnIOThread,
+                       base::Unretained(this), std::move(connector_request)));
   }
 
  private:
   void BindConnectorOnIOThread(
       service_manager::mojom::ConnectorRequest connector_request) {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
     connector_request_ = std::move(connector_request);
   }
 
   // service_manager::Service:
   void OnStart() override {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
     DCHECK(connector_request_.is_pending());
     context()->connector()->BindConnectorRequest(std::move(connector_request_));
   }
@@ -91,7 +88,6 @@ class ChromeService::IOThreadContext : public service_manager::Service {
   void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
                        const std::string& name,
                        mojo::ScopedMessagePipeHandle handle) override {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
     content::OverrideOnBindInterface(remote_info, name, &handle);
     if (!handle.is_valid())
       return;
@@ -124,14 +120,22 @@ class ChromeService::ExtraParts : public ChromeBrowserMainExtraParts {
 
  private:
   void ServiceManagerConnectionStarted(
-      content::ServiceManagerConnection* connection) override {
+      content::ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override {
     // Initializing the connector asynchronously configures the Connector on the
     // IO thread. This needs to be done before StartService() is called or
     // ChromeService::BindConnector() can race with ChromeService::OnStart().
-    ChromeService::GetInstance()->InitConnector();
+    ChromeService::GetInstance()->InitConnector(task_runner);
 
     connection->GetConnector()->StartService(
         service_manager::Identity(chrome::mojom::kServiceName));
+  }
+
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection) override {
+    ServiceManagerConnectionStarted(
+        connection, content::BrowserThread::GetTaskRunnerForThread(
+                        content::BrowserThread::IO));
   }
 
   DISALLOW_COPY_AND_ASSIGN(ExtraParts);
@@ -158,15 +162,15 @@ ChromeService::ChromeService()
 
 ChromeService::~ChromeService() = default;
 
-void ChromeService::InitConnector() {
+void ChromeService::InitConnector(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   service_manager::mojom::ConnectorRequest request;
   connector_ = service_manager::Connector::Create(&request);
-  io_thread_context_->BindConnector(std::move(request));
+  io_thread_context_->BindConnector(std::move(request), task_runner);
 }
 
 std::unique_ptr<service_manager::Service>
 ChromeService::CreateChromeServiceWrapper() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   return std::make_unique<service_manager::ForwardingService>(
       io_thread_context_.get());
 }

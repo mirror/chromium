@@ -41,7 +41,7 @@ class ChromeService {
   ChromeService();
   ~ChromeService();
 
-  void InitConnector();
+  void InitConnector(scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   std::unique_ptr<service_manager::Service> CreateChromeServiceWrapper();
 

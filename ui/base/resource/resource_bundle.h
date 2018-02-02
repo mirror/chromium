@@ -298,6 +298,9 @@ class UI_BASE_EXPORT ResourceBundle {
     mangle_localized_strings_ = mangle;
   }
 
+  // Shared initialization.
+  static void InitSharedInstance(Delegate* delegate);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ResourceBundleTest, DelegateGetPathForLocalePack);
   FRIEND_TEST_ALL_PREFIXES(ResourceBundleTest, DelegateGetImageNamed);
@@ -318,9 +321,6 @@ class UI_BASE_EXPORT ResourceBundle {
   // Ctor/dtor are private, since we're a singleton.
   explicit ResourceBundle(Delegate* delegate);
   ~ResourceBundle();
-
-  // Shared initialization.
-  static void InitSharedInstance(Delegate* delegate);
 
   // Free skia_images_.
   void FreeImages();

@@ -646,6 +646,14 @@ void ChromeBrowserMainPartsChromeos::ServiceManagerConnectionStarted(
   dbus_services_->ServiceManagerConnectionStarted(connection);
 }
 
+void ServiceManagerConnectionStarted(
+    content::ServiceManagerConnection* connection,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  ChromeBrowserMainPartsLinux::ServiceManagerConnectionStarted(connection,
+                                                               task_runner);
+  dbus_services_->ServiceManagerConnectionStarted(connection);
+}
+
 // Threads are initialized between MainMessageLoopStart and MainMessageLoopRun.
 // about_flags settings are applied in ChromeBrowserMainParts::PreCreateThreads.
 void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {

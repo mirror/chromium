@@ -11,7 +11,11 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
+#include "base/threading/thread.h"
 #include "content/common/content_export.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 
 namespace service_manager {
 class Connector;
@@ -26,7 +30,8 @@ class ServiceManagerConnection;
 // launched from an external one.
 class CONTENT_EXPORT ServiceManagerContext {
  public:
-  ServiceManagerContext();
+  explicit ServiceManagerContext(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   ~ServiceManagerContext();
 
   // Returns a service_manager::Connector that can be used on the IO thread.
@@ -40,6 +45,7 @@ class CONTENT_EXPORT ServiceManagerContext {
  private:
   class InProcessServiceManagerContext;
 
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   scoped_refptr<InProcessServiceManagerContext> in_process_context_;
   std::unique_ptr<ServiceManagerConnection> packaged_services_connection_;
 
