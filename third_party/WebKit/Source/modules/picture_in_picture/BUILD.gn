@@ -12,5 +12,7 @@ blink_modules_sources("picture_in_picture") {
     "HTMLVideoElementPictureInPicture.h",
     "PictureInPictureController.cpp",
     "PictureInPictureController.h",
+    "PictureInPictureWindow.cpp",
+    "PictureInPictureWindow.h",
   ]
 }
