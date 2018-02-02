@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "92e6e0df_c245422f",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T20:34:33Z",
+      "side": 1,
+      "message": "Ack. Right. there is no need to make SocketOptions to contain those flags. Not sure what I was thinking.",
+      "parentUuid": "d6a87a98_184c2a0b",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "529e140b_5d0ce0c2",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 8
@@ -520,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "28128b50_9ab907fa",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T20:34:33Z",
+      "side": 1,
+      "message": "Done.\n\nExtensions uses connect() with joingroup()/leavegroup(). https://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/socket/api/multicast.js?rcl\u003d693534f1ecadfa8beafe21a96de69c90efcf90c4\u0026l\u003d103\n\nI have changed this to !is_bound_. We can revisit this when I migrate extensions,",
+      "parentUuid": "93c68ac2_5e17761b",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 25
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7691ab_6663784d",
         "filename": "services/network/udp_socket.h",
         "patchSetId": 8
@@ -588,6 +636,30 @@
       "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ced49c7_a249eb39",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T20:34:33Z",
+      "side": 1,
+      "message": "Tests in udp_socket_unittest.cc also have SocketWrapper implementations. \nWe need to have this method in SocketWrapper so all implementations (SocketWrapperImpl and SocketWrapperTestImpl and its sub test impl classes) can work as a SocketWrapper (|wrapped_socket_|) and we can call ConfigureOptions on a SocketWrapper instance.",
+      "parentUuid": "d9c1d453_32f29533",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
