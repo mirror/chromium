@@ -22,6 +22,92 @@
       "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f079136f_077b9b1f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5110,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T15:34:18Z",
+      "side": 1,
+      "message": "Isn\u0027t rather \"full-admin-access\" closer to the truth here, given that via the \"Replace\" value basically any user policy can be overridden?",
+      "range": {
+        "startLine": 5110,
+        "startChar": 16,
+        "endLine": 5110,
+        "endChar": 31
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc971f0_b09cc1b1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5111,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T15:34:18Z",
+      "side": 1,
+      "message": "nit: It may be useful to leave a note that this policy is only applied to AD-managed Chromebooks.",
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3724f024_a805df92",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5118,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T15:34:18Z",
+      "side": 1,
+      "message": "nit: Maybe remove these trailing whitespaces (including newline character), so that translators are not complaining about having to replicate them?",
+      "range": {
+        "startLine": 5117,
+        "startChar": 134,
+        "endLine": 5118,
+        "endChar": 6
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30da829b_d21c19ec",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12494,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T15:34:18Z",
+      "side": 1,
+      "message": "nit: \"DeviceUserPolicyLoopbackProcessingMode\"?",
+      "range": {
+        "startLine": 12494,
+        "startChar": 26,
+        "endLine": 12494,
+        "endChar": 40
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
