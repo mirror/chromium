@@ -140,30 +140,9 @@ void HistogramBase::FindAndRunCallback(HistogramBase::Sample sample) const {
     cb.Run(sample);
 }
 
-void HistogramBase::WriteAsciiBucketGraph(double current_size,
-                                          double max_size,
-                                          std::string* output) const {
-  const int k_line_length = 72;  // Maximal horizontal width of graph.
-  int x_count = static_cast<int>(k_line_length * (current_size / max_size)
-                                 + 0.5);
-  int x_remainder = k_line_length - x_count;
-
-  while (0 < x_count--)
-    output->append("-");
-  output->append("O");
-  while (0 < x_remainder--)
-    output->append(" ");
-}
-
-const std::string HistogramBase::GetSimpleAsciiBucketRange(
-    Sample sample) const {
+// static
+std::string HistogramBase::GetSimpleAsciiBucketRange(Sample sample) {
   return StringPrintf("%d", sample);
-}
-
-void HistogramBase::WriteAsciiBucketValue(Count current,
-                                          double scaled_sum,
-                                          std::string* output) const {
-  StringAppendF(output, " (%d = %3.1f%%)", current, current/scaled_sum);
 }
 
 // static
