@@ -36,6 +36,7 @@ flat_rule::ElementType GetElementType(content::ResourceType type) {
     // url_pattern_index. These are supported by the Web Request API.
     case content::RESOURCE_TYPE_MAIN_FRAME:
     case content::RESOURCE_TYPE_CSP_REPORT:
+    case content::RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE:
       return flat_rule::ElementType_OTHER;
     case content::RESOURCE_TYPE_SCRIPT:
     case content::RESOURCE_TYPE_WORKER:

@@ -7,8 +7,14 @@
 #include "base/feature_list.h"
 #include "base/strings/stringprintf.h"
 #include "content/browser/loader/data_pipe_to_source_stream.h"
+#include "content/browser/loader/signed_exchange_cert_fetcher.h"
 #include "content/browser/loader/signed_exchange_handler.h"
 #include "content/browser/loader/source_stream_to_data_pipe.h"
+#include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/common/throttling_url_loader.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/common/content_features.h"
 #include "net/http/http_util.h"
 #include "services/network/public/cpp/features.h"
@@ -68,11 +74,19 @@ class WebPackageLoader::ResponseTimingInfo {
 WebPackageLoader::WebPackageLoader(
     const network::ResourceResponseHead& original_response,
     network::mojom::URLLoaderClientPtr forwarding_client,
-    network::mojom::URLLoaderClientEndpointsPtr endpoints)
+    network::mojom::URLLoaderClientEndpointsPtr endpoints,
+    URLLoaderFactoryGetter* default_url_loader_factory_getter,
+    ResourceContext* resource_context,
+    net::URLRequestContext* request_context,
+    URLLoaderThrottlesGetter url_loader_throttles_getter)
     : original_response_timing_info_(
           base::MakeUnique<ResponseTimingInfo>(original_response)),
       forwarding_client_(std::move(forwarding_client)),
       url_loader_client_binding_(this),
+      default_url_loader_factory_getter_(default_url_loader_factory_getter),
+      resource_context_(resource_context),
+      request_context_(request_context),
+      url_loader_throttles_getter_(std::move(url_loader_throttles_getter)),
       weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
   url_loader_.Bind(std::move(endpoints->url_loader));
@@ -143,7 +157,9 @@ void WebPackageLoader::OnStartLoadingResponseBody(
   signed_exchange_handler_ = std::make_unique<SignedExchangeHandler>(
       base::MakeUnique<DataPipeToSourceStream>(std::move(body)),
       base::BindOnce(&WebPackageLoader::OnHTTPExchangeFound,
-                     weak_factory_.GetWeakPtr()));
+                     weak_factory_.GetWeakPtr()),
+      default_url_loader_factory_getter_.get(), resource_context_,
+      request_context_, std::move(url_loader_throttles_getter_));
 }
 
 void WebPackageLoader::OnComplete(
