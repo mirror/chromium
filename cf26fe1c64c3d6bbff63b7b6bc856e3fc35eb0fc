@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b27a89d_2c1b7f8e",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-02T19:09:15Z",
+      "side": 1,
+      "message": "Why would this sequence succeed for an SVG animation? Those can\u0027t be composited.",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 298,
+        "endChar": 56
+      },
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d024d9a2_a0cde676",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 8
