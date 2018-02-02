@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a0a04c3_0827c178",
+        "filename": "third_party/android_crazy_linker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-02T14:52:34Z",
+      "side": 1,
+      "message": "Might be simpler to call this:\n\nandroid_crazy_linker_gdb_support \u003d is_debug",
+      "revId": "19f7d5e0f62a585029b7b4fb6bd7f9d94f719936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14a5253_1b5e2447",
+        "filename": "third_party/android_crazy_linker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-02T14:52:34Z",
+      "side": 1,
+      "message": "should this be checking android_enable_debuggable_release_builds?",
+      "revId": "19f7d5e0f62a585029b7b4fb6bd7f9d94f719936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
