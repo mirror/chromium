@@ -843,6 +843,8 @@ class CORE_EXPORT Element : public ContainerNode {
   void WillBeginCustomizedScrollPhase(ScrollCustomization::ScrollDirection);
   void DidEndCustomizedScrollPhase();
 
+  bool ShouldHaveFocusVisibleAppearance() const;
+
  protected:
   Element(const QualifiedName& tag_name, Document*, ConstructionType);
 
@@ -902,6 +904,8 @@ class CORE_EXPORT Element : public ContainerNode {
   Node* InsertAdjacent(const String& where, Node* new_child, ExceptionState&);
 
   virtual void ParserDidSetAttributes() {}
+
+  bool was_focused_by_mouse_ : 1;
 
  private:
   void ScrollLayoutBoxBy(const ScrollToOptions&);

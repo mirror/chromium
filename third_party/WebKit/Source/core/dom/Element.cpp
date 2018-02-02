@@ -3059,6 +3059,8 @@ Element* Element::AdjustedFocusedElementInTreeScope() const {
 void Element::DispatchFocusEvent(Element* old_focused_element,
                                  WebFocusType type,
                                  InputDeviceCapabilities* source_capabilities) {
+  if (type != kWebFocusTypePage)
+    was_focused_by_mouse_ = type == kWebFocusTypeMouse;
   DispatchEvent(FocusEvent::Create(EventTypeNames::focus, false, false,
                                    GetDocument().domWindow(), 0,
                                    old_focused_element, source_capabilities));
@@ -3067,6 +3069,8 @@ void Element::DispatchFocusEvent(Element* old_focused_element,
 void Element::DispatchBlurEvent(Element* new_focused_element,
                                 WebFocusType type,
                                 InputDeviceCapabilities* source_capabilities) {
+  if (type != kWebFocusTypePage)
+    was_focused_by_mouse_ = false;
   DispatchEvent(FocusEvent::Create(EventTypeNames::blur, false, false,
                                    GetDocument().domWindow(), 0,
                                    new_focused_element, source_capabilities));
@@ -3099,6 +3103,10 @@ void Element::DispatchFocusOutEvent(
   DispatchScopedEvent(
       FocusEvent::Create(event_type, true, false, GetDocument().domWindow(), 0,
                          new_focused_element, source_capabilities));
+}
+
+bool Element::ShouldHaveFocusVisibleAppearance() const {
+  return !was_focused_by_mouse_;
 }
 
 String Element::InnerHTMLAsString() const {

@@ -1186,7 +1186,26 @@ void ContainerNode::FocusStateChanged() {
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocus);
 
   GetLayoutObject()->InvalidateIfControlStateChanged(kFocusControlState);
+  FocusVisibleStateChanged();
   FocusWithinStateChanged();
+}
+
+void ContainerNode::FocusVisibleStateChanged() {
+  StyleChangeType change_type =
+      GetComputedStyle()->HasPseudoStyle(kPseudoIdFirstLetter)
+          ? kSubtreeStyleChange
+          : kLocalStyleChange;
+  SetNeedsStyleRecalc(change_type,
+                      StyleChangeReasonForTracing::CreateWithExtraData(
+                          StyleChangeReason::kPseudoClass,
+                          StyleChangeExtraData::g_focus_visible));
+
+  if (IsElementNode() &&
+      ToElement(this)->ChildrenOrSiblingsAffectedByFocusVisible())
+    ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocusVisible);
+
+  // TODO(robdodson): Do I also need to call
+  // GetLayoutObject()->InvalidateIfControlStatechanged()?
 }
 
 void ContainerNode::FocusWithinStateChanged() {
@@ -1242,6 +1261,16 @@ void ContainerNode::SetFocused(bool received, WebFocusType focus_type) {
         kLocalStyleChange,
         StyleChangeReasonForTracing::CreateWithExtraData(
             StyleChangeReason::kPseudoClass, StyleChangeExtraData::g_focus));
+
+  if (IsElementNode() &&
+      ToElement(this)->ChildrenOrSiblingsAffectedByFocusVisible()) {
+    ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocusVisible);
+  } else {
+    SetNeedsStyleRecalc(kLocalStyleChange,
+                        StyleChangeReasonForTracing::CreateWithExtraData(
+                            StyleChangeReason::kPseudoClass,
+                            StyleChangeExtraData::g_focus_visible));
+  }
 
   if (IsElementNode() &&
       ToElement(this)->ChildrenOrSiblingsAffectedByFocusWithin()) {
