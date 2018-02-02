@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3028da_e7c3fe16",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-02T02:31:23Z",
+      "side": 1,
+      "message": "Hi Xiyuan, could you take a look at the rebase change here?",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 14
+      },
+      "revId": "cdfa00cd01296b2a8e47554a2b0b7bf8c010c012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
