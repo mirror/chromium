@@ -122,6 +122,24 @@
       "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09dafa5_7f20bb2f",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-02T18:05:21Z",
+      "side": 0,
+      "message": "thanks, took a look at that CL and everything LGTM.",
+      "parentUuid": "d1ea0fc3_978c1045",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
