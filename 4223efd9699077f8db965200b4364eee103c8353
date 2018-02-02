@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "8a0202f4_568549a4",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "Hrm...may have to de-virtualize it in another CL, or just make it mandatory.",
+      "parentUuid": "ed61e13d_3b7fcd4e",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 13
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca6505a_6b86af5c",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "I didn\u0027t really think about it, but it does make tests simpler.  Clearly that should be the primary driver of all our APIs.  I\u0027ve removed it, and implemented a hack to work around it in tests.",
+      "parentUuid": "a5cb8983_f8b8022b",
+      "range": {
+        "startLine": 170,
+        "startChar": 35,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739ba043_9523af44",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "4223efd9699077f8db965200b4364eee103c8353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee07fd8_38784eed",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739ba043_9523af44",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a5460edb_97efd146",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcf8ffcc_42923443",
+      "range": {
+        "startLine": 38,
+        "startChar": 44,
+        "endLine": 38,
+        "endChar": 52
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0477046a_a6d1b02e",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 7
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3e0745a7_17d3b805",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "You clearly are overestimating the consistency of the English language, or underestimating the power of this CL to change it.  Fixed.  :)",
+      "parentUuid": "0477046a_a6d1b02e",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ebe758d_45fcd0c6",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "4223efd9699077f8db965200b4364eee103c8353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b285a3af_284ae484",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ebe758d_45fcd0c6",
+      "range": {
+        "startLine": 276,
+        "startChar": 36,
+        "endLine": 276,
+        "endChar": 41
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

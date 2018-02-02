@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "adfcb16b_76187fde",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:07:44Z",
+      "side": 1,
+      "message": "Think I\u0027ll leave it as-is.  The \"can delete\" guarantee is the one I care about, but then we\u0027re going to have to do some magic to call EndReadData when we need to, regardless - only other option would be a bool to track this state, and end it in the destructor, which seems not really much better.",
+      "parentUuid": "788f1b63_c2febdda",
+      "range": {
+        "startLine": 465,
+        "startChar": 20,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9438c36_2f6afcb6",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
