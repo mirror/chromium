@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01eb7c3a_8b3ef46f",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: The last sentence seems kinda unnecessary since there\u0027s no real way to inset before scaling and preserve the meaning of the floor() call.",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71153089_524fa124",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Huh, this is a neat simplification of the old code.  Bet it runs faster too.",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc762e7_06396a04",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "It seems misleading to have this public constexpr when subclasses could override the border radius to be different.  We could avoid this by making GetBorderRadiusInternal() instead be a public method (GetBorderRadiusPx()) and calling that.\n\nYou tried to tackle that with OmniboxBackgroundBorder::GetBorderRadius(), but a static method isn\u0027t necessary; the location bar can access its background() (and cast) to get an instance of this object to call the method on.\n\nHowever, this last sentence suggests (I think) a better solution.  Make OmniboxBackgroundBorder::PaintFocusBorder() non-static, which allows it to get the inner border radius internally.  Then the only places that need the border radius are inside the class itself.  That should allow reorganizing the methods here to be maximally simple.",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0542de93_363aa7b9",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: Rather than describe |height|\u0027s units in comments, I\u0027d call the parameter |height_in_px|.",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b282073b_93a2f249",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: \"Note\" (the word) unnecessary",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45deaddf_058302df",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: \"Internal\" suffix on name unnecessary.  This is already protected, so people aren\u0027t going to call it, and it won\u0027t clash with the virtual function since it has a different set of parameters.",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecae729d_b36f9662",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: I suggest \"_px\"",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b5069d_b4f52330",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: Or\n\n  return std::any_of(decorations_.begin(), decorations_.end(),\n                     [](const std::unique_ptr\u003cLocationBarDecoration\u003e\u0026 d) {\n                         return d-\u003eview-\u003evisible();\n                     });\n\n(This would be nicer with generic lambdas, but those aren\u0027t allowed in Chromium yet...)",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3f0837_4f2194da",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: No || on functions or types (just variables)",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f103c707_9d4d844d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: Declare these where you use them rather than atop the file (see http://google.github.io/styleguide/cppguide.html#Local_Variables )",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5e5576_d23ecc86",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: Seems like this is used in only one function and thus could be a local bool there instead of a function?\n\nThough really it\u0027s suboptimal that we duplicate the condition here and in OmniboxBackgroundBorder.  Perhaps what we want is for the layout code in this class to check the border radius and act differently in different cases?  Or maybe the border class should have some sort of \"is rounded\" oracle function that\u0027s the Source Of Truth here, and both places that have this conditional today just call that instead?",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b5500b_9b9ddb79",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "I\u0027m kinda uncomfortable with all this.  It feels like a hack.  Your conditions are trying to check for \"things that might run into the rounded corners\", but there\u0027s no guarantee we can\u0027t have decorations in the future whose icons look like big square boxes and thus are \"too big\".\n\nIt seems like we need to do one of the following two things when the omnibox is in this round shape:\n\n* Inset the ends by some factor all the time, not conditionally\n* Clip to the round shape when painting (not hard to do technically but could look pretty odd).",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1468723c_ac0c3282",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand the comment here.  Has less padding than what?\n\nIf the issue is basically \"we always want the appearance a k px of whitespace, but some views have it built in and some don\u0027t\", then probably the right answer is to dynamically look at the images or whatever in the views in question, subtract existing whitespace in them from the (constant) desired whitespace amount (which would be this larger amount I guess?) and then use the computed value to position things so they \"looked consistent\".",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea85c583_f0fbd60d",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Nit: 0.5f (otherwise this computes as a double, then coerces to float)\n\nThough personally I find \"/ 2.f\" clearer, but whatever :)",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748c0b99_06849d8f",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T01:41:16Z",
+      "side": 1,
+      "message": "Design-wise, it seems a little odd that the omnibox becomes rounded while its dropdown, which is supposed to echo its shape perfectly, stays in the old shape.\n\nDo we want the dropdown corners to become \"more rounded\" here too?  If not, how do the designers justify that?  If so, then shouldn\u0027t the code in this class really just be in the base class, and we avoid the complication of a subclass?",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
