@@ -324,7 +324,7 @@ SDK.TargetManager = class extends Common.Object {
   }
 
   _connectAndCreateMainTarget() {
-    if (Runtime.queryParam('nodeFrontend')) {
+    if (self.nodeFrontend) {
       var target = new SDK.Target(
           this, 'main', Common.UIString('Node.js'), SDK.Target.Capability.Target, this._createMainConnection.bind(this),
           null, this._isSuspended);
@@ -410,7 +410,7 @@ SDK.ChildTargetManager = class {
 
     if (!parentTarget.parentTarget()) {
       this._targetAgent.setDiscoverTargets(true);
-      if (Runtime.queryParam('nodeFrontend')) {
+      if (self.nodeFrontend) {
         InspectorFrontendHost.setDevicesUpdatesEnabled(true);
         InspectorFrontendHost.events.addEventListener(
             InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
@@ -450,7 +450,7 @@ SDK.ChildTargetManager = class {
   }
 
   dispose() {
-    if (Runtime.queryParam('nodeFrontend') && !this._parentTarget.parentTarget()) {
+    if (self.nodeFrontend && !this._parentTarget.parentTarget()) {
       InspectorFrontendHost.events.removeEventListener(
           InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
     }
@@ -485,7 +485,7 @@ SDK.ChildTargetManager = class {
   targetCreated(targetInfo) {
     if (targetInfo.type !== 'node')
       return;
-    if (Runtime.queryParam('nodeFrontend')) {
+    if (self.nodeFrontend) {
       if (!targetInfo.attached)
         this._targetAgent.attachToTarget(targetInfo.targetId);
       return;
@@ -501,7 +501,7 @@ SDK.ChildTargetManager = class {
    * @param {!Protocol.Target.TargetInfo} targetInfo
    */
   targetInfoChanged(targetInfo) {
-    if (targetInfo.type !== 'node' || Runtime.queryParam('nodeFrontend'))
+    if (targetInfo.type !== 'node' || self.nodeFrontend)
       return;
     var availableIds = this._targetManager._nodeTargetIds;
     if (!availableIds.has(targetInfo.targetId) && !targetInfo.attached) {
@@ -518,7 +518,7 @@ SDK.ChildTargetManager = class {
    * @param {string} targetId
    */
   targetDestroyed(targetId) {
-    if (Runtime.queryParam('nodeFrontend') || !this._targetManager._nodeTargetIds.has(targetId))
+    if (self.nodeFrontend || !this._targetManager._nodeTargetIds.has(targetId))
       return;
     this._targetManager._nodeTargetIds.delete(targetId);
     this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
@@ -551,7 +551,7 @@ SDK.ChildTargetManager = class {
     }
     target.runtimeAgent().runIfWaitingForDebugger();
 
-    if (Runtime.queryParam('nodeFrontend'))
+    if (self.nodeFrontend)
       InspectorFrontendHost.bringToFront();
   }
 

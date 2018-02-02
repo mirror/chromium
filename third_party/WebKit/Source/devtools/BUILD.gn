@@ -402,6 +402,9 @@ all_devtools_files = [
   "front_end/network_test_runner/module.json",
   "front_end/network_test_runner/NetworkTestRunner.js",
   "front_end/network_test_runner/ProductRegistryTestRunner.js",
+  "front_end/node_only/nodePanel.css",
+  "front_end/node_only/NodePanel.js",
+  "front_end/node_only/module.json",
   "front_end/object_ui/customPreviewComponent.css",
   "front_end/object_ui/CustomPreviewComponent.js",
   "front_end/object_ui/JavaScriptAutocomplete.js",
@@ -932,14 +935,16 @@ generated_scripts = [
 ]
 
 generated_applications = [
-  "$resources_out_dir/shell.js",
-  "$resources_out_dir/inspector.html",
-  "$resources_out_dir/inspector.js",
-  "$resources_out_dir/toolbox.html",
-  "$resources_out_dir/toolbox.js",
   "$resources_out_dir/audits2_worker.js",
   "$resources_out_dir/formatter_worker.js",
   "$resources_out_dir/heap_snapshot_worker.js",
+  "$resources_out_dir/inspector.html",
+  "$resources_out_dir/inspector.js",
+  "$resources_out_dir/node_frontend.html",
+  "$resources_out_dir/node_frontend.js",
+  "$resources_out_dir/shell.js",
+  "$resources_out_dir/toolbox.html",
+  "$resources_out_dir/toolbox.js",
 ]
 
 generated_non_autostart_non_remote_modules = [
@@ -1001,6 +1006,7 @@ devtools_applications = [
   "audits2_worker",
   "heap_snapshot_worker",
   "ndb",
+  "node_frontend",
 ]
 
 #-------------------------------------------------------------------------------
@@ -1138,9 +1144,10 @@ action("build_release_devtools") {
 
   inputs = helper_scripts + all_devtools_files + generated_scripts + [
              "front_end/inspector.html",
-             "front_end/toolbox.html",
-             "front_end/ndb.html",
              "front_end/integration_test_runner.html",
+             "front_end/node_frontend.html",
+             "front_end/ndb.html",
+             "front_end/toolbox.html",
            ]
 
   outputs = generated_resources + generated_remote_modules
@@ -1165,16 +1172,18 @@ if (debug_devtools) {
 
     inputs = all_devtools_files + [
                "front_end/inspector.html",
-               "front_end/toolbox.html",
-               "front_end/ndb.html",
                "front_end/integration_test_runner.html",
+               "front_end/ndb.html",
+               "front_end/node_frontend.html",
+               "front_end/toolbox.html",
              ]
 
     outputs = [
       "$resources_out_debug_dir/inspector.html",
-      "$resources_out_debug_dir/toolbox.html",
-      "$resources_out_debug_dir/ndb.html",
       "$resources_out_debug_dir/integration_test_runner.html",
+      "$resources_out_debug_dir/ndb.html",
+      "$resources_out_debug_dir/node_frontend.html",
+      "$resources_out_debug_dir/toolbox.html",
     ]
 
     args = devtools_applications + [

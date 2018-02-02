@@ -24,7 +24,7 @@ Sources.ThreadsSidebarPane = class extends UI.VBox {
    * @return {boolean}
    */
   static shouldBeShown() {
-    var minJSTargets = Runtime.queryParam('nodeFrontend') ? 1 : 2;
+    var minJSTargets = self.nodeFrontend ? 1 : 2;
     return SDK.targetManager.models(SDK.DebuggerModel).length >= minJSTargets;
   }
 
