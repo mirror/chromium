@@ -43,18 +43,20 @@ LayoutUnit MultiColumnFragmentainerGroup::LogicalHeightInFlowThreadAt(
   LayoutUnit column_height = ColumnLogicalHeight();
   LayoutUnit logical_top = LogicalTopInFlowThreadAt(column_index);
   LayoutUnit logical_bottom = logical_top + column_height;
-  if (logical_bottom > LogicalBottomInFlowThread()) {
-    DCHECK_GE(column_index + 1, ActualColumnCount());
-    // Stay within the bounds of the flow thread. We need this clamping when
-    // we're dealing with the last column, and also if we're given a column
-    // index *after* the last column. Height should obviously be 0 then. We may
-    // be called with a column index that's one entry past the end if we're
-    // dealing with zero-height content at the very end of the flow thread, and
-    // this location is at a column boundary.
-    logical_bottom = LogicalBottomInFlowThread();
-    // If the column index is out of bounds, the height better become zero.
-    DCHECK(column_index + 1 == ActualColumnCount() ||
-           logical_bottom <= logical_top);
+  unsigned actual_count = ActualColumnCount();
+  if (column_index + 1 >= actual_count) {
+    // The last column may contain overflow content, if the actual column count
+    // was clamped, so using the column height won't do. This is also a way to
+    // stay within the bounds of the flow thread, if the last column happens to
+    // contain LESS than the other columns. We also need this clamping if we're
+    // given a column index *after* the last column. Height should obviously be
+    // 0 then. We may be called with a column index that's one entry past the
+    // end if we're dealing with zero-height content at the very end of the flow
+    // thread, and this location is at a column boundary.
+    if (column_index + 1 == actual_count)
+      logical_bottom = LogicalBottomInFlowThread();
+    else
+      logical_bottom = logical_top;
   }
   return (logical_bottom - logical_top).ClampNegativeToZero();
 }
@@ -323,6 +325,20 @@ unsigned MultiColumnFragmentainerGroup::ActualColumnCount() const {
   // flowThreadPortionHeight may be saturated, so detect the remainder manually.
   if (count * column_height < flow_thread_portion_height)
     count++;
+
+  static const int kColumnCountClampMin = 10;
+  static const int kColumnCountClampMax = 2000;
+  if (count > kColumnCountClampMin) {
+    // To avoid performance problems, limit the maximum number of columns. Try
+    // to identify legitimate reasons for creating many columns, and allow many
+    // columns in such cases. We currently use a function of column height to
+    // determine this (limit the column count to the column height in pixels,
+    // but never clamp to less than 10 columns).
+    int max_count = column_height.ToInt();
+    count = std::max(std::min(max_count, kColumnCountClampMax),
+                     kColumnCountClampMin);
+  }
+
   DCHECK_GE(count, 1u);
   return count;
 }
