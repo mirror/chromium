@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f97d3e_b87db98e",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-02-02T21:04:52Z",
+      "side": 1,
+      "message": "Did you ask Fady about that? This was done for surface synchronization, and it is clear why we would need to invalidate the SurfaceId, but you\u0027re right that clearing the size doesn\u0027t seem necessary.",
+      "range": {
+        "startLine": 454,
+        "startChar": 2,
+        "endLine": 455,
+        "endChar": 39
+      },
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87153e2c_8d936f53",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2996,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-02-02T21:04:52Z",
+      "side": 1,
+      "message": "This comment seems to have gotten very stale. :/",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
