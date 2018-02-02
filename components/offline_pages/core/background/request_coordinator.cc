@@ -278,6 +278,7 @@ int64_t RequestCoordinator::SavePageLater(
       base::Time::Now(), save_page_later_params.user_requested);
   request.set_original_url(save_page_later_params.original_url);
   request.set_request_origin(save_page_later_params.request_origin);
+  SetRequestAvailableState(request);
 
   // If the download manager is not done with the request, put it on the
   // disabled list.
@@ -526,8 +527,10 @@ void RequestCoordinator::AddRequestResultCallback(
 
 void RequestCoordinator::UpdateMultipleRequestsCallback(
     std::unique_ptr<UpdateRequestsResult> result) {
-  for (const auto& request : result->updated_items)
+  for (auto& request : result->updated_items) {
+    SetRequestAvailableState(request);
     NotifyChanged(request);
+  }
 
   bool available_user_request = false;
   for (const auto& request : result->updated_items) {
@@ -543,8 +546,9 @@ void RequestCoordinator::UpdateMultipleRequestsCallback(
 
 void RequestCoordinator::ReconcileCallback(
     std::unique_ptr<UpdateRequestsResult> result) {
-  for (const auto& request : result->updated_items) {
+  for (auto& request : result->updated_items) {
     RecordOfflinerResult(request, Offliner::RequestStatus::BROWSER_KILLED);
+    SetRequestAvailableState(request);
     NotifyChanged(request);
   }
 }
@@ -737,6 +741,10 @@ void RequestCoordinator::UpdateCurrentConditionsFromAndroid() {
 void RequestCoordinator::TryNextRequest(bool is_start_of_processing) {
   state_ = RequestCoordinatorState::PICKING;
 
+  // Connection type at previous check.
+  net::NetworkChangeNotifier::ConnectionType previous_connection_type =
+      current_conditions_->GetNetConnectionType();
+
   // If this is the first call, the device conditions are current, no need to
   // update them.
   if (!is_start_of_processing) {
@@ -745,6 +753,20 @@ void RequestCoordinator::TryNextRequest(bool is_start_of_processing) {
     // in the background in android, so prefer to always get the conditions via
     // the android APIs.
     UpdateCurrentConditionsFromAndroid();
+  }
+
+  // Current connection type.
+  net::NetworkChangeNotifier::ConnectionType connection_type =
+      current_conditions_->GetNetConnectionType();
+
+  // If there was loss of network, update all available requests to waiting for
+  // network connection.
+  if (connection_type != previous_connection_type &&
+      connection_type ==
+          net::NetworkChangeNotifier::ConnectionType::CONNECTION_NONE) {
+    GetAllRequests(
+        base::Bind(&RequestCoordinator::SetRequestAvailableStateCallback,
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 
   base::TimeDelta processing_time_budget;
@@ -756,9 +778,6 @@ void RequestCoordinator::TryNextRequest(bool is_start_of_processing) {
     processing_time_budget = base::TimeDelta::FromSeconds(
         policy_->GetProcessingTimeBudgetForImmediateLoadInSeconds());
   }
-
-  net::NetworkChangeNotifier::ConnectionType connection_type =
-      current_conditions_->GetNetConnectionType();
 
   // If there is no network or no time left in the budget, return to the
   // scheduler. We do not remove the pending scheduler task that was set
@@ -795,8 +814,10 @@ void RequestCoordinator::TryNextRequest(bool is_start_of_processing) {
 }
 
 // Called by the request picker when a request has been picked.
-void RequestCoordinator::RequestPicked(const SavePageRequest& request,
-                                       bool cleanup_needed) {
+void RequestCoordinator::RequestPicked(
+    const SavePageRequest& request,
+    const std::vector<SavePageRequest>& available_requests,
+    bool cleanup_needed) {
   DVLOG(2) << request.url() << " " << __func__;
 
   // Make sure we were not stopped while picking, since any kind of cancel/stop
@@ -805,6 +826,10 @@ void RequestCoordinator::RequestPicked(const SavePageRequest& request,
     state_ = RequestCoordinatorState::OFFLINING;
     // Send the request on to the offliner.
     SendRequestToOffliner(request);
+
+    // All available requests changed to pending another download completion
+    for (const auto& request : available_requests)
+      NotifyChanged(request);
   }
 
   // Schedule a queue cleanup if needed.
@@ -1150,6 +1175,26 @@ void RequestCoordinator::RecordOfflinerResult(const SavePageRequest& request,
 
 void RequestCoordinator::Shutdown() {
   network_quality_estimator_ = nullptr;
+}
+
+void RequestCoordinator::SetRequestAvailableStateCallback(
+    std::vector<std::unique_ptr<SavePageRequest>> requests) {
+  for (auto& request : requests) {
+    SetRequestAvailableState(*request.get());
+    NotifyChanged(*request.get());
+  }
+}
+
+void RequestCoordinator::SetRequestAvailableState(SavePageRequest& request) {
+  if (request.request_state() == SavePageRequest::RequestState::AVAILABLE) {
+    if (state_ == RequestCoordinatorState::OFFLINING) {
+      request.set_available_state(
+          SavePageRequest::AvailableState::WAITING_ANOTHER_DOWNLOAD_COMPLETION);
+    } else {
+      request.set_available_state(
+          SavePageRequest::AvailableState::WAITING_NETWORK);
+    }
+  }
 }
 
 }  // namespace offline_pages

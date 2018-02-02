@@ -164,8 +164,7 @@ public class OfflineContentAggregatorNotificationBridgeUi
                 break;
             case OfflineItemState.INTERRUPTED:
                 // TODO(dtrainor): Push the correct value for auto resume.
-                // TODO(cmsy): Pass in correct PendingState.
-                mUi.notifyDownloadInterrupted(info, true, PendingState.PENDING_REASON_UNKNOWN);
+                mUi.notifyDownloadInterrupted(info, true, PendingState.values()[item.pendingState]);
                 break;
             case OfflineItemState.PAUSED:
                 mUi.notifyDownloadPaused(info);

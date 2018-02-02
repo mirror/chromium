@@ -23,6 +23,14 @@ class SavePageRequest {
     OFFLINING = 2,  // Request is actively offlining.
   };
 
+  enum class AvailableState {
+    // Request can be scheduled when network is gained
+    WAITING_NETWORK,
+
+    // Request can be scheduled when active request is completed.
+    WAITING_ANOTHER_DOWNLOAD_COMPLETION,
+  };
+
   SavePageRequest(int64_t request_id,
                   const GURL& url,
                   const ClientId& client_id,
@@ -55,6 +63,11 @@ class SavePageRequest {
 
   RequestState request_state() const { return state_; }
   void set_request_state(RequestState new_state) { state_ = new_state; }
+
+  AvailableState available_state() const { return available_state_; }
+  void set_available_state(AvailableState new_state) {
+    available_state_ = new_state;
+  }
 
   const base::Time& creation_time() const { return creation_time_; }
 
@@ -118,6 +131,9 @@ class SavePageRequest {
 
   // The current state of this request
   RequestState state_;
+
+  // The reason the request is available
+  AvailableState available_state_;
 
   // The original URL of the page to be offlined. Empty if no redirect occurs.
   GURL original_url_;

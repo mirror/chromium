@@ -79,6 +79,8 @@ class ObserverStub : public RequestCoordinator::Observer {
 
   void OnAdded(const SavePageRequest& request) override {
     added_called_ = true;
+    state_ = request.request_state();
+    available_state_ = request.available_state();
   }
 
   void OnCompleted(
@@ -91,6 +93,7 @@ class ObserverStub : public RequestCoordinator::Observer {
   void OnChanged(const SavePageRequest& request) override {
     changed_called_ = true;
     state_ = request.request_state();
+    available_state_ = request.available_state();
   }
 
   void OnNetworkProgress(const SavePageRequest& request,
@@ -108,6 +111,7 @@ class ObserverStub : public RequestCoordinator::Observer {
     return last_status_;
   }
   SavePageRequest::RequestState state() { return state_; }
+  SavePageRequest::AvailableState available_state() { return available_state_; }
 
  private:
   bool added_called_;
@@ -117,6 +121,7 @@ class ObserverStub : public RequestCoordinator::Observer {
   int64_t network_progress_bytes_;
   RequestCoordinator::BackgroundSavePageResult last_status_;
   SavePageRequest::RequestState state_;
+  SavePageRequest::AvailableState available_state_;
 };
 
 class RequestCoordinatorTest : public testing::Test {
@@ -1613,6 +1618,119 @@ TEST_F(RequestCoordinatorTest, SnapshotOnLastTryForImmediateProcessing) {
   EXPECT_EQ(RequestCoordinator::BackgroundSavePageResult::SUCCESS,
             observer().last_status());
   EXPECT_TRUE(observer().completed_called());
+}
+
+TEST_F(RequestCoordinatorTest, ResumeRequestWhenNoNetwork) {
+  // Add a request to the queue.
+  AddRequest1();
+  PumpLoop();
+
+  // Pause the request.
+  std::vector<int64_t> request_ids;
+  request_ids.push_back(kRequestId1);
+  coordinator()->PauseRequests(request_ids);
+  PumpLoop();
+  EXPECT_TRUE(observer().changed_called());
+  EXPECT_EQ(SavePageRequest::RequestState::PAUSED, observer().state());
+
+  // Clear out the observer before the next call.
+  observer().Clear();
+
+  SetNetworkConnected(false);
+
+  // Resume the request.
+  coordinator()->ResumeRequests(request_ids);
+  PumpLoop();
+
+  // Verify the request is waiting for network.
+  EXPECT_TRUE(observer().changed_called());
+  EXPECT_EQ(SavePageRequest::RequestState::AVAILABLE, observer().state());
+  EXPECT_EQ(SavePageRequest::AvailableState::WAITING_NETWORK,
+            observer().available_state());
+}
+
+TEST_F(RequestCoordinatorTest, ResumeRequestWhenOfflining) {
+  // Add a request to the queue.
+  AddRequest1();
+  PumpLoop();
+
+  // Pause the request.
+  std::vector<int64_t> request_ids;
+  request_ids.push_back(kRequestId1);
+  coordinator()->PauseRequests(request_ids);
+  PumpLoop();
+  EXPECT_TRUE(observer().changed_called());
+  EXPECT_EQ(SavePageRequest::RequestState::PAUSED, observer().state());
+
+  // Clear out the observer before the next call.
+  observer().Clear();
+
+  // Add a second request to the queue for offlining.
+  AddRequest2();
+  EnableOfflinerCallback(false);
+  EXPECT_TRUE(coordinator()->StartScheduledProcessing(device_conditions(),
+                                                      processing_callback()));
+  PumpLoop();
+  EXPECT_TRUE(state() == RequestCoordinatorState::OFFLINING);
+  EXPECT_TRUE(observer().changed_called());
+  EXPECT_EQ(SavePageRequest::RequestState::OFFLINING, observer().state());
+
+  // Clear out the observer before the next call.
+  observer().Clear();
+
+  // Resume the first request.
+  coordinator()->ResumeRequests(request_ids);
+  PumpLoop();
+
+  // Verify the request is pending another download completion.
+  EXPECT_TRUE(observer().changed_called());
+  EXPECT_EQ(SavePageRequest::RequestState::AVAILABLE, observer().state());
+  EXPECT_EQ(
+      SavePageRequest::AvailableState::WAITING_ANOTHER_DOWNLOAD_COMPLETION,
+      observer().available_state());
+}
+
+TEST_F(RequestCoordinatorTest, AddRequestWhenNoNetwork) {
+  SetNetworkConnected(false);
+
+  EXPECT_NE(0, SavePageLater());
+  PumpLoop();
+
+  // Verify the request is waiting for network.
+  EXPECT_EQ(SavePageRequest::RequestState::AVAILABLE, observer().state());
+  EXPECT_EQ(SavePageRequest::AvailableState::WAITING_NETWORK,
+            observer().available_state());
+}
+
+TEST_F(RequestCoordinatorTest, AddRequestWhenOfflining) {
+  // Make an offlining request.
+  EnableOfflinerCallback(false);
+  EXPECT_NE(0, SavePageLater());
+  PumpLoop();
+  EXPECT_TRUE(observer().changed_called());
+  EXPECT_EQ(SavePageRequest::RequestState::OFFLINING, observer().state());
+  EXPECT_TRUE(state() == RequestCoordinatorState::OFFLINING);
+
+  // Clear out the observer before the next call.
+  observer().Clear();
+
+  // Make a second request.
+  RequestCoordinator::SavePageLaterParams params;
+  params.url = kUrl2;
+  params.client_id = kClientId2;
+  params.user_requested = kUserRequested;
+  EXPECT_NE(0, coordinator()->SavePageLater(
+                   params,
+                   base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
+                              base::Unretained(this))));
+  PumpLoop();
+
+  // Verify second request is pending another download completion.
+  EXPECT_TRUE(observer().added_called());
+  EXPECT_EQ(SavePageRequest::RequestState::AVAILABLE, observer().state());
+  EXPECT_EQ(
+      SavePageRequest::AvailableState::WAITING_ANOTHER_DOWNLOAD_COMPLETION,
+      observer().available_state());
 }
 
 }  // namespace offline_pages

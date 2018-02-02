@@ -332,7 +332,9 @@ class RequestCoordinator : public KeyedService,
   void ScheduleAsNeeded();
 
   // Callback from the request picker when it has chosen our next request.
-  void RequestPicked(const SavePageRequest& request, bool cleanup_needed);
+  void RequestPicked(const SavePageRequest& request,
+                     const std::vector<SavePageRequest>& available_requests,
+                     bool cleanup_needed);
 
   // Callback from the request picker when no more requests are in the queue.
   // The parameter is a signal for what (if any) conditions to schedule future
@@ -423,6 +425,13 @@ class RequestCoordinator : public KeyedService,
 
   // KeyedService implementation:
   void Shutdown() override;
+
+  // Set AvailableState for multiple requests
+  void SetRequestAvailableStateCallback(
+      std::vector<std::unique_ptr<SavePageRequest>> requests);
+
+  // Set AvailableState for a request
+  void SetRequestAvailableState(SavePageRequest& request);
 
   friend class RequestCoordinatorTest;
 

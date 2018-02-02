@@ -4,6 +4,7 @@
 
 #include "components/offline_pages/core/background/pick_request_task.h"
 
+#include <algorithm>
 #include <memory>
 #include <set>
 
@@ -100,7 +101,9 @@ class PickRequestTaskTest : public testing::Test {
 
   void AddRequestDone(ItemActionStatus status);
 
-  void RequestPicked(const SavePageRequest& request, bool cleanup_needed);
+  void RequestPicked(const SavePageRequest& request,
+                     const std::vector<SavePageRequest>& available_requests,
+                     bool cleanup_needed);
 
   void RequestNotPicked(const bool non_user_requested_tasks_remaining,
                         bool cleanup_needed);
@@ -134,6 +137,7 @@ class PickRequestTaskTest : public testing::Test {
   bool cleanup_needed_;
   size_t total_request_count_;
   size_t available_request_count_;
+  std::vector<SavePageRequest> available_requests_;
   bool task_complete_called_;
 
  private:
@@ -156,6 +160,7 @@ void PickRequestTaskTest::SetUp() {
   request_queue_not_picked_called_ = false;
   total_request_count_ = 9999;
   available_request_count_ = 9999;
+  available_requests_.clear();
   task_complete_called_ = false;
   last_picked_.reset();
   cleanup_needed_ = false;
@@ -175,9 +180,12 @@ void PickRequestTaskTest::TaskCompletionCallback(Task* completed_task) {
 
 void PickRequestTaskTest::AddRequestDone(ItemActionStatus status) {}
 
-void PickRequestTaskTest::RequestPicked(const SavePageRequest& request,
-                                        const bool cleanup_needed) {
+void PickRequestTaskTest::RequestPicked(
+    const SavePageRequest& request,
+    const std::vector<SavePageRequest>& available_requests,
+    const bool cleanup_needed) {
   last_picked_.reset(new SavePageRequest(request));
+  available_requests_ = available_requests;
   cleanup_needed_ = cleanup_needed;
 }
 
@@ -266,6 +274,10 @@ TEST_F(PickRequestTaskTest, ChooseRequestWithHigherRetryCount) {
   EXPECT_FALSE(request_queue_not_picked_called_);
   EXPECT_EQ(2UL, total_request_count_);
   EXPECT_EQ(2UL, available_request_count_);
+  EXPECT_TRUE(std::find(available_requests_.begin(), available_requests_.end(),
+                        request1) != available_requests_.end());
+  EXPECT_FALSE(std::find(available_requests_.begin(), available_requests_.end(),
+                         request2) != available_requests_.end());
   EXPECT_TRUE(task_complete_called_);
 }
 
@@ -406,6 +418,7 @@ TEST_F(PickRequestTaskTest, ChooseNonExpiredRequest) {
   EXPECT_FALSE(request_queue_not_picked_called_);
   EXPECT_EQ(2UL, total_request_count_);
   EXPECT_EQ(1UL, available_request_count_);
+  EXPECT_EQ(0UL, available_requests_.size());
   EXPECT_TRUE(task_complete_called_);
   EXPECT_TRUE(cleanup_needed_);
 }
@@ -432,6 +445,7 @@ TEST_F(PickRequestTaskTest, ChooseRequestThatHasNotExceededStartLimit) {
   EXPECT_FALSE(request_queue_not_picked_called_);
   EXPECT_EQ(2UL, total_request_count_);
   EXPECT_EQ(1UL, available_request_count_);
+  EXPECT_EQ(0UL, available_requests_.size());
   EXPECT_TRUE(task_complete_called_);
   EXPECT_TRUE(cleanup_needed_);
 }
@@ -492,6 +506,7 @@ TEST_F(PickRequestTaskTest, ChooseRequestThatIsNotDisabled) {
   EXPECT_FALSE(request_queue_not_picked_called_);
   EXPECT_EQ(2UL, total_request_count_);
   EXPECT_EQ(1UL, available_request_count_);
+  EXPECT_EQ(0UL, available_requests_.size());
   EXPECT_TRUE(task_complete_called_);
 }
 
@@ -524,6 +539,10 @@ TEST_F(PickRequestTaskTest, ChoosePrioritizedRequests) {
   EXPECT_FALSE(request_queue_not_picked_called_);
   EXPECT_EQ(2UL, total_request_count_);
   EXPECT_EQ(2UL, available_request_count_);
+  EXPECT_TRUE(std::find(available_requests_.begin(), available_requests_.end(),
+                        request1) != available_requests_.end());
+  EXPECT_FALSE(std::find(available_requests_.begin(), available_requests_.end(),
+                         request2) != available_requests_.end());
   EXPECT_TRUE(task_complete_called_);
   EXPECT_EQ(1UL, prioritized_requests_.size());
 }
@@ -562,6 +581,10 @@ TEST_F(PickRequestTaskTest, ChooseFromTwoPrioritizedRequests) {
   EXPECT_FALSE(request_queue_not_picked_called_);
   EXPECT_EQ(2UL, total_request_count_);
   EXPECT_EQ(2UL, available_request_count_);
+  EXPECT_TRUE(std::find(available_requests_.begin(), available_requests_.end(),
+                        request1) != available_requests_.end());
+  EXPECT_FALSE(std::find(available_requests_.begin(), available_requests_.end(),
+                         request2) != available_requests_.end());
   EXPECT_TRUE(task_complete_called_);
   EXPECT_EQ(2UL, prioritized_requests_.size());
 }

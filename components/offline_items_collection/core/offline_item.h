@@ -48,6 +48,16 @@ enum class OfflineItemProgressUnit {
   PERCENTAGE,
 };
 
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.components.offline_items_collection
+enum class PendingState {
+  // Enum for reason OfflineItem is pending, if any.
+  NOT_PENDING,      // Download is not pending.
+  PENDING_NETWORK,  // Download is pending due to no network connection.
+  PENDING_ANOTHER_DOWNLOAD,  // Download is pending because another download
+                             // is currently being downloaded.
+};
+
 // This struct holds the relevant pieces of information to represent an abstract
 // offline item to the front end.  This is meant to be backed by components that
 // need to both show content being offlined (downloading, saving, etc.) as well
@@ -148,6 +158,9 @@ struct OfflineItem {
   // ---------------------------------------------------------------------------
   // The current state of the OfflineItem.
   OfflineItemState state;
+
+  // Reason OfflineItem is pending.
+  PendingState pendingState;
 
   // Whether or not the offlining of this content can be resumed if it was
   // paused or interrupted.
