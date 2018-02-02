@@ -16,6 +16,24 @@
       "revId": "d9e743c1d6a4acb04faeaeb3ba427195d94ffde6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8cc6e1_2a096133",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-02-02T11:27:42Z",
+      "side": 1,
+      "message": "We delay tracing of WeakPersistents but not weak hash tables. I disabled promptly free for weak hash tables. https://chromium-review.googlesource.com/c/chromium/src/+/836299 Hence weak callbacks get registered during the IncrementalMarkingSteps.",
+      "parentUuid": "a2eafc16_d0ca7f93",
+      "revId": "d9e743c1d6a4acb04faeaeb3ba427195d94ffde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
