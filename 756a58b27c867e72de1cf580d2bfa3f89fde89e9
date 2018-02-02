@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14ba6dc_02fb65f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-02T20:36:28Z",
+      "side": 1,
+      "message": "It\u0027s not very reliable to use this as file path, coz it could be a content URI once android updates",
+      "revId": "756a58b27c867e72de1cf580d2bfa3f89fde89e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
