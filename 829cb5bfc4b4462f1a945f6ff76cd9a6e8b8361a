@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca20fe3e_d0ad1cb7",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-02T02:04:09Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 49
+      },
+      "revId": "829cb5bfc4b4462f1a945f6ff76cd9a6e8b8361a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbb9f61_133fd0d1",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-02T02:04:09Z",
+      "side": 1,
+      "message": "I wonder if we need this one -- maybe check along with the strings approval? This one will be a lot spammier (will show up on most page loads instead of a small %) and I bet the removal of the Secure string won\u0027t cause confusion/angst in the same way as EV.",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 3
+      },
+      "revId": "829cb5bfc4b4462f1a945f6ff76cd9a6e8b8361a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
