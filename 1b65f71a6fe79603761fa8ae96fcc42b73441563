@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b43d5e_113229d1",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-02-02T20:47:24Z",
+      "side": 1,
+      "message": "Not important at all for this CL, but I wonder if we could make the event handlers struct extensible, so we could give these callbacks a meaningful name when we set them. I think this might help other elements that take a callback in their ctor. wdyt?",
+      "revId": "1b65f71a6fe79603761fa8ae96fcc42b73441563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
