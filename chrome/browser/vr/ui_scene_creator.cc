@@ -1445,6 +1445,7 @@ void UiSceneCreator::CreateController() {
 
   auto reticle_laser_group = Create<UiElement>(kReticleLaserGroup, kPhaseNone);
   reticle_laser_group->SetTransitionedProperties({OPACITY});
+  reticle_laser_group->set_hit_testable(false);
   reticle_laser_group->SetTransitionDuration(
       base::TimeDelta::FromMilliseconds(kControllerLabelTransitionDurationMs));
   VR_BIND_VISIBILITY(reticle_laser_group, !model->reposition_window_enabled());
