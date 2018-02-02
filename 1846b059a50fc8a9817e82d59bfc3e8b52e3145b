@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6be5e4_b303a492",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-02T22:57:02Z",
+      "side": 1,
+      "message": "What is the relation of this change to the change in the other file?",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
