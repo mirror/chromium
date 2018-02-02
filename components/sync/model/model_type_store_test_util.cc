@@ -31,7 +31,7 @@ std::unique_ptr<ModelTypeStore>
 ModelTypeStoreTestUtil::CreateInMemoryStoreForTest() {
   std::unique_ptr<ModelTypeStore> store;
   ModelTypeStore::CreateInMemoryStoreForTest(
-      UNSPECIFIED, base::Bind(&MoveStoreToScopedPtr, &store));
+      UNSPECIFIED, base::BindOnce(&MoveStoreToScopedPtr, &store));
 
   // Force the initialization to run now, synchronously.
   base::RunLoop().RunUntilIdle();
@@ -41,18 +41,18 @@ ModelTypeStoreTestUtil::CreateInMemoryStoreForTest() {
 }
 
 // static
-ModelTypeStoreFactory ModelTypeStoreTestUtil::FactoryForInMemoryStoreForTest() {
-  return base::Bind(&ModelTypeStoreTestUtil::MoveStoreToCallback,
-                    base::Passed(CreateInMemoryStoreForTest()));
+RepeatingModelTypeStoreFactory
+ModelTypeStoreTestUtil::FactoryForInMemoryStoreForTest() {
+  return base::BindRepeating(&ModelTypeStore::CreateInMemoryStoreForTest);
 }
 
 // static
 void ModelTypeStoreTestUtil::MoveStoreToCallback(
     std::unique_ptr<ModelTypeStore> store,
     ModelType type,
-    const ModelTypeStore::InitCallback& callback) {
+    ModelTypeStore::InitCallback callback) {
   ASSERT_TRUE(store);
-  callback.Run(Result::SUCCESS, std::move(store));
+  std::move(callback).Run(Result::SUCCESS, std::move(store));
 }
 
 }  // namespace syncer
