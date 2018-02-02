@@ -94,6 +94,30 @@
       "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6491c514_775d8b45",
+        "filename": "services/network/network_context.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T19:31:17Z",
+      "side": 1,
+      "message": "Ah, drat, so we\u0027re gradually shifting over to using the NetworkContext -\u003e URLLoaderFactory -\u003e URLLoader pathway.  Which I should have been able to figure out from first principles; ooops :-}.  Please ignore my request to make this null in the Network service enabled case.\n\nSo this means we\u0027re going to have multiple instances of ResourceScheduler running around; one per NetworkContext and one for the ResourceDispatcherHostImpl.  My memory (should be checked) is that there isn\u0027t any global throttling done within the ResourceScheduler; the (current) throttling is per-tab.  So I don\u0027t think there\u0027s a problem with making it a non-singleton class.  However, we should keep in mind that this means if we want to implement future global throttling, the ResourceScheduler is no longer a reasonable place to do that throttling.  \n\nIf we wanted to keep the singleton configuration/ability to do global throttling we could try and find a way to allow non-network service configurations use the ResourceScheduler attached to the ResourceDispatcherHostImpl for NetworkContext behavior, but I think that\u0027s more work than it\u0027s worth, given that global scheduling should probably be in /net and that I don\u0027t think there\u0027s any conflicts between multiple instances of the ResourceScheduler.\n\nYutaka, could you do two things?:\n* Confirm my memory that the ResourceScheduler doesn\u0027t currently do any global (i.e. over everything that uses the class) throttling?\n* Write some tests making sure that if there are multiple instances of the ResourceScheduler instantiated, they don\u0027t interfere with each other?",
+      "parentUuid": "f6d3ded6_d47cfb0a",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
