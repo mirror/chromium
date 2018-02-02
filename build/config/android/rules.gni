@@ -2707,6 +2707,9 @@ if (enable_java_templates) {
     _incremental_test_runner_target_name =
         "${_test_runner_target_name}_incremental"
     _incremental_test_name = "${invoker.target_name}_incremental"
+    if (!defined(android_extra_test_deps)) {
+      android_extra_test_deps = []
+    }
     if (incremental_apk_by_default) {
       _incremental_test_runner_target_name = _test_runner_target_name
       _incremental_test_name = invoker.target_name
