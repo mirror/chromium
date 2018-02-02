@@ -174,6 +174,17 @@ void WebRtcEventLogManager::OnWebRtcEventLogWrite(
                      std::move(reply)));
 }
 
+void WebRtcEventLogManager::RenderProcessExited(RenderProcessHost* host,
+                                                base::TerminationStatus status,
+                                                int exit_code) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(host);
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::RenderProcessExitedInternal,
+                     base::Unretained(this), host->GetID()));
+}
+
 void WebRtcEventLogManager::SetLocalLogsObserver(
     WebRtcLocalEventLogsObserver* observer,
     base::OnceClosure reply) {
@@ -388,6 +399,12 @@ void WebRtcEventLogManager::OnWebRtcEventLogWriteInternal(
         base::BindOnce(std::move(reply),
                        std::make_pair(local_result, remote_result)));
   }
+}
+
+void WebRtcEventLogManager::RenderProcessExitedInternal(int render_process_id) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  local_logs_manager_.RenderProcessExited(render_process_id);
+  remote_logs_manager_.RenderProcessExited(render_process_id);
 }
 
 void WebRtcEventLogManager::SetLocalLogsObserverInternal(

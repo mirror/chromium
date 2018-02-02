@@ -20,6 +20,7 @@
 #include "content/browser/webrtc/webrtc_remote_event_log_manager.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_context.h"
+#include "public/browser/render_process_host_observer.h"
 
 namespace content {
 
@@ -30,7 +31,8 @@ namespace content {
 // user from the WebRTCIntenals. (A log may simulatenously be written to both,
 // either, or none.)
 class CONTENT_EXPORT WebRtcEventLogManager
-    : public WebRtcLocalEventLogsObserver,
+    : public RenderProcessHostObserver,
+      public WebRtcLocalEventLogsObserver,
       public WebRtcRemoteEventLogsObserver {
  public:
   // To turn WebRTC on and off, we go through PeerConnectionTrackerProxy. In
@@ -144,6 +146,11 @@ class CONTENT_EXPORT WebRtcEventLogManager
       base::OnceCallback<void(std::pair<bool, bool>)> reply =
           base::OnceCallback<void(std::pair<bool, bool>)>());
 
+  // RenderProcessHostObserver implementation.
+  void RenderProcessExited(RenderProcessHost* host,
+                           base::TerminationStatus status,
+                           int exit_code) override;
+
   // Set (or unset) an observer that will be informed whenever a local log file
   // is started/stopped. The observer needs to be able to either run from
   // anywhere. If you need the code to run on specific runners or queues, have
@@ -232,6 +239,8 @@ class CONTENT_EXPORT WebRtcEventLogManager
       const BrowserContext* browser_context,
       const std::string& message,
       base::OnceCallback<void(std::pair<bool, bool>)> reply);
+
+  void RenderProcessExitedInternal(int render_process_id);
 
   void SetLocalLogsObserverInternal(WebRtcLocalEventLogsObserver* observer,
                                     base::OnceClosure reply);

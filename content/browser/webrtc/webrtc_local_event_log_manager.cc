@@ -121,6 +121,11 @@ bool WebRtcLocalEventLogManager::EventLogWrite(int render_process_id,
   return WriteToLogFile(it, message);
 }
 
+void WebRtcLocalEventLogManager::RenderProcessExited(int render_process_id) {
+  // TODO: !!!
+  printf("ELAD!!! local %d\n", render_process_id);
+}
+
 void WebRtcLocalEventLogManager::SetClockForTesting(base::Clock* clock) {
   clock_for_testing_ = clock;
 }

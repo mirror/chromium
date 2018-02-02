@@ -146,6 +146,11 @@ bool WebRtcRemoteEventLogManager::EventLogWrite(int render_process_id,
   return WriteToLogFile(it, message);
 }
 
+void WebRtcRemoteEventLogManager::RenderProcessExited(int render_process_id) {
+  // TODO: !!!
+  printf("ELAD!!! remote %d\n", render_process_id);
+}
+
 void WebRtcRemoteEventLogManager::OnWebRtcEventLogUploadComplete(
     const base::FilePath& file_path,
     bool upload_successful) {
