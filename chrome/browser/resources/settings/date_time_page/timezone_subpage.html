@@ -31,6 +31,7 @@
         </controlled-radio-button>
         <div>
           <settings-dropdown-menu id="timeZoneResolveMethodDropdown"
+              policy-indicator-end="true"
               pref="{{prefs.generated.resolve_timezone_by_geolocation_method_short}}"
               label="$i18n{selectTimeZoneResolveMethod}"
               hidden="[[!prefs.generated.resolve_timezone_by_geolocation_on_off.value]]"

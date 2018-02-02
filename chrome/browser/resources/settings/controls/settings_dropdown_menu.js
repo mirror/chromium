@@ -58,6 +58,12 @@ Polymer({
       readOnly: true,
     },
 
+    /** Whether the policy indicator should be displayed after the dropdown. */
+    policyIndicatorEnd: {
+      type: Boolean,
+      value: false,
+    },
+
     /** Label for a11y purposes */
     label: String,
   },
@@ -128,5 +134,25 @@ Polymer({
   shouldDisableMenu_: function() {
     return this.disabled || this.isPrefEnforced() ||
         this.menuOptions === null || this.menuOptions.length == 0;
+  },
+
+  /**
+   * Controls visibility of policy control indicators.
+   * @param {?chrome.settingsPrivate.ControlledBy} prefControlledBy
+   * pref.controlledBy value.
+   * @param {boolean} policyIndicatorEnd this.policyIndicatorEnd value
+   * @param {string} position 'start' or 'end'
+   * @return {boolean}
+   * @private
+   */
+  isPolicyIndicatorVisible_: function(
+      prefControlledBy, policyIndicatorEnd, position) {
+    if (!prefControlledBy)
+      return false;
+
+    if (policyIndicatorEnd)
+      return position == 'end';
+
+    return position == 'start';
   },
 });
