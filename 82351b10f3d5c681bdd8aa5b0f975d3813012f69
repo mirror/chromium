@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61a9a40f_f81afd9b",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-02T19:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f33d9df_7956a009",
+      "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98777b71_fb8d10a4",
         "filename": "content/browser/renderer_host/delegated_frame_host.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9c3c9ae8_c9e162cf",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-02T19:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98777b71_fb8d10a4",
+      "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e450bc_09bc7119",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 9
@@ -47,6 +83,30 @@
       "writtenOn": "2018-02-02T18:56:48Z",
       "side": 1,
       "message": "what happens if the client mistakenly tries to use the surface_id in other calls after marked for destruction?",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29213312_4e5070e2",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-02T19:32:18Z",
+      "side": 1,
+      "message": "A surface that is marked for destruction will not be garbage collected until the embedder drops its reference to it. Once the embedder drops the reference, it\u0027s not supposed to embed that surface again. If it does we\u0027ll just show blank. SurfaceManager knows whether a surface exists or not. I hope this answers your question.",
+      "parentUuid": "47e450bc_09bc7119",
       "range": {
         "startLine": 121,
         "startChar": 2,
