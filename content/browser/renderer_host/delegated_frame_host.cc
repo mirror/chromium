@@ -81,7 +81,9 @@ DelegatedFrameHost::~DelegatedFrameHost() {
   DCHECK(!vsync_manager_.get());
 }
 
-void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
+void DelegatedFrameHost::WasShown(const viz::LocalSurfaceId& local_surface_id,
+                                  const gfx::Size& dip_size,
+                                  const ui::LatencyInfo& latency_info) {
   frame_evictor_->SetVisible(true);
 
   if (!enable_surface_synchronization_ && !HasFallbackSurface() &&
@@ -95,7 +97,8 @@ void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
 
   // Use the default deadline to synchronize web content with browser UI.
   // TODO(fsamuel): Investigate if there is a better deadline to use here.
-  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  WasResized(local_surface_id, dip_size,
+             cc::DeadlinePolicy::UseDefaultDeadline());
 }
 
 bool DelegatedFrameHost::HasSavedFrame() {
@@ -123,7 +126,7 @@ void DelegatedFrameHost::MaybeCreateResizeLock() {
   if (!client_->DelegatedFrameCanCreateResizeLock())
     return;
 
-  gfx::Size desired_size = client_->DelegatedFrameHostDesiredSizeInDIP();
+  gfx::Size desired_size = surface_dip_size_;
   if (desired_size.IsEmpty())
     return;
   if (desired_size == current_frame_size_in_dip_)
@@ -202,7 +205,7 @@ bool DelegatedFrameHost::TransformPointToLocalCoordSpace(
     const gfx::PointF& point,
     const viz::SurfaceId& original_surface,
     gfx::PointF* transformed_point) {
-  viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
+  viz::SurfaceId surface_id(frame_sink_id_, active_local_surface_id_);
   if (!surface_id.is_valid() || enable_viz_)
     return false;
   *transformed_point = point;
@@ -223,7 +226,7 @@ bool DelegatedFrameHost::TransformPointToCoordSpaceForView(
     return false;
 
   return target_view->TransformPointToLocalCoordSpace(
-      point, viz::SurfaceId(frame_sink_id_, local_surface_id_),
+      point, viz::SurfaceId(frame_sink_id_, active_local_surface_id_),
       transformed_point);
 }
 
@@ -283,23 +286,28 @@ bool DelegatedFrameHost::ShouldSkipFrame(const gfx::Size& size_in_dip) {
 void DelegatedFrameHost::OnAggregatedSurfaceDamage(
     const viz::LocalSurfaceId& id,
     const gfx::Rect& damage_rect) {
-  if (id != local_surface_id_)
+  if (id != active_local_surface_id_)
     return;
   AttemptFrameSubscriberCapture(damage_rect);
 }
 
-void DelegatedFrameHost::WasResized(const cc::DeadlinePolicy& deadline_policy) {
+void DelegatedFrameHost::WasResized(
+    const viz::LocalSurfaceId& new_local_surface_id,
+    const gfx::Size& new_size_in_dip,
+    const cc::DeadlinePolicy& deadline_policy) {
   const viz::SurfaceId* primary_surface_id =
       client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId();
-  gfx::Size new_size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
+
+  local_surface_id_ = new_local_surface_id;
+  surface_dip_size_ = new_size_in_dip;
 
   if (enable_surface_synchronization_ &&
       client_->DelegatedFrameHostIsVisible() &&
-      (!primary_surface_id || primary_surface_id->local_surface_id() !=
-                                  client_->GetLocalSurfaceId())) {
+      (!primary_surface_id ||
+       primary_surface_id->local_surface_id() != new_local_surface_id)) {
     current_frame_size_in_dip_ = new_size_in_dip;
 
-    viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
+    viz::SurfaceId surface_id(frame_sink_id_, new_local_surface_id);
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_id, current_frame_size_in_dip_, GetGutterColor(),
         deadline_policy);
@@ -339,7 +347,7 @@ void DelegatedFrameHost::UpdateGutters() {
     return;
   }
 
-  gfx::Size size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
+  gfx::Size size_in_dip = surface_dip_size_;
   if (current_frame_size_in_dip_.width() < size_in_dip.width()) {
     right_gutter_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
     right_gutter_->SetColor(GetGutterColor());
@@ -371,7 +379,7 @@ gfx::Size DelegatedFrameHost::GetRequestedRendererSize() const {
   if (resize_lock_)
     return resize_lock_->expected_size();
   else
-    return client_->DelegatedFrameHostDesiredSizeInDIP();
+    return surface_dip_size_;
 }
 
 void DelegatedFrameHost::CheckResizeLock() {
@@ -563,7 +571,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     uint32_t parent_sequence_number =
         surface_info.id().local_surface_id().parent_sequence_number();
     uint32_t latest_parent_sequence_number =
-        client_->GetLocalSurfaceId().parent_sequence_number();
+        local_surface_id_.parent_sequence_number();
     // If |latest_parent_sequence_number| is less than
     // |first_parent_sequence_number_after_navigation_|, then the parent id has
     // wrapped around. Make sure that case is covered.
@@ -603,7 +611,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
 
   client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
       surface_info.id());
-  local_surface_id_ = surface_info.id().local_surface_id();
+  active_local_surface_id_ = surface_info.id().local_surface_id();
 
   // Surface synchronization deals with resizes in WasResized().
   if (!enable_surface_synchronization_) {
@@ -923,7 +931,7 @@ void DelegatedFrameHost::ResetCompositor() {
 }
 
 void DelegatedFrameHost::LockResources() {
-  DCHECK(local_surface_id_.is_valid());
+  DCHECK(active_local_surface_id_.is_valid());
   frame_evictor_->LockFrame();
 }
 
@@ -943,7 +951,7 @@ void DelegatedFrameHost::RequestCopyOfOutput(
 }
 
 void DelegatedFrameHost::UnlockResources() {
-  DCHECK(local_surface_id_.is_valid());
+  DCHECK(active_local_surface_id_.is_valid());
   frame_evictor_->UnlockFrame();
 }
 
@@ -978,7 +986,7 @@ void DelegatedFrameHost::ResetCompositorFrameSinkSupport() {
 
 void DelegatedFrameHost::DidNavigate() {
   first_parent_sequence_number_after_navigation_ =
-      client_->GetLocalSurfaceId().parent_sequence_number();
+      local_surface_id_.parent_sequence_number();
   received_frame_after_navigation_ = false;
 }
 
