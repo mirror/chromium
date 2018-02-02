@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98b8cef_469e5903",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-02T19:58:12Z",
+      "side": 0,
+      "message": "you need to remove this too",
+      "range": {
+        "startLine": 772,
+        "startChar": 11,
+        "endLine": 772,
+        "endChar": 16
+      },
+      "revId": "e0b27d14c02d8df7cef2befd6e6435225a2e9537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
