@@ -11,6 +11,7 @@
 #include "third_party/WebKit/Source/bindings/core/v8/ScriptPromiseResolver.h"
 #include "third_party/WebKit/Source/core/frame/LocalFrame.h"
 #include "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h"
+#include "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h"
 #include "third_party/WebKit/Source/platform/wtf/text/WTFString.h"
 #include "third_party/WebKit/public/web/WebFrameClient.h"
 
@@ -130,6 +131,54 @@ int32_t ComputedAccessibleNode::rowSpan(bool& is_null) const {
 
 int32_t ComputedAccessibleNode::setSize(bool& is_null) const {
   return GetIntAttribute(WebAOMIntAttribute::AOM_ATTR_SET_SIZE, is_null);
+}
+
+ComputedAccessibleNode* ComputedAccessibleNode::GetRelationFromCache(
+    AXID axid) const {
+  Element* element = ToAXObjectCacheImpl(cache_)->GetElementFromAXID(axid);
+  if (!element)
+    return nullptr;
+  return element->GetComputedAccessibleNode();
+}
+
+ComputedAccessibleNode* ComputedAccessibleNode::parent() const {
+  int32_t axid;
+  if (!tree_->GetParentIdForAXNode(cache_->GetAXID(element_), &axid)) {
+    return nullptr;
+  }
+  return GetRelationFromCache(axid);
+}
+
+ComputedAccessibleNode* ComputedAccessibleNode::firstChild() const {
+  int32_t axid;
+  if (!tree_->GetFirstChildIdForAXNode(cache_->GetAXID(element_), &axid)) {
+    return nullptr;
+  }
+  return GetRelationFromCache(axid);
+}
+
+ComputedAccessibleNode* ComputedAccessibleNode::lastChild() const {
+  int32_t axid;
+  if (!tree_->GetLastChildIdForAXNode(cache_->GetAXID(element_), &axid)) {
+    return nullptr;
+  }
+  return GetRelationFromCache(axid);
+}
+
+ComputedAccessibleNode* ComputedAccessibleNode::previousSibling() const {
+  int32_t axid;
+  if (!tree_->GetPreviousSiblingIdForAXNode(cache_->GetAXID(element_), &axid)) {
+    return nullptr;
+  }
+  return GetRelationFromCache(axid);
+}
+
+ComputedAccessibleNode* ComputedAccessibleNode::nextSibling() const {
+  int32_t axid;
+  if (!tree_->GetNextSiblingIdForAXNode(cache_->GetAXID(element_), &axid)) {
+    return nullptr;
+  }
+  return GetRelationFromCache(axid);
 }
 
 void ComputedAccessibleNode::OnSnapshotResponse(
