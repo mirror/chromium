@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "287c317c_fdb62db0",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "The StrongBinding impl doesn\u0027t seem to support that. It wants a pair of Interface (LockHandle) and InterfacePtr (LockHandlePtr). \n\nI\u0027d prefer to keep using StrongBinding here rather than reimplement, unless you object. Suggestions welcome.",
+      "parentUuid": "c4c93461_8732c8b0",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5a82207_80f1d688",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "23306c859614368763550ccde2338f5104d0c5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f245b202_394662d7",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a82207_80f1d688",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f21b82ab_0a629f63",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30b1ef6a_58fff4ac",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bac6271_17b97109",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "23306c859614368763550ccde2338f5104d0c5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5302c3df_fa61d252",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bac6271_17b97109",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f76e741a_d1b5b09b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b1228ea_d7128bff",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57715a47_eb28fd02",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "23306c859614368763550ccde2338f5104d0c5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c221e13_1bc97ca2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57715a47_eb28fd02",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d1aa1dc2_405eaaae",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c349c823_43f54240",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d80fe7a_3f426be9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "23306c859614368763550ccde2338f5104d0c5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f0a77c_f9bee480",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d80fe7a_3f426be9",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "984b3ee4_738e16fb",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "357e3362_93c09fcd",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5618a6f4_e12f2185",
         "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
         "patchSetId": 4
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "29ff4032_cc426045",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5618a6f4_e12f2185",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30dbedd7_5b1893a0",
         "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
         "patchSetId": 4
@@ -183,6 +363,24 @@
       "writtenOn": "2018-01-31T01:28:12Z",
       "side": 1,
       "message": "\"Priority\" is confusing me here a bit. It makes me wonder if an OVERRIDE should preempt a lock holder that also used the OVERRIDE priority.\n\nHow about ConflictResolution that can be set to WAIT / ENQUEUE / QUEUE or PREEMPT / BREAK?\n\nAlso, my intuition was that we\u0027d be minimally invasive, so we\u0027d only preempt the owners whose lock mode conflicts with the current request\u0027s mode. For example, an S request would preempt an X owner, but would not preempt other S owners.\n\nSorry I didn\u0027t express this on the spec. I was generally opposed to the proposal, so I didn\u0027t tackle the details. Please let me know if you\u0027d rather discuss the above issue on GitHub.",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b05ace0_98577e91",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T00:29:52Z",
+      "side": 1,
+      "message": "Reworked per F2F discussion (but feedback still wanted!)\n\nAlso, leaving the steal+shared behavior as-is for now. I think I agree with you but let\u0027s tackle that separately if we can.",
+      "parentUuid": "30dbedd7_5b1893a0",
       "revId": "23306c859614368763550ccde2338f5104d0c5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
