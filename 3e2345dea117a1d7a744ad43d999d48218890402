@@ -16,6 +16,24 @@
       "revId": "3e2345dea117a1d7a744ad43d999d48218890402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c231c778_094a9c32",
+        "filename": "gpu/command_buffer/build_raster_cmd_buffer.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-02T21:37:32Z",
+      "side": 1,
+      "message": "Yup, I did run the script. I need it to not autogen the function declaration for BeginRaster, similar to RasterChromium, and that\u0027s controlled by the internal flag.",
+      "parentUuid": "8ac898e2_658d9ba4",
+      "revId": "3e2345dea117a1d7a744ad43d999d48218890402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
