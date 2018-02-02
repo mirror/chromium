@@ -156,6 +156,12 @@ LayoutBlock* FindContainingBlock(LayoutObject* container,
 
 }  // namespace
 
+int RareDataStat::reason_counts_[kMaxReason] = {0};
+
+int* RareDataReasonCounts() {
+  return RareDataStat::reason_counts_;
+}
+
 #if DCHECK_IS_ON()
 
 LayoutObject::SetLayoutNeededForbiddenScope::SetLayoutNeededForbiddenScope(
@@ -186,8 +192,8 @@ struct SameSizeAsLayoutObject : DisplayItemClient {
   std::unique_ptr<FragmentData> next_fragment_;
 };
 
-static_assert(sizeof(LayoutObject) == sizeof(SameSizeAsLayoutObject),
-              "LayoutObject should stay small");
+// static_assert(sizeof(LayoutObject) == sizeof(SameSizeAsLayoutObject),
+// "LayoutObject should stay small");
 
 bool LayoutObject::affects_parent_block_ = false;
 
@@ -297,6 +303,8 @@ LayoutObject::LayoutObject(Node* node)
   InstanceCounters::IncrementCounter(InstanceCounters::kLayoutObjectCounter);
   if (node_)
     GetFrameView()->IncrementLayoutObjectCount();
+
+  rare_stat_.AddReason(kReasonLOAll);
 }
 
 LayoutObject::~LayoutObject() {

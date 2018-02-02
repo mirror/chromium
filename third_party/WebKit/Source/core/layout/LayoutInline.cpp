@@ -70,6 +70,7 @@ static_assert(sizeof(LayoutInline) == sizeof(SameSizeAsLayoutInline),
 
 LayoutInline::LayoutInline(Element* element) : LayoutBoxModelObject(element) {
   SetChildrenInline(true);
+  rare_stat_.AddReason(kReasonLIAll);
 }
 
 LayoutInline* LayoutInline::CreateAnonymous(Document* document) {

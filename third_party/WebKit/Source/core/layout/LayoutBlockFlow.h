@@ -776,7 +776,9 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
           line_break_to_avoid_widow_(-1),
           did_break_at_line_to_avoid_widow_(false),
           discard_margin_before_(false),
-          discard_margin_after_(false) {}
+          discard_margin_after_(false) {
+      block->rare_stat_.AddReason(kReasonLBFRareData);
+    }
 
     static LayoutUnit PositiveMarginBeforeDefault(
         const LayoutBlockFlow* block) {

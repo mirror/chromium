@@ -1062,8 +1062,15 @@ static LayoutPoint VisualOffsetFromPaintOffsetRoot(
   LayoutPoint result = child->VisualOffsetFromAncestor(painting_layer);
   if (!paint_offset_root->HasLayer() ||
       ToLayoutBoxModelObject(paint_offset_root)->Layer() != painting_layer) {
-    result.Move(-paint_offset_root->OffsetFromAncestorContainer(
-        &painting_layer->GetLayoutObject()));
+    auto r = paint_offset_root->OffsetFromAncestorContainer(
+        &painting_layer->GetLayoutObject());
+    if (paint_offset_root->HasLayer()) {
+      paint_offset_root->rare_stat_.AddReason(kReasonLOPaintOffsetRootNoLayer);
+    } else if (r != LayoutSize()) {
+      paint_offset_root->rare_stat_.AddReason(
+          kReasonLOPaintOffsetRootPaintingLayerDiff);
+    }
+    result.Move(-r);
   }
 
   // Don't include scroll offset of paint_offset_root. Any scroll is

@@ -82,6 +82,81 @@ struct WebScrollIntoViewParams;
 
 enum VisualRectFlags { kDefaultVisualRectFlags = 0, kEdgeInclusive = 1 };
 
+CORE_EXPORT int* RareDataReasonCounts();
+
+enum RareDataReason {
+  // LayoutObject
+  kReasonLOAll,
+  kReasonLOSVGForeign,
+  kReasonLOStackedUnderSVGForeign,
+  kReasonLOStackingContextUnderSVGForeign,
+  kReasonLOPositionedUnderSVGForeign,
+  kReasonLOAbsolutePositionUnderSVGForeign,
+  kReasonLOFixedPositionUnderSVGForeign,
+  kReasonLOPaintOffsetRootNoLayer,
+  kReasonLOPaintOffsetRootPaintingLayerDiff,
+  // LayoutInline
+  kReasonLIAll,
+  kReasonLICreatesLineBoxes,
+  // LayoutBox
+  kReasonLBAll,
+  kReasonLBRareData,
+  kReasonLBInlineBoxWrapper,
+  kReasonLBSpannerPlaceholder,
+  kReasonLBOverrideSize,
+  kReasonLBPageOffset,
+  kReasonLBPaginationStrut,
+  kReasonLBPositionedContainer,
+  kReasonLBPercentHeightContainer,
+  kReasonLBContentBoxDiff,
+  kReasonLBLayoutOverflowDiff,
+  kReasonLBTransformNotBlock,
+  // LayoutBlock
+  kReasonLBLAll,
+  kReasonLBLPositionedDescendants,
+  kReasonLBLPercentHeightDescendants,
+  // LayoutBlockFlow
+  kReasonLBFAll,
+  kReasonLBFRareData,
+  kReasonLBFPaginationStrutFromChild,
+  kReasonLBFLineBreakToAvoidWidow,
+  kReasonLBFDiscardMargin,
+  kReasonLBFMargin,
+  kReasonLBFMultiColumnFlowThread,
+
+  kMaxReason,
+  kReasonNone = -1,
+};
+
+static_assert(kMaxReason == 33, "keep consistent");
+
+struct RareDataStat {
+ public:
+  RareDataStat() : reasons_(0) {}
+#if 0
+    ~RareDataStat()
+    {
+        for (int reason = 0; reason < MaxReason; ++reason) {
+            if (m_reasons & ((uint64_t)1 << reason))
+                s_reasonCounts[reason]--;
+        }
+    }
+#endif
+
+  void AddReason(RareDataReason reason) {
+    if (reason == kReasonNone)
+      return;
+    uint64_t reason_bit = (uint64_t)1 << reason;
+    if (!(reasons_ & reason_bit)) {
+      reasons_ |= reason_bit;
+      reason_counts_[reason]++;
+    }
+  }
+
+  uint64_t reasons_;
+  static int reason_counts_[kMaxReason];
+};
+
 enum CursorDirective { kSetCursorBasedOnStyle, kSetCursor, kDoNotSetCursor };
 
 enum HitTestFilter { kHitTestAll, kHitTestSelf, kHitTestDescendants };
@@ -2609,6 +2684,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   FragmentData fragment_;
   DISALLOW_COPY_AND_ASSIGN(LayoutObject);
+
+ public:
+  mutable RareDataStat rare_stat_;
 };
 
 // FIXME: remove this once the layout object lifecycle ASSERTS are no longer

@@ -268,6 +268,20 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
   }
 
   object.GetMutableForPainting().ClearPaintFlags();
+
+  if (object.Container() && object.Container()->IsSVGForeignObject()) {
+    if (object.StyleRef().IsStackingContext())
+      object.rare_stat_.AddReason(kReasonLOStackingContextUnderSVGForeign);
+    if (object.StyleRef().IsStacked())
+      object.rare_stat_.AddReason(kReasonLOStackedUnderSVGForeign);
+    if (object.StyleRef().GetPosition() != EPosition::kStatic) {
+      object.rare_stat_.AddReason(kReasonLOPositionedUnderSVGForeign);
+      if (object.StyleRef().GetPosition() == EPosition::kAbsolute)
+        object.rare_stat_.AddReason(kReasonLOAbsolutePositionUnderSVGForeign);
+      if (object.StyleRef().GetPosition() == EPosition::kFixed)
+        object.rare_stat_.AddReason(kReasonLOFixedPositionUnderSVGForeign);
+    }
+  }
 }
 
 }  // namespace blink

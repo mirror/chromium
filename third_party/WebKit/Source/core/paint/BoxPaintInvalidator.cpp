@@ -391,6 +391,11 @@ bool BoxPaintInvalidator::
 
   const ComputedStyle& style = box_.StyleRef();
 
+  if (box_.ContentBoxRect() != box_.BorderBoxRect())
+    box_.rare_stat_.AddReason(kReasonLBContentBoxDiff);
+  if (box_.LayoutOverflowRect() != box_.BorderBoxRect())
+    box_.rare_stat_.AddReason(kReasonLBLayoutOverflowDiff);
+
   // Background and mask layers can depend on other boxes than border box. See
   // crbug.com/490533
   if ((style.BackgroundLayers().ThisOrNextLayersUseContentBox() ||

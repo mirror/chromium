@@ -104,6 +104,7 @@ LayoutBlock::LayoutBlock(ContainerNode* node)
       pagination_state_changed_(false) {
   // LayoutBlockFlow calls setChildrenInline(true).
   // By default, subclasses do not have inline children.
+  rare_stat_.AddReason(kReasonLBLAll);
 }
 
 void LayoutBlock::RemoveFromGlobalMaps() {
@@ -951,6 +952,9 @@ void LayoutBlock::InsertPositionedObject(LayoutBox* o) {
   }
   descendant_set->insert(o);
 
+  o->rare_stat_.AddReason(kReasonLBPositionedContainer);
+  rare_stat_.AddReason(kReasonLBLPositionedDescendants);
+
   has_positioned_objects_ = true;
 }
 
@@ -1061,6 +1065,8 @@ void LayoutBlock::AddPercentHeightDescendant(LayoutBox* descendant) {
                                           WTF::WrapUnique(descendant_set));
   }
   descendant_set->insert(descendant);
+
+  rare_stat_.AddReason(kReasonLBLPercentHeightDescendants);
 
   has_percent_height_descendants_ = true;
 }

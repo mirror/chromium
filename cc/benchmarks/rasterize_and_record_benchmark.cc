@@ -24,6 +24,10 @@
 #include "cc/trees/layer_tree_host_common.h"
 #include "ui/gfx/geometry/rect.h"
 
+namespace blink {
+int* RareDataReasonCounts();
+}
+
 namespace cc {
 
 namespace {
@@ -88,6 +92,44 @@ RasterizeAndRecordBenchmark::~RasterizeAndRecordBenchmark() {
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
 
+static const int kMaxReason = 33;
+
+static const char* kReasonNames[kMaxReason] = {
+    "lo_all",
+    "lo_SVGForeign",
+    "lo_stackedUnderSVGForeign",
+    "lo_stackingContextUnderSVGForeign",
+    "lo_positionedUnderSVGForeign",
+    "lo_absolutePositionUnderSVGForeign",
+    "lo_fixedPositionUnderSVGForeign",
+    "lo_paintOffsetRootNoLayer",
+    "lo_paintOffsetRootPaintingLayerDiff",
+    "li_all",
+    "li_createsLineBoxes",
+    "lb_all",
+    "lb_rareData",
+    "lb_inlineBoxWrapper",
+    "lb_spannerPlaceholder",
+    "lb_overrideSize",
+    "lb_pageOffset",
+    "lb_paginationStrut",
+    "lb_positionedContainer",
+    "lb_percentHeightContainer",
+    "lb_contentBoxDiff",
+    "lb_layoutOverflowDiff",
+    "lb_transformNoBlock",
+    "lbl_all",
+    "lbl_positionedDescendants",
+    "lbl_percentHeightDescendants",
+    "lbf_all",
+    "lbf_rareData",
+    "lbf_paginationStrutFromChild",
+    "lbf_lineBreakToAvoidWidow",
+    "lbf_discardMargin",
+    "lbf_margin",
+    "lbf_multiColumnFlowThread",
+};
+
 void RasterizeAndRecordBenchmark::DidUpdateLayers(
     LayerTreeHost* layer_tree_host) {
   layer_tree_host_ = layer_tree_host;
@@ -100,6 +142,11 @@ void RasterizeAndRecordBenchmark::DidUpdateLayers(
   results_->SetInteger("pixels_recorded", record_results_.pixels_recorded);
   results_->SetInteger("picture_memory_usage",
                        static_cast<int>(record_results_.bytes_used));
+  int* reason_counts = blink::RareDataReasonCounts();
+  for (int i = 0; i < kMaxReason; ++i) {
+    results_->SetInteger(kReasonNames[i], reason_counts[i]);
+    reason_counts[i] = 0;
+  }
 
   for (int i = 0; i < RecordingSource::RECORDING_MODE_COUNT; i++) {
     std::string name = base::StringPrintf("record_time%s_ms", kModeSuffixes[i]);

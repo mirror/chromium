@@ -261,6 +261,7 @@ LayoutBlockFlow::LayoutBlockFlow(ContainerNode* node) : LayoutBlock(node) {
   static_assert(sizeof(MarginInfo) == sizeof(SameSizeAsMarginInfo),
                 "MarginInfo should stay small");
   SetChildrenInline(true);
+  rare_stat_.AddReason(kReasonLBFAll);
 }
 
 LayoutBlockFlow::~LayoutBlockFlow() = default;
@@ -299,6 +300,7 @@ void LayoutBlockFlow::SetBreakAtLineToAvoidWidow(int line_to_break) {
   EnsureRareData();
   DCHECK(!rare_data_->did_break_at_line_to_avoid_widow_);
   rare_data_->line_break_to_avoid_widow_ = line_to_break;
+  rare_stat_.AddReason(kReasonLBFLineBreakToAvoidWidow);
 }
 
 void LayoutBlockFlow::SetDidBreakAtLineToAvoidWidow() {
@@ -2323,6 +2325,9 @@ void LayoutBlockFlow::SetMustDiscardMarginBefore(bool value) {
     rare_data_ = std::make_unique<LayoutBlockFlowRareData>(this);
 
   rare_data_->discard_margin_before_ = value;
+
+  if (value)
+    rare_stat_.AddReason(kReasonLBFDiscardMargin);
 }
 
 void LayoutBlockFlow::SetMustDiscardMarginAfter(bool value) {
@@ -2338,6 +2343,9 @@ void LayoutBlockFlow::SetMustDiscardMarginAfter(bool value) {
     rare_data_ = std::make_unique<LayoutBlockFlowRareData>(this);
 
   rare_data_->discard_margin_after_ = value;
+
+  if (value)
+    rare_stat_.AddReason(kReasonLBFDiscardMargin);
 }
 
 bool LayoutBlockFlow::MustDiscardMarginBefore() const {
@@ -2402,6 +2410,7 @@ void LayoutBlockFlow::SetMaxMarginBeforeValues(LayoutUnit pos, LayoutUnit neg) {
   }
   rare_data_->margins_.SetPositiveMarginBefore(pos);
   rare_data_->margins_.SetNegativeMarginBefore(neg);
+  rare_stat_.AddReason(kReasonLBFMargin);
 }
 
 void LayoutBlockFlow::SetMaxMarginAfterValues(LayoutUnit pos, LayoutUnit neg) {
@@ -2413,6 +2422,7 @@ void LayoutBlockFlow::SetMaxMarginAfterValues(LayoutUnit pos, LayoutUnit neg) {
   }
   rare_data_->margins_.SetPositiveMarginAfter(pos);
   rare_data_->margins_.SetNegativeMarginAfter(neg);
+  rare_stat_.AddReason(kReasonLBFMargin);
 }
 
 bool LayoutBlockFlow::MustSeparateMarginBeforeForChild(
@@ -4334,6 +4344,7 @@ void LayoutBlockFlow::SetPaginationStrutPropagatedFromChild(LayoutUnit strut) {
     rare_data_ = std::make_unique<LayoutBlockFlowRareData>(this);
   }
   rare_data_->pagination_strut_propagated_from_child_ = strut;
+  rare_stat_.AddReason(kReasonLBFPaginationStrutFromChild);
 }
 
 void LayoutBlockFlow::SetFirstForcedBreakOffset(LayoutUnit block_offset) {
@@ -4551,6 +4562,7 @@ void LayoutBlockFlow::CreateOrDestroyMultiColumnFlowThreadIfNeeded(
   LayoutBlockFlowRareData& rare_data = EnsureRareData();
   DCHECK(!rare_data.multi_column_flow_thread_);
   rare_data.multi_column_flow_thread_ = flow_thread;
+  rare_stat_.AddReason(kReasonLBFMultiColumnFlowThread);
 }
 
 LayoutBlockFlow::LayoutBlockFlowRareData& LayoutBlockFlow::EnsureRareData() {
