@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "759a1335_3960553c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-02-02T18:28:54Z",
+      "side": 1,
+      "message": "Removed the DCHECK. svg/foreignObject/fO-fixed-position-crash.html triggered it, with a fixed-positioned child of an SVG foreignObject, and it\u0027s all contentEditable, too. The fixedpos is a LayoutNG object that gets its size overridden in NG code, but it performs layout with legacy, because ForceLegacyLayout(). Its containing block is the SVG foreignObject, which is a non-NG object. So the DCHECK failed.\n\nI changed it to calling ComputePositionedLogicalHeight() like before, but override computed_values.extent_ afterwards.\n\nSee patchset 26.",
+      "parentUuid": "fde34d15_394e2ee6",
+      "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b7ccc3d_9240c4dd",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 19
