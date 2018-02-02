@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3bffeef_ab6c943d",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T00:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7147e8cb_b0c38e29",
+      "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b8f04f9_f391820f",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71ed4e2_952a63ba",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T00:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8f04f9_f391820f",
+      "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,48 @@
     },
     {
       "key": {
+        "uuid": "af32e3b3_aa7b1dc4",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T00:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa642ef_17920983",
+      "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e154da7_68be30e0",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T00:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b811589b_6fa24c07",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 24
+      },
+      "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6669e1_f1ae2a6d",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d918b5f9_c30a81fb",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T00:27:31Z",
+      "side": 1,
+      "message": "Oh, I like the last one better, thanks!",
+      "parentUuid": "1c6669e1_f1ae2a6d",
+      "revId": "fd4355d2d0f5e63ef5dbd5c2c3b0de8123374431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
