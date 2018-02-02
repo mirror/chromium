@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3866d85_71f724b4",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-02T21:50:09Z",
+      "side": 1,
+      "message": "optional:\n\nIt seems like you\u0027re capturing the entire element\u0027s text, except for the undo button. \n\nIf it\u0027s not a necessity to avoid capturing the \"undo\" word, it\u0027s probably easier to just do \"consentDescription \u003d this.textContent\" on the entire custom element and not have to attach all the \"consent-description\" attribute.",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641d9119_00a7dd3a",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-02T21:50:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if clicking on settings should be counted as consent, since plan on providing a \"nevermind, log me back out please\" button on the settings page. So if the user clicks the settings link and then click that button, how do we strike that record off?",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b10ba7_592dc206",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-02T21:50:09Z",
+      "side": 1,
+      "message": "there\u0027s an assertNotReached() function.",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44082e31_59635b70",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-02T21:50:09Z",
+      "side": 1,
+      "message": "The text in this page seems fairly static (no text or [hidden] really changes). Can we generate this consent-description only once when the dialog is created, to avoid having to call Array.from, .querySelectorAll, and .map twice each?\n\nyou can probably add this in attached() above (and set a this.consentDescription_ on the object or something).",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca22c74_eaec1b1a",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-02T21:50:09Z",
+      "side": 1,
+      "message": "does this.querySelectorAll also work?",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
