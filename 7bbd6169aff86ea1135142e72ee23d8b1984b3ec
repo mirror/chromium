@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9418c74_1a386006",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "I do not think so. Add assert(is_chromeos).",
+      "parentUuid": "98172ed5_9af460b2",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc91efa_e6630af0",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20477cdd_acd47d86",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc91efa_e6630af0",
+      "range": {
+        "startLine": 215,
+        "startChar": 15,
+        "endLine": 215,
+        "endChar": 19
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8c69c933_18edbdb3",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9932e10_62d46e41",
+      "range": {
+        "startLine": 355,
+        "startChar": 22,
+        "endLine": 355,
+        "endChar": 27
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01c9847a_730f652a",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad55a1d2_b9011007",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Thanks, renamed the base class to SearchBoxViewBase.",
+      "parentUuid": "01c9847a_730f652a",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "1637721a_01aefb38",
+        "filename": "ui/chromeos/search_box/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b698dd_95673e02",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2f73d9_07cdbcb2",
         "filename": "ui/chromeos/search_box/search_box_constants.h",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ef8cc2_90720da5",
+        "filename": "ui/chromeos/search_box/search_box_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Cannot compile: error: constexpr variable declaration must be a definition",
+      "parentUuid": "ed2f73d9_07cdbcb2",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "3ba3823c_0e7f58bb",
+        "filename": "ui/chromeos/search_box/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a66aa8d_e2b867ae",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 5
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "271e68f1_ae333f6f",
         "filename": "ui/chromeos/search_box/views/search_box_view.cc",
         "patchSetId": 2
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "65cd49d1_eee4b76b",
+        "filename": "ui/chromeos/search_box/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "271e68f1_ae333f6f",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc22a9fb_124e979e",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "bc1901b2_810469cb",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "As explained on chat, due to historical reason, this is a WidgetDelegateView, which will delegate the search_box_view_widget_ in the app_list_view.\n\nBut this could be just a view. We can discuss and design later how to remove the search_box_view_widget_ dependence in the app_list_view.",
+      "parentUuid": "bc22a9fb_124e979e",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a686928_d83cc72c",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -193,6 +379,24 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02499839_1452986f",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a686928_d83cc72c",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "094e11bb_08b4b240",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "947f4667_af9c0d3e",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f50c35bb_93e62083",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -260,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "fcd6c3cf_21e7f725",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50c35bb_93e62083",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94358be6_93ccfbfb",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -274,6 +520,24 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970571e0_bcd3675d",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94358be6_93ccfbfb",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -300,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "0cb1a57c_d2ce080e",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f5506a_49a93383",
+      "range": {
+        "startLine": 136,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 38
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f33aab5_c523817a",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -314,6 +602,24 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b31c0fb_76f7b32b",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f33aab5_c523817a",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -334,6 +640,24 @@
     },
     {
       "key": {
+        "uuid": "28a28d74_aea8b95a",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Moved.",
+      "parentUuid": "3acaa14d_84e8152d",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c93b462_daa626a3",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -348,6 +672,24 @@
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261d0686_a3c21eb2",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T09:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c93b462_daa626a3",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
