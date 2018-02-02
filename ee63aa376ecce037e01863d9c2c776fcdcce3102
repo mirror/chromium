@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5ea0c73_291791d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-02T20:18:02Z",
+      "side": 1,
+      "message": "Is there a reason we do it this way instead of doing something like mActivity.getTabCreator(). createNewTab()? Feels odd to get the button and calling its click handler.",
+      "range": {
+        "startLine": 884,
+        "startChar": 15,
+        "endLine": 884,
+        "endChar": 26
+      },
+      "revId": "ee63aa376ecce037e01863d9c2c776fcdcce3102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
