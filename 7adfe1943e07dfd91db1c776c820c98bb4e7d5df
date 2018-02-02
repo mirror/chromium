@@ -16,6 +16,40 @@
       "revId": "7adfe1943e07dfd91db1c776c820c98bb4e7d5df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441187c0_9f0b5428",
+        "filename": "components/omnibox/browser/autocomplete_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-02-02T19:20:11Z",
+      "side": 1,
+      "message": "I think this would be a little clearer:\n\n// Note: Subclasses that override this method must call the base class\n// method and include the response in their estimate.",
+      "revId": "7adfe1943e07dfd91db1c776c820c98bb4e7d5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebbdc65_7a012ad1",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-02-02T19:20:11Z",
+      "side": 1,
+      "message": "What about search_terms_data?",
+      "revId": "7adfe1943e07dfd91db1c776c820c98bb4e7d5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
