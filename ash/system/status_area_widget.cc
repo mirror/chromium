@@ -4,8 +4,6 @@
 
 #include "ash/system/status_area_widget.h"
 
-#include "ash/public/cpp/config.h"
-#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
@@ -25,14 +23,6 @@ namespace ash {
 
 StatusAreaWidget::StatusAreaWidget(aura::Window* status_container, Shelf* shelf)
     : status_area_widget_delegate_(new StatusAreaWidgetDelegate(shelf)),
-      overview_button_tray_(nullptr),
-      system_tray_(nullptr),
-      web_notification_tray_(nullptr),
-      logout_button_tray_(nullptr),
-      palette_tray_(nullptr),
-      virtual_keyboard_tray_(nullptr),
-      ime_menu_tray_(nullptr),
-      login_status_(LoginStatus::NOT_LOGGED_IN),
       shelf_(shelf) {
   DCHECK(status_container);
   DCHECK(shelf);
@@ -49,7 +39,7 @@ StatusAreaWidget::StatusAreaWidget(aura::Window* status_container, Shelf* shelf)
 
 StatusAreaWidget::~StatusAreaWidget() = default;
 
-void StatusAreaWidget::CreateTrayViews() {
+void StatusAreaWidget::Initialize() {
   AddOverviewButtonTray();
   AddSystemTray();
   AddWebNotificationTray();
@@ -61,8 +51,7 @@ void StatusAreaWidget::CreateTrayViews() {
   // Initialize after all trays have been created.
   system_tray_->InitializeTrayItems(web_notification_tray_);
   web_notification_tray_->Initialize();
-  if (palette_tray_)
-    palette_tray_->Initialize();
+  palette_tray_->Initialize();
   virtual_keyboard_tray_->Initialize();
   ime_menu_tray_->Initialize();
   overview_button_tray_->Initialize();
@@ -100,20 +89,13 @@ void StatusAreaWidget::Shutdown() {
 }
 
 void StatusAreaWidget::UpdateAfterShelfAlignmentChange() {
-  if (system_tray_)
-    system_tray_->UpdateAfterShelfAlignmentChange();
-  if (web_notification_tray_)
-    web_notification_tray_->UpdateAfterShelfAlignmentChange();
-  if (logout_button_tray_)
-    logout_button_tray_->UpdateAfterShelfAlignmentChange();
-  if (virtual_keyboard_tray_)
-    virtual_keyboard_tray_->UpdateAfterShelfAlignmentChange();
-  if (ime_menu_tray_)
-    ime_menu_tray_->UpdateAfterShelfAlignmentChange();
-  if (palette_tray_)
-    palette_tray_->UpdateAfterShelfAlignmentChange();
-  if (overview_button_tray_)
-    overview_button_tray_->UpdateAfterShelfAlignmentChange();
+  system_tray_->UpdateAfterShelfAlignmentChange();
+  web_notification_tray_->UpdateAfterShelfAlignmentChange();
+  logout_button_tray_->UpdateAfterShelfAlignmentChange();
+  virtual_keyboard_tray_->UpdateAfterShelfAlignmentChange();
+  ime_menu_tray_->UpdateAfterShelfAlignmentChange();
+  palette_tray_->UpdateAfterShelfAlignmentChange();
+  overview_button_tray_->UpdateAfterShelfAlignmentChange();
   status_area_widget_delegate_->UpdateLayout();
 }
 
@@ -121,18 +103,13 @@ void StatusAreaWidget::UpdateAfterLoginStatusChange(LoginStatus login_status) {
   if (login_status_ == login_status)
     return;
   login_status_ = login_status;
-  if (system_tray_)
-    system_tray_->UpdateAfterLoginStatusChange(login_status);
-  if (logout_button_tray_)
-    logout_button_tray_->UpdateAfterLoginStatusChange();
-  if (overview_button_tray_)
-    overview_button_tray_->UpdateAfterLoginStatusChange(login_status);
+
+  system_tray_->UpdateAfterLoginStatusChange(login_status);
+  logout_button_tray_->UpdateAfterLoginStatusChange();
+  overview_button_tray_->UpdateAfterLoginStatusChange(login_status);
 }
 
 void StatusAreaWidget::SetSystemTrayVisibility(bool visible) {
-  if (!system_tray_)
-    return;
-
   system_tray_->SetVisible(visible);
   // Opacity is set to prevent flakiness in kiosk browser tests. See
   // https://crbug.com/624584.
@@ -154,7 +131,7 @@ TrayBackgroundView* StatusAreaWidget::GetSystemTrayAnchor() const {
 bool StatusAreaWidget::ShouldShowShelf() const {
   // The system tray bubble may or may not want to force the shelf to be
   // visible.
-  if (system_tray_ && system_tray_->IsSystemBubbleVisible())
+  if (system_tray_->IsSystemBubbleVisible())
     return system_tray_->ShouldShowShelf();
 
   // All other tray bubbles will force the shelf to be visible.
@@ -162,9 +139,8 @@ bool StatusAreaWidget::ShouldShowShelf() const {
 }
 
 bool StatusAreaWidget::IsMessageBubbleShown() const {
-  return ((system_tray_ && system_tray_->IsSystemBubbleVisible()) ||
-          (web_notification_tray_ &&
-           web_notification_tray_->IsMessageCenterVisible()));
+  return system_tray_->IsSystemBubbleVisible() ||
+         web_notification_tray_->IsMessageCenterVisible();
 }
 
 void StatusAreaWidget::SchedulePaint() {
@@ -174,8 +150,7 @@ void StatusAreaWidget::SchedulePaint() {
   virtual_keyboard_tray_->SchedulePaint();
   logout_button_tray_->SchedulePaint();
   ime_menu_tray_->SchedulePaint();
-  if (palette_tray_)
-    palette_tray_->SchedulePaint();
+  palette_tray_->SchedulePaint();
   overview_button_tray_->SchedulePaint();
 }
 
@@ -194,8 +169,7 @@ void StatusAreaWidget::UpdateShelfItemBackground(SkColor color) {
   system_tray_->UpdateShelfItemBackground(color);
   virtual_keyboard_tray_->UpdateShelfItemBackground(color);
   ime_menu_tray_->UpdateShelfItemBackground(color);
-  if (palette_tray_)
-    palette_tray_->UpdateShelfItemBackground(color);
+  palette_tray_->UpdateShelfItemBackground(color);
   overview_button_tray_->UpdateShelfItemBackground(color);
 }
 
