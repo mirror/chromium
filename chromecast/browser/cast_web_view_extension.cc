@@ -11,22 +11,18 @@
 namespace chromecast {
 
 CastWebViewExtension::CastWebViewExtension(
-    const extensions::Extension* extension,
-    const GURL& initial_url,
-    CastWebView::Delegate* delegate,
+    const CreateParams& params,
     CastWebContentsManager* web_contents_manager,
     content::BrowserContext* browser_context,
     scoped_refptr<content::SiteInstance> site_instance,
-    bool transparent,
-    bool allow_media_access,
-    bool is_headless,
-    bool enable_touch_input)
+    const extensions::Extension* extension,
+    const GURL& initial_url)
     : window_(shell::CastContentWindow::Create(delegate,
                                                is_headless,
                                                enable_touch_input)),
       extension_host_(std::make_unique<CastExtensionHost>(
           browser_context,
-          delegate,
+          params.delegate,
           extension,
           initial_url,
           site_instance.get(),
