@@ -973,6 +973,18 @@ class CORE_EXPORT LocalFrameView final
   // scrollable area, or gains/loses a composited layer.
   void ScrollableAreasDidChange();
 
+  bool IsDevtoolPausedDuringLifecycle() {
+    return is_devtool_paused_during_lifecycle_;
+  }
+
+  void SetDevtoolPausedDuringLifecycle() {
+    is_devtool_paused_during_lifecycle_ = true;
+  }
+
+  void ResetDevtoolPausedDuringLifecycle() {
+    is_devtool_paused_during_lifecycle_ = false;
+  }
+
  protected:
   // Scroll the content via the compositor.
   bool ScrollContentsFastPath(const IntSize& scroll_delta);
@@ -1361,6 +1373,8 @@ class CORE_EXPORT LocalFrameView final
   size_t paint_frame_count_;
 
   UniqueObjectId unique_id_;
+
+  bool is_devtool_paused_during_lifecycle_ = false;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
 };

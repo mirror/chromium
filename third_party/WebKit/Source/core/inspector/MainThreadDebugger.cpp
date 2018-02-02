@@ -240,8 +240,11 @@ void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
   // TODO(crbug.com/788219): this is a temporary hack that disables breakpoint
   // for paint worklet.
   if (paused_frame->GetDocument() &&
-      !paused_frame->GetDocument()->Lifecycle().StateAllowsTreeMutations())
-    return;
+      !paused_frame->GetDocument()->Lifecycle().StateAllowsTreeMutations()) {
+    if (!paused_frame->View())
+      return;
+    paused_frame->View()->SetDevtoolPausedDuringLifecycle();
+  }
   DCHECK(paused_frame == paused_frame->LocalFrameRoot());
   paused_ = true;
 
