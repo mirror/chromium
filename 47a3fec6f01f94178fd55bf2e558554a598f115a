@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0123f3f0_3d57bdd0",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T22:13:22Z",
+      "side": 1,
+      "message": "How come SetWebContents implicitly destroys the view? Shouldn\u0027t that be up to the client, not this code? What harm is there in a long lived crashed overlay view?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

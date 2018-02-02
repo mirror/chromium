@@ -166,6 +166,29 @@
     },
     {
       "key": {
+        "uuid": "2ca27472_ecd5cebf",
+        "filename": "ui/views/controls/webview/webview.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T22:13:22Z",
+      "side": 1,
+      "message": "Please document the view is added as a child so that typical View oenrship model applies.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bd2f41b_d0040c8b",
         "filename": "ui/views/view.h",
         "patchSetId": 14
@@ -201,6 +224,30 @@
       "side": 1,
       "message": "Done. I added an accessor for owned_by_client instead, unless you\nprefer to make WebView a friend.",
       "parentUuid": "2bd2f41b_d0040c8b",
+      "range": {
+        "startLine": 285,
+        "startChar": 7,
+        "endLine": 285,
+        "endChar": 22
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd37e21_cf2d45e5",
+        "filename": "ui/views/view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T22:13:22Z",
+      "side": 1,
+      "message": "Adding accessor SGTM.",
+      "parentUuid": "c4a3a0c5_b2b416f4",
       "range": {
         "startLine": 285,
         "startChar": 7,
