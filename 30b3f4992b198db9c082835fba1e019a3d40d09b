@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcb17c49_05ba8b99",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "TODO(https://crbug.com/803774)",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b90afe6_dc218ce1",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "nullptr /* iter */",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d71de0_3df71d94",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
         "patchSetId": 4
@@ -13,6 +47,40 @@
       "writtenOn": "2018-02-02T02:32:30Z",
       "side": 1,
       "message": "Do we have the spec issue github ID?",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe17ed5a_964df9d3",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "nullptr /* iter */",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6ee90e_983d75ec",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "nit: \u003d default (for both)",
       "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "fe61ea80_fc1ddd9e",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "nit: Have a brief comment with a link to the relevant spec section",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e67a6e3_e8b50c49",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
         "patchSetId": 4
@@ -53,6 +138,40 @@
         "endLine": 27,
         "endChar": 48
       },
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497abcdf_2e21f1f7",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "(I should have asked this earlier, and I\u0027m fine with starting with the current code, but)\n\ngiven that we\u0027re constructing headers from cbor and then re-constructing headers again, should we rather just keep using std::map?  That\u0027d be handier and we can construct HttpResponseHeaders only when we send out to the upstream client.",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6b85af_f3d8ffa4",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T06:52:26Z",
+      "side": 1,
+      "message": "nit: if it\u0027s only used by testing add a suffix ForTesting",
       "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
