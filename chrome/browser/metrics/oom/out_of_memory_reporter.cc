@@ -29,7 +29,7 @@ void OutOfMemoryReporter::RemoveObserver(Observer* observer) {
 
 OutOfMemoryReporter::OutOfMemoryReporter(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
-      tick_clock_(std::make_unique<base::DefaultTickClock>())
+      tick_clock_(base::DefaultTickClock::GetInstance())
 #if defined(OS_ANDROID)
       ,
       scoped_observer_(this) {
@@ -57,10 +57,9 @@ void OutOfMemoryReporter::OnForegroundOOMDetected(const GURL& url,
   }
 }
 
-void OutOfMemoryReporter::SetTickClockForTest(
-    std::unique_ptr<base::TickClock> tick_clock) {
+void OutOfMemoryReporter::SetTickClockForTest(base::TickClock* tick_clock) {
   DCHECK(tick_clock_);
-  tick_clock_ = std::move(tick_clock);
+  tick_clock_ = tick_clock;
 }
 
 void OutOfMemoryReporter::DidFinishNavigation(

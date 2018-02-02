@@ -21,4 +21,6 @@ DefaultTickClock* DefaultTickClock::GetInstance() {
   return instance.Pointer();
 }
 
+DefaultTickClock::DefaultTickClock() {}
+
 }  // namespace base
