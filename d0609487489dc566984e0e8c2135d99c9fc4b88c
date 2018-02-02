@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07263b66_64296003",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2018-02-02T19:35:37Z",
+      "side": 1,
+      "message": "Really minor but using a sk_sp incurs a ref/unref. It could be avoided by making this be const sk_sp\u003c\u003e\u0026 or by adding helper method that snaps a subset image from whichever is the appropriate surface.",
+      "range": {
+        "startLine": 654,
+        "startChar": 2,
+        "endLine": 654,
+        "endChar": 34
+      },
+      "revId": "d0609487489dc566984e0e8c2135d99c9fc4b88c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0be0ae_fa6ecc8b",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2018-02-02T19:35:37Z",
+      "side": 1,
+      "message": "Does calling asLegacyBitmap() on the original image (w/out calling makeNonTextureImage) not work? Also, I\u0027m pretty sure it will allocate the pixel memory and you don\u0027t need the allocPixels call. I believe asLegacyBitmap should also reset the bitmap for you on failure.",
+      "range": {
+        "startLine": 662,
+        "startChar": 4,
+        "endLine": 672,
+        "endChar": 71
+      },
+      "revId": "d0609487489dc566984e0e8c2135d99c9fc4b88c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
