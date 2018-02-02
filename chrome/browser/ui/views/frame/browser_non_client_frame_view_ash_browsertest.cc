@@ -155,11 +155,8 @@ IN_PROC_BROWSER_TEST_P(BrowserNonClientFrameViewAshTest, NonClientHitTest) {
   // because we want it to fall through to the tab strip and select a tab.
   // However, when Touch optimized UI is enabled, the height of the caption
   // buttons is increased, so the click hits the caption.
-  // TODO(malaykeshav): Once the height of the tab is increased to match the
-  // touch-optimized UI, change this hit test to hit the client area.
-  // https://crbug.com/805762.
   widget->Maximize();
-  int expected_value = GetParam() ? HTCAPTION : HTCLIENT;
+  int expected_value = GetParam() ? HTCLIENT : HTCAPTION;
   EXPECT_EQ(expected_value, frame_view->NonClientHitTest(top_edge));
 }
 
@@ -322,9 +319,6 @@ IN_PROC_BROWSER_TEST_P(BrowserNonClientFrameViewAshTest,
                            profiles::kAvatarIconHeight / 2);
   // The increased header height in the touch-optimized UI affects the expected
   // result.
-  // TODO(malaykeshav): Once the height of the tab is increased to match the
-  // touch-optimized UI, change this hit test to hit the client area.
-  // https://crbug.com/805762.
   int expected_value = GetParam() ? HTCAPTION : HTCLIENT;
   EXPECT_EQ(expected_value, frame_view->NonClientHitTest(avatar_center));
 
