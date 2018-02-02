@@ -213,6 +213,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18d7eaba_1ded23f5",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T12:18:26Z",
+      "side": 0,
+      "message": "I think behavior 2 is still used for HeapVector\u003cWeakMember\u003cT\u003e\u003e where we Trace through the the traits (case 2.).\n\nI totally agree that we should improve this in future bit by bit, i.e., I think this is not yet the final state but a good step into the right direction.",
+      "parentUuid": "0aca7de7_68ed1ee8",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
