@@ -16,6 +16,24 @@
       "revId": "5fc224eb17ea3ec716f4c9ca2afef5ab88efce6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87d5b4a_5dc40e30",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-02-02T22:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c5b678f_3b1b2de0",
+      "revId": "5fc224eb17ea3ec716f4c9ca2afef5ab88efce6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
