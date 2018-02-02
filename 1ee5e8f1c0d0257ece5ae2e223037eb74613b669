@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "803de669_50443c4a",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T15:54:58Z",
+      "side": 1,
+      "message": "Good question, I believe it will work on all sizes. I am not creating this test, but only duplicating the existing tests to be used with Post Message element response by enabling the feature. After we fully enable |kContextMenuElementPostMessage|, we can remove the old tests, and keep these PostMessage versions. (So this test isn\u0027t actually new even though the diff shows it that way.)\n\nAlso, there is no iFrame involved in this test, and I don\u0027t think we can get the rendered frame based on the comment on line 223/224.",
+      "parentUuid": "9683e72a_e15fece7",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 10
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a889fc92_4762ae62",
         "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
         "patchSetId": 10
@@ -92,6 +116,30 @@
       "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae0fe27_3c664eb2",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T15:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a889fc92_4762ae62",
+      "range": {
+        "startLine": 248,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 60
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +385,30 @@
     },
     {
       "key": {
+        "uuid": "6a0adbfc_6ee46183",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T15:54:58Z",
+      "side": 1,
+      "message": "I figured these APIs were sensible, but it is true they are only used for the tests right now.\n\nI originally went with ScriptMessageRouter, but it\u0027s APIs require access to the webView which isn\u0027t accessible directly from the test and which doesn\u0027t exist (or could be killed at any time and then the message handlers would be lost.)\n\nI believe adding these APIs are the only clean way to ensure the handlers installed into CRWWebController are always matched with the underlying webview implementation because the CRWWebController is actually the source of truth rather than the webView or it\u0027s existence.\n\nWDYT? or do you have a better way to solve this?",
+      "parentUuid": "013ff5c1_d9ea6645",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 31
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b39294d_3093c473",
         "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
         "patchSetId": 10
@@ -463,6 +535,30 @@
       "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8bcbad_f7d0323f",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T15:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba786d13_c82d5a0c",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
