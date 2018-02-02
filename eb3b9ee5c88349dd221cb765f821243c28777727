@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74dd1ae7_8e3ad38e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/MediaList.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-02T07:50:57Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c07d0f_c9517841",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/cssimportrule.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-02T07:50:57Z",
+      "side": 1,
+      "message": "nit: This case seems okay, but in general, this kind of simple word \"test\" could accidentally conflict with other test cases (e.g. another test case might have already set \"test\" to |media| attribute).  So, unique word/phrase is preferred, I think.",
+      "range": {
+        "startLine": 88,
+        "startChar": 35,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7202661_90202942",
+        "filename": "third_party/WebKit/Source/core/css/CSSImportRule.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-02T07:50:57Z",
+      "side": 1,
+      "message": "nit: TODO comment should come along with an assignee in general.\n\n    TODO(assignee): blah blah ...",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
