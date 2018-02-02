@@ -62,6 +62,24 @@
       "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639d6c1f_55f84338",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-02-02T09:25:02Z",
+      "side": 1,
+      "message": "Ideally, we wouldn\u0027t be setting it back to its parent or owner, but to the origin of the frame that initiated the navigation. Last I checked dcheng@ was poking at things like that.\n\nStill, you\u0027re correct about the current behavior. We should match Blink (which I think we do) to avoid confusion.",
+      "parentUuid": "5ced06e1_796ab0f7",
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
