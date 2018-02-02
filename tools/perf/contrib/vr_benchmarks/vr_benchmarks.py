@@ -70,8 +70,8 @@ class XrWebVrStatic(_BaseVRBenchmark):
     return 'xr.webvr.static'
 
   @classmethod
-  def ValueCanBeAddedPredicate(cls, value, is_first_result):
-    return memory.DefaultValueCanBeAddedPredicateForMemoryMeasurement(value)
+  def ShouldAddValue(cls, name, _):
+    return memory.DefaultShouldAddValueForMemoryMeasurement(name)
 
 
 @benchmark.Owner(emails=['tiborg@chromium.org'])
