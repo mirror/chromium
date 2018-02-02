@@ -17,6 +17,36 @@
 
 namespace viz {
 
+namespace {
+
+bool ContainsSurface(const CompositorFrame& compositor_frame) {
+  for (const auto& render_pass : compositor_frame.render_pass_list) {
+    for (const DrawQuad* quad : render_pass->quad_list) {
+      if (quad->material == DrawQuad::SURFACE_CONTENT)
+        return true;
+    }
+  }
+  return false;
+}
+
+// Derives hit test regions from information in the CompositorFrame.
+mojom::HitTestRegionListPtr CreateHitTestRegionListFromCompositorFrame(
+    const CompositorFrame& compositor_frame) {
+  auto hit_test_region_list = mojom::HitTestRegionList::New();
+
+  // Use kHitTestAsk only when there is an embedded Surface(OOPIF).
+  // This code will evolve over time so that we only use the kHitTestAsk flag
+  // when necessary.
+  hit_test_region_list->flags =
+      mojom::kHitTestMouse | mojom::kHitTestTouch |
+      (ContainsSurface(compositor_frame) ? mojom::kHitTestAsk
+                                         : mojom::kHitTestMine);
+  hit_test_region_list->bounds = gfx::Rect(compositor_frame.size_in_pixels());
+  return hit_test_region_list;
+}
+
+}  // namespace
+
 ClientLayerTreeFrameSink::InitParams::InitParams() = default;
 
 ClientLayerTreeFrameSink::InitParams::~InitParams() = default;
@@ -50,6 +80,7 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
       pipes_(std::move(params->pipes)),
       client_binding_(this),
       enable_surface_synchronization_(params->enable_surface_synchronization),
+      use_viz_hit_test_(params->use_viz_hit_test),
       wants_animate_only_begin_frames_(params->wants_animate_only_begin_frames),
       weak_factory_(this) {
   DETACH_FROM_THREAD(thread_checker_);
@@ -66,6 +97,7 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
       pipes_(std::move(params->pipes)),
       client_binding_(this),
       enable_surface_synchronization_(params->enable_surface_synchronization),
+      use_viz_hit_test_(params->use_viz_hit_test),
       wants_animate_only_begin_frames_(params->wants_animate_only_begin_frames),
       weak_factory_(this) {
   DETACH_FROM_THREAD(thread_checker_);
@@ -155,8 +187,11 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
                                      &tracing_enabled);
 
   mojom::HitTestRegionListPtr hit_test_region_list;
-  if (hit_test_data_provider_)
+  if (hit_test_data_provider_) {
     hit_test_region_list = hit_test_data_provider_->GetHitTestData();
+  } else if (use_viz_hit_test_) {
+    hit_test_region_list = CreateHitTestRegionListFromCompositorFrame(frame);
+  }
 
   compositor_frame_sink_ptr_->SubmitCompositorFrame(
       local_surface_id_, std::move(frame), std::move(hit_test_region_list),

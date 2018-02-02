@@ -59,6 +59,7 @@ class VIZ_CLIENT_EXPORT ClientLayerTreeFrameSink
     UnboundMessagePipes pipes;
     bool enable_surface_synchronization = false;
     bool wants_animate_only_begin_frames = false;
+    bool use_viz_hit_test = false;
   };
 
   ClientLayerTreeFrameSink(
@@ -127,6 +128,7 @@ class VIZ_CLIENT_EXPORT ClientLayerTreeFrameSink
 
   THREAD_CHECKER(thread_checker_);
   const bool enable_surface_synchronization_;
+  const bool use_viz_hit_test_;
   const bool wants_animate_only_begin_frames_;
 
   base::WeakPtrFactory<ClientLayerTreeFrameSink> weak_factory_;

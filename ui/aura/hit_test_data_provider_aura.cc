@@ -58,6 +58,7 @@ viz::mojom::HitTestRegionListPtr HitTestDataProviderAura::GetHitTestData()
               ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY
           ? viz::mojom::kHitTestIgnore
           : viz::mojom::kHitTestMine;
+  // TODO(crbug.com/805416): Use pixels instead of DIP units for bounds.
   hit_test_region_list->bounds = window_->bounds();
 
   GetHitTestDataRecursively(window_, hit_test_region_list.get());

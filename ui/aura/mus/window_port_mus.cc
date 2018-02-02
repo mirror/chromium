@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
-#include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/common/features.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
@@ -122,6 +122,7 @@ WindowPortMus::RequestLayerTreeFrameSink(
   params.local_surface_id_provider =
       std::make_unique<viz::DefaultLocalSurfaceIdProvider>();
   params.enable_surface_synchronization = true;
+  params.use_viz_hit_test = features::IsVizHitTestingEnabled();
 
   auto layer_tree_frame_sink = std::make_unique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,
