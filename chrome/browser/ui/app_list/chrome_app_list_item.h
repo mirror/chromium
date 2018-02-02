@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "chrome/browser/ui/app_list/app_context_menu.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -79,6 +80,8 @@ class ChromeAppListItem {
   // has its Android analog installed.
   virtual bool IsBadged() const;
 
+  void ContextMenuItemSelected(int command_id, int event_flags);
+
   bool CompareForTest(const ChromeAppListItem* other) const;
 
   std::string ToDebugString() const;
@@ -106,6 +109,8 @@ class ChromeAppListItem {
 
   // Set the default position if it exists.
   void SetDefaultPositionIfApplicable();
+
+  virtual app_list::AppContextMenu* GetAppContextMenu();
 
   // The following methods set Chrome side data here, and call model updater
   // interfaces that talk to ash directly.
