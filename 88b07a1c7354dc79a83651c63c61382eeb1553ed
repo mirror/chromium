@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb00a3fa_f27b0206",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T15:41:47Z",
+      "side": 1,
+      "message": "How do you know the compositor you attach the observer to is the same as the compositor when destroyed? Say you drag the tab between windows?",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 126,
+        "endChar": 46
+      },
+      "revId": "88b07a1c7354dc79a83651c63c61382eeb1553ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32db0f48_03326301",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T15:41:47Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 22
+      },
+      "revId": "88b07a1c7354dc79a83651c63c61382eeb1553ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
