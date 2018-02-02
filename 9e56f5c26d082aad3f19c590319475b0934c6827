@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebebeec8_020233dc",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2018-02-02T05:13:00Z",
+      "side": 1,
+      "message": "could be const",
+      "revId": "9e56f5c26d082aad3f19c590319475b0934c6827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24a5ac8_d2dd6e39",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2018-02-02T05:13:00Z",
+      "side": 1,
+      "message": "shouldn\u0027t this also be const \u0026 ref too ?",
+      "revId": "9e56f5c26d082aad3f19c590319475b0934c6827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52947e3c_79132f01",
+        "filename": "chromeos/process_proxy/process_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2018-02-02T05:13:00Z",
+      "side": 1,
+      "message": "lets use a CROS_ prefix since it is entirely a Chrome OS thing",
+      "revId": "9e56f5c26d082aad3f19c590319475b0934c6827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
