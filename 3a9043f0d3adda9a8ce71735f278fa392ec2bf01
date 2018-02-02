@@ -16,6 +16,24 @@
       "revId": "3a9043f0d3adda9a8ce71735f278fa392ec2bf01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca23a17_54227e7d",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-02T21:43:44Z",
+      "side": 1,
+      "message": "Using the ampersand operator in the capture block of a lambda statement in C++ doesn\u0027t take the address - it just means that the value is passed by reference (instead of making a copy of the iterator). Fine to leave as-is?",
+      "parentUuid": "bc68a426_d62028a1",
+      "revId": "3a9043f0d3adda9a8ce71735f278fa392ec2bf01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
