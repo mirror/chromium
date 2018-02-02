@@ -336,12 +336,6 @@ void InstantService::BuildThemeInfo() {
         break;
     }
 
-    // Set theme background image height.
-    gfx::ImageSkia* image =
-        theme_provider.GetImageSkiaNamed(IDR_THEME_NTP_BACKGROUND);
-    DCHECK(image);
-    theme_info_->image_height = image->height();
-
     theme_info_->has_attribution =
         theme_provider.HasCustomImage(IDR_THEME_NTP_ATTRIBUTION);
   }
