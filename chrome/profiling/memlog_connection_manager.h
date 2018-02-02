@@ -39,7 +39,9 @@ namespace profiling {
 // This object is constructed on the UI thread, but the rest of the usage
 // (including deletion) is on the IO thread.
 class MemlogConnectionManager {
- private:
+  using DumpProcessesForTracingCallback = memory_instrumentation::mojom::
+      HeapProfiler::DumpProcessesForTracingCallback;
+
  public:
   MemlogConnectionManager();
   ~MemlogConnectionManager();
@@ -66,7 +68,7 @@ class MemlogConnectionManager {
   void DumpProcessesForTracing(
       bool keep_small_allocations,
       bool strip_path_from_mapped_files,
-      mojom::ProfilingService::DumpProcessesForTracingCallback callback,
+      DumpProcessesForTracingCallback callback,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
 
   void OnNewConnection(base::ProcessId pid,

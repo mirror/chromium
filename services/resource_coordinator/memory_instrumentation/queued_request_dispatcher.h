@@ -55,6 +55,12 @@ class QueuedRequestDispatcher {
   static void Finalize(QueuedRequest* request,
                        TracingObserver* tracing_observer);
 
+  static void SetUpAndDispatch(QueuedVmRegionRequest* request,
+                               const std::vector<ClientInfo>& clients,
+                               const OsCallback& os_callback);
+  static std::map<base::ProcessId, mojom::RawOSMemDump> Finalize(
+      QueuedVmRegionRequest* request);
+
  private:
   static bool AddChromeMemoryDumpToTrace(
       const base::trace_event::MemoryDumpRequestArgs& args,

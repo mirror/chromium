@@ -527,6 +527,7 @@ bool ProfilingTestDriver::CheckOrStartProfiling() {
   }
 
   ProfilingProcessHost::Start(connection, options_.mode, options_.stack_mode);
+  ProfilingProcessHost::GetInstance()->SetKeepSmallAllocations(true);
 
   if (run_loop)
     run_loop->Run();
@@ -598,7 +599,6 @@ void ProfilingTestDriver::CollectResults(bool synchronous) {
   profiling::ProfilingProcessHost::GetInstance()->RequestTraceWithHeapDump(
       base::Bind(&ProfilingTestDriver::TraceFinished, base::Unretained(this),
                  std::move(finish_tracing_closure)),
-      true /* keep_small_allocations */,
       false /* strip_path_from_mapped_files */);
 
   if (synchronous)

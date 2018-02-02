@@ -53,13 +53,13 @@ struct MemlogConnectionManager::DumpProcessesForTracingTracking
   size_t waiting_responses = 0;
 
   // Callback to issue when dumps are complete.
-  mojom::ProfilingService::DumpProcessesForTracingCallback callback;
+  DumpProcessesForTracingCallback callback;
 
   // Info about the request.
   memory_instrumentation::mojom::GlobalMemoryDumpPtr dump;
 
   // Collects the results.
-  std::vector<profiling::mojom::SharedBufferWithSizePtr> results;
+  std::vector<memory_instrumentation::mojom::SharedBufferWithSizePtr> results;
 
  private:
   friend class base::RefCountedThreadSafe<DumpProcessesForTracingTracking>;
@@ -203,14 +203,15 @@ void MemlogConnectionManager::OnConnectionCompleteThunk(
 void MemlogConnectionManager::DumpProcessesForTracing(
     bool keep_small_allocations,
     bool strip_path_from_mapped_files,
-    mojom::ProfilingService::DumpProcessesForTracingCallback callback,
+    DumpProcessesForTracingCallback callback,
     memory_instrumentation::mojom::GlobalMemoryDumpPtr dump) {
+  LOG(ERROR) << "MemlogConnectionManager::DumpProcessesForTracing1";
   base::AutoLock lock(connections_lock_);
 
   // Early out if there are no connections.
   if (connections_.empty()) {
     std::move(callback).Run(
-        std::vector<profiling::mojom::SharedBufferWithSizePtr>());
+        std::vector<memory_instrumentation::mojom::SharedBufferWithSizePtr>());
     return;
   }
 
@@ -241,6 +242,7 @@ void MemlogConnectionManager::DumpProcessesForTracing(
                        strip_path_from_mapped_files));
     connection->client->FlushMemlogPipe(barrier_id);
   }
+  LOG(ERROR) << "MemlogConnectionManager::DumpProcessesForTracing2";
 }
 
 void MemlogConnectionManager::DoDumpOneProcessForTracing(
@@ -253,6 +255,7 @@ void MemlogConnectionManager::DoDumpOneProcessForTracing(
     AllocationCountMap counts,
     AllocationTracker::ContextMap context,
     AllocationTracker::AddressToStringMap mapped_strings) {
+  LOG(ERROR) << "MemlogConnectionManager::DoDumpOneProcessForTracing1";
   // All code paths through here must issue the callback when waiting_responses
   // is 0 or the browser will wait forever for the dump.
   DCHECK(tracking->waiting_responses > 0);
@@ -308,8 +311,8 @@ void MemlogConnectionManager::DoDumpOneProcessForTracing(
     } else {
       memcpy(mapping.get(), reply.c_str(), reply.size());
 
-      profiling::mojom::SharedBufferWithSizePtr result =
-          profiling::mojom::SharedBufferWithSize::New();
+      memory_instrumentation::mojom::SharedBufferWithSizePtr result =
+          memory_instrumentation::mojom::SharedBufferWithSize::New();
       result->buffer = std::move(buffer);
       result->size = reply.size();
       result->pid = pid;
@@ -317,6 +320,7 @@ void MemlogConnectionManager::DoDumpOneProcessForTracing(
     }
   }
 
+  LOG(ERROR) << "MemlogConnectionManager::DoDumpOneProcessForTracing2";
   // When all responses complete, issue done callback.
   if (tracking->waiting_responses == 0)
     std::move(tracking->callback).Run(std::move(tracking->results));

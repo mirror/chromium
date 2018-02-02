@@ -203,12 +203,13 @@ std::unique_ptr<TracedValue> GetChromeDumpAndGlobalAndEdgesTracedValue(
 
 }  // namespace
 
+// static
 void QueuedRequestDispatcher::SetUpAndDispatch(
     QueuedRequest* request,
     const std::vector<ClientInfo>& clients,
     const ChromeCallback& chrome_callback,
     const OsCallback& os_callback) {
-  using ResponseType = QueuedRequest::PendingResponse::Type;
+  using ResponseType = PendingResponse::Type;
   DCHECK(!request->dump_in_progress);
   request->dump_in_progress = true;
 
@@ -299,6 +300,83 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
     request->failed_memory_dump_count++;
     return;
   }
+}
+
+// static
+void QueuedRequestDispatcher::SetUpAndDispatch(QueuedVmRegionRequest* request,
+                               const std::vector<ClientInfo>& clients,
+                               const OsCallback& os_callback) {
+// On Linux, OS stats can only be dumped from a privileged process to
+// get around to sandboxing/selinux restrictions (see crbug.com/461788).
+#if defined(OS_LINUX)
+  std::vector<base::ProcessId> pids;
+  mojom::ClientProcess* browser_client = nullptr;
+  pids.reserve(clients.size());
+  for (const auto& client_info : clients) {
+    pids.push_back(client_info.pid);
+
+    if (client_info.process_type == mojom::ProcessType::BROWSER) {
+      browser_client = client_info.client;
+    }
+  }
+
+  if (!browser_client) {
+    LOG(ERROR) << "Missing browser client.";
+    return;
+  }
+
+  request->pending_responses.insert({browser_client, ResponseType::kOSDump});
+  const auto callback = base::Bind(os_callback, browser_client);
+  browser_client->RequestOSMemoryDump(true /* wants_mmaps */, pids, callback);
+#else
+  for (const auto& client_info : clients) {
+    request->pending_responses.insert({client, ResponseType::kOSDump});
+    client->RequestOSMemoryDump(true /* wants_mmaps */, {base::kNullProcessId},
+                                base::Bind(os_callback, client));
+  }
+#endif  // defined(OS_LINUX)
+}
+
+// static
+std::map<base::ProcessId, mojom::RawOSMemDump> QueuedRequestDispatcher::Finalize(QueuedVmRegionRequest* request) {
+  std::map<base::ProcessId, mojom::RawOSMemDump> results;
+  for (auto& response : request->responses) {
+    const base::ProcessId& original_pid = response.second.process_id;
+
+    // |response| accumulates the replies received by each client process.
+    // Depending on the OS each client process might return 1 chrome + 1 OS
+    // dump each or, in the case of Linux, only 1 chrome dump each % the
+    // browser process which will provide all the OS dumps.
+    // In the former case (!OS_LINUX) we expect client processes to have
+    // exactly one OS dump in their |response|, % the case when they
+    // unexpectedly disconnect in the middle of a dump (e.g. because they
+    // crash). In the latter case (OS_LINUX) we expect the full map to come
+    // from the browser process response.
+    OSMemDumpMap& extra_os_dumps = response.second.os_dumps;
+#if defined(OS_LINUX)
+    for (const auto& kv : extra_os_dumps) {
+      auto pid = kv.first == base::kNullProcessId ? original_pid : kv.first;
+      DCHECK_EQ(intermediates->pid_to_os_dump[pid], nullptr);
+      results[pid] = std::move(kv.second);
+    }
+#else
+    // This can be empty if the client disconnects before providing both
+    // dumps. See UnregisterClientProcess().
+    DCHECK_LE(extra_os_dumps.size(), 1u);
+    for (const auto& kv : extra_os_dumps) {
+      // When the OS dump comes from child processes, the pid is supposed to be
+      // not used. We know the child process pid at the time of the request and
+      // also wouldn't trust pids coming from child processes.
+      DCHECK_EQ(base::kNullProcessId, kv.first);
+
+      // Check we don't receive duplicate OS dumps for the same process.
+      DCHECK_EQ(intermediates->pid_to_os_dump[original_pid], nullptr);
+
+      results[original_pid] = std::move(kv.second);
+    }
+#endif
+  }
+  return results;
 }
 
 void QueuedRequestDispatcher::Finalize(QueuedRequest* request,

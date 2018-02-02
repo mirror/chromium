@@ -37,12 +37,12 @@ base::trace_event::MemoryDumpRequestArgs QueuedRequest::GetRequestArgs() {
   return request_args;
 }
 
-QueuedRequest::PendingResponse::PendingResponse(
+PendingResponse::PendingResponse(
     const mojom::ClientProcess* client,
     Type type)
     : client(client), type(type) {}
 
-bool QueuedRequest::PendingResponse::operator<(
+bool PendingResponse::operator<(
     const PendingResponse& other) const {
   return std::tie(client, type) < std::tie(other.client, other.type);
 }

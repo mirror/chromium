@@ -232,6 +232,28 @@ interface ClientProcess {
       (bool success, map<mojo.common.mojom.ProcessId, RawOSMemDump> dumps);
 };
 
+struct SharedBufferWithSize {
+  handle<shared_buffer> buffer;
+  uint32 size;
+  mojo.common.mojom.ProcessId pid;
+};
+
+// HeapProfilers expose a single interface to memory_instrumentation, allowing
+// the latter to query for heap dumps when necessary.
+interface HeapProfiler {
+  // Dumps the memory log of all profiled processes into shared buffers. The
+  // contents of each shared buffer is a JSON string compatible with
+  // TRACE_EVENT* macros. Processes that fail to dump will be omitted from
+  // |buffers|. When |strip_path_from_mapped_files| is true, only the base name
+  // of mapped files is emitted. This prevents usernames from sneaking into the
+  // trace.
+  // |strip_path_from_mapped_files| should only be true for traces that will be
+  // uploaded to the crash servers - this strips potential PII, but prevents
+  // symbolization of local builds.
+  DumpProcessesForTracing(bool strip_path_from_mapped_files) =>
+      (array<SharedBufferWithSize> buffers);
+};
+
 // The memory-infra service implements this interface. There is one instance for
 // the whole system. The coordinator maintains a list of registered client
 // processes and polls them whenever a global dump is required.
@@ -259,13 +281,22 @@ interface Coordinator {
   RequestGlobalMemoryDumpAndAppendToTrace(DumpType dump_type,
                                           LevelOfDetail level_of_detail) =>
       (bool success, uint64 dump_id);
+
+  // When a heap profiler is registered, heap dumps will be added to the trace
+  // any time RequestGlobalMemoryDumpAndAppendToTrace is called.
+  // This is cleaner than having the memory_instrumentation service talk
+  // directly to the HeapProfiler, since that will spawn the HeapProfiler in a
+  // new process if it isn't already running.
+  RegisterHeapProfiler(HeapProfiler heap_profiler);
 };
 
-// Used by the Chrome heap profiler
+// Implemented by resource_coordinator to provide additional information needed
+// by the HeapProfiler.
 interface HeapProfilerHelper {
   // Broadcasts a RequestOSMemoryDump-only request for all registered client
   // processes, retrieves only their memory maps and returns them in the field
   // |global_memory_dump.process_dumps.os_dump.memory_maps_for_heap_profiler|.
-  GetVmRegionsForHeapProfiler() =>
+  GetVmRegionsForHeapProfiler(array<mojo.common.mojom.ProcessId> pids) =>
       (bool success, GlobalMemoryDump? global_memory_dump);
 };
+

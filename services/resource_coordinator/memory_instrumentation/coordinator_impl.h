@@ -70,9 +70,10 @@ class CoordinatorImpl : public Coordinator,
       base::trace_event::MemoryDumpType,
       base::trace_event::MemoryDumpLevelOfDetail,
       const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
+  void RegisterHeapProfiler(mojom::HeapProfilerPtr heap_profiler) override;
 
   // mojom::HeapProfilerHelper implementation.
-  void GetVmRegionsForHeapProfiler(
+  void GetVmRegionsForHeapProfiler(std::vector<base::ProcessId> pids,
       const GetVmRegionsForHeapProfilerCallback&) override;
 
  protected:
@@ -120,8 +121,23 @@ class CoordinatorImpl : public Coordinator,
                               bool success,
                               OSMemDumpMap);
 
+  // Callback of RequestOSMemoryDumpForVmRegions.
+  // |client| is used as an opaque identifier.
+  void OnOSMemoryDumpForVMRegions(uint64_t dump_guid,
+                                  void* client,
+                                  bool success,
+                                  OSMemDumpMap);
+
+  std::list<QueuedVmRegionRequest>::iterator GetQueuedVmRegionRequestForDumpGuid(uint64_t dump_guid);
+  void FinalizeVmRegionDumpIfAllManagersReplied(std::list<QueuedVmRegionRequest>::iterator);
+
+  // Callback of DumpProcessesForTracing.
+  void OnDumpProcessesForTracing(
+    uint64_t dump_guid,
+    std::vector<mojom::SharedBufferWithSizePtr> buffers);
+
   void RemovePendingResponse(mojom::ClientProcess*,
-                             QueuedRequest::PendingResponse::Type);
+                             PendingResponse::Type);
 
   void OnQueuedRequestTimedOut(uint64_t dump_guid);
 
@@ -139,6 +155,24 @@ class CoordinatorImpl : public Coordinator,
   // Outstanding dump requests, enqueued via RequestGlobalMemoryDump().
   std::list<QueuedRequest> queued_memory_dump_requests_;
 
+  // Outstanding vm region requests, enqueued via GetVmRegionsForHeapProfiler().
+  // This is kept in a separate list from |queued_memory_dump_requests_| for two
+  // reasons:
+  //   1) The profiling service is queried during a memory dump request, but the
+  //   profiling service in turn needs to query for vm regions. Keeping this in
+  //   the same list as |queued_memory_dump_requests_| would require this class
+  //   to support concurrent requests.
+  //
+  //   2) Vm region requests are only ever requested by the profiling service,
+  //   which uses the HeapProfilerHelper interface. Keeping the requests
+  //   separate means we can avoid littering the RequestGlobalMemoryDump
+  //   interface with flags intended for HeapProfilerHelper. This was already
+  //   technically possible before, but required some additional plumbing. Now
+  //   the separation is much cleaner.
+  //
+  // Unlike queued_memory_dump_requests_, all requests are executed in parallel.
+  std::list<QueuedVmRegionRequest> in_progress_vm_region_requests_;
+
   // There may be extant callbacks in |queued_memory_dump_requests_|. The
   // bindings_ must be closed before destroying the un-run callbacks.
   mojo::BindingSet<mojom::Coordinator, service_manager::Identity> bindings_;
@@ -150,11 +184,16 @@ class CoordinatorImpl : public Coordinator,
 
   // Maintains a map of service_manager::Identity -> pid for registered clients.
   std::unique_ptr<ProcessMap> process_map_;
+
+  // Dump IDs are unique across both heap dump and memory dump requests.
   uint64_t next_dump_id_;
   std::unique_ptr<TracingObserver> tracing_observer_;
 
   // Timeout for registered client processes to respond to dump requests.
   base::TimeDelta client_process_timeout_;
+
+  // This InterfacePtr provides a mechanism to obtain heap dumps.
+  mojom::HeapProfilerPtr heap_profiler_;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);
