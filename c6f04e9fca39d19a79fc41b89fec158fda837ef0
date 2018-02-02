@@ -22,6 +22,30 @@
       "revId": "c6f04e9fca39d19a79fc41b89fec158fda837ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75aa154a_86efb06e",
+        "filename": "third_party/closure_compiler/externs/system_display.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-02T15:45:01Z",
+      "side": 1,
+      "message": "The generator has issues.  Since it\u0027s a generated file that doesn\u0027t need to be perfectly human readable, it\u0027s been low priority to fix.  This is fine. :)",
+      "parentUuid": "7061a34f_77d1d054",
+      "range": {
+        "startLine": 332,
+        "startChar": 28,
+        "endLine": 332,
+        "endChar": 33
+      },
+      "revId": "c6f04e9fca39d19a79fc41b89fec158fda837ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
