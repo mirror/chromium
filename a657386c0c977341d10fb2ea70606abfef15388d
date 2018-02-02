@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "02784583_6b918904",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-02T21:45:07Z",
+      "side": 1,
+      "message": "You\u0027re right, the caller can push/retrieve buffers in a more arbitrary way. The reason to do this in a one push one retrieve style is to fallback to original flow when BackendDecryptor isn\u0027t used. Note, CdmDecryptor (which will fallback to the original solution) is used in most of the cases. In addition, decryptor should not hold too much buffers. Given BackendDecryptor may need more than one buffer to work, it should keep as little buffer as possible.",
+      "parentUuid": "8cedc1ec_aea29f35",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "a657386c0c977341d10fb2ea70606abfef15388d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18ad441c_b26a1333",
         "filename": "chromecast/media/cma/pipeline/audio_pipeline_impl.cc",
         "patchSetId": 2
@@ -76,6 +100,24 @@
       "writtenOn": "2018-02-02T19:13:01Z",
       "side": 1,
       "message": "|decryptor| could be a plain pointer.  if DCHECK fails the object is not constructed. Besides if it fails it\u0027s a fatal error.",
+      "revId": "a657386c0c977341d10fb2ea70606abfef15388d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8ed2b4_e7788e57",
+        "filename": "chromecast/media/cma/pipeline/audio_pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-02T21:45:07Z",
+      "side": 1,
+      "message": "DCHECK is compiled out in production. And it\u0027s invalid for the implementation to return a null decryptor.",
+      "parentUuid": "18ad441c_b26a1333",
       "revId": "a657386c0c977341d10fb2ea70606abfef15388d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "ded7f871_cd8c77e3",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-02T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8507fa18_9d7e6554",
+      "range": {
+        "startLine": 20,
+        "startChar": 55,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "a657386c0c977341d10fb2ea70606abfef15388d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9297dd2a_554455ba",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 2
@@ -116,6 +182,30 @@
       "writtenOn": "2018-02-02T19:13:01Z",
       "side": 1,
       "message": "I think you can replace \"bool success\" with (BufferStatus status), then in the commence you only need to explain possible causes of the failure.",
+      "range": {
+        "startLine": 201,
+        "startChar": 42,
+        "endLine": 201,
+        "endChar": 49
+      },
+      "revId": "a657386c0c977341d10fb2ea70606abfef15388d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e99522_7a88b2ae",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-02T21:45:07Z",
+      "side": 1,
+      "message": "Do not want to mix this callback with PushBufferForDecrypt and OnPushBufferComplete. Currently there\u0027s only two states in decryption.",
+      "parentUuid": "9297dd2a_554455ba",
       "range": {
         "startLine": 201,
         "startChar": 42,
