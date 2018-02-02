@@ -25,8 +25,10 @@ class MODULES_EXPORT PictureInPictureController
 
   static const char* SupplementName();
 
+  // Returns whether Picture-in-Picture is enabled or not.
   bool PictureInPictureEnabled() const;
 
+  // Used only in tests to enable or disable Picture-in-Picture.
   void SetPictureInPictureEnabledForTesting(bool);
 
   enum class Status {
@@ -36,23 +38,31 @@ class MODULES_EXPORT PictureInPictureController
     kDisabledByAttribute,
   };
 
+  // Returns Picture-in-Picture status for a document.
   Status IsDocumentAllowed() const;
 
+  // Returns Picture-in-Picture status for a given element in a document.
   Status IsElementAllowed(HTMLVideoElement&) const;
 
+  // Set Picture-in-Picture element.
   void SetPictureInPictureElement(HTMLVideoElement&);
 
+  // Set Picture-in-Picture element to null.
   void UnsetPictureInPictureElement();
 
+  // Returns the Picture-in-Picture element.
   HTMLVideoElement* PictureInPictureElement() const;
 
+  // Implementation of Supplement.
   void Trace(blink::Visitor*) override;
 
  private:
   explicit PictureInPictureController(Document&);
 
+  // Whether Picture-in-Picture is enabled or not.
   bool picture_in_picture_enabled_ = true;
 
+  // The Picture-in-Picture element for a document.
   Member<HTMLVideoElement> picture_in_picture_element_;
 };
 
