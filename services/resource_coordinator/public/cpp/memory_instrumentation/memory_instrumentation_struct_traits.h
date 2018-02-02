@@ -5,6 +5,7 @@
 #ifndef SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_MEMORY_INSTRUMENTATION_MEMORY_INSTRUMENTATION_STRUCT_TRAITS_H_
 #define SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_MEMORY_INSTRUMENTATION_MEMORY_INSTRUMENTATION_STRUCT_TRAITS_H_
 
+#include "base/component_export.h"
 #include "base/process/process_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
@@ -16,7 +17,7 @@
 namespace mojo {
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     EnumTraits<memory_instrumentation::mojom::DumpType,
                base::trace_event::MemoryDumpType> {
   static memory_instrumentation::mojom::DumpType ToMojom(
@@ -26,7 +27,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     EnumTraits<memory_instrumentation::mojom::LevelOfDetail,
                base::trace_event::MemoryDumpLevelOfDetail> {
   static memory_instrumentation::mojom::LevelOfDetail ToMojom(
@@ -36,7 +37,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     EnumTraits<memory_instrumentation::mojom::HeapProfilingMode,
                base::trace_event::HeapProfilingMode> {
   static memory_instrumentation::mojom::HeapProfilingMode ToMojom(
@@ -46,7 +47,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     StructTraits<memory_instrumentation::mojom::RequestArgsDataView,
                  base::trace_event::MemoryDumpRequestArgs> {
   static uint64_t dump_guid(
@@ -66,7 +67,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT StructTraits<
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES) StructTraits<
     memory_instrumentation::mojom::RawAllocatorDumpEdgeDataView,
     base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge> {
   static uint64_t source_id(
@@ -95,7 +96,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT StructTraits<
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT UnionTraits<
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES) UnionTraits<
     memory_instrumentation::mojom::RawAllocatorDumpEntryValueDataView,
     base::trace_event::MemoryAllocatorDump::Entry> {
   static memory_instrumentation::mojom::RawAllocatorDumpEntryValue::Tag GetTag(
@@ -129,7 +130,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT UnionTraits<
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     StructTraits<memory_instrumentation::mojom::RawAllocatorDumpEntryDataView,
                  base::trace_event::MemoryAllocatorDump::Entry> {
   static const std::string& name(
@@ -150,7 +151,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     StructTraits<memory_instrumentation::mojom::RawAllocatorDumpDataView,
                  std::unique_ptr<base::trace_event::MemoryAllocatorDump>> {
   static uint64_t id(
@@ -179,7 +180,7 @@ struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
 };
 
 template <>
-struct RESOURCE_COORDINATOR_PUBLIC_INTERFACES_EXPORT
+struct COMPONENT_EXPORT(RESOURCE_COORDINATOR_PUBLIC_INTERFACES)
     StructTraits<memory_instrumentation::mojom::RawProcessMemoryDumpDataView,
                  std::unique_ptr<base::trace_event::ProcessMemoryDump>> {
   // TODO(primiano): Remove this wrapping vector to adapt the underlying map<>
