@@ -97,11 +97,9 @@ class OutOfMemoryReporterTest : public ChromeRenderViewHostTestHarness,
     OutOfMemoryReporter* reporter =
         OutOfMemoryReporter::FromWebContents(web_contents());
     reporter->AddObserver(this);
-    auto tick_clock = std::make_unique<base::SimpleTestTickClock>();
-    test_tick_clock_ = tick_clock.get();
-    reporter->SetTickClockForTest(std::move(tick_clock));
+    reporter->SetTickClockForTest(&test_tick_clock_);
     // Ensure clock is set to something that's not 0 to begin.
-    test_tick_clock_->Advance(base::TimeDelta::FromSeconds(1));
+    test_tick_clock_.Advance(base::TimeDelta::FromSeconds(1));
 
     test_ukm_recorder_ = std::make_unique<ukm::TestAutoSetUkmRecorder>();
     ukm::InitializeSourceUrlRecorderForWebContents(web_contents());
@@ -116,7 +114,7 @@ class OutOfMemoryReporterTest : public ChromeRenderViewHostTestHarness,
   }
 
   void SimulateOOM() {
-    test_tick_clock_->Advance(base::TimeDelta::FromSeconds(3));
+    test_tick_clock_.Advance(base::TimeDelta::FromSeconds(3));
 #if defined(OS_ANDROID)
     process()->SimulateRenderProcessExit(base::TERMINATION_STATUS_OOM_PROTECTED,
                                          0);
@@ -171,7 +169,7 @@ class OutOfMemoryReporterTest : public ChromeRenderViewHostTestHarness,
   std::unique_ptr<ukm::TestAutoSetUkmRecorder> test_ukm_recorder_;
 
  private:
-  base::SimpleTestTickClock* test_tick_clock_;
+  base::SimpleTestTickClock test_tick_clock_;
 
   DISALLOW_COPY_AND_ASSIGN(OutOfMemoryReporterTest);
 };

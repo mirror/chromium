@@ -147,7 +147,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // Instantiates |video_detector_| for tests where we simulate the passage of
   // time.
   VideoDetector* CreateVideoDetectorForTesting(
-      std::unique_ptr<base::TickClock> tick_clock,
+      base::TickClock* tick_clock,
       scoped_refptr<base::SequencedTaskRunner> task_runner);
 
   // Called when |frame_token| is changed on a submitted CompositorFrame.

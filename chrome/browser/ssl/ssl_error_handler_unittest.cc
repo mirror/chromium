@@ -595,8 +595,6 @@ class SSLErrorHandlerDateInvalidTest : public ChromeRenderViewHostTestHarness {
       : ChromeRenderViewHostTestHarness(
             content::TestBrowserThreadBundle::REAL_IO_THREAD),
         field_trial_test_(new network_time::FieldTrialTest()),
-        clock_(new base::SimpleTestClock),
-        tick_clock_(new base::SimpleTestTickClock),
         test_server_(new net::EmbeddedTestServer) {
     network_time::NetworkTimeTracker::RegisterPrefs(pref_service_.registry());
   }
@@ -609,15 +607,14 @@ class SSLErrorHandlerDateInvalidTest : public ChromeRenderViewHostTestHarness {
         false, 0.0,
         network_time::NetworkTimeTracker::FETCHES_IN_BACKGROUND_ONLY);
     tracker_.reset(new network_time::NetworkTimeTracker(
-        std::unique_ptr<base::Clock>(clock_),
-        std::unique_ptr<base::TickClock>(tick_clock_), &pref_service_,
+        &clock_, &tick_clock_, &pref_service_,
         new net::TestURLRequestContextGetter(
             content::BrowserThread::GetTaskRunnerForThread(
                 content::BrowserThread::IO))));
 
     // Do this to be sure that |is_null| returns false.
-    clock_->Advance(base::TimeDelta::FromDays(111));
-    tick_clock_->Advance(base::TimeDelta::FromDays(222));
+    clock_.Advance(base::TimeDelta::FromDays(111));
+    tick_clock_.Advance(base::TimeDelta::FromDays(222));
 
     SSLErrorHandler::SetInterstitialDelayForTesting(base::TimeDelta());
     ssl_info_.cert =
@@ -667,8 +664,8 @@ class SSLErrorHandlerDateInvalidTest : public ChromeRenderViewHostTestHarness {
   TestSSLErrorHandlerDelegate* delegate_;
 
   std::unique_ptr<network_time::FieldTrialTest> field_trial_test_;
-  base::SimpleTestClock* clock_;
-  base::SimpleTestTickClock* tick_clock_;
+  base::SimpleTestClock clock_;
+  base::SimpleTestTickClock tick_clock_;
   TestingPrefServiceSimple pref_service_;
   std::unique_ptr<network_time::NetworkTimeTracker> tracker_;
   std::unique_ptr<net::EmbeddedTestServer> test_server_;

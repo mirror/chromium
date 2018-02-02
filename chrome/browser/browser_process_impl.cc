@@ -783,8 +783,8 @@ WebRtcLogUploader* BrowserProcessImpl::webrtc_log_uploader() {
 network_time::NetworkTimeTracker* BrowserProcessImpl::network_time_tracker() {
   if (!network_time_tracker_) {
     network_time_tracker_ = base::MakeUnique<network_time::NetworkTimeTracker>(
-        base::WrapUnique(new base::DefaultClock()),
-        base::WrapUnique(new base::DefaultTickClock()), local_state(),
+        base::DefaultClock::GetInstance(),
+        base::DefaultTickClock::GetInstance(), local_state(),
         system_request_context());
   }
   return network_time_tracker_.get();
@@ -1141,8 +1141,8 @@ void BrowserProcessImpl::PreMainMessageLoopRun() {
 
   if (base::FeatureList::IsEnabled(network_time::kNetworkTimeServiceQuerying)) {
     network_time_tracker_ = base::MakeUnique<network_time::NetworkTimeTracker>(
-        base::WrapUnique(new base::DefaultClock()),
-        base::WrapUnique(new base::DefaultTickClock()), local_state(),
+        base::DefaultClock::GetInstance(),
+        base::DefaultTickClock::GetInstance(), local_state(),
         system_request_context());
   }
 }

@@ -80,26 +80,21 @@ class DiscoveryNetworkMonitorMetricObserverTest : public ::testing::Test {
             std::make_unique<MockNetworkChangeNotifier>()),
         task_runner_(new base::TestMockTimeTaskRunner()),
         task_runner_handle_(task_runner_),
-        mock_clock_(task_runner_->GetMockTickClock()),
-        start_ticks_(mock_clock_->NowTicks()),
+        clock_(task_runner_->GetMockTickClock()),
+        start_ticks_(clock_->NowTicks()),
         metrics_(std::make_unique<MockMetrics>()),
         mock_metrics_(metrics_.get()),
-        clock_(task_runner_->GetMockTickClock()),
-        metric_observer_(clock_.get(), std::move(metrics_)) {}
+        metric_observer_(clock_, std::move(metrics_)) {}
 
  protected:
   base::TimeDelta time_advance_ = base::TimeDelta::FromMilliseconds(10);
   std::unique_ptr<MockNetworkChangeNotifier> mock_network_change_notifier_;
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
-  std::unique_ptr<base::TickClock> mock_clock_;
+  base::TickClock* clock_;
   const base::TimeTicks start_ticks_;
   std::unique_ptr<MockMetrics> metrics_;
   MockMetrics* mock_metrics_;
-
-  // TODO(tzik): Remove |clock_| after updating GetMockTickClock to own the
-  // instance.
-  std::unique_ptr<base::TickClock> clock_;
 
   DiscoveryNetworkMonitorMetricObserver metric_observer_;
 };
@@ -311,7 +306,7 @@ TEST_F(DiscoveryNetworkMonitorMetricObserverTest,
   metric_observer_.OnNetworksChanged("network1");
 
   task_runner_->FastForwardBy(time_advance_);
-  const auto disconnect_ticks = mock_clock_->NowTicks();
+  const auto disconnect_ticks = clock_->NowTicks();
   mock_network_change_notifier_->SetConnectionType(
       net::NetworkChangeNotifier::CONNECTION_NONE);
   metric_observer_.OnNetworksChanged(
@@ -329,7 +324,7 @@ TEST_F(DiscoveryNetworkMonitorMetricObserverTest,
   task_runner_->RunUntilIdle();
 
   task_runner_->FastForwardBy(time_advance_);
-  const auto second_ethernet_ticks = mock_clock_->NowTicks();
+  const auto second_ethernet_ticks = clock_->NowTicks();
   EXPECT_CALL(*mock_metrics_, RecordTimeBetweenNetworkChangeEvents(
                                   second_ethernet_ticks - disconnect_ticks));
   EXPECT_CALL(

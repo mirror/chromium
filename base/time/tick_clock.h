@@ -26,13 +26,14 @@ namespace base {
 // See Clock (base/time/clock.h) for the equivalent interface for Times.
 class BASE_EXPORT TickClock {
  public:
-  virtual ~TickClock();
-
   // NowTicks() must be safe to call from any thread.  The caller may
   // assume that NowTicks() is monotonic (but not strictly monotonic).
   // In other words, the returned TimeTicks will never decrease with
   // time, although they might "stand still".
   virtual TimeTicks NowTicks() = 0;
+
+ protected:
+  virtual ~TickClock();
 };
 
 }  // namespace base
