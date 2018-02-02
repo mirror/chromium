@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90dffc18_b933c9f5",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-02-02T02:00:38Z",
+      "side": 0,
+      "message": "It\u0027s probably best to retain this comment in the new file, unless we feel it is pointless.",
+      "revId": "aa36bffbca291c237487d2374d416a9c59f4de2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
