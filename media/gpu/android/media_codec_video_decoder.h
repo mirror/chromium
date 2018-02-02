@@ -12,6 +12,7 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/overlay_info.h"
+#include "media/base/post_only_owner.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
 #include "media/gpu/android/avda_codec_allocator.h"
@@ -59,7 +60,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
       std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
       AndroidOverlayMojoFactoryCB overlay_factory_cb,
       RequestOverlayInfoCB request_overlay_info_cb,
-      std::unique_ptr<VideoFrameFactory> video_frame_factory);
+      PostOnlyOwner<VideoFrameFactory> video_frame_factory);
 
   // VideoDecoder implementation:
   std::string GetDisplayName() const override;
@@ -254,7 +255,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   SurfaceChooserHelper surface_chooser_helper_;
 
   // The factory for creating VideoFrames from CodecOutputBuffers.
-  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
+  PostOnlyOwner<VideoFrameFactory> video_frame_factory_;
 
   // An optional factory callback for creating mojo AndroidOverlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;

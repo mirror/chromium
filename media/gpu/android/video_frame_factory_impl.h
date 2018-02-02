@@ -9,6 +9,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "gpu/ipc/service/command_buffer_stub.h"
+#include "media/base/post_only_owner.h"
 #include "media/base/video_frame.h"
 #include "media/gpu/android/codec_image.h"
 #include "media/gpu/android/codec_wrapper.h"
@@ -22,49 +23,16 @@ namespace media {
 class CodecImageGroup;
 class GpuVideoFrameFactory;
 
-// VideoFrameFactoryImpl creates CodecOutputBuffer backed VideoFrames and tries
+// GpuFrameFactory creates CodecOutputBuffer backed VideoFrames and tries
 // to eagerly render them to their surface to release the buffers back to the
 // decoder as soon as possible. It's not thread safe; it should be created, used
-// and destructed on a single sequence. It's implemented by proxying calls
-// to a helper class hosted on the gpu thread.
-class MEDIA_GPU_EXPORT VideoFrameFactoryImpl : public VideoFrameFactory {
- public:
-  // |get_stub_cb| will be run on |gpu_task_runner|.
-  VideoFrameFactoryImpl(
-      scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-      GetStubCb get_stub_cb);
-  ~VideoFrameFactoryImpl() override;
-
-  void Initialize(bool wants_promotion_hint, InitCb init_cb) override;
-  void SetSurfaceBundle(
-      scoped_refptr<AVDASurfaceBundle> surface_bundle) override;
-  void CreateVideoFrame(
-      std::unique_ptr<CodecOutputBuffer> output_buffer,
-      base::TimeDelta timestamp,
-      gfx::Size natural_size,
-      PromotionHintAggregator::NotifyPromotionHintCB promotion_hint_cb,
-      VideoDecoder::OutputCB output_cb) override;
-  void RunAfterPendingVideoFrames(base::OnceClosure closure) override;
-
- private:
-  // The gpu thread side of the implementation.
-  std::unique_ptr<GpuVideoFrameFactory> gpu_video_frame_factory_;
-  scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
-  GetStubCb get_stub_cb_;
-
-  // The surface texture that video frames should use, or nullptr.
-  scoped_refptr<SurfaceTextureGLOwner> surface_texture_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
-  DISALLOW_COPY_AND_ASSIGN(VideoFrameFactoryImpl);
-};
-
-// GpuVideoFrameFactory is an implementation detail of VideoFrameFactoryImpl. It
-// may be created on any thread but only accessed on the gpu thread thereafter.
-class GpuVideoFrameFactory
+// and destructed on the gpu main thread.
+class MEDIA_GPU_EXPORT GpuVideoFrameFactory
     : public gpu::CommandBufferStub::DestructionObserver {
- public:
+ protected:
   GpuVideoFrameFactory();
+
+ public:
   ~GpuVideoFrameFactory() override;
 
   scoped_refptr<SurfaceTextureGLOwner> Initialize(
