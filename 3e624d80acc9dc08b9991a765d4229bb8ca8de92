@@ -22,6 +22,30 @@
       "revId": "3e624d80acc9dc08b9991a765d4229bb8ca8de92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0d8c62_787c1b91",
+        "filename": "media/filters/source_buffer_range_by_dts.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-02-02T23:23:41Z",
+      "side": 1,
+      "message": "From offline chat, for posterity included here: the case being solved by this method is specific to [Can]AppendBuffersToEnd, as called by [Can]AppendRangeToEnd. In the normal continuous-by-dts case, a nonkeyframe would already be continuous (as determined by frameprocessor continuity), so wouldn\u0027t be somehow made to reside in a separate range that begins with a nonkeyframe. All ranges (and new coded frame groups following discontinuity) begin with keyframe. Any intervening explicit remove impacting an in-progress GOP will cause dropping of nonkeyframes until next keyframe in SBS::Append, too. Hence, scoping to just keyframe here focuses on the edge case being solved.",
+      "parentUuid": "5c62124a_cf210f30",
+      "range": {
+        "startLine": 115,
+        "startChar": 43,
+        "endLine": 115,
+        "endChar": 55
+      },
+      "revId": "3e624d80acc9dc08b9991a765d4229bb8ca8de92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
