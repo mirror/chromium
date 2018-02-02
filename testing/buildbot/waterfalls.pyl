@@ -1095,7 +1095,8 @@
               'device_type': 'bullhead',
             },
           ],
-          'hard_timeout': 1800,
+          'expiration': 10800,
+          'hard_timeout': 3600,
         },
         'os_type': 'android',
         'test_suites': {
