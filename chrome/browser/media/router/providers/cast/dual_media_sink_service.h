@@ -19,6 +19,7 @@
 
 namespace media_router {
 
+class CastAppDiscoveryService;
 class CastMediaSinkService;
 class DialMediaSinkService;
 
@@ -41,6 +42,10 @@ class DualMediaSinkService {
 
   // Returns the lazily-created leaky singleton instance.
   static DualMediaSinkService* GetInstance();
+
+  CastAppDiscoveryService* cast_app_discovery_service() {
+    return cast_app_discovery_service_.get();
+  }
 
   // Returns the current list of sinks, keyed by provider name.
   const base::flat_map<std::string, std::vector<MediaSinkInternal>>&
@@ -83,6 +88,7 @@ class DualMediaSinkService {
                          std::vector<MediaSinkInternal> sinks);
 
   std::unique_ptr<CastMediaSinkService> cast_media_sink_service_;
+  std::unique_ptr<CastAppDiscoveryService> cast_app_discovery_service_;
   std::unique_ptr<DialMediaSinkService> dial_media_sink_service_;
 
   OnSinksDiscoveredProviderCallbackList sinks_discovered_callbacks_;
