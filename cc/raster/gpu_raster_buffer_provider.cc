@@ -37,7 +37,6 @@ namespace {
 static void RasterizeSourceOOP(
     const RasterSource* raster_source,
     bool resource_has_previous_content,
-    const gfx::Size& resource_size,
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& playback_rect,
     const gfx::AxisTransform2d& transform,
@@ -53,13 +52,20 @@ static void RasterizeSourceOOP(
                           msaa_sample_count, playback_settings.use_lcd_text,
                           use_distance_field_text,
                           resource_lock->PixelConfig());
-  // TODO(enne): need to pass color space into this function as well.
+  // TODO(enne): should this scale just be the transform scale??
   float recording_to_raster_scale =
       transform.scale() / raster_source->recording_scale_factor();
+  gfx::Size content_size = gfx::ScaleToCeiledSize(raster_source->GetSize(),
+                                                  recording_to_raster_scale);
+  // TODO(enne): need to pass color space into this function as well.
+  // TODO(enne): could skip the clear on new textures, as the service side has
+  // to do that anyway.  resource_has_previous_content implies that the texture
+  // is not new, but the reverse does not hold, so more plumbing is needed.
   ri->RasterCHROMIUM(raster_source->GetDisplayItemList().get(),
-                     playback_settings.image_provider,
-                     raster_full_rect.OffsetFromOrigin(), playback_rect,
-                     transform.translation(), recording_to_raster_scale);
+                     playback_settings.image_provider, content_size,
+                     raster_full_rect, playback_rect, transform.translation(),
+                     recording_to_raster_scale,
+                     raster_source->requires_clear());
   ri->EndRasterCHROMIUM();
 
   ri->DeleteTextures(1, &texture_id);
@@ -89,7 +95,6 @@ class ScopedGrContextAccess {
 static void RasterizeSource(
     const RasterSource* raster_source,
     bool resource_has_previous_content,
-    const gfx::Size& resource_size,
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& playback_rect,
     const gfx::AxisTransform2d& transform,
@@ -124,9 +129,14 @@ static void RasterizeSource(
     if (raster_full_rect == playback_rect)
       canvas->discard();
 
+    float recording_to_raster_scale =
+        transform.scale() / raster_source->recording_scale_factor();
+    gfx::Size content_size = gfx::ScaleToCeiledSize(raster_source->GetSize(),
+                                                    recording_to_raster_scale);
+
     raster_source->PlaybackToCanvas(
-        canvas, resource_lock->color_space_for_raster(), raster_full_rect,
-        playback_rect, transform, playback_settings);
+        canvas, resource_lock->color_space_for_raster(), content_size,
+        raster_full_rect, playback_rect, transform, playback_settings);
   }
 
   ri->DeleteTextures(1, &texture_id);
@@ -320,17 +330,15 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
   }
 
   if (enable_oop_rasterization_) {
-    RasterizeSourceOOP(raster_source, resource_has_previous_content,
-                       resource_lock->size(), raster_full_rect, playback_rect,
-                       transform, playback_settings, worker_context_provider_,
-                       resource_lock, use_distance_field_text_,
-                       msaa_sample_count_);
+    RasterizeSourceOOP(
+        raster_source, resource_has_previous_content, raster_full_rect,
+        playback_rect, transform, playback_settings, worker_context_provider_,
+        resource_lock, use_distance_field_text_, msaa_sample_count_);
   } else {
     RasterizeSource(raster_source, resource_has_previous_content,
-                    resource_lock->size(), raster_full_rect, playback_rect,
-                    transform, playback_settings, worker_context_provider_,
-                    resource_lock, use_distance_field_text_,
-                    msaa_sample_count_);
+                    raster_full_rect, playback_rect, transform,
+                    playback_settings, worker_context_provider_, resource_lock,
+                    use_distance_field_text_, msaa_sample_count_);
   }
 
   // Generate sync token for cross context synchronization.
