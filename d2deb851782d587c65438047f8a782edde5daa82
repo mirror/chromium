@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f382a20_7a4d1b89",
+        "filename": "chrome/browser/sessions/session_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T16:18:40Z",
+      "side": 1,
+      "message": "You should also only do this if pending_window_close_ids_ is empty.",
+      "range": {
+        "startLine": 413,
+        "startChar": 30,
+        "endLine": 413,
+        "endChar": 43
+      },
+      "revId": "d2deb851782d587c65438047f8a782edde5daa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
