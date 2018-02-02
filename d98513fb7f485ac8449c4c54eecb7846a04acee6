@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c063543_51d5ffcc",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-02-02T15:47:48Z",
+      "side": 1,
+      "message": "I\u0027d say that we should have a separate BUILD.gn in ../fuchsia that will include the shared_library(\"cronet\") target, which will have\n\n deps \u003d [\n    \"//components/cronet/native:cronet_native_impl\",\n  ]\n  sources \u003d [ \"../fuchsia/cronet_global_state_fuchsia.cc\" ]",
+      "parentUuid": "370352ae_53caabd4",
+      "revId": "d98513fb7f485ac8449c4c54eecb7846a04acee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26e46786_60b5c76c",
         "filename": "components/cronet/native/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T22:53:37Z",
       "side": 1,
       "message": "I couldn\u0027t find the test target that is supposed to include these source_set()s, which is why I converted them to standalone test()s.  Where are the main test targets for these supposed to live? Should they be platform-specific?",
+      "revId": "d98513fb7f485ac8449c4c54eecb7846a04acee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef0756c_d7c6cadc",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-02-02T15:47:48Z",
+      "side": 1,
+      "message": "Currently there is no common test targets as Android and iOS were pretty separate. \n\nThe one for Android is instrumentation_test_apk(\"cronet_test_instrumentation_apk\") and one for iOS is test(\"cronet_test\") with dependencies on Cronet.framework. Those probably should stay separate as they test public API and have very platform-specific packaging nuances.\n\nFor cronet_unittests we also have two separate targets (android:cronet_unittests and cronet_unittests_ios), but those statically link their dependencies, and probably could/should be merged.\n\nFor fuchsia we could add one under ../fuchsia or top level cronet.",
+      "parentUuid": "26e46786_60b5c76c",
       "revId": "d98513fb7f485ac8449c4c54eecb7846a04acee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
