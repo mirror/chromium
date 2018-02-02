@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8ecf97_a0982f85",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-02T15:57:26Z",
+      "side": 0,
+      "message": "Hmm... I wonder if one of the reasons that we didn\u0027t write these is so that we didn\u0027t have a bunch of empty prefs for explicit_host: [].  One way to maintain this same benefit while fixing the bug would be to do something like:\nif (explicit_hosts)\n  SetPref(explicit_hosts)\nelse\n  ErasePref(explicit_hosts)\n\nThat would reduce the necessary size of the prefs file, and might also be *slightly* more performant (since erasing could short-circuit if the pref doesn\u0027t exist [which would be the common case if the new value is empty], and we avoid a write).\n\nOn the other hand, api and manifest permissions both don\u0027t do this, and this code isn\u0027t hit all *that* often.\n\nOverall, I might have a small preference for erasing unnecessary prefs, rather than inserting empty values, but I don\u0027t feel strongly.  WDYT?",
+      "revId": "1d27b2eb8c431f0b6b5567d474de2e9fe47707b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
