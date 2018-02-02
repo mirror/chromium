@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3a4d1a80_b9b0851c",
+        "filename": "android_webview/browser/deferred_gpu_command_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T00:12:09Z",
+      "side": 1,
+      "message": "This is what I\u0027m thinking about:\n\nstatic base::NoDestructor\u003cscoped_refptr\u003cDeferredGpuCommandService\u003e\u003e instance(CreateDeferredGpuCommandService());\nreturn *instance;\n\nwith CreateDeferredGpuCommandService() doing all the code that you currently have inside the if (!g_service.Get().get()) {...}\n\nOr using a lambda instead of a named function (as suggested in base/no_desttructor.h)",
+      "parentUuid": "bd90b0fc_03f70771",
+      "revId": "e1df2be7b642f0c4c3cc3c69dfc618f790676948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b07db96_f9e6b5b1",
         "filename": "android_webview/browser/deferred_gpu_command_service.cc",
         "patchSetId": 3
