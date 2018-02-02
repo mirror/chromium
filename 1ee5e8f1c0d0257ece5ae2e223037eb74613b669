@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da26e44f_8b5482b8",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe56d865_def82ebb",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 51
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9683e72a_e15fece7",
         "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
         "patchSetId": 10
@@ -160,6 +184,30 @@
       "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882a5f3d_1d4d143b",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "Great idea, I like that a lot. (I moved this change to a separate CL.)",
+      "parentUuid": "717e66f9_67cc16d8",
+      "range": {
+        "startLine": 711,
+        "startChar": 18,
+        "endLine": 711,
+        "endChar": 31
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "e0ab6e15_dfa78342",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b39294d_3093c473",
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3277a017_25336f7f",
         "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
         "patchSetId": 10
@@ -329,6 +395,30 @@
     },
     {
       "key": {
+        "uuid": "04544d92_79d2ed72",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3277a017_25336f7f",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 70
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f652a908_4ce86446",
         "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
         "patchSetId": 10
@@ -340,6 +430,30 @@
       "writtenOn": "2018-02-01T00:10:27Z",
       "side": 1,
       "message": "Can we update this comment to explain the purpose of this class?",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba786d13_c82d5a0c",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "I am pulling the creation of this class into it\u0027s own CL, but once I rebase on top of it, I will update this comment even more to specify the JS function it is used with.",
+      "parentUuid": "f652a908_4ce86446",
       "range": {
         "startLine": 14,
         "startChar": 31,
@@ -375,6 +489,30 @@
     },
     {
       "key": {
+        "uuid": "ade5476a_7e4b2239",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c7da7bd_b7d6b029",
+      "range": {
+        "startLine": 18,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6699cb1e_4231fb8c",
         "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
         "patchSetId": 10
@@ -395,6 +533,30 @@
       "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19479850_b0312b68",
+        "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-02-02T07:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6699cb1e_4231fb8c",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
