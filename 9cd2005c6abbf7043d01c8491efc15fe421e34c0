@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6240ab7f_f1511c1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b5c5d3_4db0eeff",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fffebd46_ce75cb9a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefc9c2d_83069588",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done\nAfter a quick going through I don\u0027t think there are cases that needs to be replaced by isShowingTrustedOfflinePage. But please let me know if you have any concerns with any specific scenarios.",
+      "parentUuid": "fffebd46_ce75cb9a",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e8ea1cbe_af35533f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab107e2_437a452d",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d071e434_6e48c159",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e14233_1e0e7e83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d071e434_6e48c159",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6728ea74_d4c8ae22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e011bb1_9fc6cf29",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c54a68c1_5f4caaa5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ff4679_a1c86659",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c54a68c1_5f4caaa5",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "dc331dff_03bdb5ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "I\u0027ve moved this into ToolbarDataProvider interface, hopefully I didn\u0027t misunderstand your comment:)\nI\u0027m marking this as resolved, but if I\u0027m doing wrong please reopen it.",
+      "parentUuid": "c2d4fe56_626fe5f4",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29020602_cde3208f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a104c3d5_498b7cb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29020602_cde3208f",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +328,54 @@
     },
     {
       "key": {
+        "uuid": "a9bbcb88_1836698c",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6cbe097_b0f2067b",
+      "range": {
+        "startLine": 1977,
+        "startChar": 138,
+        "endLine": 1977,
+        "endChar": 140
+      },
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ff36ee9_0694dde9",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a351d416_a0122604",
+      "range": {
+        "startLine": 1977,
+        "startChar": 175,
+        "endLine": 1977,
+        "endChar": 199
+      },
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "059f0966_94fa5531",
         "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
         "patchSetId": 1
@@ -198,6 +390,24 @@
       "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6418f8e_162b642c",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-02T00:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059f0966_94fa5531",
+      "revId": "9cd2005c6abbf7043d01c8491efc15fe421e34c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
