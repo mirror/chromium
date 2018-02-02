@@ -31,6 +31,7 @@ class MODULES_EXPORT PictureInPictureController
 
   enum class Status {
     kEnabled,
+    kFrameDetached,
     kDisabledBySystem,
     kDisabledByFeaturePolicy,
     kDisabledByAttribute,
