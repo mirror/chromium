@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4931bd2c_9dabedc6",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T16:49:00Z",
+      "side": 1,
+      "message": "Scrolls can be handled on either the main thread, or the compositor thread. Most of the time, scrolls will be handled on the compositor, and won\u0027t be blocked on the main thread.\n\nA web page can\u0027t distinguish between a scroll taking place on main or the compositor, so we\u0027re choosing to ignore both, to get consistency between the JS and C++ implementations.\n\nI think this is less confusing from a developer perspective as well - we just don\u0027t include scrolls, instead of sometimes including them, based on the crazy heuristics we use to decide whether or not to scroll on main.",
+      "parentUuid": "1bbc8fa8_374c03f9",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c89d654_0aa8956e",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T16:29:34Z",
       "side": 1,
       "message": "is there some property of the WebInputEvent beyond just kPointerUp that allows us to pair the kPointerUp uniquely with its associated kPointerDown? if so it might be good to use that just to be extra explicit about pairing the 2 events together.",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdeaf96_9620a669",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T16:49:00Z",
+      "side": 1,
+      "message": "Great question.\n\nSo, the instance where this would matter is if we get a PointerUp for a different pointer than the first Pointer Down.\n\ne.g.\n\nDown with Pointer 1\nDown with Pointer 2\nUp with Pointer 2\n\nThis is kinda tricky, because in this case, we should really report the delay for pointer 2, which means we\u0027d want to store a map of pending pointer down events.\n\nYou can imagine we\u0027ve pressed down 10 fingers, and we could release any one of them, so we need to know each of their delay.\n\nIn all of these cases though, this gesture isn\u0027t solely scrolling, so I think it\u0027s fairly reasonable to report the delay of the first event.\n\nI\u0027ve added a comment to this effect, but am open to adding the full map if folks think it\u0027s worth it.\n\nMulti-finger gestures in general are rare enough that I\u0027m not too worried about this case.",
+      "parentUuid": "2c89d654_0aa8956e",
       "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "040e9065_89f88a89",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T16:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff7b7a4d_6fc76482",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da5cf352_89e695af",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54875525_6b5b051d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T16:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da5cf352_89e695af",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
