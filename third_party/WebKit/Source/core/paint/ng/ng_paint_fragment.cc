@@ -120,69 +120,11 @@ NGPaintFragment::FragmentRange NGPaintFragment::InlineFragmentsFor(
       if (it != root->first_fragment_map_.end())
         return FragmentRange(it->value);
 
-      // TODO(kojii): This is a culled inline box. Should we handle the case
-      // here, or by the caller, or even stop the culled inline boxes?
-      DCHECK(layout_object->IsLayoutInline());
+      // TODO(kojii): For a culled inline box, should we handle the case here,
+      // or by the caller, or even stop the culled inline boxes?
     }
   }
   return FragmentRange(nullptr);
-}
-
-// TODO(kojii): This code copies VisualRects from the LayoutObject tree. We
-// should implement the pre-paint tree walk on the NGPaintFragment tree, and
-// save this work.
-void NGPaintFragment::UpdateVisualRectFromLayoutObject() {
-  DCHECK_EQ(PhysicalFragment().Type(), NGPhysicalFragment::kFragmentBox);
-
-  UpdateVisualRectFromLayoutObject({});
-}
-
-void NGPaintFragment::UpdateVisualRectFromLayoutObject(
-    const NGPhysicalOffset& parent_paint_offset) {
-  // Compute VisualRect from fragment if:
-  // - Text fragment, including generated content
-  // - Line box fragment (does not have LayoutObject)
-  // - Box fragment for inline box
-  // VisualRect() of LayoutText/LayoutInline is the union of corresponding
-  // fragments.
-  const NGPhysicalFragment& fragment = PhysicalFragment();
-  const LayoutObject* layout_object = fragment.GetLayoutObject();
-  bool is_inline =
-      fragment.IsText() || fragment.IsLineBox() ||
-      (fragment.IsBox() && layout_object && layout_object->IsLayoutInline());
-  NGPhysicalOffset paint_offset;
-  if (is_inline) {
-    NGPhysicalOffsetRect visual_rect = fragment.SelfVisualRect();
-    paint_offset = parent_paint_offset + fragment.Offset();
-    visual_rect.offset += paint_offset;
-    SetVisualRect(visual_rect.ToLayoutRect());
-  } else {
-    // Copy the VisualRect from the corresponding LayoutObject.
-    // PaintInvalidator has set the correct VisualRect to LayoutObject, computed
-    // from SelfVisualRect().
-    // TODO(kojii): The relationship of fragment_data and NG multicol isn't
-    // clear yet. For now, this copies from the union of fragment visual rects.
-    // This should be revisited if this code lives long, but the hope is for
-    // PaintInvalidator to walk NG fragment tree is not that far.
-    DCHECK(layout_object && layout_object->IsBox());
-    DCHECK_EQ(fragment.Type(), NGPhysicalFragment::kFragmentBox);
-    const DisplayItemClient* client = layout_object;
-    SetVisualRect(client->VisualRect());
-  }
-
-  if (!children_.IsEmpty()) {
-    // |VisualRect| of children of an inline box are relative to their inline
-    // formatting context. Accumulate offset to convert to the |VisualRect|
-    // space.
-    if (!is_inline) {
-      DCHECK(layout_object);
-      paint_offset =
-          NGPhysicalOffset{layout_object->FirstFragment().PaintOffset()};
-    }
-    for (auto& child : children_) {
-      child->UpdateVisualRectFromLayoutObject(paint_offset);
-    }
-  }
 }
 
 void NGPaintFragment::AddSelfOutlineRect(
