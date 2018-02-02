@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fdb4818_b576628c",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-02-02T05:28:15Z",
+      "side": 1,
+      "message": "This function name looks awkwardly long :(\nHow about just adding a getter for last_mount_auth_request_?",
+      "revId": "4966822d91cd3672c7409a2ecf08e6b2eb015c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
