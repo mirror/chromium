@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06cef78c_0e007992",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-02-02T19:51:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure this meets the bar for helper methods",
+      "range": {
+        "startLine": 395,
+        "startChar": 1,
+        "endLine": 395,
+        "endChar": 0
+      },
+      "revId": "22c0166dc4568f85f11369e89c18cecc93167923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbd4860_40153467",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-02-02T19:51:42Z",
+      "side": 1,
+      "message": "Should this be CHECK(is_valid()) ?",
+      "range": {
+        "startLine": 226,
+        "startChar": 13,
+        "endLine": 226,
+        "endChar": 32
+      },
+      "revId": "22c0166dc4568f85f11369e89c18cecc93167923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37aabc1_2f68988e",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-02-02T19:51:42Z",
+      "side": 1,
+      "message": "CHECK(is_valid())",
+      "revId": "22c0166dc4568f85f11369e89c18cecc93167923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
