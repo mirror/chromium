@@ -71,6 +71,8 @@ jumbo_component("compositor") {
     "scoped_animation_duration_scale_mode.h",
     "scoped_layer_animation_settings.cc",
     "scoped_layer_animation_settings.h",
+    "shadow_layer.cc",
+    "shadow_layer.h",
     "transform_animation_curve_adapter.cc",
     "transform_animation_curve_adapter.h",
     "transform_recorder.cc",
@@ -190,6 +192,7 @@ test("compositor_unittests") {
     "layer_owner_unittest.cc",
     "layer_unittest.cc",
     "run_all_unittests.cc",
+    "shadow_layer_unittest.cc",
     "transform_animation_curve_adapter_unittest.cc",
   ]
 

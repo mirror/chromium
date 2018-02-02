@@ -13,7 +13,7 @@ namespace wm {
 // Different types of drop shadows that can be drawn under a window by the
 // shell. Used as a value for the kShadowTypeKey property. The integer value of
 // each entry is directly used for determining the size of the shadow.
-enum class ShadowElevation {
+enum ShadowElevation {
   // Indicates an elevation should be chosen based on the window. This is the
   // default.
   DEFAULT = -1,
