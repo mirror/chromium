@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85245d8e_409287ae",
+        "filename": "media/capture/video/video_capture_device_descriptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-02-02T12:12:31Z",
+      "side": 1,
+      "message": "Agree that that\u0027s the right thing to do. It might even make sense to have thread/sequence checks. I added a TODO for now.",
+      "parentUuid": "8a82917d_ab3c5067",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 7
+      },
+      "revId": "4f52f82cef6f0ce8ad5619ba9ec4e8cf913520ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfd976da_eae2c923",
         "filename": "media/capture/video/video_capture_device_descriptor.h",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "cfd976da_eae2c923",
+      "range": {
+        "startLine": 107,
+        "startChar": 14,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "4f52f82cef6f0ce8ad5619ba9ec4e8cf913520ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd8c2222_5c6d41c3",
+        "filename": "media/capture/video/video_capture_device_descriptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-02-02T12:12:31Z",
+      "side": 1,
+      "message": "I think it\u0027s OK given the TODO at struct/class level and that the variable is now private.",
+      "parentUuid": "ca533b68_8d67a3dd",
       "range": {
         "startLine": 107,
         "startChar": 14,
