@@ -134,7 +134,9 @@ void DnsSession::UpdateTimeouts(NetworkChangeNotifier::ConnectionType type) {
 
 void DnsSession::InitializeServerStats() {
   server_stats_.clear();
-  for (size_t i = 0; i < config_.nameservers.size(); ++i) {
+  for (size_t i = 0;
+       i < config_.nameservers.size() + config_.dns_over_https_servers_.size();
+       ++i) {
     server_stats_.push_back(std::make_unique<ServerStats>(
         initial_timeout_, rtt_buckets_.Pointer()));
   }
