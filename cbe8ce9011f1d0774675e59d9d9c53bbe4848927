@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba50781e_d260add3",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-02-02T21:55:50Z",
+      "side": 1,
+      "message": "if you keep {master_name:machine group} dict in recipe code, then this is not needed",
+      "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
