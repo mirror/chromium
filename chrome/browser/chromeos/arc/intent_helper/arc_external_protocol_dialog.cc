@@ -19,6 +19,7 @@
 #include "components/arc/intent_helper/page_transition_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/referrer.h"
@@ -33,7 +34,7 @@ namespace arc {
 
 namespace {
 
-// TODO(yusukes|djacobo): Find a better way to detect a request loop and remove
+// TODO(djacobo): Find a better way to detect a request loop and remove
 // the global variables.
 base::LazyInstance<GURL>::DestructorAtExit g_last_url =
     LAZY_INSTANCE_INITIALIZER;
@@ -48,11 +49,15 @@ void ShowFallbackExternalProtocolDialog(int render_process_host_id,
   new ExternalProtocolDialog(web_contents, url);
 }
 
-void CloseTabIfNeeded(int render_process_host_id, int routing_id) {
+void CloseTabIfNeeded(int render_process_host_id,
+                      int routing_id,
+                      bool ask_the_user) {
   WebContents* web_contents =
       tab_util::GetWebContentsByID(render_process_host_id, routing_id);
-  if (web_contents && web_contents->GetController().IsInitialNavigation())
+  if (web_contents &&
+      (web_contents->GetController().IsInitialNavigation() || !ask_the_user)) {
     web_contents->Close();
+  }
 }
 
 // Tells whether or not Chrome is an app candidate for the current navigation.
@@ -74,13 +79,17 @@ void OpenUrlInChrome(int render_process_host_id,
   if (!web_contents)
     return;
 
-  // Use the PAGE_TRANSITION_FROM_API qualifier so that this nativation won't
-  // end up showing the disambig dialog.
+  // Use the PAGE_TRANSITION_FROM_API qualifier so that this navigation won't
+  // end up showing the disambig dialog. Decided not to use
+  // PAGE_TRANSITION_FROM_ARC since that could trick the browser into escaping
+  // to ARC without showing the picker and that's something that should only
+  // happen for navigations started from ARC, and so ChromeShellDelegate is the
+  // only part that can create/mark a new navigation with this flag.
   const ui::PageTransition page_transition_type = ui::PageTransitionFromInt(
       ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_FROM_API);
   constexpr bool kIsRendererInitiated = false;
   const content::OpenURLParams params(
-      // TODO(yusukes): Send a non-empty referrer.
+      // TODO(djacobo): Send a non-empty referrer.
       url, content::Referrer(), WindowOpenDisposition::CURRENT_TAB,
       page_transition_type, kIsRendererInitiated);
   web_contents->OpenURL(params);
@@ -99,7 +108,8 @@ void HandleUrlInArc(int render_process_host_id,
     return;
 
   instance->HandleUrl(url_and_package.first.spec(), url_and_package.second);
-  CloseTabIfNeeded(render_process_host_id, routing_id);
+  CloseTabIfNeeded(render_process_host_id, routing_id,
+                   false /* ask_the_user */);
 }
 
 // A helper function called by GetAction().
@@ -154,13 +164,20 @@ GetActionResult GetAction(
   if (selected_app_index == handlers.size()) {
     // The user hasn't made the selection yet.
 
-    // If |handlers| has only one element and its package is "Chrome", open
-    // the fallback URL in the current tab without showing the dialog.
+    // If |handlers| has only one element and:
+    // 1) its package is "Chrome", open the fallback URL in the current tab
+    // without showing the dialog.
+    // 2) its package is not "Chrome" but it has been marked as
+    // !always_ask_user, this means that we trust the current tab enough to be
+    // able to bypass the picker.
     if (handlers.size() == 1) {
-      if (GetActionInternal(original_url, always_ask_user, handlers[0],
-                            out_url_and_package) ==
-          GetActionResult::OPEN_URL_IN_CHROME) {
+      GetActionResult internal_result = GetActionInternal(
+          original_url, always_ask_user, handlers[0], out_url_and_package);
+      if (internal_result == GetActionResult::OPEN_URL_IN_CHROME) {
         return GetActionResult::OPEN_URL_IN_CHROME;
+      } else if (internal_result == GetActionResult::HANDLE_URL_IN_ARC &&
+                 !always_ask_user) {
+        return GetActionResult::HANDLE_URL_IN_ARC;
       }
     }
 
@@ -244,7 +261,8 @@ void OnIntentPickerDialogDeactivated(
     const std::vector<mojom::IntentHandlerInfoPtr>& handlers) {
   const GURL url_to_open_in_chrome = GetUrlToNavigateOnDeactivate(handlers);
   if (url_to_open_in_chrome.is_empty())
-    CloseTabIfNeeded(render_process_host_id, routing_id);
+    CloseTabIfNeeded(render_process_host_id, routing_id,
+                     true /* ask_the_user */);
   else
     OpenUrlInChrome(render_process_host_id, routing_id, url_to_open_in_chrome);
 }
@@ -365,6 +383,7 @@ void OnAppIconsReceived(
   auto show_bubble_cb = base::Bind(ShowIntentPickerBubble());
   WebContents* web_contents =
       tab_util::GetWebContentsByID(render_process_host_id, routing_id);
+
   show_bubble_cb.Run(nullptr /* anchor_view */, web_contents, app_info,
                      !IsChromeAnAppCandidate(handlers),
                      base::Bind(OnIntentPickerClosed, render_process_host_id,
@@ -426,18 +445,28 @@ void OnUrlHandlerList(int render_process_host_id,
 }
 
 // Returns true if the |url| is safe to be forwarded to ARC without showing the
-// disambig dialog when there is a preferred app on ARC for the |url|. Note that
-// this function almost always returns true (i.e. "safe") except for very rare
-// situations mentioned below.
-// TODO(yusukes|djacobo): Find a better way to detect a request loop and remove
-// these heuristics.
+// disambig dialog when:
+//
+// a) there is a preferred app on ARC for the |url|
+// b) there is only one possible app to handle this |url| and such navigation
+// was started in ARC and created in Chrome context via ChromeShellDelegate.
+//
+// Note that this function almost always returns true (i.e. "safe") except for
+// very rare situations mentioned below.
+// TODO(djacobo): Find a better way to detect a request loop and remove these
+// heuristics.
 bool IsSafeToRedirectToArcWithoutUserConfirmation(
     const GURL& url,
     ui::PageTransition page_transition,
     const GURL& last_url,
     ui::PageTransition last_page_transition) {
-  // Return "safe" unless both transition flags are FROM_API because the only
-  // unsafe situation we know is infinite tab creation loop with FROM_API
+  // If the navigation is coming FROM_ARC given the last committed entry, allow
+  // the user to be redirected without more UI hassle.
+  if (last_page_transition & ui::PAGE_TRANSITION_FROM_ARC)
+    return true;
+
+  // Return "safe" unless both transition flags are FROM_ARC because the only
+  // unsafe situation we know is infinite tab creation loop with FROM_ARC
   // (b/30125340).
   if (!(page_transition & ui::PAGE_TRANSITION_FROM_API) ||
       !(last_page_transition & ui::PAGE_TRANSITION_FROM_API)) {
@@ -458,12 +487,25 @@ bool RunArcExternalProtocolDialog(const GURL& url,
   // This function is for external protocols that Chrome cannot handle.
   DCHECK(!url.SchemeIsHTTPOrHTTPS()) << url;
 
+  // Try to recover the last url and the related page transition info if
+  // possible.
+  WebContents* tab =
+      tab_util::GetWebContentsByID(render_process_host_id, routing_id);
+  if (tab) {
+    content::NavigationEntry* last_entry =
+        tab->GetController().GetLastCommittedEntry();
+    if (last_entry) {
+      g_last_url.Get() = last_entry->GetURL();
+      g_last_page_transition = last_entry->GetTransitionType();
+    }
+  }
+
   const bool always_ask_user = !IsSafeToRedirectToArcWithoutUserConfirmation(
       url, page_transition, g_last_url.Get(), g_last_page_transition);
   LOG_IF(WARNING, always_ask_user)
       << "RunArcExternalProtocolDialog: repeatedly handling external protocol "
       << "redirection to " << url
-      << " started from API: last_url=" << g_last_url.Get();
+      << " started from ARC: last_url=" << g_last_url.Get();
 
   // This function is called only on the UI thread. Updating g_last_* variables
   // without a lock is safe.

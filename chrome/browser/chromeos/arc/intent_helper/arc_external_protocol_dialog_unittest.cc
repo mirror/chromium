@@ -42,7 +42,7 @@ TEST(ArcExternalProtocolDialogTest, TestGetActionWithNoApp) {
 }
 
 // Tests that when one app is passed to GetAction but the user hasn't selected
-// it, the function returns ASK_USER.
+// it and |always_ask_user| is set to true, the function returns ASK_USER.
 TEST(ArcExternalProtocolDialogTest, TestGetActionWithOneApp) {
   std::vector<mojom::IntentHandlerInfoPtr> handlers;
   handlers.push_back(
@@ -51,7 +51,25 @@ TEST(ArcExternalProtocolDialogTest, TestGetActionWithOneApp) {
   const size_t no_selection = handlers.size();
   std::pair<GURL, std::string> url_and_package;
   EXPECT_EQ(GetActionResult::ASK_USER,
-            GetActionForTesting(GURL("external-protocol:foo"), false, handlers,
+            GetActionForTesting(GURL("external-protocol:foo"),
+                                true /* always_ask_user */, handlers,
+                                no_selection, &url_and_package));
+}
+
+// Tests that when one app is passed to GetAction but the user hasn't selected
+// it and |always_ask_user| is set to false, the function returns
+// HANDLE_URL_IN_ARC.
+TEST(ArcExternalProtocolDialogTest,
+     TestGetActionWithOneAppBypassesIntentPicker) {
+  std::vector<mojom::IntentHandlerInfoPtr> handlers;
+  handlers.push_back(
+      Create("package", "com.google.package.name", false, GURL()));
+
+  const size_t no_selection = handlers.size();
+  std::pair<GURL, std::string> url_and_package;
+  EXPECT_EQ(GetActionResult::HANDLE_URL_IN_ARC,
+            GetActionForTesting(GURL("external-protocol:foo"),
+                                false /* always_ask_user */, handlers,
                                 no_selection, &url_and_package));
 }
 
@@ -289,7 +307,7 @@ TEST(ArcExternalProtocolDialogTest,
 }
 
 // Tests that ASK_USER is returned when a handler with a fallback market: URL
-// is passed to GetAction.
+// is passed to GetAction and |always_ask_user| is set to true.
 TEST(ArcExternalProtocolDialogTest, TestGetActionWithOneMarketFallbackUrl) {
   const GURL intent_url_with_fallback(
       "intent://scan/#Intent;scheme=abc;package=com.google.abc;end");
@@ -301,9 +319,10 @@ TEST(ArcExternalProtocolDialogTest, TestGetActionWithOneMarketFallbackUrl) {
 
   const size_t no_selection = handlers.size();
   std::pair<GURL, std::string> url_and_package;
-  EXPECT_EQ(GetActionResult::ASK_USER,
-            GetActionForTesting(intent_url_with_fallback, false, handlers,
-                                no_selection, &url_and_package));
+  EXPECT_EQ(
+      GetActionResult::ASK_USER,
+      GetActionForTesting(intent_url_with_fallback, true /* always_ask_user */,
+                          handlers, no_selection, &url_and_package));
 }
 
 // Tests the same but with is_preferred == true.
@@ -352,6 +371,26 @@ TEST(ArcExternalProtocolDialogTest,
                                 kSelection, &url_and_package));
   EXPECT_EQ(fallback_url, url_and_package.first);
   EXPECT_EQ(play_store_package_name, url_and_package.second);
+}
+
+// Tests that HANDLE_URL_IN_ARC is returned when a handler with a fallback
+// market: URL is passed to GetAction and |always_ask_user| is set to false.
+TEST(ArcExternalProtocolDialogTest,
+     TestGetActionWithOneMarketFallbackUrlBypassIntentPicker) {
+  const GURL intent_url_with_fallback(
+      "intent://scan/#Intent;scheme=abc;package=com.google.abc;end");
+  const GURL fallback_url("market://details?id=com.google.abc");
+
+  std::vector<mojom::IntentHandlerInfoPtr> handlers;
+  handlers.push_back(
+      Create("Play Store", "com.google.play.store", false, fallback_url));
+
+  const size_t no_selection = handlers.size();
+  std::pair<GURL, std::string> url_and_package;
+  EXPECT_EQ(
+      GetActionResult::HANDLE_URL_IN_ARC,
+      GetActionForTesting(intent_url_with_fallback, false /* always_ask_user */,
+                          handlers, no_selection, &url_and_package));
 }
 
 // Tests that ASK_USER is returned when two handlers with fallback market: URLs
