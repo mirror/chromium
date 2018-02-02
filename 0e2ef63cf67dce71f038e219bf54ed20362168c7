@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "466a89c3_78a63101",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f883fd03_fec718fd",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "733c64d3_0583695b",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17dd5d89_1ada4101",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733c64d3_0583695b",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e0d527e_91cc759b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da68d9c_9539e59f",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "544ada38_6bb2e1cc",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c784f1_0acfa991",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "544ada38_6bb2e1cc",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1c651dfe_d5fd6851",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "It\u0027s not necessary to log here, this method is called once per directory, we\u0027re already logging at the entrance and exit of the outer loop.",
+      "parentUuid": "28a4ae4a_391ff459",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69cb45e9_c0428410",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111d9848_eb5963c9",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "For example, given a directory, it doesn\u0027t make any sense to include OWNER or README.md files into the coverage report.",
+      "parentUuid": "69cb45e9_c0428410",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6f279452_cf5a4aa1",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e774b2_c1cc8768",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e645c231_d2a500a8",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2018-02-01T17:18:09Z",
       "side": 1,
       "message": "I see os.path.abspath in a bunch of places, this is risky to use, why don\u0027t we have the src directory path in self._src_directory and then we should os.join to it. This also allows coverage script to be run from any directory.",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3b0978_d511502b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "We already have SRC_ROOT_PATH, I can change to use it, but I don\u0027t understand why it is risky? Can you elaborate a little bit more? In either case, there are a lot of them, it\u0027s non-trivial to change, I\u0027ll update them in a separate CL.\n\nAlso, there is no technical difficulty in supporting running the script from any directory, but I\u0027m hesitating doing that because it introduce confusions, for example, when specifying relative paths in the command arguments, should they be relative current working directory or src_root_path? And btw, I don\u0027t think this flexibility brings much benefits, but if there is an important use case, we can definitely support it.",
+      "parentUuid": "e645c231_d2a500a8",
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6dde3f40_eae15c47",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f536bb7_be48a19e",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "726aca0c_d26dc4d0",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2018-02-01T17:18:09Z",
       "side": 1,
       "message": "Where should this happen, should we assert here ?",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cd356f_d9083772",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Let\u0027s say a component C maps to two directories: dir1/ and dir2, and after running test targets, nothing in dir2/ is exercised, then I think we probably don\u0027t want to display dir2/ under component C in the report because it\u0027s empty anyway. WDYT?",
+      "parentUuid": "726aca0c_d26dc4d0",
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ab917bb0_61d9c6bf",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "I wanted to create a method, but didn\u0027t do it because I thought it\u0027s going be to confusing anyway, and quite error-prone as it\u0027s easy to mistakenly use that method for os.path.relpath or the other way around.\n\nBut after giving it more thoughts, I think you\u0027re right, duplication is worse and also error-prone, I\u0027ll give it a very specific method name to avoid confusions as much as possible.",
+      "parentUuid": "8b563ad5_a00346e9",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce956a8c_3e1e5c24",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -203,6 +401,24 @@
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fad2d0_e99859b7",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce956a8c_3e1e5c24",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "01012655_149e321b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "path1 \u003d \u0027a/b/c\u0027 path2 \u003d \u0027a/b/c/d/e\u0027\n\nWe want: path3 \u003d \u0027a/b/c/a/b/c/d/e\u0027, so os.path.join won\u0027t work, I know this is very confusing, so I should probably write a comment for it.",
+      "parentUuid": "5db32280_8930d18e",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "418dac54_4edabfcd",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -237,6 +471,24 @@
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7dd060_a2419b92",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-02-02T01:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418dac54_4edabfcd",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
