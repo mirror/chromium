@@ -125,25 +125,22 @@ MemoryUsageStats TaskGroupSampler::RefreshMemoryUsage() {
   DCHECK(worker_pool_sequenced_checker_.CalledOnValidSequence());
 
   MemoryUsageStats memory_usage;
-#if defined(OS_MACOSX)
-  size_t private_bytes = 0;
-  size_t shared_bytes = 0;
-  size_t resident_bytes = 0;
-  if (process_metrics_->GetMemoryBytes(&private_bytes, &shared_bytes,
-                                       &resident_bytes, nullptr)) {
-    memory_usage.private_bytes = static_cast<int64_t>(private_bytes);
-    memory_usage.shared_bytes = static_cast<int64_t>(shared_bytes);
-    memory_usage.physical_bytes = resident_bytes;
-  }
-#else
+
   // Refreshing the physical/private/shared memory at one shot.
   base::WorkingSetKBytes ws_usage;
   if (process_metrics_->GetWorkingSetKBytes(&ws_usage)) {
     memory_usage.private_bytes = static_cast<int64_t>(ws_usage.priv * 1024);
     memory_usage.shared_bytes = static_cast<int64_t>(ws_usage.shared * 1024);
-#if defined(OS_LINUX)
+#if defined(OS_LINUX) || defined(OS_MACOSX)
     // On Linux private memory is also resident. Just use it.
     memory_usage.physical_bytes = memory_usage.private_bytes;
+
+    // On macOS, "memory footprint" is the most meaningful representation we
+    // have for memory usage. It is on by default in the task manager.
+    //
+    // The other numbers are not particularly meaningful, and previous
+    // calculations were slow to boot. Use "task_vm_info().resident_size" as
+    // physical_bytes and private_bytes, and leave shared_bytes as 0.
 #else
     // Memory = working_set.private which is working set minus shareable. This
     // avoids the unpredictable counting that occurs when calculating memory as
@@ -160,7 +157,6 @@ MemoryUsageStats TaskGroupSampler::RefreshMemoryUsage() {
     memory_usage.swapped_bytes = ws_usage.swapped * 1024;
 #endif  // defined(OS_CHROMEOS)
   }
-#endif  // defined(OS_MACOSX)
 
   return memory_usage;
 }
