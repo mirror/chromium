@@ -22,6 +22,30 @@
       "revId": "7be76540e3006e69a8ad7a515bc9c870c6157a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4432e5ee_87c21ce0",
+        "filename": "third_party/polymer/v1_0/components-chromium/iron-media-query/iron-media-query.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T19:52:16Z",
+      "side": 1,
+      "message": "That and the change in iron-media-query/bower.json which is more important, since that is what allows bower to determine that the element is compatible with any Polymer version between 1.9 and 2.x.",
+      "parentUuid": "8089452a_e1db955e",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 8
+      },
+      "revId": "7be76540e3006e69a8ad7a515bc9c870c6157a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
