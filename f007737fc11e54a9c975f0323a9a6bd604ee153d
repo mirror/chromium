@@ -70,6 +70,24 @@
       "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fe753a_1a9581c1",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133474
+      },
+      "writtenOn": "2018-02-02T02:28:59Z",
+      "side": 1,
+      "message": "The reason is because this implementation is used by content/browser/tracing/tracing_controller_impl.cc. However, we don\u0027t want content// to have any dependency on chrome//. (I\u0027ve left Chrome OS team, not sure if this rule is still true or not.) Given this restriction, we decided to put this class in chromeos//, and use a Delegate object to for implementation that requires chrome// and components//\n\nYou can find more context in https://codereview.chromium.org/2400163003/diff/120001/content/browser/tracing/DEPS\nhttps://codereview.chromium.org/2400163003/#msg23\n\nAfter this modification, we further found that since this class is only used by content// and chrome//, not chromeos//, we can just move it to content// so it\u0027s co-located with the other platform-specific tracing agent. Context: https://codereview.chromium.org/2699833003/diff/140001/chromeos/chromeos.gyp#newcode411\n\nIn the end, we move this to content//. \n\nFor me, I think it\u0027s OK to move it to chromeos// if it make more sense.",
+      "parentUuid": "f7c3450e_c9bda015",
+      "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
