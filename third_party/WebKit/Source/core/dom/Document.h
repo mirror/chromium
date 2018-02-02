@@ -41,6 +41,7 @@
 #include "core/animation/WorkletAnimationController.h"
 #include "core/dom/ContainerNode.h"
 #include "core/dom/CreateElementFlags.h"
+#include "core/dom/DocumentElementCounts.h"
 #include "core/dom/DocumentEncodingData.h"
 #include "core/dom/DocumentInit.h"
 #include "core/dom/DocumentLifecycle.h"
@@ -253,6 +254,7 @@ class CORE_EXPORT Document : public ContainerNode,
                              public Supplementable<Document> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Document);
+  ELEMENT_COUNTERS(ELEMENT_TYPE_COUNTER_METHODS);
 
  public:
   static Document* Create(const DocumentInit& init) {
@@ -496,8 +498,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // document's frame_, if any.  Can be null.
   // TODO(kochi): Audit usage of this interface (crbug.com/746150).
   LocalFrame* GetFrameOfMasterDocument() const;
-  Page* GetPage() const;                           // can be null
-  Settings* GetSettings() const;                   // can be null
+  Page* GetPage() const;          // can be null
+  Settings* GetSettings() const;  // can be null
 
   float DevicePixelRatio() const;
 
