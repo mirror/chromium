@@ -29,6 +29,7 @@ source_set("cronet_native_impl") {
     "engine.cc",
     "engine.h",
     "include/cronet_c.h",
+    "include/cronet_export.h",
     "runnables.cc",
     "runnables.h",
 
@@ -46,6 +47,7 @@ source_set("cronet_native_testutil") {
   testonly = true
 
   deps = [
+    ":cronet_native_impl",
     "//base",
   ]
 
@@ -86,6 +88,7 @@ source_set("cronet_native_tests") {
   testonly = true
 
   deps = [
+    ":cronet_native_impl",
     ":cronet_native_testutil",
     "//base",
     "//base/test:test_support",
