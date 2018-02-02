@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c62124a_cf210f30",
+        "filename": "media/filters/source_buffer_range_by_dts.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-02-02T22:51:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the keyframe requirement. The webm spec only says that clusters *should* start with a key frame. It may occur that the next cluster doesn\u0027t start with a key frame, but causes the estimated duration of the previous cluster\u0027s tale to increase. In this case, if that next cluster were removed and then later re-added to abut the the same estimated tale, you might fail this check.",
+      "range": {
+        "startLine": 115,
+        "startChar": 43,
+        "endLine": 115,
+        "endChar": 55
+      },
+      "revId": "3e624d80acc9dc08b9991a765d4229bb8ca8de92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
