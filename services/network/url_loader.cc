@@ -28,6 +28,7 @@
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
+#include "services/network/resource_scheduler_client.h"
 
 namespace network {
 
@@ -243,6 +244,7 @@ URLLoader::URLLoader(
     mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     uint32_t process_id,
+    scoped_refptr<ResourceSchedulerClient> resource_scheduler_client,
     base::WeakPtr<KeepaliveStatisticsRecorder> keepalive_statistics_recorder)
     : url_request_context_getter_(url_request_context_getter),
       network_service_client_(network_service_client),
@@ -260,6 +262,7 @@ URLLoader::URLLoader(
       peer_closed_handle_watcher_(FROM_HERE,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       report_raw_headers_(report_raw_headers),
+      resource_scheduler_client_(std::move(resource_scheduler_client)),
       keepalive_statistics_recorder_(std::move(keepalive_statistics_recorder)),
       weak_ptr_factory_(this) {
   url_request_context_getter_->AddObserver(this);
@@ -311,7 +314,18 @@ URLLoader::URLLoader(
   if (keepalive_ && keepalive_statistics_recorder_)
     keepalive_statistics_recorder_->OnLoadStarted(process_id_);
 
-  url_request_->Start();
+  resource_scheduler_request_handle_ =
+      resource_scheduler_client_->ScheduleRequest(
+          !(options_ & network::mojom::kURLLoadOptionSynchronous),
+          url_request_.get());
+  resource_scheduler_request_handle_->set_resume_callback(
+      base::BindRepeating(&URLLoader::ResumeStart, base::Unretained(this)));
+  bool defer = false;
+  resource_scheduler_request_handle_->WillStartRequest(&defer);
+  if (defer)
+    url_request_->LogBlockedBy("ResourceScheduler");
+  else
+    url_request_->Start();
 }
 
 URLLoader::~URLLoader() {
@@ -338,7 +352,10 @@ void URLLoader::ProceedWithResponse() {
 
 void URLLoader::SetPriority(net::RequestPriority priority,
                             int32_t intra_priority_value) {
-  NOTIMPLEMENTED();
+  if (url_request_) {
+    resource_scheduler_client_->ReprioritizeRequest(
+        url_request_.get(), priority, intra_priority_value);
+  }
 }
 
 void URLLoader::PauseReadingBodyFromNet() {
@@ -436,6 +453,11 @@ void URLLoader::OnSSLCertificateError(net::URLRequest* request,
                  weak_ptr_factory_.GetWeakPtr(), ssl_info));
 }
 
+void URLLoader::ResumeStart() {
+  url_request_->LogUnblocked();
+  url_request_->Start();
+}
+
 void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
   DCHECK(url_request == url_request_.get());
 
@@ -443,6 +465,12 @@ void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
     NotifyCompleted(net_error);
     // |this| may have been deleted.
     return;
+  }
+
+  if (url_request->was_fetched_via_proxy() &&
+      url_request->was_fetched_via_spdy() &&
+      url_request->url().SchemeIs(url::kHttpScheme)) {
+    resource_scheduler_client_->OnReceivedSpdyProxiedHttpResponse();
   }
 
   if (upload_progress_tracker_) {
@@ -594,6 +622,12 @@ void URLLoader::OnContextShuttingDown() {
   delete this;
 }
 
+net::LoadState URLLoader::GetLoadStateForTesting() const {
+  if (!url_request_)
+    return net::LOAD_STATE_IDLE;
+  return url_request_->GetLoadState().state;
+}
+
 base::WeakPtr<URLLoader> URLLoader::GetWeakPtrForTests() {
   return weak_ptr_factory_.GetWeakPtr();
 }
@@ -649,6 +683,7 @@ void URLLoader::OnResponseBodyStreamReady(MojoResult result) {
 void URLLoader::CloseResponseBodyStreamProducer() {
   RecordBodyReadFromNetBeforePausedIfNeeded();
 
+  resource_scheduler_request_handle_.reset();
   url_request_.reset();
   peer_closed_handle_watcher_.Cancel();
   writable_handle_watcher_.Cancel();

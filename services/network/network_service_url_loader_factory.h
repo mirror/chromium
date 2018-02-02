@@ -6,19 +6,29 @@
 #define SERVICES_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 namespace network {
 
 class NetworkContext;
+class ResourceSchedulerClient;
 
 // This class is an implementation of mojom::URLLoaderFactory that
 // creates a mojom::URLLoader.
+// A NetworkServiceURLLoaderFactory has a pointer to ResourceSchedulerClient. A
+// ResourceSchedulerClient is associated with cloned
+// NetworkServiceURLLoaderFactories. Roughly one NetworkServiceURLLoaderFactory
+// is created for one frame in render process, so it means ResourceScheduler
+// works on each frame.
 class NetworkServiceURLLoaderFactory : public mojom::URLLoaderFactory {
  public:
   // NOTE: |context| must outlive this instance.
-  NetworkServiceURLLoaderFactory(NetworkContext* context, uint32_t process_id);
+  NetworkServiceURLLoaderFactory(
+      NetworkContext* context,
+      uint32_t process_id,
+      scoped_refptr<ResourceSchedulerClient> resource_scheduler_clien);
 
   ~NetworkServiceURLLoaderFactory() override;
 
@@ -37,6 +47,7 @@ class NetworkServiceURLLoaderFactory : public mojom::URLLoaderFactory {
   // Not owned.
   NetworkContext* context_;
   uint32_t process_id_;
+  scoped_refptr<ResourceSchedulerClient> resource_scheduler_client_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceURLLoaderFactory);
 };
