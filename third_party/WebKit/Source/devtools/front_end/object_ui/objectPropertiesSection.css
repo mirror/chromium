@@ -55,3 +55,11 @@
 .object-properties-section .editable-div {
     overflow: hidden;
 }
+
+:host(:only-child) .object-properties-section > ol.children {
+    width: 0;
+}
+
+:host(:only-child) .object-properties-section li {
+    min-width: fit-content;
+}
