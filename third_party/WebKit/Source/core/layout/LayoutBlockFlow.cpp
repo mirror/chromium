@@ -4401,6 +4401,11 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
     return true;
   }
 
+  if (IsLayoutFullScreen()) {
+    // Fullscreen should be completely contained.
+    return true;
+  }
+
   // NGBlockNode cannot compute margin collapsing across NG/non-NG boundary.
   // Create a new formatting context for non-NG node to prevent margin
   // collapsing.
