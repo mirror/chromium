@@ -81391,6 +81391,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Setup.Install.AddAppContainerAce" enum="Boolean">
+  <owner>forshaw@chromium.org</owner>
+  <summary>
+    True if the the installer successfully added AppContainer ACEs to the
+    application directory during installation and updating.
+  </summary>
+</histogram>
+
 <histogram name="Setup.Install.ApplyArchivePatchTime" units="ms">
   <owner>grt@chromium.org</owner>
   <summary>
