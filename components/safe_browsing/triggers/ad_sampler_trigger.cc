@@ -32,6 +32,10 @@ const char kAdSamplerFrequencyDenominatorParam[] =
 // A frequency denominator with this value indicates sampling is disabled.
 const size_t kSamplerFrequencyDisabled = 0;
 
+// Number of milliseconds to wait after a page finished loading before starting
+// a report. Allows ads which load in the background to finish loading.
+const int64_t kAdSampleCollectionStartDelayMilliseconds = 1000;
+
 // Number of milliseconds to allow data collection to run before sending a
 // report (since this trigger runs in the background).
 const int64_t kAdSampleCollectionPeriodMilliseconds = 5000;
@@ -99,11 +103,13 @@ AdSamplerTrigger::AdSamplerTrigger(
     history::HistoryService* history_service)
     : content::WebContentsObserver(web_contents),
       sampler_frequency_denominator_(GetSamplerFrequencyDenominator()),
+      start_report_delay_ms_(kAdSampleCollectionStartDelayMilliseconds),
       finish_report_delay_ms_(kAdSampleCollectionPeriodMilliseconds),
       trigger_manager_(trigger_manager),
       prefs_(prefs),
       request_context_(request_context),
-      history_service_(history_service) {}
+      history_service_(history_service),
+      weak_ptr_factory_(this) {}
 
 AdSamplerTrigger::~AdSamplerTrigger() {}
 
@@ -124,23 +130,31 @@ void AdSamplerTrigger::CreateForWebContents(
 }
 
 void AdSamplerTrigger::DidFinishLoad(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& validated_url) {
+  content::RenderFrameHost* render_frame_host,
+  const GURL& validated_url) {
   UMA_HISTOGRAM_ENUMERATION(kAdSamplerTriggerActionMetricName, TRIGGER_CHECK,
-                            MAX_ACTIONS);
+    MAX_ACTIONS);
   // We are using light-weight ad detection logic here so it's safe to do the
   // check on each navigation for the sake of metrics.
   if (!DetectGoogleAd(render_frame_host, validated_url)) {
     UMA_HISTOGRAM_ENUMERATION(kAdSamplerTriggerActionMetricName,
-                              NO_SAMPLE_NO_AD, MAX_ACTIONS);
+      NO_SAMPLE_NO_AD, MAX_ACTIONS);
     return;
   }
   if (!ShouldSampleAd(sampler_frequency_denominator_)) {
     UMA_HISTOGRAM_ENUMERATION(kAdSamplerTriggerActionMetricName,
-                              NO_SAMPLE_AD_SKIPPED_FOR_FREQUENCY, MAX_ACTIONS);
+      NO_SAMPLE_AD_SKIPPED_FOR_FREQUENCY, MAX_ACTIONS);
     return;
   }
 
+  // Create a report after a short delay. The delay gives more time for ads to
+  // finish loading in the background. This is best-effort.
+  LOG(ERROR) << "Lpz: creating report in 1s";
+  content::BrowserThread::PostDelayedTask(content::BrowserThread::UI, FROM_HERE, base::BindOnce(&AdSamplerTrigger::CreateAdSampleReport, weak_ptr_factory_.GetWeakPtr()), base::TimeDelta::FromMilliseconds(start_report_delay_ms_));
+}
+
+void AdSamplerTrigger::CreateAdSampleReport() {
+  LOG(ERROR) << "Lpz: got call to create report";
   SBErrorOptions error_options =
       TriggerManager::GetSBErrorDisplayOptions(*prefs_, *web_contents());
 
@@ -154,11 +168,13 @@ void AdSamplerTrigger::DidFinishLoad(
   if (!trigger_manager_->StartCollectingThreatDetails(
           TriggerType::AD_SAMPLE, web_contents(), resource, request_context_,
           history_service_, error_options)) {
+    LOG(ERROR) << "Lpz: can't start collection, returning";
     UMA_HISTOGRAM_ENUMERATION(kAdSamplerTriggerActionMetricName,
                               NO_SAMPLE_COULD_NOT_START_REPORT, MAX_ACTIONS);
     return;
   }
 
+  LOG(ERROR) << "Lpz: collection started, finishing report in 5s";
   // Call into TriggerManager to finish the reports after a short delay. Any
   // ads that are detected during this delay will be rejected by TriggerManager
   // because a report is already being collected, so we won't send multiple

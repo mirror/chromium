@@ -160,7 +160,7 @@ void RunAllTasksUntilIdle() {
     // TaskScheduler::FlushForTesting() since this may spin the MessageLoop.
     TaskObserver task_observer;
     base::MessageLoop::current()->AddTaskObserver(&task_observer);
-
+    LOG(ERROR) << "Lpz: current loop is null? " << (base::MessageLoop::current() == nullptr);
     base::TaskScheduler::GetInstance()->FlushForTesting();
 
     base::RunLoop().RunUntilIdle();

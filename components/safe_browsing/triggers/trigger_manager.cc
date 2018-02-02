@@ -179,6 +179,7 @@ bool TriggerManager::FinishCollectingThreatDetails(
     bool did_proceed,
     int num_visits,
     const SBErrorOptions& error_display_options) {
+  LOG(ERROR) << "Lpz: finishing report";
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // Make sure there's a ThreatDetails collector running on this tab.
   if (!base::ContainsKey(data_collectors_map_, web_contents))

@@ -15,6 +15,7 @@
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_renderer_host.h"
+#include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock-generated-function-mockers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -58,7 +59,7 @@ class MockTriggerManager : public TriggerManager {
 
 class AdSamplerTriggerTest : public content::RenderViewHostTestHarness {
  public:
-  AdSamplerTriggerTest() {}
+  AdSamplerTriggerTest() : content::RenderViewHostTestHarness(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
   ~AdSamplerTriggerTest() override {}
 
   void SetUp() override {
@@ -77,7 +78,7 @@ class AdSamplerTriggerTest : public content::RenderViewHostTestHarness {
     safe_browsing::AdSamplerTrigger::FromWebContents(web_contents())
         ->sampler_frequency_denominator_ = denominator;
     safe_browsing::AdSamplerTrigger::FromWebContents(web_contents())
-        ->finish_report_delay_ms_ = 0;
+        ->finish_report_delay_ms_ = 1000;
   }
 
   // Returns the final RenderFrameHost after navigation commits.
@@ -187,6 +188,10 @@ TEST_F(AdSamplerTriggerTest, PageWithMultipleAds) {
   RenderFrameHost* main_frame = NavigateMainFrame(kNonAdUrl);
   CreateAndNavigateSubFrame(kAdUrl, kNonAdName, main_frame);
   CreateAndNavigateSubFrame(kNonAdUrl, kAdName, main_frame);
+
+  // Wait for any posted tasks to finish.
+  base::RunLoop().RunUntilIdle();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 
   // Three navigations (main frame, two subframes). Main frame with no ads, and
   // two sampled ads
