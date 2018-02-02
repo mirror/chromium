@@ -18,10 +18,13 @@
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
 #include "content/public/common/content_switches.h"
 #include "ui/accessibility/platform/ax_system_caret_win.h"
+#include "ui/aura/window.h"
+#include "ui/aura/window_tree_host.h"
 #include "ui/base/view_prop.h"
 #include "ui/base/win/direct_manipulation.h"
 #include "ui/base/win/internal_constants.h"
 #include "ui/base/win/window_event_target.h"
+#include "ui/compositor/compositor.h"
 #include "ui/display/win/screen_win.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -31,6 +34,25 @@ namespace content {
 // other client is listening on MSAA events - if so, we enable full web
 // accessibility support.
 const int kIdScreenReaderHoneyPot = 1;
+
+// DirectManipulation needs to pull for new events every frame while finger
+// gesturing on touchpad.
+class CompositorAnimationObserverForDirectManipulation
+    : public ui::CompositorAnimationObserver {
+ public:
+  CompositorAnimationObserverForDirectManipulation(
+      LegacyRenderWidgetHostHWND* render_widget_host_hwnd)
+      : render_widget_host_hwnd_(render_widget_host_hwnd) {}
+  void OnAnimationStep(base::TimeTicks timestamp) override {
+    render_widget_host_hwnd_->OnAnimationStep();
+  }
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
+
+ private:
+  LegacyRenderWidgetHostHWND* render_widget_host_hwnd_;
+
+  DISALLOW_COPY_AND_ASSIGN(CompositorAnimationObserverForDirectManipulation);
+};
 
 // static
 LegacyRenderWidgetHostHWND* LegacyRenderWidgetHostHWND::Create(
@@ -72,10 +94,14 @@ HWND LegacyRenderWidgetHostHWND::GetParent() {
 
 void LegacyRenderWidgetHostHWND::Show() {
   ::ShowWindow(hwnd(), SW_SHOW);
+  if (direct_manipulation_helper_)
+    direct_manipulation_helper_->Activate(hwnd());
 }
 
 void LegacyRenderWidgetHostHWND::Hide() {
   ::ShowWindow(hwnd(), SW_HIDE);
+  if (direct_manipulation_helper_)
+    direct_manipulation_helper_->Deactivate(hwnd());
 }
 
 void LegacyRenderWidgetHostHWND::SetBounds(const gfx::Rect& bounds) {
@@ -84,8 +110,21 @@ void LegacyRenderWidgetHostHWND::SetBounds(const gfx::Rect& bounds) {
   ::SetWindowPos(hwnd(), NULL, bounds_in_pixel.x(), bounds_in_pixel.y(),
                  bounds_in_pixel.width(), bounds_in_pixel.height(),
                  SWP_NOREDRAW);
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->SetBounds(bounds_in_pixel);
+}
+
+void LegacyRenderWidgetHostHWND::SetHost(RenderWidgetHostViewAura* host) {
+  if (host_ == host)
+    return;
+
+  // Stop the AnimationObserver when host update, this also include window
+  // close.
+  if (compositor_animation_observer_ && host_ &&
+      host_->GetNativeView()->GetHost() &&
+      host_->GetNativeView()->GetHost()->compositor()) {
+    host_->GetNativeView()->GetHost()->compositor()->RemoveAnimationObserver(
+        compositor_animation_observer_.get());
+  }
+  host_ = host;
 }
 
 void LegacyRenderWidgetHostHWND::MoveCaretTo(const gfx::Rect& bounds) {
@@ -141,8 +180,13 @@ bool LegacyRenderWidgetHostHWND::Init() {
   // returns NULL if Direct Manipulation is not available.
   direct_manipulation_helper_ =
       ui::win::DirectManipulationHelper::CreateInstance();
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->Initialize(hwnd());
+  if (direct_manipulation_helper_) {
+    compositor_animation_observer_ =
+        std::make_unique<CompositorAnimationObserverForDirectManipulation>(
+            this);
+    direct_manipulation_helper_->Initialize(hwnd(),
+                                            GetWindowEventTarget(GetParent()));
+  }
 
   // Disable pen flicks (http://crbug.com/506977)
   base::win::DisableFlicks(hwnd());
@@ -276,12 +320,6 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseRange(UINT message,
       ret = ::DefWindowProc(GetParent(), message, w_param, l_param);
       handled = TRUE;
     }
-  }
-
-  if (direct_manipulation_helper_ &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
   }
   return ret;
 }
@@ -446,6 +484,39 @@ LRESULT LegacyRenderWidgetHostHWND::OnWindowPosChanged(UINT message,
   }
   SetMsgHandled(FALSE);
   return 0;
+}
+
+LRESULT LegacyRenderWidgetHostHWND::OnPointerHitTest(UINT message,
+                                                     WPARAM w_param,
+                                                     LPARAM l_param) {
+  if (!direct_manipulation_helper_)
+    return 0;
+
+  // Update window event target in case user move tab to another window.
+  direct_manipulation_helper_->SetEventTarget(
+      GetWindowEventTarget(GetParent()));
+  if (direct_manipulation_helper_->OnPointerHitTest(w_param)) {
+    DCHECK(host_);
+    DCHECK(host_->GetNativeView()->GetHost());
+    DCHECK(host_->GetNativeView()->GetHost()->compositor());
+    host_->GetNativeView()->GetHost()->compositor()->AddAnimationObserver(
+        compositor_animation_observer_.get());
+  }
+
+  return 0;
+}
+
+void LegacyRenderWidgetHostHWND::OnAnimationStep() {
+  if (!direct_manipulation_helper_)
+    return;
+  DCHECK(host_);
+  DCHECK(host_->GetNativeView()->GetHost());
+  DCHECK(host_->GetNativeView()->GetHost()->compositor());
+
+  if (!direct_manipulation_helper_->OnAnimationStep()) {
+    host_->GetNativeView()->GetHost()->compositor()->RemoveAnimationObserver(
+        compositor_animation_observer_.get());
+  }
 }
 
 }  // namespace content
