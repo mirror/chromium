@@ -177,6 +177,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c08334fb_e3357729",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T11:59:19Z",
+      "side": 0,
+      "message": "We cannot redirect 4. to 2. for WeakMember. \n\n4. marks WeakMember as strong, while 2 just clears them.",
+      "parentUuid": "b506a501_a09e8543",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
