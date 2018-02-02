@@ -16,6 +16,24 @@
       "revId": "69acc39be7584ebc6b41214520c6e39ac1aa8ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8c00fe_afb72c17",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-02T16:22:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b760220_eae14ffd",
+      "revId": "69acc39be7584ebc6b41214520c6e39ac1aa8ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
