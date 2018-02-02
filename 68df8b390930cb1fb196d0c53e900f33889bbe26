@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22025516_c1431b33",
+        "filename": "chrome/app/google_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T03:50:44Z",
+      "side": 1,
+      "message": "Nit: Descriptions need to mention that one is on Mac and the other is not, since translators won\u0027t have that context.  (all files)",
+      "revId": "68df8b390930cb1fb196d0c53e900f33889bbe26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
