@@ -73,6 +73,9 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
   void PostMainMessageLoopStart() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   void PreMainMessageLoopRun() override;
 
   // Stages called from PreMainMessageLoopRun.

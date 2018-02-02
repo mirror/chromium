@@ -36,10 +36,17 @@ void CreateNetworkServiceOnIO(network::mojom::NetworkServiceRequest request) {
 }  // namespace
 
 network::mojom::NetworkService* GetNetworkService() {
+  return GetNetworkService(
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+}
+
+network::mojom::NetworkService* GetNetworkService(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
 
   if (!g_network_service_ptr)
     g_network_service_ptr = new network::mojom::NetworkServicePtr;
+
   static NetworkServiceClient* g_client;
   if (!g_network_service_ptr->is_bound() ||
       g_network_service_ptr->encountered_error()) {
@@ -48,10 +55,9 @@ network::mojom::NetworkService* GetNetworkService() {
           mojom::kNetworkServiceName, g_network_service_ptr);
     } else {
       DCHECK(!g_network_service_ptr->is_bound());
-      BrowserThread::PostTask(
-          BrowserThread::IO, FROM_HERE,
-          base::BindOnce(CreateNetworkServiceOnIO,
-                         mojo::MakeRequest(g_network_service_ptr)));
+      task_runner->PostTask(
+          FROM_HERE, base::BindOnce(CreateNetworkServiceOnIO,
+                                    mojo::MakeRequest(g_network_service_ptr)));
     }
 
     network::mojom::NetworkServiceClientPtr client_ptr;

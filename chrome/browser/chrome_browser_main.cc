@@ -1441,14 +1441,22 @@ void ChromeBrowserMainParts::PostCreateThreads() {
 }
 
 void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
-    content::ServiceManagerConnection* connection) {
+    content::ServiceManagerConnection* connection,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   // This should be called after the creation of the tracing controller. The
   // tracing controller is created when the service manager connection is
   // started.
   tracing::SetupBackgroundTracingFieldTrial();
 
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
-    chrome_extra_parts_[i]->ServiceManagerConnectionStarted(connection);
+    chrome_extra_parts_[i]->ServiceManagerConnectionStarted(connection,
+                                                            task_runner);
+}
+
+void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
+    content::ServiceManagerConnection* connection) {
+  ServiceManagerConnectionStarted(
+      connection, BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 void ChromeBrowserMainParts::PreMainMessageLoopRun() {

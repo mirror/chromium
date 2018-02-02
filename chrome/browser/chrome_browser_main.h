@@ -76,6 +76,9 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void PostCreateThreads() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   void PreMainMessageLoopRun() override;
   bool MainMessageLoopRun(int* result_code) override;
   void PostMainMessageLoopRun() override;
