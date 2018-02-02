@@ -33,7 +33,7 @@ class IntRect;
 class LayoutObject;
 class NGPhysicalTextFragment;
 class FrameSelection;
-
+struct LayoutSelectionStatus;
 // This class represents a selection range in layout tree for painting and
 // paint invalidation.
 // The current selection to be painted is represented as 2 pairs of
@@ -109,8 +109,7 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   // Returned pair is a partial range of
   // (text_fragment.StartOffset(), text_fragment.EndOffset()).
   // If first equals second, it indicates "no selection in fragment".
-  std::pair<unsigned, unsigned> SelectionStartEndForNG(
-      const NGPhysicalTextFragment&);
+  LayoutSelectionStatus SelectionStartEndForNG(const NGPhysicalTextFragment&);
 
   void OnDocumentShutdown();
 
