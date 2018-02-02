@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9983f25_fdd1397e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T22:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a58a485_bc5a4de0",
+      "range": {
+        "startLine": 35,
+        "startChar": 23,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcbcc783_fb5842f4",
         "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "78177c69_570a6c1e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T22:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcbcc783_fb5842f4",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eacdaadf_17f64ddc",
         "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-02T22:02:39Z",
       "side": 1,
       "message": "Could this be replaced by this.getBoundingClientRect() instead? Then you would not need to convert the \"Xpx\" to X as a number.",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae32e02_60d86e38",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T22:36:13Z",
+      "side": 1,
+      "message": "using this.getBoundingClientRect.height seems to break the sizing, unfortunately.",
+      "parentUuid": "eacdaadf_17f64ddc",
       "range": {
         "startLine": 128,
         "startChar": 19,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "37b2720d_950c7b68",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T22:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3a019c1_15a62234",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 59
+      },
+      "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cce20acb_c1a3dc6c",
         "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7c1e3580_44226814",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T22:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cce20acb_c1a3dc6c",
+      "range": {
+        "startLine": 122,
+        "startChar": 32,
+        "endLine": 122,
+        "endChar": 78
+      },
+      "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8117749_cda7ec0d",
         "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d95671_9dcc868c",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T22:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8117749_cda7ec0d",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "660469e9e84957c38da8ca78e557a409a1c58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
