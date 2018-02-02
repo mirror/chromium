@@ -61,6 +61,7 @@ import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
@@ -906,5 +907,23 @@ public class DownloadUtils {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
+    }
+
+    /**
+     * Compares two file paths to see if they represent the same file.
+     * @param filePath1 File path to compare.
+     * @param filePath2 The other file path to compare.
+     * @return If two file paths represent the same file on disk. Returns false if one of the file
+     * path is null.
+     */
+    public static boolean compareFilePath(String filePath1, String filePath2) {
+        if (filePath1 == null || filePath2 == null) return false;
+        try {
+            String canonicalPath1 = new File(filePath1).getCanonicalPath();
+            String canonicalPath2 = new File(filePath2).getCanonicalPath();
+            return canonicalPath1.equals(canonicalPath2);
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

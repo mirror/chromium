@@ -132,13 +132,31 @@ public class DownloadManagerDelegate {
     /**
      * Removes a download from Android DownloadManager.
      * @param downloadGuid The GUID of the download.
+     * @param filePath The file path of the download.
      */
-    void removeCompletedDownload(String downloadGuid) {
+    void removeCompletedDownload(String downloadGuid, String filePath) {
         long downloadId = removeDownloadIdMapping(downloadGuid);
-        if (downloadId != INVALID_SYSTEM_DOWNLOAD_ID) {
-            DownloadManager manager =
-                    (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-            manager.remove(downloadId);
+        if (downloadId == INVALID_SYSTEM_DOWNLOAD_ID) return;
+
+        DownloadManager manager =
+                (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Query q = new DownloadManager.Query().setFilterById(downloadId);
+        Cursor c = manager.query(q);
+        try {
+            if (!c.moveToFirst()) return;
+            // Query the file URI string kept in Android DownloadManager's database.
+            String androidFileUriStr =
+                    c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+            if (androidFileUriStr == null) return;
+
+            // Let Android download to remove the file only if the file paths are the same in Chrome
+            // and in Android download.
+            // If the user renamed or moved the file in Android downloads or other application, we
+            // should keep the file.
+            if (DownloadUtils.compareFilePath(filePath, Uri.parse(androidFileUriStr).getPath()))
+                manager.remove(downloadId);
+        } finally {
+            c.close();
         }
     }
 

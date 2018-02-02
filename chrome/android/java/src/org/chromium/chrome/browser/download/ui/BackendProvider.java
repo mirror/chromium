@@ -33,7 +33,7 @@ public interface BackendProvider {
         void checkForExternallyRemovedDownloads(boolean isOffTheRecord);
 
         /** See {@link DownloadManagerService#removeDownload}. */
-        void removeDownload(String guid, boolean isOffTheRecord);
+        void removeDownload(String guid, boolean isOffTheRecord, String filePath);
 
         /** See {@link DownloadManagerService#isDownloadOpenableInBrowser}. */
         boolean isDownloadOpenableInBrowser(boolean isOffTheRecord, String mimeType);
