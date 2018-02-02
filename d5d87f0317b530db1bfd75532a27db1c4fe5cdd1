@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cdc67db_e21012c2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/muted-errors.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-02T00:37:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we can make this a WPT if this checks exact message text. We can assert that it doens\u0027t include ev.filename maybe?",
+      "revId": "d5d87f0317b530db1bfd75532a27db1c4fe5cdd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803f379f_4ecca6b3",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-02T00:37:20Z",
+      "side": 1,
+      "message": "yes",
+      "range": {
+        "startLine": 97,
+        "startChar": 19,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "d5d87f0317b530db1bfd75532a27db1c4fe5cdd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
