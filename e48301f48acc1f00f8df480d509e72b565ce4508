@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f71d7f_c35d960f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T10:19:11Z",
+      "side": 1,
+      "message": "This is exactly what I am trying to avoid these days.\n\nI see that we emit the write barrier for the elements once they are moved in but shouldn\u0027t we just emit the write barrier for the backing store? This should automatically mark it when incremental marking is on.",
+      "range": {
+        "startLine": 82,
+        "startChar": 31,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "e48301f48acc1f00f8df480d509e72b565ce4508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
