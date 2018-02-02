@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a0bb8e_04bd8ccf",
+        "filename": "components/sync/model/mock_model_type_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-02-02T13:30:44Z",
+      "side": 1,
+      "message": "I think base::Passed shouldn\u0027t be required anymore? (few more instances of this below)",
+      "range": {
+        "startLine": 31,
+        "startChar": 76,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "fba7d44cf6298b0508b5583264c0302885085162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54b6015_bf4eff78",
+        "filename": "components/sync/model/model_type_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-02-02T13:30:44Z",
+      "side": 1,
+      "message": "Not your doing, but I find the name \"Factory\" a bit unfortunate.\n\nDo we need both the Once and Repeating versions long-term?",
+      "range": {
+        "startLine": 187,
+        "startChar": 75,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "fba7d44cf6298b0508b5583264c0302885085162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e8155b_812422bf",
+        "filename": "components/sync/model/model_type_sync_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-02-02T13:30:44Z",
+      "side": 1,
+      "message": "Was the missing \"virtual\" just an oversight? Or what\u0027s the reason for adding it?",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "fba7d44cf6298b0508b5583264c0302885085162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
