@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "278968ab_977535d4",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T12:23:55Z",
+      "side": 1,
+      "message": "In the mocks, the spacing in and around the items is a lot bigger, so I added the separators for now so that the menu looks closer to the mocks. We might want to change that in the future and maybe increase the height of the items overall, if that is possible.",
+      "parentUuid": "9d1d1548_9324d37e",
+      "revId": "9364000c274ccaa1980ead14f4578b2f0b9fbfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "586185be_5d102954",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 5
