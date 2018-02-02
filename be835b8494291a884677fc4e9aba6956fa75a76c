@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7b949a_eae3bf55",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1261640
+      },
+      "writtenOn": "2018-02-02T07:21:48Z",
+      "side": 1,
+      "message": "The only one new diff in this patch is here.\nI didn\u0027t expect that some testsuits can call `ChromeContentRendererClient::RenderFrameCreated` without `ChromeContentRendererClient::RenderThreadStarted`.\nIn this case the chrome_observer_ isn\u0027t initialized.",
+      "revId": "be835b8494291a884677fc4e9aba6956fa75a76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
