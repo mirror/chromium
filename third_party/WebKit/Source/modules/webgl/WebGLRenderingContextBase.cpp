@@ -88,6 +88,7 @@
 #include "modules/webgl/WebGLUniformLocation.h"
 #include "modules/webgl/WebGLVertexArrayObject.h"
 #include "modules/webgl/WebGLVertexArrayObjectOES.h"
+#include "modules/xr/XRDevice.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/bindings/ScriptWrappableVisitor.h"
@@ -818,6 +819,43 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
       surface->makeImageSnapshot(), std::move(shared_context_wrapper));
 }
 
+ScriptPromise WebGLRenderingContextBase::setCompatibleXRDevice(
+    ScriptState* script_state,
+    XRDevice* xr_device) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  if (isContextLost()) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, "Context lost."));
+  }
+
+  if (xr_device == compatible_xr_device_) {
+    resolver->Resolve();
+    return promise;
+  }
+
+  if (IsContextCompatible(xr_device)) {
+    compatible_xr_device_ = xr_device;
+    resolver->Resolve();
+  } else {
+    // TODO(offenwanger): Trigger context loss and recreate on compatible GPU.
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kNotSupportedError,
+            "Context is not compatible. Switching not yet implemented."));
+  }
+
+  return promise;
+}
+
+bool WebGLRenderingContextBase::IsXRDeviceCompatible(
+    const XRDevice* xr_device) {
+  return xr_device == compatible_xr_device_;
+}
+
 namespace {
 
 // Exposed by GL_ANGLE_depth_texture
@@ -1097,6 +1135,7 @@ void WebGLRenderingContextBase::InitializeNewContext() {
   current_program_ = nullptr;
   framebuffer_binding_ = nullptr;
   renderbuffer_binding_ = nullptr;
+  compatible_xr_device_ = nullptr;
   depth_mask_ = true;
   stencil_enabled_ = false;
   stencil_mask_ = 0xFFFFFFFF;
@@ -1480,6 +1519,11 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
     return false;
   }
 
+  return true;
+}
+
+bool WebGLRenderingContextBase::IsContextCompatible(const XRDevice* device) {
+  // TODO(offenwanger): Determine if device is compatible with current context.
   return true;
 }
 
@@ -2761,6 +2805,9 @@ void WebGLRenderingContextBase::getContextAttributes(
   if (CreationAttributes().stencil() && !GetDrawingBuffer()->HasStencilBuffer())
     result->setStencil(false);
   result->setAntialias(GetDrawingBuffer()->Multisample());
+  if (compatible_xr_device_) {
+    result->setCompatibleXRDevice(compatible_xr_device_);
+  }
 }
 
 GLenum WebGLRenderingContextBase::getError() {
@@ -7809,6 +7856,7 @@ void WebGLRenderingContextBase::Trace(blink::Visitor* visitor) {
   visitor->Trace(current_program_);
   visitor->Trace(framebuffer_binding_);
   visitor->Trace(renderbuffer_binding_);
+  visitor->Trace(compatible_xr_device_);
   visitor->Trace(texture_units_);
   visitor->Trace(extensions_);
   CanvasRenderingContext::Trace(visitor);
