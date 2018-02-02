@@ -48,13 +48,10 @@ Polymer({
    * @private
    */
   updateSearchHint_: function(searchQuery) {
-    if (!searchQuery) {
-      this.searchHint_ = '';
-      return;
-    }
-    this.searchHint_ = this.destination.extraPropertiesToMatch
-                           .filter(p => p.match(searchQuery))
-                           .join(' ');
+    this.searchHint_ = !searchQuery ? '' :
+                                      this.destination.extraPropertiesToMatch
+                                          .filter(p => p.match(searchQuery))
+                                          .join(' ');
   },
 
   /**
@@ -67,7 +64,7 @@ Polymer({
       this.highlighted_ = false;
     }
 
-    if (!searchQuery)
+    if (!searchQuery || this.hidden)
       return;
 
     this.shadowRoot.querySelectorAll('.searchable').forEach(element => {
