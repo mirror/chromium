@@ -169,12 +169,15 @@ class ChromeBrowsingDataRemoverDelegate
       int origin_type_mask,
       base::OnceClosure callback) override;
 
-  // history::HistoryServiceObserver:
+  // history::HistoryServiceObserver
   void OnURLsDeleted(history::HistoryService* history_service,
                      const history::DeletionTimeRange& time_range,
                      bool expired,
                      const history::URLRows& deleted_rows,
                      const std::set<GURL>& favicon_urls) override;
+
+  void HistoryServiceBeingDeleted(
+      history::HistoryService* history_service) override;
 
 #if defined(OS_ANDROID)
   void OverrideWebappRegistryForTesting(

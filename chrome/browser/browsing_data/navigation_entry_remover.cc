@@ -35,10 +35,6 @@ bool UrlMatcher(const base::flat_set<GURL>& urls,
   return urls.find(entry.GetURL()) != urls.end();
 }
 
-// Create a predicate to select NavigationEntries that should be deleted.
-// If a valid time_range is supplied, the decision will be based on time and
-// |deleted_rows| is ignored.
-// Otherwise entries matching |deleted_rows| will be selected.
 content::NavigationController::DeletionPredicate CreateDeletionPredicate(
     const history::DeletionTimeRange& time_range,
     const history::URLRows& deleted_rows) {
@@ -58,7 +54,7 @@ content::NavigationController::DeletionPredicate CreateDeletionPredicate(
 // common base class but both have a |GetWebContentsAt()| method.
 // TODO(dullweber): Add a common base class?
 template <typename TabList>
-void DeleteNavigationEntries(
+void PruneNavigationEntries(
     TabList* tab_list,
     int tab_count,
     const content::NavigationController::DeletionPredicate& predicate) {
@@ -67,7 +63,7 @@ void DeleteNavigationEntries(
     content::NavigationController* controller = &web_contents->GetController();
     controller->DiscardNonCommittedEntries();
     // We discarded pending and transient entries but there could still be
-    // no last_committed_entry, which would prevent deletion.
+    // no last_committed_entry, which would prevent pruning.
     if (controller->CanPruneAllButLastCommitted())
       controller->DeleteNavigationEntries(predicate);
   }
@@ -92,14 +88,14 @@ void RemoveNavigationEntries(Profile* profile,
   for (auto it = TabModelList::begin(); it != TabModelList::end(); ++it) {
     TabModel* tab_model = *it;
     if (tab_model->GetProfile() == profile) {
-      DeleteNavigationEntries(tab_model, tab_model->GetTabCount(), predicate);
+      PruneNavigationEntries(tab_model, tab_model->GetTabCount(), predicate);
     }
   }
 #else
   for (Browser* browser : *BrowserList::GetInstance()) {
     TabStripModel* tab_strip = browser->tab_strip_model();
     if (browser->profile() == profile) {
-      DeleteNavigationEntries(tab_strip, tab_strip->count(), predicate);
+      PruneNavigationEntries(tab_strip, tab_strip->count(), predicate);
     }
   }
 #endif

@@ -12,10 +12,7 @@ class Profile;
 
 namespace browsing_data {
 
-// Remove navigation entries from the tabs of all browsers of |profile|.
-// If a valid time_range is supplied, all entries within this time range will be
-// removed and |deleted_rows| is ignored.
-// Otherwise entries matching |deleted_rows| will be deleted.
+// Remove navigation entries from the tabs of |profile|.
 void RemoveNavigationEntries(Profile* profile,
                              const history::DeletionTimeRange& time_range,
                              const history::URLRows& deleted_rows);

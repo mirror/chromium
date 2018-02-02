@@ -363,6 +363,11 @@ void ChromeBrowsingDataRemoverDelegate::OnURLsDeleted(
     browsing_data::RemoveNavigationEntries(profile_, time_range, deleted_rows);
 }
 
+void ChromeBrowsingDataRemoverDelegate::HistoryServiceBeingDeleted(
+    history::HistoryService* history_service) {
+  history_observer_.Remove(history_service);
+}
+
 bool ChromeBrowsingDataRemoverDelegate::MayRemoveDownloadHistory() const {
   return profile_->GetPrefs()->GetBoolean(prefs::kAllowDeletingBrowserHistory);
 }
@@ -501,7 +506,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
     // Therefore, clearing history for a small set of origins (WHITELIST) should
     // never delete any extension launch times, while clearing for almost all
     // origins (BLACKLIST) should always delete all of extension launch times.
-    if (filter_builder.IsEmptyBlacklist()) {
+    if (filter_builder.GetMode() == BrowsingDataFilterBuilder::BLACKLIST) {
       extensions::ExtensionPrefs* extension_prefs =
           extensions::ExtensionPrefs::Get(profile_);
       extension_prefs->ClearLastLaunchTimes();

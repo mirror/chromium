@@ -195,7 +195,7 @@ IN_PROC_BROWSER_TEST_F(NavigationEntryRemoverTest, TwoTabsDeletion) {
   browsing_data::RemoveNavigationEntries(
       browser()->profile(), history::DeletionTimeRange::AllTime(), {});
 
-  ExpectEntries({url_b_, url_d_}, GetEntries());
+  ExpectEntries(std::vector<GURL>{url_b_, url_d_}, GetEntries());
 }
 
 IN_PROC_BROWSER_TEST_F(NavigationEntryRemoverTest, TwoWindowsDeletion) {

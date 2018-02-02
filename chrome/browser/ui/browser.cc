@@ -1488,6 +1488,11 @@ void Browser::NavigationStateChanged(WebContents* source,
     hosted_app_controller_->UpdateLocationBarVisibility(true);
 }
 
+void Browser::NavigationEntriesDeleted(WebContents* source) {
+  if (source == tab_strip_model_->GetActiveWebContents())
+    command_controller_->TabStateChanged();
+}
+
 void Browser::VisibleSecurityStateChanged(WebContents* source) {
   // When the current tab's security state changes, we need to update the URL
   // bar to reflect the new state.

@@ -412,23 +412,23 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, HistoryDeletion) {
-  const std::string kType = "History";
+  std::string type = "History";
   GURL url = embedded_test_server()->GetURL("/browsing_data/site_data.html");
   // Create a new tab to avoid confusion from having a NTP navigation entry.
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), url, WindowOpenDisposition::NEW_FOREGROUND_TAB,
       ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
-  EXPECT_FALSE(HasDataForType(kType));
-  SetDataForType(kType);
-  EXPECT_TRUE(HasDataForType(kType));
+  EXPECT_FALSE(HasDataForType(type));
+  SetDataForType(type);
+  EXPECT_TRUE(HasDataForType(type));
   // Remove history from navigation to site_data.html.
   RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY);
-  EXPECT_FALSE(HasDataForType(kType));
-  SetDataForType(kType);
-  EXPECT_TRUE(HasDataForType(kType));
+  EXPECT_FALSE(HasDataForType(type));
+  SetDataForType(type);
+  EXPECT_TRUE(HasDataForType(type));
   // Remove history from previous pushState() call in setHistory().
   RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY);
-  EXPECT_FALSE(HasDataForType(kType));
+  EXPECT_FALSE(HasDataForType(type));
 }
 
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, CookieDeletion) {

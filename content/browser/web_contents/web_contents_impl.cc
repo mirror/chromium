@@ -4544,6 +4544,8 @@ void WebContentsImpl::NotifyNavigationListPruned(
 }
 
 void WebContentsImpl::NotifyNavigationEntriesDeleted() {
+  if (delegate_)
+    delegate_->NavigationEntriesDeleted(this);
   for (auto& observer : observers_)
     observer.NavigationEntriesDeleted();
 }
