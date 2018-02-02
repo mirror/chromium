@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d95161b_9784bf62",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T08:17:38Z",
+      "side": 1,
+      "message": "Nit: please document why Unretained() is safe here.",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1c4d8f_71657944",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T08:17:38Z",
+      "side": 1,
+      "message": "Similarly, this class could some clarification on how the different bits here are expected to interact, as there\u0027s three distinct interfaces implemented here. For example, the comments in the class that DidReceiveFrame is called before rendering started don\u0027t help me understand why it\u0027s important to call SubmitSingleFrame() there.",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5cc9f1_b0f2d1d9",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T08:17:38Z",
+      "side": 1,
+      "message": "Nit: prefix cc:: here",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726e5cbd_36d7e338",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T08:17:38Z",
+      "side": 1,
+      "message": "As someone who\u0027s not familiar with these systems, I don\u0027t quite understand the purpose of this class. In other words, the thing I\u0027d like to see documented is why we\u0027re sending compositor frames from the VideoFrameProvider to the compositor? What is the relationship between a compositor frame and a video frame? Does the compositor frame contain the decoded video frame, or is the video frame only useful for metadata? et cetera\n\nIt\u0027d also be useful to document the expected control flow: when is this class hooked up, can anything happen before Initialize(), et cetera.",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
