@@ -16,10 +16,10 @@
 #include "extensions/common/error_utils.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_resource.h"
-#include "extensions/common/install_warning.h"
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/manifest_handlers/permissions_parser.h"
 #include "extensions/common/permissions/api_permission.h"
+#include "extensions/common/url_pattern.h"
 #include "extensions/common/url_pattern_set.h"
 
 namespace extensions {
@@ -29,8 +29,16 @@ namespace errors = manifest_errors;
 
 namespace declarative_net_request {
 
-DNRManifestHandler::DNRManifestHandler() = default;
-DNRManifestHandler::~DNRManifestHandler() = default;
+namespace {
+
+const int kValidDNRHostSchemes =
+    URLPattern::SCHEME_HTTP | URLPattern::SCHEME_HTTPS |
+    URLPattern::SCHEME_FILE | URLPattern::SCHEME_FTP | URLPattern::SCHEME_WS |
+    URLPattern::SCHEME_WSS;
+static_assert((kValidDNRHostSchemes | URLPattern::SCHEME_CHROMEUI) ==
+                  Extension::kValidHostPermissionSchemes,
+              "Modifying valid host permission schemes? Make sure to consider "
+              "both explicit and DNR host schemes.");
 
 // Retrieves the "hosts" key from the kDeclarativeNetRequestKey manifest key
 // dictionary. Returns false in case of an error.
@@ -50,6 +58,11 @@ bool GetHostsList(const base::DictionaryValue& dnr_dict,
 
   return true;
 }
+
+}  // namespace
+
+DNRManifestHandler::DNRManifestHandler() = default;
+DNRManifestHandler::~DNRManifestHandler() = default;
 
 bool DNRManifestHandler::Parse(Extension* extension, base::string16* error) {
   DCHECK(extension->manifest()->HasKey(keys::kDeclarativeNetRequestKey));
@@ -85,7 +98,8 @@ bool DNRManifestHandler::Parse(Extension* extension, base::string16* error) {
   URLPatternSet host_permissions;
   PermissionsParser::ParseHostPermissions(
       extension, hosts, PermissionsParser::GetRequiredAPIPermissions(extension),
-      &host_permissions, &malformed_hosts, &invalid_scheme_hosts);
+      kValidDNRHostSchemes, &host_permissions, &malformed_hosts,
+      &invalid_scheme_hosts);
 
   if (!malformed_hosts.empty()) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -94,12 +108,11 @@ bool DNRManifestHandler::Parse(Extension* extension, base::string16* error) {
     return false;
   }
 
-  for (const auto& invalid_scheme_host : invalid_scheme_hosts) {
-    std::string warning = ErrorUtils::FormatErrorMessage(
-        errors::kInvalidDeclarativeHostScheme, invalid_scheme_host,
+  if (!invalid_scheme_hosts.empty()) {
+    *error = ErrorUtils::FormatErrorMessageUTF16(
+        errors::kInvalidDeclarativeHostScheme, invalid_scheme_hosts[0],
         keys::kDeclarativeNetRequestKey, keys::kDeclarativeHostsKey);
-    extension->AddInstallWarning(InstallWarning(
-        warning, keys::kDeclarativeNetRequestKey, keys::kDeclarativeHostsKey));
+    return false;
   }
 
   if (host_permissions.is_empty()) {

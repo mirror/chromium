@@ -161,7 +161,8 @@ bool ParseHelper(Extension* extension,
   // Parse host pattern permissions.
   std::vector<std::string> malformed_hosts, invalid_scheme_hosts;
   PermissionsParser::ParseHostPermissions(
-      extension, host_data, *api_permissions, host_permissions,
+      extension, host_data, *api_permissions,
+      Extension::kValidHostPermissionSchemes, host_permissions,
       &malformed_hosts, &invalid_scheme_hosts);
 
   for (const std::string& malformed_host : malformed_hosts) {
@@ -248,6 +249,7 @@ void PermissionsParser::ParseHostPermissions(
     Extension* extension,
     const std::vector<std::string>& host_data,
     const APIPermissionSet& api_permissions,
+    int allowed_scheme_masks,
     URLPatternSet* host_permissions,
     std::vector<std::string>* malformed_hosts,
     std::vector<std::string>* invalid_scheme_hosts) {
@@ -256,14 +258,19 @@ void PermissionsParser::ParseHostPermissions(
 
   const bool can_execute_script_everywhere =
       PermissionsData::CanExecuteScriptEverywhere(extension);
-  const int allowed_schemes_mask = can_execute_script_everywhere
-                                       ? URLPattern::SCHEME_ALL
-                                       : Extension::kValidHostPermissionSchemes;
+  if (can_execute_script_everywhere)
+    allowed_scheme_masks = URLPattern::SCHEME_ALL;
 
+  bool has_all_url_pattern = false;
   for (const std::string& permission_str : host_data) {
     // Check if it's a host pattern permission.
-    URLPattern pattern = URLPattern(allowed_schemes_mask);
+    URLPattern pattern = URLPattern(allowed_scheme_masks);
     URLPattern::ParseResult parse_result = pattern.Parse(permission_str);
+
+    if (parse_result == URLPattern::PARSE_ERROR_INVALID_SCHEME) {
+      invalid_scheme_hosts->push_back(permission_str);
+      continue;
+    }
 
     if (parse_result != URLPattern::PARSE_SUCCESS) {
       malformed_hosts->push_back(permission_str);
@@ -298,13 +305,16 @@ void PermissionsParser::ParseHostPermissions(
 
     host_permissions->AddPattern(pattern);
 
-    // We need to make sure all_urls matches chrome://favicon and (maybe)
-    // chrome://thumbnail, so add them back in to host_permissions separately.
-    if (pattern.match_all_urls()) {
-      host_permissions->AddPatterns(
-          ExtensionsClient::Get()->GetPermittedChromeSchemeHosts(
-              extension, api_permissions));
-    }
+    has_all_url_pattern |= pattern.match_all_urls();
+  }
+
+  // We need to make sure all_urls matches chrome://favicon and (maybe)
+  // chrome://thumbnail, so add them back in to host_permissions separately.
+  if (has_all_url_pattern &&
+      (allowed_scheme_masks & URLPattern::SCHEME_CHROMEUI)) {
+    host_permissions->AddPatterns(
+        ExtensionsClient::Get()->GetPermittedChromeSchemeHosts(
+            extension, api_permissions));
   }
 }
 
