@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e48e794e_6a74fbc1",
+        "filename": "ash/wm/overview/overview_window_mask.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553f7157_805d28c5",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99a7414f_7ea582e8",
         "filename": "ash/wm/overview/overview_window_mask.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-01T22:05:45Z",
       "side": 1,
       "message": "is it possible to use PaintedLayer + Painter + SolidRoundRectPainter?\n\nhttps://cs.chromium.org/chromium/src/ui/views/painter.cc?rcl\u003d94f07a46b5ec3f38a29ec095a06b8ea967ce9173\u0026l\u003d317\n\nhttps://cs.chromium.org/chromium/src/ui/views/painter.cc?rcl\u003d94f07a46b5ec3f38a29ec095a06b8ea967ce9173\u0026l\u003d47",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f16a27_a0ba175a",
+        "filename": "ash/wm/overview/overview_window_mask.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "AFAICT there is not a way to mask the outsides with this, but if we do not go this route i think we should be able to use this.",
+      "parentUuid": "99a7414f_7ea582e8",
       "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f68a4975_caf39355",
+        "filename": "ash/wm/overview/overview_window_mask.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd89a433_a08c5dc1",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6619bd_3a925492",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4e61d4_487a1daf",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d6619bd_3a925492",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f3fd5a63_d024b4b3",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b56fdcb0_a599d6c7",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0fcaea_8090315c",
         "filename": "ash/wm/overview/scoped_transform_overview_window.h",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-01T18:27:02Z",
       "side": 1,
       "message": "Can this be calculated from |top_inset_| in OverviewWindowMask? If not, can it be a variable in OverviewWindowMask?",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2c0739_7dad20ea",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "It requires additional information from ScopedBlah::ShrinkRectBlah in addition to top_offset, and then it needs to wait for the animation to finish before sending it off to WindowSelectorItem, so we would need the local variable unfortuantely.",
+      "parentUuid": "6a0fcaea_8090315c",
       "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e09ef618_422be4c8",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "|window| is declared line 769 which is indeed transform_window_.window().\n\n|item_widget_| needs to go above window since it blocks events from reaching. We could create another widget which contains the backdrop to stack below the window. But we would need to sync the bounds, animations, etc. AFAICT we cannot stack the view which block events above window, and the backdrop below window; if we can that would be ideal.",
+      "parentUuid": "03f8bfe2_501753e3",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dbfed79_98af4e8d",
         "filename": "ash/wm/overview/window_selector_item.h",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef53ad4_9c1da037",
+        "filename": "ash/wm/overview/window_selector_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-02T00:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dbfed79_98af4e8d",
+      "revId": "0f95d9f19e498f1dbf7f370050089c8615d0b21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
