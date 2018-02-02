@@ -847,7 +847,7 @@ String ExternalRepresentation(LocalFrame* frame,
                               LayoutAsTextBehavior behavior,
                               const PaintLayer* marked_layer) {
   if (!(behavior & kLayoutAsTextDontUpdateLayout))
-    frame->View()->UpdateLifecycleToPrePaintClean();
+    DCHECK(frame->View()->UpdateLifecycleToPrePaintClean());
 
   LayoutObject* layout_object = frame->ContentLayoutObject();
   if (!layout_object || !layout_object->IsBox())
