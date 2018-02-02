@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "0224217c_be3ee26b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-02-02T01:00:07Z",
+      "side": 1,
+      "message": "Why this new check? Can you add a comment?",
+      "range": {
+        "startLine": 2864,
+        "startChar": 48,
+        "endLine": 2864,
+        "endChar": 71
+      },
+      "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc907dbb_04b34e84",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-02-02T01:00:07Z",
+      "side": 1,
+      "message": "Hm, do we not need to set the margins in the computed_values struct, and for that matter also the position?",
+      "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b7ccc3d_9240c4dd",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 19
