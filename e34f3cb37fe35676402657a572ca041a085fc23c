@@ -22,6 +22,30 @@
       "revId": "e34f3cb37fe35676402657a572ca041a085fc23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d5f33c_f9341e09",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-02-02T15:45:29Z",
+      "side": 0,
+      "message": "not sure I understand the problem. you can define anything you want in anonymous namespaces and don\u0027t have to worry that this is causing conflicts in other compilation units.\n\nWhat\u0027s not safe in this CL is that the extracted function is defined in the global namespace. Just realizing that this is apparently common in chrome/browser/android. any idea why?\n\n\nPS: Please don\u0027t try to fix those things with more complicated means like pragmas, etc.",
+      "parentUuid": "8d2043a9_69157216",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "e34f3cb37fe35676402657a572ca041a085fc23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
