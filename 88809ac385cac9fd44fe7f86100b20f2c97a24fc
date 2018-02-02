@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f61b70de_2724c8e9",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T19:02:46Z",
+      "side": 1,
+      "message": "I\u0027d say, just to keep things simple, refuse to resolve the hostname of any DoH server using a DoH server.\n\nI\u0027m also fine with an exception allowing us to use DoH servers with IP endpoints to be used.  I don\u0027t think it\u0027s too much extra complexity, though would need tests for that case, too, if we do it.",
+      "parentUuid": "618b3418_65423ccd",
+      "range": {
+        "startLine": 283,
+        "startChar": 18,
+        "endLine": 283,
+        "endChar": 36
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d8a259c_5202dc71",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 30
@@ -1306,6 +1330,30 @@
       "side": 1,
       "message": "The URLRequestIntercepter needs to be passed tot he URLRequestFilter, so I think it needs to be public for that.",
       "parentUuid": "13196114_3c279858",
+      "range": {
+        "startLine": 617,
+        "startChar": 28,
+        "endLine": 617,
+        "endChar": 35
+      },
+      "revId": "88809ac385cac9fd44fe7f86100b20f2c97a24fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c68e488a_d37635ae",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T19:02:46Z",
+      "side": 1,
+      "message": "I don\u0027t believe that\u0027s accurate.  What matters is where the call to Bind is.  Since the call is in a method of this class, we do do have access to this method there.  Note that this entire file is in an anonymous namespace, which the URLRequestFilter does not have access to.",
+      "parentUuid": "affd4616_28b65561",
       "range": {
         "startLine": 617,
         "startChar": 28,
