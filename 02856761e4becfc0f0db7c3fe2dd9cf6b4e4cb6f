@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "427584cc_723a4e07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-02T08:41:31Z",
+      "side": 1,
+      "message": "Please expand on reasoning behind reland?\n\nWas speculative revert @ https://chromium-review.googlesource.com/882506 not at fault after all?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "02856761e4becfc0f0db7c3fe2dd9cf6b4e4cb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
