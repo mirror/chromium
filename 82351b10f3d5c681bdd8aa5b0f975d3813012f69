@@ -33,6 +33,29 @@
       "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e450bc_09bc7119",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-02-02T18:56:48Z",
+      "side": 1,
+      "message": "what happens if the client mistakenly tries to use the surface_id in other calls after marked for destruction?",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
