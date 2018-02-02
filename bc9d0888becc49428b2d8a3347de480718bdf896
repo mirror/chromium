@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "410e6749_94f42853",
+        "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroup.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-02T17:48:04Z",
+      "side": 1,
+      "message": "Interesting - what are the legitimate reasons during layout?",
+      "revId": "bc9d0888becc49428b2d8a3347de480718bdf896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891b97af_8154039e",
+        "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroupTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-02T17:48:04Z",
+      "side": 1,
+      "message": "Could you add a unittest to PaintPropertyTreebuilderTest.cpp that uses this\nsame example, but makes sure the # of FragmentData objects on the box is limited?",
+      "revId": "bc9d0888becc49428b2d8a3347de480718bdf896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
