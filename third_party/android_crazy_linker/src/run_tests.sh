@@ -135,8 +135,6 @@ libcrazy_linker_tests_libzoo.so \
 libcrazy_linker_tests_libzoo_with_dlopen_handle.so \
 "
 
-# TODO(digit): Fix crazy_linker_test_load_library_callbacks and add it
-# to the list.
 TEST_FILES="\
 crazy_linker_bench_load_library \
 crazy_linker_test_constructors_destructors \
