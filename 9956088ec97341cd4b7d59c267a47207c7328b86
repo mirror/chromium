@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c78120_9383e32a",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-02T14:03:22Z",
+      "side": 1,
+      "message": "Note: Fixed a bug. Without this CL, if device_path is contained in |mounted_paths_|,\n|callback| was called twice.",
+      "revId": "9956088ec97341cd4b7d59c267a47207c7328b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
