@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bab6f73_aac3235c",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:39:58Z",
+      "side": 1,
+      "message": "nit: here and line 406, no blank lines between overridden methods",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0c6aa4_626a9f82",
+        "filename": "chrome/browser/ui/login/login_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:39:58Z",
+      "side": 1,
+      "message": "once the old path uses the same callback, then it would remove the need to have different constructors here and other changes in chrome/",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e500345a_5329666d",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:39:58Z",
+      "side": 1,
+      "message": "nit: convention is to have a verb at beginning of a method name, i.e. RunAuthRequiredCallback. You can add a OnUI suffix to the other method",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205e3a6c_95cdcd47",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:39:58Z",
+      "side": 1,
+      "message": "main and sub frames are in the same routing id namespace, so I don\u0027t think this is right.\n\nFor frame requests, process_id will be 0. You can then use routing_id, which is a frame tree node id, to call  RenderFrameHost::FromID and if GetParent is null then it\u0027s a main frame",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bcf691c_90410593",
+        "filename": "content/public/browser/content_browser_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:39:58Z",
+      "side": 1,
+      "message": "please remove ResourceDispatcherHostDelegate::CreateLoginDelegate and have the old code path call this method as well\n\nin a followup, it would be nice to rename ResourceDispatcherHostLoginDelegate to something like LoginDelegate as it\u0027s not used for RDH only anymore",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db9dcd6_405e18ab",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:39:58Z",
+      "side": 1,
+      "message": "nit: this isn\u0027t really necessary, and we don\u0027t do it in the other URLRequestDelegate callbacks",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
