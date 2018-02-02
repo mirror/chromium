@@ -37,15 +37,16 @@ class PermissionsParser {
   void Finalize(Extension* extension);
 
   // A utility method to parse host permissions from a list of match patterns.
-  // Also returns match patterns which couldn't be parsed as |malformed_hosts|
-  // and hosts with invalid schemes as |invalid_scheme_hosts|. These must be
-  // non-null.
-  // TODO(crbug.com/777714): Provide an option to tweak behavior for chrome
-  // scheme hosts.
+  // |allowed_scheme_masks| is a bitmask of URLPattern::SchemeMasks containing
+  // the allowed schemes. This will be ignored if the extension can script
+  // everywhere. Also returns match patterns which couldn't be parsed as
+  // |malformed_hosts| and hosts with invalid schemes as |invalid_scheme_hosts|.
+  // These must be non-null.
   static void ParseHostPermissions(
       Extension* extension,
       const std::vector<std::string>& host_data,
       const APIPermissionSet& api_permissions,
+      int allowed_scheme_masks,
       URLPatternSet* host_permissions,
       std::vector<std::string>* malformed_hosts,
       std::vector<std::string>* invalid_scheme_hosts);

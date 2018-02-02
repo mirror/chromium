@@ -21,6 +21,7 @@
 #include "extensions/common/hashed_extension_id.h"
 #include "extensions/common/install_warning.h"
 #include "extensions/common/manifest.h"
+#include "extensions/common/url_pattern.h"
 #include "extensions/common/url_pattern_set.h"
 #include "extensions/features/features.h"
 #include "url/gurl.h"
@@ -161,7 +162,10 @@ class Extension : public base::RefCountedThreadSafe<Extension> {
   static const int kValidBookmarkAppSchemes;
 
   // Valid schemes for host permission URLPatterns.
-  static const int kValidHostPermissionSchemes;
+  static const int kValidHostPermissionSchemes =
+      URLPattern::SCHEME_CHROMEUI | URLPattern::SCHEME_HTTP |
+      URLPattern::SCHEME_HTTPS | URLPattern::SCHEME_FILE |
+      URLPattern::SCHEME_FTP | URLPattern::SCHEME_WS | URLPattern::SCHEME_WSS;
 
   // The mimetype used for extensions.
   static const char kMimeType[];
