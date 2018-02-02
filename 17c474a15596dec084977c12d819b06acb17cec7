@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "73c9721e_bffec330",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/css/css-scroll-snap/snap-at-user-scroll-end-manual-automation.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-02T15:39:14Z",
+      "side": 1,
+      "message": "This is the chrome only wpt automation script. It is acceptable to use gpuBenchamrking (or eventSender) here. Basically, we write the test as if it is a manual test and then use these automated chrome only scripts to run the automatically in chrome.\n\nAFAIK, the automation script is not upstreamed but only the manual test. \n \nSee for example wpt_automation/pointerevents/pointerevent_common_input.js",
+      "parentUuid": "af39afcf_0db7f357",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "17c474a15596dec084977c12d819b06acb17cec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ffccc54_4792a4e1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/css/css-scroll-snap/snap-at-user-scroll-end-manual-automation.js",
         "patchSetId": 16
