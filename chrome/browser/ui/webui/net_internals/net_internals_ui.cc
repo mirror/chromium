@@ -84,6 +84,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/network/onc/onc_certificate_importer_impl.h"
+#include "chromeos/network/onc/onc_parsed_certificates.h"
 #include "chromeos/network/onc/onc_utils.h"
 #endif
 
@@ -1019,12 +1020,11 @@ void NetInternalsMessageHandler::ImportONCFileToNSSDB(
 
   chromeos::onc::CertificateImporterImpl cert_importer(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO), nssdb);
+  chromeos::onc::OncParsedCertificates onc_parsed_certificates(certificates);
   cert_importer.ImportCertificates(
-      certificates,
-      onc_source,
+      onc_parsed_certificates, onc_source,
       base::Bind(&NetInternalsMessageHandler::OnCertificatesImported,
-                 AsWeakPtr(),
-                 error));
+                 AsWeakPtr(), error));
 }
 
 void NetInternalsMessageHandler::OnCertificatesImported(
