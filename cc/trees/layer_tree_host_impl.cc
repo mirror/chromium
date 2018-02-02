@@ -862,17 +862,18 @@ bool LayerTreeHostImpl::HasDamage() const {
   // If the root render surface has no visible damage, then don't generate a
   // frame at all.
   const RenderSurfaceImpl* root_surface = active_tree->RootRenderSurface();
-  bool root_surface_has_no_visible_damage =
-      !root_surface->GetDamageRect().Intersects(root_surface->content_rect());
+  bool root_surface_has_visible_damage =
+      root_surface->GetDamageRect().Intersects(root_surface->content_rect());
   bool root_surface_has_contributing_layers =
       !!root_surface->num_contributors();
+  bool root_surface_has_contributing_damage =
+      root_surface_has_contributing_layers && root_surface_has_visible_damage;
   bool hud_wants_to_draw_ = active_tree->hud_layer() &&
                             active_tree->hud_layer()->IsAnimatingHUDContents();
   bool must_always_swap =
       layer_tree_frame_sink_->capabilities().must_always_swap;
 
-  return !root_surface_has_contributing_layers ||
-         !root_surface_has_no_visible_damage ||
+  return root_surface_has_contributing_damage ||
          active_tree_->property_trees()->effect_tree.HasCopyRequests() ||
          must_always_swap || hud_wants_to_draw_;
 }
@@ -1954,6 +1955,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
     UMA_HISTOGRAM_COUNTS_1000(
         base::StringPrintf("Compositing.%s.CompositorFrame.Quads", client_name),
         total_quad_count);
+    DCHECK_NE(total_quad_count, 0);
   }
   layer_tree_frame_sink_->SubmitCompositorFrame(std::move(compositor_frame));
 
