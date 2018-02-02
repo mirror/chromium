@@ -1377,7 +1377,29 @@ void ChromeBrowserMainParts::PostBrowserStart() {
     // Initialize the TabActivityWatcher to begin logging tab activity events.
     resource_coordinator::TabActivityWatcher::GetInstance();
   }
-#endif
+
+  // If we're running tests (ui_task is non-null), then we don't want to
+  // call RequestLanguageList.
+  BrowserThread::PostAfterStartupTask(
+      FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+      base::BindOnce(
+          [](PrefService* prefs, bool not_test) {
+            TranslateService::Initialize();
+            if (not_test) {
+              translate::TranslateDownloadManager::RequestLanguageList(prefs);
+            }
+          },
+          profile_->GetPrefs(), parameters().ui_task == NULL));
+#else
+  BrowserThread::PostAfterStartupTask(
+      FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+      base::BindOnce(
+          [](PrefService* prefs) {
+            TranslateService::Initialize();
+            translate::TranslateDownloadManager::RequestLanguageList(prefs);
+          },
+          profile_->GetPrefs()));
+#endif  // !defined(OS_ANDROID)
 
   // At this point, StartupBrowserCreator::Start has run creating initial
   // browser windows and tabs, but no progress has been made in loading
@@ -1614,7 +1636,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 #endif  // BUILDFLAG(ENABLE_BACKGROUND_MODE)
   // Post-profile init ---------------------------------------------------------
 
-  TranslateService::Initialize();
   if (base::FeatureList::IsEnabled(features::kGeoLanguage)) {
     language::GeoLanguageProvider::GetInstance()->StartUp(
         content::ServiceManagerConnection::GetForProcess()
@@ -1815,8 +1836,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     // will be initialized when the app enters foreground mode.
     variations_service->set_policy_pref_service(profile_->GetPrefs());
   }
-  translate::TranslateDownloadManager::RequestLanguageList(
-      profile_->GetPrefs());
 
 #else
   // Most general initialization is behind us, but opening a
@@ -1877,17 +1896,13 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     startup_metric_utils::RecordBrowserOpenTabsDelta(delta);
 
     // If we're running tests (ui_task is non-null), then we don't want to
-    // call RequestLanguageList or StartRepeatedVariationsSeedFetch or
-    // RequestLanguageList
+    // call StartRepeatedVariationsSeedFetch
     if (parameters().ui_task == NULL) {
       // Request new variations seed information from server.
       variations::VariationsService* variations_service =
           browser_process_->variations_service();
       if (variations_service)
         variations_service->PerformPreMainMessageLoopStartup();
-
-      translate::TranslateDownloadManager::RequestLanguageList(
-          profile_->GetPrefs());
     }
   }
   run_message_loop_ = started;
