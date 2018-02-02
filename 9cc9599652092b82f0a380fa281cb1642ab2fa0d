@@ -195,6 +195,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aca7de7_68ed1ee8",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T12:14:09Z",
+      "side": 0,
+      "message": "Thanks, I\u0027m getting to understand :)\n\nWhen do we need the behavior 2? There should be no case where we want the behavior 2 for collections... right?\n\nStamping LGTM if it\u0027s easy to address the issue in a follow-up.",
+      "parentUuid": "c08334fb_e3357729",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
