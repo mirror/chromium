@@ -124,6 +124,7 @@ class NoteTakingController;
 class OverlayEventFilter;
 class PartialMagnificationController;
 class PeripheralBatteryNotifier;
+class PersistentWindowController;
 class PowerButtonController;
 class PowerEventObserver;
 class ProjectingObserver;
@@ -667,6 +668,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<SessionController> session_controller_;
   std::unique_ptr<NightLightController> night_light_controller_;
   std::unique_ptr<NoteTakingController> note_taking_controller_;
+  std::unique_ptr<PersistentWindowController> persistent_window_controller_;
   std::unique_ptr<ShelfController> shelf_controller_;
   std::unique_ptr<ShelfWindowWatcher> shelf_window_watcher_;
   std::unique_ptr<ShellDelegate> shell_delegate_;
