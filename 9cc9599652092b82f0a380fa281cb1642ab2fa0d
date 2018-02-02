@@ -159,6 +159,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b506a501_a09e8543",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T11:44:57Z",
+      "side": 0,
+      "message": "How is 4 different from 2?\n\ni.e., would it be possible to redirect 4 to 2?",
+      "parentUuid": "6eb1e036_121732e0",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

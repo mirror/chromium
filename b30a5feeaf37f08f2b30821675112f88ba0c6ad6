@@ -45,6 +45,23 @@
       "revId": "b30a5feeaf37f08f2b30821675112f88ba0c6ad6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ea5b48_ca4ca862",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T11:44:57Z",
+      "side": 1,
+      "message": "For example, this should be the case 4, right?",
+      "revId": "b30a5feeaf37f08f2b30821675112f88ba0c6ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
