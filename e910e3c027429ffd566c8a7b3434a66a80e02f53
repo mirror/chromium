@@ -16,6 +16,24 @@
       "revId": "e910e3c027429ffd566c8a7b3434a66a80e02f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95429f2_aa364e63",
+        "filename": "ui/aura/mus/client_surface_embedder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-02T20:10:19Z",
+      "side": 1,
+      "message": "It keeps giving me linker errors when I do that (see previous patchsets). Do you know what to do? I assumed there is a reason the other two ForTesting methods are also in the header file.",
+      "parentUuid": "8e3c9075_401c612b",
+      "revId": "e910e3c027429ffd566c8a7b3434a66a80e02f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
