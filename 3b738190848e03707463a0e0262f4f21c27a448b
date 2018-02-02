@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b601285_246293f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-02-02T18:07:23Z",
+      "side": 1,
+      "message": "Would be great to have a test for calling onStop() and onStart() again. If it\u0027s too hard to do it before your deadline, please add a TODO somewhere in the Fragment class to add a unittest.\n\nBut please say here if you\u0027ve tested manually, at least! It gives us reviewers more peace of mind knowing that it actually works on a device :)",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "3b738190848e03707463a0e0262f4f21c27a448b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
