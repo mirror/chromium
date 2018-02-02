@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ffcae06_3a50485a",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e0b594_9873841f",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54777759_605ffd30",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 74
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-02T10:59:00Z",
       "side": 1,
       "message": "nit: do something like this in ComServerModule\u0027s class defn\u0027s private: section:\n  using ModuleType \u003d Microsoft::WRL::Module\u003cMicrosoft::WRL::OutOfProcDisableCaching\u003e;\n\nand then use \"ModuleType\" here and on line 83.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d212989_7ccd52e3",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Microsoft::WRL::OutOfProcDisableCaching is defined in \u003cwrl/module.h\u003e. Adding the \"using ModuleType \u003d ...\" to the defn file requires to include \u003cwrl/module.h\u003e in the header file. \n\nI recall that you mentioned we\u0027d like to include \u003cwrl/module.h\u003e in the \"cc\" file, so that we can safely define __WRL_CLASSIC_COM_STRICT__ there, right?",
+      "parentUuid": "54777759_605ffd30",
       "range": {
         "startLine": 45,
         "startChar": 6,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7ff5f3fe_b7b35196",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f716f4e_57a751e2",
+      "range": {
+        "startLine": 54,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "626f71f7_b05506f4",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 74
@@ -79,6 +145,24 @@
       "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2afcdd_d9802dcd",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626f71f7_b05506f4",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6db94d3d_7eb4bbf1",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66eeaa59_b8c0c6d4",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c720f348_dc4b4a7a",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 74
@@ -113,6 +215,24 @@
       "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890ff38b_75ebd4b3",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c720f348_dc4b4a7a",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "48e8d230_f22f84c8",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd5a59b_ab8d8d3b",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e96e003_14d9d818",
         "filename": "notification_helper/notification_helper.cc",
         "patchSetId": 74
@@ -173,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "49f4d7b2_c25c838f",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e96e003_14d9d818",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6201f580_ac3af3cb",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 74
@@ -187,6 +349,24 @@
       "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0ee288_34c4ab1e",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done. I forgot to remove it after changing IsProcessRunning method to FindHelperProcess.",
+      "parentUuid": "6201f580_ac3af3cb",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "65e4e36a_eb3c8685",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb1b7955_1f45f74c",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a78ef6a_28158acb",
         "filename": "notification_helper/trace_util.h",
         "patchSetId": 74
@@ -221,6 +419,24 @@
       "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a5cdc2_634ad749",
+        "filename": "notification_helper/trace_util.h",
+        "patchSetId": 74
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a78ef6a_28158acb",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

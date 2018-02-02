@@ -362,6 +362,24 @@
     },
     {
       "key": {
+        "uuid": "1e7bd274_22eef4d2",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "ACK. Thanks for the explanation.",
+      "parentUuid": "6891d9c1_7cefbd6a",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d621a20_918c950a",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
@@ -456,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "6ce172da_00486dc3",
+        "filename": "notification_helper/README.md",
+        "patchSetId": 66
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Mark it resolved.",
+      "parentUuid": "4a47c7ee_cb640856",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed643dc_f76a3474",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 66
@@ -506,6 +548,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b1c14f_e0634bb9",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done. I\u0027ve reverted to the original version and added comment at the ctor.",
+      "parentUuid": "d68e74e2_21c9e0b6",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -588,6 +648,24 @@
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b9bf9f_c77eef3e",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "f3586af8_9bde02f3",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -919,6 +997,24 @@
       "side": 1,
       "message": "See chrome/installer/util/registry_key_backup.h for code to save/restore a Key and its contents (values and subkeys).",
       "parentUuid": "bfcb32fb_4922f6ea",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5006ef12_3b93d03c",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Woot! We have the class already!",
+      "parentUuid": "92bb769e_b22469b1",
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

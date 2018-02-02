@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "868b3e5f_f39eb4ba",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9e02660_6095c434",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064e79d3_161d7f01",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 71
@@ -151,6 +175,30 @@
       "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac1b443_6577da0b",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "Done. New stuff learned from Rob: ComPtr::As calls QI underneath the hood.",
+      "parentUuid": "dbfc4bef_4f1f249b",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

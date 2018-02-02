@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "98d58f42_ffdb20f1",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T21:24:02Z",
+      "side": 1,
+      "message": "mark resolved.",
+      "parentUuid": "a723b56d_764a867f",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "a49060602900f25ae789b97df96f82ca516d382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "602f559a_6cdbf59e",
         "filename": "win10/delegate_execute/command_execute_impl.h",
         "patchSetId": 2
