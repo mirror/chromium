@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f33d9df_7956a009",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T18:23:14Z",
+      "side": 1,
+      "message": "This will insert entries back into the map and could potentially hit a DCHECK that entries aren\u0027t in the map later. Use find() instead.",
+      "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98777b71_fb8d10a4",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-02T18:23:14Z",
+      "side": 1,
+      "message": "There is a helper global function GetHostFrameSinkManager().",
+      "revId": "82351b10f3d5c681bdd8aa5b0f975d3813012f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
