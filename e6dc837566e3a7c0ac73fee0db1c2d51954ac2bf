@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b9fce0_55d22075",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T07:48:34Z",
+      "side": 1,
+      "message": "Should this probably just take message by value? It\u0027s not string.",
+      "revId": "e6dc837566e3a7c0ac73fee0db1c2d51954ac2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63696c8d_c605fd83",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-02T07:48:34Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "e6dc837566e3a7c0ac73fee0db1c2d51954ac2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
