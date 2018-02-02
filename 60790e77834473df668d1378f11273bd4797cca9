@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e0020f_a454f672",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T14:11:18Z",
+      "side": 1,
+      "message": "just \"constexpr wchar_t\" :-)",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "60790e77834473df668d1378f11273bd4797cca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e855029_3bbe4fc3",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T14:11:18Z",
+      "side": 1,
+      "message": "remove \"ATL::CSid()\" here. emplace_back is like a magical pony version of push_back that uses perfect forwarding to pass all of its arguments to the constructor of the contained type, so there\u0027s no need to invoke the constructor manually. as you have it here, you\u0027re creating a temporary CSid that is then being passed to a new CSid in the vector. without \"ATL::CSid()\", std::vector constructs the new CSid in-place in the vector\u0027s memory. no copies!",
+      "range": {
+        "startLine": 363,
+        "startChar": 36,
+        "endLine": 363,
+        "endChar": 46
+      },
+      "revId": "60790e77834473df668d1378f11273bd4797cca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

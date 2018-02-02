@@ -210,6 +210,30 @@
       "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12336849_81a8a9e6",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T14:11:18Z",
+      "side": 1,
+      "message": "hmm. i wonder why it doesn\u0027t work if it\u0027s immediately after the CreateDirWorkItem. at that point, the ...\\Google\\Chrome\\Application directory exists and is empty (for a new install). that seems like the ideal time to slap an ACL on it.",
+      "parentUuid": "6c54682f_9dcd3b00",
+      "range": {
+        "startLine": 753,
+        "startChar": 18,
+        "endLine": 753,
+        "endChar": 27
+      },
+      "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
