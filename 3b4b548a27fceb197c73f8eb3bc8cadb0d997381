@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b7164340_5bd46c31",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-02T13:27:57Z",
+      "side": 1,
+      "message": "\u003e This class holds *two* things: the symbols from the library, and the object file sections :)\n\u003e \n\u003e Rearranging the code will bring benefits. For example this change has made it\n\u003e clear that patch_orderfile rescans the object directory for symbols.\n\nNot sure it has made it clearer. It is a toplevel method of a class that holds\nalmost-everything. It was a toplevel function previously.\n\nFrom the standpoint of merging several files into one this would make classes\nmove, instead of functions, which may get simpler. Is this something you are\nconsidering?\n\n\u003e In general, I\u0027m trying to organize things functionally rather than\n\u003e procedurally. What I mean by that is that currently all this orderfile stuff\n\u003e is done as a list of steps with complex interdependancies.\n\nThe interdependencies stay the same after the change, and the grouping adds an\nabstraction with fuzzy boundaries. It separates out _ParseLogLines (which sounds\ngood) and _WarnAboutDuplicates (not sure why it is out of\nOffsetOrderfileGenerator). So the next person modifying this file would be\nwondering whether to add to this class or somewhere else, a problem that did not\nexist before.\n\n\u003e Doing things like assembling an orderfile manually from multiple profile runs\n\u003e isn\u0027t possible with the current code, because the profile step is mixed in\n\u003e with setting up a build and performing a compile.\n\nI am not following. Manual orderfile processing is enabled in the concurrent change\nthat could very well use a function exposed from here, not a class.\n\nOverall, I don\u0027t want to force this to be re-copypasted back in the original\nstate, seems not worth the effort. The grouping is okay :) Probably a workable\napproach for the future would be to discuss rough plans for refactoring for 5\nminutes and invest afterwards.",
+      "parentUuid": "c9ad2a29_4d8aeff3",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "698fbba9_04c32c85",
         "filename": "tools/cygprofile/cyglog_to_orderfile.py",
         "patchSetId": 4
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "725d2152_ad9adebc",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-02T13:27:57Z",
+      "side": 1,
+      "message": "In my opinion multiple definitions of SymbolInfo makes it more difficult for unfamiliar folks to contribute to this codebase because it adds burden figuring out which definition is where. These drawbacks outweigh the benefits of using explicit None.\n\nOther possibilities: SymbolInfoForTesting, SymbolInfoWithoutSection",
+      "parentUuid": "6121bdec_873b3a47",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "308f210e_627c0dc6",
         "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
         "patchSetId": 4
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Because some tests exercise code that uses the section field; see the previous comment.",
       "parentUuid": "308f210e_627c0dc6",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91858974_d46b64c3",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-02T13:27:57Z",
+      "side": 1,
+      "message": "this is confusing because even after the explanation above it seems like an unnecessary abstraction",
+      "parentUuid": "3e147806_ed39ec91",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -319,6 +391,30 @@
       "side": 1,
       "message": "These tests are related to offsets found at odd adresses, see the comment in _SymbolsAtOffset.\n\nI have no idea if this is actually used now or if this is ancient history, but I didn\u0027t want to accidentally change any semantics.",
       "parentUuid": "70de7a24_954336a0",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c06d3cf_383ed1d7",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-02T13:27:57Z",
+      "side": 1,
+      "message": "The logic is still used. Your comment does not directly answer my question, which suggests that the order of these tests was not important. This answer is OK :)",
+      "parentUuid": "73b1316c_3afe40bc",
       "range": {
         "startLine": 56,
         "startChar": 6,
