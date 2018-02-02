@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b7cd9ec3_ad6a8aa0",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T18:44:55Z",
+      "side": 1,
+      "message": "Ah apologizes! I wasn\u0027t sure and had looked at the same line: https://codesearch.chromium.org/chromium/src/base/time/time.h?q\u003dbase::Time\u0026sq\u003dpackage:chromium\u0026l\u003d524\nbut looked at the TimeBase(0) and bit assumed it was equivalent to 0 (i.e. epoch time)",
+      "parentUuid": "49655f33_1e225823",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd3ba520_0592f06b",
         "filename": "components/metrics/stability_metrics_provider.cc",
         "patchSetId": 4
