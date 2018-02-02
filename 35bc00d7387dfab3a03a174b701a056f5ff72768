@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c113f02d_fc918288",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T03:44:01Z",
+      "side": 1,
+      "message": "can this use the web_view() installed in SetUp()? And, e.g.\n\n WebContents* web_contents \u003d web_view()-\u003eGetWebContents()\n\n(might not work for the other test though.. see below)",
+      "revId": "35bc00d7387dfab3a03a174b701a056f5ff72768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27994d9e_efbacc4a",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T03:44:01Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "35bc00d7387dfab3a03a174b701a056f5ff72768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d02eadb_c33604f5",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T03:44:01Z",
+      "side": 1,
+      "message": "I think this should do `webview.reset()` before this. Currently that happens when |webview| goes out of scope, after the delete below. But that delete would also remove the view from the hierarchy (assuming it owned it still). webview.reset() should expose more possible lifetime issues.",
+      "revId": "35bc00d7387dfab3a03a174b701a056f5ff72768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

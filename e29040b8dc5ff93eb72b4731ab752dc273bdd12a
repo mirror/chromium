@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b606c0_b6282142",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T03:44:01Z",
+      "side": 1,
+      "message": "So I *think* here we also need to check whether there\u0027s a sad tab, and call SadTabView::AttachToWebView(). I\u0027m thinking: what if there are two crashed tabs? Here we could switch from one crashed webcontents to the other, but we\u0027d keep the overlay view from the original crashed webcontents.\n\nIn general, I think we\u0027d need to check or do \"something\" whenever we call SetWebContents -- e.g. maybe the calls to SetWebContents(nullptr) should clear out any existing crashed overlay view as well (maybe WebView should do this automatically rather than just making the overlay hidden).",
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6fa6ed_86ee0d27",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T03:44:01Z",
+      "side": 1,
+      "message": "Can SizeChanged be removed from the content::WebContentsViewDelegate interface? I think it only exists for the toolkit-views SadTab -- Cocoa windows never used it. The call in WebContentsViewAura::OnBoundsChanged() could then go too.",
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
