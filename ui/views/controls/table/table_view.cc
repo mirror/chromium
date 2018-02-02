@@ -460,18 +460,19 @@ void TableView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     if (selection_model_.IsSelected(selection_model_.active())) {
       node_data->AddState(ax::mojom::State::kSelected);
     }
-
-    std::vector<base::string16> name_parts;
-    for (const VisibleColumn& visible_column : visible_columns_) {
-      base::string16 value = model_->GetText(
-          selection_model_.active(), visible_column.column.id);
-      if (!value.empty()) {
-        name_parts.push_back(visible_column.column.title);
-        name_parts.push_back(value);
-      }
-    }
-    node_data->SetName(base::JoinString(name_parts, base::ASCIIToUTF16(", ")));
   }
+
+  // Create accessible name from column header.
+  std::vector<base::string16> name_parts;
+  for (const VisibleColumn& visible_column : visible_columns_) {
+    base::string16 value =
+        model_->GetText(selection_model_.active(), visible_column.column.id);
+    if (!value.empty()) {
+      name_parts.push_back(visible_column.column.title);
+      name_parts.push_back(value);
+    }
+  }
+  node_data->SetName(base::JoinString(name_parts, base::ASCIIToUTF16(", ")));
 }
 
 void TableView::OnModelChanged() {
