@@ -516,6 +516,8 @@ jumbo_source_set("browser") {
     "browsing_instance.h",
     "byte_stream.cc",
     "byte_stream.h",
+    "cache_storage/cache_impl.cc",
+    "cache_storage/cache_impl.h",
     "cache_storage/cache_storage.cc",
     "cache_storage/cache_storage.h",
     "cache_storage/cache_storage_blob_to_disk_cache.cc",

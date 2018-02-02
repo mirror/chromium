@@ -9,7 +9,9 @@
 
 #include "content/child/thread_safe_sender.h"
 #include "content/renderer/cache_storage/cache_storage_dispatcher.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebHTTPHeaderVisitor.h"
+#include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
@@ -20,8 +22,11 @@ namespace content {
 
 WebServiceWorkerCacheStorageImpl::WebServiceWorkerCacheStorageImpl(
     ThreadSafeSender* thread_safe_sender,
-    const url::Origin& origin)
-    : thread_safe_sender_(thread_safe_sender), origin_(origin) {}
+    const url::Origin& origin,
+    service_manager::InterfaceProvider* provider)
+    : thread_safe_sender_(thread_safe_sender),
+      origin_(origin),
+      provider_(provider) {}
 
 WebServiceWorkerCacheStorageImpl::~WebServiceWorkerCacheStorageImpl() {
 }
@@ -29,24 +34,27 @@ WebServiceWorkerCacheStorageImpl::~WebServiceWorkerCacheStorageImpl() {
 void WebServiceWorkerCacheStorageImpl::DispatchHas(
     std::unique_ptr<CacheStorageCallbacks> callbacks,
     const blink::WebString& cacheName) {
-  GetDispatcher()->dispatchHas(std::move(callbacks), origin_, cacheName);
+  GetDispatcher()->dispatchHas(std::move(callbacks), origin_, cacheName,
+                               provider_);
 }
 
 void WebServiceWorkerCacheStorageImpl::DispatchOpen(
     std::unique_ptr<CacheStorageWithCacheCallbacks> callbacks,
     const blink::WebString& cacheName) {
-  GetDispatcher()->dispatchOpen(std::move(callbacks), origin_, cacheName);
+  GetDispatcher()->dispatchOpen(std::move(callbacks), origin_, cacheName,
+                                provider_);
 }
 
 void WebServiceWorkerCacheStorageImpl::DispatchDelete(
     std::unique_ptr<CacheStorageCallbacks> callbacks,
     const blink::WebString& cacheName) {
-  GetDispatcher()->dispatchDelete(std::move(callbacks), origin_, cacheName);
+  GetDispatcher()->dispatchDelete(std::move(callbacks), origin_, cacheName,
+                                  provider_);
 }
 
 void WebServiceWorkerCacheStorageImpl::DispatchKeys(
     std::unique_ptr<CacheStorageKeysCallbacks> callbacks) {
-  GetDispatcher()->dispatchKeys(std::move(callbacks), origin_);
+  GetDispatcher()->dispatchKeys(std::move(callbacks), origin_, provider_);
 }
 
 void WebServiceWorkerCacheStorageImpl::DispatchMatch(
@@ -54,7 +62,7 @@ void WebServiceWorkerCacheStorageImpl::DispatchMatch(
     const blink::WebServiceWorkerRequest& request,
     const blink::WebServiceWorkerCache::QueryParams& query_params) {
   GetDispatcher()->dispatchMatch(std::move(callbacks), origin_, request,
-                                 query_params);
+                                 query_params, provider_);
 }
 
 CacheStorageDispatcher* WebServiceWorkerCacheStorageImpl::GetDispatcher()

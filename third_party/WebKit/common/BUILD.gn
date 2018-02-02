@@ -131,6 +131,7 @@ mojom("mojo_platform_bindings") {
     "service_worker/service_worker_registration.mojom",
     "service_worker/service_worker_state.mojom",
     "service_worker/service_worker_stream_handle.mojom",
+    "fetch/fetch_api_response.mojom",
   ]
 
   public_deps = [
