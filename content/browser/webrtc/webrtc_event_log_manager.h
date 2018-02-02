@@ -121,12 +121,15 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // posted back to BrowserThread::UI with the return value provided by
   // WebRtcRemoteEventLogManager::StartRemoteLogging - see the comment there
   // for more details.
-  // TODO(eladalon): Add support for injecting metadata through this call.
-  // https://crbug.com/775415
+  // One may attach an arbitrary binary string |metadata|, which would be
+  // prepended to the WebRTC event log. Its length is counted towards the
+  // max file size. (I.e., if the metadata is of length 4 and the max size
+  // is 10, only 6 bytes are left available for the actual WebRTC event log.)
   void StartRemoteLogging(
       int render_process_id,
       int lid,  // Renderer-local PeerConnection ID.
       size_t max_file_size_bytes,
+      const std::string& metadata = "",
       base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
 
   // Called when a new log fragment is sent from the renderer. This will
@@ -224,6 +227,7 @@ class CONTENT_EXPORT WebRtcEventLogManager
                                   int lid,  // Renderer-local PeerConnection ID.
                                   const BrowserContext* browser_context,
                                   size_t max_file_size_bytes,
+                                  const std::string& metadata,
                                   base::OnceCallback<void(bool)> reply);
 
   void OnWebRtcEventLogWriteInternal(
