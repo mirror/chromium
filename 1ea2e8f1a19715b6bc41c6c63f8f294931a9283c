@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1ddd014e_9e54a944",
+        "filename": "components/variations/service/safe_seed_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-02T22:29:13Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "7ab31fb2_55245656",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "1ea2e8f1a19715b6bc41c6c63f8f294931a9283c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cb9f3e3_d6fb735d",
         "filename": "components/variations/service/safe_seed_manager.cc",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "The user count numbers here are less promising.  On the high-connectivity platforms, we\u0027d need a threshold of 8 or 9 to capture the 99.5th percentile.  On the low-connectivity platforms, we\u0027d need a threshold of 10 (or maybe even higher) to capture just the 99th percentile.  But, the question comes up: At what point does the threshold grow so high that we\u0027re essentially giving up on prompt true-positive detection?\n\nOn desktop, we fetch once every half hour[1]; so a threshold of 10 works out to 5 hours of broken connectivity.  If Chrome is continuously running for those 5 hours, that\u0027s probably fine; but if the user is actively trying to quit and relaunch Chrome to fix the problem by \"turning it off and on again\", they\u0027re probably not going to have the patience to try it 10 times.\n\nOn mobile, we fetch only on app start and app foregrounding (assuming that at least 30 minutes have elapsed since the last fetch)[2].  This more or less means that the user would have to manually launch/foreground the app at least N times, where N is our threshold.  Again, if Chrome\u0027s network stack is actually broken, I doubt that they\u0027ll try 8 or 9 app launches, each spaced at least 30 minutes apart from the previous one.  (I certainly would be more likely to try uninstalling and then re-installing the app!)\n\nSo, I think this leaves us with a conundrum: We can either flip a bunch of users\u0027 seeds back and forth for no good reason; or we can leave ourselves more or less unable to respond to true network stack failures due to a bad seed.  If these are subtle network stack failures that only affect the ability to fetch a new seed, that might be okay; but if they affect basic browsing functionality, that leaves us pretty stuck.\n\nThoughts?\n\n[1] https://cs.chromium.org/chromium/src/components/variations/variations_request_scheduler.cc?l\u003d55-56\n[2] https://cs.chromium.org/chromium/src/components/variations/variations_request_scheduler_mobile.cc\n\nHigh-connectivity graphs:\nhttps://uma.googleplex.com/timeline_v2?sid\u003dd8aa9414db2895fbcc6db2bce14b5779\nhttps://uma.googleplex.com/timeline_v2?sid\u003d20e5a81873a8b46a476afe9a5f77684b\n\nLow-connectivity graphs:\nhttps://uma.googleplex.com/timeline_v2?sid\u003da3cc11983fca4340beaebe60cfe4923c\nhttps://uma.googleplex.com/timeline_v2?sid\u003d0f23a70145deae097738733af3d63d85\nhttps://uma.googleplex.com/timeline_v2?sid\u003d15aaedcc7de6b6234dcd462e170169bb",
       "parentUuid": "8cb9f3e3_d6fb735d",
+      "revId": "1ea2e8f1a19715b6bc41c6c63f8f294931a9283c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09f02f4_5f5595c1",
+        "filename": "components/variations/service/safe_seed_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-02T22:29:13Z",
+      "side": 1,
+      "message": "Maybe we can leave this part off initially and start a conversation with the networking team on their thoughts on this? Do you want to reach out?",
+      "parentUuid": "4e9541ed_25f6af9d",
       "revId": "1ea2e8f1a19715b6bc41c6c63f8f294931a9283c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
