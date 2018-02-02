@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef73236_7e16d26a",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-02T19:52:13Z",
+      "side": 1,
+      "message": "Does this fit?\n  \u003ctemplate is\u003d\"dom-if\"\n      if\u003d\"[[isPolicy...(..., ..., ...)]]\"\n      restamp\u003e\n?",
+      "revId": "9bc45ba43d88d37a9b917e9d5c51a426e16e166b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a2436f_b77a1da1",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-02T19:52:13Z",
+      "side": 1,
+      "message": "Fix indent:\n*     pref....",
+      "revId": "9bc45ba43d88d37a9b917e9d5c51a426e16e166b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d94ea0_ca7d5044",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-02T19:52:13Z",
+      "side": 1,
+      "message": "nit: return policyIndicatorEnd ? position \u003d\u003d \u0027end\u0027 : position \u003d\u003d \u0027start\u0027;",
+      "revId": "9bc45ba43d88d37a9b917e9d5c51a426e16e166b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
