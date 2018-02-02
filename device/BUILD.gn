@@ -78,7 +78,7 @@ test("device_unittests") {
     "u2f/u2f_ble_device_unittest.cc",
     "u2f/u2f_ble_frames_unittest.cc",
     "u2f/u2f_discovery_unittest.cc",
-    "u2f/u2f_message_unittest.cc",
+    "u2f/u2f_hid_message_unittest.cc",
     "u2f/u2f_register_unittest.cc",
     "u2f/u2f_request_unittest.cc",
     "u2f/u2f_sign_unittest.cc",
