@@ -26,10 +26,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/sqlite/sqlite3.h"
 
-#if defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-#include "base/ios/ios_util.h"
-#endif  // defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-
 namespace sql {
 namespace test {
 
@@ -670,14 +666,7 @@ TEST_F(SQLConnectionTest, RazeNOTADB) {
   {
     sql::test::ScopedErrorExpecter expecter;
 
-    // Earlier versions of Chromium compiled against SQLite 3.6.7.3, which
-    // returned SQLITE_IOERR_SHORT_READ in this case.  Some platforms may still
-    // compile against an earlier SQLite via USE_SYSTEM_SQLITE.
-    if (expecter.SQLiteLibVersionNumber() < 3008005) {
-      expecter.ExpectError(SQLITE_IOERR_SHORT_READ);
-    } else {
-      expecter.ExpectError(SQLITE_NOTADB);
-    }
+    expecter.ExpectError(SQLITE_NOTADB);
 
     EXPECT_TRUE(db().Open(db_path()));
     ASSERT_TRUE(expecter.SawExpectedErrors());
@@ -1081,31 +1070,6 @@ TEST_F(SQLConnectionTest, AttachDatabaseWithOpenTransaction) {
   // Cannot see the attached database, yet.
   EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
 
-#if defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-  // SQLite before 3.21 does not support ATTACH and DETACH in transactions.
-
-  // Attach fails in a transaction.
-  EXPECT_TRUE(db().BeginTransaction());
-  {
-    sql::test::ScopedErrorExpecter expecter;
-    expecter.ExpectError(SQLITE_ERROR);
-    EXPECT_FALSE(db().AttachDatabase(attach_path, kAttachmentPoint));
-    EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
-    ASSERT_TRUE(expecter.SawExpectedErrors());
-  }
-
-  // Detach also fails in a transaction.
-  {
-    sql::test::ScopedErrorExpecter expecter;
-    expecter.ExpectError(SQLITE_ERROR);
-    EXPECT_FALSE(db().DetachDatabase(kAttachmentPoint));
-    ASSERT_TRUE(expecter.SawExpectedErrors());
-  }
-
-  db().RollbackTransaction();
-#else   // defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-  // Chrome's SQLite (3.21+) supports ATTACH and DETACH in transactions.
-
   // Attach succeeds in a transaction.
   EXPECT_TRUE(db().BeginTransaction());
   EXPECT_TRUE(db().AttachDatabase(attach_path, kAttachmentPoint));
@@ -1132,7 +1096,6 @@ TEST_F(SQLConnectionTest, AttachDatabaseWithOpenTransaction) {
   db().RollbackTransaction();
   EXPECT_TRUE(db().DetachDatabase(kAttachmentPoint));
   EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
-#endif  // defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
 }
 
 TEST_F(SQLConnectionTest, Basic_QuickIntegrityCheck) {
@@ -1595,14 +1558,6 @@ TEST_F(SQLConnectionTest, MmapInitiallyEnabledAltStatus) {
 }
 
 TEST_F(SQLConnectionTest, GetAppropriateMmapSize) {
-#if defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-  // Mmap is not supported on iOS9.
-  if (!base::ios::IsRunningOnIOS10OrLater()) {
-    ASSERT_EQ(0UL, db().GetAppropriateMmapSize());
-    return;
-  }
-#endif  // defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-
   const size_t kMmapAlot = 25 * 1024 * 1024;
   int64_t mmap_status = MetaTable::kMmapFailure;
 
@@ -1646,15 +1601,6 @@ TEST_F(SQLConnectionTest, GetAppropriateMmapSize) {
 }
 
 TEST_F(SQLConnectionTest, GetAppropriateMmapSizeAltStatus) {
-#if defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-  // Mmap is not supported on iOS9.  Make sure that test takes precedence.
-  if (!base::ios::IsRunningOnIOS10OrLater()) {
-    db().set_mmap_alt_status();
-    ASSERT_EQ(0UL, db().GetAppropriateMmapSize());
-    return;
-  }
-#endif  // defined(OS_IOS) && defined(USE_SYSTEM_SQLITE)
-
   const size_t kMmapAlot = 25 * 1024 * 1024;
 
   // At this point, Connection still expects a future [meta] table.
