@@ -31,6 +31,9 @@ declare_args() {
 
   # Whether we should use glib, a low level C utility library.
   use_glib = is_linux
+
+  # Indicate if Display Manager is enabled.
+  internal_window_mode = is_chromeos
 }
 
 declare_args() {
