@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d8a4b8b_94e4d670",
+        "filename": "mojo/public/cpp/bindings/array_traits_span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-02T19:41:42Z",
+      "side": 1,
+      "message": "Is it weird that SetToNull exists/does something?",
+      "revId": "0364ea129a07ac00ee6fab46b7b4e3d35b842d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce11dc3_0da0c8c1",
+        "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-02T19:41:42Z",
+      "side": 1,
+      "message": "I\u0027m not clear why this needs to be optional when the others aren\u0027t. This is essentially a big union.",
+      "revId": "0364ea129a07ac00ee6fab46b7b4e3d35b842d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
