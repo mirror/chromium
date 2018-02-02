@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e4f2b00_0ef9c06c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-02T17:25:18Z",
+      "side": 1,
+      "message": "The CL description cites a bug that is already marked fixed, so I\u0027m not sure if this is just a cleanup CL or if it\u0027s actually fixing a bug here.  Maybe file a new bug with a description of the current problem if it\u0027s the latter?",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd996f73_45b3b6f4",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-02T17:25:18Z",
+      "side": 1,
+      "message": "Can you clarify either in the comment or the parameter names that most of these are about the pending entry?  It wasn\u0027t clear without looking at the call site.",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58735e9_94a451ab",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-02T17:25:18Z",
+      "side": 1,
+      "message": "I\u0027m curious if there\u0027s a distinction for which of these checks belong inside ShouldTreatNavigationAsReload and which belong outside?  I see that some additional ones have moved inside, but I\u0027m not sure I understand the difference between them and the ones that stayed here.  (I\u0027m mainly asking in case more or all of these should move into the helper function.)",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce052349_3507d937",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5184,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-02T17:25:18Z",
+      "side": 1,
+      "message": "Since we\u0027re changing the test expectation, can you update the comment to say why this is the right behavior?\n\nAlso, is this the test for the bug you\u0027re describing in the CL description?  We should definitely elaborate if so.  (If not, is it possible to add a test for that?)",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2a53ec_1afb9e73",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-02T17:25:18Z",
+      "side": 1,
+      "message": "Why did this start failing?",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
