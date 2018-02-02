@@ -1594,7 +1594,6 @@ interface Document : Node
     getter scrollingElement
     getter selectedStylesheetSet
     getter styleSheets
-    getter suborigin
     getter timeline
     getter title
     getter visibilityState
@@ -4323,7 +4322,6 @@ interface MessageEvent : Event
     getter origin
     getter ports
     getter source
-    getter suborigin
     method constructor
     method initMessageEvent
 interface MessagePort : EventTarget

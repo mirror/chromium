@@ -72,7 +72,7 @@ bool TextTrackLoader::RedirectReceived(Resource* resource,
   DCHECK_EQ(GetResource(), resource);
   if (resource->GetResourceRequest().GetFetchRequestMode() ==
           network::mojom::FetchRequestMode::kCORS ||
-      GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(request.Url()))
+      GetDocument().GetSecurityOrigin()->CanRequest(request.Url()))
     return true;
 
   CorsPolicyPreventedLoad(GetDocument().GetSecurityOrigin(), request.Url());
@@ -140,7 +140,7 @@ bool TextTrackLoader::Load(const KURL& url,
   if (cross_origin != kCrossOriginAttributeNotSet) {
     cue_fetch_params.SetCrossOriginAccessControl(
         GetDocument().GetSecurityOrigin(), cross_origin);
-  } else if (!GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(url)) {
+  } else if (!GetDocument().GetSecurityOrigin()->CanRequest(url)) {
     // Text track elements without 'crossorigin' set on the parent are "No
     // CORS"; report error if not same-origin.
     CorsPolicyPreventedLoad(GetDocument().GetSecurityOrigin(), url);

@@ -223,8 +223,8 @@ void ClearLocalStorageOnUIThread(
       // TODO(dullweber): |callback| should be passed to
       // DeleteLocalStorageForPhysicalOrigin() but then ASAN complains about a
       // few tests that need to be fixed.
-      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(
-          storage_origin, base::BindOnce(&base::DoNothing));
+      dom_storage_context->DeleteLocalStorage(storage_origin,
+                                              base::BindOnce(&base::DoNothing));
     }
     callback.Run();
     return;
