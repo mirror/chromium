@@ -167,9 +167,77 @@ Persistence.Automapping = class {
     if (networkSourceCode[Persistence.Automapping._processingPromise] ||
         networkSourceCode[Persistence.Automapping._status])
       return;
-    var createBindingPromise =
-        this._createBinding(networkSourceCode).then(validateStatus.bind(this)).then(onStatus.bind(this));
+    var status = new Persistence.AutomappingStatus(networkSourceCode);
+    var createBindingPromise = createBinding.call(this, status).then(validateStatus.bind(this, status)).then(onStatus.bind(this, status));
     networkSourceCode[Persistence.Automapping._processingPromise] = createBindingPromise;
+
+    /**
+     * @param {!Workspace.UISourceCode} networkSourceCode
+     * @return {!Promise<?Persistence.AutomappingStatus>}
+     */
+    function createBinding(status) {
+      if (status.network.url().startsWith('file://')) {
+        var fileSourceCode = this._fileSystemUISourceCodes.get(status.network.url());
+        if (fileSourceCode)
+          status.binding = new Persistence.PersistenceBinding(status.network, fileSourceCode);
+        return Promise.resolve();
+      }
+
+      var networkPath = Common.ParsedURL.extractPath(status.network.url());
+      if (networkPath === null)
+        return Promise.resolve(/** @type {?Persistence.AutomappingStatus} */ (null));
+
+      if (networkPath.endsWith('/'))
+        networkPath += 'index.html';
+      var similarFiles = this._filesIndex.similarFiles(networkPath).map(path => this._fileSystemUISourceCodes.get(path));
+      if (!similarFiles.length)
+        return Promise.resolve(/** @type {?Persistence.AutomappingStatus} */ (null));
+
+      var promises = similarFiles.concat(status.network).map(file => {
+        return file.requestMetadata().then(metadata => file[Persistence.Automapping._metadata] = metadata);
+      });
+      return Promise.all(promises).then(onMetadatas.bind(this));
+
+      /**
+       * @this {Persistence.Automapping}
+       */
+      function onMetadatas() {
+        var activeFiles = similarFiles.filter(file => !!this._activeFoldersIndex.closestParentFolder(file.url()));
+        var networkMetadata = networkSourceCode[Persistence.Automapping._metadata];
+        if (!networkMetadata || (!networkMetadata.modificationTime && typeof networkMetadata.contentSize !== 'number')) {
+          // If networkSourceCode does not have metadata, try to match against active folders.
+          if (activeFiles.length !== 1)
+            return null;
+          return new Persistence.AutomappingStatus(networkSourceCode, activeFiles[0], false);
+        }
+
+        // Try to find exact matches, prioritizing active folders.
+        var exactMatches = filterWithMetadata(activeFiles, networkMetadata);
+        if (!exactMatches.length)
+          exactMatches = filterWithMetadata(similarFiles, networkMetadata);
+        if (exactMatches.length !== 1)
+          return null;
+        return new Persistence.AutomappingStatus(networkSourceCode, exactMatches[0], true);
+      }
+
+      /**
+       * @param {!Array<!Workspace.UISourceCode>} files
+       * @param {!Workspace.UISourceCodeMetadata} networkMetadata
+       * @return {!Array<!Workspace.UISourceCode>}
+       */
+      function filterWithMetadata(files, networkMetadata) {
+        return files.filter(file => {
+          var fileMetadata = file[Persistence.Automapping._metadata];
+          if (!fileMetadata)
+            return false;
+          // Allow a second of difference due to network timestamps lack of precision.
+          var timeMatches = !networkMetadata.modificationTime ||
+              Math.abs(networkMetadata.modificationTime - fileMetadata.modificationTime) < 1000;
+          var contentMatches = !networkMetadata.contentSize || fileMetadata.contentSize === networkMetadata.contentSize;
+          return timeMatches && contentMatches;
+        });
+      }
+    }
 
     /**
      * @param {?Persistence.AutomappingStatus} status
@@ -265,87 +333,6 @@ Persistence.Automapping = class {
         this._activeFoldersIndex.removeFolder(projectFolder);
     }
     this._onStatusRemoved.call(null, status);
-  }
-
-  /**
-   * @param {!Workspace.UISourceCode} networkSourceCode
-   * @return {!Promise<?Persistence.AutomappingStatus>}
-   */
-  _createBinding(networkSourceCode) {
-    if (networkSourceCode.url().startsWith('file://')) {
-      var fileSourceCode = this._fileSystemUISourceCodes.get(networkSourceCode.url());
-      var status = fileSourceCode ? new Persistence.AutomappingStatus(networkSourceCode, fileSourceCode, false) : null;
-      return Promise.resolve(status);
-    }
-
-    var networkPath = Common.ParsedURL.extractPath(networkSourceCode.url());
-    if (networkPath === null)
-      return Promise.resolve(/** @type {?Persistence.AutomappingStatus} */ (null));
-
-    if (networkPath.endsWith('/'))
-      networkPath += 'index.html';
-    var similarFiles = this._filesIndex.similarFiles(networkPath).map(path => this._fileSystemUISourceCodes.get(path));
-    if (!similarFiles.length)
-      return Promise.resolve(/** @type {?Persistence.AutomappingStatus} */ (null));
-
-    return this._pullMetadatas(similarFiles.concat(networkSourceCode)).then(onMetadatas.bind(this));
-
-    /**
-     * @this {Persistence.Automapping}
-     */
-    function onMetadatas() {
-      var activeFiles = similarFiles.filter(file => !!this._activeFoldersIndex.closestParentFolder(file.url()));
-      var networkMetadata = networkSourceCode[Persistence.Automapping._metadata];
-      if (!networkMetadata || (!networkMetadata.modificationTime && typeof networkMetadata.contentSize !== 'number')) {
-        // If networkSourceCode does not have metadata, try to match against active folders.
-        if (activeFiles.length !== 1)
-          return null;
-        return new Persistence.AutomappingStatus(networkSourceCode, activeFiles[0], false);
-      }
-
-      // Try to find exact matches, prioritizing active folders.
-      var exactMatches = this._filterWithMetadata(activeFiles, networkMetadata);
-      if (!exactMatches.length)
-        exactMatches = this._filterWithMetadata(similarFiles, networkMetadata);
-      if (exactMatches.length !== 1)
-        return null;
-      return new Persistence.AutomappingStatus(networkSourceCode, exactMatches[0], true);
-    }
-  }
-
-  /**
-   * @param {!Array<!Workspace.UISourceCode>} uiSourceCodes
-   * @return {!Promise}
-   */
-  _pullMetadatas(uiSourceCodes) {
-    var promises = uiSourceCodes.map(file => fetchMetadata(file));
-    return Promise.all(promises);
-
-    /**
-     * @param {!Workspace.UISourceCode} file
-     * @return {!Promise}
-     */
-    function fetchMetadata(file) {
-      return file.requestMetadata().then(metadata => file[Persistence.Automapping._metadata] = metadata);
-    }
-  }
-
-  /**
-   * @param {!Array<!Workspace.UISourceCode>} files
-   * @param {!Workspace.UISourceCodeMetadata} networkMetadata
-   * @return {!Array<!Workspace.UISourceCode>}
-   */
-  _filterWithMetadata(files, networkMetadata) {
-    return files.filter(file => {
-      var fileMetadata = file[Persistence.Automapping._metadata];
-      if (!fileMetadata)
-        return false;
-      // Allow a second of difference due to network timestamps lack of precision.
-      var timeMatches = !networkMetadata.modificationTime ||
-          Math.abs(networkMetadata.modificationTime - fileMetadata.modificationTime) < 1000;
-      var contentMatches = !networkMetadata.contentSize || fileMetadata.contentSize === networkMetadata.contentSize;
-      return timeMatches && contentMatches;
-    });
   }
 
   /**
@@ -472,12 +459,11 @@ Persistence.Automapping.FolderIndex = class {
 Persistence.AutomappingStatus = class {
   /**
    * @param {!Workspace.UISourceCode} network
-   * @param {!Workspace.UISourceCode} fileSystem
-   * @param {boolean} exactMatch
    */
-  constructor(network, fileSystem, exactMatch) {
+  constructor(network) {
     this.network = network;
-    this.fileSystem = fileSystem;
-    this.exactMatch = exactMatch;
+    //TODO: FIX THIS!
+    this.binding = null;
+    this.exactMatch = false;
   }
 };
