@@ -66,6 +66,14 @@ class PasswordUIViewAndroid : public PasswordUIView {
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>&,
       const base::android::JavaParamRef<jobject>& callback);
+  void HandleAddPasswordEntry(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>&,
+      const base::android::JavaParamRef<jstring>& site,
+      const base::android::JavaParamRef<jstring>& username,
+      const base::android::JavaParamRef<jstring>& password,
+      const base::android::JavaParamRef<jstring>& origin);
+
   // Destroy the native implementation.
   void Destroy(JNIEnv*, const base::android::JavaParamRef<jobject>&);
 
