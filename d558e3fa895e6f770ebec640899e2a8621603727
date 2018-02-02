@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bf49006_175443e9",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-02T16:43:59Z",
+      "side": 1,
+      "message": "i cant recall if we want to filter this to only report for pages that were in the foreground up to this point, via WasStartedInForegroundOptionalEventInForeground. we do that for other events i believe. if we don\u0027t want to do that here, let\u0027s add a comment to note why it\u0027s not the right thing.\n\nif we do want to track backgrounded pages, we might also consider segmenting these FIDs for foreground vs background pages (2 separate histos) since we tend to see very different delays depending on whether a page is in the FG generally.",
+      "revId": "d558e3fa895e6f770ebec640899e2a8621603727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
