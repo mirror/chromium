@@ -22,6 +22,30 @@
       "revId": "c5beb2b4073c1e7856e43f4f8057b3ef708b38f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6978bd3_807d8752",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 10782,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-02T01:09:14Z",
+      "side": 1,
+      "message": "Just a style thing, normally the name of the extension would be in titlecase (My SSH Extension), because the developer would name it so (like any other title). This doesn\u0027t affect the translated strings but translators would see an titlecased name for the example extension name.",
+      "parentUuid": "84953868_0b571ba7",
+      "range": {
+        "startLine": 10782,
+        "startChar": 50,
+        "endLine": 10782,
+        "endChar": 71
+      },
+      "revId": "c5beb2b4073c1e7856e43f4f8057b3ef708b38f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
