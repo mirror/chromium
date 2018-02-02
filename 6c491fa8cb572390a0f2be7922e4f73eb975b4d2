@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e992af08_a4bf3c59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-02T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2b9982_16cf69bf",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f079136f_077b9b1f",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-02T15:34:18Z",
       "side": 1,
       "message": "Isn\u0027t rather \"full-admin-access\" closer to the truth here, given that via the \"Replace\" value basically any user policy can be overridden?",
+      "range": {
+        "startLine": 5110,
+        "startChar": 16,
+        "endLine": 5110,
+        "endChar": 31
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dbac82_bc0c81b4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5110,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-02T16:24:47Z",
+      "side": 1,
+      "message": "Copy\u0026paste error. I\u0027m not sure whether \u0027full-admin-access\u0027 applies, either. The policy just picks the source (device GPOs vs user GPOs), but both of those are controlled by the admin.\n\nIf an admin uses this to sneak in a policy that spies on the user, the tag of *that* policy would be presented to the user, so I don\u0027t think this policy qualifies. Hope that makes sense.",
+      "parentUuid": "f079136f_077b9b1f",
       "range": {
         "startLine": 5110,
         "startChar": 16,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "0496203c_fef5bbdf",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5111,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-02T16:24:47Z",
+      "side": 1,
+      "message": "In the html doc I\u0027d rather surface the \u0027supported_chrome_os_management\u0027 type directly, so we don\u0027t have to add a sentence to every AD-only policy. I\u0027ll add a bug for that. Right now, we only show \u0027Windows registry location for Google Chrome OS clients:\u0027, which says the same thing if you know what it means, but it\u0027s not very clear otherwise.\n\nSince the policy only shows up in the Chrome OS ADMX template, but not the Windows one, we\u0027re good here.",
+      "parentUuid": "3bc971f0_b09cc1b1",
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3724f024_a805df92",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "bef6a1bd_50cd0316",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5118,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-02T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3724f024_a805df92",
+      "range": {
+        "startLine": 5117,
+        "startChar": 134,
+        "endLine": 5118,
+        "endChar": 6
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30da829b_d21c19ec",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -108,6 +198,30 @@
       "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2050e196_a31aa0e2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12494,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-02T16:24:47Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "30da829b_d21c19ec",
+      "range": {
+        "startLine": 12494,
+        "startChar": 26,
+        "endLine": 12494,
+        "endChar": 40
+      },
+      "revId": "6c491fa8cb572390a0f2be7922e4f73eb975b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
