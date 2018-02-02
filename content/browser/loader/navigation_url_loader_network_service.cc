@@ -403,6 +403,21 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       return;
     }
 
+    // Requests to Blob scheme won't get redirected to/from other schemes
+    // or be intercepted, so we just let it go here.
+    if (request_info->begin_params->blob_url_loader_factory.is_valid()) {
+      url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
+          base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
+              std::move(request_info->begin_params->blob_url_loader_factory)),
+          GetContentClient()->browser()->CreateURLLoaderThrottles(
+              web_contents_getter_, navigation_ui_data_.get()),
+          0 /* routing_id */, 0 /* request_id? */,
+          network::mojom::kURLLoadOptionNone, resource_request_.get(), this,
+          kNavigationUrlLoaderTrafficAnnotation,
+          base::ThreadTaskRunnerHandle::Get());
+      return;
+    }
+
     if (service_worker_navigation_handle_core) {
       network::mojom::RequestContextFrameType frame_type =
           request_info->is_main_frame
