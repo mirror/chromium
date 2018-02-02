@@ -1,0 +1,20 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+message FontIndex {
+  message FontIndexEntry {
+    required string font_file_path = 1;
+    required uint64 font_file_size = 2;
+    required uint64 font_file_timestamp = 3;
+    optional string font_family_name = 10;
+    optional string font_full_name = 11;
+    optional string font_postscript_name = 12;
+  }
+
+  repeated FontIndexEntry indexed_fonts = 1;
+}

@@ -1,0 +1,45 @@
+# Copyright 2015 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# No mojo yet, take cues from font_service for defining mojo interfaces etc.
+# For now, let's only build a simple indexer using FreeType.
+
+import("//build/config/freetype/freetype.gni")
+import("//third_party/protobuf/proto_library.gni")
+
+static_library("font_index") {
+  sources = [
+    "font_index.cc",
+    "font_index.h",
+  ]
+
+  public_deps = [
+    ":proto",
+    "//build/config/freetype",
+  ]
+
+  deps = [
+    "//base",
+  ]
+}
+
+proto_library("proto") {
+  sources = [
+    "font_index.proto",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "font_index_test.cc",
+  ]
+
+  deps = [
+    ":font_index",
+    "//base",
+    "//base/test:test_support",
+    "//testing/gtest",
+  ]
+}
