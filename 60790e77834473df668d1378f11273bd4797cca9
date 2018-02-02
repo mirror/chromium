@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98201e03_14a2533b",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e0020f_a454f672",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "60790e77834473df668d1378f11273bd4797cca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e855029_3bbe4fc3",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "60790e77834473df668d1378f11273bd4797cca9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126b62c6_28cd7ff8",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e855029_3bbe4fc3",
+      "range": {
+        "startLine": 363,
+        "startChar": 36,
+        "endLine": 363,
+        "endChar": 46
+      },
+      "revId": "60790e77834473df668d1378f11273bd4797cca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
