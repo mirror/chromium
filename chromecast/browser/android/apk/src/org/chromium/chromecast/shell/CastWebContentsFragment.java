@@ -34,6 +34,8 @@ public class CastWebContentsFragment extends Fragment {
 
     private CastWebContentsSurfaceHelper mSurfaceHelper;
 
+    private View mFragmentRootView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
@@ -52,10 +54,13 @@ public class CastWebContentsFragment extends Fragment {
                     .show();
             return null;
         }
-
-        return inflater.cloneInContext(getContext())
+        if (mFragmentRootView == null) {
+            mFragmentRootView = inflater.cloneInContext(getContext())
                 .inflate(R.layout.cast_web_contents_activity, null);
+        }
+        return mFragmentRootView;
     }
+
 
     @Override
     public Context getContext() {
@@ -69,11 +74,12 @@ public class CastWebContentsFragment extends Fragment {
     public void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
-        if (mSurfaceHelper == null) {
-            mSurfaceHelper = new CastWebContentsSurfaceHelper(getActivity(), /* hostActivity */
+        if (mSurfaceHelper != null) {
+            return;
+        }
+        mSurfaceHelper = new CastWebContentsSurfaceHelper(getActivity(), /* hostActivity */
                     (FrameLayout) getView().findViewById(R.id.web_contents_container),
                     true /* showInFragment */);
-        }
         Bundle bundle = getArguments();
         bundle.setClassLoader(WebContents.class.getClassLoader());
         String uriString = bundle.getString(CastWebContentsComponent.INTENT_EXTRA_URI);
@@ -93,7 +99,6 @@ public class CastWebContentsFragment extends Fragment {
     public void onPause() {
         Log.d(TAG, "onPause");
         super.onPause();
-
         if (mSurfaceHelper != null) {
             mSurfaceHelper.onPause();
         }
