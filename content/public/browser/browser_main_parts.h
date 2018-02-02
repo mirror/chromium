@@ -5,6 +5,7 @@
 #ifndef CONTENT_PUBLIC_BROWSER_BROWSER_MAIN_PARTS_H_
 #define CONTENT_PUBLIC_BROWSER_BROWSER_MAIN_PARTS_H_
 
+#include "base/single_thread_task_runner.h"
 #include "content/common/content_export.h"
 
 namespace content {
@@ -66,6 +67,8 @@ class CONTENT_EXPORT BrowserMainParts {
   // Allows an embedder to do any extra toolkit initialization.
   virtual void ToolkitInitialized() {}
 
+  virtual void MainMessageLoopStart() {}
+
   // Called just before any child threads owned by the content
   // framework are created.
   //
@@ -80,6 +83,10 @@ class CONTENT_EXPORT BrowserMainParts {
 
   virtual void ServiceManagerConnectionStarted(
       ServiceManagerConnection* connection) {}
+
+  virtual void ServiceManagerConnectionStarted(
+      ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) {}
 
   // This is called just before the main message loop is run.  The
   // various browser threads have all been created at this point

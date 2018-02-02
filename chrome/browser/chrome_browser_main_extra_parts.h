@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_CHROME_BROWSER_MAIN_EXTRA_PARTS_H_
 #define CHROME_BROWSER_CHROME_BROWSER_MAIN_EXTRA_PARTS_H_
 
+#include "base/memory/scoped_refptr.h"
+#include "base/single_thread_task_runner.h"
+
 namespace content {
 class ServiceManagerConnection;
 }
@@ -40,6 +43,9 @@ class ChromeBrowserMainExtraParts {
   virtual void PreCreateThreads() {}
   virtual void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) {}
+  virtual void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) {}
   virtual void PreProfileInit() {}
   virtual void PostProfileInit() {}
   virtual void PreBrowserStart() {}

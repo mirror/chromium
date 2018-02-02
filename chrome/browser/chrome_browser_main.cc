@@ -699,6 +699,9 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
       std::make_unique<metrics::ExpiredHistogramsChecker>(
           chrome_metrics::kExpiredHistogramsHashes,
           chrome_metrics::kNumExpiredHistograms));
+#if !defined(OS_MACOSX)
+  InitializeResourceBundle();
+#endif  // !defined(!OS_MACOSX)
 }
 
 ChromeBrowserMainParts::~ChromeBrowserMainParts() {
@@ -917,6 +920,32 @@ void ChromeBrowserMainParts::PostMainMessageLoopStart() {
     chrome_extra_parts_[i]->PostMainMessageLoopStart();
 }
 
+void ChromeBrowserMainParts::MainMessageLoopStart() {
+  // The initial read is done synchronously, the TaskPriority is thus only used
+  // for flushes to disks and BACKGROUND is therefore appropriate. Priority of
+  // remaining BACKGROUND+BLOCK_SHUTDOWN tasks is bumped by the TaskScheduler on
+  // shutdown. However, some shutdown use cases happen without
+  // TaskScheduler::Shutdown() (e.g. ChromeRestartRequest::Start() and
+  // BrowserProcessImpl::EndSession()) and we must thus unfortunately make this
+  // USER_VISIBLE until we solve https://crbug.com/747495 to allow bumping
+  // priority of a sequence on demand.
+  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+
+  {
+    TRACE_EVENT0(
+        "startup",
+        "ChromeBrowserMainParts::PreCreateThreadsImpl:InitBrowswerProcessImpl");
+    browser_process_ =
+        std::make_unique<BrowserProcessImpl>(local_state_task_runner_.get());
+  }
+
+  browser_process_->SetApplicationLocale("en-US");
+  SetupFieldTrials();
+}
+
 int ChromeBrowserMainParts::PreCreateThreads() {
   // IMPORTANT
   // Calls in this function should not post tasks or create threads as
@@ -954,6 +983,23 @@ int ChromeBrowserMainParts::PreCreateThreads() {
   return result_code_;
 }
 
+int ChromeBrowserMainParts::InitializeResourceBundle() {
+  {
+    TRACE_EVENT0("startup",
+                 "ChromeBrowserMainParts::PreCreateThreadsImpl:AddDataPack");
+    base::FilePath resources_pack_path;
+    PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
+    ui::ResourceBundle::InitSharedInstance(nullptr);
+#if defined(OS_ANDROID)
+    ui::LoadMainAndroidPackFile("assets/resources.pak", resources_pack_path);
+#else
+    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+        resources_pack_path, ui::SCALE_FACTOR_NONE);
+#endif  // defined(OS_ANDROID)
+  }
+  return content::RESULT_CODE_NORMAL_EXIT;
+}
+
 int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreCreateThreadsImpl")
   run_message_loop_ = false;
@@ -975,28 +1021,8 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   first_run::IsChromeFirstRun();
 #endif  // !defined(OS_ANDROID)
 
-  // The initial read is done synchronously, the TaskPriority is thus only used
-  // for flushes to disks and BACKGROUND is therefore appropriate. Priority of
-  // remaining BACKGROUND+BLOCK_SHUTDOWN tasks is bumped by the TaskScheduler on
-  // shutdown. However, some shutdown use cases happen without
-  // TaskScheduler::Shutdown() (e.g. ChromeRestartRequest::Start() and
-  // BrowserProcessImpl::EndSession()) and we must thus unfortunately make this
-  // USER_VISIBLE until we solve https://crbug.com/747495 to allow bumping
-  // priority of a sequence on demand.
-  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
-
-  {
-    TRACE_EVENT0("startup",
-      "ChromeBrowserMainParts::PreCreateThreadsImpl:InitBrowswerProcessImpl");
-    browser_process_ =
-        std::make_unique<BrowserProcessImpl>(local_state_task_runner.get());
-  }
-
-  PrefService* local_state = InitializeLocalState(local_state_task_runner.get(),
-                                                  parsed_command_line());
+  PrefService* local_state = InitializeLocalState(
+      local_state_task_runner_.get(), parsed_command_line());
 
 #if !defined(OS_ANDROID)
   // These members must be initialized before returning from this function.
@@ -1076,19 +1102,6 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   }
   CHECK(!loaded_locale.empty()) << "Locale could not be found for " << locale;
   browser_process_->SetApplicationLocale(loaded_locale);
-
-  {
-    TRACE_EVENT0("startup",
-        "ChromeBrowserMainParts::PreCreateThreadsImpl:AddDataPack");
-    base::FilePath resources_pack_path;
-    PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
-#if defined(OS_ANDROID)
-    ui::LoadMainAndroidPackFile("assets/resources.pak", resources_pack_path);
-#else
-    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
-        resources_pack_path, ui::SCALE_FACTOR_NONE);
-#endif  // defined(OS_ANDROID)
-  }
 #endif  // defined(OS_MACOSX)
 
   browser_process_->browser_policy_connector()->OnResourceBundleCreated();
@@ -1187,13 +1200,6 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
       base::Bind(&vr::VRServiceImpl::Create));
 #endif
 
-  // Now that the command line has been mutated based on about:flags, we can
-  // initialize field trials. The field trials are needed by IOThread's
-  // initialization which happens in BrowserProcess:PreCreateThreads. Metrics
-  // initialization is handled in PreMainMessageLoopRunImpl since it posts
-  // tasks.
-  SetupFieldTrials();
-
   // Add Site Isolation switches as dictated by policy.
   auto* command_line = base::CommandLine::ForCurrentProcess();
   if (local_state->GetBoolean(prefs::kSitePerProcess) &&
@@ -1235,14 +1241,22 @@ void ChromeBrowserMainParts::PostCreateThreads() {
 }
 
 void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
-    content::ServiceManagerConnection* connection) {
+    content::ServiceManagerConnection* connection,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   // This should be called after the creation of the tracing controller. The
   // tracing controller is created when the service manager connection is
   // started.
   tracing::SetupBackgroundTracingFieldTrial();
 
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
-    chrome_extra_parts_[i]->ServiceManagerConnectionStarted(connection);
+    chrome_extra_parts_[i]->ServiceManagerConnectionStarted(connection,
+                                                            task_runner);
+}
+
+void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
+    content::ServiceManagerConnection* connection) {
+  ServiceManagerConnectionStarted(
+      connection, BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 void ChromeBrowserMainParts::PreMainMessageLoopRun() {

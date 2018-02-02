@@ -64,10 +64,14 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
+  void MainMessageLoopStart() override;
   int PreCreateThreads() override;
   void PostCreateThreads() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   void PreMainMessageLoopRun() override;
   bool MainMessageLoopRun(int* result_code) override;
   void PostMainMessageLoopRun() override;
@@ -115,6 +119,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // for child processes.
   void SetupOriginTrialsCommandLine(PrefService* local_state);
 
+  int InitializeResourceBundle();
   // Methods for Main Message Loop -------------------------------------------
 
   int PreCreateThreadsImpl();
@@ -181,6 +186,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   scoped_refptr<FieldTrialSynchronizer> field_trial_synchronizer_;
 
   base::FilePath user_data_dir_;
+
+  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainParts);
 };
