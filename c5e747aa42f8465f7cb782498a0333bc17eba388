@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4b640b_fab7b485",
+        "filename": "components/browser_watcher/fetch_system_session_events_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "update comment.\n\nAlso I\u0027m a bit surprised - we\u0027re passing in the max_session_cnt to be 0? Based on CL description I would have thought this should be 1. This would make IsSessionUnclean always empty - which you test in SystemSessionAnalyzerTest, NoEvent). However how does IsSessionUnclean going to get used?",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9b1318_20b45524",
+        "filename": "components/browser_watcher/fetch_system_session_events_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "can you comment on why 11 is the right number here?",
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e0508d_16e8488d",
+        "filename": "components/metrics/system_session_analyzer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "I\u0027d also add the \"first session\" spans the start and end, clarifying that\u0027s why this is 3 here",
+      "range": {
+        "startLine": 203,
+        "startChar": 59,
+        "endLine": 203,
+        "endChar": 64
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2fa8c7_eb34eeb9",
+        "filename": "components/metrics/system_session_analyzer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "I was looking at the description of this map:\nstart time to duration until the next\n  // session start, ie *not* session duration.\n\nHowever isn\u0027t the duration here (end - start) - isn\u0027t that the session duration?",
+      "range": {
+        "startLine": 241,
+        "startChar": 45,
+        "endLine": 241,
+        "endChar": 55
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f28f1d_98bffae1",
+        "filename": "components/metrics/system_session_analyzer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "update",
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35fcf73_ceede44b",
+        "filename": "components/metrics/system_session_analyzer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "comment",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 21
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbf0368_f1796d4e",
+        "filename": "components/metrics/system_session_analyzer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T03:58:15Z",
+      "side": 1,
+      "message": "context",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
