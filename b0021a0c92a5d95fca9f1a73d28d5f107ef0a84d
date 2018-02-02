@@ -22,6 +22,30 @@
       "revId": "b0021a0c92a5d95fca9f1a73d28d5f107ef0a84d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c01e1d_6a48f5a5",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-02-02T10:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f16811_4a3c4cf3",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "b0021a0c92a5d95fca9f1a73d28d5f107ef0a84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
