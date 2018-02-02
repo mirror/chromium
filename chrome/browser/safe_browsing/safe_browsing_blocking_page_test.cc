@@ -685,6 +685,9 @@ class SafeBrowsingBlockingPageBrowserTest
       const std::string& expected_parent,
       int expected_child_size,
       const std::string& expected_tag_name) {
+    LOG(ERROR) << actual_resource.url();
+    LOG(ERROR) << actual_resource.parent_id();
+    LOG(ERROR) << actual_resource.tag_name();
     EXPECT_EQ(expected_url, actual_resource.url());
     // Finds the parent url by comparing resource ids.
     for (auto resource : report.resources()) {
@@ -988,7 +991,7 @@ IN_PROC_BROWSER_TEST_P(SafeBrowsingBlockingPageBrowserTest,
                    embedded_test_server()->GetURL(kMaliciousIframe).spec(),
                    url.spec(),  // kCrossSiteMaliciousPage
                    0, "IFRAME");
-
+    LOG(ERROR) << report.dom_size();
     ASSERT_EQ(2, report.dom_size());
     // Because the order of elements is not deterministic, we basically need to
     // verify the relationship. Namely that there is an IFRAME element and that

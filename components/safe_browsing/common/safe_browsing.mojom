@@ -63,3 +63,26 @@ interface SafeBrowsingUrlChecker {
 interface UrlCheckNotifier {
   OnCompleteCheck(bool proceed, bool showed_interstitial);
 };
+
+struct AttributeNameValue {
+  string name;
+  string value;
+};
+
+struct ThreatDOMDetailsNode {
+  int32 node_id;
+  url.mojom.Url url;
+  string tag_name;
+  url.mojom.Url parent;
+  int32 parent_node_id;
+  array<url.mojom.Url> children;
+  array<int32> child_node_ids;
+  array<AttributeNameValue> attributes;
+  int32 child_frame_routing_id;
+};
+
+interface ThreatReport {
+ // Client-side detection message sent from the browser to the renderer.
+  // Request a DOM tree when a safe browsing interstitial is shown.
+  GetThreatDOMDetails() => (array<ThreatDOMDetailsNode> nodes);
+};

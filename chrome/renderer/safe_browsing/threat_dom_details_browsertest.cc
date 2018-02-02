@@ -10,7 +10,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/test/base/chrome_render_view_test.h"
-#include "components/safe_browsing/common/safebrowsing_messages.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/features.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/renderer/render_view.h"
@@ -56,7 +56,8 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
   std::unique_ptr<base::test::ScopedFeatureList> feature_list =
       SetupTagAndAttributeFeature();
   std::unique_ptr<safe_browsing::ThreatDOMDetails> details(
-      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame()));
+      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame(),
+                                              registry_.get()));
   // Lower kMaxNodes and kMaxAttributes for the test. Loading 500 subframes in a
   // debug build takes a while.
   safe_browsing::ThreatDOMDetails::kMaxNodes = 50;
@@ -70,14 +71,14 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     std::string html = "<html><head><script></script></head></html>";
     LoadHTML(html.c_str());
     base::HistogramTester histograms;
-    std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+    std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
     details->ExtractResources(&params);
     ASSERT_EQ(1u, params.size());
     auto& param = params[0];
-    EXPECT_EQ(GURL(urlprefix + html), param.url);
-    EXPECT_EQ(0, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
+    EXPECT_EQ(GURL(urlprefix + html), param->url);
+    EXPECT_EQ(0, param->node_id);
+    EXPECT_EQ(0, param->parent_node_id);
+    EXPECT_TRUE(param->child_node_ids.empty());
 
     histograms.ExpectBucketCount(kMaxNodesExceededMetric, false, 1);
   }
@@ -94,28 +95,28 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     GURL url(urlprefix + html);
 
     LoadHTML(html.c_str());
-    std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+    std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
     details->ExtractResources(&params);
     ASSERT_EQ(3u, params.size());
     auto& param = params[0];
-    EXPECT_EQ(script1_url, param.url);
-    EXPECT_EQ("SCRIPT", param.tag_name);
-    EXPECT_EQ(1, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
+    EXPECT_EQ(script1_url, param->url);
+    EXPECT_EQ("SCRIPT", param->tag_name);
+    EXPECT_EQ(1, param->node_id);
+    EXPECT_EQ(0, param->parent_node_id);
+    EXPECT_TRUE(param->child_node_ids.empty());
 
-    param = params[1];
-    EXPECT_EQ(script2_url, param.url);
-    EXPECT_EQ("SCRIPT", param.tag_name);
-    EXPECT_EQ(2, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
+    auto& param1 = params[1];
+    EXPECT_EQ(script2_url, param1->url);
+    EXPECT_EQ("SCRIPT", param1->tag_name);
+    EXPECT_EQ(2, param1->node_id);
+    EXPECT_EQ(0, param1->parent_node_id);
+    EXPECT_TRUE(param1->child_node_ids.empty());
 
-    param = params[2];
-    EXPECT_EQ(url, param.url);
-    EXPECT_EQ(0, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
+    auto& param2 = params[2];
+    EXPECT_EQ(url, param2->url);
+    EXPECT_EQ(0, param2->node_id);
+    EXPECT_EQ(0, param2->parent_node_id);
+    EXPECT_TRUE(param2->child_node_ids.empty());
   }
 
   {
@@ -151,50 +152,54 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     GURL url(urlprefix + html);
 
     LoadHTML(html.c_str());
-    std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+    std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
     details->ExtractResources(&params);
     ASSERT_EQ(4u, params.size());
 
     auto& param = params[0];
-    EXPECT_TRUE(param.url.is_empty());
-    EXPECT_EQ(url, param.parent);
-    EXPECT_EQ("DIV", param.tag_name);
+    EXPECT_TRUE(param->url.is_empty());
+    EXPECT_EQ(url, param->parent);
+    EXPECT_EQ("DIV", param->tag_name);
     // The children field contains URLs, but this mapping is not currently
     // maintained among the interior nodes. The summary node is the parent of
     // all elements in the frame.
-    EXPECT_TRUE(param.children.empty());
-    EXPECT_EQ(1, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_THAT(param.child_node_ids, ElementsAre(2, 3));
-    EXPECT_THAT(param.attributes, ElementsAre(std::make_pair("foo", "1")));
+    EXPECT_TRUE(param->children.empty());
+    EXPECT_EQ(1, param->node_id);
+    EXPECT_EQ(0, param->parent_node_id);
+    EXPECT_THAT(param->child_node_ids, ElementsAre(2, 3));
+    EXPECT_EQ(1u, param->attributes.size());
+    EXPECT_EQ("foo", param->attributes[0]->name);
+    EXPECT_EQ("1", param->attributes[0]->value);
 
-    param = params[1];
-    EXPECT_TRUE(param.url.is_empty());
-    EXPECT_EQ(url, param.parent);
-    EXPECT_EQ("DIV", param.tag_name);
-    EXPECT_TRUE(param.children.empty());
-    EXPECT_EQ(2, param.node_id);
-    EXPECT_EQ(1, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
-    EXPECT_THAT(param.attributes, ElementsAre(std::make_pair("baz", "1")));
+    auto& param1 = params[1];
+    EXPECT_TRUE(param1->url.is_empty());
+    EXPECT_EQ(url, param1->parent);
+    EXPECT_EQ("DIV", param1->tag_name);
+    EXPECT_TRUE(param1->children.empty());
+    EXPECT_EQ(2, param1->node_id);
+    EXPECT_EQ(1, param1->parent_node_id);
+    EXPECT_TRUE(param1->child_node_ids.empty());
+    EXPECT_EQ(1u, param1->attributes.size());
+    EXPECT_EQ("baz", param1->attributes[0]->name);
+    EXPECT_EQ("1", param1->attributes[0]->value);
 
-    param = params[2];
-    EXPECT_EQ(iframe1_url, param.url);
-    EXPECT_EQ(url, param.parent);
-    EXPECT_EQ("IFRAME", param.tag_name);
-    EXPECT_TRUE(param.children.empty());
-    EXPECT_EQ(3, param.node_id);
-    EXPECT_EQ(1, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
-    EXPECT_TRUE(param.attributes.empty());
+    auto& param2 = params[2];
+    EXPECT_EQ(iframe1_url, param2->url);
+    EXPECT_EQ(url, param2->parent);
+    EXPECT_EQ("IFRAME", param2->tag_name);
+    EXPECT_TRUE(param2->children.empty());
+    EXPECT_EQ(3, param2->node_id);
+    EXPECT_EQ(1, param2->parent_node_id);
+    EXPECT_TRUE(param2->child_node_ids.empty());
+    EXPECT_TRUE(param2->attributes.empty());
 
-    param = params[3];
-    EXPECT_EQ(url, param.url);
-    EXPECT_EQ(GURL(), param.parent);
-    EXPECT_THAT(param.children, ElementsAre(iframe1_url));
-    EXPECT_EQ(0, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
+    auto& param3 = params[3];
+    EXPECT_EQ(url, param3->url);
+    EXPECT_EQ(GURL(), param3->parent);
+    EXPECT_THAT(param3->children, ElementsAre(iframe1_url));
+    EXPECT_EQ(0, param3->node_id);
+    EXPECT_EQ(0, param3->parent_node_id);
+    EXPECT_TRUE(param3->child_node_ids.empty());
   }
 
   {
@@ -210,7 +215,7 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
 
     LoadHTML(html.c_str());
     base::HistogramTester histograms;
-    std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+    std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
     details->ExtractResources(&params);
     ASSERT_EQ(51u, params.size());
 
@@ -218,9 +223,9 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     for (size_t i = 0; i < params.size() - 1; ++i) {
       auto& param = params[i];
       const int expected_id = i + 1;
-      EXPECT_EQ(expected_id, param.node_id);
-      EXPECT_EQ(0, param.parent_node_id);
-      EXPECT_TRUE(param.child_node_ids.empty());
+      EXPECT_EQ(expected_id, param->node_id);
+      EXPECT_EQ(0, param->parent_node_id);
+      EXPECT_TRUE(param->child_node_ids.empty());
     }
 
     histograms.ExpectBucketCount(kMaxNodesExceededMetric, true, 1);
@@ -239,7 +244,7 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
 
     LoadHTML(html.c_str());
     base::HistogramTester histograms;
-    std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+    std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
     details->ExtractResources(&params);
     ASSERT_EQ(51u, params.size());
 
@@ -247,9 +252,9 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     for (size_t i = 0; i < params.size() - 1; ++i) {
       auto& param = params[i];
       const int expected_id = i + 1;
-      EXPECT_EQ(expected_id, param.node_id);
-      EXPECT_EQ(0, param.parent_node_id);
-      EXPECT_TRUE(param.child_node_ids.empty());
+      EXPECT_EQ(expected_id, param->node_id);
+      EXPECT_EQ(0, param->parent_node_id);
+      EXPECT_TRUE(param->child_node_ids.empty());
     }
 
     histograms.ExpectBucketCount(kMaxNodesExceededMetric, true, 1);
@@ -262,31 +267,34 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
         "<html><head><div foo=1 attr2=2 attr3=3 longattr4=4 attr5=longvalue5 "
         "attr6=6></div></head></html>";
     LoadHTML(html.c_str());
-    std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+    std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
     details->ExtractResources(&params);
-
     GURL url = GURL(urlprefix + html);
     ASSERT_EQ(2u, params.size());
     auto& param = params[0];
-    EXPECT_TRUE(param.url.is_empty());
-    EXPECT_EQ(url, param.parent);
-    EXPECT_EQ("DIV", param.tag_name);
-    EXPECT_TRUE(param.children.empty());
-    EXPECT_EQ(1, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
-    EXPECT_THAT(
-        param.attributes,
-        ElementsAre(std::make_pair("foo", "1"), std::make_pair("attr2", "2"),
-                    std::make_pair("attr3", "3"),
-                    std::make_pair("longattr4", "4"),
-                    std::make_pair("attr5", "lo...")));
-
-    param = params[1];
-    EXPECT_EQ(url, param.url);
-    EXPECT_EQ(0, param.node_id);
-    EXPECT_EQ(0, param.parent_node_id);
-    EXPECT_TRUE(param.child_node_ids.empty());
+    EXPECT_TRUE(param->url.is_empty());
+    EXPECT_EQ(url, param->parent);
+    EXPECT_EQ("DIV", param->tag_name);
+    EXPECT_TRUE(param->children.empty());
+    EXPECT_EQ(1, param->node_id);
+    EXPECT_EQ(0, param->parent_node_id);
+    EXPECT_TRUE(param->child_node_ids.empty());
+    EXPECT_EQ(5u, param->attributes.size());
+    EXPECT_EQ("foo", param->attributes[0]->name);
+    EXPECT_EQ("1", param->attributes[0]->value);
+    EXPECT_EQ("attr2", param->attributes[1]->name);
+    EXPECT_EQ("2", param->attributes[1]->value);
+    EXPECT_EQ("attr3", param->attributes[2]->name);
+    EXPECT_EQ("3", param->attributes[2]->value);
+    EXPECT_EQ("longattr4", param->attributes[3]->name);
+    EXPECT_EQ("4", param->attributes[3]->value);
+    EXPECT_EQ("attr5", param->attributes[4]->name);
+    EXPECT_EQ("lo...", param->attributes[4]->value);
+    auto& param1 = params[1];
+    EXPECT_EQ(url, param1->url);
+    EXPECT_EQ(0, param1->node_id);
+    EXPECT_EQ(0, param1->parent_node_id);
+    EXPECT_TRUE(param1->child_node_ids.empty());
   }
 }
 
@@ -300,7 +308,8 @@ TEST_F(ThreatDOMDetailsTest, DefaultTagAndAttributesList) {
   feature_list->InitAndDisableFeature(
       safe_browsing::kThreatDomDetailsTagAndAttributeFeature);
   std::unique_ptr<safe_browsing::ThreatDOMDetails> details(
-      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame()));
+      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame(),
+                                              registry_.get()));
   const char urlprefix[] = "data:text/html;charset=utf-8,";
 
   // A page with some divs containing an iframe which itself contains an
@@ -328,49 +337,54 @@ TEST_F(ThreatDOMDetailsTest, DefaultTagAndAttributesList) {
   GURL url(urlprefix + html);
 
   LoadHTML(html.c_str());
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
+  std::vector<safe_browsing::mojom::ThreatDOMDetailsNodePtr> params;
   details->ExtractResources(&params);
   ASSERT_EQ(4u, params.size());
 
   auto& param = params[0];
-  EXPECT_TRUE(param.url.is_empty());
-  EXPECT_EQ(url, param.parent);
-  EXPECT_EQ("DIV", param.tag_name);
+  EXPECT_TRUE(param->url.is_empty());
+  EXPECT_EQ(url, param->parent);
+  EXPECT_EQ("DIV", param->tag_name);
   // The children field contains URLs, but this mapping is not currently
   // maintained among the interior nodes. The summary node (last in the list) is
   // the parent of all elements in the frame.
-  EXPECT_TRUE(param.children.empty());
-  EXPECT_EQ(1, param.node_id);
-  EXPECT_EQ(0, param.parent_node_id);
-  EXPECT_THAT(param.child_node_ids, ElementsAre(2));
-  EXPECT_THAT(param.attributes,
-              ElementsAre(std::make_pair("data-google-query-id", "foo")));
+  EXPECT_TRUE(param->children.empty());
+  EXPECT_EQ(1, param->node_id);
+  EXPECT_EQ(0, param->parent_node_id);
+  EXPECT_THAT(param->child_node_ids, ElementsAre(2));
+  EXPECT_EQ(1u, param->attributes.size());
+  EXPECT_EQ("data-google-query-id", param->attributes[0]->name);
+  EXPECT_EQ("foo", param->attributes[0]->value);
 
-  param = params[1];
-  EXPECT_TRUE(param.url.is_empty());
-  EXPECT_EQ(url, param.parent);
-  EXPECT_EQ("DIV", param.tag_name);
-  EXPECT_TRUE(param.children.empty());
-  EXPECT_EQ(2, param.node_id);
-  EXPECT_EQ(1, param.parent_node_id);
-  EXPECT_THAT(param.child_node_ids, ElementsAre(3));
-  EXPECT_THAT(param.attributes, ElementsAre(std::make_pair("id", "bar")));
+  auto& param1 = params[1];
+  EXPECT_TRUE(param1->url.is_empty());
+  EXPECT_EQ(url, param1->parent);
+  EXPECT_EQ("DIV", param1->tag_name);
+  EXPECT_TRUE(param1->children.empty());
+  EXPECT_EQ(2, param1->node_id);
+  EXPECT_EQ(1, param1->parent_node_id);
+  EXPECT_THAT(param1->child_node_ids, ElementsAre(3));
+  EXPECT_EQ(1u, param1->attributes.size());
+  EXPECT_EQ("id", param1->attributes[0]->name);
+  EXPECT_EQ("bar", param1->attributes[0]->value);
 
-  param = params[2];
-  EXPECT_TRUE(param.url.is_empty());
-  EXPECT_EQ(url, param.parent);
-  EXPECT_EQ("IFRAME", param.tag_name);
-  EXPECT_TRUE(param.children.empty());
-  EXPECT_EQ(3, param.node_id);
-  EXPECT_EQ(2, param.parent_node_id);
-  EXPECT_TRUE(param.child_node_ids.empty());
-  EXPECT_THAT(param.attributes, ElementsAre(std::make_pair("id", "baz")));
+  auto& param2 = params[2];
+  EXPECT_TRUE(param2->url.is_empty());
+  EXPECT_EQ(url, param2->parent);
+  EXPECT_EQ("IFRAME", param2->tag_name);
+  EXPECT_TRUE(param2->children.empty());
+  EXPECT_EQ(3, param2->node_id);
+  EXPECT_EQ(2, param2->parent_node_id);
+  EXPECT_TRUE(param2->child_node_ids.empty());
+  EXPECT_EQ(1u, param2->attributes.size());
+  EXPECT_EQ("id", param2->attributes[0]->name);
+  EXPECT_EQ("baz", param2->attributes[0]->value);
 
-  param = params[3];
-  EXPECT_EQ(url, param.url);
-  EXPECT_EQ(GURL(), param.parent);
-  EXPECT_TRUE(param.children.empty());
-  EXPECT_EQ(0, param.node_id);
-  EXPECT_EQ(0, param.parent_node_id);
-  EXPECT_TRUE(param.child_node_ids.empty());
+  auto& param3 = params[3];
+  EXPECT_EQ(url, param3->url);
+  EXPECT_EQ(GURL(), param3->parent);
+  EXPECT_TRUE(param3->children.empty());
+  EXPECT_EQ(0, param3->node_id);
+  EXPECT_EQ(0, param3->parent_node_id);
+  EXPECT_TRUE(param3->child_node_ids.empty());
 }
