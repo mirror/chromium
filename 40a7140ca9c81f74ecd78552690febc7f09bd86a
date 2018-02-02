@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d5ab46_1e8acff8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-02T13:17:03Z",
+      "side": 1,
+      "message": "I wonder if this should be base::Optional\u003cTimeDelta\u003e to properly distinguish a case when we don\u0027t have any more work to do.",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 15
+      },
+      "revId": "40a7140ca9c81f74ecd78552690febc7f09bd86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768f2dde_77461cc4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-02T13:17:03Z",
+      "side": 1,
+      "message": "Bikeshed: should we rename it to AreAllEnabledWorkQueuesEmpty?",
+      "range": {
+        "startLine": 321,
+        "startChar": 35,
+        "endLine": 321,
+        "endChar": 57
+      },
+      "revId": "40a7140ca9c81f74ecd78552690febc7f09bd86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa5126e2_d25dec07",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-02T13:17:03Z",
+      "side": 1,
+      "message": "Bikeshed: it\u0027s things like that make we wonder if we could do better with pull-only approach.",
+      "revId": "40a7140ca9c81f74ecd78552690febc7f09bd86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
