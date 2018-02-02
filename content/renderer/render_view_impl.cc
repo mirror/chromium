@@ -1527,7 +1527,8 @@ void RenderViewImpl::UpdateTargetURL(const GURL& url,
 gfx::RectF RenderViewImpl::ClientRectToPhysicalWindowRect(
     const gfx::RectF& rect) const {
   gfx::RectF window_rect = rect;
-  window_rect.Scale(device_scale_factor_ * webview()->PageScaleFactor());
+  float to_pix = IsUseZoomForDSFEnabled() ? 1 : device_scale_factor_;
+  window_rect.Scale(to_pix * webview()->PageScaleFactor());
   return window_rect;
 }
 
@@ -2319,12 +2320,13 @@ bool RenderViewImpl::DidTapMultipleTargets(
 
   // The touch_rect, target_rects and zoom_rect are in the outer viewport
   // reference frame.
+  float to_pix = IsUseZoomForDSFEnabled() ? 1 : device_scale_factor_;
   gfx::Rect zoom_rect;
   float new_total_scale =
       DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
           touch_rect, target_rects, GetSize(),
           gfx::Rect(webview()->MainFrame()->VisibleContentRect()).size(),
-          device_scale_factor_ * webview()->PageScaleFactor(), &zoom_rect);
+          to_pix * webview()->PageScaleFactor(), &zoom_rect);
   if (!new_total_scale || zoom_rect.IsEmpty())
     return false;
 
@@ -2361,10 +2363,8 @@ bool RenderViewImpl::DidTapMultipleTargets(
         // device scale will be applied in WebKit
         // --> zoom_rect doesn't include device scale,
         //     but WebKit will still draw on zoom_rect * device_scale_factor_
-        canvas.scale(new_total_scale / device_scale_factor_,
-                     new_total_scale / device_scale_factor_);
-        canvas.translate(-zoom_rect.x() * device_scale_factor_,
-                         -zoom_rect.y() * device_scale_factor_);
+        canvas.scale(new_total_scale / to_pix, new_total_scale / to_pix);
+        canvas.translate(-zoom_rect.x() * to_pix, -zoom_rect.y() * to_pix);
 
         DCHECK(webview_->IsAcceleratedCompositingActive());
         webview_->UpdateAllLifecyclePhases();
