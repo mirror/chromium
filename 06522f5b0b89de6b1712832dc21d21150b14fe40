@@ -16,6 +16,24 @@
       "revId": "06522f5b0b89de6b1712832dc21d21150b14fe40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d092926_74cddca7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T16:13:49Z",
+      "side": 1,
+      "message": "Moved to InteractiveDetector. I just have the PWD grab the document off the LocalFrame, and get the InteractiveDetector itself.\n\nThis is definitely better, thanks.",
+      "parentUuid": "98d085ae_6989c8c0",
+      "revId": "06522f5b0b89de6b1712832dc21d21150b14fe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
