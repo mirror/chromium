@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "702694c1_b260de38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-02T15:30:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38317dea_b5309777",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8e85693_aea7b1e1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 6
@@ -657,6 +681,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3aff16b_659164e4",
+        "filename": "components/payments/content/installable_payment_app_crawler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-02T15:30:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9bc48ea4_e4461973",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1729,6 +1777,30 @@
     },
     {
       "key": {
+        "uuid": "eb9302bd_146e8282",
+        "filename": "components/payments/core/payment_manifest_downloader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-02T15:30:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb381ef9_002919de",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e94e23f_16db295d",
         "filename": "content/browser/payments/payment_app_installer.cc",
         "patchSetId": 6
@@ -2551,6 +2623,30 @@
       "side": 1,
       "message": "They have been checked in crawler, may no need to check it again here.",
       "parentUuid": "fdd6cbae_37de2156",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 30
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0735a8e_0ca5124f",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-02T15:30:16Z",
+      "side": 1,
+      "message": "In that case, please DCHECK() it. That way, if some new code path calls into this function, the developer will know to pre-check this condition.",
+      "parentUuid": "31f12d1f_5312e499",
       "range": {
         "startLine": 410,
         "startChar": 0,
