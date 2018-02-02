@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae9ddab_77b2c882",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-02T18:46:04Z",
+      "side": 1,
+      "message": "Can this just use std::set::count as I suggested?",
+      "revId": "48600904ee3c59456666fe787986b4465e383a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf83d893_9ff7cc46",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-02T18:46:04Z",
+      "side": 1,
+      "message": "nit: \"The custom view could be wider than the available width; clamp as needed.\"",
+      "revId": "48600904ee3c59456666fe787986b4465e383a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
