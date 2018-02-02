@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb43656_ab9a6286",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T00:33:09Z",
+      "side": 1,
+      "message": "I think we need a neater solution for the pageinfo bubble -- the logic here is too scattered. the fix might have a similar theme to my suggestion in https://chromium-review.googlesource.com/c/chromium/src/+/897749\n\nAlternatively, I think we can add an interface to BrowserWindow to help with this. Something like\n\n virtual .. BrowserWindow::GetLeadingBubbleAnchorRect() \u003d 0;\n\nthis is then implemented for BrowserView and BrowserWindowCocoa  -- i.e. we use runtime polymorphism rather than compile time polymorphism.\n\n\nThe neatest solution might be a combination of these :). See how you go..",
+      "revId": "28c5221f606e68024745ad46f576e2c82de5dedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b8d074_963d4ca6",
+        "filename": "chrome/browser/ui/views/session_crashed_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T00:33:09Z",
+      "side": 1,
+      "message": "comment like, // Return false so that StartupBrowserCreator shows the infobar instead.\n\nWe should also just port the SessionCrashedBubble to the Cocoa browser too..... (maybe TODO here?)\n\n\n(also perhaps split this out to a new CL, since I don\u0027t think this bit is controversial at all)",
+      "revId": "28c5221f606e68024745ad46f576e2c82de5dedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
