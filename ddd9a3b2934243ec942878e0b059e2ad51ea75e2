@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93fc60a7_4e2a197c",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-02T19:55:25Z",
+      "side": 1,
+      "message": "This is equivalent to the RunUnitIdle() we had before and has the same issue of depending on assumptions on how the implementation handles threading internally. Neither the test nor other clients should depend on such an assumption. Otherwise things will break in unexpected ways if we change how the implementation handles threading internally in the future.\n\nIMHO, the solution using RunLoop was good.",
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
