@@ -163,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "992ec33e_ffc139bb",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-02-02T19:58:48Z",
+      "side": 1,
+      "message": "\u003e Does user scrolling cancel browser restoration? Should it? It does cancel fragment navigation and this feels like a similar use case.\n\nUser scrolls have always cancelled history restore, this is what InitialScrollState::was_scrolled_by_user is for.\n\nThe interaction of user scrolls and fragment navigation is more complicated. :)\n\n\u003e ScrollType was originally meant to handle the fact that we have separate animators for programmatic and user scrolling but has since grown from the original 2 to 6 and there\u0027s already ambiguity between different types so I\u0027m a bit weary of adding yet another.\n\nYeah it\u0027s gotten messy.  What do you think of expressing the overlapping categories with IsXxx helpers?  E.g.\n\n  bool IsProgrammaticScrollType(ScrollType type) {\n    return type \u003d\u003d kBrowserScroll || type \u003d\u003d kScriptScroll || ...;\n  }\n\nThis seems simpler to me than a bit field.",
+      "parentUuid": "bff68e97_87566044",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
