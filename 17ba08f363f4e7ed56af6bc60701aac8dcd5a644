@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89e27623_d1c497b3",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-02T02:57:21Z",
+      "side": 1,
+      "message": "might be worth a comment (possibly with a bug link) for why we don\u0027t immediately start the download.",
+      "revId": "17ba08f363f4e7ed56af6bc60701aac8dcd5a644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda9e489_33421773",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-02T02:57:21Z",
+      "side": 1,
+      "message": "nit: add function comments",
+      "revId": "17ba08f363f4e7ed56af6bc60701aac8dcd5a644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
