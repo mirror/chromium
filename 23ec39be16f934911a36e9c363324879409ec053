@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c241acb8_1ad3f93d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Yes, for \"ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h\"",
+      "parentUuid": "6819828f_7c6477a9",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "264a61e8_b77360c6",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_coordinator.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "23ec39be16f934911a36e9c363324879409ec053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92da1140_9cd60acb",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "264a61e8_b77360c6",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c04dce2_0af24d83",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29bbb00d_68601e33",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8e770d_aed18d1a",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2018-02-01T10:31:05Z",
       "side": 1,
       "message": "Good catch! But the problem is actually worse than that.\nThe PrimaryToolbarViewController is constraining 5 different layout guides. By adding the toolbar in the view hierarchy, the constraints are broken for those other layout guides (they are silently removed).\n\nI think a BOOL flag should be added to the PrimaryToolbarViewController, default to NO, to know whether the named layout guide should be constrained. You have constraints in -viewDidLoad and -didMoveToParentViewController:. Can you do that (or something else if you have a better idea)?",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382ee07c_37999ec6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Why not just add all the layout guides, as we do in BVC and omnibox_perftests.",
+      "parentUuid": "ad8e770d_aed18d1a",
       "range": {
         "startLine": 49,
         "startChar": 16,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c9f93da4_0810e535",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d97e5a_5aed43d2",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 1
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f3b24b3_babeb226",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2018-02-01T10:31:05Z",
       "side": 1,
       "message": "Yes, but this the ContentSuggestionsHeaderViewController is part of the VC hierarchy. It is added in ContentSuggestionsCoordinator, on line 166.",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 61
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3f36b5_181cf0cb",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Would you like me to update the comment?  I added this comment to explain why I\u0027m adding it to the parentViewController.  If I add to the CSHVC, UIKit will throw an exception.",
+      "parentUuid": "9f3b24b3_babeb226",
       "range": {
         "startLine": 221,
         "startChar": 42,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f51543d2_9546ebca",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d469d49_2b802340",
+      "range": {
+        "startLine": 223,
+        "startChar": 26,
+        "endLine": 223,
+        "endChar": 28
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885c118d_904cba92",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
         "patchSetId": 6
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "40f1a927_aed5ae4e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885c118d_904cba92",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 63
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d81924b_8965f372",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.h",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "23ec39be16f934911a36e9c363324879409ec053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0545f854_404d8b05",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T02:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d81924b_8965f372",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
