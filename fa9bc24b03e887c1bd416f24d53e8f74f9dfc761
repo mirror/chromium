@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d07c18a_206d0e51",
+        "filename": "chrome/browser/chromeos/policy/temp_certs_cache_nss.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T21:36:29Z",
+      "side": 1,
+      "message": "nit: s/onc_x509_certs/x509_certs/",
+      "range": {
+        "startLine": 21,
+        "startChar": 61,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "fa9bc24b03e887c1bd416f24d53e8f74f9dfc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6480039d_378c667b",
+        "filename": "chrome/browser/chromeos/policy/temp_certs_cache_nss.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-02T21:36:29Z",
+      "side": 1,
+      "message": "Hmm, just thinking - is it still a right place for this function? The class is no more specific to neither untrusted authorities nor to ONC.\nAlso this function is just a shortcut for DeviceNetworkConfigurationUpdater::GetAuthorityCertificates().",
+      "revId": "fa9bc24b03e887c1bd416f24d53e8f74f9dfc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
