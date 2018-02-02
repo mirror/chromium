@@ -52,6 +52,24 @@
       "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3428899_f55eab4e",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-02-02T22:13:31Z",
+      "side": 1,
+      "message": "Don\u0027t we agree the end state is to use \"perf_dashboard_machine_group:\" for LUCI? If so, I think it\u0027s easier to clean thing up if we do:\n\nif buildbot:\n  use the dict conversion for \"mastername\"\nelif LUCI:\n  use  \"perf_dashboard_machine_group:\"",
+      "parentUuid": "accca1de_ebb5489a",
+      "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
