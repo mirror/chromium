@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "01148b09_d98c9312",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-02T09:47:21Z",
+      "side": 1,
+      "message": "I prefer one method as that is what we need to have in the other contextual promos as well.",
+      "parentUuid": "d799f178_214c6e5e",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c787990_f7e4654b",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 4
