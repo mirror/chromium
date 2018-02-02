@@ -122,6 +122,7 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
 
   void DestroyUnitUnderTest() {
     SetLocalLogsObserver(nullptr);
+    SetRemoteLogsObserver(nullptr);
     manager_.reset();
   }
 
@@ -1349,6 +1350,8 @@ TEST_F(WebRtcEventLogManagerTest, StartRemoteLoggingCreatesEmptyFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogFileCreatedInCorrectDirectory) {
+  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
+
   // Set up separate browser contexts; each one will get one log.
   constexpr size_t kLogsNum = 3;
   std::unique_ptr<TestBrowserContext> browser_contexts[kLogsNum] = {
@@ -1361,7 +1364,6 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileCreatedInCorrectDirectory) {
 
   // Prepare to store the logs' paths in distinct memory locations.
   base::Optional<base::FilePath> file_paths[kLogsNum];
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
   for (size_t i = 0; i < kLogsNum; i++) {
     const PeerConnectionKey key(rphs[i]->GetID(), kPeerConnectionId);
     EXPECT_CALL(observer, OnRemoteLogStarted(key, _))
@@ -1381,6 +1383,8 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileCreatedInCorrectDirectory) {
     ASSERT_TRUE(file_paths[i]);
     EXPECT_TRUE(browser_contexts[i]->GetPath().IsParent(*file_paths[i]));
   }
+
+  SetRemoteLogsObserver(nullptr);
 }
 
 TEST_F(WebRtcEventLogManagerTest,
