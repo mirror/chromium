@@ -32,7 +32,8 @@ namespace scheduler {
 // fast forward the timers.
 class PerfTestTimeDomain : public VirtualTimeDomain {
  public:
-  PerfTestTimeDomain() : VirtualTimeDomain(base::TimeTicks::Now()) {}
+  PerfTestTimeDomain()
+      : VirtualTimeDomain(base::Time::Now(), base::TimeTicks::Now()) {}
   ~PerfTestTimeDomain() override = default;
 
   base::Optional<base::TimeDelta> DelayTillNextTask(
@@ -41,7 +42,7 @@ class PerfTestTimeDomain : public VirtualTimeDomain {
     if (!NextScheduledRunTime(&run_time))
       return base::Optional<base::TimeDelta>();
 
-    AdvanceTo(run_time);
+    AdvanceNowTo(run_time);
     return base::TimeDelta();  // Makes DoWork post an immediate continuation.
   }
 

@@ -20,6 +20,8 @@ std::unique_ptr<blink::WebThread> FakeRendererScheduler::CreateMainThread() {
   return nullptr;
 }
 
+void FakeRendererScheduler::V8Initalized() {}
+
 scoped_refptr<base::SingleThreadTaskRunner>
 FakeRendererScheduler::DefaultTaskRunner() {
   return nullptr;

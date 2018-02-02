@@ -1250,6 +1250,8 @@ void RenderThreadImpl::InitializeWebKit(
   blink::Initialize(blink_platform_impl_.get(), registry);
 
   v8::Isolate* isolate = blink::MainThreadIsolate();
+  renderer_scheduler_->V8Initalized();
+
   isolate->SetCreateHistogramFunction(CreateHistogram);
   isolate->SetAddHistogramSampleFunction(AddHistogramSample);
   renderer_scheduler_->SetRAILModeObserver(this);

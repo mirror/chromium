@@ -11,8 +11,14 @@
 namespace blink {
 namespace scheduler {
 
-VirtualTimeDomain::VirtualTimeDomain(base::TimeTicks initial_time)
-    : now_(initial_time), task_queue_manager_(nullptr) {}
+VirtualTimeDomain::VirtualTimeDomain(base::Time initial_time,
+                                     base::TimeTicks initial_time_ticks)
+    : thread_id_(base::PlatformThread::CurrentId()),
+      initial_time_(initial_time),
+      initial_time_ticks_(initial_time_ticks),
+      min_time_offset_(base::TimeDelta::FromMilliseconds(1)),
+      now_ticks_(initial_time_ticks),
+      task_queue_manager_(nullptr) {}
 
 VirtualTimeDomain::~VirtualTimeDomain() = default;
 
@@ -24,12 +30,12 @@ void VirtualTimeDomain::OnRegisterWithTaskQueueManager(
 
 LazyNow VirtualTimeDomain::CreateLazyNow() const {
   base::AutoLock lock(lock_);
-  return LazyNow(now_);
+  return LazyNow(now_ticks_);
 }
 
 base::TimeTicks VirtualTimeDomain::Now() const {
   base::AutoLock lock(lock_);
-  return now_;
+  return now_ticks_;
 }
 
 void VirtualTimeDomain::RequestWakeUpAt(base::TimeTicks now,
@@ -51,10 +57,10 @@ base::Optional<base::TimeDelta> VirtualTimeDomain::DelayTillNextTask(
 void VirtualTimeDomain::AsValueIntoInternal(
     base::trace_event::TracedValue* state) const {}
 
-void VirtualTimeDomain::AdvanceTo(base::TimeTicks now) {
+void VirtualTimeDomain::AdvanceNowTo(base::TimeTicks now) {
   base::AutoLock lock(lock_);
-  DCHECK_GE(now, now_);
-  now_ = now;
+  DCHECK_GE(now, now_ticks_);
+  now_ticks_ = now;
 }
 
 void VirtualTimeDomain::RequestDoWork() {

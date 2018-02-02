@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/time/time_override.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
 
 namespace blink {
@@ -26,8 +27,10 @@ class PLATFORM_EXPORT AutoAdvancingVirtualTimeDomain
     : public VirtualTimeDomain,
       public base::MessageLoop::TaskObserver {
  public:
-  AutoAdvancingVirtualTimeDomain(base::TimeTicks initial_time,
-                                 SchedulerHelper* helper);
+  AutoAdvancingVirtualTimeDomain(base::Time initial_time,
+                                 base::TimeTicks initial_time_ticks,
+                                 SchedulerHelper* helper,
+                                 bool override_base_time);
   ~AutoAdvancingVirtualTimeDomain() override;
 
   // TimeDomain implementation:
@@ -72,7 +75,18 @@ class PLATFORM_EXPORT AutoAdvancingVirtualTimeDomain
 
   int task_starvation_count() const { return task_starvation_count_; }
 
+  // Can be called on any thread.  On the main thread, if the call appears to
+  // be from within v8 the returned value will always increase to prevent JS
+  // entering infinite loops.
+  base::Time Date() const;
+
+  void V8Initalized();
+
  private:
+  static base::TimeTicks GetVirtualTimeTicks();
+  static base::Time GetVirtualTime();
+  static AutoAdvancingVirtualTimeDomain* g_time_domain_;
+
   // The number of tasks that have been run since the last time VirtualTime
   // advanced. Used to detect excessive starvation of delayed tasks.
   int task_starvation_count_;
@@ -92,6 +106,12 @@ class PLATFORM_EXPORT AutoAdvancingVirtualTimeDomain
 
   // Upper limit on how far virtual time is allowed to advance.
   base::TimeTicks virtual_time_fence_;
+
+  // Guarded by VirtualTimeDomain::lock_
+  mutable base::Time previous_time_;
+  bool v8_initalized_;
+
+  std::unique_ptr<base::subtle::ScopedTimeClockOverrides> time_overrides_;
 
   DISALLOW_COPY_AND_ASSIGN(AutoAdvancingVirtualTimeDomain);
 };
