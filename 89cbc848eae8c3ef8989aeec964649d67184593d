@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a355031a_90e55f65",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T23:54:33Z",
+      "side": 1,
+      "message": "nit: the linked bug is fixed, so this comment isn\u0027t entirely correct anymore...",
+      "revId": "89cbc848eae8c3ef8989aeec964649d67184593d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c48cd4d_aa9cd0d9",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T23:54:33Z",
+      "side": 1,
+      "message": "this all seems way more complicated then necesary. For localstorage the code needs to get usage from both mojo and non-mojo code paths since they are two different storage systems only converted on first access of an origin. But here you\u0027re using the same DB and indeed are only getting usage from one system, so it doesn\u0027t seem like you need half the levels of indirection?",
+      "revId": "89cbc848eae8c3ef8989aeec964649d67184593d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1413d2c3_fb31d944",
+        "filename": "content/browser/dom_storage/dom_storage_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T23:54:33Z",
+      "side": 1,
+      "message": "would it make sense to only have the DOMStorageContextWrapper version of the Create methods, and extract the DOMStorageContextImpl inside there if needed?",
+      "revId": "89cbc848eae8c3ef8989aeec964649d67184593d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814235cd_a5dd66cf",
+        "filename": "content/browser/dom_storage/session_storage_namespace_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T23:54:33Z",
+      "side": 1,
+      "message": "do you actually need all these !! bits? Won\u0027t ?: convert to bool anyway?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "89cbc848eae8c3ef8989aeec964649d67184593d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4a3de7_8cb46d4a",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-02T23:54:33Z",
+      "side": 1,
+      "message": "do you want a check that input_size is actually even like the UTF16 case below has?",
+      "revId": "89cbc848eae8c3ef8989aeec964649d67184593d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
