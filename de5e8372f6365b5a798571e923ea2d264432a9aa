@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca073483_d50f1dfc",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-02T17:30:19Z",
+      "side": 1,
+      "message": "As mentioned in the previous patchset, I don\u0027t think this is the right linker condition to check here given the default values of use_lld and use_gold for current_cpu\u003d\"mipsel\" + is_android. I think both use_lld and use_gold are false in that case.",
+      "range": {
+        "startLine": 38,
+        "startChar": 71,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "de5e8372f6365b5a798571e923ea2d264432a9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
