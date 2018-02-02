@@ -19,6 +19,98 @@
     },
     {
       "key": {
+        "uuid": "7ab28c24_b7177c06",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T19:01:25Z",
+      "side": 1,
+      "message": "Where is this class used?",
+      "range": {
+        "startLine": 96,
+        "startChar": 48,
+        "endLine": 96,
+        "endChar": 60
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa1c1c2_ba1db03e",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T19:01:25Z",
+      "side": 1,
+      "message": "Nit: Can fit in previous line?",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc5cef3_a4ec427e",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T19:01:25Z",
+      "side": 1,
+      "message": "Not needed for primitive types. string implies !string.",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 15
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b4c4e4_cdb64a4c",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T19:01:25Z",
+      "side": 1,
+      "message": "Is this expected to be null or empty? If null, annotate as ?string",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "788ce600_d2fa9d2d",
         "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
         "patchSetId": 5
