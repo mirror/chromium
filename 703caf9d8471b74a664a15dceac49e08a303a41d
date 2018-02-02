@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14b746e3_b9f6361b",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-02T17:23:29Z",
+      "side": 1,
+      "message": "This was introduced by error while rebasing. Thank you for catching.",
+      "parentUuid": "6acc51dd_661818dc",
+      "range": {
+        "startLine": 577,
+        "startChar": 3,
+        "endLine": 577,
+        "endChar": 4
+      },
+      "revId": "703caf9d8471b74a664a15dceac49e08a303a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981d1a18_897889de",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "703caf9d8471b74a664a15dceac49e08a303a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6090b1c9_7ea3a883",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-02T17:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981d1a18_897889de",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 9
+      },
+      "revId": "703caf9d8471b74a664a15dceac49e08a303a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
