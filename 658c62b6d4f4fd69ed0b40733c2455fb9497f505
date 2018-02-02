@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1375eb83_f6837429",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T15:03:58Z",
+      "side": 1,
+      "message": "Added comment, for q2 tablet work.",
+      "parentUuid": "1d4818f7_4d3636a9",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 80
+      },
+      "revId": "658c62b6d4f4fd69ed0b40733c2455fb9497f505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcb5b609_a058d5d5",
         "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "658c62b6d4f4fd69ed0b40733c2455fb9497f505",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0b9e0c_f420ff16",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T15:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb5b609_a058d5d5",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "658c62b6d4f4fd69ed0b40733c2455fb9497f505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

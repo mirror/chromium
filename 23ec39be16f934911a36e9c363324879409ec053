@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "8db0c774_faa67d6e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T15:03:58Z",
+      "side": 1,
+      "message": "I\u0027m going to file a bug to revisit and clean this up in March.  I agree with you this is not ideal, but for now I think it\u0027s \u0027ok\u0027.",
+      "parentUuid": "4ef7c605_ef66a2f4",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d97e5a_5aed43d2",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
         "patchSetId": 6
@@ -320,6 +344,30 @@
       "side": 1,
       "message": "I am surprised that it is throwing an exception, but it is fine to add it here.",
       "parentUuid": "bf3f36b5_181cf0cb",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 61
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55b4e3a9_8f67993c",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-02T15:03:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2229e135_321329f9",
       "range": {
         "startLine": 221,
         "startChar": 42,
