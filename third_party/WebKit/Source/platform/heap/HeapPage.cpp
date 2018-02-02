@@ -167,11 +167,16 @@ BasePage* BaseArena::FindPageFromAddress(Address address) {
 }
 #endif
 
-void BaseArena::MakeConsistentForGC() {
-  ClearFreeLists();
+void BaseArena::CheckIntegrity() {
+  for (BasePage* page = first_page_; page; page = page->Next())
+    page->CheckIntegrity();
+}
 
-  // Verification depends on the allocation point being cleared.
-  Verify();
+void BaseArena::MakeConsistentForGC() {
+//  ClearFreeLists();
+//
+//  // Verification depends on the allocation point being cleared.
+//  Verify();
 
 #if DCHECK_IS_ON()
   DCHECK(IsConsistentForGC());
@@ -233,9 +238,16 @@ size_t BaseArena::ObjectPayloadSizeForTesting() {
   return object_payload_size;
 }
 
+size_t NormalPageArena::ObjectPayloadSizeForTesting() {
+  SetAllocationPoint(nullptr, 0);
+  return BaseArena::ObjectPayloadSizeForTesting();
+}
+
 void BaseArena::PrepareForSweep() {
   DCHECK(GetThreadState()->IsInGC());
   DCHECK(SweepingCompleted());
+
+  ClearFreeLists();
 
   // Move all pages to a list of unswept pages.
   first_unswept_page_ = first_page_;
@@ -278,6 +290,7 @@ Address BaseArena::LazySweep(size_t allocation_size, size_t gc_info_index) {
 
 void BaseArena::SweepUnsweptPage() {
   BasePage* page = first_unswept_page_;
+  CHECK(page->IsValid());
   if (page->IsEmpty()) {
     page->Unlink(&first_unswept_page_);
     page->RemoveFromHeap();
@@ -1627,20 +1640,30 @@ void NormalPage::PoisonUnmarkedObjects() {
 
 void NormalPage::VerifyObjectStartBitmapIsConsistentWithPayload() {
 #if DCHECK_IS_ON()
-  Address current_allocation_point =
-      ArenaForNormalPage()->CurrentAllocationPoint();
-  DCHECK(!current_allocation_point ||
-         (PageFromObject(current_allocation_point) != this));
+  NormalPage* page = this;
 
   HeapObjectHeader* current_header =
       reinterpret_cast<HeapObjectHeader*>(Payload());
-  object_start_bit_map()->Iterate([&current_header](Address object_address) {
+  if (reinterpret_cast<Address>(current_header) ==
+      page->ArenaForNormalPage()->CurrentAllocationPoint()) {
+    current_header = reinterpret_cast<HeapObjectHeader*>(
+        reinterpret_cast<Address>(current_header) +
+        page->ArenaForNormalPage()->RemainingAllocationSize());
+  }
+  object_start_bit_map()->Iterate([&current_header,
+                                   &page](Address object_address) {
     const HeapObjectHeader* object_header =
         reinterpret_cast<HeapObjectHeader*>(object_address);
     DCHECK_EQ(object_header, current_header);
     DCHECK(object_header->IsValidOrZapped());
     current_header = reinterpret_cast<HeapObjectHeader*>(object_address +
                                                          object_header->size());
+    if (reinterpret_cast<Address>(current_header) ==
+        page->ArenaForNormalPage()->CurrentAllocationPoint()) {
+      current_header = reinterpret_cast<HeapObjectHeader*>(
+          reinterpret_cast<Address>(current_header) +
+          page->ArenaForNormalPage()->RemainingAllocationSize());
+    }
   });
 #endif  // DCHECK_IS_ON()
 }
@@ -1936,5 +1959,11 @@ void HeapDoesNotContainCache::AddEntry(Address address) {
   entries_[index + 1] = entries_[index];
   entries_[index] = cache_page;
 }
+
+void NormalPage::CheckIntegrity() {
+  VerifyObjectStartBitmapIsConsistentWithPayload();
+}
+
+void LargeObjectPage::CheckIntegrity() {}
 
 }  // namespace blink

@@ -74,9 +74,12 @@ static_assert(WTF::IsTraceable<IntWrapper>::value,
 using IntVector = blink::HeapVector<blink::Member<IntWrapper>>;
 using IntDeque = blink::HeapDeque<blink::Member<IntWrapper>>;
 using IntMap = blink::HeapHashMap<blink::Member<IntWrapper>, int>;
+
+#if ENABLE_HEAP_COMPACTION
 // TODO(sof): decide if this ought to be a global trait specialization.
 // (i.e., for HeapHash*<T>.)
 WTF_ALLOW_CLEAR_UNUSED_SLOTS_WITH_MEM_FUNCTIONS(IntMap);
+#endif
 
 namespace blink {
 #if ENABLE_HEAP_COMPACTION

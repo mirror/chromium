@@ -1385,6 +1385,7 @@ TEST(IncrementalMarkingTest, HeapHashMapCopyValuesToVectorMember) {
 TEST(IncrementalMarkingTest, WeakHashMapPromptlyFreeDisabled) {
   ThreadState* state = ThreadState::Current();
   state->SetGCState(ThreadState::kIncrementalMarkingStartScheduled);
+  state->SetGCState(ThreadState::kGCRunning);
   state->SetGCState(ThreadState::kIncrementalMarkingStepScheduled);
   Persistent<Object> obj1 = Object::Create();
   NormalPageArena* arena = static_cast<NormalPageArena*>(
@@ -1414,8 +1415,27 @@ TEST(IncrementalMarkingTest, WeakHashMapPromptlyFreeDisabled) {
     // Non-weak hash table backings should be promptly freed.
     EXPECT_GT(after, before);
   }
-  state->SetGCState(ThreadState::kIncrementalMarkingFinalizeScheduled);
+  state->SetGCState(ThreadState::kGCRunning);
+  state->SetGCState(ThreadState::kSweeping);
   state->SetGCState(ThreadState::kNoGCScheduled);
+}
+
+// TODO(keishi): Crashes when sweeping.
+TEST(IncrementalMarkingTest, AddReferenceWhileIncrementalMarking) {
+  ThreadState* state = ThreadState::Current();
+  Persistent<Object> obj1 = Object::Create();
+  state->IncrementalMarkingStart();
+  EXPECT_TRUE(obj1->IsMarked());
+  Object* obj2 = Object::Create();
+  obj1->set_next(obj2);
+  while (state->GcState() !=
+         ThreadState::kIncrementalMarkingFinalizeScheduled) {
+    state->IncrementalMarkingStep();
+  }
+  // Write barrier should fire to mark obj2.
+  EXPECT_TRUE(obj2->IsMarked());
+  state->IncrementalMarkingFinalize();
+  state->CompleteSweep();
 }
 
 }  // namespace incremental_marking_test

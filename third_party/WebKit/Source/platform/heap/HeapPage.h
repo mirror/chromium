@@ -436,12 +436,12 @@ class BasePage {
   bool HasBeenSwept() const { return swept_; }
 
   void MarkAsSwept() {
-    DCHECK(!swept_);
+    // DCHECK(!swept_);
     swept_ = true;
   }
 
   void MarkAsUnswept() {
-    DCHECK(swept_);
+    // DCHECK(swept_);
     swept_ = false;
   }
 
@@ -451,6 +451,8 @@ class BasePage {
 
   // Returns true if magic number is valid.
   bool IsValid() const;
+
+  virtual void CheckIntegrity() = 0;
 
  private:
   // Returns a random magic value.
@@ -604,6 +606,8 @@ class PLATFORM_EXPORT NormalPage final : public BasePage {
   // is also reachable through iteration on the page.
   void VerifyObjectStartBitmapIsConsistentWithPayload();
 
+  void CheckIntegrity() override;
+
   // Uses the object_start_bit_map_ to find an object for a given address. The
   // returned header is either nullptr, indicating that no object could be
   // found, or it is pointing to valid object or free list entry.
@@ -637,6 +641,7 @@ class LargeObjectPage final : public BasePage {
   }
 
   size_t ObjectPayloadSizeForTesting() override;
+  void CheckIntegrity() override;
   bool IsEmpty() override;
   void RemoveFromHeap() override;
   void Sweep() override;
@@ -795,12 +800,13 @@ class PLATFORM_EXPORT BaseArena {
 #endif
   virtual void TakeFreelistSnapshot(const String& dump_base_name) {}
   virtual void ClearFreeLists() {}
+  void CheckIntegrity();
   void MakeConsistentForGC();
   void MakeConsistentForMutator();
 #if DCHECK_IS_ON()
   virtual bool IsConsistentForGC() = 0;
 #endif
-  size_t ObjectPayloadSizeForTesting();
+  virtual size_t ObjectPayloadSizeForTesting();
   void PrepareForSweep();
 #if defined(ADDRESS_SANITIZER)
   void PoisonArena();
@@ -860,6 +866,7 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   bool PagesToBeSweptContains(Address);
 #endif
   void TakeFreelistSnapshot(const String& dump_base_name) override;
+  size_t ObjectPayloadSizeForTesting() override;
 
   Address AllocateObject(size_t allocation_size, size_t gc_info_index);
 
@@ -887,6 +894,7 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   void Verify() override;
 
   Address CurrentAllocationPoint() const { return current_allocation_point_; }
+  size_t RemainingAllocationSize() const { return remaining_allocation_size_; }
 
   bool IsInCurrentAllocationPointRegion(Address address) const {
     return HasCurrentAllocationArea() &&
@@ -907,7 +915,6 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   }
   void SetAllocationPoint(Address, size_t);
 
-  size_t RemainingAllocationSize() const { return remaining_allocation_size_; }
   void SetRemainingAllocationSize(size_t);
   void UpdateRemainingAllocationSize();
 

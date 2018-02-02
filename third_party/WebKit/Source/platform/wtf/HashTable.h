@@ -1762,6 +1762,8 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     stats_ = HashTableStatsPtr<Allocator>::Create();
 #endif
 
+  // Allocator::ManualWriteBarrier(table_);
+
   return new_entry;
 }
 
@@ -2060,6 +2062,9 @@ struct WeakProcessingHashTableHelper<kWeakHandlingInCollections,
   static void EphemeronIteration(typename Allocator::Visitor* visitor,
                                  void* closure) {
     HashTableType* table = reinterpret_cast<HashTableType*>(closure);
+    // Table may be gone when the callback is invoked.
+    if (!table->table_)
+      return;
     DCHECK(table->table_);
     // Check the hash table for elements that we now know will not be
     // removed by weak processing. Those elements need to have their strong

@@ -213,7 +213,6 @@ Address ThreadHeap::CheckAndMarkPointer(
 
 void ThreadHeap::PushTraceCallback(void* object, TraceCallback callback) {
   DCHECK(thread_state_->IsInGC() || thread_state_->IsIncrementalMarking());
-
   CallbackStack::Item* slot = marking_stack_->AllocateEntry();
   *slot = CallbackStack::Item(object, callback);
 }
@@ -819,6 +818,11 @@ void ThreadHeap::WriteBarrierInternal(BasePage* page, const void* value) {
   header->Mark();
   PushTraceCallback(header->Payload(),
                     ThreadHeap::GcInfo(header->GcInfoIndex())->trace_);
+}
+
+void ThreadHeap::CheckIntegrity() {
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->CheckIntegrity();
 }
 
 ThreadHeap* ThreadHeap::main_thread_heap_ = nullptr;

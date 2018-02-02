@@ -225,6 +225,11 @@ class PLATFORM_EXPORT ThreadHeap {
     return weak_callback_stack_.get();
   }
   CallbackStack* EphemeronStack() const { return ephemeron_stack_.get(); }
+  CallbackStack* EphemeronIterationDoneStack() const {
+    return ephemeron_iteration_done_stack_.get();
+  }
+
+  void CheckIntegrity();
 
   void VisitPersistentRoots(Visitor*);
   void VisitStackRoots(Visitor*);
@@ -245,10 +250,11 @@ class PLATFORM_EXPORT ThreadHeap {
     static_assert(IsGarbageCollectedType<T>::value,
                   "only objects deriving from GarbageCollected can be used.");
     BasePage* page = PageFromObject(object_pointer);
+    if (!page->Arena()->GetThreadState()->IsSweepingInProgress())
+      return false;
     // Page has been swept and it is still alive.
     if (page->HasBeenSwept())
       return false;
-    DCHECK(page->Arena()->GetThreadState()->IsSweepingInProgress());
 
     // If marked and alive, the object hasn't yet been swept..and won't
     // be once its page is processed.
