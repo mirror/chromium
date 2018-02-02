@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869603d6_9ddf6a4c",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T20:47:40Z",
+      "side": 1,
+      "message": "Is there a reason you need this here? The more typical pattern is to put the register call close to the code that uses it. See RegisterLocalState() in browser_prefs for what I mean.",
+      "range": {
+        "startLine": 883,
+        "startChar": 12,
+        "endLine": 883,
+        "endChar": 34
+      },
+      "revId": "bcd6dce51250fac49b53e7210c30c7bba464e4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
