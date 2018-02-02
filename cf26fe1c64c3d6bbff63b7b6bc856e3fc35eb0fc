@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f0dd577_606f6a3a",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T19:14:27Z",
+      "side": 1,
+      "message": "I have added a test case for this in the CompositorAnimationsTest. Basically there is a transform animation on a SVG element, and CheckCanStartEffectOnCompositor does return code.Ok(). So the code path will get to here.\n\nThe CheckCanStartEffectOnCompositor doesn\u0027t check whether the element is SVG or not, it only checks whether the animated property can be started on compositor or not. In this particular case (transform animation), it can.",
+      "parentUuid": "3b27a89d_2c1b7f8e",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 298,
+        "endChar": 56
+      },
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d024d9a2_a0cde676",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 8
