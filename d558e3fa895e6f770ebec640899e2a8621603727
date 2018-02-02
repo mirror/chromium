@@ -52,6 +52,24 @@
       "revId": "d558e3fa895e6f770ebec640899e2a8621603727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa62b3c0_7663b9fa",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T18:18:30Z",
+      "side": 1,
+      "message": "As discussed, switched to indicate that we\u0027ll eventually want to add splits of this metric for the backgrounded and never backgrounded cases.",
+      "parentUuid": "9ed6671b_435a4eab",
+      "revId": "d558e3fa895e6f770ebec640899e2a8621603727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
