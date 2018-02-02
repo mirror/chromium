@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66cacd5e_443dc5aa",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T00:12:24Z",
+      "side": 1,
+      "message": "you know what... I think we don\u0027t even need this file to change :). browser_window_views_mac.mm was needed while BrowserWindowController wasn\u0027t linked in. But now it is! So we can just delete browser_window_views_mac.mm. However, I do think it\u0027s worth keeping these methods rather than having callsites invoke the method on BrowserWindowController, since those callsites should work with a views browser as well (and indicate possible missing functionality on the views browser like appkit/vs-immersive fullscreen)\n\nAnd BrowserWindowController browserWindowControllerForWindow will return nil if it\u0027s passed a views browser window. So the old implementations would (theoretically) work if we were to try crazy stuff like showing *both* views and cocoa browser windows in one process. So I don\u0027t think this file needs to change at all.",
+      "revId": "00af1cb481c6fa1fb2032f6e83a9b4137753dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
