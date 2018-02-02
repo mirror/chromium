@@ -1048,9 +1048,16 @@ class RTCPeerConnectionHandler::WebRtcSetRemoteDescriptionObserverImpl
       // Process the addition of remote receivers/tracks.
       for (auto& receiver_state : states.receiver_states) {
         if (ReceiverWasAdded(receiver_state)) {
+          LOG(ERROR) << "DEBUG: Track_ref is "
+                     << receiver_state.track_ref.get();
+          // Check for nullness by crashing here first.
+          auto* x = receiver_state.track_ref->webrtc_track();
+          LOG(ERROR) << "DEBUG: webrtc track is " << x;
+          auto y = receiver_state.track_ref->web_track();
           handler_->OnAddRemoteTrack(receiver_state.receiver,
                                      std::move(receiver_state.track_ref),
                                      std::move(receiver_state.stream_refs));
+          LOG(ERROR) << "DEBUG: Finished adding remote track";
         }
       }
       // Process the removal of remote receivers/tracks.
