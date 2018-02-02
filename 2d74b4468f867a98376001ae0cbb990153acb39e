@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a76421eb_ab94a97c",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_unpremultiply_and_dither_copy.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-02T17:43:52Z",
+      "side": 1,
+      "message": "This file might be overkill given that this is a targeted workaround not designed to be called by external parties?",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 42
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca023af_fe45dc05",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 4644,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-02T17:43:52Z",
+      "side": 1,
+      "message": "Wasn\u0027t 100% sure how you had suggested I address this fn being missing on passthrough command buffer. Were you thinking I basically use \"extension_flag\" to get a flag on feature info, then pass that through to gpu::Capabilities in the renderer?",
+      "range": {
+        "startLine": 4644,
+        "startChar": 18,
+        "endLine": 4644,
+        "endChar": 56
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80400891_f0832c38",
+        "filename": "gpu/command_buffer/service/gles2_cmd_copy_texture_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-02T17:43:52Z",
+      "side": 1,
+      "message": "Skia also has an integer / bit-shifting approach, but that is only ES3+. In previous testing, this method was close to the performance of the bit shifting approach, but works everywhere... didn\u0027t seem worth the complexity of adding both?",
+      "range": {
+        "startLine": 458,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 10
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cc5b45_44766886",
+        "filename": "gpu/command_buffer/tests/gl_copy_texture_CHROMIUM_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-02T17:43:52Z",
+      "side": 1,
+      "message": "These tests seemed to fit in pretty well here, although it\u0027s not technically part of gl_copy_texture_CHROMIUM... I can split these out as well though, but might duplicate some code. WDYT?",
+      "range": {
+        "startLine": 1679,
+        "startChar": 34,
+        "endLine": 1679,
+        "endChar": 60
+      },
+      "revId": "2d74b4468f867a98376001ae0cbb990153acb39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
