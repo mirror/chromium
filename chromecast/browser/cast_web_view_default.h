@@ -25,6 +25,10 @@ class SiteInstance;
 
 namespace chromecast {
 
+namespace shell {
+class RemoteDebuggingServer;
+}
+
 class CastWebContentsManager;
 class CastWindowManager;
 
@@ -42,7 +46,8 @@ class CastWebViewDefault : public CastWebView,
                      bool transparent,
                      bool allow_media_access,
                      bool is_headless,
-                     bool enable_touch_input);
+                     bool enable_touch_input,
+                     bool enabled_for_dev);
   ~CastWebViewDefault() override;
 
   // CastWebView implementation:
@@ -95,6 +100,7 @@ class CastWebViewDefault : public CastWebView,
   Delegate* const delegate_;
   CastWebContentsManager* const web_contents_manager_;
   content::BrowserContext* const browser_context_;
+  shell::RemoteDebuggingServer* remote_debugging_server_;
   const scoped_refptr<content::SiteInstance> site_instance_;
   const bool transparent_;
   std::unique_ptr<content::WebContents> web_contents_;
@@ -102,6 +108,7 @@ class CastWebViewDefault : public CastWebView,
   bool did_start_navigation_;
   base::TimeDelta shutdown_delay_;
   bool allow_media_access_;
+  bool enabled_for_dev_;
 
   DISALLOW_COPY_AND_ASSIGN(CastWebViewDefault);
 };

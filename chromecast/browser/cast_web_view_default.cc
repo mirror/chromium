@@ -11,7 +11,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromecast/base/cast_features.h"
 #include "chromecast/base/metrics/cast_metrics_helper.h"
+#include "chromecast/browser/cast_browser_process.h"
 #include "chromecast/browser/cast_web_contents_manager.h"
+#include "chromecast/browser/devtools/remote_debugging_server.h"
 #include "chromecast/chromecast_features.h"
 #include "chromecast/public/cast_media_shlib.h"
 #include "content/public/browser/media_capture_devices.h"
@@ -65,10 +67,13 @@ CastWebViewDefault::CastWebViewDefault(
     bool transparent,
     bool allow_media_access,
     bool is_headless,
-    bool enable_touch_input)
+    bool enable_touch_input,
+    bool enabled_for_dev)
     : delegate_(delegate),
       web_contents_manager_(web_contents_manager),
       browser_context_(browser_context),
+      remote_debugging_server_(
+          shell::CastBrowserProcess::GetInstance()->remote_debugging_server()),
       site_instance_(std::move(site_instance)),
       transparent_(transparent),
       web_contents_(CreateWebContents(browser_context_, site_instance_)),
@@ -76,13 +81,23 @@ CastWebViewDefault::CastWebViewDefault(
                                                is_headless,
                                                enable_touch_input)),
       did_start_navigation_(false),
-      allow_media_access_(allow_media_access) {
+      allow_media_access_(allow_media_access),
+      enabled_for_dev_(enabled_for_dev) {
   DCHECK(delegate_);
   DCHECK(web_contents_manager_);
   DCHECK(browser_context_);
   DCHECK(window_);
   content::WebContentsObserver::Observe(web_contents_.get());
   web_contents_->SetDelegate(this);
+
+  // If this CastWebView is enabled for development, start the remote debugger.
+  // This should only occur for debug builds, or if an app is whitelisted for
+  // development in the Device Configuration Server.
+  if (enabled_for_dev_) {
+    LOG(INFO) << "Enabling dev console for " << web_contents_->GetVisibleURL();
+    remote_debugging_server_->EnableWebContentsForDebugging(
+        web_contents_.get());
+  }
 }
 
 CastWebViewDefault::~CastWebViewDefault() {}
