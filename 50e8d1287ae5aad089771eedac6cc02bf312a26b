@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "836dfc75_7756741e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T02:14:23Z",
+      "side": 1,
+      "message": "\u003e - FrameLoader::RestoreScrollPositionAndViewState\n\u003e - Page::DidCommitLoad\n\u003e - RotationViewportAnchor::RestoreToAnchor\n\u003e - SnapCoordinator::PerformSnapping\n\u003e - TextFieldInputType::ForwardEvent\n\u003e - ImageDocument::ImageClicked\n\nDoes user scrolling cancel browser restoration? Should it? It does cancel fragment navigation and this feels like a similar use case.\n\nIMHO, These all seem like they\u0027re either at a time when it doesn\u0027t matter for scroll restoration or they\u0027re the result of a user action which we should maybe be taking as a cue not to change the scroll offset.\n\nScrollType was originally meant to handle the fact that we have separate animators for programmatic and user scrolling but has since grown from the original 2 to 6 and there\u0027s already ambiguity between different types so I\u0027m a bit weary of adding yet another.\n\nIf we\u0027re going to make a sweeping change (Chao\u0027s split out patch touches lots of stuff) I think we\u0027d be better served by a bit field. such that kProgrammaticScroll \u003d\u003d kBrowserScroll | kScriptScroll | kSequencedScroll (and maybe Anchoring | Clamping?). Then we could also have compositor scrolls being kCompositorScroll | kUserScroll to differentiate from kCompositorScroll | kClampingScroll which would also be helpful in some situations. That way if we keep adding information to where a scroll came from we don\u0027t have to keep changing every handler to make sure it covers the new case too. WDYT?",
+      "parentUuid": "80f45cae_dac5f26b",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
