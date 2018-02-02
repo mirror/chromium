@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a127d40c_288226bb",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T00:09:47Z",
+      "side": 1,
+      "message": "mind adding a comment here to make it obvious what this represents?",
+      "revId": "051bb11dcf559f49ba9a9e4ab759c412024d52ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
