@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731f676a_e3ae9c22",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/events.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T16:27:29Z",
+      "side": 1,
+      "message": "A bit of a speculation, but does the test keep running after a failed assertEq? In that case, one failing test may fail to reset state for the next one and cause it to fail too?",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "8fa5b3c0c46ae01849c4bc5966430bd0ac6b2b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
