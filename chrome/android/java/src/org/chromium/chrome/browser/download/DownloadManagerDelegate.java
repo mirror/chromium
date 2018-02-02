@@ -133,12 +133,33 @@ public class DownloadManagerDelegate {
      * Removes a download from Android DownloadManager.
      * @param downloadGuid The GUID of the download.
      */
-    void removeCompletedDownload(String downloadGuid) {
+    void removeCompletedDownload(String downloadGuid, String filePath) {
         long downloadId = removeDownloadIdMapping(downloadGuid);
-        if (downloadId != INVALID_SYSTEM_DOWNLOAD_ID) {
-            DownloadManager manager =
-                    (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-            manager.remove(downloadId);
+        Log.d("@@@", "removeCompletedDownload, android download id = " + downloadId);
+        if (downloadId == INVALID_SYSTEM_DOWNLOAD_ID) return;
+
+        DownloadManager manager =
+                (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Query q = new DownloadManager.Query().setFilterById(downloadId);
+        Cursor c = manager.query(q);
+        try {
+            if (!c.moveToFirst()) {
+                Log.d("@@@ ", " c moveToFirst failed. ");
+                return;
+            }
+            Uri localUri =
+                    Uri.parse(c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)));
+            if (localUri == null) return;
+            Log.d("@@@", "COLUMN_LOCAL_URI =" + localUri);
+            Log.d("@@@", "filePath = " + filePath);
+            // Let Android download to remove the file only if the file paths are the same, the user
+            // may rename or move the file in Android downloads.
+            if (DownloadUtils.compareFilePath(filePath, localUri.getPath())) {
+                Log.d("@@@", "actual remove!");
+                manager.remove(downloadId);
+            }
+        } finally {
+            c.close();
         }
     }
 

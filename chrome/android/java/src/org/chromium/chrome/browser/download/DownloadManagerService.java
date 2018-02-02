@@ -990,9 +990,13 @@ public class DownloadManagerService
      * Removes a download from the list.
      * @param downloadGuid GUID of the download.
      * @param isOffTheRecord Whether the download is off the record.
+     * @param filePath File path of the download.
      */
     @Override
-    public void removeDownload(final String downloadGuid, boolean isOffTheRecord) {
+    public void removeDownload(final String downloadGuid, boolean isOffTheRecord, String filePath) {
+        Log.d("@@@", "removeDownload, supposed to call when remove action in Chrome!");
+        Thread.dumpStack();
+
         mHandler.post(() -> {
             nativeRemoveDownload(getNativeDownloadManagerService(), downloadGuid, isOffTheRecord);
             removeDownloadProgress(downloadGuid);
@@ -1001,7 +1005,7 @@ public class DownloadManagerService
         new AsyncTask<Void, Void, Void>() {
             @Override
             public Void doInBackground(Void... params) {
-                mDownloadManagerDelegate.removeCompletedDownload(downloadGuid);
+                mDownloadManagerDelegate.removeCompletedDownload(downloadGuid, filePath);
                 return null;
             }
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
