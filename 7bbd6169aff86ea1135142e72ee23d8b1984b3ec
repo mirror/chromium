@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "98172ed5_9af460b2",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "Does app_list compile on targets other than chromeos? If so, does this need to be conditional on is_chromeos? If not, can this BUILD.gn file assert(is_chromeos)?",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc91efa_e6630af0",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 2
@@ -42,6 +59,57 @@
         "endLine": 355,
         "endChar": 27
       },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c9847a_730f652a",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "In general, having classes named foo::Baz and bar::Baz is OK, but it\u0027s very confusing if one is a subclass of the other. (We\u0027ve had this problem with app list code in the past, I think for AppListPresenterDelegate.) Please find a way to give the classes different names. For example, this one could be AppListSearchBoxView or SearchBoxViewImpl. Alternately the other one could be SearchBoxViewBase or SearchBoxBase.",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b698dd_95673e02",
+        "filename": "ui/chromeos/search_box/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "nit: chromeos always uses views, so I don\u0027t think there\u0027s much use in putting the UI classes in a views subdir. I would just put them in ui/chromeos/search_box.\n\n(btw, tools/git/move_source_file.py is an easy way to move things around, if you haven\u0027t seen it before)",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2f73d9_07cdbcb2",
+        "filename": "ui/chromeos/search_box/search_box_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "Can these be constexpr?",
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +162,40 @@
     },
     {
       "key": {
+        "uuid": "bc22a9fb_124e979e",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "Wait, is this just the icon+textfield, or is it the whole Widget/window? A WidgetDelegateView is an entire Widget.",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a686928_d83cc72c",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feabc0cf_dec7965f",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -117,6 +219,64 @@
     },
     {
       "key": {
+        "uuid": "947f4667_af9c0d3e",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "nit: Also, document what these methods are supposed to do.",
+      "parentUuid": "feabc0cf_dec7965f",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50c35bb_93e62083",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94358be6_93ccfbfb",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19f5506a_49a93383",
         "filename": "ui/chromeos/search_box/views/search_box_view.h",
         "patchSetId": 2
@@ -134,6 +294,57 @@
         "endLine": 136,
         "endChar": 38
       },
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f33aab5_c523817a",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "ditto xiyuan\u0027s comment",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acaa14d_84e8152d",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "This needs to move (or be deleted).",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c93b462_daa626a3",
+        "filename": "ui/chromeos/search_box/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T01:08:39Z",
+      "side": 1,
+      "message": "ditto this needs to move",
       "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
