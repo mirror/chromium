@@ -684,6 +684,7 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
       request.GetSuggestedFilename().has_value()
           ? base::Optional<std::string>(request.GetSuggestedFilename()->Utf8())
           : base::nullopt;
+  params.blob_url_loader_factory = request.GetURLLoaderFactory().release();
 
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }

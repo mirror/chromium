@@ -295,7 +295,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, initiator,
           GURL() /* client_side_redirect_url */,
-          nullptr /* blob_url_loader_factory */),
+          entry.blob_url_loader_factory()
+              .PassInterface() /* blob_url_loader_factory */),
       request_params, browser_initiated, false /* from_begin_navigation */,
       &frame_entry, &entry));
   return navigation_request;
