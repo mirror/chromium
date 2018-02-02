@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec072e20_c1d0443c",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T21:36:08Z",
+      "side": 1,
+      "message": "nit: i think that https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-code-in-headers suggests that this probably shouldn\u0027t be inlined now that it\u0027s calling std::max.\n\nmaybe you could instead just DCHECK_GT(screen_capture_active_counter_, 0) before doing the decrement? i assume that all of that would be compiled out in non-debug builds, then.",
+      "revId": "e9cf37292dc5d45aaa16c37a01e45134ea277e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
