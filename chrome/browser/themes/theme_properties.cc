@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
@@ -138,6 +139,29 @@ constexpr char kTilingRepeatX[] = "repeat-x";
 constexpr char kTilingRepeatY[] = "repeat-y";
 constexpr char kTilingRepeat[] = "repeat";
 
+base::Optional<SkColor> MaybeGetDefaultColorForTouchOptimizedUI(
+    int id,
+    bool incognito) {
+  if (!ui::MaterialDesignController::IsTouchOptimizedUiEnabled())
+    return base::nullopt;
+
+  switch (id) {
+    case ThemeProperties::COLOR_FRAME:
+      // Active frame colors.
+      return incognito ? SkColorSetRGB(0x20, 0x21, 0x24)
+                       : SkColorSetRGB(0xD0, 0xD2, 0xD6);
+    case ThemeProperties::COLOR_FRAME_INACTIVE:
+      // Inactive frame colors.
+      return incognito ? SkColorSetRGB(0x32, 0x36, 0x39)
+                       : SkColorSetRGB(0xE3, 0xE5, 0xE8);
+
+    // TODO: Place all touch-optimized UI related colors here.
+
+    default:
+      return base::nullopt;
+  }
+}
+
 }  // namespace
 
 // static
@@ -226,6 +250,11 @@ color_utils::HSL ThemeProperties::GetDefaultTint(int id, bool incognito) {
 
 // static
 SkColor ThemeProperties::GetDefaultColor(int id, bool incognito) {
+  const base::Optional<SkColor> color =
+      MaybeGetDefaultColorForTouchOptimizedUI(id, incognito);
+  if (color)
+    return color.value();
+
   switch (id) {
     // Properties stored in theme pack.
     case COLOR_FRAME:
