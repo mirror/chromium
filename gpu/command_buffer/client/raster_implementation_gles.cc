@@ -387,6 +387,7 @@ void RasterImplementationGLES::BeginRasterCHROMIUM(
     GLboolean can_use_lcd_text,
     GLboolean use_distance_field_text,
     GLint pixel_config) {
+  background_color_ = sk_color;
   gl_->BeginRasterCHROMIUM(texture_id, sk_color, msaa_sample_count,
                            can_use_lcd_text, use_distance_field_text,
                            pixel_config);
@@ -395,10 +396,12 @@ void RasterImplementationGLES::BeginRasterCHROMIUM(
 void RasterImplementationGLES::RasterCHROMIUM(
     const cc::DisplayItemList* list,
     cc::ImageProvider* provider,
-    const gfx::Vector2d& translate,
+    const gfx::Size& content_size,
+    const gfx::Rect& full_raster_rect,
     const gfx::Rect& playback_rect,
     const gfx::Vector2dF& post_translate,
-    GLfloat post_scale) {
+    GLfloat post_scale,
+    bool requires_clear) {
   if (std::abs(post_scale) < std::numeric_limits<float>::epsilon())
     return;
 
@@ -416,10 +419,13 @@ void RasterImplementationGLES::RasterCHROMIUM(
 
   // This section duplicates RasterSource::PlaybackToCanvas setup preamble.
   cc::PaintOpBufferSerializer::Preamble preamble;
-  preamble.translation = translate;
-  preamble.playback_rect = gfx::RectF(playback_rect);
+  preamble.content_size = content_size;
+  preamble.full_raster_rect = full_raster_rect;
+  preamble.playback_rect = playback_rect;
   preamble.post_translation = post_translate;
   preamble.post_scale = gfx::SizeF(post_scale, post_scale);
+  preamble.requires_clear = requires_clear;
+  preamble.background_color = background_color_;
 
   // Wrap the provided provider in a stashing provider so that we can delay
   // unrefing images until we have serialized dependent commands.

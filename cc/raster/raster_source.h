@@ -54,6 +54,7 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   // the content space, so only a sub-rect of the tile gets rastered.
   void PlaybackToCanvas(SkCanvas* canvas,
                         const gfx::ColorSpace& target_color_space,
+                        const gfx::Size& content_size,
                         const gfx::Rect& canvas_bitmap_rect,
                         const gfx::Rect& canvas_playback_rect,
                         const gfx::AxisTransform2d& raster_transform,
@@ -61,16 +62,14 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
 
   // Raster this RasterSource into the given canvas. Canvas states such as
   // CTM and clip region will be respected. This function will replace pixels
-  // in the clip region without blending. It is assumed that existing pixels
-  // may be uninitialized and will be cleared before playback.
+  // in the clip region without blending.
   //
   // Virtual for testing.
   //
   // Note that this should only be called after the image decode controller has
   // been set, which happens during commit.
   virtual void PlaybackToCanvas(SkCanvas* canvas,
-                                const gfx::ColorSpace& target_color_space,
-                                const PlaybackSettings& settings) const;
+                                ImageProvider* image_provider) const;
 
   // Returns whether the given rect at given scale is of solid color in
   // this raster source, as well as the solid color value.
@@ -115,6 +114,8 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
 
   SkColor background_color() const { return background_color_; }
 
+  bool requires_clear() const { return requires_clear_; }
+
   base::flat_map<PaintImage::Id, PaintImage::DecodingMode>
   TakeDecodingModeMap();
 
@@ -139,12 +140,6 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   const bool clear_canvas_with_debug_color_;
   const int slow_down_raster_scale_factor_for_debug_;
   const float recording_scale_factor_;
-
- private:
-  void RasterCommon(SkCanvas* canvas,
-                    ImageProvider* image_provider = nullptr) const;
-
-  void ClearCanvasForPlayback(SkCanvas* canvas) const;
 
   DISALLOW_COPY_AND_ASSIGN(RasterSource);
 };

@@ -293,8 +293,8 @@ TEST(RasterSourceTest, RasterFullContents) {
       canvas.clear(SK_ColorTRANSPARENT);
 
       raster->PlaybackToCanvas(
-          &canvas, ColorSpaceForTesting(), canvas_rect, canvas_rect,
-          gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
+          &canvas, ColorSpaceForTesting(), content_bounds, canvas_rect,
+          canvas_rect, gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
           RasterSource::PlaybackSettings());
 
       SkColor* pixels = reinterpret_cast<SkColor*>(bitmap.getPixels());
@@ -345,8 +345,8 @@ TEST(RasterSourceTest, RasterPartialContents) {
   gfx::Rect raster_full_rect(content_bounds);
   gfx::Rect playback_rect(content_bounds);
   raster->PlaybackToCanvas(
-      &canvas, ColorSpaceForTesting(), raster_full_rect, playback_rect,
-      gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
+      &canvas, ColorSpaceForTesting(), content_bounds, raster_full_rect,
+      playback_rect, gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
       RasterSource::PlaybackSettings());
 
   {
@@ -377,8 +377,8 @@ TEST(RasterSourceTest, RasterPartialContents) {
   // that touches the edge pixels of the recording.
   playback_rect.Inset(1, 2, 0, 1);
   raster->PlaybackToCanvas(
-      &canvas, ColorSpaceForTesting(), raster_full_rect, playback_rect,
-      gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
+      &canvas, ColorSpaceForTesting(), content_bounds, raster_full_rect,
+      playback_rect, gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
       RasterSource::PlaybackSettings());
 
   SkColor* pixels = reinterpret_cast<SkColor*>(bitmap.getPixels());
@@ -442,8 +442,8 @@ TEST(RasterSourceTest, RasterPartialClear) {
   gfx::Rect raster_full_rect(content_bounds);
   gfx::Rect playback_rect(content_bounds);
   raster->PlaybackToCanvas(
-      &canvas, ColorSpaceForTesting(), raster_full_rect, playback_rect,
-      gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
+      &canvas, ColorSpaceForTesting(), content_bounds, raster_full_rect,
+      playback_rect, gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
       RasterSource::PlaybackSettings());
 
   {
@@ -482,8 +482,8 @@ TEST(RasterSourceTest, RasterPartialClear) {
   playback_rect =
       gfx::Rect(gfx::ScaleToCeiledSize(partial_bounds, contents_scale));
   raster->PlaybackToCanvas(
-      &canvas, ColorSpaceForTesting(), raster_full_rect, playback_rect,
-      gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
+      &canvas, ColorSpaceForTesting(), content_bounds, raster_full_rect,
+      playback_rect, gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
       RasterSource::PlaybackSettings());
 
   // Test that the whole playback_rect was cleared and repainted with new alpha.
@@ -523,7 +523,7 @@ TEST(RasterSourceTest, RasterContentsTransparent) {
   SkCanvas canvas(bitmap);
 
   raster->PlaybackToCanvas(
-      &canvas, ColorSpaceForTesting(), canvas_rect, canvas_rect,
+      &canvas, ColorSpaceForTesting(), content_bounds, canvas_rect, canvas_rect,
       gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
       RasterSource::PlaybackSettings());
 
