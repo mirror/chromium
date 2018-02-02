@@ -22,6 +22,30 @@
       "revId": "48db1f8823eafbf50131d59dd70ac4c7452b88c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7016b34a_e93f2e85",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-02T01:32:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e5a5361_c897eb6a",
+      "range": {
+        "startLine": 288,
+        "startChar": 12,
+        "endLine": 288,
+        "endChar": 28
+      },
+      "revId": "48db1f8823eafbf50131d59dd70ac4c7452b88c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
