@@ -34,6 +34,24 @@
       "revId": "c9c4504093d7623cd16499067a2c27bf724c453a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515bbbb9_37d36535",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-02T18:01:05Z",
+      "side": 1,
+      "message": "Ah right, got it. thanks.",
+      "parentUuid": "733204cc_0691b118",
+      "revId": "c9c4504093d7623cd16499067a2c27bf724c453a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
