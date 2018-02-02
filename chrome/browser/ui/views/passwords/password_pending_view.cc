@@ -307,6 +307,12 @@ views::View* PasswordPendingView::GetInitiallyFocusedView() {
   return PasswordBubbleViewBase::GetInitiallyFocusedView();
 }
 
+int PasswordPendingView::GetDialogButtons() const {
+  if (sign_in_promo_)
+    return sign_in_promo_->GetDialogButtons();
+  return PasswordBubbleViewBase::GetDialogButtons();
+}
+
 base::string16 PasswordPendingView::GetDialogButtonLabel(
     ui::DialogButton button) const {
   if (sign_in_promo_)

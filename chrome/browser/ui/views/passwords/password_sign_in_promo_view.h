@@ -15,13 +15,18 @@ class ManagePasswordsBubbleModel;
 class PasswordSignInPromoView : public views::View {
  public:
   explicit PasswordSignInPromoView(ManagePasswordsBubbleModel* model);
+  ~PasswordSignInPromoView() override;
 
   bool Accept();
   bool Cancel();
+  int GetDialogButtons() const;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const;
 
  private:
+  friend class PasswordBubbleSyncPromoDelegate;
+
   ManagePasswordsBubbleModel* const model_;
+  std::unique_ptr<PasswordBubbleSyncPromoDelegate> dice_sync_promo_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordSignInPromoView);
 };

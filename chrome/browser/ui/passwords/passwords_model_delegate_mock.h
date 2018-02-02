@@ -7,7 +7,9 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "build/buildflag.h"
 #include "chrome/browser/ui/passwords/passwords_model_delegate.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 class PasswordsModelDelegateMock
@@ -47,6 +49,9 @@ class PasswordsModelDelegateMock
   MOCK_METHOD0(NavigateToPasswordManagerAccountDashboard, void());
   MOCK_METHOD0(NavigateToPasswordManagerSettingsPage, void());
   MOCK_METHOD0(NavigateToChromeSignIn, void());
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  MOCK_METHOD1(EnableSync, void(const AccountInfo& account));
+#endif
   MOCK_METHOD0(OnDialogHidden, void());
   MOCK_METHOD0(AuthenticateUser, bool());
   MOCK_CONST_METHOD0(ArePasswordsRevealedWhenBubbleIsOpened, bool());

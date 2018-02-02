@@ -146,10 +146,7 @@ class ExtensionInstalledBubbleView : public BubbleSyncPromoDelegate,
   void Init() override;
 
   // BubbleSyncPromoDelegate:
-  void ShowBrowserSignin() override;
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  void EnableSync(const AccountInfo& account_info) override;
-#endif
+  void OnEnableSync(const AccountInfo& account_info) override;
 
   // views::LinkListener:
   void LinkClicked(views::Link* source, int event_flags) override;
@@ -309,21 +306,12 @@ void ExtensionInstalledBubbleView::Init() {
   }
 }
 
-void ExtensionInstalledBubbleView::ShowBrowserSignin() {
-  chrome::ShowBrowserSignin(
-      browser(),
-      signin_metrics::AccessPoint::ACCESS_POINT_EXTENSION_INSTALL_BUBBLE);
-  CloseBubble(BUBBLE_CLOSE_NAVIGATED);
-}
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-void ExtensionInstalledBubbleView::EnableSync(const AccountInfo& account) {
+void ExtensionInstalledBubbleView::OnEnableSync(const AccountInfo& account) {
   signin_ui_util::EnableSync(
       browser(), account,
       signin_metrics::AccessPoint::ACCESS_POINT_EXTENSION_INSTALL_BUBBLE);
   CloseBubble(BUBBLE_CLOSE_NAVIGATED);
 }
-#endif
 
 void ExtensionInstalledBubbleView::LinkClicked(views::Link* source,
                                                int event_flags) {

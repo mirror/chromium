@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_clock.h"
+#include "build/buildflag.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/profile_sync_test_util.h"
@@ -28,6 +29,7 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "components/ukm/test_ukm_recorder.h"
 #include "components/ukm/ukm_source.h"
 #include "content/public/browser/web_contents.h"
@@ -36,6 +38,10 @@
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "components/signin/core/browser/account_info.h"
+#endif
 
 using ::testing::AnyNumber;
 using ::testing::Contains;
@@ -103,6 +109,12 @@ std::unique_ptr<KeyedService> TestingSyncFactoryFunction(
     content::BrowserContext* context) {
   return std::make_unique<TestSyncService>(static_cast<Profile*>(context));
 }
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+MATCHER_P(AccountEq, expected, "") {
+  return expected.account_id == arg.account_id;
+}
+#endif
 
 }  // namespace
 
@@ -401,6 +413,38 @@ TEST_F(ManagePasswordsBubbleModelTest, SignInPromoOK) {
   EXPECT_TRUE(prefs()->GetBoolean(
       password_manager::prefs::kWasSignInPasswordPromoClicked));
 }
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+TEST_F(ManagePasswordsBubbleModelTest, EnableSyncPromoOK) {
+  base::HistogramTester histogram_tester;
+  PretendPasswordWaiting();
+  EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
+  EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value,
+                                          GetPendingPassword().password_value));
+  model()->OnSaveClicked();
+
+  EXPECT_TRUE(model()->ReplaceToShowPromotionIfNeeded());
+
+  AccountInfo account;
+  account.account_id = "foo_account_id";
+  account.gaia = "foo_gaia_id";
+  account.email = "foo@bar.com";
+  EXPECT_CALL(*controller(), EnableSync(AccountEq(account)));
+  model()->OnEnableSyncClicked(account);
+  DestroyModelAndVerifyControllerExpectations();
+  histogram_tester.ExpectUniqueSample(
+      kUIDismissalReasonMetric, password_manager::metrics_util::CLICKED_SAVE,
+      1);
+  histogram_tester.ExpectUniqueSample(
+      kSignInPromoDismissalReasonMetric,
+      password_manager::metrics_util::CHROME_SIGNIN_OK, 1);
+  histogram_tester.ExpectUniqueSample(kSignInPromoCountTilSignInMetric, 1, 1);
+  histogram_tester.ExpectTotalCount(kSignInPromoCountTilNoThanksMetric, 0);
+  histogram_tester.ExpectTotalCount(kSignInPromoDismissalCountMetric, 0);
+  EXPECT_TRUE(prefs()->GetBoolean(
+      password_manager::prefs::kWasSignInPasswordPromoClicked));
+}
+#endif
 
 TEST_F(ManagePasswordsBubbleModelTest, SignInPromoCancel) {
   base::HistogramTester histogram_tester;

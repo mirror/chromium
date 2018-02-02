@@ -16,6 +16,7 @@
 #include "base/time/default_clock.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/passwords/manage_passwords_view_utils.h"
 #include "chrome/browser/ui/passwords/passwords_model_delegate.h"
@@ -502,13 +503,16 @@ void ManagePasswordsBubbleModel::OnPasswordAction(
     password_store->AddLogin(password_form);
 }
 
-void ManagePasswordsBubbleModel::OnSignInToChromeClicked() {
+void ManagePasswordsBubbleModel::OnSignInToChromeClicked(
+    const AccountInfo& account) {
+  // Enabling sync for an existing account and starting a new sign-in are
+  // triggered by the user interacting with the sign-in promo.
   interaction_keeper_->set_sign_in_promo_dismissal_reason(
       metrics_util::CHROME_SIGNIN_OK);
   GetProfile()->GetPrefs()->SetBoolean(
       password_manager::prefs::kWasSignInPasswordPromoClicked, true);
   if (delegate_)
-    delegate_->NavigateToChromeSignIn();
+    delegate_->EnableSync(account);
 }
 
 void ManagePasswordsBubbleModel::OnSkipSignInClicked() {
@@ -541,7 +545,11 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
           prefs, sync_service)) {
     interaction_keeper_->ReportInteractions(this);
     title_brand_link_range_ = gfx::Range();
-    title_ = l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE);
+    int title_string_id =
+        AccountConsistencyModeManager::IsDiceEnabledForProfile(GetProfile())
+            ? IDS_PASSWORD_MANAGER_DICE_PROMO_TITLE
+            : IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE;
+    title_ = l10n_util::GetStringUTF16(title_string_id);
     state_ = password_manager::ui::CHROME_SIGN_IN_PROMO_STATE;
     int show_count = prefs->GetInteger(
         password_manager::prefs::kNumberSignInPasswordPromoShown);

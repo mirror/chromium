@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
+#include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
@@ -129,12 +130,17 @@ void EnableSync(Browser* browser,
   DCHECK_NE(signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN, access_point);
 
   Profile* profile = browser->profile();
-  DCHECK(AccountConsistencyModeManager::IsDiceEnabledForProfile(profile));
   if (SigninManagerFactory::GetForProfile(profile)->IsAuthenticated()) {
     DVLOG(1) << "There is already a primary account.";
     return;
   }
 
+  if (account.email.empty()) {
+    chrome::ShowBrowserSignin(browser, access_point);
+    return;
+  }
+
+  DCHECK(AccountConsistencyModeManager::IsDiceEnabledForProfile(profile));
   ProfileOAuth2TokenService* token_service =
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
   bool needs_reauth_before_enable_sync =

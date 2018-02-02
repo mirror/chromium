@@ -4702,6 +4702,26 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE" desc="Promotion text for Chrome sign-in appearing in the password bubble after a password is saved.">
         Password saved. To get your passwords on all your devices, sign in to Chrome.
       </message>
+
+      <!-- Begin of Sync Promo strings for Desktop Identity Consistency. -->
+      <if expr="use_titlecase">
+        <message name="IDS_PASSWORD_MANAGER_DICE_PROMO_TITLE" desc="Title of the promotion for Chrome sign-in appearing in the password bubble after a password is saved.">
+          Password Saved
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_PASSWORD_MANAGER_DICE_PROMO_TITLE" desc="Title of the promotion for Chrome sign-in appearing in the password bubble after a password is saved.">
+          Password saved
+        </message>
+      </if>
+      <message name="IDS_PASSWORD_MANAGER_DICE_PROMO_SIGNIN_MESSAGE" desc="Text of the sync promo displayed at the bottom of the save password bubble asking the user to sign in and enable sync.">
+        To get all your passwords on all your devices, sign in and turn on sync.
+      </message>
+      <message name="IDS_PASSWORD_MANAGER_DICE_PROMO_SYNC_MESSAGE" desc="Text of the sync promo displayed at the bottom of the save password bubble asking the user to enable sync.">
+        To get all your passwords on all your devices, turn on sync.
+      </message>
+      <!-- End of Sync Promo strings for Desktop Identity Consistency. -->
+
       <message name="IDS_SAVE_PASSWORD" desc="The title of the save password bubble when a password can be saved.">
         Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your password for this site?
       </message>
