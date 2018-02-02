@@ -16,6 +16,24 @@
       "revId": "22e8a1fd21bbc0cfcc2ac681fb0d9009ffe2e1fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda35ded_9e25b91c",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2889,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-02-02T15:30:29Z",
+      "side": 1,
+      "message": "Followup. Including third_party/pdfium/public/cpp/fpdf_deleters.h causes problems because of the includes within fpdf_deleters.h.",
+      "parentUuid": "39604914_46cb79b5",
+      "revId": "22e8a1fd21bbc0cfcc2ac681fb0d9009ffe2e1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
