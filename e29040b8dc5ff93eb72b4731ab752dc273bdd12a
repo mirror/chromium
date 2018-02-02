@@ -33,6 +33,75 @@
       "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038df720_62baa25a",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T16:01:48Z",
+      "side": 1,
+      "message": "Why do you have the IsDrawn check here? Less to worry about if you always set the bounds.",
+      "range": {
+        "startLine": 130,
+        "startChar": 54,
+        "endLine": 130,
+        "endChar": 61
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bc3ac3_682c3d86",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T16:01:48Z",
+      "side": 1,
+      "message": "You want SetBoundsRect(gfx::Rect(size());",
+      "range": {
+        "startLine": 131,
+        "startChar": 41,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd2f41b_d0040c8b",
+        "filename": "ui/views/view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T16:01:48Z",
+      "side": 1,
+      "message": "I think this mildly complicates the API and would prefer not to have this for one special case. The name of the arg is also misleading, it\u0027s really delete_if_not_owned_by_client.",
+      "range": {
+        "startLine": 285,
+        "startChar": 7,
+        "endLine": 285,
+        "endChar": 22
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
