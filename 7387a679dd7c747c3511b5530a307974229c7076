@@ -16,6 +16,24 @@
       "revId": "7387a679dd7c747c3511b5530a307974229c7076",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af18f8b_fec96e97",
+        "filename": "testing/libfuzzer/proto/skia_image_filter_proto_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2018-02-02T20:27:15Z",
+      "side": 1,
+      "message": "Ah right.\n\nRemoved.",
+      "parentUuid": "61ccc4ff_71993230",
+      "revId": "7387a679dd7c747c3511b5530a307974229c7076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
