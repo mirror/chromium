@@ -124,6 +124,33 @@ const SkColor kDefaultColorToolbarStrokeTheme =
 const SkColor kDefaultColorToolbarStrokeThemeInactive =
     SkColorSetARGB(0x66, 0x4C, 0x4C, 0x4C);
 #endif  // OS_MACOSX
+
+// ----------------------------------------------------------------------------
+// Material Design 2
+
+// Color palette
+// Grey
+constexpr SkColor kMD2ColorGrey900 = SkColorSetRGB(0x20, 0x21, 0x24);
+constexpr SkColor kMD2ColorGrey800 = SkColorSetRGB(0x3C, 0x40, 0x43);
+constexpr SkColor kMD2ColorGrey700 = SkColorSetRGB(0x5F, 0x63, 0x68);
+constexpr SkColor kMD2ColorGrey400 = SkColorSetRGB(0xBD, 0xC1, 0xC6);
+constexpr SkColor kMD2ColorGrey100 = SkColorSetRGB(0xF1, 0xF3, 0xF4);
+
+// Red
+constexpr SkColor kMD2ColorRed800 = SkColorSetRGB(0xB3, 0x14, 0x12);
+constexpr SkColor kMD2ColorRed600 = SkColorSetRGB(0xD9, 0x30, 0x25);
+
+// Red - dark
+constexpr SkColor kMD2ColorRedDark800 = SkColorSetRGB(0xB4, 0x1B, 0x1A);
+constexpr SkColor kMD2ColorRedDark600 = SkColorSetRGB(0xD3, 0x3B, 0x30);
+
+constexpr SkColor kDefaultMD2ColorToolbar = SkColorSetRGB(0xFD, 0xFE, 0xFF);
+constexpr SkColor kDefaultMD2ColorActiveFrame = SkColorSetRGB(0xD0, 0xD2, 0xD6);
+constexpr SkColor kDefaultMD2ColorInactiveFrame =
+    SkColorSetRGB(0xE3, 0xE5, 0xE8);
+constexpr SkColor kDefaultMD2ColorInactiveFrameIncognito =
+    SkColorSetRGB(0x32, 0x36, 0x39);
+
 // ----------------------------------------------------------------------------
 
 // Strings used in alignment properties.
@@ -139,38 +166,40 @@ constexpr char kTilingRepeatX[] = "repeat-x";
 constexpr char kTilingRepeatY[] = "repeat-y";
 constexpr char kTilingRepeat[] = "repeat";
 
-// ----------------------------------------------------------------------------
-// Defaults for properties when the touch-optimized UI is enabled.
-
-constexpr SkColor kActiveFrameColorTouchOptimized =
-    SkColorSetRGB(0xD0, 0xD2, 0xD6);
-constexpr SkColor kInactiveFrameColorTouchOptimized =
-    SkColorSetRGB(0xE3, 0xE5, 0xE8);
-constexpr SkColor kIncognitoActiveFrameColorTouchOptimized =
-    SkColorSetRGB(0x20, 0x21, 0x24);
-constexpr SkColor kIncognitoInactiveFrameColorTouchOptimized =
-    SkColorSetRGB(0x32, 0x36, 0x39);
-
 // Returns a |nullopt| if the touch-optimized UI is not enabled, or it's enabled
 // but for the given |id|, there's no touch-optimized specific colors, and we
 // should fall back to the default colors.
-base::Optional<SkColor> MaybeGetDefaultColorForTouchOptimizedUi(
-    int id,
-    bool incognito) {
+base::Optional<SkColor> MaybeGetDefaultColorForMD2Ui(int id, bool incognito) {
   if (!ui::MaterialDesignController::IsTouchOptimizedUiEnabled())
     return base::nullopt;
 
   switch (id) {
     case ThemeProperties::COLOR_FRAME:
       // Active frame colors.
-      return incognito ? kIncognitoActiveFrameColorTouchOptimized
-                       : kActiveFrameColorTouchOptimized;
+      return incognito ? kMD2ColorGrey900 : kDefaultMD2ColorActiveFrame;
     case ThemeProperties::COLOR_FRAME_INACTIVE:
       // Inactive frame colors.
-      return incognito ? kIncognitoInactiveFrameColorTouchOptimized
-                       : kInactiveFrameColorTouchOptimized;
+      return incognito ? kDefaultMD2ColorInactiveFrameIncognito
+                       : kDefaultMD2ColorInactiveFrame;
 
-    // TODO: Place all touch-optimized UI related colors here.
+    case ThemeProperties::COLOR_TOOLBAR:
+      return incognito ? kDefaultMD2ColorInactiveFrameIncognito
+                       : kDefaultMD2ColorToolbar;
+    case ThemeProperties::COLOR_TAB_TEXT:
+    case ThemeProperties::COLOR_BOOKMARK_TEXT:
+      return incognito ? kMD2ColorGrey100 : kMD2ColorGrey800;
+    case ThemeProperties::COLOR_BACKGROUND_TAB_TEXT:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorGrey700;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_ICON_HOVER:
+      return incognito ? kMD2ColorGrey100 : kDefaultMD2ColorToolbar;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE:
+      return incognito ? kMD2ColorGrey100 : kMD2ColorGrey800;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorGrey700;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER:
+      return incognito ? kMD2ColorRedDark600 : kMD2ColorRed600;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_PRESSED:
+      return incognito ? kMD2ColorRedDark800 : kMD2ColorRed800;
 
     default:
       return base::nullopt;
@@ -266,7 +295,7 @@ color_utils::HSL ThemeProperties::GetDefaultTint(int id, bool incognito) {
 // static
 SkColor ThemeProperties::GetDefaultColor(int id, bool incognito) {
   const base::Optional<SkColor> color =
-      MaybeGetDefaultColorForTouchOptimizedUi(id, incognito);
+      MaybeGetDefaultColorForMD2Ui(id, incognito);
   if (color)
     return color.value();
 
