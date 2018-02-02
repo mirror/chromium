@@ -267,6 +267,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a47ebbd_cf860937",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T12:33:57Z",
+      "side": 0,
+      "message": "Actually, case 2. and for differ in a very simple way.\n\ncase 2.: we define Trait::kWeakHandlingFlag \u003d kNoWeakHandling and add *no* TraceInCollection method and everything still works\n\ncase 4: we defined weak handling using Trait::kWeakHandlingFlag \u003d kWeakHandling but we have to specify what to do for conservative GCs and here it differs on WeakMember.",
+      "parentUuid": "c1e764b6_7600d767",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
