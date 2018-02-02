@@ -47,7 +47,8 @@ class CastWebContentsManager {
       bool transparent,
       bool allow_media_access,
       bool is_headless,
-      bool enable_touch_input);
+      bool enable_touch_input,
+      bool enabled_for_dev);
 
   // Take ownership of |web_contents| and delete after |time_delta|, or sooner
   // if necessary.

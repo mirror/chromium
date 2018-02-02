@@ -62,10 +62,15 @@ void CastServiceSimple::StartInternal() {
   }
 
   cast_web_view_ = web_contents_manager_->CreateWebView(
-      this, /* extension */ nullptr, /* initial_url */ GURL(),
-      /*site_instance*/ nullptr, /*transparent*/ false,
-      false /*allow_media_access*/, /*is_headless*/ false,
-      /*enable_touch_input*/ false);
+      this,
+      nullptr, /* extension */
+      GURL(),  /* initial_url */
+      nullptr, /* site_instance */
+      false,   /* transparent */
+      false,   /* allow_media_access */
+      false,   /* is_headless */
+      false,   /* enable_touch_input */
+      true     /* enable_for_dev */);
   cast_web_view_->LoadUrl(startup_url_);
   cast_web_view_->Show(window_manager_);
 }

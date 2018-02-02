@@ -54,11 +54,6 @@ class CastDevToolsManagerDelegateTest
   DISALLOW_COPY_AND_ASSIGN(CastDevToolsManagerDelegateTest);
 };
 
-TEST_F(CastDevToolsManagerDelegateTest, TestSingletonGetter) {
-  EXPECT_EQ(devtools_manager_delegate_.get(),
-            CastDevToolsManagerDelegate::GetInstance());
-}
-
 TEST_F(CastDevToolsManagerDelegateTest, DisabledWebContents) {
   TestDiscoveredTargets(WebContentsSet(),
                         devtools_manager_delegate_->RemoteDebuggingTargets());
