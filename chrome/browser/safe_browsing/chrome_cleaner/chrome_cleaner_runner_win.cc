@@ -13,6 +13,7 @@
 #include "base/location.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/path_service.h"
+#include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_client_info_win.h"
@@ -190,6 +191,7 @@ ChromeCleanerRunner::LaunchAndWaitForExitOnBackgroundThread() {
         LaunchStatus::kLaunchSucceededFailedToWaitForCompletion);
   }
 
+  exit_code = 15;
   base::UmaHistogramSparse(
       "SoftwareReporter.Cleaner.ExitCodeFromConnectedProcess", exit_code);
   return ProcessStatus(LaunchStatus::kSuccess, exit_code);
