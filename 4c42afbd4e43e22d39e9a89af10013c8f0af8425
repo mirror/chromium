@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89a5755_b42436b6",
+        "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/BuildConfigGenerator.groovy",
+        "patchSetId": 20
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-02-02T15:32:58Z",
+      "side": 1,
+      "message": "TODO: mention the additional .info file",
+      "revId": "4c42afbd4e43e22d39e9a89af10013c8f0af8425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
