@@ -16,6 +16,24 @@
       "revId": "c9c4504093d7623cd16499067a2c27bf724c453a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733204cc_0691b118",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-02-02T04:57:25Z",
+      "side": 1,
+      "message": "So both weak interface and normal interface pointers can be supported, as weak interfaces require an extra parameter to MakeRequest().",
+      "parentUuid": "d46f1126_399e5305",
+      "revId": "c9c4504093d7623cd16499067a2c27bf724c453a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
