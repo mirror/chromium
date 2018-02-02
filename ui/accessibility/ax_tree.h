@@ -90,6 +90,17 @@ class AX_EXPORT AXTreeDelegate {
       const std::vector<std::string>& old_value,
       const std::vector<std::string>& new_value) {}
 
+  // Callbacks on a relation source when a target changes.
+  virtual void OnTargetRelationChanged(AXTree* tree,
+                                       ax::mojom::IntAttribute relation_attr,
+                                       AXNode* target_id,
+                                       AXNode* source_id) {}
+  virtual void OnTargetRelationChanged(
+      AXTree* tree,
+      ax::mojom::IntListAttribute relation_attr,
+      AXNode* target_id,
+      AXNode* source_id) {}
+
   // Called when tree data changes.
   virtual void OnTreeDataChanged(AXTree* tree,
                                  const ui::AXTreeData& old_data,
@@ -237,6 +248,8 @@ class AX_EXPORT AXTree {
   void CallNodeChangeCallbacks(AXNode* node, const AXNodeData& new_data);
 
   void UpdateReverseRelations(AXNode* node, const AXNodeData& new_data);
+
+  void NotifyTargetRelationChanged(AXNode* target_node, int32_t target_id);
 
   void OnRootChanged();
 

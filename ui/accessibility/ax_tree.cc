@@ -467,6 +467,7 @@ bool AXTree::UpdateNode(const AXNodeData& src,
     if (update_state->new_nodes.find(node) == update_state->new_nodes.end())
       CallNodeChangeCallbacks(node, src);
     UpdateReverseRelations(node, src);
+    NotifyTargetRelationChanged(node, src.id);
     node->SetData(src);
   } else {
     if (!is_new_root) {
@@ -479,6 +480,7 @@ bool AXTree::UpdateNode(const AXNodeData& src,
     node = update_state->new_root;
     update_state->new_nodes.insert(node);
     UpdateReverseRelations(node, src);
+    NotifyTargetRelationChanged(node, src.id);
     node->SetData(src);
   }
 
@@ -632,6 +634,34 @@ void AXTree::UpdateReverseRelations(AXNode* node, const AXNodeData& new_data) {
   CallIfAttributeValuesChanged(old_data.intlist_attributes,
                                new_data.intlist_attributes,
                                std::vector<int32_t>(), intlist_callback);
+}
+
+void AXTree::NotifyTargetRelationChanged(AXNode* target_node,
+                                         int32_t target_id) {
+  if (!delegate_)
+    return;
+
+  auto call_delegate = [&](const auto entry) {
+    auto attr = entry.first;
+    const auto target_to_sources = entry.second;
+    auto sources_it = target_to_sources.find(target_id);
+    if (sources_it == target_to_sources.end())
+      return;
+
+    auto sources = sources_it->second;
+    std::for_each(sources.begin(), sources.end(), [&](int32_t source_id) {
+      AXNode* source_node = GetFromId(source_id);
+      if (!source_node)
+        return;
+
+      delegate_->OnTargetRelationChanged(this, attr, target_node, source_node);
+    });
+  };
+
+  std::for_each(int_reverse_relations_.begin(), int_reverse_relations_.end(),
+                call_delegate);
+  std::for_each(intlist_reverse_relations_.begin(),
+                intlist_reverse_relations_.end(), call_delegate);
 }
 
 void AXTree::DestroySubtree(AXNode* node,
