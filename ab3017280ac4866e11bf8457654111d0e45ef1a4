@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f1a5d8_28b0e374",
+        "filename": "chrome/browser/android/ntp/get_remote_suggestions_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-02T14:00:15Z",
+      "side": 1,
+      "message": "I don\u0027t think you need an include guard in .cc files :)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "ab3017280ac4866e11bf8457654111d0e45ef1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2043a9_69157216",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-02T14:00:15Z",
+      "side": 0,
+      "message": "Is there something that would prevent this from regressing? I feel like many developers would assume they can put anything they want into an anonymous namespace without having to worry about naming conflicts.\n\n(Or alternatively, would it be prohibitively complicated to add eg. a pragma to clang to make it forget anything seen so far in an anonymous namespace, and insert that between translation units?)",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "e34f3cb37fe35676402657a572ca041a085fc23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
