@@ -4335,6 +4335,7 @@ if (!is_android) {
     sources = [
       "../browser/permissions/permission_request_manager_test_api.cc",
       "../browser/permissions/permission_request_manager_test_api.h",
+      "base/accessibility_checks.cc",
       "base/in_process_browser_test.cc",
       "base/in_process_browser_test.h",
       "base/in_process_browser_test_mac.cc",
