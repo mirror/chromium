@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "586b75d2_8628d3df",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-02-02T05:49:30Z",
+      "side": 1,
+      "message": "That failed spectacularly with over 1000 tests crashing, so it seems better to allow ShrinkToAvoidFloats() to be called inside NG containing blocks anyway. But return false.\n\nThis method is invoked via RemoveFloatingOrPositionedChildFromBlockLists() on style changes and layout tree structure changes. Since we create FloatingObjects and what not even when inside NG, we need to allow this cleanup. It doesn\u0027t seem pretty to put an NG check on all call sites for ShrinkToAvoidFloats() to avoid DCHECK failures.\n\nSee patchset 24.",
+      "parentUuid": "2a4afa0f_7a0cd2d8",
+      "range": {
+        "startLine": 2864,
+        "startChar": 48,
+        "endLine": 2864,
+        "endChar": 71
+      },
+      "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc907dbb_04b34e84",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 19
