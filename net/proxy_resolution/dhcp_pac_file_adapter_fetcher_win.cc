@@ -46,8 +46,9 @@ DhcpProxyScriptAdapterFetcher::~DhcpProxyScriptAdapterFetcher() {
   Cancel();
 }
 
-void DhcpProxyScriptAdapterFetcher::Fetch(
-    const std::string& adapter_name, const CompletionCallback& callback) {
+void DhcpProxyScriptAdapterFetcher::Fetch(const std::string& adapter_name,
+                                          const CompletionCallback& callback,
+                                          const NetLogWithSource& net_log) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(state_, STATE_START);
   result_ = ERR_IO_PENDING;

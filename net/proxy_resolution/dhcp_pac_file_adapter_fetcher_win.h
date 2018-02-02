@@ -28,6 +28,7 @@ namespace net {
 
 class ProxyScriptFetcher;
 class URLRequestContext;
+class NetLogWithSource;
 
 // For a given adapter, this class takes care of first doing a DHCP lookup
 // to get the PAC URL, then if there is one, trying to fetch it.
@@ -49,7 +50,8 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptAdapterFetcher
   // You may only call Fetch() once on a given instance of
   // DhcpProxyScriptAdapterFetcher.
   virtual void Fetch(const std::string& adapter_name,
-                     const CompletionCallback& callback);
+                     const CompletionCallback& callback,
+                     const NetLogWithSource& net_log);
 
   // Cancels the fetch on this adapter.
   virtual void Cancel();

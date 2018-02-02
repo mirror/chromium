@@ -10,23 +10,46 @@
 #include <string>
 #include <vector>
 
+#include <winsock2.h>
+#include <iphlpapi.h>
+
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
+#include "base/memory/free_deleter.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "net/base/net_export.h"
+#include "net/log/net_log_with_source.h"
 #include "net/proxy_resolution/dhcp_pac_file_fetcher.h"
 
 namespace base {
 class SequencedWorkerPool;
 class TaskRunner;
+class Value;
 }
 
 namespace net {
 
 class DhcpProxyScriptAdapterFetcher;
 class URLRequestContext;
+
+class NET_EXPORT_PRIVATE DhcpAdapterNamesLoggingInfo {
+public:
+  DhcpAdapterNamesLoggingInfo();
+  ~DhcpAdapterNamesLoggingInfo();
+
+  ULONG error;
+  std::unique_ptr<IP_ADAPTER_ADDRESSES, base::FreeDeleter> adapters;
+
+  base::TimeTicks origin_thread_start_time;
+  base::TimeTicks worker_thread_start_time;
+  base::TimeTicks worker_thread_end_time;
+  base::TimeTicks origin_thread_end_time;
+
+private:
+    DISALLOW_COPY_AND_ASSIGN(DhcpAdapterNamesLoggingInfo);
+};
 
 // Windows-specific implementation.
 class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
@@ -41,16 +64,18 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
 
   // DhcpProxyScriptFetcher implementation.
   int Fetch(base::string16* utf16_text,
-            const CompletionCallback& callback) override;
+            const CompletionCallback& callback,
+            const NetLogWithSource& net_log) override;
   void Cancel() override;
   void OnShutdown() override;
   const GURL& GetPacURL() const override;
   std::string GetFetcherName() const override;
 
   // Sets |adapter_names| to contain the name of each network adapter on
-  // this machine that has DHCP enabled and is not a loop-back adapter. Returns
-  // false on error.
-  static bool GetCandidateAdapterNames(std::set<std::string>* adapter_names);
+  // this machine that has DHCP enabled and is not a loop-back adapter. May
+  // optionally update |info| with information for logging. Returns false on
+  // error.
+  static bool GetCandidateAdapterNames(std::set<std::string>* adapter_names, DhcpAdapterNamesLoggingInfo* info);
 
  protected:
   int num_pending_fetchers() const;
@@ -74,19 +99,22 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
     // been run. Its lifetime is scoped by this object.
     const std::set<std::string>& adapter_names() const;
 
+	DhcpAdapterNamesLoggingInfo* logging_info();
+
    protected:
     // Virtual method introduced to allow unit testing.
     virtual bool ImplGetCandidateAdapterNames(
-        std::set<std::string>* adapter_names);
+        std::set<std::string>* adapter_names, DhcpAdapterNamesLoggingInfo* info);
 
     friend class base::RefCountedThreadSafe<AdapterQuery>;
     virtual ~AdapterQuery();
 
    private:
-    // This is constructed on the originating thread, then used on the
+    // These are constructed on the originating thread, then used on the
     // worker thread, then used again on the originating thread only when
     // the task has completed on the worker thread. No locking required.
     std::set<std::string> adapter_names_;
+    DhcpAdapterNamesLoggingInfo logging_info_;
 
     DISALLOW_COPY_AND_ASSIGN(AdapterQuery);
   };
@@ -101,7 +129,7 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
   // Event/state transition handlers
   void CancelImpl();
   void OnGetCandidateAdapterNamesDone(scoped_refptr<AdapterQuery> query);
-  void OnFetcherDone(int result);
+  void OnFetcherDone(size_t fetcher_i, int result);
   void OnWaitTimer();
   void TransitionToDone();
 
@@ -176,6 +204,8 @@ class NET_EXPORT_PRIVATE DhcpProxyScriptFetcherWin
 
   // Worker pool we use for all DHCP lookup tasks.
   scoped_refptr<base::SequencedWorkerPool> worker_pool_;
+
+  NetLogWithSource net_log_;
 
   THREAD_CHECKER(thread_checker_);
 
