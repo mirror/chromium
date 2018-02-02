@@ -22,6 +22,23 @@
       "revId": "37fafbcfb4560db6ff6fbf4e3e5d9522ea2114d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2178ac2_6403d7bc",
+        "filename": "net/quic/core/quic_spdy_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-02-02T19:37:38Z",
+      "side": 1,
+      "message": "Need to add quic version check here.",
+      "revId": "37fafbcfb4560db6ff6fbf4e3e5d9522ea2114d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
