@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e240891a_497ae237",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T22:22:06Z",
+      "side": 1,
+      "message": "Can you use an alternate approach to order the indicator and the md-select-wrapper? Since the parent is using display flex already, you should be able to use the |order| property to dictate which one comes first.\n\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/order.",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 75
+      },
+      "revId": "a5c56d176f041de7914ab9e40680914e73a3cf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
