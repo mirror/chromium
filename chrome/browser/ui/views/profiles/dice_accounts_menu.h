@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#include "base/callback_forward.h"
+#include "base/optional.h"
 #include "components/signin/core/browser/account_info.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/gfx/image/image.h"
@@ -21,12 +23,16 @@ class View;
 // TODO(tangltom): Add action handling.
 class DiceAccountsMenu : public ui::SimpleMenuModel::Delegate {
  public:
+  using Callback =
+      base::OnceCallback<void(const base::Optional<AccountInfo>& account)>;
+
   // Builds the accounts menu. Each account from |accounts| is placed in a menu
   // item showing the email and the corresponding icon from |icons|. The last
   // item in the accounts menu is the "Use another accounts" button. Separators
   // are added at the top, bottom and between each item to increase the spacing.
   DiceAccountsMenu(const std::vector<AccountInfo>& accounts,
-                   const std::vector<gfx::Image>& icons);
+                   const std::vector<gfx::Image>& icons,
+                   Callback account_selected_callback);
   ~DiceAccountsMenu() override;
 
   // Shows the accounts menu below |anchor_view|. This method can only be called
@@ -43,6 +49,8 @@ class DiceAccountsMenu : public ui::SimpleMenuModel::Delegate {
   std::unique_ptr<views::MenuRunner> runner_;
 
   std::vector<AccountInfo> accounts_;
+
+  Callback account_selected_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceAccountsMenu);
 };
