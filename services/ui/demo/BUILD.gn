@@ -17,7 +17,7 @@ source_set("lib") {
     "window_tree_data.h",
   ]
 
-  if (use_ozone && !is_chromeos) {
+  if (use_ozone && !internal_window_mode) {
     sources += [
       "mus_demo_external.cc",
       "mus_demo_external.h",
@@ -49,7 +49,7 @@ source_set("lib") {
 }
 
 service("mus_demo") {
-  if (use_ozone && !is_chromeos) {
+  if (use_ozone && !internal_window_mode) {
     sources = [
       "main_external.cc",
     ]

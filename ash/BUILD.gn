@@ -1013,7 +1013,10 @@ component("ash") {
   ]
 
   configs += [ "//build/config:precompiled_headers" ]
-  defines = [ "ASH_IMPLEMENTATION" ]
+  defines = [
+    "ASH_IMPLEMENTATION",
+    "INTERNAL_WINDOW_MODE",
+  ]
 
   public_deps = [
     "//ash/public/cpp",

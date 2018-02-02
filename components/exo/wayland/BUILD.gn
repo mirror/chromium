@@ -99,6 +99,7 @@ source_set("wayland") {
 
     if (is_chromeos) {
       deps += [ "//ui/events/ozone:events_ozone_layout" ]
+      defines += [ "INTERNAL_WINDOW_MODE" ]
     }
   }
 
