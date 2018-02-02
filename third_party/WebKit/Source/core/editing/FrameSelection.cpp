@@ -983,7 +983,9 @@ LayoutRect FrameSelection::UnclippedBounds() const {
   if (!view || !layout_view)
     return LayoutRect();
 
-  view->UpdateLifecycleToLayoutClean();
+  // The lifecycle update should always succeed, because this is not inside
+  // of a throttling scope.
+  DCHECK(view->UpdateLifecycleToLayoutClean());
   return LayoutRect(layout_selection_->SelectionBounds());
 }
 
