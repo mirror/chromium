@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cda400c_e1e5ce8a",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-02T21:02:54Z",
+      "side": 1,
+      "message": "Offline talk with weidongg@:\n\n|source| for ShowContextMenuForView may be a different view from AppListItemView, so keep the RequestFocus outside the callback.",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 25
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
