@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7b415f_c1c59f3f",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-02T17:28:29Z",
+      "side": 1,
+      "message": "We could probably import these to clean things up a bit.",
+      "range": {
+        "startLine": 123,
+        "startChar": 18,
+        "endLine": 123,
+        "endChar": 42
+      },
+      "revId": "ab9c046f8190180584f15db0ae30216708e6905a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
