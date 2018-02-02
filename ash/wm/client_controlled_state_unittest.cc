@@ -408,5 +408,25 @@ TEST_F(ClientControlledStateTest, MoveWindowToDisplay) {
   EXPECT_EQ(gfx::Rect(0, 0, 100, 100), delegate()->requested_bounds());
 }
 
+TEST_F(ClientControlledStateTest, TargetBoundsNotMatchTargetDisplay) {
+  UpdateDisplay("1000x500, 500x500");
+
+  constexpr gfx::Rect bounds(600, 0, 300, 200);
+  state()->set_bounds_locally(true);
+  widget()->SetBounds(bounds);
+  state()->set_bounds_locally(false);
+  EXPECT_EQ(bounds, widget()->GetWindowBoundsInScreen());
+
+  display::Screen* screen = display::Screen::GetScreen();
+  const int64_t first_display_id = screen->GetAllDisplays()[0].id();
+  const int64_t second_display_id = screen->GetAllDisplays()[1].id();
+  EXPECT_EQ(first_display_id, screen->GetDisplayNearestWindow(window()).id());
+
+  // Do not move window to display if target bounds' biggest intersection
+  // display doesn't match the target display.
+  EXPECT_FALSE(MoveWindowToDisplay(window(), second_display_id));
+  EXPECT_EQ(gfx::Rect(600, 0, 300, 200), widget()->GetWindowBoundsInScreen());
+}
+
 }  // namespace wm
 }  // namespace ash
