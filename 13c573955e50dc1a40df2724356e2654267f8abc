@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50b403ed_9b9eb8fd",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-02T00:30:05Z",
+      "side": 1,
+      "message": "We can\u0027t do this. How about, instead, we add an ElementFromAXID method to AXObjectCache (not Impl), and basically move this method implementation into AXObjectCacheImpl?",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 10
+      },
+      "revId": "13c573955e50dc1a40df2724356e2654267f8abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
