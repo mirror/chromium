@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d5d71de0_3df71d94",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-02T02:32:30Z",
+      "side": 1,
+      "message": "Do we have the spec issue github ID?",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5e1d0b_25f941cc",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-02T02:32:30Z",
+      "side": 1,
+      "message": "+ #include \u003cvector\u003e",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e67a6e3_e8b50c49",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
         "patchSetId": 4
