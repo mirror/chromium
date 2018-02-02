@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cbd59a9_c6d2122e",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T01:38:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb91eed_fb8c7ffd",
+      "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "023824fd_1753cb2e",
         "filename": "chrome/browser/notifications/system_notification_helper.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "81783925_1fc68611",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T01:38:09Z",
+      "side": 1,
+      "message": "I would think that you are right, but is there an advantage to that? It feels safer to write this in a way that will still work if shutdown ordering changes (for example, SystemNotificationHelper stops being a singleton).",
+      "parentUuid": "023824fd_1753cb2e",
+      "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749e1e28_27155083",
         "filename": "chrome/browser/notifications/system_notification_helper.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-01T18:47:10Z",
       "side": 1,
       "message": "nit: In this comment and below, let\u0027s consistently talk about \"profile\" instead of mixing it with \"user\"",
+      "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06094f8d_1a09f7ed",
+        "filename": "chrome/browser/notifications/system_notification_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T01:38:09Z",
+      "side": 1,
+      "message": "I tried to clear this up and improve linguistic consistency, but I couldn\u0027t just replace \"user\" with \"profile\" because we are, of course, still using a profile. It\u0027s just a generic profile that doesn\u0027t correspond to a user or identity.",
+      "parentUuid": "749e1e28_27155083",
       "revId": "4f427ca17639a341affb94cb6a5f4b28ad4ce7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
