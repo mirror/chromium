@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5c6ed9_2e4c7c42",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-02-02T13:56:51Z",
+      "side": 1,
+      "message": "I was surprised to find that we execute the condition even when DCHECK_IS_ON returns false, but the stated reason is to avoid compiler warnings on unused variables. It seems risky to rely on the DCHECK executing it\u0027s condition, but obviously you may know more about this.\n\nIn particular, I always assumed I could put super expensive stuff inside a DCHECK and it would only execute when DCHECK_IS_ON. This implies I\u0027m wrong.",
+      "range": {
+        "startLine": 2586,
+        "startChar": 6,
+        "endLine": 2586,
+        "endChar": 12
+      },
+      "revId": "5a682445e6f8ca27097c8b011fec714535f34797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
