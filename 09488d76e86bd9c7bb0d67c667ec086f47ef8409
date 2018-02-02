@@ -33,6 +33,24 @@
       "revId": "09488d76e86bd9c7bb0d67c667ec086f47ef8409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ad4d09_b4deaf06",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2018-02-02T02:06:26Z",
+      "side": 1,
+      "message": "If an invalid udid is passed in, xcodebuild will give error messages as such device can not be found and print out existing devices.  We can also validate from simctl_list as well if we want to block before proceeding.",
+      "parentUuid": "a13eea07_83bb2add",
+      "revId": "09488d76e86bd9c7bb0d67c667ec086f47ef8409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
