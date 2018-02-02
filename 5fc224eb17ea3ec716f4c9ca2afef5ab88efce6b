@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c5b678f_3b1b2de0",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T22:02:22Z",
+      "side": 1,
+      "message": "nit: i think you should have base/logging.h here now that you\u0027re using DCHECK_GT",
+      "revId": "5fc224eb17ea3ec716f4c9ca2afef5ab88efce6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
