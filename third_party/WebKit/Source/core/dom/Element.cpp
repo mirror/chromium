@@ -2537,12 +2537,14 @@ ShadowRoot* Element::GetShadowRoot() const {
   return &element_shadow->YoungestShadowRoot();
 }
 
-ShadowRoot* Element::OpenShadowRoot() const {
+ShadowRoot* Element::OpenShadowRoot(const ScriptState* script_state) const {
   ShadowRoot* root = GetShadowRoot();
   if (!root)
     return nullptr;
   return root->GetType() == ShadowRootType::V0 ||
-                 root->GetType() == ShadowRootType::kOpen
+         root->GetType() == ShadowRootType::kOpen ||
+         (root->GetType() == ShadowRootType::kClosed &&
+          script_state && script_state->World().IsIsolatedWorld())
              ? root
              : nullptr;
 }

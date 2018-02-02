@@ -502,7 +502,7 @@ class CORE_EXPORT Element : public ContainerNode {
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
 
-  ShadowRoot* OpenShadowRoot() const;
+  ShadowRoot* OpenShadowRoot(const ScriptState* = nullptr) const;
   ShadowRoot* ClosedShadowRoot() const;
   ShadowRoot* AuthorShadowRoot() const;
   ShadowRoot* UserAgentShadowRoot() const;
