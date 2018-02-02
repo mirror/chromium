@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe5c496_d3d21383",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-02T01:27:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s actually important to fix, but I\u0027d guess that it would be better to base this off of use_lld (mips still uses gold, and I\u0027d guess that\u0027s what make the difference)",
+      "revId": "9e571a0f819cd6e3372b0735cb4e542603ac5ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
