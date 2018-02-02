@@ -15,6 +15,7 @@
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/dbus_client_implementation_type.h"
+#include "chromeos/dbus/dbus_method_call_status.h"
 
 namespace base {
 class FilePath;
@@ -323,15 +324,13 @@ class CHROMEOS_EXPORT CrosDisksClient : public DBusClient {
                      const std::string& mount_label,
                      MountAccessMode access_mode,
                      RemountOption remount,
-                     const base::Closure& callback,
-                     const base::Closure& error_callback) = 0;
+                     VoidDBusMethodCallback callback) = 0;
 
   // Calls Unmount method.  |callback| is called after the method call succeeds,
   // otherwise, |error_callback| is called.
   virtual void Unmount(const std::string& device_path,
                        UnmountOptions options,
-                       const base::Closure& callback,
-                       const base::Closure& error_callback) = 0;
+                       VoidDBusMethodCallback callback) = 0;
 
   // Calls EnumerateAutoMountableDevices method.  |callback| is called after the
   // method call succeeds, otherwise, |error_callback| is called.
@@ -354,15 +353,13 @@ class CHROMEOS_EXPORT CrosDisksClient : public DBusClient {
   // otherwise, |error_callback| is called.
   virtual void Format(const std::string& device_path,
                       const std::string& filesystem,
-                      const base::Closure& callback,
-                      const base::Closure& error_callback) = 0;
+                      VoidDBusMethodCallback callback) = 0;
 
   // Calls Rename method. |callback| is called after the method call succeeds,
   // otherwise, |error_callback| is called.
   virtual void Rename(const std::string& device_path,
                       const std::string& volume_name,
-                      const base::Closure& callback,
-                      const base::Closure& error_callback) = 0;
+                      VoidDBusMethodCallback callback) = 0;
 
   // Calls GetDeviceProperties method.  |callback| is called after the method
   // call succeeds, otherwise, |error_callback| is called.
