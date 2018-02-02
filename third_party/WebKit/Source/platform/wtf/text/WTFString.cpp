@@ -24,7 +24,6 @@
 
 #include "base/strings/string_util.h"
 #include "platform/wtf/ASCIICType.h"
-#include "platform/wtf/DataLog.h"
 #include "platform/wtf/HexNumber.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/StringExtras.h"
@@ -817,7 +816,7 @@ std::ostream& operator<<(std::ostream& out, const String& string) {
 
 #ifndef NDEBUG
 void String::Show() const {
-  DataLogF("%s\n", AsciiDebug(Impl()).data());
+  printf("%s\n", AsciiDebug(Impl()).data());
 }
 #endif
 

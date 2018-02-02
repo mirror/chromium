@@ -7,7 +7,6 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/heap/BlinkGC.h"
-#include "platform/wtf/DataLog.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 
