@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<script src = '../../resources/testharness.js'></script>
+<script src = '../../resources/testharnessreport.js'></script>
+<section id="firstSection">
+  <div>
+    <span class="green"></span>
+    <span class="red"></span>
+    <span class="blue"></span>
+    <span><!-- becomes red --></span>
+    <span class="yellow"><!-- can become blue --></span>
+  </div>
+</section>
+<section id="secondSection"></section>
+<script>
+'use strict';
+const redStyleText = ".red { color: red; } .red + span + span { color: red; }";
+const yellowStyleText = ".yellow { color: yellow; }";
+const greenStyleText = ".green { color: green; }";
+const blueStyleText = ".blue { color: blue; } .blue + span + span { color: blue; }";
+
+test(() => {
+  const firstDiv = document.querySelector('#firstSection > div');
+  const secondDiv = firstDiv.cloneNode(true);
+  const shadowRoot = document.querySelector('#secondSection').attachShadow({mode: 'open'});
+  shadowRoot.appendChild(secondDiv);
+
+  // Style sheets can be created
+  const redStyleSheet = new CSSStyleSheet(redStyleText, {media: "screen, print"});
+  const yellowStyleSheet = new CSSStyleSheet(yellowStyleText, {title: "Yellow", disabled: false});
+
+  const greenStyleSheet = new CSSStyleSheet(greenStyleText);
+  const blueStyleSheet = new CSSStyleSheet(blueStyleText, {title: "Blue", disabled: true});
+
+  assert_equals(redStyleSheet.title, "");
+  assert_equals(yellowStyleSheet.title, "Yellow");
+  assert_equals(greenStyleSheet.title, "");
+  assert_equals(blueStyleSheet.title, "Blue");
+
+  assert_equals(redStyleSheet.media.length, 2);
+  assert_equals(redStyleSheet.media.item(0), "screen");
+  assert_equals(redStyleSheet.media.item(1), "print");
+  assert_equals(yellowStyleSheet.media.length, 0);
+  assert_equals(greenStyleSheet.media.length, 0);
+  assert_equals(blueStyleSheet.media.length, 0);
+
+  assert_false(redStyleSheet.disabled);
+  assert_false(yellowStyleSheet.disabled);
+  assert_false(greenStyleSheet.disabled);
+  assert_true(blueStyleSheet.disabled);
+
+}, 'Style sheets can be constructed using script');
+</script>
+
