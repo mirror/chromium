@@ -50,6 +50,9 @@ class MockLoginDisplayHost : public LoginDisplayHost {
   MOCK_METHOD0(OnStartArcKiosk, void());
   MOCK_METHOD0(StartVoiceInteractionOobe, void(void));
   MOCK_METHOD0(IsVoiceInteractionOobe, bool(void));
+  MOCK_METHOD1(UpdateGaiaDialogVisibility, void(bool visible));
+  MOCK_METHOD2(UpdateGaiaDialogSize, void(int width, int height));
+  MOCK_METHOD0(GetUsers, const user_manager::UserList(void));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockLoginDisplayHost);

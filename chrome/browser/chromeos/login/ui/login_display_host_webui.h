@@ -75,6 +75,9 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   void OnStartArcKiosk() override;
   bool IsVoiceInteractionOobe() override;
   void StartVoiceInteractionOobe() override;
+  void UpdateGaiaDialogVisibility(bool visible) override;
+  void UpdateGaiaDialogSize(int width, int height) override;
+  const user_manager::UserList GetUsers() override;
 
   // Creates WizardController instance.
   WizardController* CreateWizardController();
