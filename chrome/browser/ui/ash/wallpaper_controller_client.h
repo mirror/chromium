@@ -48,9 +48,9 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
                           wallpaper::WallpaperLayout layout,
                           bool show_wallpaper);
   void SetDefaultWallpaper(const AccountId& account_id, bool show_wallpaper);
-  void SetCustomizedDefaultWallpaper(const GURL& wallpaper_url,
-                                     const base::FilePath& file_path,
-                                     const base::FilePath& resized_directory);
+  void SetCustomizedDefaultWallpaperPaths(
+      const base::FilePath& customized_default_small_path,
+      const base::FilePath& customized_default_large_path);
   void SetPolicyWallpaper(const AccountId& account_id,
                           std::unique_ptr<std::string> data);
   void UpdateCustomWallpaperLayout(const AccountId& account_id,
@@ -78,8 +78,14 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
 
+  // Shows the wallpaper of a registered device after device policy is trusted,
+  // outside an user session. Note that before device is enrolled, it proceeds
+  // with untrusted setting.
+  void ShowRegisteredDeviceWallpaper();
+
   // ash::mojom::WallpaperControllerClient:
   void OpenWallpaperPicker() override;
+  void OnReadyToSetWallpaper() override;
 
   // WallpaperController interface in ash.
   ash::mojom::WallpaperControllerPtr wallpaper_controller_;
@@ -88,6 +94,13 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
 
   // Binds to the client interface.
   mojo::Binding<ash::mojom::WallpaperControllerClient> binding_;
+
+  // Observes if user names should be shown on the login screen, which
+  // determines whether a user wallpaper or a default wallpaper should be shown.
+  // TODO(crbug.com/776464, 784495): Views-based login should observe this and
+  // send different requests accordingly.
+  std::unique_ptr<chromeos::CrosSettings::ObserverSubscription>
+      show_user_name_on_signin_subscription_;
 
   base::WeakPtrFactory<WallpaperControllerClient> weak_factory_;
 
