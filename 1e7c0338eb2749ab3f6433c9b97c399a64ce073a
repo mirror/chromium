@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "e4f17350_ea97abd4",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-02T16:42:46Z",
+      "side": 1,
+      "message": "nit: Please consider using TODO(https://crbug.com/###) style instead of TODO(username)",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95fd0df3_f1034d3a",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 24
@@ -124,6 +141,23 @@
     },
     {
       "key": {
+        "uuid": "f37a96e8_72835237",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-02T16:42:46Z",
+      "side": 1,
+      "message": "I really don\u0027t want to introduce more direct browser dependencies in this code, but I think I\u0027m OK with allowing this for now since I don\u0027t want to block you.\n\nI would like to fix it ASAP. My thinking is that EmbeddedServiceInfo should support taking a callback to get a task runner when it needs one. Then any dependency on AudioManager state can be deferred until the first connection to the service is handled and said callback needs to be invoked.",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
@@ -135,6 +169,24 @@
       "writtenOn": "2018-02-01T20:38:54Z",
       "side": 1,
       "message": "Does { base::BindRepeating(\u0026audio::CreateEmbeddedService, audio_manager), audio_manager-\u003eGetTaskRunner() } work?",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaf4717_61833282",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-02T16:42:46Z",
+      "side": 1,
+      "message": "EmbeddedServiceInfo has multiple other fields, so initializer syntax might make the code less readable.",
+      "parentUuid": "474b817b_e67074a1",
       "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
