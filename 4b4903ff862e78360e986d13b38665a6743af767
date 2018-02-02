@@ -34,6 +34,24 @@
       "revId": "4b4903ff862e78360e986d13b38665a6743af767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7fab7e_f2aab53b",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T18:47:20Z",
+      "side": 1,
+      "message": "Thanks! Sorry the lifetime of things is already murky enough as it is, so anywhere we can (hopefully) make useful assertions is always good.",
+      "parentUuid": "bb8eb6f1_722bbed2",
+      "revId": "4b4903ff862e78360e986d13b38665a6743af767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
