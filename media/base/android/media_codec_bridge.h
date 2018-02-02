@@ -122,6 +122,7 @@ class MEDIA_EXPORT MediaCodecBridge {
   // Returns the buffer to the codec. If you previously specified a surface when
   // configuring this video decoder you can optionally render the buffer.
   virtual void ReleaseOutputBuffer(int index, bool render) = 0;
+  virtual void ReleaseOutputBuffer(int index, base::TimeDelta render_time) = 0;
 
   // Returns an input buffer's base pointer and capacity.
   virtual MediaCodecStatus GetInputBuffer(int input_buffer_index,

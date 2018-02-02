@@ -88,6 +88,16 @@ bool AVDACodecImage::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
     return false;
   }
 
+  // For SV, this is when it should be drawn.  Update our estimate, even if we
+  // already rendered it early.  We only do this the first time we're drawn;
+  // if we draw the same frame more than once, we don't care.
+  if (!notified_overlay_release_) {
+    LOG(ERROR) << "AVDA: " << this
+               << " should be drawn pts: " << pts_.InMicroseconds();
+    shared_state_->NotifyOverlayRelease(pts_);
+    notified_overlay_release_ = true;
+  }
+
   // Move the overlay if needed.
   if (shared_state_->overlay() && most_recent_bounds_ != bounds_rect) {
     most_recent_bounds_ = bounds_rect;
@@ -137,10 +147,13 @@ void AVDACodecImage::CodecChanged(MediaCodecBridge* codec) {
 
 void AVDACodecImage::SetBufferMetadata(int buffer_index,
                                        bool has_surface_texture,
-                                       const gfx::Size& size) {
+                                       const gfx::Size& size,
+                                       base::TimeDelta pts) {
   has_surface_texture_ = has_surface_texture;
   codec_buffer_index_ = buffer_index;
   size_ = size;
+  pts_ = pts;
+  notified_overlay_release_ = false;
 }
 
 bool AVDACodecImage::SetSharedState(
@@ -193,7 +206,21 @@ void AVDACodecImage::ReleaseOutputBuffer(UpdateMode update_mode) {
   if (!has_surface_texture_) {
     DCHECK(update_mode == UpdateMode::RENDER_TO_FRONT_BUFFER);
     DCHECK_GE(codec_buffer_index_, 0);
-    media_codec_->ReleaseOutputBuffer(codec_buffer_index_, true);
+    base::Optional<base::TimeDelta> render_time =
+        shared_state_->ComputeOverlayReleaseTime(pts_);
+    // TODO: if we release with a timestamp, then we don't hold the front buffer
+    // since it gets queued.
+    if (render_time) {
+      LOG(ERROR) << "AVDA: " << this << " releasing with time "
+                 << (*render_time -
+                     (base::TimeTicks::Now() - base::TimeTicks()));
+      media_codec_->ReleaseOutputBuffer(codec_buffer_index_, *render_time);
+      was_queued_with_release_time_ = true;
+    } else {
+      LOG(ERROR) << "AVDA: " << this << " releasing to front buffer";
+      media_codec_->ReleaseOutputBuffer(codec_buffer_index_, true);
+      was_queued_with_release_time_ = false;
+    }
     codec_buffer_index_ = kRendered;
     return;
   }

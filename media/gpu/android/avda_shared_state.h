@@ -90,6 +90,10 @@ class AVDASharedState : public base::RefCounted<AVDASharedState> {
   void SetPromotionHintCB(PromotionHintAggregator::NotifyPromotionHintCB cb);
   const PromotionHintAggregator::NotifyPromotionHintCB& GetPromotionHintCB();
 
+  void NotifyOverlayRelease(base::TimeDelta pts);
+  base::Optional<base::TimeDelta> ComputeOverlayReleaseTime(
+      base::TimeDelta pts);
+
  protected:
   virtual ~AVDASharedState();
 
@@ -102,6 +106,13 @@ class AVDASharedState : public base::RefCounted<AVDASharedState> {
   scoped_refptr<AVDASurfaceBundle> surface_bundle_;
 
   PromotionHintAggregator::NotifyPromotionHintCB promotion_hint_cb_;
+
+  struct {
+    double drift_estimate = 1;
+    base::TimeDelta offset_estimate;
+    base::Optional<base::TimeDelta> most_recent_vsync;
+    base::Optional<base::TimeDelta> most_recent_pts;
+  } overlay_;
 
   base::WeakPtrFactory<AVDASharedState> weak_this_factory_;
 

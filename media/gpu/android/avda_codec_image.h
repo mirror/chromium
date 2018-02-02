@@ -84,7 +84,8 @@ class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
   // rendering path is used, and |size| is used by the compositor.
   void SetBufferMetadata(int buffer_index,
                          bool has_surface_texture,
-                         const gfx::Size& size);
+                         const gfx::Size& size,
+                         base::TimeDelta pts);
 
   bool SetSharedState(scoped_refptr<AVDASharedState> shared_state);
 
@@ -95,7 +96,7 @@ class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
 
   // Indicates if the codec buffer has been released to the front buffer.
   bool was_rendered_to_front_buffer() const {
-    return codec_buffer_index_ == kRendered;
+    return codec_buffer_index_ == kRendered && !was_queued_with_release_time_;
   }
 
   bool is_unrendered() const { return codec_buffer_index_ >= kUpdateOnly; }
@@ -156,6 +157,16 @@ class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
 
   // Bounds that we last sent to our overlay.
   gfx::Rect most_recent_bounds_;
+
+  // Most recent pts.
+  base::TimeDelta pts_;
+
+  // Have we notified that the overlay was drawn?
+  bool notified_overlay_release_ = false;
+
+  // Was the codec buffer released with a release time?  If so, then it doesn't
+  // consume the front buffer.
+  bool was_queued_with_release_time_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AVDACodecImage);
 };

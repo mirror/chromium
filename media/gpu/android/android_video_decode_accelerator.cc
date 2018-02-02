@@ -844,7 +844,8 @@ bool AndroidVideoDecodeAccelerator::DequeueOutput() {
     const int32_t bitstream_buffer_id = it->second;
     bitstream_buffers_in_decoder_.erase(bitstream_buffers_in_decoder_.begin(),
                                         ++it);
-    SendDecodedFrameToClient(buf_index, bitstream_buffer_id);
+    SendDecodedFrameToClient(buf_index, bitstream_buffer_id,
+                             presentation_timestamp);
 
     // Removes ids former or equal than the id from decoder. Note that
     // |bitstreams_notified_in_advance_| does not mean bitstream ids in decoder
@@ -876,7 +877,8 @@ bool AndroidVideoDecodeAccelerator::DequeueOutput() {
 
 void AndroidVideoDecodeAccelerator::SendDecodedFrameToClient(
     int32_t codec_buffer_index,
-    int32_t bitstream_id) {
+    int32_t bitstream_id,
+    base::TimeDelta pts) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(bitstream_id, -1);
   DCHECK(!free_picture_ids_.empty());
@@ -939,7 +941,7 @@ void AndroidVideoDecodeAccelerator::SendDecodedFrameToClient(
 
   // Connect the PictureBuffer to the decoded frame.
   picture_buffer_manager_.UseCodecBufferForPictureBuffer(codec_buffer_index,
-                                                         picture_buffer);
+                                                         picture_buffer, pts);
 }
 
 void AndroidVideoDecodeAccelerator::Decode(

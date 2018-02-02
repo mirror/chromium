@@ -435,6 +435,17 @@ class MediaCodecBridge {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @CalledByNative
+    protected void releaseOutputBufferAtTime(int index, long renderTimestampNs) {
+        try {
+            mMediaCodec.releaseOutputBuffer(index, renderTimestampNs);
+        } catch (IllegalStateException e) {
+            // TODO(qinmin): May need to report the error to the caller. crbug.com/356498.
+            Log.e(TAG, "Failed to release output buffer", e);
+        }
+    }
+
     @SuppressWarnings("deprecation")
     @CalledByNative
     private DequeueOutputResult dequeueOutputBuffer(long timeoutUs) {

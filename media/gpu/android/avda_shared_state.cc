@@ -76,4 +76,44 @@ AVDASharedState::GetPromotionHintCB() {
   return promotion_hint_cb_;
 }
 
+void AVDASharedState::NotifyOverlayRelease(base::TimeDelta pts) {
+  base::TimeDelta vsync = base::TimeTicks::Now() - base::TimeTicks();
+
+  if (overlay_.most_recent_vsync) {
+    // Compute drift with realtime.
+    base::TimeDelta pts_delta = pts - *overlay_.most_recent_pts;
+    base::TimeDelta vsync_delta = vsync - *overlay_.most_recent_vsync;
+    const float drift_alpha = 0.95;
+    overlay_.drift_estimate =
+        overlay_.drift_estimate * drift_alpha +
+        (((double)pts_delta.InMicroseconds()) / vsync_delta.InMicroseconds()) *
+            (1 - drift_alpha);
+
+    // Compute offset between vsync and ptr.
+    // TODO: should we modify this by the expted drift?
+    base::TimeDelta pts_offset = vsync - pts;
+    const float offset_alpha = 0.95;
+    overlay_.offset_estimate = base::TimeDelta::FromMicroseconds(
+        overlay_.offset_estimate.InMicroseconds() * offset_alpha +
+        pts_offset.InMicroseconds() * (1 - offset_alpha));
+
+    LOG(ERROR) << "AVDA: drift: " << overlay_.drift_estimate
+               << " offset: " << overlay_.offset_estimate.InMicroseconds()
+               << " pts: " << pts.InMicroseconds() << " vsync: " << vsync
+               << " now: " << base::TimeTicks::Now();
+  }
+
+  overlay_.most_recent_vsync = vsync;
+  overlay_.most_recent_pts = pts;
+}
+
+base::Optional<base::TimeDelta> AVDASharedState::ComputeOverlayReleaseTime(
+    base::TimeDelta pts) {
+  if (!overlay_.most_recent_vsync)
+    return base::Optional<base::TimeDelta>();
+
+  // For now, ignore the drift.
+  return overlay_.offset_estimate + pts;
+}
+
 }  // namespace media

@@ -505,6 +505,14 @@ void MediaCodecBridgeImpl::ReleaseOutputBuffer(int index, bool render) {
   Java_MediaCodecBridge_releaseOutputBuffer(env, j_bridge_, index, render);
 }
 
+void MediaCodecBridgeImpl::ReleaseOutputBuffer(int index,
+                                               base::TimeDelta render_time) {
+  DVLOG(3) << __func__ << ": " << index;
+  JNIEnv* env = AttachCurrentThread();
+  Java_MediaCodecBridge_releaseOutputBufferAtTime(env, j_bridge_, index,
+                                                  render_time.InNanoseconds());
+}
+
 MediaCodecStatus MediaCodecBridgeImpl::GetInputBuffer(int input_buffer_index,
                                                       uint8_t** data,
                                                       size_t* capacity) {
