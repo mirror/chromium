@@ -19,6 +19,10 @@ UI_BASE_EXPORT extern const base::Feature kSecondaryUiMd;
 
 UI_BASE_EXPORT extern const base::Feature kTouchableChrome;
 
+UI_BASE_EXPORT extern const base::Feature kTouchableAppContextMenu;
+
+UI_BASE_EXPORT bool IsTouchableAppContextMenuEnabled();
+
 }  // namespace features
 
 #endif  // UI_BASE_UI_BASE_FEATURES_H_
