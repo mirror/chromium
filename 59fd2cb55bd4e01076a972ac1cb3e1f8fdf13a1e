@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1bbc8fa8_374c03f9",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-02T16:29:34Z",
+      "side": 1,
+      "message": "is the issue here that if it gets turned into a scroll the page will never see the event?\n\nis the delay on kPointerDown still relevant as a \u0027first input delay\u0027 from a user standpoint? seems like it will still delay the scroll happening, even if the event is not dispatched to the page\u0027s JS for handling.\n\nor are kPointerDowns that turn into scrolls fast pathed to skip the input queue, which would result in their delay not actually measuring the main thread queue delay?",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c89d654_0aa8956e",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-02T16:29:34Z",
+      "side": 1,
+      "message": "is there some property of the WebInputEvent beyond just kPointerUp that allows us to pair the kPointerUp uniquely with its associated kPointerDown? if so it might be good to use that just to be extra explicit about pairing the 2 events together.",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7b7a4d_6fc76482",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-02T16:29:34Z",
+      "side": 1,
+      "message": "should we pull this up to the top of the function? if we already have a delay, should we ignore kPointerDowns for instance?",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da5cf352_89e695af",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 3
