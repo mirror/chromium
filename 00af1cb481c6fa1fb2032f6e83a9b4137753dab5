@@ -16,6 +16,24 @@
       "revId": "00af1cb481c6fa1fb2032f6e83a9b4137753dab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e302ec3b_db7d2807",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-02-02T19:48:52Z",
+      "side": 1,
+      "message": "Ooh, nice! Thanks :D",
+      "parentUuid": "66cacd5e_443dc5aa",
+      "revId": "00af1cb481c6fa1fb2032f6e83a9b4137753dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
