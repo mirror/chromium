@@ -118,6 +118,30 @@
       "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef323bf_7adf1697",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2018-02-02T08:42:28Z",
+      "side": 1,
+      "message": "please ignore \"Capslock\" comment, since only send \"shift\" key will trigger that notification. Send \"Capslock\" doesn\u0027t work. Probably, since chrome book doesn\u0027t has Capslock key.\nAnd only send \"Shift\" keydown event can trigger the notification. Send \"Shfit\" keydown and keyup events doesn\u0027t work. It\u0027s so wired.\n\nAnd press CapsLock key on virtual keyboard, it doesn\u0027t change the physical keyboard capslock status. So I think had better not to show the \"CapsLock\" notification. The visual effect of virtual keyboard for “CapsLock\" is enough.",
+      "parentUuid": "e6a8ff79_3e5b881d",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
