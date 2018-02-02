@@ -40,7 +40,7 @@ class TabletPowerButtonControllerTest : public PowerButtonTestBase {
 
   void SetUp() override {
     PowerButtonTestBase::SetUp();
-    InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+    InitPowerButtonControllerMembers(true /* is_tablet_mode_switch_set */);
     power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
     EXPECT_FALSE(power_manager_client_->backlights_forced_off());
 
@@ -492,7 +492,7 @@ TEST_F(TabletPowerButtonControllerTest, SyncTouchscreenEnabled) {
   // and PowerButtonController.
   power_manager_client_->SetBacklightsForcedOff(false);
   ResetPowerButtonController();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch();
 
   // Run the event loop for PowerButtonDisplayController to get backlight state
   // and check that the global touchscreen status is correct.
@@ -501,23 +501,23 @@ TEST_F(TabletPowerButtonControllerTest, SyncTouchscreenEnabled) {
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 }
 
-// Tests that tablet power button behavior is enabled on having seen
-// accelerometer update, otherwise it is disabled.
+// Tests that tablet power button behavior is enabled on setting tablet mode
+// switch, otherwise it is disabled.
 TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   ASSERT_TRUE(tablet_controller_);
   ResetPowerButtonController();
   EXPECT_FALSE(tablet_controller_);
 
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch();
   EXPECT_TRUE(tablet_controller_);
 
   // If clamshell-like power button behavior is requested via a flag, the
   // TabletPowerButtonController shouldn't be initialized in response to
-  // accelerometer events.
+  // set tablet mode switch.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kForceClamshellPowerButton);
   ResetPowerButtonController();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch();
   EXPECT_FALSE(tablet_controller_);
 }
 
@@ -615,7 +615,7 @@ TEST_F(TabletPowerButtonControllerTest, TouchscreenEnabledClamshell) {
   ResetPowerButtonController();
   // Run the event loop for PowerButtonDisplayController to get backlight state.
   base::RunLoop().RunUntilIdle();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch();
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 }
 
@@ -670,18 +670,6 @@ TEST_F(TabletPowerButtonControllerTest, A11yAlert) {
   ReleasePowerButton();
 }
 
-using NoTabletModePowerButtonControllerTest = NoTabletModePowerButtonTestBase;
-
-// Tests that tablet power button behavior should not be enabled on the device
-// that hasn't tablet mode switch set, even it has seen accelerometer data.
-TEST_F(NoTabletModePowerButtonControllerTest,
-       HasAccelerometerUpdateButNoTabletModeSwitch) {
-  InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
-  ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kAshEnableTabletMode));
-  EXPECT_FALSE(tablet_controller_);
-}
-
 class TabletPowerButtonControllerShowMenuTest : public PowerButtonTestBase {
  public:
   TabletPowerButtonControllerShowMenuTest() {
@@ -692,7 +680,7 @@ class TabletPowerButtonControllerShowMenuTest : public PowerButtonTestBase {
   void SetUp() override {
     PowerButtonTestBase::SetUp();
 
-    InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+    InitPowerButtonControllerMembers(true /* is_tablet_mode_switch_set */);
     EnableTabletMode(true);
 
     // Advance a duration longer than |kIgnorePowerButtonAfterResumeDelay| to

@@ -71,7 +71,7 @@ class LockStateControllerTest : public PowerButtonTestBase {
 
   void SetUp() override {
     PowerButtonTestBase::SetUp();
-    InitPowerButtonControllerMembers(false /* SendAccelerometerUpdate */);
+    InitPowerButtonControllerMembers(false /* is_tablet_mode_switch_set  */);
 
     test_animator_ = new TestSessionStateAnimator;
     lock_state_controller_->set_animator_for_test(test_animator_);
