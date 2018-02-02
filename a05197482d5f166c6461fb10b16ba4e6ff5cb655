@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "663c3081_9799b367",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T18:14:00Z",
+      "side": 1,
+      "message": "Thanks for the correction on capacity(). Looking at the STL spec, it seems that we should be using size() here as the string is already initialized!\n\nC++17 Working Draft N4659 -  Around 24.3.2.2\nbasic_string(size_type n, charT c, const Allocator\u0026 a \u003d Allocator());\n  Requires: n \u003c npos.\n  Effects: Constructs an object of class basic_string and determines \n           its initial string value by repeating the char-like object c for all n \n           elements, as indicated in Table 60.\n\n[...]\n\nTable 60 — basic_string(size_t, charT, const Allocator\u0026) effects\nElement             Value\ndata()              points at the first element of an \n                    allocated array of n elements, each \n                    storing the initial value c\nsize()              n\ncapacity()          a value at least as large as size()",
+      "parentUuid": "a272f4bc_4ddea09c",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a21d7d3_3440e992",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
