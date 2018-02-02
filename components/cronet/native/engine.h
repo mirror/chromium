@@ -12,9 +12,13 @@
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "components/cronet/native/generated/cronet.idl_impl_interface.h"
+#include "components/grpc_support/include/bidirectional_stream_c.h"
+
+namespace net {
+class CertVerifier;
+}
 
 namespace cronet {
-
 class CronetURLRequestContext;
 
 // Implementation of Cronet_Engine that uses CronetURLRequestContext.
@@ -36,6 +40,17 @@ class Cronet_EngineImpl : public Cronet_Engine {
   // Check |result| and aborts if result is not SUCCESS and enableCheckResult
   // is true.
   Cronet_RESULT CheckResult(Cronet_RESULT result);
+
+  // Set Mock CertVerifier for testing. Must be called before StartWithParams.
+  void SetMockCertVerifierForTesting(
+      std::unique_ptr<net::CertVerifier> mock_cert_verifier);
+
+  // Get stream engine for GRPC Bidirectional Stream support.
+  stream_engine* GetBidirectionalStreamEngine();
+
+  CronetURLRequestContext* cronet_url_request_context() const {
+    return context_.get();
+  }
 
  private:
   class Callback;
@@ -60,6 +75,11 @@ class Cronet_EngineImpl : public Cronet_Engine {
 
   // Engine context. Not owned, accessed from client thread.
   Cronet_EngineContext engine_context_ = nullptr;
+
+  // Stream engine for GRPC Bidirectional Stream support.
+  stream_engine stream_engine_;
+
+  std::unique_ptr<net::CertVerifier> mock_cert_verifier_;
 
   DISALLOW_COPY_AND_ASSIGN(Cronet_EngineImpl);
 };

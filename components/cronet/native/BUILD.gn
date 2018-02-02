@@ -3,12 +3,14 @@
 # found in the LICENSE file.
 
 import("//components/cronet/native/include/headers.gni")
+import("//components/grpc_support/include/headers.gni")
 import("//testing/test.gni")
 
 config("cronet_native_include_config") {
   include_dirs = [
     "//components/cronet/native/generated",
     "//components/cronet/native/include",
+    "//components/grpc_support/include",
   ]
 }
 
@@ -18,6 +20,7 @@ source_set("cronet_native_impl") {
     "//base",
     "//components/cronet:cronet_common",
     "//components/cronet:cronet_version_header",
+    "//components/grpc_support:grpc_support",
     "//net",
   ]
 
@@ -31,6 +34,8 @@ source_set("cronet_native_impl") {
     "include/cronet_c.h",
     "runnables.cc",
     "runnables.h",
+    "url_request.cc",
+    "url_request.h",
 
     # Generated from cronet.idl.
     "generated/cronet.idl_c.h",
@@ -47,12 +52,15 @@ source_set("cronet_native_testutil") {
 
   deps = [
     "//base",
+    "//net:test_support",
   ]
 
   configs += [ ":cronet_native_include_config" ]
   public_configs = [ ":cronet_native_include_config" ]
 
   sources = [
+    "test_url_request_callback.cc",
+    "test_url_request_callback.h",
     "test_util.cc",
     "test_util.h",
   ]
@@ -90,6 +98,8 @@ source_set("cronet_native_tests") {
     "//base",
     "//base/test:test_support",
     "//components/cronet/test:test_support",
+    "//components/grpc_support:bidirectional_stream_unittest",
+    "//components/grpc_support/test:get_stream_engine_header",
     "//net:test_support",
     "//testing/gtest",
   ]
@@ -100,5 +110,7 @@ source_set("cronet_native_tests") {
     "buffer_test.cc",
     "engine_test.cc",
     "executors_test.cc",
+    "test_stream_engine.cc",
+    "url_request_test.cc",
   ]
 }

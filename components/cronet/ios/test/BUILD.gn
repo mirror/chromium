@@ -18,7 +18,8 @@ test("cronet_test") {
     "cronet_quic_test.mm",
     "cronet_test_base.mm",
     "cronet_test_runner.mm",
-    "get_stream_engine.mm",
+
+    # "get_stream_engine.mm",
     "start_cronet.h",
     "start_cronet.mm",
   ]

@@ -115,12 +115,13 @@ struct Cronet_UrlRequestCallback {
                                  Cronet_UrlResponseInfoPtr info) = 0;
   virtual void OnReadCompleted(Cronet_UrlRequestPtr request,
                                Cronet_UrlResponseInfoPtr info,
-                               Cronet_BufferPtr buffer) = 0;
+                               Cronet_BufferPtr buffer,
+                               uint64_t bytesRead) = 0;
   virtual void OnSucceeded(Cronet_UrlRequestPtr request,
                            Cronet_UrlResponseInfoPtr info) = 0;
   virtual void OnFailed(Cronet_UrlRequestPtr request,
                         Cronet_UrlResponseInfoPtr info,
-                        Cronet_ExceptionPtr error) = 0;
+                        Cronet_ErrorPtr error) = 0;
   virtual void OnCanceled(Cronet_UrlRequestPtr request,
                           Cronet_UrlResponseInfoPtr info) = 0;
 
@@ -136,9 +137,9 @@ struct Cronet_UploadDataSink {
   virtual Cronet_UploadDataSinkContext GetContext() = 0;
 
   virtual void OnReadSucceeded(bool finalChunk) = 0;
-  virtual void OnReadError(Cronet_ExceptionPtr error) = 0;
+  virtual void OnReadError(Cronet_ErrorPtr error) = 0;
   virtual void OnRewindSucceded() = 0;
-  virtual void OnRewindError(Cronet_ExceptionPtr error) = 0;
+  virtual void OnRewindError(Cronet_ErrorPtr error) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Cronet_UploadDataSink);
@@ -168,15 +169,15 @@ struct Cronet_UrlRequest {
   virtual void SetContext(Cronet_UrlRequestContext context) = 0;
   virtual Cronet_UrlRequestContext GetContext() = 0;
 
-  virtual void InitWithParams(Cronet_EnginePtr engine,
-                              CharString url,
-                              Cronet_UrlRequestParamsPtr params,
-                              Cronet_UrlRequestCallbackPtr callback,
-                              Cronet_ExecutorPtr executor) = 0;
-  virtual void Start() = 0;
-  virtual void FollowRedirect() = 0;
-  virtual void Read(Cronet_BufferPtr buffer) = 0;
-  virtual void Cancel() = 0;
+  virtual Cronet_RESULT InitWithParams(Cronet_EnginePtr engine,
+                                       CharString url,
+                                       Cronet_UrlRequestParamsPtr params,
+                                       Cronet_UrlRequestCallbackPtr callback,
+                                       Cronet_ExecutorPtr executor) = 0;
+  virtual Cronet_RESULT Start() = 0;
+  virtual Cronet_RESULT FollowRedirect() = 0;
+  virtual Cronet_RESULT Read(Cronet_BufferPtr buffer) = 0;
+  virtual Cronet_RESULT Cancel() = 0;
   virtual bool IsDone() = 0;
   virtual void GetStatus(Cronet_UrlRequestStatusListenerPtr listener) = 0;
 

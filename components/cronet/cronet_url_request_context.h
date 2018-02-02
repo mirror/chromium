@@ -35,6 +35,7 @@ class CertVerifier;
 class NetLog;
 class ProxyConfigService;
 class URLRequestContext;
+class URLRequestContextGetter;
 class FileNetLogObserver;
 }  // namespace net
 
@@ -121,6 +122,8 @@ class CronetURLRequestContext {
 
   net::URLRequestContext* GetURLRequestContext();
 
+  net::URLRequestContextGetter* GetURLRequestContextGetter();
+
   // TODO(xunjieli): Keep only one version of StartNetLog().
 
   // Starts NetLog logging to file. This can be called on any thread.
@@ -160,6 +163,7 @@ class CronetURLRequestContext {
 
  private:
   friend class TestUtil;
+  class ContextGetter;
 
   // NetworkTasks performs tasks on the network thread and owns objects that
   // live on the network thread.
