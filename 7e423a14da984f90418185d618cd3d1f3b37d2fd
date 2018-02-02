@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9956d663_00fc5926",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "Correct. \u0027Soon\u0027, blink::Animation will be able to target multiple elements too, via a GroupKeyframeEffect (or similar construct). cc is ahead of blink at this time, because that\u0027s where AnimationWorklet work is happening.",
+      "parentUuid": "39939b67_6c9cf737",
+      "revId": "7e423a14da984f90418185d618cd3d1f3b37d2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04624c3c_6adba430",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 5

@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67a1d526_69466d6c",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "Nit; s/number of total/total number of",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1175d80e_06a8a8bd",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "Nit; missing comma",
+      "range": {
+        "startLine": 637,
+        "startChar": 62,
+        "endLine": 637,
+        "endChar": 64
+      },
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bd5955_e0784e95",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "nit; \u0027there are,\u0027",
+      "range": {
+        "startLine": 641,
+        "startChar": 48,
+        "endLine": 641,
+        "endChar": 49
+      },
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c5fdd7_ae1c73ce",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "Does IsSVG() not suffice here? Every LayoutObject subclass relating to SVG I can find returns true for IsOfType(kLayoutObjectSVG);.",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bf0a9a_f63df6f2",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "Why is this NonActionable rather than NotPaintIntoOwnBacking?",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17060918_7e112ff6",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T16:07:03Z",
+      "side": 1,
+      "message": "Nit; TODO(crbug.com/754471): ...",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
