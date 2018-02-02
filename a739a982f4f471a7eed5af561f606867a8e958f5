@@ -22,6 +22,30 @@
       "revId": "a739a982f4f471a7eed5af561f606867a8e958f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ce80e3_5275f5c2",
+        "filename": "chrome/browser/profiles/profile_attributes_entry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-02-02T17:15:02Z",
+      "side": 1,
+      "message": "Uploaded a new patch with that change. What do you think? I\u0027m a bit torn between the two.",
+      "parentUuid": "ba762ab3_902cc2ca",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "a739a982f4f471a7eed5af561f606867a8e958f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
