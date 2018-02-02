@@ -18,17 +18,39 @@ namespace blink {
 class ScriptPromiseResolver;
 class ScriptState;
 
+class GetComputedAccessibleNodePromiseResolver final
+    : public GarbageCollectedFinalized<
+          GetComputedAccessibleNodePromiseResolver>,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(GetComputedAccessibleNodePromiseResolver);
+
+ public:
+  static GetComputedAccessibleNodePromiseResolver* Create(ScriptState*,
+                                                          Element*);
+
+  ScriptPromise Promise();
+
+  void ComputeAccessibleNode();
+
+  void Trace(blink::Visitor*);
+
+ private:
+  GetComputedAccessibleNodePromiseResolver(ScriptState*, Element*);
+  void OnTimerFired(TimerBase*);
+
+  WeakMember<Element> element_;
+  Member<ScriptPromiseResolver> resolver_;
+  TaskRunnerTimer<GetComputedAccessibleNodePromiseResolver> timer_;
+};
+
 class ComputedAccessibleNode : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static ComputedAccessibleNode* Create(Element*);
+  static ComputedAccessibleNode* Create(AXID, WebComputedAXTree*);
   virtual ~ComputedAccessibleNode();
 
   void Trace(Visitor*);
-
-  // Starts computation of the accessibility properties of the stored element.
-  ScriptPromise ComputeAccessibleProperties(ScriptState*);
 
   // String attribute accessors. These can return blank strings if the element
   // has no node in the computed accessible tree, or property does not apply.
@@ -45,15 +67,22 @@ class ComputedAccessibleNode : public ScriptWrappable {
   int32_t rowSpan(bool& is_null) const;
   int32_t setSize(bool& is_null) const;
 
+  ComputedAccessibleNode* parent() const;
+  ComputedAccessibleNode* firstChild() const;
+  ComputedAccessibleNode* lastChild() const;
+  ComputedAccessibleNode* previousSibling() const;
+  ComputedAccessibleNode* nextSibling() const;
+
  private:
-  explicit ComputedAccessibleNode(Element*);
+  explicit ComputedAccessibleNode(AXID, WebComputedAXTree*);
 
   // content::ComputedAXTree callback.
   void OnSnapshotResponse(ScriptPromiseResolver*);
 
   int32_t GetIntAttribute(WebAOMIntAttribute, bool& is_null) const;
+  ComputedAccessibleNode* GetRelationFromCache(AXID) const;
 
-  Member<Element> element_;
+  AXID ax_id_;
   Member<AXObjectCache> cache_;
 
   // This tree is owned by the RenderFrame.

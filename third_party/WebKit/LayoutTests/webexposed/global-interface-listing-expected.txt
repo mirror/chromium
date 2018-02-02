@@ -1050,9 +1050,14 @@ interface ComputedAccessibleNode
     getter colCount
     getter colIndex
     getter colSpan
+    getter firstChild
+    getter lastChild
     getter level
     getter name
+    getter nextSibling
+    getter parent
     getter posInSet
+    getter previousSibling
     getter role
     getter rowCount
     getter rowIndex
