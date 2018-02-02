@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b551858e_a5a8b298",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-02T22:01:32Z",
+      "side": 0,
+      "message": "What makes this safe to remove? I wouldn\u0027t be surprised if it is, I\u0027m just not sure I see the reasoning.",
+      "revId": "8a80beb492de364a0be438a6f471b63688a6be1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90755002_91cdc990",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-02T22:01:32Z",
+      "side": 0,
+      "message": "Hm... we need to be really careful about these kinds of changes (though it looks like the original function here is wrong.)\n\nhasAlpha means that the alpha value of the dictionary previously was specified at all, not that it was set to true. The IDL specified that if it wasn\u0027t set the default was true, so this logic actually seems inverted. If you didn\u0027t specify and alpha (which should default to true) this previously reported that the canvas is opaque. if you set it to alpha: true explicitly this would have reported that the canvas was not opaque, which is correct but only accidentally so. And if you explicitly set alpha: false it would have ALSO reported the canvas was not opaque. :(\n\nI think we should file a bug about this, so that even if your change doesn\u0027t land as-is (or is delayed) we can get this specific issue addressed.",
+      "revId": "8a80beb492de364a0be438a6f471b63688a6be1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

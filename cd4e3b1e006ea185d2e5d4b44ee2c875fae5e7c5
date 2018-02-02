@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a26204e1_3936aeb1",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-02T22:01:32Z",
+      "side": 1,
+      "message": "Nit: Newer style guide preference is to initialize values like this in the .h file.\n\nie: bool alpha_ \u003d true;",
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425e8c4e_bd1bf95b",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-02T22:01:32Z",
+      "side": 1,
+      "message": "If we do keep the setter functions around, is there a reason for keeping them in the cpp file? They\u0027re all simple enough. Seems like this could be a header only class for brevity.",
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b319a5_5ca0eeaf",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-02T22:01:32Z",
+      "side": 1,
+      "message": "Give that this class no longer needs to interact with JavaScript the use of setter and getter functions is unnecessary. I\u0027d consider making the members public and removing the functions (except for Trace, obviously). Of course, that may trigger far more changes to other files than desired. If that\u0027s the case it seems pretty reasonable to keep this structured as-is and maybe revisit the getter/setter design as a followup.",
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a183134_4e75f3f7",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-02T22:01:32Z",
+      "side": 1,
+      "message": "Despite the comment it still took me a while to figure out what the difference between this and IsXRDeviceCompatible was. Suggest changing name to something slightly more explicit like ContextCreatedOnCompatibleAdapter(const XRDevice*)?",
+      "range": {
+        "startLine": 1706,
+        "startChar": 7,
+        "endLine": 1706,
+        "endChar": 26
+      },
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
