@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "294ab73f_b993ef41",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T21:25:36Z",
+      "side": 1,
+      "message": "nit: s/excepts/except/",
+      "range": {
+        "startLine": 223,
+        "startChar": 35,
+        "endLine": 223,
+        "endChar": 42
+      },
+      "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a956eef_db1b31f2",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T21:25:36Z",
+      "side": 1,
+      "message": "nit: \"... on devices that have a tablet mode switch.\"",
+      "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cadf1bd_9a3fa400",
         "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
         "patchSetId": 3
@@ -13,6 +53,64 @@
       "writtenOn": "2018-02-02T21:11:59Z",
       "side": 1,
       "message": "I will defer to derat@ for this suggestion.\n\nShall we change boolean parameter to PowerManagerClient::TabletMode to test, such as UNSUPPORTED case?",
+      "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1bf6d6_03cc8038",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T21:25:36Z",
+      "side": 1,
+      "message": "i could go either way, but i agree that it\u0027d probably be a bit cleaner to rename this argument to something like \"initial_tablet_mode_switch_state\" and make it be of type TabletMode. (the only downside i see is that the header will then depend on //chromeos/dbus/power_manager_client.h, but i think that that\u0027s probably not a big deal in test code.)",
+      "parentUuid": "9cadf1bd_9a3fa400",
+      "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e1a062_139f7dbd",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T21:25:36Z",
+      "side": 1,
+      "message": "nit: tablet_controller_",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1bc135_f86ac28c",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-02T21:25:36Z",
+      "side": 1,
+      "message": "this name is a bit ambiguous as to the state that it\u0027s setting the switch to. please either make it take a TabletMode argument containing the state or rename it to something like SetTabletModeSwitchEnabled",
       "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
