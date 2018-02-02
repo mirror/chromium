@@ -155,14 +155,6 @@ bool SparseHistogram::AddSamplesFromPickle(PickleIterator* iter) {
   return unlogged_samples_->AddFromPickle(iter);
 }
 
-void SparseHistogram::WriteHTMLGraph(std::string* output) const {
-  WriteAsciiImpl(true, output);
-}
-
-void SparseHistogram::WriteAscii(std::string* output) const {
-  WriteAsciiImpl(false, output);
-}
-
 void SparseHistogram::SerializeInfoImpl(Pickle* pickle) const {
   pickle->WriteString(histogram_name());
   pickle->WriteInt(flags());
@@ -215,74 +207,6 @@ void SparseHistogram::GetCountAndBucketData(Count* count,
                                             int64_t* sum,
                                             ListValue* buckets) const {
   // TODO(kaiwang): Implement. (See HistogramBase::WriteJSON.)
-}
-
-void SparseHistogram::WriteAsciiImpl(const bool is_html,
-                                     std::string* const output) const {
-  // Get a local copy of the data so we are consistent.
-  std::unique_ptr<HistogramSamples> snapshot = SnapshotSamples();
-  Count sample_count = snapshot->TotalCount();
-
-  StringAppendF(output, is_html ? "<h2>%s</h2><pre>" : "%s\n\n",
-                histogram_name());
-
-  // If there are no samples, display the mean as 0.0 instead of NaN.
-  const double mean = sample_count != 0
-                          ? static_cast<double>(snapshot->sum()) / sample_count
-                          : 0.0;
-  StringAppendF(output, "Samples: %d, Mean: %.1f, Flags: 0x%x\n\n",
-                sample_count, mean, flags());
-
-  if (sample_count != 0) {
-    *output += "+------------+------------+--------+------------+--------+\n";
-    *output += "|     Bucket |    Samples |      % |  Cumulated |      % |\n";
-    *output += "+------------+------------+--------+------------+--------+\n";
-
-    // Determine how wide the largest bucket range is (how many digits to
-    // print), so that we'll be able to right-align starts for the graphical
-    // bars.
-    Count count_max = 0;
-    for (const std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
-         !it->Done(); it->Next()) {
-      Sample min;
-      int64_t max;
-      Count count;
-      it->Get(&min, &max, &count);
-      count_max = std::max(count_max, count);
-    }
-
-    const double bar_scaling = 50.0 / count_max;
-    const double percent_scaling = 100.0 / sample_count;
-
-    Count previous = 0;
-    Count cumulated = 0;
-    // Output the actual histogram graph.
-    for (const std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
-         !it->Done(); it->Next()) {
-      Sample min;
-      int64_t max;
-      Count current;
-      it->Get(&min, &max, &current);
-
-      cumulated += current;
-      if (current != 0 || previous != 0) {
-        StringAppendF(output, "| %10s | %10d | %5.1f%% | %10d | %5.1f%% | ",
-                      GetSimpleAsciiBucketRange(min).c_str(), current,
-                      current * percent_scaling, cumulated,
-                      cumulated * percent_scaling);
-
-        output->append(current * bar_scaling, '*');
-        *output += '\n';
-      }
-      previous = current;
-    }
-
-    DCHECK_EQ(sample_count, cumulated);
-    *output += "+------------+------------+--------+------------+--------+\n";
-  }
-
-  if (is_html)
-    output->append("</pre>");
 }
 
 }  // namespace base
