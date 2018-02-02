@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5cc82d02_2fd93cf4",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-02T22:59:59Z",
+      "side": 0,
+      "message": "The only difference between having the line and not having the line is that, before, it was possible that hasLowLatency was not set. But as this is the only place it ever gets checked, I didn\u0027t think that was an issue. All other code paths will remain the same as far as I can tell.",
+      "parentUuid": "b551858e_a5a8b298",
+      "revId": "8a80beb492de364a0be438a6f471b63688a6be1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90755002_91cdc990",
         "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8a80beb492de364a0be438a6f471b63688a6be1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cc06e0_48571325",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-02T22:59:59Z",
+      "side": 0,
+      "message": "Agreed.",
+      "parentUuid": "90755002_91cdc990",
+      "revId": "8a80beb492de364a0be438a6f471b63688a6be1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

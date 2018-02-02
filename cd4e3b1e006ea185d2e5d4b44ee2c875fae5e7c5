@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b267607b_09c80f58",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-02T22:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26204e1_3936aeb1",
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "425e8c4e_bd1bf95b",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cdb21632_a1948551",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-02T22:59:59Z",
+      "side": 1,
+      "message": "I tried it but I get a \u0027Function definition not allowed here\u0027 error.",
+      "parentUuid": "425e8c4e_bd1bf95b",
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77b319a5_5ca0eeaf",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4628f940_50bbe794",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-02T22:59:59Z",
+      "side": 1,
+      "message": "The changes are rather extensive so a followup would be better I think.",
+      "parentUuid": "77b319a5_5ca0eeaf",
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6122ae_0b1470ba",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-02T22:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a183134_4e75f3f7",
+      "range": {
+        "startLine": 1706,
+        "startChar": 7,
+        "endLine": 1706,
+        "endChar": 26
+      },
+      "revId": "cd4e3b1e006ea185d2e5d4b44ee2c875fae5e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
