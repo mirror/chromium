@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a932527_50f02dde",
+        "filename": "components/data_use_measurement/content/service_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-02T23:19:17Z",
+      "side": 1,
+      "message": "Curious, how do we plan to associate this data use with a specific profile?",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "0adfa4d228aecc703aa19b60fa9eeb7dbe026e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ff5b7e_ee711c4f",
+        "filename": "components/data_use_measurement/content/service_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-02T23:19:17Z",
+      "side": 1,
+      "message": "Would content/ be a better location for this? I see content/ uses URLFetcher. If we keep this in components/, then we would not be able to use it for parts of content/ that currently use URLFetcher.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "0adfa4d228aecc703aa19b60fa9eeb7dbe026e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee898410_a50dfca8",
+        "filename": "components/data_use_measurement/content/service_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-02T23:19:17Z",
+      "side": 1,
+      "message": "nit: s/kDataReductionProxy + 1/2/",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "0adfa4d228aecc703aa19b60fa9eeb7dbe026e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b837ceea_8f6cc301",
+        "filename": "components/data_use_measurement/content/service_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-02T23:19:17Z",
+      "side": 1,
+      "message": "const object?",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "0adfa4d228aecc703aa19b60fa9eeb7dbe026e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
