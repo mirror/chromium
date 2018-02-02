@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b89b8b1d_6dfcb584",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-02T15:09:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48db511c_60c9f1fe",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09288968_9f69e664",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ca9f79_7f4de6ed",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-02T15:09:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09288968_9f69e664",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8cc1ebe9_d2569cd6",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-02T15:09:37Z",
+      "side": 1,
+      "message": "Added a TODO for the mixed-track case.",
+      "parentUuid": "f305e2d8_b8b55bdc",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d0607f3_38ff358b",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-02T14:56:56Z",
       "side": 1,
       "message": "Why does this crash? Can you add a bug link?",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf34d19_75126d70",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-02T15:09:37Z",
+      "side": 1,
+      "message": "That comment was supposed to have been removed!\nThat\u0027s the bug I fixed. Another test also crashed, which was what I used to test it.",
+      "parentUuid": "5d0607f3_38ff358b",
       "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
