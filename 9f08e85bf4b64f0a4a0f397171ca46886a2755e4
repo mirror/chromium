@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60951ea8_3920b03b",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-02T05:19:29Z",
+      "side": 1,
+      "message": "Can this simply be a anonymous helper function?\nThen we can avoid TEST_F(SignedExchangeCertFetcherTest",
+      "revId": "9f08e85bf4b64f0a4a0f397171ca46886a2755e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
