@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091b8361_f12a9e6d",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-02T18:27:30Z",
+      "side": 1,
+      "message": "I think it\u0027s never okay to use unstable lid angles to exit tablet mode (because it\u0027s not possible to use a chromebook open to less than 20 degrees so we don\u0027t need to detect this as a switch to laptop mode) but it is okay to eventually use unstable angles to enter tablet mode (because you keep the device at 360 for an extended length of time).",
+      "revId": "21a2ceaf10bbf9fb037914d67e37edc266fdaa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
