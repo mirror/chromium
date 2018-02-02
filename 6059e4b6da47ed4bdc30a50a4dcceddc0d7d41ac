@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "45fa896c_ab5c7303",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-02T23:18:03Z",
+      "side": 1,
+      "message": "Seems like that is going to end up causing a lot of duplication... can we unify the two enums?\n\nAnother alternative is to have the Login enum be a strict superset of the Lock enum and do casting - but that seems error prone.",
+      "parentUuid": "3c592ca6_8ed079d1",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7935466a_a4a48fd3",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
