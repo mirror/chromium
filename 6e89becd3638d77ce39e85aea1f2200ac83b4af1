@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a268e209_3b42d1f7",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_aura.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-02T23:48:50Z",
+      "side": 1,
+      "message": "From my understanding, |InternalClient| is only used within |TouchSelectionControllerClientAura| as a private member, onDragUpdate() on |InternalClient| can only be called inside. Following convention in this class to have a NOTREACHED() to enforce the behavior.\n\nOnDragUpdate() of |TouchSelectionControllerClientAura| will be called from |TouchSelectionController| though.",
+      "parentUuid": "77e1658c_61296d0f",
+      "revId": "6e89becd3638d77ce39e85aea1f2200ac83b4af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c5994f8_c9de0952",
         "filename": "ui/touch_selection/touch_selection_controller.cc",
         "patchSetId": 10
