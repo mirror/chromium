@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5cf352_89e695af",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-02T16:25:43Z",
+      "side": 1,
+      "message": "Nit; you have include here and in the cc file.\n\nYou only need forward definition of the class here. Remove the #include and add a \"class WebInputEvent;\" definition",
+      "revId": "59fd2cb55bd4e01076a972ac1cb3e1f8fdf13a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
