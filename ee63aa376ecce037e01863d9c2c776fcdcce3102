@@ -22,6 +22,30 @@
       "revId": "ee63aa376ecce037e01863d9c2c776fcdcce3102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4eebc9_90e40ae7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-02T20:23:38Z",
+      "side": 1,
+      "message": "I mostly just want this to follow the same path as the button click and not use the tab creator directly.\n\nSee newTabClickHandler in ChromeTabbedActivity. It does a few extra things on top of just opening the tab.",
+      "parentUuid": "a5ea0c73_291791d7",
+      "range": {
+        "startLine": 884,
+        "startChar": 15,
+        "endLine": 884,
+        "endChar": 26
+      },
+      "revId": "ee63aa376ecce037e01863d9c2c776fcdcce3102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
