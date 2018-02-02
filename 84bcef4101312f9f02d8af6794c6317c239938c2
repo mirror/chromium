@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8c0b8f9_9fec7ed7",
+        "filename": "mash/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "I added this to be able to build it.  Removed it from this cl.",
+      "parentUuid": "d62bac03_d2a6b091",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47bddfb8_8e3ffea7",
         "filename": "services/assistant/BUILD.gn",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a38565_9b83e9eb",
+        "filename": "services/assistant/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "sorry wrong file name. Updated.",
+      "parentUuid": "47bddfb8_8e3ffea7",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "81b1f6c9_69629319",
+        "filename": "services/assistant/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4c49d7f_a32a1fbc",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1926f205_29d89d66",
         "filename": "services/assistant/assistant_manager_service.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e42f6f_07d51f52",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "Done, also added a quick README.md",
+      "parentUuid": "1926f205_29d89d66",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "252d366b_879ebfd3",
+        "filename": "services/assistant/assistant_manager_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "It\u0027s used by the impl, moved to the impl class instead.",
+      "parentUuid": "1afe16d2_312efe55",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae0d9c32_c1be57af",
         "filename": "services/assistant/assistant_manager_service_impl.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619238c7_33e53ebe",
+        "filename": "services/assistant/assistant_manager_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "Changed to DVLOG",
+      "parentUuid": "ae0d9c32_c1be57af",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6a18c5c1_a4d60e39",
+        "filename": "services/assistant/fake_assistant_manager_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23dee6b_c99adf7f",
+      "range": {
+        "startLine": 9,
+        "startChar": 67,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0999a568_733a905e",
         "filename": "services/assistant/fake_assistant_manager_service_impl.cc",
         "patchSetId": 6
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "28742f17_2bfa1add",
+        "filename": "services/assistant/fake_assistant_manager_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0999a568_733a905e",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f62a6b_d380c6cf",
         "filename": "services/assistant/fake_assistant_manager_service_impl.h",
         "patchSetId": 6
@@ -200,6 +392,24 @@
       "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e074dbc_0261aaf3",
+        "filename": "services/assistant/fake_assistant_manager_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T00:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f62a6b_d380c6cf",
+      "revId": "84bcef4101312f9f02d8af6794c6317c239938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
