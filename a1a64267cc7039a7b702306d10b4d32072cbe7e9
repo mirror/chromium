@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317a0192_4084ee73",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-02T06:09:40Z",
+      "side": 1,
+      "message": "Could you attach a screenshot?",
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab3873d_8ca1ee7c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-02T06:09:40Z",
+      "side": 1,
+      "message": "For private property, use invalidPPD_.",
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c852f987_7941538f",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-02T06:09:40Z",
+      "side": 1,
+      "message": "The default value is false, does the error-message always show when the dialog is opened?",
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
