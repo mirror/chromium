@@ -146,7 +146,8 @@ class HitTestDataProviderAuraTest : public test::AuraTestBaseMus {
 
 // Tests that the order of reported hit-test regions matches windows Z-order.
 TEST_F(HitTestDataProviderAuraTest, Stacking) {
-  const auto hit_test_data_1 = hit_test_data_provider()->GetHitTestData();
+  const auto hit_test_data_1 =
+      hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data_1);
   EXPECT_EQ(hit_test_data_1->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data_1->bounds, root()->bounds());
@@ -164,7 +165,8 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
   }
 
   root()->StackChildAbove(window2(), window3());
-  const auto hit_test_data_2 = hit_test_data_provider()->GetHitTestData();
+  const auto hit_test_data_2 =
+      hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data_2);
   EXPECT_EQ(hit_test_data_2->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data_2->bounds, root()->bounds());
@@ -187,7 +189,7 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
 TEST_F(HitTestDataProviderAuraTest, CustomTargeter) {
   window3()->SetEventTargeter(std::make_unique<TestWindowTargeter>());
   window2()->set_embed_frame_sink_id(viz::FrameSinkId(1, 2));
-  const auto hit_test_data = hit_test_data_provider()->GetHitTestData();
+  const auto hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data->bounds, root()->bounds());
@@ -229,7 +231,7 @@ TEST_F(HitTestDataProviderAuraTest, CustomTargeter) {
 // Tests that the complex hit-test shape can be set with a custom targeter.
 TEST_F(HitTestDataProviderAuraTest, HoleTargeter) {
   window3()->SetEventTargeter(std::make_unique<TestHoleWindowTargeter>());
-  const auto hit_test_data = hit_test_data_provider()->GetHitTestData();
+  const auto hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data->bounds, root()->bounds());
@@ -263,13 +265,13 @@ TEST_F(HitTestDataProviderAuraTest, HoleTargeter) {
 
 TEST_F(HitTestDataProviderAuraTest, TargetingPolicies) {
   root()->SetEventTargetingPolicy(ui::mojom::EventTargetingPolicy::NONE);
-  auto hit_test_data = hit_test_data_provider()->GetHitTestData();
+  auto hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_FALSE(hit_test_data);
 
   root()->SetEventTargetingPolicy(ui::mojom::EventTargetingPolicy::TARGET_ONLY);
   window3()->SetEventTargetingPolicy(
       ui::mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS);
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data->regions.size(), 3u);
@@ -277,7 +279,7 @@ TEST_F(HitTestDataProviderAuraTest, TargetingPolicies) {
   root()->SetEventTargetingPolicy(ui::mojom::EventTargetingPolicy::TARGET_ONLY);
   window3()->SetEventTargetingPolicy(
       ui::mojom::EventTargetingPolicy::TARGET_ONLY);
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data->regions.size(), 2u);
@@ -286,7 +288,7 @@ TEST_F(HitTestDataProviderAuraTest, TargetingPolicies) {
       ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
   window3()->SetEventTargetingPolicy(
       ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestIgnore);
   EXPECT_EQ(hit_test_data->regions.size(), 2u);
@@ -295,7 +297,7 @@ TEST_F(HitTestDataProviderAuraTest, TargetingPolicies) {
       ui::mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS);
   window3()->SetEventTargetingPolicy(
       ui::mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS);
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data->regions.size(), 3u);
@@ -304,30 +306,30 @@ TEST_F(HitTestDataProviderAuraTest, TargetingPolicies) {
 // Tests that we do not submit hit-test data for invisible windows and for
 // children of a child surface.
 TEST_F(HitTestDataProviderAuraTest, DoNotSubmit) {
-  auto hit_test_data = hit_test_data_provider()->GetHitTestData();
+  auto hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->regions.size(), 3u);
 
   window2()->Hide();
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->regions.size(), 2u);
 
   window3()->set_embed_frame_sink_id(viz::FrameSinkId(1, 3));
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->regions.size(), 1u);
 
   root()->Hide();
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_FALSE(hit_test_data);
 
   root()->Show();
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->regions.size(), 1u);
   root()->set_embed_frame_sink_id(viz::FrameSinkId(1, 1));
-  hit_test_data = hit_test_data_provider()->GetHitTestData();
+  hit_test_data = hit_test_data_provider()->GetHitTestData(nullptr);
   ASSERT_TRUE(hit_test_data);
   EXPECT_EQ(hit_test_data->regions.size(), 0u);
 }
