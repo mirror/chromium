@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10905c4a_4e814238",
+        "filename": "ui/touch_selection/touch_selection_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-02-02T02:11:24Z",
+      "side": 1,
+      "message": "nit: Could you rename this to \"last_drag_update_position_\" and make the corresponding change to the selector method?",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 33
+      },
+      "revId": "b93c2bd89a64b2cdee616232e89c9ced8029c61f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9769153_f9b203d8",
+        "filename": "ui/touch_selection/touch_selection_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-02-02T02:11:24Z",
+      "side": 1,
+      "message": "nit: I think it would more realistic if this ChangeInsertion() call came after the first WillHandleTouchEvent() call.",
+      "revId": "b93c2bd89a64b2cdee616232e89c9ced8029c61f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
