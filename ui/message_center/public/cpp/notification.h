@@ -56,7 +56,8 @@ enum class ButtonType {
 
 enum class SettingsButtonHandler {
   NONE,     // No button. This is the default.
-  TRAY,     // Button shown, the tray handles clicks. Only used on Chrome OS.
+  INLINE,   // Button shown, settings inline. Used on Chrome OS and Windows
+            // when native notifications are not supported.
   DELEGATE  // Button shown, notification's delegate handles action.
 };
 
