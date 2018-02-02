@@ -181,7 +181,10 @@ class PLATFORM_EXPORT ResourceFetcher
   ResourceFetcher(FetchContext*);
 
   void InitializeRevalidation(ResourceRequest&, Resource*);
-  Resource* CreateResourceForLoading(FetchParameters&,
+  scoped_refptr<const SecurityOrigin> GetSourceOrigin(
+      const ResourceLoaderOptions&) const;
+  void AddToMemoryCacheIfNeeded(const FetchParameters&, Resource*);
+  Resource* CreateResourceForLoading(const FetchParameters&,
                                      const ResourceFactory&);
   void StorePerformanceTimingInitiatorInformation(Resource*);
   ResourceLoadPriority ComputeLoadPriority(

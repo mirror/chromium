@@ -69,7 +69,7 @@ TEST_F(RawResourceTest, DontIgnoreAcceptForCacheReuse) {
   ResourceRequest png_request;
   png_request.SetHTTPAccept("image/png");
 
-  EXPECT_FALSE(jpeg_resource->CanReuse(FetchParameters(png_request)));
+  EXPECT_FALSE(jpeg_resource->CanReuse(FetchParameters(png_request), nullptr));
 }
 
 class DummyClient final : public GarbageCollectedFinalized<DummyClient>,
@@ -213,8 +213,8 @@ TEST_F(RawResourceTest,
   request.SetHTTPHeaderField(
       HTTPNames::X_DevTools_Emulate_Network_Conditions_Client_Id, "Foo");
   Resource* raw = RawResource::CreateForTest(request, Resource::kRaw);
-  EXPECT_TRUE(
-      raw->CanReuse(FetchParameters(ResourceRequest("data:text/html,"))));
+  EXPECT_TRUE(raw->CanReuse(FetchParameters(ResourceRequest("data:text/html,")),
+                            nullptr));
 }
 
 }  // namespace blink

@@ -468,10 +468,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
   resource->SetCacheIdentifier(cache_identifier);
   resource->Finish(0.0, Context().GetLoadingTaskRunner().get());
 
-  if (ShouldResourceBeAddedToMemoryCache(params, resource) &&
-      !substitute_data.IsValid()) {
-    GetMemoryCache()->Add(resource);
-  }
+  if (!substitute_data.IsValid())
+    AddToMemoryCacheIfNeeded(params, resource);
 
   return resource;
 }
@@ -862,8 +860,23 @@ void ResourceFetcher::InitializeRevalidation(
   resource->SetRevalidatingRequest(revalidating_request);
 }
 
+scoped_refptr<const SecurityOrigin> ResourceFetcher::GetSourceOrigin(
+    const ResourceLoaderOptions& options) const {
+  if (options.security_origin)
+    return options.security_origin;
+  return Context().GetSecurityOrigin();
+}
+
+void ResourceFetcher::AddToMemoryCacheIfNeeded(const FetchParameters& params,
+                                               Resource* resource) {
+  if (!ShouldResourceBeAddedToMemoryCache(params, resource))
+    return;
+  resource->SetSourceOrigin(GetSourceOrigin(params.Options()));
+  GetMemoryCache()->Add(resource);
+}
+
 Resource* ResourceFetcher::CreateResourceForLoading(
-    FetchParameters& params,
+    const FetchParameters& params,
     const ResourceFactory& factory) {
   const String cache_identifier = GetCacheIdentifier();
   DCHECK(!IsMainThread() ||
@@ -881,8 +894,7 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   }
   resource->SetCacheIdentifier(cache_identifier);
 
-  if (ShouldResourceBeAddedToMemoryCache(params, resource))
-    GetMemoryCache()->Add(resource);
+  AddToMemoryCacheIfNeeded(params, resource);
   return resource;
 }
 
@@ -968,7 +980,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
     return nullptr;
 
   if (IsImageResourceDisallowedToBeReused(*resource) ||
-      !resource->CanReuse(params))
+      !resource->CanReuse(params, GetSourceOrigin(params.Options())))
     return nullptr;
 
   if (!resource->MatchPreload(params, Context().GetLoadingTaskRunner().get()))
@@ -1099,7 +1111,8 @@ ResourceFetcher::DetermineRevalidationPolicyInternal(
   if (is_static_data)
     return kUse;
 
-  if (!existing_resource.CanReuse(fetch_params)) {
+  if (!existing_resource.CanReuse(fetch_params,
+                                  GetSourceOrigin(fetch_params.Options()))) {
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::DetermineRevalidationPolicy "
                                  "reloading due to Resource::CanReuse() "
                                  "returning false.";
