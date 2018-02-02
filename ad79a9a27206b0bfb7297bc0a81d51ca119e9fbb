@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e65fe5b_49e5e778",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-02T18:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e98c72f_add7dd18",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a8aff0_96eab4c4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
         "patchSetId": 3
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c2f58509_541f1f8f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-02T18:09:57Z",
+      "side": 1,
+      "message": "? We had a similar issue with create(), hence this comment:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/775630/10/third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-iframe.html#22\n\nI double checked, and the first *two* tests use the mock and work fine. The comment I just referenced was for the third test, which definitely does not use the mock.\n\nAnyways, the test timeout seems to happen in 6 seconds. I could add an adjusted timeout to exit before then if we make the minimum really really short. But that might cause unintended problems when it comes to using BLE devices, no? What do you think?",
+      "parentUuid": "533804f0_9ed9fa9c",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e4d8452_e2609597",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
         "patchSetId": 3
@@ -65,6 +101,24 @@
       "writtenOn": "2018-02-01T14:59:08Z",
       "side": 1,
       "message": "nit: Why do we have these four here and not in -basics.hmtl? The same question goes for create-origins.html.",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa16c21_c1153d61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-02T18:09:57Z",
+      "side": 1,
+      "message": "They will fail early due to not being called from a secure origin. For that reason, we can only have tests in -basics.html tests that have TypeError-type failures. I\u0027ll add comments to that effect.",
+      "parentUuid": "2e4d8452_e2609597",
       "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "d3fdba63_3dee2d9f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/credential-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-02T18:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eba8322a_a57b4a9b",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd9893cf_1663e3ba",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 3
@@ -108,6 +180,30 @@
       "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25781ca8_7f985863",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-02T18:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9893cf_1663e3ba",
+      "range": {
+        "startLine": 395,
+        "startChar": 73,
+        "endLine": 395,
+        "endChar": 74
+      },
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
