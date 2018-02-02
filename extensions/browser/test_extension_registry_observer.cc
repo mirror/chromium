@@ -44,6 +44,7 @@ TestExtensionRegistryObserver::TestExtensionRegistryObserver(
     ExtensionRegistry* registry,
     const std::string& extension_id)
     : will_be_installed_waiter_(new Waiter()),
+      installed_waiter_(new Waiter()),
       uninstalled_waiter_(new Waiter()),
       loaded_waiter_(new Waiter()),
       ready_waiter_(new Waiter()),
@@ -65,6 +66,10 @@ TestExtensionRegistryObserver::WaitForExtensionWillBeInstalled() {
   return Wait(&will_be_installed_waiter_);
 }
 
+const Extension* TestExtensionRegistryObserver::WaitForExtensionInstalled() {
+  return Wait(&installed_waiter_);
+}
+
 const Extension* TestExtensionRegistryObserver::WaitForExtensionLoaded() {
   return Wait(&loaded_waiter_);
 }
@@ -84,6 +89,14 @@ void TestExtensionRegistryObserver::OnExtensionWillBeInstalled(
     const std::string& old_name) {
   if (extension_id_.empty() || extension->id() == extension_id_)
     will_be_installed_waiter_->OnObserved(extension);
+}
+
+void TestExtensionRegistryObserver::OnExtensionInstalled(
+    content::BrowserContext* browser_context,
+    const Extension* extension,
+    bool is_update) {
+  if (extension_id_.empty() || extension->id() == extension_id_)
+    installed_waiter_->OnObserved(extension);
 }
 
 void TestExtensionRegistryObserver::OnExtensionUninstalled(
