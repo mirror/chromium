@@ -11,33 +11,25 @@
 
 namespace autofill {
 
-namespace {
-
-static base::LazyInstance<AutofillClock>::DestructorAtExit g_autofill_clock =
-    LAZY_INSTANCE_INITIALIZER;
-
-}  // namespace
+AutofillClock AutofillClock::s_autofill_clock_;
 
 // static
 base::Time AutofillClock::Now() {
-  if (!g_autofill_clock.Get().clock_)
+  if (!s_autofill_clock_.clock_)
     SetClock();
 
-  return g_autofill_clock.Get().clock_->Now();
+  return s_autofill_clock_.clock_->Now();
 }
-
-AutofillClock::AutofillClock(){};
-AutofillClock::~AutofillClock(){};
 
 // static
 void AutofillClock::SetClock() {
-  g_autofill_clock.Get().clock_ = std::make_unique<base::DefaultClock>();
+  s_autofill_clock_.clock_ = base::DefaultClock::GetInstance();
 }
 
 // static
-void AutofillClock::SetTestClock(std::unique_ptr<base::Clock> clock) {
+void AutofillClock::SetTestClock(base::Clock* clock) {
   DCHECK(clock);
-  g_autofill_clock.Get().clock_ = std::move(clock);
+  s_autofill_clock_.clock_ = clock;
 }
 
 }  // namespace autofill
