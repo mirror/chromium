@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c355b2_ed7eec4b",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T21:33:14Z",
+      "side": 1,
+      "message": "I think the comment on the swiftshader bug is right, on stock ES3 (even with GL_EXT_texture_type_2_10_10_10_REV) we can\u0027t assume GL_BGRA/GL_UNSIGNED_INT_2_10_10_10_REV is supported.\n\nShould we limit support to desktop GL \u003e\u003d 4.2 as a first step?",
+      "revId": "51f6bf6cc386559883d467fec7f168dda767fb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
