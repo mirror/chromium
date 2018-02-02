@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab994d7_96b7f760",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-02-02T10:17:42Z",
+      "side": 1,
+      "message": "It might be reasonable to split this into \"resource in the top-level document\" vs \"resource in a nested frame\", since we\u0027re probably more likely to be happy breaking the latter rather than the former.",
+      "revId": "d190de6592c29ae9bf53edc5c0f4afb35cb72687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
