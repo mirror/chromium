@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5436ed4_b8c37f2e",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-02-02T21:51:37Z",
+      "side": 1,
+      "message": "nit: under_scores for these variables?",
+      "range": {
+        "startLine": 646,
+        "startChar": 47,
+        "endLine": 646,
+        "endChar": 60
+      },
+      "revId": "1994434c98d498eb6ea48bb5a73dbd6e822a1239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
