@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd63166_5b879ad5",
+        "filename": "base/deferred_sequenced_task_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-02T00:20:45Z",
+      "side": 1,
+      "message": "if you don\u0027t want to lock twice, here and in StartImpl(), you can remove the StartImpl() lock and lock in both Start() and StartWithTaskRunner() instead.",
+      "revId": "c180b28582ef1be6bbf19088af584860158b5bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
