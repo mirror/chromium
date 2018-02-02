@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a8ddfd63_ebf37bb7",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2018-02-02T00:16:38Z",
+      "side": 1,
+      "message": "Again, I misunderstood code a bit on the first pass. Withdrawing this comment.",
+      "parentUuid": "8824473d_82a7fe69",
+      "range": {
+        "startLine": 203,
+        "startChar": 65,
+        "endLine": 203,
+        "endChar": 77
+      },
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1c714d2_06c8c66d",
         "filename": "chrome/browser/devtools/device/cast_device_provider.h",
         "patchSetId": 1
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "954041aa_3661539e",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2018-02-02T00:16:38Z",
+      "side": 1,
+      "message": "I think I misunderstood this line during my first pass, sorry.\nDigging through the code and using my outdated knowledge about this, I think the only case when cache may be flushed is due to network change. However, this code is clearly a notification handled and only concerns about specific service_type.\n\nThe current interface has been inherited from old implementation is less then ideal, but it is not a job of this CL to completely change service implementation here :), so I withdraw my comment here.",
+      "parentUuid": "b945e444_e0138b04",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69fc09d1_fbebb91b",
         "filename": "chrome/browser/local_discovery/service_discovery_device_lister.h",
         "patchSetId": 1
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "I\u0027m targeting the latter use case -- 1 delegate managing multiple types.\n\nI went back and forth on adding type to the other hooks.  Happy to add it, but the reason I didn\u0027t is that the information is already encoded in the existing arguments for the other Delegate callbacks in relatively easy-to-extract methods.  In the case of OnDeviceChanged it\u0027s available as service_description.service_type().  In the case of OnDeviceRemoved, it\u0027s slightly more complicated, but can be extracted from service_name, which is just \"$service_type.$instance_name\"\n\nWhat would you think about changing OnDeviceRemoved to use (service_type, instance_name) as arguments instead of (service_type, service_name), and leaving OnDeviceChanged as-is?  That makes service_type easily available in all hooks, and it\u0027s easier to construct service_name from the combination of type and instance than it is to do the reverse.",
       "parentUuid": "69fc09d1_fbebb91b",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7f89b9_9a7ea17b",
+        "filename": "chrome/browser/local_discovery/service_discovery_device_lister.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2018-02-02T00:16:38Z",
+      "side": 1,
+      "message": "Yeah, I can see confusion here. Don\u0027t have a good answer either.\n\nLooks like device cache flush will affect all services, so it may be even ok to keep it as it was. However, to make it cleaner I can see 3 options here:\n1. Leave as in this CL. It will make interface a bit confusing for future use (why service is only in one function, why there are different ways to get service type in every function).\n2. Add service_type to all functions. It will make service_type redundant (you can always get it from service name), but it will be a bit cleaner (user register for service_type and gets service_type in every callback).\n3. We can add ServiceDiscoveryDeviceListener pointer to every call, so implemented may differentiate. (kind of removing redundancy concerns, but may be making OnDeviceCacheFlushed implementations more confusing).\n\nI would probably advise against either splitting service_name into 2 (as user may need to reconstruct it to compare with ServiceDescription) or let user manually do it.\n\nAfter thinking this through, I probably leaning towards 2, for simplicity and easy to understand in the future (even at a cost of redundancy, which should be commented). However, I may be convinced for 1. or 3. if you strongly prefer one or another. (just add comments for future users)",
+      "parentUuid": "0e8d4fae_4058b3b4",
       "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
