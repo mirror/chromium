@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72a2dbe6_decb9d42",
+        "filename": "sql/recovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T15:54:10Z",
+      "side": 0,
+      "message": "I couldn\u0027t actually find this comment. I\u0027m assuming this comment got out of date.",
+      "range": {
+        "startLine": 145,
+        "startChar": 33,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "bb3933892e1499aafdb25841ca90ff6c5e8ccf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
