@@ -4,10 +4,13 @@
 
 #include "modules/picture_in_picture/HTMLVideoElementPictureInPicture.h"
 
+//#include "bindings/core/v8/ScriptPromise.h"
+//#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/events/Event.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "modules/picture_in_picture/PictureInPictureController.h"
+#include "modules/picture_in_picture/PictureInPictureWindow.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 
 namespace blink {
@@ -71,7 +74,12 @@ ScriptPromise HTMLVideoElementPictureInPicture::requestPictureInPicture(
   element.DispatchEvent(
       Event::CreateBubble(EventTypeNames::enterpictureinpicture));
 
-  return ScriptPromise::CastUndefined(script_state);
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  PictureInPictureWindow window =
+      PictureInPictureWindow::Create(document, 300, 150);
+  return resolver->Resolve(window);
 }
 
 // static
