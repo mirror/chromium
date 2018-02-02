@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08a6af6_4330a661",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-02T23:27:45Z",
+      "side": 1,
+      "message": "We could do just\nif (!Display::HasForceColorProfile())\n  new_display.set_color_space(...)\n\nSimilar to Windows\nhttps://cs.chromium.org/chromium/src/ui/display/win/screen_win.cc?rcl\u003df59838589e069f663e3d8fd83d06eb0c18ed9597\u0026l\u003d95\n\nNote that we initialize display::Display color space to the forced one\nhttps://cs.chromium.org/chromium/src/ui/display/display.cc?rcl\u003df59838589e069f663e3d8fd83d06eb0c18ed9597\u0026l\u003d164",
+      "revId": "63bf8f92932f5232ed13eb3e8dcef9ff09fd28f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
