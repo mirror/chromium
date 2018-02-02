@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d34808b_04e8ae5a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-02T08:19:38Z",
+      "side": 1,
+      "message": "Can you help me understand if it\u0027s possible to go in the other direction, or if we can safely rule that out?  Just want to make sure we\u0027re not creating a race here.\n\nSomething like [A1, *A2].  We try to go back to A1 (same document), but the page has committed B (cross-document) by then.  So we hop up here to convert it to a cross-document load, but in the meantime we\u0027ve gone back from B to A2, so that A1 is now same document again.  Is that ruled out in some way?",
+      "revId": "24c7ae85de2bb72c1e90cebcc08c05c1209f601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
