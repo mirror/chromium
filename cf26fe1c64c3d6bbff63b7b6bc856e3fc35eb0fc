@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d856f165_d3855964",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T19:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d024d9a2_a0cde676",
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c800b44e_f23f9932",
         "filename": "third_party/WebKit/Source/core/animation/test_data/transform-animation-on-svg.html",
         "patchSetId": 8
@@ -101,6 +119,24 @@
       "writtenOn": "2018-02-02T18:49:34Z",
       "side": 1,
       "message": "Nit; remove line here.",
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae8005d2_0f0b4ae5",
+        "filename": "third_party/WebKit/Source/core/animation/test_data/transform-animation-on-svg.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T19:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c800b44e_f23f9932",
       "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
