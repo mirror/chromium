@@ -2860,12 +2860,13 @@ LayoutUnit LayoutBox::ComputeLogicalWidthUsing(
   LayoutUnit logical_width_result =
       FillAvailableMeasure(available_logical_width, margin_start, margin_end);
 
-  if (ShrinkToAvoidFloats() && cb->IsLayoutBlockFlow() &&
-      ToLayoutBlockFlow(cb)->ContainsFloats())
+  if (!cb->IsLayoutNGMixin() && ShrinkToAvoidFloats() &&
+      cb->IsLayoutBlockFlow() && ToLayoutBlockFlow(cb)->ContainsFloats()) {
     logical_width_result =
         std::min(logical_width_result,
                  ShrinkLogicalWidthToAvoidFloats(margin_start, margin_end,
                                                  ToLayoutBlockFlow(cb)));
+  }
 
   if (width_type == kMainOrPreferredSize &&
       SizesLogicalWidthToFitContent(logical_width)) {
@@ -3032,7 +3033,8 @@ void LayoutBox::ComputeMarginsForDirection(MarginDirection flow_direction,
   if (AvoidsFloats() && containing_block->IsLayoutBlockFlow() &&
       ToLayoutBlockFlow(containing_block)->ContainsFloats()) {
     available_width = ContainingBlockAvailableLineWidth();
-    if (ShrinkToAvoidFloats() && available_width < container_width) {
+    if (!containing_block->IsLayoutNGMixin() && ShrinkToAvoidFloats() &&
+        available_width < container_width) {
       margin_start = std::max(LayoutUnit(), margin_start_width);
       margin_end = std::max(LayoutUnit(), margin_end_width);
     }
@@ -3144,7 +3146,13 @@ void LayoutBox::ComputeLogicalHeight(
 
   Length h;
   if (IsOutOfFlowPositioned()) {
-    ComputePositionedLogicalHeight(computed_values);
+    if (HasOverrideLogicalContentHeight()) {
+      DCHECK(!ContainingBlock() || !ContainingBlock()->IsLayoutNGMixin());
+      computed_values.extent_ =
+          OverrideLogicalContentHeight() + BorderAndPaddingLogicalHeight();
+    } else {
+      ComputePositionedLogicalHeight(computed_values);
+    }
   } else {
     LayoutBlock* cb = ContainingBlock();
 
@@ -4926,6 +4934,10 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
 
 DISABLE_CFI_PERF
 bool LayoutBox::ShrinkToAvoidFloats() const {
+  // If the containing block is LayoutNG, we really shouldn't let legacy layout
+  // deal with positioning of floats. This method shouldn't be called then.
+  DCHECK(!ContainingBlock() || !ContainingBlock()->IsLayoutNGMixin());
+
   // Floating objects don't shrink.  Objects that don't avoid floats don't
   // shrink.
   if (IsInline() || !AvoidsFloats() || IsFloating())
