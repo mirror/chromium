@@ -211,7 +211,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
     return running_hosted_version_.get();
   }
 
-  // S13nServiceWorker:
+  // S13nServiceWorker/NavigationMojoResponse:
   // For service worker clients. Similar to GetControllerServiceWorker, but this
   // returns a bound Mojo ptr which is supposed to be sent to clients. The
   // controller ptr passed to the clients will be used to intercept requests
@@ -578,7 +578,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
 
   std::vector<base::Closure> queued_events_;
 
-  // S13nServiceWorker:
+  // S13nServiceWorker/NavigationMojoResponse:
   // A service worker handle for the controller service worker that is
   // pre-created before the renderer process (and therefore the dispatcher host)
   // is created.

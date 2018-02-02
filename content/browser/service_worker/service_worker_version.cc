@@ -1583,7 +1583,7 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   binding_.Close();
   binding_.Bind(mojo::MakeRequest(&params->service_worker_host));
 
-  // S13nServiceWorker:
+  // S13nServiceWorker/NavigationMojoResponse:
   if (!controller_request_.is_pending()) {
     DCHECK(!controller_ptr_.is_bound());
     controller_request_ = mojo::MakeRequest(&controller_ptr_);
