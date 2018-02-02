@@ -90,7 +90,7 @@ class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
 
   // V8InspectorClient implementation.
   void runMessageLoopOnPause(int context_group_id) override;
-  void quitMessageLoopOnPause() override;
+  void quitMessageLoopOnPause(int context_group_id) override;
   void muteMetrics(int context_group_id) override;
   void unmuteMetrics(int context_group_id) override;
   v8::Local<v8::Context> ensureDefaultContextInGroup(
