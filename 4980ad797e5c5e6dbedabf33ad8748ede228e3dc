@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3da4b605_4b249f2c",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T15:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79aae44c_916324bb",
+      "range": {
+        "startLine": 1253,
+        "startChar": 23,
+        "endLine": 1253,
+        "endChar": 35
+      },
+      "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75cc837_1cf54895",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/virtual_time_domain.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "06c940d4_5b9e6694",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/virtual_time_domain.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T15:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e75cc837_1cf54895",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c62a0c_f37b02a1",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-02T14:45:56Z",
       "side": 1,
       "message": "I thought about this a bit more and this is starting to feel a little too magical in my opinion (e.g., makes AutoAdvancingVirtualTimeDomain hard to test in isolation, it\u0027s hard to spot this behavior since it relies on globals). How about making this a little more explicit by having a scoped object which enables this behavior and instantiating it in V8ScriptRunner (i.e., near probe::ExecuteScript and probe::CallFunction) -- WDYT?",
+      "range": {
+        "startLine": 152,
+        "startChar": 5,
+        "endLine": 152,
+        "endChar": 7
+      },
+      "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c540ff_657e2199",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T15:59:03Z",
+      "side": 1,
+      "message": "Lets just monkey patch Date.now in JS to enforce the always advancing property, looks like it\u0027s going to be simplest that way.",
+      "parentUuid": "24c62a0c_f37b02a1",
       "range": {
         "startLine": 152,
         "startChar": 5,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1e609c5c_1fb05a22",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T15:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4000062_48272bc5",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33dc41f8_2c610785",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
         "patchSetId": 12
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ddaae90e_4943f3b7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T15:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "33dc41f8_2c610785",
+      "range": {
+        "startLine": 110,
+        "startChar": 13,
+        "endLine": 110,
+        "endChar": 15
+      },
+      "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdfb3ef9_1665b11a",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2160e2_a5456f53",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T15:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fdfb3ef9_1665b11a",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 21
+      },
+      "revId": "4980ad797e5c5e6dbedabf33ad8748ede228e3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
