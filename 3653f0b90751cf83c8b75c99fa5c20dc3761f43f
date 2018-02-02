@@ -262,6 +262,24 @@
       "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a175b90f_abb280d3",
+        "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T17:19:33Z",
+      "side": 1,
+      "message": "No, I believe IME won\u0027t track non-text input focus changes. We\u0027ll have to observe this some other way. I will discuss with the PM to see whether we need that. Thanks for bringing this up.",
+      "parentUuid": "d444d3c6_f30c6325",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
