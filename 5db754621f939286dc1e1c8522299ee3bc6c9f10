@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533d4f04_50c121f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "Typo: s/hone/honor/",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb11a731_652ec4ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/alignment/grid-column-axis-alignment-sticky-positioned-items-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "I believe alignment should work independently of what\u0027s the nearest scrolling ancestor.\nIt\u0027s true that the offsets in the test vary, and even the position, but this sentence seems misleading to me.",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449a6c2a_7e960ee5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/alignment/grid-column-axis-alignment-sticky-positioned-items-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "Maybe we could have another test grid-column-axis-alignment-sticky-positioned-items-002.html\nwithout using \"top: 0\" in the items.\nSo the items will be visually properly aligned.",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e071fb2f_74526b2d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/alignment/grid-column-axis-alignment-sticky-positioned-items-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "Nit: I\u0027d use a bigger top, so the center element also varies in the 2 cases below.",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9047686_421f3228",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/alignment/grid-column-axis-alignment-sticky-positioned-items-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "Nit: I\u0027d use \"height: 30px\" here.",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc26940_e08210db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/alignment/grid-column-axis-alignment-sticky-positioned-items-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "Nit: And \"height: 200px\" here.",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8318808_97395aa8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/alignment/grid-row-axis-alignment-sticky-positioned-items-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-02-02T09:40:45Z",
+      "side": 1,
+      "message": "The same comments from the other test apply here.",
+      "revId": "5db754621f939286dc1e1c8522299ee3bc6c9f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
