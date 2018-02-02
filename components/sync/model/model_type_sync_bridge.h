@@ -129,8 +129,9 @@ class ModelTypeSyncBridge : public base::SupportsWeakPtr<ModelTypeSyncBridge> {
   // Called by the DataTypeController to gather additional information needed
   // before the processor can be connected to a sync worker. Once the
   // metadata has been loaded, the info is collected and given to |callback|.
-  void OnSyncStarting(const ModelErrorHandler& error_handler,
-                      const ModelTypeChangeProcessor::StartCallback& callback);
+  virtual void OnSyncStarting(
+      const ModelErrorHandler& error_handler,
+      const ModelTypeChangeProcessor::StartCallback& callback);
 
   // Indicates that we no longer want to do any sync-related things for this
   // data type. Severs all ties to the sync thread, deletes all local sync
