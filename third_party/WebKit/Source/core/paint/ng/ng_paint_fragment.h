@@ -69,6 +69,7 @@ class CORE_EXPORT NGPaintFragment : public DisplayItemClient,
   bool ShouldClipOverflow() const;
   bool HasSelfPaintingLayer() const;
   LayoutRect VisualRect() const override { return visual_rect_; }
+  void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
   LayoutRect VisualOverflowRect() const;
   LayoutRect OverflowClipRect(const LayoutPoint& location,
                               OverlayScrollbarClipBehavior) const {
@@ -134,8 +135,6 @@ class CORE_EXPORT NGPaintFragment : public DisplayItemClient,
   static FragmentRange InlineFragmentsFor(const LayoutObject*);
 
  private:
-  void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
-
   void PopulateDescendants(
       const NGPhysicalOffset inline_offset_to_container_box,
       HashMap<const LayoutObject*, NGPaintFragment*>* first_fragment_map,
