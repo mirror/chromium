@@ -350,6 +350,18 @@ public class ApiCompatibilityUtils {
         } else {
             activity.finish();
         }
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // On L ApiCompatibilityUtils.finishAndRemoveTask() sometimes fails, which causes
+            // NPE in onStart() later, see https://crbug.com/781396. We can't let this activity to
+            // start, and we don't want to crash either. So try finishing one more time and
+            // suicide if that fails.
+            if (!activity.isFinishing()) {
+                activity.finish();
+                if (!activity.isFinishing()) Process.killProcess(Process.myPid());
+            }
+        }
     }
 
     /**
