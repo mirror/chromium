@@ -1578,6 +1578,8 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
                                          bool height_changed) {
   DCHECK(width_changed || height_changed);
   DCHECK(frame_->GetPage());
+  if (is_devtool_paused_during_lifecycle_)
+    return;
 
   bool root_layer_scrolling_enabled =
       RuntimeEnabledFeatures::RootLayerScrollingEnabled();
@@ -2006,6 +2008,8 @@ IntSize LocalFrameView::GetLayoutSize(
 
 void LocalFrameView::SetLayoutSize(const IntSize& size) {
   DCHECK(!LayoutSizeFixedToFrameSize());
+  if (is_devtool_paused_during_lifecycle_)
+    return;
 
   SetLayoutSizeInternal(size);
 }
@@ -2962,6 +2966,8 @@ void LocalFrameView::UpdateGeometriesIfNeeded() {
 }
 
 void LocalFrameView::UpdateAllLifecyclePhases() {
+  if (is_devtool_paused_during_lifecycle_)
+    return;
   GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kPaintClean);
 }

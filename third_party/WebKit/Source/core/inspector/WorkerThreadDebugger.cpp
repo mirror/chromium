@@ -148,7 +148,7 @@ void WorkerThreadDebugger::runMessageLoopOnPause(int context_group_id) {
       ->StartRunningDebuggerTasksOnPauseOnWorkerThread();
 }
 
-void WorkerThreadDebugger::quitMessageLoopOnPause() {
+void WorkerThreadDebugger::quitMessageLoopOnPause(int context_group_id) {
   DCHECK_NE(kInvalidContextGroupId, paused_context_group_id_);
   DCHECK(worker_threads_.Contains(paused_context_group_id_));
   worker_threads_.at(paused_context_group_id_)
