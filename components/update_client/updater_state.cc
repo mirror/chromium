@@ -53,6 +53,7 @@ void UpdaterState::ReadState() {
 UpdaterState::Attributes UpdaterState::BuildAttributes() const {
   Attributes attributes;
 
+  attributes["ismachine"] = is_machine_ ? "1" : "0";
   attributes[kIsEnterpriseManaged] = is_enterprise_managed_ ? "1" : "0";
 
   attributes["name"] = updater_name_;
