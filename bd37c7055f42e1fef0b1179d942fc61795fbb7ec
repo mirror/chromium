@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3506e7_24cadf05",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T17:27:16Z",
+      "side": 1,
+      "message": "nit: I think this code was clearer when the local was named |contents_view|. It could also be |contents|. |view| is too generic.",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427887be_a800e592",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T17:27:16Z",
+      "side": 1,
+      "message": "nit: Please put all the SearchBoxViewBase overrides together. It\u0027s OK if you have to change the visibility of some methods to do that -- I think the readability benefit of keeping them together outweighs any small loss in information hiding.",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8b957b_810d3777",
+        "filename": "ui/chromeos/search_box/search_box_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T17:27:16Z",
+      "side": 1,
+      "message": "If |delegate| is allowed to be null, document that in header. If not, DCHECK(delegate_)",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e453cd_585a299b",
+        "filename": "ui/chromeos/search_box/search_box_view_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T17:27:16Z",
+      "side": 1,
+      "message": "nit: Please expand this comment - what behaviors does it supply? How can you use it? Why does it exist?",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
