@@ -712,6 +712,12 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
                                            host_->GetLatencyComponentId(), 0);
     renderer_latency_info.set_trace_id(++tab_show_sequence_);
   }
+
+  if (delegated_frame_host_ && !delegated_frame_host_->HasSavedFrame() &&
+      features::IsSurfaceSynchronizationEnabled()) {
+    WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  }
+
   TRACE_EVENT_ASYNC_BEGIN0("latency", "TabSwitching::Latency",
                            tab_show_sequence_);
   host_->WasShown(renderer_latency_info);
