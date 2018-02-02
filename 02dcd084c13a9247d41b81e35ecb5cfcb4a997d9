@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "dbfc4bef_4f1f249b",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "You and I think alike, Rob! I was typing up a detailed comment on this when I saw that wrl/module.h does exactly this cast on exactly this pointer for exactly this purpose (wrl/module.h line 456). Do you think we should QI just to be safe, or is it okay to monkey-see-monkey-do what MS is doing?",
+      "parentUuid": "064e79d3_161d7f01",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c6e3c75_4a10ae6a",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 71

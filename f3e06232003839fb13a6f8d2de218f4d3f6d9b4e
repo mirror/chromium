@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84e0b594_9873841f",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "optional nit:\n  if (SUCCEEDED(hr)) {\n    wait and unregister\n  }\n  return hr;\nso there\u0027s only one \"return hr;\"",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54777759_605ffd30",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "nit: do something like this in ComServerModule\u0027s class defn\u0027s private: section:\n  using ModuleType \u003d Microsoft::WRL::Module\u003cMicrosoft::WRL::OutOfProcDisableCaching\u003e;\n\nand then use \"ModuleType\" here and on line 83.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f716f4e_57a751e2",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "i think this reference is being leaked. if i\u0027m reading wrl/module.h correctly, the created factory is released in Details::RegisterObjects on line 485. how about changing |factory| to a smart pointer so that it\u0027s release for you automatically?",
+      "range": {
+        "startLine": 54,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626f71f7_b05506f4",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "nit: static_assert for the size of this array as you have below for |class_ids|.",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66eeaa59_b8c0c6d4",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "nit: move this comment up above line 48 since that\u0027s where the extra work begins.",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c720f348_dc4b4a7a",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "general comment for uses of Trace like this: since Trace takes a format string, how about including |hr| in the string? it might help diagnose failures to know exactly what the error code is.",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd5a59b_ab8d8d3b",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "check the return value here?",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e96e003_14d9d818",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "nit: WinRT, no?",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6201f580_ac3af3cb",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1b7955_1f45f74c",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "nit: do something to handle an error here. for example:\n  if (vswprintf(...) \u003e 0) {\n    OutputDebugString(buffer);\n  } else {\n    std::wstring error_string(L\"Format error for string: \");\n    OutputDebugString(error_string.append(format_string).c_str());\n  }",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a78ef6a_28158acb",
+        "filename": "notification_helper/trace_util.h",
+        "patchSetId": 74
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "please document.\n\nalso, please note that ATL::AtlTrace is compiled out in release builds. could you make this implementation conditional on \"#if !defined(NDEBUG)\" so that the same holds true here? you may need to experiment with either macro magic or defining Trace inline here. the goal being that there is no code generated in release builds.",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

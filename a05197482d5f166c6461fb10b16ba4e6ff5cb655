@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "a272f4bc_4ddea09c",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "capacity is always right for what it is, but it is the wrong thing for this use. follow me if you dare:\n\ncapacity() is: \"The size of the allocated storage in the string.\"\nsize() is: \"A count of the number of char-like objects currently in the string.\"\n\nin this code, operator[] is being used to get a pointer into which characters can be written. the question is whether or not it\u0027s valid to write capacity() characters into that memory (spoiler alert: the answer is \"no\"). forget for the moment what the value returned by these functions might actually be and focus on what is being done.\n\noperator[](size_type pos) has this requirement of |pos|: \"Requires: pos \u003c\u003d size().\".\n\nthat\u0027s the key point: you may only index up through size() no matter what capacity() says.\n\nso what use is capacity()? it generally tells you how much you can resize up to without an allocation. it doesn\u0027t say that you can touch any location outside of size().\n\nso, please change this so that it isn\u0027t using capacity(). i like my original suggestion, but you can do something else if you wish.",
+      "parentUuid": "688e7a02_b40cc708",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a21d7d3_3440e992",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
@@ -290,6 +314,24 @@
       "side": 1,
       "message": "The pdb file already has \u0027archive\u0027, so I just delete it here. peter@ suggested adding \u0027archive\u0027 here.",
       "parentUuid": "296c83f3_7d173e40",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6891d9c1_7cefbd6a",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 66
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "I think he may have been suggesting \u0027dev\u0027 so that it\u0027s included in the default archive for dev and official builds. I think that was a good suggestion. By specifying \u0027archive\u0027 here, you suppress the default archival and instead put it with the debugging symbols, which probably isn\u0027t what you intended.",
+      "parentUuid": "1fdddcb3_74e213a7",
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -419,6 +461,24 @@
       "side": 1,
       "message": "Here is the story. I have to check IsSignal() for sampling profiler in another CL. https://chromium-review.googlesource.com/c/chromium/src/+/851427/37/base/profiler/stack_sampling_profiler.cc\n\ngab@ explicitly asked me to add the static_assert thing. So I did the same thing here too. If you think this is unnecessary, I can go back to the original version.",
       "parentUuid": "bed643dc_f76a3474",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68e74e2_21c9e0b6",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "I don\u0027t see how the static_assert helps make any guarantees. It asserts that a constant has a value, not that the Event is actually constructed with that constant. Furthermore, the constant and the comment are not at the point of Event construction -- separating them like this makes it harder for a reader to understand what kResetPolicy is and why. It\u0027s trivial for a refactor to change Event construction without causing the assert to fire (just change line 32 without touching anything else). I think that putting a clear comment at the ctor explaining why it\u0027s a manual-reset event is better than the static_assert -- it\u0027s simple, it doesn\u0027t require reading beyond the ctor, and it\u0027s less likely to be broken by a refactor.\n\nSend Gab to me if he doesn\u0027t like it. :-)",
+      "parentUuid": "031a174a_eace8987",
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -571,6 +631,24 @@
       "side": 1,
       "message": "I cannot recall but it seems that I included \"wrl/client.h\", rather than \u003cwrl/client.h\u003e. Sorry about the confusion I brought here. Now it\u0027s fixed.",
       "parentUuid": "27ed761d_e1b985b2",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e09f5ff2_5a3318c8",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "whew!",
+      "parentUuid": "6d02dea9_5ddc4ea8",
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -799,6 +877,24 @@
       "writtenOn": "2018-02-01T10:16:34Z",
       "side": 1,
       "message": "this test requires that Chrome be installed? i think this greatly limits the utility of the test. could you make the test register the server in the build output directory? you could use SetUp() and TearDown() overrides to save any existing registration before registering the server, then restore the originals when done.",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bb769e_b22469b1",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T10:59:00Z",
+      "side": 1,
+      "message": "See chrome/installer/util/registry_key_backup.h for code to save/restore a Key and its contents (values and subkeys).",
+      "parentUuid": "bfcb32fb_4922f6ea",
       "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
