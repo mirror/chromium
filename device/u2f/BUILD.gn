@@ -27,10 +27,6 @@ source_set("u2f") {
     "response_data.h",
     "sign_response_data.cc",
     "sign_response_data.h",
-    "u2f_apdu_command.cc",
-    "u2f_apdu_command.h",
-    "u2f_apdu_response.cc",
-    "u2f_apdu_response.h",
     "u2f_ble_connection.cc",
     "u2f_ble_connection.h",
     "u2f_ble_device.cc",
@@ -66,6 +62,7 @@ source_set("u2f") {
 
   deps = [
     "//base",
+    "//components/apdu",
     "//components/cbor",
     "//crypto",
     "//device/base",
@@ -110,17 +107,6 @@ source_set("mocks") {
     "//base",
     "//testing/gmock",
   ]
-}
-
-fuzzer_test("u2f_apdu_fuzzer") {
-  sources = [
-    "u2f_apdu_fuzzer.cc",
-  ]
-  deps = [
-    ":u2f",
-    "//net",
-  ]
-  libfuzzer_options = [ "max_len=65537" ]
 }
 
 fuzzer_test("u2f_message_fuzzer") {

@@ -76,7 +76,6 @@ test("device_unittests") {
     "sensors/sensor_manager_android_unittest.cc",
     "sensors/sensor_manager_chromeos_unittest.cc",
     "test/run_all_unittests.cc",
-    "u2f/u2f_apdu_unittest.cc",
     "u2f/u2f_ble_connection_unittest.cc",
     "u2f/u2f_ble_device_unittest.cc",
     "u2f/u2f_ble_frames_unittest.cc",
@@ -90,6 +89,7 @@ test("device_unittests") {
   deps = [
     "//base/test:test_support",
     "//base/third_party/dynamic_annotations:dynamic_annotations",
+    "//components/apdu",
     "//components/cbor",
     "//device/base/synchronization",
     "//device/bluetooth",
