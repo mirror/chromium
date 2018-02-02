@@ -81,6 +81,9 @@ MessageLoop::DestructionObserver::~DestructionObserver() = default;
 
 MessageLoop::MessageLoop(Type type)
     : MessageLoop(type, MessagePumpFactoryCallback()) {
+  base::debug::StackTrace tr;
+  tr.Print();
+  LOG(ERROR) << "ML Created";
   BindToCurrentThread();
 }
 

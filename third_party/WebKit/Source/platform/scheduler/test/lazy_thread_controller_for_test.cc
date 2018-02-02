@@ -4,6 +4,7 @@
 
 #include "platform/scheduler/test/lazy_thread_controller_for_test.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/time/default_tick_clock.h"
@@ -16,6 +17,9 @@ LazyThreadControllerForTest::LazyThreadControllerForTest()
                            nullptr,
                            base::DefaultTickClock::GetInstance()),
       thread_ref_(base::PlatformThread::CurrentRef()) {
+  base::debug::StackTrace tr;
+  tr.Print();
+  LOG(ERROR) << "LTC created, ML=" << (message_loop_ != nullptr);
   if (message_loop_)
     task_runner_ = message_loop_->task_runner();
 }
@@ -23,6 +27,8 @@ LazyThreadControllerForTest::LazyThreadControllerForTest()
 LazyThreadControllerForTest::~LazyThreadControllerForTest() = default;
 
 void LazyThreadControllerForTest::EnsureMessageLoop() {
+  LOG(ERROR) << "ML needed";
+  CHECK(false);
   if (message_loop_)
     return;
   DCHECK(RunsTasksInCurrentSequence());

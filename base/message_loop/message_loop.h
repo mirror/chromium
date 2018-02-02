@@ -11,6 +11,7 @@
 
 #include "base/base_export.h"
 #include "base/callback_forward.h"
+#include "base/debug/stack_trace.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
