@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "88c028c1_7b940fe5",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-02T19:21:43Z",
+      "side": 1,
+      "message": "Using a lambda with a STL algorithm is one of the rare cases where passing a unique_ptr by const-ref makes sense. That means you could do\n\n  size_t total_size \u003d std::accumulate(packets_.begin(), packets_.end(), 0, [](size_t size, const std::unique_ptr\u003cCTAPHidPacket\u003e\u0026 packet) { return size + packet.GetPacketPayload().size(); });\n\nor maybe easier\n\n  size_t total_size \u003d 0;\n  (const auto\u0026 packet : packets_)\n    total_size +\u003d packet.GetPacketPayload().size();\n\nthe for-each loop is probably nicer.",
+      "parentUuid": "7b8a9c0f_21efe5c7",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 74
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6a0cb63_5a109385",
         "filename": "device/ctap/ctap_hid_message.h",
         "patchSetId": 4
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "Theses iterators are currently only used in test to validate correct message payload. Is there a way we could iterate through base::queue without popping packets in |packets_|?",
       "parentUuid": "7cd6d2f4_ed4c166f",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b672f7dc_4d4e2a2d",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-02T19:21:43Z",
+      "side": 1,
+      "message": "Maybe instead of a `base::queue` you could use a `base::circular_deque` instead. A `base::queue` IS a `base::circular_deque`, just exposed a smaller API. Instead of exposing `begin` and `end` directly, you then also could have a\n\n  const base::circular_deque\u003cstd::unique_ptr\u003cCTAPHidPacket\u003e\u003e\u0026 GetPacketsForTesting()\n\nmethod, where presubmit checks enforce that this method is really only used in tests.",
+      "parentUuid": "93bfe346_6c8ddd5c",
       "range": {
         "startLine": 68,
         "startChar": 0,
@@ -1080,6 +1128,30 @@
       "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4068c64a_2b5f1ddb",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-02T19:21:43Z",
+      "side": 1,
+      "message": "Ack, this makes sense. Create methods make sense if the operation can fail, e.g. here if invalid serialized data is specified. In the case where you don\u0027t have to do any parsing and simply set internal fields a constructor is the best choice.",
+      "parentUuid": "7540d536_27b371af",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
