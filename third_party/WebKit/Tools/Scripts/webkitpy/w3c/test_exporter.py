@@ -57,6 +57,7 @@ class TestExporter(object):
         self.local_wpt = self.local_wpt or LocalWPT(self.host, credentials['GH_TOKEN'])
         self.local_wpt.fetch()
 
+        _log.info('Searching for exportable Gerrit CLs.')
         # The Gerrit search API is slow and easy to fail, so we wrap it in a try
         # statement to continue exporting landed commits when it fails.
         try:
@@ -68,9 +69,13 @@ class TestExporter(object):
             self.process_gerrit_cls(open_gerrit_cls)
             gerrit_error = False
 
+        _log.info('Looking for exportable Chromium commits.')
         exportable_commits, git_errors = self.get_exportable_commits()
-        for error in git_errors:
-            _log.error(error)
+        if git_errors:
+            _log.info('The following (non-fatal) errors have occurred while looking for exportable '
+                      'commits:')
+            for error in git_errors:
+                _log.error(error)
         self.process_chromium_commits(exportable_commits)
 
         return not (gerrit_error or git_errors)
