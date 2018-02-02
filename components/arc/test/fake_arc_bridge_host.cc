@@ -41,6 +41,9 @@ void FakeArcBridgeHost::OnClipboardInstanceReady(
 void FakeArcBridgeHost::OnCrashCollectorInstanceReady(
     mojom::CrashCollectorInstancePtr crash_collector_ptr) {}
 
+void FakeArcBridgeHost::OnCupsPrintInstanceReady(
+    mojom::CupsPrintInstancePtr cups_print_ptr) {}
+
 void FakeArcBridgeHost::OnEnterpriseReportingInstanceReady(
     mojom::EnterpriseReportingInstancePtr enterprise_reporting_ptr) {}
 
