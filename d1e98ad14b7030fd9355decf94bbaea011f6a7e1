@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fd5a812_fd128739",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5b5b34_6a291c0f",
+      "range": {
+        "startLine": 546,
+        "startChar": 30,
+        "endLine": 546,
+        "endChar": 36
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac7b3de7_0a4bbae2",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/virtual_time_domain.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-01T18:26:02Z",
       "side": 1,
       "message": "Since we\u0027re about to move these classes to //base, let\u0027s find a way to do this without introducing a hard dependency to v8.",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494c2e56_4884d53a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/virtual_time_domain.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "I\u0027ll just move the functionality into AutoAdvancingVirtualTimeDomain.",
+      "parentUuid": "ac7b3de7_0a4bbae2",
       "range": {
         "startLine": 10,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3ca08028_89a879be",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/virtual_time_domain.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb63e20f_fd5b9d46",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51b1e746_6c7bdb4c",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2018-02-01T18:26:02Z",
       "side": 1,
       "message": "I wonder if we should instead have a separate BaseTimeOverrider class that is given a VirtualTimeDomain* which it uses to override to separate the concerns a bit?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78eaa78b_9686fe94",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "Or it could be moved into RendererSchedulerImpl that already has the APIs for entering virtual time. WDYT?",
+      "parentUuid": "51b1e746_6c7bdb4c",
       "range": {
         "startLine": 25,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "25242087_30b40b74",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "But this is DisableVirtualTime_ForTesting_  Surely it\u0027s ok?",
+      "parentUuid": "2c172330_494caa7e",
+      "range": {
+        "startLine": 1836,
+        "startChar": 36,
+        "endLine": 1836,
+        "endChar": 48
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "713afe35_b076290b",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ad720b_b6c9af61",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "713afe35_b076290b",
+      "range": {
+        "startLine": 729,
+        "startChar": 9,
+        "endLine": 729,
+        "endChar": 22
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "bbcb0739_a99cce5d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3776,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8d53bc_47af16a1",
+      "range": {
+        "startLine": 3776,
+        "startChar": 27,
+        "endLine": 3776,
+        "endChar": 46
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f151fa_1185220f",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 11
@@ -183,6 +351,30 @@
       "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4249c044_e61d343f",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-02-02T09:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f151fa_1185220f",
+      "range": {
+        "startLine": 57,
+        "startChar": 31,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "d1e98ad14b7030fd9355decf94bbaea011f6a7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
