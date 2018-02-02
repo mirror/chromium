@@ -84,22 +84,40 @@ CGFloat FullscreenModel::GetToolbarHeight() const {
   return toolbar_height_;
 }
 
+void FullscreenModel::SetScrollViewHeight(CGFloat scroll_view_height) {
+  scroll_view_height_ = scroll_view_height;
+}
+
+CGFloat FullscreenModel::GetScrollViewHeight() const {
+  return scroll_view_height_;
+}
+
+void FullscreenModel::SetContentHeight(CGFloat content_height) {
+  content_height_ = content_height;
+}
+
+CGFloat FullscreenModel::GetContentHeight() const {
+  return content_height_;
+}
+
+void FullscreenModel::SetTopContentInset(CGFloat top_inset) {
+  top_inset_ = top_inset;
+}
+
+CGFloat FullscreenModel::GetTopContentInset() const {
+  return top_inset_;
+}
+
 void FullscreenModel::SetYContentOffset(CGFloat y_content_offset) {
-
+  bool ignore_scroll = ShouldIgnoreNewScrollOffset(y_content_offset);
+  CGFloat old_y_content_offset = y_content_offset_;
   y_content_offset_ = y_content_offset;
-
-  if (!has_base_offset())
+  if (ignore_scroll) {
     UpdateBaseOffset();
-
-  if (!enabled())
     return;
-
-  if (scrolling_ && !observer_callback_count_) {
-    CGFloat delta = base_offset_ - y_content_offset_;
-    SetProgress(1.0 + delta / toolbar_height_);
-  } else {
-    UpdateBaseOffset();
   }
+
+  UpdateProgressForUserScrollFromOffset(old_y_content_offset);
 }
 
 CGFloat FullscreenModel::GetYContentOffset() const {
@@ -118,8 +136,16 @@ void FullscreenModel::SetScrollViewIsScrolling(bool scrolling) {
   }
 }
 
-bool FullscreenModel::ISScrollViewScrolling() const {
+bool FullscreenModel::IsScrollViewScrolling() const {
   return scrolling_;
+}
+
+void FullscreenModel::SetScrollViewIsZooming(bool zooming) {
+  zooming_ = zooming;
+}
+
+bool FullscreenModel::IsScrollViewZooming() const {
+  return zooming_;
 }
 
 void FullscreenModel::SetScrollViewIsDragging(bool dragging) {
@@ -139,6 +165,46 @@ bool FullscreenModel::IsScrollViewDragging() const {
   return dragging_;
 }
 
+bool FullscreenModel::ShouldIgnoreNewScrollOffset(
+    CGFloat y_content_offset) const {
+  // Ignore the scroll if:
+  // - the model is disabled,
+  // - the scroll is not triggered by a user action,
+  // - the sroll view is zooming,
+  // - the scroll is triggered from a FullscreenModelObserve callback,
+  // - there is no toolbar.
+  return !enabled() || !scrolling_ || zooming_ || observer_callback_count_ ||
+         AreCGFloatsEqual(toolbar_height_, 0.0);
+}
+
+void FullscreenModel::UpdateProgressForUserScrollFromOffset(
+    CGFloat from_offset) {
+  DCHECK(scrolling_);
+
+  // Ignore the UIScrollView bounce up animation after scrolling past the top of
+  // the content.
+  bool scrolling_content_down = y_content_offset_ - from_offset < 0.0;
+  bool scrolling_past_top = y_content_offset_ <= -top_inset_;
+  if (scrolling_past_top && !scrolling_content_down)
+    return;
+
+  // Ignore the UIScrollView bounce down animation after scrolling past the
+  // bottom of the content.
+  bool scrolling_past_bottom =
+      y_content_offset_ + scroll_view_height_ >= content_height_;
+  if (scrolling_past_bottom && scrolling_content_down)
+    return;
+
+  // Ignore upward scrolls when the content fits.
+  bool content_fits = content_height_ <= scroll_view_height_ - top_inset_;
+  if (scrolling_past_bottom && content_fits && !scrolling_content_down)
+    return;
+
+  // Calculate the new progress.
+  CGFloat delta = base_offset_ - y_content_offset_;
+  SetProgress(1.0 + delta / toolbar_height_);
+}
+
 void FullscreenModel::SetProgress(CGFloat progress) {
   progress = std::min(static_cast<CGFloat>(1.0), progress);
   progress = std::max(static_cast<CGFloat>(0.0), progress);
@@ -154,6 +220,19 @@ void FullscreenModel::SetProgress(CGFloat progress) {
 
 void FullscreenModel::UpdateBaseOffset() {
   base_offset_ = y_content_offset_ - (1.0 - progress_) * toolbar_height_;
+}
+
+void FullscreenModel::OnScrollViewSizeBroadcasted(CGSize scroll_view_size) {
+  SetScrollViewHeight(scroll_view_size.height);
+}
+
+void FullscreenModel::OnScrollViewContentSizeBroadcasted(CGSize content_size) {
+  SetContentHeight(content_size.height);
+}
+
+void FullscreenModel::OnScrollViewContentInsetBroadcasted(
+    UIEdgeInsets content_inset) {
+  SetTopContentInset(content_inset.top);
 }
 
 void FullscreenModel::OnContentScrollOffsetBroadcasted(CGFloat offset) {
