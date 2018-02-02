@@ -19,6 +19,7 @@
 #include "components/safe_browsing/base_ui_manager.h"
 #include "components/safe_browsing/browser/threat_details_cache.h"
 #include "components/safe_browsing/browser/threat_details_history.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/common/safebrowsing_messages.h"
 #include "components/safe_browsing/db/hit_report.h"
 #include "components/safe_browsing/features.h"
@@ -30,6 +31,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 using content::BrowserThread;
 using content::NavigationEntry;
@@ -350,17 +352,6 @@ ThreatDetails::~ThreatDetails() {
   DCHECK(all_done_expected_ == is_all_done_);
 }
 
-bool ThreatDetails::OnMessageReceived(const IPC::Message& message,
-                                      RenderFrameHost* render_frame_host) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(ThreatDetails, message, render_frame_host)
-    IPC_MESSAGE_HANDLER(SafeBrowsingHostMsg_ThreatDOMDetails,
-                        OnReceivedThreatDOMDetails)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
 bool ThreatDetails::IsReportableUrl(const GURL& url) const {
   // TODO(panayiotis): also skip internal urls.
   return url.SchemeIs("http") || url.SchemeIs("https");
@@ -445,7 +436,7 @@ void ThreatDetails::AddDomElement(
     const int element_node_id,
     const std::string& tagname,
     const int parent_element_node_id,
-    const std::vector<AttributeNameValue>& attributes,
+    const std::vector<mojom::AttributeNameValuePtr> attributes,
     const ClientSafeBrowsingReportRequest::Resource* resource) {
   // Create the element. It should not exist already since this function should
   // only be called once for each element.
@@ -458,10 +449,10 @@ void ThreatDetails::AddDomElement(
   if (!tag_name_upper.empty()) {
     cur_element->set_tag(tag_name_upper);
   }
-  for (const AttributeNameValue& attribute : attributes) {
+  for (const mojom::AttributeNameValuePtr& attribute : attributes) {
     HTMLElement::Attribute* attribute_pb = cur_element->add_attribute();
-    attribute_pb->set_name(attribute.first);
-    attribute_pb->set_value(attribute.second);
+    attribute_pb->set_name(attribute->name);
+    attribute_pb->set_value(attribute->value);
 
     // Remember which the IDs of elements that represent ads so we can trim the
     // report down to just those parts later.
@@ -508,6 +499,14 @@ void ThreatDetails::AddDomElement(
       parent_element->add_child_ids(cur_element->id());
     }
   }
+}
+
+void ThreatDetails::RequestThreatDOMDetails(content::RenderFrameHost* frame) {
+  safe_browsing::mojom::ThreatReportPtr threatReporter;
+  frame->GetRemoteInterfaces()->GetInterface(&threatReporter);
+  auto callback = base::BindOnce(&ThreatDetails::OnReceivedThreatDOMDetails,
+                                 base::Unretained(this), frame);
+  threatReporter->GetThreatDOMDetails(std::move(callback));
 }
 
 void ThreatDetails::StartCollection() {
@@ -568,28 +567,29 @@ void ThreatDetails::StartCollection() {
     // OnReceivedThreatDOMDetails will be called when the renderer replies.
     // TODO(mattm): In theory, if the user proceeds through the warning DOM
     // detail collection could be started once the page loads.
-    web_contents()->SendToAllFrames(
-        new SafeBrowsingMsg_GetThreatDOMDetails(MSG_ROUTING_NONE));
+    auto callback = base::BindRepeating(&ThreatDetails::RequestThreatDOMDetails,
+                                        base::Unretained(this));
+    web_contents()->ForEachFrame(std::move(callback));
   }
 }
 
 // When the renderer is done, this is called.
 void ThreatDetails::OnReceivedThreatDOMDetails(
     content::RenderFrameHost* sender,
-    const std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node>& params) {
+    const std::vector<mojom::ThreatDOMDetailsNodePtr> params) {
   // Lookup the FrameTreeNode ID of any child frames in the list of DOM nodes.
   const int sender_process_id = sender->GetProcess()->GetID();
   const int sender_frame_tree_node_id = sender->GetFrameTreeNodeId();
   KeyToFrameTreeIdMap child_frame_tree_map;
-  for (const SafeBrowsingHostMsg_ThreatDOMDetails_Node& node : params) {
-    if (node.child_frame_routing_id == 0)
+  for (const mojom::ThreatDOMDetailsNodePtr& node : params) {
+    if (node->child_frame_routing_id == 0)
       continue;
 
     const std::string cur_element_key =
-        GetElementKey(sender_frame_tree_node_id, node.node_id);
+        GetElementKey(sender_frame_tree_node_id, node->node_id);
     int child_frame_tree_node_id =
         content::RenderFrameHost::GetFrameTreeNodeIdForRoutingId(
-            sender_process_id, node.child_frame_routing_id);
+            sender_process_id, node->child_frame_routing_id);
     if (child_frame_tree_node_id ==
         content::RenderFrameHost::kNoFrameTreeNodeId) {
       ambiguous_dom_ = true;
@@ -598,17 +598,22 @@ void ThreatDetails::OnReceivedThreatDOMDetails(
     }
   }
 
+  std::vector<mojom::ThreatDOMDetailsNodePtr> params_copy;
+  for (auto& node : params) {
+    params_copy.push_back(node.Clone());
+  }
+
   // Schedule this in IO thread, so it doesn't conflict with future users
   // of our data structures (eg GetSerializedReport).
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&ThreatDetails::AddDOMDetails, this, sender_frame_tree_node_id,
-                 params, child_frame_tree_map));
+                 std::move(params_copy), child_frame_tree_map));
 }
 
 void ThreatDetails::AddDOMDetails(
     const int frame_tree_node_id,
-    const std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node>& params,
+    const std::vector<mojom::ThreatDOMDetailsNodePtr>& params,
     const KeyToFrameTreeIdMap& child_frame_tree_map) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DVLOG(1) << "Nodes from the DOM: " << params.size();
@@ -635,16 +640,18 @@ void ThreatDetails::AddDOMDetails(
   // bogus messages, so limit the number of nodes we accept.
   // Also update |elements_| with the DOM structure.
   for (size_t i = 0; i < params.size() && i < kMaxDomNodes; ++i) {
-    SafeBrowsingHostMsg_ThreatDOMDetails_Node node = params[i];
-    DVLOG(1) << node.url << ", " << node.tag_name << ", " << node.parent;
+    const mojom::ThreatDOMDetailsNodePtr& node = params[i];
+    DVLOG(1) << node->url << ", " << node->tag_name << ", " << node->parent;
     ClientSafeBrowsingReportRequest::Resource* resource = nullptr;
-    if (!node.url.is_empty()) {
-      resource = AddUrl(node.url, node.parent, node.tag_name, &(node.children));
+    if (!node->url.is_empty()) {
+      resource =
+          AddUrl(node->url, node->parent, node->tag_name, &(node->children));
     }
     // Check for a tag_name to avoid adding the summary node to the DOM.
-    if (!node.tag_name.empty()) {
-      AddDomElement(frame_tree_node_id, node.node_id, node.tag_name,
-                    node.parent_node_id, node.attributes, resource);
+    if (!node->tag_name.empty()) {
+      AddDomElement(frame_tree_node_id, node->node_id, node->tag_name,
+                    node->parent_node_id, std::move(node->attributes),
+                    resource);
     }
   }
 }
