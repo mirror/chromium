@@ -88,6 +88,24 @@
       "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c9b44c_2c2c8a1b",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-02T14:38:49Z",
+      "side": 1,
+      "message": "Thanks all for the context! So, I think everyone agrees that the ARC agent should be moved out. I\u0027ll move it to chrome/browser/chromeos where the ARC tracing bridge (i.e. the delegate) exists. This should be easy after recent refactoring and simplification of tracing agents.",
+      "parentUuid": "35fe753a_1a9581c1",
+      "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
