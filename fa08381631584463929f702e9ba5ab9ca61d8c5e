@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2a5d3e_9830f28e",
+        "filename": "chrome/browser/chromeos/arc/tracing/arc_tracing_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-02-02T16:26:16Z",
+      "side": 1,
+      "message": "Can this be moved to ArcTracingBridge::ArcTracingReader? having an anonymous namespace in a header file is kind of weird.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "fa08381631584463929f702e9ba5ab9ca61d8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
