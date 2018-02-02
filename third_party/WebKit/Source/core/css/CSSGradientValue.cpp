@@ -106,7 +106,7 @@ scoped_refptr<Image> CSSGradientValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const FloatSize& size) {
+    const FloatSize& size) const {
   if (size.IsEmpty())
     return nullptr;
 
@@ -292,7 +292,7 @@ static Color ResolveStopColor(const CSSValue& stop_color,
 
 void CSSGradientValue::AddDeprecatedStops(GradientDesc& desc,
                                           const Document& document,
-                                          const ComputedStyle& style) {
+                                          const ComputedStyle& style) const {
   DCHECK(gradient_type_ == kCSSDeprecatedLinearGradient ||
          gradient_type_ == kCSSDeprecatedRadialGradient);
 
@@ -457,7 +457,7 @@ void CSSGradientValue::AddStops(
     CSSGradientValue::GradientDesc& desc,
     const CSSToLengthConversionData& conversion_data,
     const Document& document,
-    const ComputedStyle& style) {
+    const ComputedStyle& style) const {
   if (gradient_type_ == kCSSDeprecatedLinearGradient ||
       gradient_type_ == kCSSDeprecatedRadialGradient) {
     AddDeprecatedStops(desc, document, style);
@@ -875,7 +875,7 @@ scoped_refptr<Gradient> CSSLinearGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
     const FloatSize& size,
     const Document& document,
-    const ComputedStyle& style) {
+    const ComputedStyle& style) const {
   DCHECK(!size.IsEmpty());
 
   FloatPoint first_point;
@@ -1242,7 +1242,7 @@ scoped_refptr<Gradient> CSSRadialGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
     const FloatSize& size,
     const Document& document,
-    const ComputedStyle& style) {
+    const ComputedStyle& style) const {
   DCHECK(!size.IsEmpty());
 
   FloatPoint first_point =
@@ -1418,7 +1418,7 @@ scoped_refptr<Gradient> CSSConicGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
     const FloatSize& size,
     const Document& document,
-    const ComputedStyle& style) {
+    const ComputedStyle& style) const {
   DCHECK(!size.IsEmpty());
 
   const float angle = from_angle_ ? from_angle_->ComputeDegrees() : 0;

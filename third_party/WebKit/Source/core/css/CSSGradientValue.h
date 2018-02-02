@@ -95,7 +95,7 @@ class CSSGradientValue : public CSSImageGeneratorValue {
   scoped_refptr<Image> GetImage(const ImageResourceObserver&,
                                 const Document&,
                                 const ComputedStyle&,
-                                const FloatSize&);
+                                const FloatSize&) const;
 
   void AddStop(const CSSGradientColorStop& stop) {
     stops_.push_back(stop);
@@ -135,18 +135,20 @@ class CSSGradientValue : public CSSImageGeneratorValue {
   void AddStops(GradientDesc&,
                 const CSSToLengthConversionData&,
                 const Document&,
-                const ComputedStyle&);
-  void AddDeprecatedStops(GradientDesc&, const Document&, const ComputedStyle&);
+                const ComputedStyle&) const;
+  void AddDeprecatedStops(GradientDesc&,
+                          const Document&,
+                          const ComputedStyle&) const;
 
   void AppendCSSTextForColorStops(StringBuilder&,
                                   bool requires_separator) const;
   void AppendCSSTextForDeprecatedColorStops(StringBuilder&) const;
 
   // Stops
-  HeapVector<CSSGradientColorStop, 2> stops_;
+  mutable HeapVector<CSSGradientColorStop, 2> stops_;
   CSSGradientType gradient_type_;
   bool repeating_ : 1;
-  bool stops_sorted_ : 1;
+  mutable bool stops_sorted_ : 1;
   bool is_cacheable_ : 1;
 };
 
@@ -172,7 +174,7 @@ class CSSLinearGradientValue final : public CSSGradientValue {
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
                                          const FloatSize&,
                                          const Document&,
-                                         const ComputedStyle&);
+                                         const ComputedStyle&) const;
 
   bool Equals(const CSSLinearGradientValue&) const;
 
@@ -246,7 +248,7 @@ class CSSRadialGradientValue final : public CSSGradientValue {
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
                                          const FloatSize&,
                                          const Document&,
-                                         const ComputedStyle&);
+                                         const ComputedStyle&) const;
 
   bool Equals(const CSSRadialGradientValue&) const;
 
@@ -313,7 +315,7 @@ class CSSConicGradientValue final : public CSSGradientValue {
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
                                          const FloatSize&,
                                          const Document&,
-                                         const ComputedStyle&);
+                                         const ComputedStyle&) const;
 
   bool Equals(const CSSConicGradientValue&) const;
 
