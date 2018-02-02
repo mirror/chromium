@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "451f8b4d_6aa8bcc5",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T14:31:28Z",
+      "side": 1,
+      "message": "I\u0027d be inclined to use the UmaHistogramBoolean function (#include \"base/metrics/histogram_functions.h\") rather than the macro here since this is only done once in the process. There\u0027s no need for the extra overhead of the cache provided by the macro.\n\nThat said, I\u0027m not sure what the metrics OWNERS are recommending these days, so maybe they should weigh in. I\u0027m okay with whatever they suggest, although I\u0027d like to know the rationale if they prefer the macro.",
+      "range": {
+        "startLine": 784,
+        "startChar": 12,
+        "endLine": 784,
+        "endChar": 33
+      },
+      "revId": "5be19510c45130deefcee681506fea1732ceb54d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
