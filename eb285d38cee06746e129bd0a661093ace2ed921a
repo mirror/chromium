@@ -46,6 +46,30 @@
       "revId": "eb285d38cee06746e129bd0a661093ace2ed921a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caccc91b_0727d74f",
+        "filename": "components/payments/content/payment_manifest_web_data_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-02T15:31:07Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "8b8569a9_eeaa762c",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "eb285d38cee06746e129bd0a661093ace2ed921a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
