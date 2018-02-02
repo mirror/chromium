@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f5b3916_33900ade",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-02-02T01:31:43Z",
+      "side": 1,
+      "message": "Question: Do we assume that this will never be null if the StorageManger isn\u0027t null?",
+      "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200b4a46_19bed847",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-02-02T01:31:43Z",
+      "side": 1,
+      "message": "Optional: if (uuid \u003d\u003d null) continue; to reduce indents?",
+      "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b17615_efd98480",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-02-02T01:31:43Z",
+      "side": 1,
+      "message": "Optional: Maybe just early out if |\u003c O| instead? You\u0027d still need to null-check below anyway, but hey, you get to declare PackageMetricsData on the same line as you read it :-)",
+      "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
