@@ -349,14 +349,7 @@ TEST(DOMStorageDatabaseTest, TestCanOpenFileThatIsNotADatabase) {
   {
     sql::test::ScopedErrorExpecter expecter;
 
-    // Earlier versions of Chromium compiled against SQLite 3.6.7.3, which
-    // returned SQLITE_IOERR_SHORT_READ in this case.  Some platforms may still
-    // compile against an earlier SQLite via USE_SYSTEM_SQLITE.
-    if (expecter.SQLiteLibVersionNumber() < 3008005) {
-      expecter.ExpectError(SQLITE_IOERR_SHORT_READ);
-    } else {
-      expecter.ExpectError(SQLITE_NOTADB);
-    }
+    expecter.ExpectError(SQLITE_NOTADB);
 
     // Try and open the file. As it's not a database, we should end up deleting
     // it and creating a new, valid file, so everything should actually
