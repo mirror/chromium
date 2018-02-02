@@ -9,6 +9,7 @@
 
 #include "ash/app_list/model/search/search_box_model_observer.h"
 #include "ash/public/cpp/app_list/app_list_types.h"
+#include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/chromeos/search_box/search_box_view_base.h"
 
@@ -74,7 +75,12 @@ class APP_LIST_EXPORT SearchBoxView : public search_box::SearchBoxViewBase,
   void UpdateSearchIcon() override;
 
   // Gets the wallpaper prominent colors.
-  void GetWallpaperProminentColors(std::vector<SkColor>* colors);
+  void GetWallpaperProminentColors(
+      AppListViewDelegate::GetWallpaperProminentColorsCallback callback);
+
+  // Got the wallpaper prominent colors.
+  void OnGetWallpaperProminentColors(
+      const std::vector<SkColor>& prominent_colors);
 
   // Overridden from views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,
@@ -102,6 +108,8 @@ class APP_LIST_EXPORT SearchBoxView : public search_box::SearchBoxViewBase,
 
   // Owned by views hierarchy.
   app_list::AppListView* app_list_view_;
+
+  base::WeakPtrFactory<SearchBoxView> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBoxView);
 };
