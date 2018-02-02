@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd248aed_9da62d40",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "nit: cursor",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c05bd0_d85cb737",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "Will all calls on the mojo interface come via the client in chrome? If any other arbitrary piece of code could bind the interface and call into it then this should be a BindingSet\u003c\u003e. (Or you could just make it a BindingSet now and it would be future-proof.)",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87fcd10_6b4fe98f",
+        "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "Can you use https://cs.chromium.org/chromium/src/ui/gfx/geometry/mojo/geometry.mojom ?",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be6db87_275e5c94",
+        "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "Does this exist because the magnifier is going to center itself on that point? If so, maybe the API should be something like CenterOnPoint(Point point_in_screen)?",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463baf50_d4da8b6b",
+        "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "nit: \"changes\"",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe6df61_11f30948",
+        "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "nit: DCHECK instead?",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23557c9f_8c3dc8d6",
+        "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T00:24:17Z",
+      "side": 1,
+      "message": "Q: Why does editable vs. not-editable matter? I would imagine we want to magnifier to center on editable things too.",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
