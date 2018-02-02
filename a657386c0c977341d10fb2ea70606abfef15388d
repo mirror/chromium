@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8507fa18_9d7e6554",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-02T06:38:06Z",
+      "side": 1,
+      "message": "add comment on meaning of this bool param",
+      "range": {
+        "startLine": 20,
+        "startChar": 55,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "a657386c0c977341d10fb2ea70606abfef15388d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
