@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93e2eb2_1afc1823",
+        "filename": "services/video_capture/device_media_to_mojo_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-02-02T00:30:35Z",
+      "side": 1,
+      "message": "weak_factory_.InvalidateWeakPtrs() to make it same behavior as before?",
+      "range": {
+        "startLine": 114,
+        "startChar": 26,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "015512959c8c9d8327c6577b076a12329716c05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
