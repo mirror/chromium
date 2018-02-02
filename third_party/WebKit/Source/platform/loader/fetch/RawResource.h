@@ -76,7 +76,8 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   }
 
   // Resource implementation
-  bool CanReuse(const FetchParameters&) const override;
+  bool CanReuse(const FetchParameters&,
+                scoped_refptr<const SecurityOrigin>) const override;
   bool WillFollowRedirect(const ResourceRequest&,
                           const ResourceResponse&) override;
 
