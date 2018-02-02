@@ -22,6 +22,30 @@
       "revId": "30abaff35cfa985f0eafaf4d00f171281db971a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788d0a39_45329d75",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T00:54:52Z",
+      "side": 0,
+      "message": "I have a couple of tests with triggers a match with an empty common or organization name.",
+      "parentUuid": "47fea2e1_a76dd3bb",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 48
+      },
+      "revId": "30abaff35cfa985f0eafaf4d00f171281db971a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
