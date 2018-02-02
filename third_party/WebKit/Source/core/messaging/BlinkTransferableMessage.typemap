@@ -3,12 +3,18 @@
 # found in the LICENSE file.
 
 mojom = "//third_party/WebKit/common/message_port/message_port.mojom"
-public_headers =
-    [ "//third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h" ]
+public_headers = [
+  "//third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
+  "//skia/public/interfaces/bitmap_skbitmap_struct_traits.h",
+]
 traits_headers = [ "//third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.h" ]
 
 deps = [
   "//mojo/public/cpp/bindings",
+  "//third_party/WebKit/Source/platform/wtf",
   "//third_party/WebKit/common:blink_common",
 ]
-type_mappings = [ "blink.mojom.TransferableMessage=::blink::BlinkTransferableMessage[move_only]" ]
+type_mappings = [
+  "blink.mojom.TransferableMessage=::blink::BlinkTransferableMessage[move_only]",
+  "blink.mojom.SerializedArrayBufferContents=WTF::ArrayBufferContents[move_only]",
+]
