@@ -22,6 +22,30 @@
       "revId": "2abb6a1446a48600c7edebb86b65d57fe823d7f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10218198_5d81a06f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/picture-in-picture/leave-picture-in-picture.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-02T07:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25e9b14_fbe947a7",
+      "range": {
+        "startLine": 38,
+        "startChar": 77,
+        "endLine": 38,
+        "endChar": 81
+      },
+      "revId": "2abb6a1446a48600c7edebb86b65d57fe823d7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
