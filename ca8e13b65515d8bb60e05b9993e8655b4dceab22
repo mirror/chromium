@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5f73e40_1f1ed96c",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-02-02T11:10:11Z",
+      "side": 1,
+      "message": "I like it! Done.",
+      "parentUuid": "a8e9456d_c78950f9",
+      "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afa4e2d6_bd218653",
         "filename": "ui/message_center/message_center_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ddbc5736_4336ace8",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-02-02T11:10:11Z",
+      "side": 1,
+      "message": "I\u0027ve removed the More Settings button. Will start a conversation with UX for guidance, and update the CL description.",
+      "parentUuid": "afa4e2d6_bd218653",
+      "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b67a49db_ae36085a",
         "filename": "ui/message_center/views/message_popup_collection.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-01T14:59:18Z",
       "side": 1,
       "message": "We\u0027ll want to keep the context menu for the old notifications.",
+      "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebc61f4_f3d3a4d8",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-02-02T11:10:11Z",
+      "side": 1,
+      "message": "Ah, of course. Done.",
+      "parentUuid": "b67a49db_ae36085a",
       "revId": "ca8e13b65515d8bb60e05b9993e8655b4dceab22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
