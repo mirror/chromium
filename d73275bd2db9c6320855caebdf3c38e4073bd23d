@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0006912d_5c9ee0d1",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-02T20:08:39Z",
+      "side": 1,
+      "message": "To maintain full code coverage, generate_buildbot_json_unittest.py in this same directory will have to be modified to have at least one case where use_multi_dimension_trigger_script is used. Can you please add one, and also install the Python coverage module (\"pip install coverage\", I think) and make sure that generate_buildbot_json_coveragetest.py passes?",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada2934e_e3fddb53",
         "filename": "testing/buildbot/generate_buildbot_json.py",
         "patchSetId": 1
@@ -13,6 +30,41 @@
       "writtenOn": "2018-02-02T03:40:16Z",
       "side": 1,
       "message": "Since the tester \u0027Mac10.9 Tests\u0027 has 3 types of test suites: \"gtest_tests\", \"isolated_scripts\" and \"scripts\". I added \u0027add_common_test_properties\u0027 function to 3 generate_*_test: generate_gtest, generate_isolated_script_test and generate_script_test. Please correct me if I was wrong.",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95460e8e_b704ce6c",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-02T20:08:39Z",
+      "side": 1,
+      "message": "This sounds fine in general. There\u0027s one issue though: script tests don\u0027t run on Swarming. That\u0027s visible for example here:\n  https://ci.chromium.org/buildbot/chromium.mac/Mac10.9%20Tests/53516\n\nby looking at the \"webkit_lint\" step.\n\nSo let\u0027s just remove the add_common_test_properties from generate_script_test. That step will run on the bot that\u0027s triggering the rest of the Swarming jobs.",
+      "parentUuid": "ada2934e_e3fddb53",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9498b4b7_e9fdc096",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-02T20:08:39Z",
+      "side": 1,
+      "message": "Looking at one recent example job from Mac10.9 Tests:\nhttps://chromium-swarm.appspot.com/task?id\u003d3b70c4a92bce1710\u0026refresh\u003d10\u0026show_raw\u003d1\n\nIt looks like the Swarming dimensions also included:\n  \"cpu\": \"x86-64\"\n\nWould it be best to add that to both of these, or is it redundant / unnecessary?",
       "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
