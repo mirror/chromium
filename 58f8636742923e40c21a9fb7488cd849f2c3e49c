@@ -206,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "c00d345d_76a090ea",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T02:54:09Z",
+      "side": 1,
+      "message": "\u003e I\u0027m kinda uncomfortable with all this.  It feels like a hack.  Your conditions are trying to check for \"things that might run into the rounded corners\", but there\u0027s no guarantee we can\u0027t have decorations in the future whose icons look like big square boxes and thus are \"too big\".\n\u003e \n\u003e It seems like we need to do one of the following two things when the omnibox is in this round shape:\n\u003e \n\u003e * Inset the ends by some factor all the time, not conditionally\n\nwhen the omnibox has its default height, we want the hover inkdrops on, e.g., the bookmark star to be flush against the rounded edge.. so this might not work long-term. But it\u0027s a good starting point - we can fix the alignment in a follow-up since there\u0027s probably more to do.\n\n\n\u003e * Clip to the round shape when painting (not hard to do technically but could look pretty odd).\n\nclipping to round shapes doesn\u0027t work on Windows ( http://crbug.com/713359 ). And it can look weird if the round things it\u0027s clipping don\u0027t cooperate (e.g. circles may become asymmetric cat-eye shapes).",
+      "parentUuid": "38b5500b_9b9ddb79",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1468723c_ac0c3282",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 13
@@ -251,6 +269,24 @@
       "writtenOn": "2018-02-02T01:41:16Z",
       "side": 1,
       "message": "Design-wise, it seems a little odd that the omnibox becomes rounded while its dropdown, which is supposed to echo its shape perfectly, stays in the old shape.\n\nDo we want the dropdown corners to become \"more rounded\" here too?  If not, how do the designers justify that?  If so, then shouldn\u0027t the code in this class really just be in the base class, and we avoid the complication of a subclass?",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6972ce_f8518997",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T02:54:09Z",
+      "side": 1,
+      "message": "\u003e Design-wise, it seems a little odd that the omnibox becomes rounded while its dropdown, which is supposed to echo its shape perfectly, stays in the old shape.\n\u003e \n\u003e Do we want the dropdown corners to become \"more rounded\" here too?  If not, how do the designers justify that?  If so, then shouldn\u0027t the code in this class really just be in the base class, and we avoid the complication of a subclass?\n\nthe dropdown does become more rounded, but with a fixed radius (8 dip). and whilst the dropdown is showing, the omnibox border does not paint at all - only the text field paints (so as to appear \"inside\" the dropdown). See attachments on http://crbug.com/801583 and something else I\u0027ll send you.",
+      "parentUuid": "748c0b99_06849d8f",
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
