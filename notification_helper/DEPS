@@ -1,0 +1,8 @@
+include_rules = [
+  "+base",
+  "+chrome/common",
+  "+chrome/install_static",
+  "+chrome/installer/util",
+  "+components/crash/content/app",
+  "+content/public/common/content_switches.h",
+]
