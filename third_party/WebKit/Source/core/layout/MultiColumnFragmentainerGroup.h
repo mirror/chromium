@@ -5,6 +5,7 @@
 #ifndef MultiColumnFragmentainerGroup_h
 #define MultiColumnFragmentainerGroup_h
 
+#include "core/CoreExport.h"
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "platform/wtf/Allocator.h"
 
@@ -29,7 +30,7 @@ namespace blink {
 // or they'd overflow the outer fragmentainer in the inline direction. If we
 // need more columns than what a group has room for, we'll create another group
 // and put them there (and make them appear in the next outer fragmentainer).
-class MultiColumnFragmentainerGroup {
+class CORE_EXPORT MultiColumnFragmentainerGroup {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
