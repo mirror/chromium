@@ -5,21 +5,51 @@
 #include "content/browser/loader/signed_exchange_handler.h"
 
 #include "base/feature_list.h"
+#include "content/browser/loader/resource_requester_info.h"
+#include "content/browser/loader/signed_exchange_cert_fetcher.h"
+#include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/url_loader_throttle.h"
 #include "mojo/public/cpp/system/string_data_pipe_producer.h"
 #include "net/base/io_buffer.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {
 
+namespace {
+
+void GetContextsCallbackForCertificateFetcherForSignedExchange(
+    ResourceContext* resource_context,
+    net::URLRequestContext* request_context,
+    ResourceType resource_type,
+    ResourceContext** resource_context_out,
+    net::URLRequestContext** request_context_out) {
+  *resource_context_out = resource_context;
+  *request_context_out = request_context;
+}
+
+}  // namespace
+
 SignedExchangeHandler::SignedExchangeHandler(
     std::unique_ptr<net::SourceStream> upstream,
-    ExchangeHeadersCallback headers_callback)
+    ExchangeHeadersCallback headers_callback,
+    URLLoaderFactoryGetter* default_url_loader_factory_getter,
+    ResourceContext* resource_context,
+    net::URLRequestContext* request_context,
+    URLLoaderThrottlesGetter url_loader_throttles_getter)
     : net::FilterSourceStream(net::SourceStream::TYPE_NONE,
                               std::move(upstream)),
       headers_callback_(std::move(headers_callback)),
+      default_url_loader_factory_getter_(default_url_loader_factory_getter),
+      resource_context_(resource_context),
+      request_context_(request_context),
+      url_loader_throttles_getter_(std::move(url_loader_throttles_getter)),
       weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
 
@@ -105,13 +135,46 @@ bool SignedExchangeHandler::MaybeRunHeadersCallback() {
   // TODO(https://crbug.com/803774): This is just for testing, we should
   // implement the CBOR parsing here.
   FillMockExchangeHeaders();
-  std::move(headers_callback_)
-      .Run(request_url_, request_method_, response_head_, ssl_info_);
 
   // TODO(https://crbug.com/803774) Consume the bytes size that were
   // necessary to read out the headers.
+  network::mojom::URLLoaderFactory* url_loader_factory = nullptr;
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+    DCHECK(default_url_loader_factory_getter_.get());
+    url_loader_factory =
+        default_url_loader_factory_getter_->GetNetworkFactory();
+  } else {
+    DCHECK(!default_url_loader_factory_getter_.get());
+    url_loader_factory_impl_ = std::make_unique<URLLoaderFactoryImpl>(
+        ResourceRequesterInfo::CreateForCertificateFetcherForSignedExchange(
+            base::BindRepeating(
+                &GetContextsCallbackForCertificateFetcherForSignedExchange,
+                base::Unretained(resource_context_),
+                base::Unretained(request_context_))));
+    url_loader_factory = url_loader_factory_impl_.get();
+  }
+  DCHECK(url_loader_factory);
+  DCHECK(url_loader_throttles_getter_);
+  std::vector<std::unique_ptr<URLLoaderThrottle>> throttles =
+      std::move(url_loader_throttles_getter_).Run();
+  cert_fetcher_ = SignedExchangeCertFetcher::CreateAndStart(
+      base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          url_loader_factory),
+      request_context_, std::move(throttles),
+      GURL("http://127.0.0.1:8000/loading/htxg/resources/example.com.cert_msg"),
+      false,
+      base::BindOnce(&SignedExchangeHandler::OnCertVerified,
+                     base::Unretained(this)));
 
   return true;
+}
+void SignedExchangeHandler::OnCertVerified(
+    net::CertStatus cert_staus,
+    const base::Optional<net::SSLInfo>& ssl_info) {
+  LOG(ERROR) << "SignedExchangeHandler::OnCertVerified cert_staus: "
+             << cert_staus;
+  std::move(headers_callback_)
+      .Run(request_url_, request_method_, response_head_, ssl_info);
 }
 
 void SignedExchangeHandler::FillMockExchangeHeaders() {

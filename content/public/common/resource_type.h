@@ -30,7 +30,8 @@ enum ResourceType {
   RESOURCE_TYPE_SERVICE_WORKER = 15,  // the main resource of a service worker.
   RESOURCE_TYPE_CSP_REPORT = 16,      // a report of Content Security Policy
                                       // violations.
-  RESOURCE_TYPE_PLUGIN_RESOURCE = 17, // a resource that a plugin requested.
+  RESOURCE_TYPE_PLUGIN_RESOURCE = 17,  // a resource that a plugin requested.
+  RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE = 18,
   RESOURCE_TYPE_LAST_TYPE
 };
 
