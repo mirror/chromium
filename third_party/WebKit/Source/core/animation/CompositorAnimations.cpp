@@ -290,19 +290,32 @@ CompositorAnimations::CheckCanStartElementOnCompositor(
       }
     }
   } else {
+    LayoutObject* layout_object = target_element.GetLayoutObject();
     bool paints_into_own_backing =
-        target_element.GetLayoutObject() &&
-        target_element.GetLayoutObject()->GetCompositingState() ==
-            kPaintsIntoOwnBacking;
+        layout_object &&
+        layout_object->GetCompositingState() == kPaintsIntoOwnBacking;
     // This function is called in CheckCanStartAnimationOnCompositor(), after
     // CheckCanStartEffectOnCompositor returns code.Ok(), which means that we
     // know this animation could be accelerated. If |!paints_into_own_backing|,
-    // then we know that the animation is not composited due to certain check,
-    // such as the ComputedStyle::ShouldCompositeForCurrentAnimations(), for
-    // a running experiment.
+    // and that the |target_element| is not SVG related, then we know that the
+    // animation is not composited due to certain check, such as the
+    // ComputedStyle::ShouldCompositeForCurrentAnimations(), for a running
+    // experiment.
+    bool is_element_svg_related =
+        layout_object &&
+        (layout_object->IsSVG() || layout_object->IsSVGChild() ||
+         layout_object->IsSVGContainer() || layout_object->IsSVGShape() ||
+         layout_object->IsSVGText() || layout_object->IsSVGTextPath() ||
+         layout_object->IsSVGInline() || layout_object->IsSVGInlineText() ||
+         layout_object->IsSVGImage());
     if (!paints_into_own_backing) {
-      return FailureCode::NotPaintIntoOwnBacking(
-          "Acceleratable animation not accelerated due to an experiment");
+      if (!is_element_svg_related) {
+        return FailureCode::NotPaintIntoOwnBacking(
+            "Acceleratable animation not accelerated due to an experiment");
+      } else {
+        return FailureCode::NonActionable(
+            "Element does not paint into own backing");
+      }
     }
   }
 
