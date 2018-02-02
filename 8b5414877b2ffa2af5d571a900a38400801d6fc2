@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6872f68b_6363d4d1",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-02T01:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c6fbc8_03af5c20",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aae5901_471d21df",
         "filename": "content/browser/devtools/devtools_io_context.cc",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5fdf48bc_ecf8e6b2",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-02T01:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aae5901_471d21df",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beef0f13_21232256",
         "filename": "content/browser/devtools/devtools_io_context.cc",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-01T19:24:08Z",
       "side": 1,
       "message": "is this safe? You are posting a task to read the download_item, can it get deleted before the task gets executed?",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855376c2_85baef64",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-02T01:14:15Z",
+      "side": 1,
+      "message": "Good catch, I\u0027ve moved the GetDownloadItem logice into ReadOnDownload. Since download_items are detached/deleted on the DownloadTaskRunner, we should be safe.",
+      "parentUuid": "beef0f13_21232256",
       "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "faa8568f_9e6a2c5f",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-02T01:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866bbefd_c7c28382",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e80296_3a1068e7",
         "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
         "patchSetId": 20
@@ -84,6 +156,24 @@
       "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c433f6_10d3b29c",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-02T01:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e80296_3a1068e7",
+      "revId": "8b5414877b2ffa2af5d571a900a38400801d6fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
