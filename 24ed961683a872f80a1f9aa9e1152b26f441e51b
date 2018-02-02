@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deeb7c5d_301ade27",
+        "filename": "chrome/renderer/extensions/i18n_hooks_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-02T16:00:49Z",
+      "side": 1,
+      "message": "super-nit: up to you, but you can fit it on one line like this using the extended object syntax, here and below:\n\n                            \"[{toString() { throw new Error(\u0027haha\u0027); }]\"",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a2f189_294fb4a7",
+        "filename": "chrome/renderer/extensions/i18n_hooks_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-02T16:00:49Z",
+      "side": 1,
+      "message": "this produces [\u003carray-with-zero-accessor\u003e], but the access at property 0 is expected on the outer array, not its element (which is toString-ed). Suggest removing the wrapping [] on the outside here.",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e558380f_c1e838df",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-02T16:00:49Z",
+      "side": 1,
+      "message": "I think this is code movement, so maybe not required, but consider std::move-ing this map in to avoid copying it. (Alternatively, you could do the lookup in l10n_messages_map first, and pass \u0026l10n_messages_map[extension_id] directly to the sync IPC.)",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4be7638_38f610c9",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-02T16:00:49Z",
+      "side": 1,
+      "message": "nit: similarly, this does the same lookup the previous line did, no? Surely this would suffice?\n\nl10n_messages \u003d \u0026l10n_messages_map[extension_id];\n*l10n_messages \u003d std::move(messages);\n\n(though possibly that could even be combined with the third lookup above; maybe I\u0027m suggesting premature optimization here)",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78e3dc4_0234ce18",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-02T16:00:49Z",
+      "side": 1,
+      "message": "super-nit: s/arry/array/",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
