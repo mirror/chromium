@@ -22,6 +22,30 @@
       "revId": "1d87f734be618048a4ded43eeb94a018c9689aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394f9c27_28dc65b0",
+        "filename": "BUILD.gn",
+        "patchSetId": 71
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T06:38:19Z",
+      "side": 0,
+      "message": "Done. I\u0027ve used another CL for this.",
+      "parentUuid": "a3f77c12_57f1baae",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 3
+      },
+      "revId": "1d87f734be618048a4ded43eeb94a018c9689aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
