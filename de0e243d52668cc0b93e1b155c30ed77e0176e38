@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bae192e_27daf5cf",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee3a065_4849b2d9",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d77d20_69b4cd9e",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 37
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a1da77cf_f693ebb0",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Yes, added where it is reused https://chromium-review.googlesource.com/c/chromium/src/+/887961/9/components/printing/browser/print_composite_client.cc#116",
+      "parentUuid": "f7d77d20_69b4cd9e",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fac6850_2d5af91e",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 37
@@ -50,6 +86,24 @@
       "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d0c4cd_ac62f48b",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Sounds possible, comment changed.",
+      "parentUuid": "7fac6850_2d5af91e",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "e378eec8_8792b60e",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efa1ce7_b8adeb01",
+      "range": {
+        "startLine": 50,
+        "startChar": 47,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "747837ca_89e2b0ca",
         "filename": "components/printing/common/print_messages.h",
         "patchSetId": 37
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "9ea10baa_4b55c406",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747837ca_89e2b0ca",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c09751d6_6d8dd823",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 37
@@ -107,6 +203,24 @@
       "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6f7f82_6122afd9",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09751d6_6d8dd823",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "5125857a_ca93056d",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done, changed it throughout.",
+      "parentUuid": "51747652_6eb2976f",
+      "range": {
+        "startLine": 354,
+        "startChar": 46,
+        "endLine": 354,
+        "endChar": 56
+      },
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a668c8_6cad4e0c",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 37
@@ -147,6 +285,24 @@
       "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1803bb5f_a8c1e573",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a668c8_6cad4e0c",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "3fc33b86_8b03f9c6",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea7737f_fd89009e",
+      "range": {
+        "startLine": 548,
+        "startChar": 6,
+        "endLine": 548,
+        "endChar": 14
+      },
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "612ca003_3a07145b",
         "filename": "printing/pdf_metafile_skia.cc",
         "patchSetId": 37
@@ -187,6 +367,24 @@
       "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5a4f82_c611c441",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "612ca003_3a07145b",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "8b657a8c_99c53adf",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "There is no need to clear it, just added to make it explicit that it is empty now. In fact, it is always the initial value which is empty. Removed.",
+      "parentUuid": "26294281_a4ca50cb",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbf3efcf_280c8168",
         "filename": "printing/printing_utils.h",
         "patchSetId": 37
@@ -221,6 +437,24 @@
       "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfcf850_95994c34",
+        "filename": "printing/printing_utils.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-02T22:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf3efcf_280c8168",
+      "revId": "de0e243d52668cc0b93e1b155c30ed77e0176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
