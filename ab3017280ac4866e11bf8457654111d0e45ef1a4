@@ -22,6 +22,30 @@
       "revId": "ab3017280ac4866e11bf8457654111d0e45ef1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33caa2c4_d68c0e4d",
+        "filename": "chrome/browser/android/ntp/get_remote_suggestions_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-02-02T17:10:57Z",
+      "side": 1,
+      "message": "Wow. I\u0027m surprised it compiled. This mistake is probably a new for me. Yay. :)",
+      "parentUuid": "19f1a5d8_28b0e374",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "ab3017280ac4866e11bf8457654111d0e45ef1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

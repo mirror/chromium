@@ -46,6 +46,30 @@
       "revId": "e34f3cb37fe35676402657a572ca041a085fc23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757d7ac8_66aac8b7",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-02-02T17:10:57Z",
+      "side": 0,
+      "message": "Responded in a top level comment by mistake. Too long to repeat here, but in summary life is complicated. :)",
+      "parentUuid": "36d5f33c_f9341e09",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "e34f3cb37fe35676402657a572ca041a085fc23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
