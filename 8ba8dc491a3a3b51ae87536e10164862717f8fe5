@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0dc8e5f2_7451bde1",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Ah, ok, I had missed FileWriter.\n\nWilling to clarify the \"all received data\" as being from Mojo rather than the network?",
+      "parentUuid": "a94d799b_ac1cf4b9",
+      "range": {
+        "startLine": 361,
+        "startChar": 17,
+        "endLine": 361,
+        "endChar": 22
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "759722e4_c2efa79c",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -140,6 +164,30 @@
       "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ea691a_28cf9103",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Agreed about redundant docs and not adding state for DCHECKs; if you document this in OnDataRead() I\u0027m happy.",
+      "parentUuid": "dd8563ba_e9af654b",
+      "range": {
+        "startLine": 404,
+        "startChar": 7,
+        "endLine": 404,
+        "endChar": 13
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -378,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "f70ca36e_1697ae1b",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ae30999_a0d067ad",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc48a38c_a05cce6c",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 5
@@ -460,6 +532,30 @@
       "side": 1,
       "message": "I\u0027m not at all committed to this name.  SimpleURLLoaderStreamReader doesn\u0027t work, because of the BodyReader, and StreamReceiver also sounds too similar to me.  Maybe SimpleURLLoaderStreamDelegate?  We clearly need more classes named delegate in Chrome!\n\nSimpleURLLoaderResponseWriter would mirror the URLFetcher-equivalent name, but I don\u0027t want to make assumptions about what the consumer is doing.\n\nYou have any preferences or other ideas?  Not going to rename it until we agree on something, since renaming more than once is a bit of a pain.",
       "parentUuid": "f1cc85bf_e0af257d",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bd2bbc_1f08c35a",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "SURLLSConsumer?",
+      "parentUuid": "bd27059a_4bc9c9d9",
       "range": {
         "startLine": 19,
         "startChar": 21,

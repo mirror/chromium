@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "788f1b63_c2febdda",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not finding myself with strong opinions.  (*Possibly* the newspapers should be called :-}.) . I think it\u0027s pretty clear what this code does, and it\u0027s all near each other (major plus), so I\u0027m not particularly concerned about the fragility.  And I also am not particularly attached to the interface guarantee, so I wouldn\u0027t object to getting rid of that guarantee and simplifying the implementation.  Completely up to you.",
+      "parentUuid": "3e275f51_0cba9311",
+      "range": {
+        "startLine": 465,
+        "startChar": 20,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9438c36_2f6afcb6",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I\u0027m not sure why it seems funny to not land part of an API we\u0027ll need in another CL?  I didn\u0027t land upload support or save-to-file support to SimpleURLLoader in the same CL I created the class, despite knowing they\u0027d be needed.  My feeling is that smaller CLs make sure the code gets more attention during review, reduces merge failures, reduces number and latency of review round trips, and discourages more tests.  The downside is that design flays may only be discovered later, and corner cases between how the different CLs interact may be more likely to be missed (Though I think with the greater review coverage, that\u0027s debatable).\n\nWe can also choose to punt adding the API until we\u0027re sure that some consumers need it.\n\nI hadn\u0027t considered getting rid of this method in favor of a callback.  My problem with that is we\u0027d probably see a lot of classes with something like Foo::OnResponseInfoReceived(const ResponseInfo\u0026 info) { response_info_ \u003d info; }, which seems a bit silly.  It also makes SimpleURLLoader conversion a bit trickier if we don\u0027t want to update consumers just do something like that, or if consumers manage multiple SimpleURLLoaders.  Anyhow, we can worry about that whole can of chickens in another CL (Which is another reason smaller CLs are better - having one discussion on something like this rather than 5 at a time is much simpler).",
       "parentUuid": "77163945_c1296224",
+      "range": {
+        "startLine": 1184,
+        "startChar": 25,
+        "endLine": 1184,
+        "endChar": 33
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5d2ed2_aa4bf886",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure why it seems funny to not land part of an API we\u0027ll need in another CL? \n\nIt\u0027s what feels internally related/cohesive, which is at base an aesthetic judgement.  I certainly think there\u0027s value in not landing things until they\u0027re needed, but I also think there\u0027s value in landing code that\u0027s internally related all at once.  But I\u0027m happy to go with your preference for delay.\n\n\u003e I hadn\u0027t considered getting rid of this method in favor of a callback.  \n\nI very much agree that the API decision would be easier to make in the context of some set (possibly singular, though selection bias) of consumer uses.  That\u0027s the major place where I personally have tension with small CLs; when they include interface and implementation without usage it makes it noticeably harder to evaluate the interface.\n\nI don\u0027t think there\u0027s a disagreement that matters here, though--just sharing my thoughts in case there\u0027s anything useful in them for your decision.",
+      "parentUuid": "9358ed64_d95346de",
       "range": {
         "startLine": 1184,
         "startChar": 25,

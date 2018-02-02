@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5cb8983_f8b8022b",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Sorry I missed this on my first pass through, but can you say a few words (in response to this comment, not asking for a doc update) on why this is useful for this interface?  I would imagine that if a consumer is downloading as a stream, it\u0027s because there\u0027s some continuous consumption or next stage with backpressure to handle the data, and there don\u0027t need to be limits on the body size.  What do you see as the use cases for this argument?",
+      "range": {
+        "startLine": 170,
+        "startChar": 35,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed61e13d_3b7fcd4e",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Also, the style guide says \"Default arguments are banned on virtual functions, where they don\u0027t work properly\"?  https://google.github.io/styleguide/cppguide.html#Default_Arguments\n\nWhoops, that also applies on previous CLs, and I missed it.",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 13
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739ba043_9523af44",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Worthwhile adding a guarantee that none of these routines will be called during SimpleURLLoader destruction?  I could imagine consumers might be able to use the lack-of-reentrancy guarantee.",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf8ffcc_42923443",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "Maybe prefix this sentence with \"In the default configuration\"?  As a strong statement at the top of the comment without caveats, I imagine it being the true thing that stays true no matter how you configure things.",
+      "range": {
+        "startLine": 38,
+        "startChar": 44,
+        "endLine": 38,
+        "endChar": 52
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0477046a_a6d1b02e",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s a word, even in the context of this CL :-}.",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebe758d_45fcd0c6",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T21:12:14Z",
+      "side": 1,
+      "message": "nit: \"Number\"",
+      "range": {
+        "startLine": 276,
+        "startChar": 36,
+        "endLine": 276,
+        "endChar": 41
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
