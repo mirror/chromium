@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5414ad6d_abb2cea2",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-02-02T20:44:04Z",
+      "side": 1,
+      "message": "Hmm, this looks too redundant. I do expect in case of single item position change indices are updated automatically, regardless of D\u0026D operation. Technically I can do the same effect by just calling the same function. I think item position needs to be updated on changing position in hierarchy.\n\nWDYT?",
+      "range": {
+        "startLine": 681,
+        "startChar": 2,
+        "endLine": 681,
+        "endChar": 30
+      },
+      "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
