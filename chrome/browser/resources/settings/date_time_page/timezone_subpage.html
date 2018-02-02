@@ -16,6 +16,7 @@
       }
       settings-dropdown-menu {
         --md-select-width: 400px;
+        -webkit-padding-start: 28px;
       }
     </style>
     <div class="settings-box block first">
@@ -28,13 +29,15 @@
             label="$i18n{setTimeZoneAutomaticallyOn}"
             no-extension-indicator>
         </controlled-radio-button>
-        <settings-dropdown-menu id="timeZoneResolveMethodDropdown"
-            pref="{{prefs.generated.resolve_timezone_by_geolocation_method_short}}"
-            label="$i18n{selectTimeZoneResolveMethod}"
-            hidden="[[!prefs.generated.resolve_timezone_by_geolocation_on_off.value]]"
-            menu-options="[[getTimeZoneResolveMethodsList_(
-                prefs.generated.resolve_timezone_by_geolocation_method_short)]]">
-        </settings-dropdown-menu>
+        <div>
+          <settings-dropdown-menu id="timeZoneResolveMethodDropdown"
+              pref="{{prefs.generated.resolve_timezone_by_geolocation_method_short}}"
+              label="$i18n{selectTimeZoneResolveMethod}"
+              hidden="[[!prefs.generated.resolve_timezone_by_geolocation_on_off.value]]"
+              menu-options="[[getTimeZoneResolveMethodsList_(
+                  prefs.generated.resolve_timezone_by_geolocation_method_short)]]">
+          </settings-dropdown-menu>
+        </div>
         <controlled-radio-button
             id="timeZoneAutoDetectOff"
             name="false"
@@ -42,9 +45,11 @@
             label="$i18n{setTimeZoneAutomaticallyOff}"
             no-extension-indicator>
         </controlled-radio-button>
-        <timezone-selector prefs="{{prefs}}"
-            active-time-zone-display-name="{{activeTimeZoneDisplayName}}">
-        </timezone-selector>
+        <div>
+          <timezone-selector prefs="{{prefs}}"
+              active-time-zone-display-name="{{activeTimeZoneDisplayName}}">
+          </timezone-selector>
+        </div>
       </settings-radio-group>
     </div>
   </template>
