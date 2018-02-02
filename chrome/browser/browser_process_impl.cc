@@ -878,6 +878,10 @@ void BrowserProcessImpl::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(
       prefs::kCrashReportingEnabled, false);
 #endif  // defined(OS_ANDROID)
+
+#if defined(OS_WIN)
+  registry->RegisterDictionaryPref(prefs::kProblematicPrograms);
+#endif  // defined(OS_WIN)
 }
 
 DownloadRequestLimiter* BrowserProcessImpl::download_request_limiter() {
