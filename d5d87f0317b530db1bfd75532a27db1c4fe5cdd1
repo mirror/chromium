@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bdce1c1_3d999a34",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/muted-errors.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-02-02T00:53:21Z",
+      "side": 1,
+      "message": "The exact message text is a part of the HTML spec (see the comment above), so we can test it.\n(Perhaps we can\u0027t test in Line 26 because UA is free to choose the same \"Script error.\" string even if not muted though; also Firefox mutes filename/lineno/colno always and thus I removed checks for them in non-muted cases)",
+      "parentUuid": "7cdc67db_e21012c2",
+      "revId": "d5d87f0317b530db1bfd75532a27db1c4fe5cdd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "803f379f_4ecca6b3",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/DocumentModuleScriptFetcher.cpp",
         "patchSetId": 2
