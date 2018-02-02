@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8fabb5a7_e50db4af",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_infobar_delegate_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-02T01:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd33b0d_372e15a1",
+      "range": {
+        "startLine": 20,
+        "startChar": 63,
+        "endLine": 20,
+        "endChar": 66
+      },
+      "revId": "69d167ac7bd1c866454c5178228e64e35d55ee38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "596b71eb_03cc7dc1",
         "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "69d167ac7bd1c866454c5178228e64e35d55ee38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07dcb5e_363163f8",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-02T01:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596b71eb_03cc7dc1",
+      "range": {
+        "startLine": 16,
+        "startChar": 24,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "69d167ac7bd1c866454c5178228e64e35d55ee38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
