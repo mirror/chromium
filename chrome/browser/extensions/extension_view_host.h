@@ -116,7 +116,12 @@ class ExtensionViewHost
   static std::unique_ptr<ExtensionView> CreateExtensionView(
       ExtensionViewHost* host,
       Browser* browser);
-
+#if defined(OS_MACOSX)
+  // crbug/804950
+  static std::unique_ptr<ExtensionView> CreateExtensionViewCocoa(
+      ExtensionViewHost* host,
+      Browser* browser);
+#endif
   // Optional view that shows the rendered content in the UI.
   std::unique_ptr<ExtensionView> view_;
 
