@@ -22,6 +22,30 @@
       "revId": "dbd225ceb35806a4aaee24bd1c80a2593c4308fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee6c536_d495fb1f",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-02T20:25:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e47c2bec_3935a125",
+      "range": {
+        "startLine": 227,
+        "startChar": 20,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "dbd225ceb35806a4aaee24bd1c80a2593c4308fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
