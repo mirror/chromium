@@ -1,3 +1,4 @@
+
 // Copyright 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -232,6 +233,10 @@
 #include "chrome/browser/chromeos/fileapi/external_file_url_util.h"
 #include "chrome/browser/ui/settings_window_manager_chromeos.h"
 #endif
+
+#include "base/unguessable_token.h"
+#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 
 using base::TimeDelta;
 using base::UserMetricsAction;
@@ -1411,6 +1416,17 @@ void Browser::OnDidBlockFramebust(content::WebContents* web_contents,
   // click-through metrics.
   content_settings->OnFramebustBlocked(
       url, FramebustBlockTabHelper::ClickCallback());
+}
+
+void Browser::UpdatePictureInPictureSurfaceId(viz::FrameSinkId frame_sink_id,
+                                              uint32_t parent_id,
+                                              base::UnguessableToken nonce) {
+  pip_window_controller_.reset(
+      PictureInPictureWindowController::GetOrCreateForWebContents(
+          tab_strip_model_->GetActiveWebContents()));
+  pip_window_controller_->Init();
+  pip_window_controller_->EmbedSurface(frame_sink_id, parent_id, nonce);
+  pip_window_controller_->Show();
 }
 
 bool Browser::IsMouseLocked() const {

@@ -69,6 +69,13 @@ class FakeWebMediaPlayerDelegate
     EXPECT_EQ(delegate_id_, delegate_id);
   }
 
+  void ShowPictureInPicture(int delegate_id,
+                            viz::FrameSinkId frame_sink_id,
+                            uint32_t parent_id,
+                            base::UnguessableToken nonce) override {
+    EXPECT_EQ(delegate_id_, delegate_id);
+  }
+
   void DidPause(int delegate_id) override {
     EXPECT_EQ(delegate_id_, delegate_id);
     EXPECT_TRUE(playing_);
@@ -529,6 +536,7 @@ class WebMediaPlayerMSTest
       blink::WebLocalizedString::Name error_msg) override {}
   void PictureInPictureStarted() override {}
   void PictureInPictureStopped() override {}
+  bool IsInPictureInPictureMode() override {}
 
   // Implementation of cc::VideoFrameProvider::Client
   void StopUsingProvider() override;

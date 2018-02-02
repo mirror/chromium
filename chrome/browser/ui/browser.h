@@ -76,6 +76,8 @@ class TabStripModel;
 class TabStripModelDelegate;
 class UnloadController;
 
+class PictureInPictureWindowController;
+
 namespace chrome {
 class BrowserCommandController;
 }
@@ -489,6 +491,9 @@ class Browser : public TabStripModelObserver,
                            bool is_audible) override;
   void OnDidBlockFramebust(content::WebContents* web_contents,
                            const GURL& url) override;
+  void UpdatePictureInPictureSurfaceId(viz::FrameSinkId frame_sink_id,
+                                       uint32_t parent_id,
+                                       base::UnguessableToken nonce) override;
 
   bool is_type_tabbed() const { return type_ == TYPE_TABBED; }
   bool is_type_popup() const { return type_ == TYPE_POPUP; }
@@ -972,6 +977,8 @@ class Browser : public TabStripModelObserver,
   std::unique_ptr<extensions::WindowController> extension_window_controller_;
 
   std::unique_ptr<chrome::BrowserCommandController> command_controller_;
+
+  std::unique_ptr<PictureInPictureWindowController> pip_window_controller_;
 
   // True if the browser window has been shown at least once.
   bool window_has_shown_;
