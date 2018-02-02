@@ -22,6 +22,30 @@
       "revId": "b28d0bc62494d2e374ecd5d67c2a2ce58ed83efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820fb7f4_a79646a8",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T15:51:23Z",
+      "side": 1,
+      "message": "Having constants if useful if the colors are going to be used in other places. Will they?",
+      "parentUuid": "d92b0063_d6d44150",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "b28d0bc62494d2e374ecd5d67c2a2ce58ed83efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
