@@ -28,12 +28,12 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [0, 4, 15, 17],
+          "rect": [0, 4, 15, 16],
           "reason": "appeared"
         },
         {
           "object": "LayoutText #text",
-          "rect": [0, 4, 15, 17],
+          "rect": [0, 4, 15, 16],
           "reason": "disappeared"
         }
       ]

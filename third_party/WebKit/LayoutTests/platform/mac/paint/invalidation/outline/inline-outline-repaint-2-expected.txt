@@ -23,7 +23,7 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [215, -1, 40, 12],
+          "rect": [215, -1, 40, 11],
           "reason": "style change"
         }
       ]

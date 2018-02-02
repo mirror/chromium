@@ -33,12 +33,12 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [8, 67, 140, 22],
+          "rect": [8, 67, 140, 21],
           "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
-          "rect": [8, 7, 140, 22],
+          "rect": [8, 7, 140, 21],
           "reason": "geometry"
         }
       ]
