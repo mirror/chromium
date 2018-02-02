@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04424ad0_80ff4f52",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-02T01:15:21Z",
+      "side": 1,
+      "message": "I still need to investigate this TODO, but PTAL at the rest of the patch.",
+      "revId": "4bc541778ce646c30611fea4ccefa488c978545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
