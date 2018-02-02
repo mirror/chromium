@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7b7073f_c9aaea3f",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01eb7c3a_8b3ef46f",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71153089_524fa124",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4142e6af_37264660",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "It was Trent\u0027s idea! :)",
+      "parentUuid": "71153089_524fa124",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0868167_ac138f73",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcc762e7_06396a04",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0542de93_363aa7b9",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b083a324_4f37f215",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0542de93_363aa7b9",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d33f8469_c42538e6",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b282073b_93a2f249",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45deaddf_058302df",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625c4f71_0ca173b4",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45deaddf_058302df",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "59546a18_880521cf",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecae729d_b36f9662",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8b5069d_b4f52330",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.cc",
         "patchSetId": 13
@@ -135,6 +261,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b54a59_b9b328c4",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "N/A (reverted, see previous comment).",
+      "parentUuid": "b8b5069d_b4f52330",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "dc096ec8_2eda753c",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Thanks, will remember for next time! I reverted this file though since this method is no longer needed to determine whether to add padding or not.",
+      "parentUuid": "5c3f0837_4f2194da",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f103c707_9d4d844d",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 13
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "0499a749_5b106fd3",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f103c707_9d4d844d",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5e5576_d23ecc86",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 13
@@ -186,6 +366,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5caa873_4b0f1572",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Opted for your second suggestion :)",
+      "parentUuid": "3a5e5576_d23ecc86",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "b8df89d5_c3c431d8",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Updated to add the padding always (except when touchable is off) in the next patchset :)",
+      "parentUuid": "c00d345d_76a090ea",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1468723c_ac0c3282",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 13
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "b10ad2c2_565a315f",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Updated the comment. The issue isn\u0027t to try and keep the padding consistent - |ime_inline_autocomplete_view_| goes *almost* the way up to the edges of the omnibox instead of having ~5px of whitespace. I realised the screenshots I took in the CL description were actually not of the IME autocomplete view, so I\u0027ve updated it now - see the fourth row in the picture.",
+      "parentUuid": "1468723c_ac0c3282",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea85c583_f0fbd60d",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
         "patchSetId": 13
@@ -255,6 +489,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40b7ebe_2571c3be",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "ea85c583_f0fbd60d",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +557,24 @@
       "side": 1,
       "message": "K, it looks to me like probably in this world the dropdown won\u0027t be using anything like this border class, so I think we would probably be good to just use a single class that is equivalent to this subclass.\n\nFor the moment that\u0027d mean that in Touchable Chrome mode your dropdown will look odd, but you\u0027ll fix that by totally changing how the dropdown is positioned and drawn anyway, so not a problem.",
       "parentUuid": "7e6972ce_f8518997",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e88385_af4f4190",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T05:41:27Z",
+      "side": 1,
+      "message": "I opted to subclass BackgroundWith1PxBorder because it gets used in other places. I think some of these other places will also become rounded (e.g. the KeywordHintView, BubbleIconView), but I checked the spec and I think we are not touching the find-in-page UI for this first round of changes, which also uses it.",
+      "parentUuid": "89e600f8_82f4df54",
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
