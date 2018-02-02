@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00ec6e82_a5716d5a",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-02T18:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f3aaed_6dcc9744",
+      "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4531baf_3e69f458",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "32b7b32e_7b9e3ea9",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-02T18:55:05Z",
+      "side": 1,
+      "message": "If it doesn\u0027t have inlineTextBoxes at the beginning it should never be called. But I\u0027ll handle the case where the parent loses its inlineTextBoxes.",
+      "parentUuid": "e4531baf_3e69f458",
+      "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6716e1f3_782e869e",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844d12e9_ba680eb4",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-02T18:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6716e1f3_782e869e",
+      "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
