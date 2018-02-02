@@ -2101,6 +2101,7 @@ group("performance_test_suite") {
 
   data = [
     "//testing/scripts/run_performance_tests.py",
+    "//testing/trigger_scripts/perf_device_trigger.py",
   ]
 }
 
