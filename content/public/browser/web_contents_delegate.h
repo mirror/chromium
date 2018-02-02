@@ -544,6 +544,17 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) {
   }
 
+  // Coordinate printing an out-of-process subframe for the WebContents.
+  // |rect| is the rectangular area its content resides in its parent frame.
+  // |document_cookie| is a unique id for printed document with its setting.
+  // |page_number| is the number of page the subframe is in.
+  // |render_frame_host| is the render frame host of this subframe.
+  virtual void PrintSubframe(WebContents* web_contents,
+                             const gfx::Rect& rect,
+                             int document_cookie,
+                             int page_number,
+                             RenderFrameHost* render_frame_host) const {}
+
  protected:
   virtual ~WebContentsDelegate();
 

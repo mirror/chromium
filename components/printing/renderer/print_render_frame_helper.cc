@@ -37,6 +37,7 @@
 #include "printing/features/features.h"
 #include "printing/metafile_skia_wrapper.h"
 #include "printing/pdf_metafile_skia.h"
+#include "printing/printing_utils.h"
 #include "printing/units.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/common/sandbox_flags.h"
@@ -1054,6 +1055,7 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PrintMsg_ClosePrintPreviewDialog,
                         OnClosePrintPreviewDialog)
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+    IPC_MESSAGE_HANDLER(PrintMsg_PrintFrameContent, OnPrintFrameContent)
     IPC_MESSAGE_HANDLER(PrintMsg_SetPrintingEnabled, OnSetPrintingEnabled)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -1422,6 +1424,70 @@ void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
   print_preview_context_.source_frame()->DispatchAfterPrintEvent();
 }
 #endif
+
+void PrintRenderFrameHelper::OnPrintFrameContent(
+    const PrintMsg_PrintFrame_Params& params) {
+  if (ipc_nesting_level_ > 1)
+    return;
+
+  // If the last request is not finished yet, do not proceed.
+  if (prep_frame_view_) {
+    DLOG(ERROR) << "Previous request is still ongoing";
+    return;
+  }
+
+  auto weak_this = weak_ptr_factory_.GetWeakPtr();
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+  frame->DispatchBeforePrintEvent();
+  if (!weak_this) {
+    DLOG(ERROR) << "Weak ptr should not be nullptr";
+    return;
+  }
+
+  // If we are printing a PDF extension frame, find the plugin node and print
+  // that instead.
+  auto plugin = delegate_->GetPdfElement(frame);
+
+  PdfMetafileSkia metafile(SkiaDocumentType::MSKP);
+  gfx::Rect area(params.printable_area.width(), params.printable_area.height());
+  cc::PaintCanvas* canvas = metafile.GetVectorCanvasForNewPage(
+      gfx::Size(area.width(), area.height()), area, 1.0f);
+  if (!canvas)
+    return;
+
+  MetafileSkiaWrapper::SetMetafileOnCanvas(canvas, &metafile);
+  blink::WebPrintParams web_print_params;
+  web_print_params.print_content_area = area;
+  web_print_params.printable_area = area;
+  web_print_params.printer_dpi = kPointsPerInch;
+  web_print_params.print_scaling_option =
+      blink::kWebPrintScalingOptionFitToPrintableArea;
+  frame->PrintBegin(web_print_params, plugin);
+  frame->PrintPage(0, canvas);
+  frame->PrintEnd();
+
+  // Done printing. Close the canvas to retrieve the compiled metafile.
+  DCHECK(metafile.FinishPage());
+
+  FinishFramePrinting();
+
+  metafile.FinishFrameContent();
+
+  // Send the printed result back.
+  PrintHostMsg_DidPrintContent_Params printed_frame_params;
+  if (!CopyMetafileDataToReadOnlySharedMem(metafile, &printed_frame_params)) {
+    DLOG(ERROR) << "CopyMetafileDataToSharedMem failed";
+    return;
+  }
+  printed_frame_params.subframe_content_info =
+      metafile.GetSubframeContentInfo();
+  Send(new PrintHostMsg_DidPrintFrameContent(
+      routing_id(), params.document_cookie, params.page_number,
+      printed_frame_params));
+
+  if (!render_frame_gone_)
+    frame->DispatchAfterPrintEvent();
+}
 
 bool PrintRenderFrameHelper::IsPrintingEnabled() const {
   return is_printing_enabled_;
@@ -1975,8 +2041,7 @@ bool PrintRenderFrameHelper::CopyMetafileDataToReadOnlySharedMem(
       &params->metafile_data_handle, nullptr, nullptr);
   DCHECK_EQ(MOJO_RESULT_OK, result);
   params->data_size = metafile.GetDataSize();
-  // TODO(weili): Copy the actual subframes' content information here.
-  params->subframe_content_info.clear();
+  params->subframe_content_info = metafile.GetSubframeContentInfo();
   return true;
 }
 
