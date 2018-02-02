@@ -125,6 +125,11 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
     is_voice_interaction_oobe_ = true;
   }
   bool IsVoiceInteractionOobe() override { return is_voice_interaction_oobe_; }
+  void UpdateGaiaDialogVisibility(bool visible) override {}
+  void UpdateGaiaDialogSize(int width, int height) override {}
+  const user_manager::UserList GetUsers() override {
+    return user_manager::UserList();
+  }
 
  private:
   bool is_voice_interaction_oobe_ = false;

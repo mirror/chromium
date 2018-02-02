@@ -118,11 +118,25 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
     lastBackMessageValue_: false,
 
     /**
+     * Number of users in the login screen UI.
+     * This is mainly used by views login screen, this value is always 0 for
+     * WebUI login screen.
+     * TODO(crbug.com/808271): WebUI and views implementation should return the
+     * same user list.
+     * @type {number}
+     * @private
+     */
+    userCount_: 0,
+
+    /**
      * Whether the dialog could be closed.
      * @type {boolean}
      */
     get closable() {
-      return !!$('pod-row').pods.length || this.isOffline();
+      var hasUser = Oobe.getInstance().showingViewsLogin ?
+          (!!this.userCount_) :
+          (!!$('pod-row').pods.length);
+      return hasUser || this.isOffline();
     },
 
     /**
@@ -685,6 +699,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       this.chromeOSApiVersion_ = data.chromeOSApiVersion;
       // This triggers updateSigninFrameContainers_()
       this.screenMode = data.screenMode;
+      this.userCount_ = data.userCount;
       this.email = '';
       this.authCompleted_ = false;
       this.lastBackMessageValue_ = false;
