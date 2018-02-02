@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3f1e261_5101ed1d",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T21:01:38Z",
+      "side": 1,
+      "message": "You\u0027re right. Visually it looked like it was working with multiple sad tabs,\nbut pressing Reload could reload the wrong tab. I fixed it by adding a\ncall to reinstall the sad tab in the view here, and also as you suggested by\nhaving the WebView delete the overlay if the web contents is changed. I think\nthat makes sense that way, it will make it more obvious if there\u0027s a bug\nrather than something confusing like reloading the wrong tab.\n\nI also added a new test for multiple sad tabs.",
+      "parentUuid": "91b606c0_b6282142",
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e6fa6ed_86ee0d27",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.h",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T03:44:01Z",
       "side": 1,
       "message": "Can SizeChanged be removed from the content::WebContentsViewDelegate interface? I think it only exists for the toolkit-views SadTab -- Cocoa windows never used it. The call in WebContentsViewAura::OnBoundsChanged() could then go too.",
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67fff6b_1383bd0b",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T21:01:38Z",
+      "side": 1,
+      "message": "Done! Nice cleanup.",
+      "parentUuid": "0e6fa6ed_86ee0d27",
       "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ee28fa0e_be71386c",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T21:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038df720_62baa25a",
+      "range": {
+        "startLine": 130,
+        "startChar": 54,
+        "endLine": 130,
+        "endChar": 61
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6bc3ac3_682c3d86",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 14
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "89fa93e0_ea0d0e94",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T21:01:38Z",
+      "side": 1,
+      "message": "Done, and changed below too.",
+      "parentUuid": "c6bc3ac3_682c3d86",
+      "range": {
+        "startLine": 131,
+        "startChar": 41,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd2f41b_d0040c8b",
         "filename": "ui/views/view.h",
         "patchSetId": 14
@@ -93,6 +177,30 @@
       "writtenOn": "2018-02-02T16:01:48Z",
       "side": 1,
       "message": "I think this mildly complicates the API and would prefer not to have this for one special case. The name of the arg is also misleading, it\u0027s really delete_if_not_owned_by_client.",
+      "range": {
+        "startLine": 285,
+        "startChar": 7,
+        "endLine": 285,
+        "endChar": 22
+      },
+      "revId": "e29040b8dc5ff93eb72b4731ab752dc273bdd12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a3a0c5_b2b416f4",
+        "filename": "ui/views/view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T21:01:38Z",
+      "side": 1,
+      "message": "Done. I added an accessor for owned_by_client instead, unless you\nprefer to make WebView a friend.",
+      "parentUuid": "2bd2f41b_d0040c8b",
       "range": {
         "startLine": 285,
         "startChar": 7,
