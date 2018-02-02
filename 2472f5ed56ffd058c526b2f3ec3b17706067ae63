@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa73f1a_1f0690e4",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "nit: I\u0027d leave a blank line here",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec025eb_97bc7219",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "nit: Please add documentation that these values are persisted to logs, and should therefore never be renumbered nor reused (as documented in the best practices doc).",
+      "range": {
+        "startLine": 16,
+        "startChar": 68,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613f952e_7a89a596",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "nit: enum class?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de5b342_8e3d3d2f",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "nit: I\u0027d name this \"kCount\" or \"kNumEntries\" or something like that – \"max\" is typically used as an alias to refer to the final \"real\" value in an enum.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d43c38_79e46925",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "nit: And here too",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8089cc41_29438758",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_ macros expand to a fair bit of code.  To help the compiler avoid duplicating that logic, it\u0027s nice to define a small wrapper function that\u0027s used along the lines of RecordKeyboardLockApiCall(kRequestAllKeys).  (This also helps avoid potential typos where the wrong value is passed to the macro invocation at just one of the callsites.)",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447d88a1_47380c34",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32009,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:02:26Z",
+      "side": 1,
+      "message": "Sorry for not noticing this sooner – it looks like you\u0027re adding a new top-level metric category, \"KeyboardLock\".  This is essentially going into a global namespace; and as such, it might not be the best level of granularity.  What sort of an API is this?  If it\u0027s an extensions API, then maybe \"Extensions.KeyboardLockApi.Calls\" would be a good name for this metric.",
+      "range": {
+        "startLine": 32009,
+        "startChar": 17,
+        "endLine": 32009,
+        "endChar": 29
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
