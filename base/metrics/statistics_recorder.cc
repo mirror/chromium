@@ -137,10 +137,11 @@ const BucketRanges* StatisticsRecorder::RegisterOrDeleteDuplicateRanges(
 // static
 void StatisticsRecorder::WriteHTMLGraph(const std::string& query,
                                         std::string* output) {
-  for (const HistogramBase* const histogram :
-       Sort(WithName(GetHistograms(), query))) {
+  const Histograms histograms = Sort(WithName(GetHistograms(), query));
+  StringAppendF(output, "<h1>Histograms (%zd)</h1>", histograms.size());
+  for (const HistogramBase* const histogram : histograms) {
+    *output += "<hr>";
     histogram->WriteHTMLGraph(output);
-    *output += "<br><hr><br>";
   }
 }
 
@@ -152,10 +153,11 @@ void StatisticsRecorder::WriteGraph(const std::string& query,
   else
     output->append("Collections of all histograms\n");
 
-  for (const HistogramBase* const histogram :
-       Sort(WithName(GetHistograms(), query))) {
-    histogram->WriteAscii(output);
+  const Histograms histograms = Sort(WithName(GetHistograms(), query));
+  StringAppendF(output, "Histograms (%zd)\n", histograms.size());
+  for (const HistogramBase* const histogram : histograms) {
     output->append("\n");
+    histogram->WriteAscii(output);
   }
 }
 
