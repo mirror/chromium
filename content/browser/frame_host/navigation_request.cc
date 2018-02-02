@@ -432,6 +432,9 @@ void NavigationRequest::BeginNavigation() {
                                "BeginNavigation");
 
   state_ = STARTED;
+  LOG(ERROR) << "Started navigating to " << common_params_.url.spec()
+             << " in frame " << frame_tree_node_->frame_tree_node_id()
+             << " which is a main frame?: " << frame_tree_node_->IsMainFrame();
 
 #if defined(OS_ANDROID)
   base::WeakPtr<NavigationRequest> this_ptr(weak_factory_.GetWeakPtr());
@@ -643,6 +646,9 @@ void NavigationRequest::OnRequestRedirected(
     frame_tree_node_->ResetNavigationRequest(false, true);
     return;
   }
+  LOG(ERROR) << "Redirecting navigation to  " << common_params_.url.spec()
+             << " to " << redirect_info.new_url.spec()
+             << " in frame " << frame_tree_node_->frame_tree_node_id();
 
   // If a redirect occurs, the original site instance we thought is the
   // destination could change.
@@ -870,6 +876,9 @@ void NavigationRequest::OnRequestFailed(
     bool has_stale_copy_in_cache,
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info) {
+  LOG(ERROR) << "Navigation to  " << common_params_.url.spec() << " in frame "
+             << frame_tree_node_->frame_tree_node_id()
+             << " failed with error code " << net_error;
   NavigationRequest::OnRequestFailedInternal(has_stale_copy_in_cache, net_error,
                                              ssl_info, false);
 }
@@ -1238,6 +1247,11 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 void NavigationRequest::CommitErrorPage(
     RenderFrameHostImpl* render_frame_host,
     const base::Optional<std::string>& error_page_content) {
+  LOG(ERROR) << "Committing error page in navigation to  " << common_params_.url.spec()
+             << " in frame " << frame_tree_node_->frame_tree_node_id()
+             << " in RFH " << render_frame_host->GetRoutingID()
+             << " in RPH " << render_frame_host->GetProcess()->GetID()
+             << " with precreated SWPH " << request_params_.service_worker_provider_id;
   frame_tree_node_->TransferNavigationRequestOwnership(render_frame_host);
   navigation_handle_->ReadyToCommitNavigation(render_frame_host);
   render_frame_host->FailedNavigation(common_params_, request_params_,
@@ -1259,6 +1273,10 @@ void NavigationRequest::CommitNavigation() {
              frame_tree_node_->render_manager()->speculative_frame_host());
 
   frame_tree_node_->TransferNavigationRequestOwnership(render_frame_host);
+  LOG(ERROR) << "Committing navigation to  " << common_params_.url.spec()
+             << " in frame " << frame_tree_node_->frame_tree_node_id()
+             << " in RFH " << render_frame_host->GetRoutingID()
+             << " in RPH " << render_frame_host->GetProcess()->GetID();
   render_frame_host->CommitNavigation(
       response_.get(), std::move(url_loader_client_endpoints_),
       std::move(body_), common_params_, request_params_, is_view_source_,

@@ -1471,6 +1471,9 @@ void RenderFrameHostImpl::OnDocumentOnLoadCompleted(
                                base::TimeDelta::FromMilliseconds(10),
                                base::TimeDelta::FromMinutes(10), 100);
   }
+  LOG(ERROR) << "Document on load completed for " << last_committed_url_.spec()
+             << " in RFH " << GetRoutingID()
+             << " in RPH " << GetProcess()->GetID();
   // This message is only sent for top-level frames. TODO(avi): when frame tree
   // mirroring works correctly, add a check here to enforce it.
   delegate_->DocumentOnLoadCompleted(this);
@@ -1686,6 +1689,9 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         GetProcess(), bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
     return;
   }
+  LOG(ERROR) << "Did commit navigation to " << validated_params->url.spec()
+             << " in RFH " << GetRoutingID()
+             << " in RPH " << GetProcess()->GetID();
 
   if (!navigation_request_) {
     // The browser has not been notified about the start of the load in this
@@ -2756,6 +2762,8 @@ void RenderFrameHostImpl::OnDidStopLoading() {
     LOG(WARNING) << "OnDidStopLoading was called twice.";
     return;
   }
+  LOG(ERROR) << "DidStopLoading in RFH " << GetRoutingID()
+             << " and RPH " << GetProcess()->GetID();
 
   is_loading_ = false;
   navigation_request_.reset();
@@ -3651,6 +3659,9 @@ void RenderFrameHostImpl::CommitNavigation(
     // Released in OnStreamHandleConsumed().
     stream_handle_ = std::move(body);
   }
+
+  LOG(ERROR) << "Committing navigation in RFH " << GetRoutingID()
+             << " and RPH " << GetProcess()->GetID();
 
   pending_commit_ = true;
   is_loading_ = true;

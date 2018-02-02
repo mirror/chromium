@@ -4443,12 +4443,14 @@ void WebContentsImpl::LoadingStateChanged(bool to_different_document,
 
   std::string url = (details ? details->url.possibly_invalid_spec() : "NULL");
   if (is_loading) {
+    LOG(ERROR) << "WEB CONTENTS STARTED LOADING";
     TRACE_EVENT_ASYNC_BEGIN2("browser,navigation", "WebContentsImpl Loading",
                              this, "URL", url, "Main FrameTreeNode id",
                              GetFrameTree()->root()->frame_tree_node_id());
     for (auto& observer : observers_)
       observer.DidStartLoading();
   } else {
+    LOG(ERROR) << "WEB CONTENTS STOPPED LOADING";
     TRACE_EVENT_ASYNC_END1("browser,navigation", "WebContentsImpl Loading",
                            this, "URL", url);
     for (auto& observer : observers_)

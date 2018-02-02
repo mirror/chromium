@@ -315,6 +315,7 @@ void ServiceWorkerDispatcherHost::OnProviderCreated(
 
   if (IsBrowserSideNavigationEnabled() &&
       ServiceWorkerUtils::IsBrowserAssignedProviderId(info.provider_id)) {
+    LOG(ERROR) << "Attempting to claim pre-created SWPH " << info.provider_id;
     std::unique_ptr<ServiceWorkerProviderHost> provider_host;
     // PlzNavigate
     // Retrieve the provider host previously created for navigation requests.
@@ -325,10 +326,13 @@ void ServiceWorkerDispatcherHost::OnProviderCreated(
 
     // If no host is found, create one.
     if (provider_host == nullptr) {
+      LOG(ERROR) << "Pre-created SWPH wasn't found " << info.provider_id;
       GetContext()->AddProviderHost(ServiceWorkerProviderHost::Create(
           render_process_id_, std::move(info), GetContext()->AsWeakPtr(),
           AsWeakPtr()));
       return;
+    } else {
+      LOG(ERROR) << "Pre-created SWPH was found " << info.provider_id;
     }
 
     // Otherwise, completed the initialization of the pre-created host.
