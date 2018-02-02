@@ -46,6 +46,7 @@ using base::LazyInstance;
 using blink::mojom::CacheStorageError;
 using blink::mojom::StorageType;
 using crypto::SymmetricKey;
+using url::Origin;
 
 namespace content {
 
@@ -124,14 +125,14 @@ class CacheStorage::CacheLoader {
       storage::QuotaManagerProxy* quota_manager_proxy,
       base::WeakPtr<storage::BlobStorageContext> blob_context,
       CacheStorage* cache_storage,
-      const GURL& origin)
+      const Origin& origin)
       : cache_task_runner_(cache_task_runner),
         request_context_getter_(request_context_getter),
         quota_manager_proxy_(quota_manager_proxy),
         blob_context_(blob_context),
         cache_storage_(cache_storage),
         origin_(origin) {
-    DCHECK(!origin_.is_empty());
+    DCHECK(!origin_.unique());
   }
 
   virtual ~CacheLoader() {}
@@ -180,7 +181,7 @@ class CacheStorage::CacheLoader {
   // Raw pointer is safe because this object is owned by cache_storage_.
   CacheStorage* cache_storage_;
 
-  GURL origin_;
+  Origin origin_;
 };
 
 // Creates memory-only ServiceWorkerCaches. Because these caches have no
@@ -194,7 +195,7 @@ class CacheStorage::MemoryLoader : public CacheStorage::CacheLoader {
                storage::QuotaManagerProxy* quota_manager_proxy,
                base::WeakPtr<storage::BlobStorageContext> blob_context,
                CacheStorage* cache_storage,
-               const GURL& origin)
+               const Origin& origin)
       : CacheLoader(cache_task_runner,
                     request_context,
                     quota_manager_proxy,
@@ -262,7 +263,7 @@ class CacheStorage::SimpleCacheLoader : public CacheStorage::CacheLoader {
                     storage::QuotaManagerProxy* quota_manager_proxy,
                     base::WeakPtr<storage::BlobStorageContext> blob_context,
                     CacheStorage* cache_storage,
-                    const GURL& origin)
+                    const Origin& origin)
       : CacheLoader(cache_task_runner,
                     request_context,
                     quota_manager_proxy,
@@ -354,7 +355,7 @@ class CacheStorage::SimpleCacheLoader : public CacheStorage::CacheLoader {
     // 2. Write the file to disk. (WriteIndexWriteToFileInPool)
 
     proto::CacheStorageIndex protobuf_index;
-    protobuf_index.set_origin(origin_.spec());
+    protobuf_index.set_origin(origin_.Serialize());
 
     for (const auto& cache_metadata : index.ordered_cache_metadata()) {
       DCHECK(base::ContainsKey(cache_name_to_cache_dir_, cache_metadata.name));
@@ -575,7 +576,7 @@ CacheStorage::CacheStorage(
     scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy,
     base::WeakPtr<storage::BlobStorageContext> blob_context,
     CacheStorageManager* cache_storage_manager,
-    const GURL& origin)
+    const Origin& origin)
     : initialized_(false),
       initializing_(false),
       memory_only_(memory_only),
@@ -608,7 +609,7 @@ void CacheStorage::OpenCache(const std::string& cache_name,
     LazyInit();
 
   quota_manager_proxy_->NotifyStorageAccessed(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary);
 
   scheduler_->ScheduleOperation(base::BindOnce(
@@ -624,7 +625,7 @@ void CacheStorage::HasCache(const std::string& cache_name,
     LazyInit();
 
   quota_manager_proxy_->NotifyStorageAccessed(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary);
 
   scheduler_->ScheduleOperation(base::BindOnce(
@@ -640,7 +641,7 @@ void CacheStorage::DoomCache(const std::string& cache_name,
     LazyInit();
 
   quota_manager_proxy_->NotifyStorageAccessed(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary);
 
   scheduler_->ScheduleOperation(base::BindOnce(
@@ -655,7 +656,7 @@ void CacheStorage::EnumerateCaches(IndexCallback callback) {
     LazyInit();
 
   quota_manager_proxy_->NotifyStorageAccessed(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary);
 
   scheduler_->ScheduleOperation(base::BindOnce(
@@ -674,7 +675,7 @@ void CacheStorage::MatchCache(
     LazyInit();
 
   quota_manager_proxy_->NotifyStorageAccessed(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary);
 
   scheduler_->ScheduleOperation(
@@ -693,7 +694,7 @@ void CacheStorage::MatchAllCaches(
     LazyInit();
 
   quota_manager_proxy_->NotifyStorageAccessed(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary);
 
   scheduler_->ScheduleOperation(base::BindOnce(
@@ -966,7 +967,7 @@ void CacheStorage::DeleteCacheFinalize(CacheStorageCache* doomed_cache) {
 void CacheStorage::DeleteCacheDidGetSize(CacheStorageCache* doomed_cache,
                                          int64_t cache_size) {
   quota_manager_proxy_->NotifyStorageModified(
-      storage::QuotaClient::kServiceWorkerCache, origin_,
+      storage::QuotaClient::kServiceWorkerCache, origin_.GetURL(),
       StorageType::kTemporary, -1 * cache_size);
 
   cache_loader_->CleanUpDeletedCache(doomed_cache);
