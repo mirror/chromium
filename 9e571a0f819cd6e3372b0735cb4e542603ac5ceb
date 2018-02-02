@@ -16,6 +16,24 @@
       "revId": "9e571a0f819cd6e3372b0735cb4e542603ac5ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8c69e4_ab5cce4a",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-02T01:41:15Z",
+      "side": 1,
+      "message": "I\u0027d agree w/ basing this on the linker in use rather than the CPU architecture, but it doesn\u0027t appear that we\u0027re using gold or lld w/ MIPS: https://codesearch.chromium.org/chromium/src/build/config/compiler/compiler.gni?rcl\u003d36d852747003eb05955b4f5fb1a7da5abc50d450\u0026l\u003d153",
+      "parentUuid": "cfe5c496_d3d21383",
+      "revId": "9e571a0f819cd6e3372b0735cb4e542603ac5ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
