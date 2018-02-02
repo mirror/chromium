@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4616eb79_60289eab",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-02T02:15:20Z",
+      "side": 1,
+      "message": "This should mention *which* target(s) are duplicated.",
+      "revId": "1c2e9f33fa4133c2970daef165c097ce0d78bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f19565d_b85a7c27",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-02T02:15:20Z",
+      "side": 1,
+      "message": "nit: four space indent",
+      "revId": "1c2e9f33fa4133c2970daef165c097ce0d78bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
