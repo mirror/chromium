@@ -1,0 +1,28 @@
+<!-- Copyright 2018 The Chromium Authors. All rights reserved.
+   Use of this source code is governed by a BSD-style license that can be
+   found in the LICENSE file.-->
+<!doctype html>
+<html dir="$i18n{textdirection}" lang="$i18n{language}">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
+  <link rel="stylesheet" href="chrome://resources/css/widgets.css">
+  <link rel="stylesheet" href="histograms_internals.css">
+  <script src="chrome://resources/js/action_link.js"></script>
+  <script src="chrome://resources/js/cr.js"></script>
+  <script src="chrome://resources/js/load_time_data.js"></script>
+  <script src="chrome://resources/js/promise_resolver.js"></script>
+  <script src="chrome://resources/js/util.js"></script>
+  <script src="chrome://histograms/chart.js"></script>
+  <script src="chrome://histograms/histograms_internals.js"></script>
+</head>
+<div id="filter_div">
+  <input id="filter_input" type="text" paceholder="Filter by prefix">
+  <button id="filter_button">Filter</button>
+</div>
+<div id="live_mode_div" style="float: right">
+  <label for="live_mode_check">Live Mode:</label>
+  <input id="live_mode_check" type="checkbox">
+</div>
+<div id="histograms"></div>
+</html>
