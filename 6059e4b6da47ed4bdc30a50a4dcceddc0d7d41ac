@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "091faa9f_63ad05ef",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-02T23:40:26Z",
+      "side": 1,
+      "message": "Hmm, okay. What about adding a helper method in this function then that makes this a bit less repetitive?\n\n  bool is_lock \u003d /*...*/;\n  auto dispatch_click \u003d [\u0026](LoginScreenUserClickTarget login,\n                           LockScreenUserClickTarget lock) {\n    if (is_lock)\n      LogUserClickOnLock(lock);\n    else\n      LogUserClickOnLogin(login);\n  };\n\n  case ....:\n      dispatch_click(\n          LoginScreenUserClickTarget::kVirtualKeyboardTray,\n          LockScreenUserClickTarget::kVirtualKeyboardTray);",
+      "parentUuid": "2f218213_77000045",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7935466a_a4a48fd3",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
