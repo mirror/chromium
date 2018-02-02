@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "654a7d84_d553a8b4",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-02-02T03:05:58Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "89e27623_d1c497b3",
+      "revId": "17ba08f363f4e7ed56af6bc60701aac8dcd5a644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eda9e489_33421773",
         "filename": "extensions/browser/app_window/app_window.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "17ba08f363f4e7ed56af6bc60701aac8dcd5a644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f36ab50_97746b1e",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-02-02T03:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda9e489_33421773",
+      "revId": "17ba08f363f4e7ed56af6bc60701aac8dcd5a644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
