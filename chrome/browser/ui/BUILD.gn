@@ -3082,6 +3082,8 @@ split_static_library("ui") {
         "views/media_router/presentation_receiver_window_view.h",
         "views/omnibox/omnibox_popup_contents_view.cc",
         "views/omnibox/omnibox_popup_contents_view.h",
+        "views/omnibox/omnibox_popup_shadow_frame.cc",
+        "views/omnibox/omnibox_popup_shadow_frame.h",
         "views/omnibox/omnibox_result_view.cc",
         "views/omnibox/omnibox_result_view.h",
         "views/omnibox/omnibox_view_views.cc",

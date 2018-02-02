@@ -27,11 +27,11 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/compositor/shadow_layer.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/event_targeter.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/widget/widget.h"
-#include "ui/wm/core/shadow.h"
 #include "ui/wm/core/shadow_controller.h"
 #include "ui/wm/core/shadow_types.h"
 
@@ -250,7 +250,7 @@ TEST_F(ClientControlledShellSurfaceTest, SurfaceShadow) {
   aura::Window* window = shell_surface->GetWidget()->GetNativeWindow();
 
   // 1) Initial state, no shadow.
-  wm::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
+  ui::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
   ASSERT_TRUE(shadow);
   EXPECT_FALSE(shadow->layer()->visible());
 
@@ -331,7 +331,7 @@ TEST_F(ClientControlledShellSurfaceTest, ShadowWithStateChange) {
 
   views::Widget* widget = shell_surface->GetWidget();
   aura::Window* window = widget->GetNativeWindow();
-  wm::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
+  ui::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
 
   shell_surface->SetShadowBounds(shadow_bounds);
   surface->Commit();
@@ -381,7 +381,7 @@ TEST_F(ClientControlledShellSurfaceTest, ShadowWithTransform) {
   surface->Commit();
 
   aura::Window* window = shell_surface->GetWidget()->GetNativeWindow();
-  wm::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
+  ui::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
 
   // Placing a shadow at screen origin will make the shadow's origin (-10, -10).
   const gfx::Rect shadow_bounds(content_size);
@@ -423,7 +423,7 @@ TEST_F(ClientControlledShellSurfaceTest, ShadowStartMaximized) {
   // Restore the window and make sure the shadow is created, visible and
   // has the latest bounds.
   widget->Restore();
-  wm::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
+  ui::Shadow* shadow = wm::ShadowController::GetShadowForWindow(window);
   ASSERT_TRUE(shadow);
   EXPECT_TRUE(shadow->layer()->visible());
   EXPECT_EQ(gfx::Rect(10, 10, 100, 100), shadow->content_bounds());

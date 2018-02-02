@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_WM_CORE_SHADOW_H_
-#define UI_WM_CORE_SHADOW_H_
+#ifndef UI_COMPOSITOR_SHADOW_LAYER_H_
+#define UI_COMPOSITOR_SHADOW_LAYER_H_
 
 #include <memory>
 
 #include "base/macros.h"
+#include "ui/compositor/compositor_export.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/wm/core/wm_core_export.h"
 
 namespace gfx {
 struct ShadowDetails;
@@ -18,18 +18,14 @@ struct ShadowDetails;
 
 namespace ui {
 class Layer;
-}  // namespace ui
-
-namespace wm {
-enum class ShadowElevation;
 
 // Simple class that draws a drop shadow around content at given bounds.
-class WM_CORE_EXPORT Shadow : public ui::ImplicitAnimationObserver {
+class COMPOSITOR_EXPORT Shadow : public ui::ImplicitAnimationObserver {
  public:
   Shadow();
   ~Shadow() override;
 
-  void Init(ShadowElevation elevation);
+  void Init(int elevation);
 
   // Returns |layer_.get()|. This is exposed so it can be added to the same
   // layer as the content and stacked below it.  SetContentBounds() should be
@@ -42,13 +38,13 @@ class WM_CORE_EXPORT Shadow : public ui::ImplicitAnimationObserver {
   ui::Layer* shadow_layer() const { return shadow_layer_.get(); }
 
   const gfx::Rect& content_bounds() const { return content_bounds_; }
-  ShadowElevation desired_elevation() const { return desired_elevation_; }
+  int desired_elevation() const { return desired_elevation_; }
 
   // Moves and resizes the shadow layer to frame |content_bounds|.
   void SetContentBounds(const gfx::Rect& content_bounds);
 
   // Sets the shadow's appearance, animating opacity as necessary.
-  void SetElevation(ShadowElevation elevation);
+  void SetElevation(int elevation);
 
   // Sets the radius for the rounded corners to take into account when
   // adjusting the shadow layer to frame |content_bounds|. 0 or greater.
@@ -71,7 +67,7 @@ class WM_CORE_EXPORT Shadow : public ui::ImplicitAnimationObserver {
   // dictates the shadow's display characteristics and is proportional to the
   // size of the blur and its offset. This may not match reality if the window
   // isn't big enough to support it.
-  ShadowElevation desired_elevation_;
+  int desired_elevation_;
 
   // Rounded corners are drawn on top of the window's content layer,
   // we need to exclude them from the occlusion area.
@@ -101,6 +97,6 @@ class WM_CORE_EXPORT Shadow : public ui::ImplicitAnimationObserver {
   DISALLOW_COPY_AND_ASSIGN(Shadow);
 };
 
-}  // namespace wm
+}  // namespace ui
 
-#endif  // UI_WM_CORE_SHADOW_H_
+#endif  // UI_COMPOSITOR_SHADOW_LAYER_H_

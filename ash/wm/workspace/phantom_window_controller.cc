@@ -33,7 +33,7 @@ constexpr ::wm::ShadowElevation kShadowElevation =
     ::wm::ShadowController::kActiveNormalShadowElevation;
 
 // The shadow ninebox requires a minimum size to work well. See
-// ui/wm/core/shadow.cc
+// ui/compositor/shadow_layer.cc
 constexpr int kMinWidthWithShadow = 2 * static_cast<int>(kShadowElevation);
 constexpr int kMinHeightWithShadow = 4 * static_cast<int>(kShadowElevation);
 

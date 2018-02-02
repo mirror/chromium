@@ -2,16 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/wm/core/shadow.h"
+#include "ui/compositor/shadow_layer.h"
 
 #include "base/macros.h"
-#include "ui/aura/test/aura_test_base.h"
+#include "testing/gtest/include/gtest/gtest.h"
+#include "ui/compositor/layer.h"
+#include "ui/compositor/scoped_animation_duration_scale_mode.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/shadow_util.h"
 #include "ui/gfx/shadow_value.h"
-#include "ui/wm/core/shadow_types.h"
 
-namespace wm {
+namespace ui {
 namespace {
+
+constexpr int kElevationLarge = 24;
+constexpr int kElevationSmall = 6;
 
 gfx::Insets InsetsForElevation(int elevation) {
   return -gfx::Insets(2 * elevation) + gfx::Insets(elevation, 0, -elevation, 0);
@@ -26,14 +31,16 @@ gfx::Size NineboxImageSizeForElevationAndCornerRadius(int elevation,
   return bounds.size();
 }
 
-using ShadowTest = aura::test::AuraTestBase;
+using ShadowTest = testing::Test;
 
 // Test if the proper content bounds is calculated based on the current style.
 TEST_F(ShadowTest, SetContentBounds) {
+  ui::ScopedAnimationDurationScaleMode zero_duration_mode(
+      ui::ScopedAnimationDurationScaleMode::ZERO_DURATION);
   // Verify that layer bounds are outset from content bounds.
   Shadow shadow;
   {
-    shadow.Init(ShadowElevation::LARGE);
+    shadow.Init(kElevationLarge);
     gfx::Rect content_bounds(100, 100, 300, 300);
     shadow.SetContentBounds(content_bounds);
     EXPECT_EQ(content_bounds, shadow.content_bounds());
@@ -43,7 +50,7 @@ TEST_F(ShadowTest, SetContentBounds) {
   }
 
   {
-    shadow.SetElevation(ShadowElevation::SMALL);
+    shadow.SetElevation(kElevationSmall);
     gfx::Rect content_bounds(100, 100, 300, 300);
     shadow.SetContentBounds(content_bounds);
     EXPECT_EQ(content_bounds, shadow.content_bounds());
@@ -57,7 +64,7 @@ TEST_F(ShadowTest, SetContentBounds) {
 // the full elevation.
 TEST_F(ShadowTest, AdjustElevationForSmallContents) {
   Shadow shadow;
-  shadow.Init(ShadowElevation::LARGE);
+  shadow.Init(kElevationLarge);
   {
     gfx::Rect content_bounds(100, 100, 300, 300);
     shadow.SetContentBounds(content_bounds);
@@ -88,7 +95,7 @@ TEST_F(ShadowTest, AdjustElevationForSmallContents) {
 // Test that rounded corner radius is handled correctly.
 TEST_F(ShadowTest, AdjustRoundedCornerRadius) {
   Shadow shadow;
-  shadow.Init(ShadowElevation::SMALL);
+  shadow.Init(kElevationSmall);
   gfx::Rect content_bounds(100, 100, 300, 300);
   shadow.SetContentBounds(content_bounds);
   EXPECT_EQ(content_bounds, shadow.content_bounds());
@@ -101,4 +108,4 @@ TEST_F(ShadowTest, AdjustRoundedCornerRadius) {
 }
 
 }  // namespace
-}  // namespace wm
+}  // namespace ui

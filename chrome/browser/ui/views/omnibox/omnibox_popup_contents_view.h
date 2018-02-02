@@ -85,6 +85,9 @@ class OmniboxPopupContentsView : public views::View,
   // Calculates the height needed to show all the results in the model.
   int CalculatePopupHeight();
 
+  // Update the Widget bounds, or re-clip the contents.
+  void UpdatePopupBounds();
+
   // Size our children to the available content area.
   void LayoutChildren();
 
