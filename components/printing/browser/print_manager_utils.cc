@@ -29,6 +29,7 @@ void CreateCompositeClientIfNeeded(content::WebContents* web_contents,
                                    bool for_preview) {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kSitePerProcess) ||
+      base::FeatureList::IsEnabled(features::kSitePerProcess) ||
       base::FeatureList::IsEnabled(features::kTopDocumentIsolation)) {
     // For cases need to support OOPIFs.
     PrintCompositeClient::CreateForWebContents(web_contents);
