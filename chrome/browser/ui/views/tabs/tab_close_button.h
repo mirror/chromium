@@ -19,6 +19,14 @@ class TabCloseButton : public views::ImageButton,
   using MouseEventCallback =
       base::Callback<void(views::View*, const ui::MouseEvent&)>;
 
+  struct StateColorInfo {
+    SkColor icon;
+    SkColor icon_hover;
+    SkColor background;
+    SkColor background_hover;
+    SkColor background_pressed;
+  };
+
   // The mouse_event callback will be called for every mouse event to allow
   // middle clicks to be handled by the parent.
   //
@@ -33,6 +41,14 @@ class TabCloseButton : public views::ImageButton,
   // theme changes.
   void SetTabColor(SkColor color);
 
+  // Initializes the color information for different states of the button. This
+  // is used to create skia images that can be cached and reused during paint.
+  void SetStateColorInfo(bool for_active_state, const StateColorInfo& info);
+
+  // Sets the state of the button to active or inactive. This information is
+  // used to select the correct skia image during paint.
+  void ActiveStateChanged(bool is_active);
+
   // views::View:
   View* GetTooltipHandlerForPoint(const gfx::Point& point) override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
@@ -45,6 +61,11 @@ class TabCloseButton : public views::ImageButton,
   // views::MaskedTargeterDelegate:
   views::View* TargetForRect(views::View* root, const gfx::Rect& rect) override;
   bool GetHitTestMask(gfx::Path* mask) const override;
+
+  // Color info required to generate the skia images for active and inactive
+  // state.
+  StateColorInfo active_state_info_;
+  StateColorInfo inactive_state_info_;
 
   MouseEventCallback mouse_event_callback_;
 

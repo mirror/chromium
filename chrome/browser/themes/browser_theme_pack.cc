@@ -48,7 +48,7 @@ namespace {
 // theme packs that aren't int-equal to this. Increment this number if you
 // change default theme assets or if you need themes to recreate their generated
 // images (which are cached).
-const int kThemePackVersion = 48;
+const int kThemePackVersion = 49;
 
 // IDs that are in the DataPack won't clash with the positive integer
 // uint16_t. kHeaderID should always have the maximum value because we want the
@@ -230,6 +230,16 @@ const StringToIntTable kColorTable[] = {
   { "toolbar", ThemeProperties::COLOR_TOOLBAR },
   { "tab_text", ThemeProperties::COLOR_TAB_TEXT },
   { "tab_background_text", ThemeProperties::COLOR_BACKGROUND_TAB_TEXT },
+  { "tab_close_button_icon_hover",
+    ThemeProperties::COLOR_TAB_CLOSE_BUTTON_ICON_HOVER },
+  { "tab_close_button_background_active",
+    ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE },
+  { "tab_close_button_background_inactive",
+    ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE },
+  { "tab_close_button_background_hover",
+    ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER },
+  { "tab_close_button_background_pressed",
+    ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_PRESSED },
   { "bookmark_text", ThemeProperties::COLOR_BOOKMARK_TEXT },
   { "ntp_background", ThemeProperties::COLOR_NTP_BACKGROUND },
   { "ntp_text", ThemeProperties::COLOR_NTP_TEXT },
