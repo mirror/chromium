@@ -76,7 +76,6 @@ class OfflineContentAggregator : public OfflineContentProvider,
   void UnregisterProvider(const std::string& name_space);
 
   // OfflineContentProvider implementation.
-  bool AreItemsAvailable() override;
   void OpenItem(const ContentId& id) override;
   void RemoveItem(const ContentId& id) override;
   void CancelDownload(const ContentId& id) override;
@@ -91,27 +90,9 @@ class OfflineContentAggregator : public OfflineContentProvider,
 
  private:
   // OfflineContentProvider::Observer implementation.
-  void OnItemsAvailable(OfflineContentProvider* provider) override;
   void OnItemsAdded(const OfflineItemList& items) override;
   void OnItemRemoved(const ContentId& id) override;
   void OnItemUpdated(const OfflineItem& item) override;
-
-  // Checks if the underlying OfflineContentProviders are available.  If so,
-  // it calls OnItemsAvailable on all observers that haven't yet been notified
-  // of this.
-  void CheckAndNotifyItemsAvailable();
-
-  // Checks to see if |provider| is initialized.  If so, this flushes any
-  // pending actions taken on OfflineItems that belong to |provider|.
-  void FlushPendingActionsIfReady(OfflineContentProvider* provider);
-
-  // Checks if |provider| is initialized.  If so, runs |action|, otherwise
-  // queues it to run once |provider| triggers that it is ready.
-  // NOTE: It is expected that |provider| is the same as the
-  // OfflineContentProvider bound in |action|.  The class provides safety checks
-  // for that scenario only.
-  void RunIfReady(OfflineContentProvider* provider,
-                  const base::Closure& action);
 
   void OnGetAllItemsDone(OfflineContentProvider* provider,
                          const OfflineItemList& items);
@@ -125,13 +106,6 @@ class OfflineContentAggregator : public OfflineContentProvider,
   using OfflineProviderMap = std::map<std::string, OfflineContentProvider*>;
   OfflineProviderMap providers_;
 
-  // Stores a map of OfflineContentProvider -> list of closures that represent
-  // all actions that need to be taken on the associated OfflineContentProvider
-  // when it becomes initialized.
-  using CallbackList = std::vector<base::Closure>;
-  using PendingActionMap = std::map<OfflineContentProvider*, CallbackList>;
-  PendingActionMap pending_actions_;
-
   // Used by GetAllItems and the corresponding callback.
   std::vector<MultipleItemCallback> multiple_item_get_callbacks_;
   OfflineItemList aggregated_items_;
@@ -139,16 +113,6 @@ class OfflineContentAggregator : public OfflineContentProvider,
 
   // A list of all currently registered observers.
   base::ObserverList<OfflineContentProvider::Observer> observers_;
-
-  // A set of observers that have been notified that this class is initialized.
-  // We do not want to notify them of this initialization more than once, so
-  // we track them here.
-  using ObserverSet = std::set<OfflineContentProvider::Observer*>;
-  ObserverSet signaled_observers_;
-
-  // Whether or not this class currently identifies itself as available and has
-  // notified the observers.
-  bool sent_on_items_available_;
 
   base::WeakPtrFactory<OfflineContentAggregator> weak_ptr_factory_;
 
