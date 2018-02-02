@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc042b89_01f4d2ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-02-02T02:56:56Z",
+      "side": 1,
+      "message": "Done. Changing chrome os sleeps would be a much larger change. :p",
+      "parentUuid": "56223d78_941b5c92",
+      "revId": "93b3240b181ce49eac01473de27654859e3540c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05bc439b_da3c003d",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "98b3bd60_e3d02bda",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-02-02T02:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05bc439b_da3c003d",
+      "range": {
+        "startLine": 126,
+        "startChar": 69,
+        "endLine": 126,
+        "endChar": 70
+      },
+      "revId": "93b3240b181ce49eac01473de27654859e3540c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd784d39_36a936b4",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "93b3240b181ce49eac01473de27654859e3540c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ac7c02_9daa2db7",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-02-02T02:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd784d39_36a936b4",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 17
+      },
+      "revId": "93b3240b181ce49eac01473de27654859e3540c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
