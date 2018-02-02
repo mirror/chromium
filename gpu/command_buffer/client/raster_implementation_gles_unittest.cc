@@ -143,7 +143,7 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
                     GLuint msaa_sample_count,
                     GLboolean can_use_lcd_text,
                     GLboolean use_distance_field_text,
-                    GLint pixel_config));
+                    GLint color_type));
   MOCK_METHOD2(RasterCHROMIUM, void(GLsizeiptr size, const void* list));
   MOCK_METHOD1(MapRasterCHROMIUM, void*(GLsizeiptr size));
   MOCK_METHOD1(UnmapRasterCHROMIUM, void(GLsizeiptr written));
@@ -671,14 +671,14 @@ TEST_F(RasterImplementationGLESTest, BeginRasterCHROMIUM) {
   const GLuint msaa_sample_count = 4;
   const GLboolean can_use_lcd_text = GL_TRUE;
   const GLboolean use_distance_field_text = GL_FALSE;
-  const GLint pixel_config = kRGBA_8888_GrPixelConfig;
+  const GLint color_type = kRGBA_8888_SkColorType;
   EXPECT_CALL(*gl_, BeginRasterCHROMIUM(texture_id, sk_color, msaa_sample_count,
                                         can_use_lcd_text,
-                                        use_distance_field_text, pixel_config))
+                                        use_distance_field_text, color_type))
       .Times(1);
   ri_->BeginRasterCHROMIUM(texture_id, sk_color, msaa_sample_count,
                            can_use_lcd_text, use_distance_field_text,
-                           pixel_config);
+                           color_type);
 }
 
 TEST_F(RasterImplementationGLESTest, RasterCHROMIUM) {
