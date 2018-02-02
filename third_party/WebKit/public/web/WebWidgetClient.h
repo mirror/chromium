@@ -189,6 +189,8 @@ class WebWidgetClient {
                              WebDragOperationsMask,
                              const WebImage& drag_image,
                              const WebPoint& drag_image_offset) {}
+
+  virtual void SetDevToolPausedDuringLifeCycle() {}
 };
 
 }  // namespace blink

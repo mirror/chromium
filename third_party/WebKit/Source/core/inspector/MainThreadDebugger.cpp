@@ -53,6 +53,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
+#include "core/frame/WebLocalFrameImpl.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/IdentifiersFactory.h"
@@ -68,6 +69,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 #include "platform/wtf/text/StringBuilder.h"
+#include "public/web/WebWidgetClient.h"
 
 namespace blink {
 
@@ -240,8 +242,13 @@ void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
   // TODO(crbug.com/788219): this is a temporary hack that disables breakpoint
   // for paint worklet.
   if (paused_frame->GetDocument() &&
-      !paused_frame->GetDocument()->Lifecycle().StateAllowsTreeMutations())
-    return;
+      !paused_frame->GetDocument()->Lifecycle().StateAllowsTreeMutations()) {
+    LocalFrame& local_root = paused_frame->LocalFrameRoot();
+    if (WebFrameWidgetBase* widget =
+            WebLocalFrameImpl::FromFrame(&local_root)->FrameWidget()) {
+      widget->Client()->SetDevToolPausedDuringLifeCycle();
+    }
+  }
   DCHECK(paused_frame == paused_frame->LocalFrameRoot());
   paused_ = true;
 

@@ -326,6 +326,7 @@ class CONTENT_EXPORT RenderWidget
                      blink::WebDragOperationsMask mask,
                      const blink::WebImage& image,
                      const blink::WebPoint& imageOffset) override;
+  void SetDevToolPausedDuringLifeCycle() override;
 
   // Override point to obtain that the current input method state and caret
   // position.

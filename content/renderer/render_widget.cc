@@ -1620,6 +1620,10 @@ void RenderWidget::AutoscrollEnd() {
   Send(new ViewHostMsg_AutoscrollEnd(routing_id_));
 }
 
+void RenderWidget::SetDevToolPausedDuringLifeCycle() {
+  Send(new ViewHostMsg_SetDevToolPausedDuringLifeCycle(routing_id_));
+}
+
 // We are supposed to get a single call to Show for a newly created RenderWidget
 // that was created via RenderWidget::CreateWebView.  So, we wait until this
 // point to dispatch the ShowWidget message.

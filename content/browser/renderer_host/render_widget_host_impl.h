@@ -728,6 +728,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnAutoscrollStart(const gfx::PointF& position);
   void OnAutoscrollFling(const gfx::Vector2dF& velocity);
   void OnAutoscrollEnd();
+  void OnSetDevToolPausedDuringLifeCycle();
   void OnTextInputStateChanged(const TextInputState& params);
 
   void OnLockMouse(bool user_gesture,
@@ -1084,6 +1085,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   base::Optional<ScreenOrientationValues> screen_orientation_type_for_testing_;
 
   bool next_resize_needs_resize_ack_ = false;
+
+  bool is_dev_tool_paused_during_lifecycle_ = false;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 

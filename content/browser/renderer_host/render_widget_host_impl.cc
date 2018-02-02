@@ -606,6 +606,8 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollStart, OnAutoscrollStart)
     IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollFling, OnAutoscrollFling)
     IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollEnd, OnAutoscrollEnd)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_SetDevToolPausedDuringLifeCycle,
+                        OnSetDevToolPausedDuringLifeCycle)
     IPC_MESSAGE_HANDLER(ViewHostMsg_TextInputStateChanged,
                         OnTextInputStateChanged)
     IPC_MESSAGE_HANDLER(ViewHostMsg_LockMouse, OnLockMouse)
@@ -828,6 +830,8 @@ void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
   ResizeParams params;
   if (!GetResizeParams(&params))
     return;
+  if (is_dev_tool_paused_during_lifecycle_)
+    return;
   params.scroll_focused_node_into_view = scroll_focused_node_into_view;
 
   if (Send(new ViewMsg_Resize(routing_id_, params)))
@@ -881,6 +885,9 @@ void RenderWidgetHostImpl::SetPageFocus(bool focused) {
     if (touch_emulator_)
       touch_emulator_->CancelTouch();
   }
+
+  if (is_dev_tool_paused_during_lifecycle_)
+    return;
 
   GetWidgetInputHandler()->SetFocus(focused);
 
@@ -2132,6 +2139,10 @@ void RenderWidgetHostImpl::OnAutoscrollEnd() {
       WebInputEvent::kGestureScrollEnd,
       blink::kWebGestureDeviceSyntheticAutoscroll);
   input_router_->SendGestureEvent(GestureEventWithLatencyInfo(end_event));
+}
+
+void RenderWidgetHostImpl::OnSetDevToolPausedDuringLifeCycle() {
+  is_dev_tool_paused_during_lifecycle_ = true;
 }
 
 TouchEmulator* RenderWidgetHostImpl::GetTouchEmulator() {

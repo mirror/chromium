@@ -630,6 +630,8 @@ IPC_MESSAGE_ROUTED1(ViewHostMsg_AutoscrollStart, gfx::PointF /* start */)
 IPC_MESSAGE_ROUTED1(ViewHostMsg_AutoscrollFling, gfx::Vector2dF /* velocity */)
 IPC_MESSAGE_ROUTED0(ViewHostMsg_AutoscrollEnd)
 
+IPC_MESSAGE_ROUTED0(ViewHostMsg_SetDevToolPausedDuringLifeCycle)
+
 // Get the list of proxies to use for |url|, as a semicolon delimited list
 // of "<TYPE> <HOST>:<PORT>" | "DIRECT".
 IPC_SYNC_MESSAGE_CONTROL1_2(ViewHostMsg_ResolveProxy,
@@ -657,14 +659,13 @@ IPC_MESSAGE_ROUTED1(ViewHostMsg_DidContentsPreferredSizeChange,
                     gfx::Size /* pref_size */)
 
 // Notifies whether there are JavaScript touch event handlers or not.
-IPC_MESSAGE_ROUTED1(ViewHostMsg_HasTouchEventHandlers,
-                    bool /* has_handlers */)
+IPC_MESSAGE_ROUTED1(ViewHostMsg_HasTouchEventHandlers, bool /* has_handlers */)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
-// A renderer sends this to the browser process when it wants to access a PPAPI
-// broker. In contrast to FrameHostMsg_OpenChannelToPpapiBroker, this is called
-// for every connection.
-// The browser will respond with ViewMsg_PpapiBrokerPermissionResult.
+// A renderer sends this to the browser process when it wants to access a
+// PPAPI broker. In contrast to FrameHostMsg_OpenChannelToPpapiBroker, this
+// is called for every connection. The browser will respond with
+// ViewMsg_PpapiBrokerPermissionResult.
 IPC_MESSAGE_ROUTED3(ViewHostMsg_RequestPpapiBrokerPermission,
                     int /* routing_id */,
                     GURL /* document_url */,
@@ -688,11 +689,10 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_EnumerateDirectory,
                     int /* request_id */,
                     base::FilePath /* file_path */)
 
-// When the renderer needs the browser to transfer focus cross-process on its
-// behalf in the focus hierarchy. This may focus an element in the browser ui or
-// a cross-process frame, as appropriate.
-IPC_MESSAGE_ROUTED1(ViewHostMsg_TakeFocus,
-                    bool /* reverse */)
+// When the renderer needs the browser to transfer focus cross-process on
+// its behalf in the focus hierarchy. This may focus an element in the
+// browser ui or a cross-process frame, as appropriate.
+IPC_MESSAGE_ROUTED1(ViewHostMsg_TakeFocus, bool /* reverse */)
 
 // Required for opening a date/time dialog
 IPC_MESSAGE_ROUTED1(ViewHostMsg_OpenDateTimeDialog,
@@ -707,9 +707,9 @@ IPC_MESSAGE_ROUTED1(ViewHostMsg_PageScaleFactorChanged,
                     float /* page_scale_factor */)
 
 // Updates the minimum/maximum allowed zoom percent for this tab from the
-// default values.  If |remember| is true, then the zoom setting is applied to
-// other pages in the site and is saved, otherwise it only applies to this
-// tab.
+// default values.  If |remember| is true, then the zoom setting is applied
+// to other pages in the site and is saved, otherwise it only applies to
+// this tab.
 IPC_MESSAGE_ROUTED2(ViewHostMsg_UpdateZoomLimits,
                     int /* minimum_percent */,
                     int /* maximum_percent */)
@@ -726,11 +726,10 @@ IPC_MESSAGE_CONTROL1(ViewHostMsg_UserMetricsRecordAction,
 IPC_MESSAGE_CONTROL1(ViewHostMsg_MediaLogEvents,
                      std::vector<media::MediaLogEvent> /* events */)
 
-// Requests to lock the mouse. Will result in a ViewMsg_LockMouse_ACK message
-// being sent back.
-// |privileged| is used by Pepper Flash. If this flag is set to true, we won't
-// pop up a bubble to ask for user permission or take mouse lock content into
-// account.
+// Requests to lock the mouse. Will result in a ViewMsg_LockMouse_ACK
+// message being sent back. |privileged| is used by Pepper Flash. If this
+// flag is set to true, we won't pop up a bubble to ask for user permission
+// or take mouse lock content into account.
 IPC_MESSAGE_ROUTED2(ViewHostMsg_LockMouse,
                     bool /* user_gesture */,
                     bool /* privileged */)
@@ -741,8 +740,8 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_LockMouse,
 IPC_MESSAGE_ROUTED1(ViewHostMsg_IntrinsicSizingInfoChanged,
                     blink::WebIntrinsicSizingInfo)
 
-// Requests to unlock the mouse. A ViewMsg_MouseLockLost message will be sent
-// whenever the mouse is unlocked (which may or may not be caused by
+// Requests to unlock the mouse. A ViewMsg_MouseLockLost message will be
+// sent whenever the mouse is unlocked (which may or may not be caused by
 // ViewHostMsg_UnlockMouse).
 IPC_MESSAGE_ROUTED0(ViewHostMsg_UnlockMouse)
 
@@ -753,14 +752,13 @@ IPC_MESSAGE_ROUTED3(ViewHostMsg_ShowDisambiguationPopup,
                     gfx::Size, /* Size of zoomed image */
                     base::SharedMemoryHandle /* Bitmap pixels */)
 
-// Message sent from renderer to the browser when the element that is focused
-// has been touched. A bool is passed in this message which indicates if the
-// node is editable.
-IPC_MESSAGE_ROUTED1(ViewHostMsg_FocusedNodeTouched,
-                    bool /* editable */)
+// Message sent from renderer to the browser when the element that is
+// focused has been touched. A bool is passed in this message which
+// indicates if the node is editable.
+IPC_MESSAGE_ROUTED1(ViewHostMsg_FocusedNodeTouched, bool /* editable */)
 
-// Sent once a paint happens after the first non empty layout. In other words,
-// after the frame widget has painted something.
+// Sent once a paint happens after the first non empty layout. In other
+// words, after the frame widget has painted something.
 IPC_MESSAGE_ROUTED0(ViewHostMsg_DidFirstVisuallyNonEmptyPaint)
 
 // Sent in reply to ViewMsg_WaitForNextFrameForTests.
