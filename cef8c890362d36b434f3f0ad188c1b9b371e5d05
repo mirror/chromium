@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82ec3441_7b2a52ec",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1b63f3_fdc4f94b",
+      "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ce830f_54dc2df0",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e19f668_7574a7c3",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ce830f_54dc2df0",
+      "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e24910f7_0e74bfb9",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20a7c6c_c4642f8a",
+      "range": {
+        "startLine": 323,
+        "startChar": 7,
+        "endLine": 323,
+        "endChar": 11
+      },
+      "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "188c3463_6f668d33",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "809a80d6_ecee8f74",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "188c3463_6f668d33",
+      "range": {
+        "startLine": 359,
+        "startChar": 23,
+        "endLine": 359,
+        "endChar": 66
+      },
+      "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6afc6e4_b739a4e1",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 2
@@ -93,6 +177,30 @@
       "writtenOn": "2018-02-02T13:40:57Z",
       "side": 1,
       "message": "i\u0027m curious: why is the ACE needed on |temp_path|?",
+      "range": {
+        "startLine": 753,
+        "startChar": 18,
+        "endLine": 753,
+        "endChar": 27
+      },
+      "revId": "cef8c890362d36b434f3f0ad188c1b9b371e5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c54682f_9dcd3b00",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:02:51Z",
+      "side": 1,
+      "message": "It\u0027s due to a mistake on my part. I originally had this code after AddInstallerCopyTasks but moved it and noticed that the versioned directory no longer for the ACL so changed it. But it should be after AddInstallerCopyTasks and it works fine. Reverted it back to the correct location.",
+      "parentUuid": "d6afc6e4_b739a4e1",
       "range": {
         "startLine": 753,
         "startChar": 18,

@@ -16,6 +16,24 @@
       "revId": "a01a779e04192eae55aa2d0a58cc3ccd32b650d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258ffdb6_f63efc77",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2018-02-02T14:02:51Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "62bd9a33_1803b6d7",
+      "revId": "a01a779e04192eae55aa2d0a58cc3ccd32b650d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
