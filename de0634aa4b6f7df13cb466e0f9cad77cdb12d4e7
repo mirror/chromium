@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f95fa824_79cb0a3f",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T00:42:59Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. This will require integrate UserSelectionScreen with LoginDisplayViews, and then set users in LoginDisplayHost when we  UpdateAndReturnUserListForMojo/UpdateAndReturnUserListForWebUI. I feel this is the right thing to do, but since this CL is already long, mind if I do it in a follow up CL? I will open a bug for this.",
+      "parentUuid": "fb6325e9_06fa7786",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "398dd374_065eb16a",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 7
