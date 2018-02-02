@@ -22,6 +22,30 @@
       "revId": "4a56e92610cda539d426ef5b601f0cc2b0814569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d29549_eb7e7b4b",
+        "filename": "chrome/browser/chromeos/policy/temp_certs_cache_nss.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-02T21:22:35Z",
+      "side": 1,
+      "message": "Good point - Done.\nI\u0027ve left the member variable name in gaia_screen_handler.{h,cc} as untrusted_authorities_cache_ intentionally, as TempCertsCacheNSS is only intended to be used for untrusted authority certs in that case.",
+      "parentUuid": "f65f7180_37b080c2",
+      "range": {
+        "startLine": 22,
+        "startChar": 38,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "4a56e92610cda539d426ef5b601f0cc2b0814569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
