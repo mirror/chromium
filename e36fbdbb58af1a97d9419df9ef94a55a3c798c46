@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f50bade_7e6ffe5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-02T04:44:57Z",
+      "side": 1,
+      "message": "nit: Could you format this line to fit 80 chars in line?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 85
+      },
+      "revId": "e36fbdbb58af1a97d9419df9ef94a55a3c798c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54736638_3c3bd83d",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-02T04:44:57Z",
+      "side": 1,
+      "message": "nit: Could you format a comment to fit 80 chars in line?",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 63
+      },
+      "revId": "e36fbdbb58af1a97d9419df9ef94a55a3c798c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
