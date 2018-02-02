@@ -67,7 +67,6 @@ class SharedModelTypeProcessor : public ModelTypeProcessor,
                       const StartCallback& callback) override;
   void DisableSync() override;
   bool IsTrackingMetadata() override;
-  void ReportError(const ModelError& error) override;
   void ReportError(const base::Location& location,
                    const std::string& message) override;
 

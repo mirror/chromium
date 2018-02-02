@@ -439,7 +439,7 @@ void AutocompleteSyncBridge::ActOnLocalChanges(
   }
 
   if (Optional<ModelError> error = metadata_change_list->TakeError())
-    change_processor()->ReportError(error.value());
+    change_processor()->ReportModelError(error.value());
 }
 
 void AutocompleteSyncBridge::LoadMetadata() {

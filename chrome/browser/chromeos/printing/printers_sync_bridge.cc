@@ -133,7 +133,7 @@ class PrintersSyncBridge::StoreProxy {
       base::Optional<syncer::ModelError> error,
       std::unique_ptr<syncer::MetadataBatch> metadata_batch) {
     if (error) {
-      owner_->change_processor()->ReportError(error.value());
+      owner_->change_processor()->ReportModelError(error.value());
       return;
     }
 
