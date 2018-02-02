@@ -250,16 +250,16 @@ static void GetDeviceDescriptorsMediaFoundation(
 static void GetDeviceSupportedFormatsDirectShow(const Descriptor& descriptor,
                                                 VideoCaptureFormats* formats) {
   DVLOG(1) << "GetDeviceSupportedFormatsDirectShow for "
-           << descriptor.display_name;
+           << descriptor.get_display_name();
   bool query_detailed_frame_rates =
       !IsDeviceBlacklistedForQueryingDetailedFrameRates(
-          descriptor.display_name);
+          descriptor.get_display_name());
   CapabilityList capability_list;
   VideoCaptureDeviceWin::GetDeviceCapabilityList(
       descriptor.device_id, query_detailed_frame_rates, &capability_list);
   for (const auto& entry : capability_list) {
     formats->emplace_back(entry.supported_format);
-    DVLOG(1) << descriptor.display_name << " "
+    DVLOG(1) << descriptor.get_display_name() << " "
              << VideoCaptureFormat::ToString(entry.supported_format);
   }
 }
@@ -268,7 +268,7 @@ static void GetDeviceSupportedFormatsMediaFoundation(
     const Descriptor& descriptor,
     VideoCaptureFormats* formats) {
   DVLOG(1) << "GetDeviceSupportedFormatsMediaFoundation for "
-           << descriptor.display_name;
+           << descriptor.get_display_name();
   ComPtr<IMFMediaSource> source;
   if (!CreateVideoCaptureDeviceMediaFoundation(descriptor.device_id.c_str(),
                                                source.GetAddressOf())) {
@@ -323,7 +323,7 @@ static void GetDeviceSupportedFormatsMediaFoundation(
       continue;
     formats->push_back(capture_format);
 
-    DVLOG(1) << descriptor.display_name << " "
+    DVLOG(1) << descriptor.get_display_name() << " "
              << VideoCaptureFormat::ToString(capture_format);
   }
 }
@@ -350,7 +350,8 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
   if (device_descriptor.capture_api == VideoCaptureApi::WIN_MEDIA_FOUNDATION) {
     DCHECK(PlatformSupportsMediaFoundation());
     device.reset(new VideoCaptureDeviceMFWin(device_descriptor));
-    DVLOG(1) << " MediaFoundation Device: " << device_descriptor.display_name;
+    DVLOG(1) << " MediaFoundation Device: "
+             << device_descriptor.get_display_name();
     ComPtr<IMFMediaSource> source;
     if (!CreateVideoCaptureDeviceMediaFoundation(
             device_descriptor.device_id.c_str(), source.GetAddressOf())) {
@@ -361,7 +362,7 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
   } else if (device_descriptor.capture_api ==
              VideoCaptureApi::WIN_DIRECT_SHOW) {
     device.reset(new VideoCaptureDeviceWin(device_descriptor));
-    DVLOG(1) << " DirectShow Device: " << device_descriptor.display_name;
+    DVLOG(1) << " DirectShow Device: " << device_descriptor.get_display_name();
     if (!static_cast<VideoCaptureDeviceWin*>(device.get())->Init())
       device.reset();
   } else {
