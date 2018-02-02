@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39826cd5_2765fd39",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-02T17:46:39Z",
+      "side": 1,
+      "message": "This comment looks out of date now.\n\n(Also this doesn\u0027t need to be public, does it?)",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "3fc1a2f2818ecee90556950fe9e7aad247e96676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98c3530_cfe5a34d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-02T17:46:39Z",
+      "side": 1,
+      "message": "nit: Given the comments at the call sites I\u0027d suggest making this an enum parameter.",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 224,
+        "endChar": 40
+      },
+      "revId": "3fc1a2f2818ecee90556950fe9e7aad247e96676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c58e4b9_b3886c77",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-02T17:46:39Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 731,
+        "startChar": 9,
+        "endLine": 731,
+        "endChar": 23
+      },
+      "revId": "3fc1a2f2818ecee90556950fe9e7aad247e96676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479f6bce_997462f4",
+        "filename": "third_party/WebKit/public/platform/scheduler/test/mock_renderer_scheduler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-02T17:46:39Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "3fc1a2f2818ecee90556950fe9e7aad247e96676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
