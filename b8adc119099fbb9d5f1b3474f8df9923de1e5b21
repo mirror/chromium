@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a7fc23_0cc42aba",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-02T14:30:04Z",
+      "side": 1,
+      "message": "Note: Moved out from chromeos namespace, as this is only for testing of extensions.",
+      "revId": "b8adc119099fbb9d5f1b3474f8df9923de1e5b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
