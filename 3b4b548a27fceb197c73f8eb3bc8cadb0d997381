@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "27dbebc2_1c204eae",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T17:00:02Z",
+      "side": 1,
+      "message": "The general toplevel function approach used with the orderfile has not been maintainable because it separates things like symbol maps from which directory one gets the symbol maps from. Having a single instance to hold a logically unified chunk of data seems to be much easier to compose for different pipelines, as has been done in the process_profile.py work.\n\nAdmittedly that work is incomplete here because I haven\u0027t untangled all the uses of the object directory and the best way to combine that with other symbol processing. It\u0027s not clear to me if we want there to be a single thing that holds on to all information associated with a particular build, or if keeping the symbol information separate from the section information would work better.\n\nBut there is still an advantage, I think, to taking small steps towards passing around instances where appropriate.",
+      "parentUuid": "b7164340_5bd46c31",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "698fbba9_04c32c85",
         "filename": "tools/cygprofile/cyglog_to_orderfile.py",
         "patchSetId": 4
@@ -415,6 +439,30 @@
       "side": 1,
       "message": "The logic is still used. Your comment does not directly answer my question, which suggests that the order of these tests was not important. This answer is OK :)",
       "parentUuid": "73b1316c_3afe40bc",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d618cca_19cf1e20",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T17:00:02Z",
+      "side": 1,
+      "message": "Oh, sorry, I somehow badly misparsed your question. There was no strict ordering principle to these tests, just generally grouping the things only used in the scripting run of cyglog_to_orderfile (ie, what\u0027s used in main()) together, and the things used in the exported classes together.",
+      "parentUuid": "4c06d3cf_383ed1d7",
       "range": {
         "startLine": 56,
         "startChar": 6,
