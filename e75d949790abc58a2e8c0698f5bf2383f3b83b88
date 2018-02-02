@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2259edaa_964fc3fb",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-02T07:41:05Z",
+      "side": 1,
+      "message": "I added a TODO to mention that we should update the comment later.",
+      "parentUuid": "c62d7b94_ee061dbf",
+      "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b60d576d_c62b3c73",
         "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2018-02-02T07:17:26Z",
       "side": 1,
       "message": "// S13nServiceWorker",
+      "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f768bd58_2711776d",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-02T07:41:05Z",
+      "side": 1,
+      "message": "Let me keep this as S13nServiceWorker isn\u0027t fully working.",
+      "parentUuid": "b60d576d_c62b3c73",
       "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
