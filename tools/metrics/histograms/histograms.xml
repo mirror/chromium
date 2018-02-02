@@ -79081,6 +79081,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ServiceURLLoader.ServiceType" enum="ServiceTypes">
+  <owner>ryansturm@chromium.org</owner>
+  <summary>
+    Records when a service in Chrome creates a ServiceURLLoader to track usage
+    of the API.
+  </summary>
+</histogram>
+
 <histogram name="ServiceWorker.AbortPaymentEvent.Time" units="ms">
   <owner>jinho.bang@samsung.com</owner>
   <summary>

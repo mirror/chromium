@@ -6,12 +6,29 @@ static_library("content") {
   sources = [
     "content_url_request_classifier.cc",
     "content_url_request_classifier.h",
+    "service_url_loader.cc",
+    "service_url_loader.h",
   ]
   deps = [
     "//base",
     "//content/public/browser",
     "//content/public/common",
     "//net:net",
+    "//services/network/public/cpp",
     "//ui/base",
+  ]
+}
+
+source_set("unit_tests") {
+  sources = [
+    "service_url_loader_unittest.cc",
+  ]
+  testonly = true
+  deps = [
+    ":content",
+    "//base/test:test_support",
+    "//content/public/common",
+    "//testing/gmock",
+    "//testing/gtest",
   ]
 }
