@@ -46,6 +46,30 @@
       "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237b0f45_276999e2",
+        "filename": "services/network/network_context.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T18:54:08Z",
+      "side": 1,
+      "message": "So my understanding, which I\u0027m not confident of, is that NetworkContext::CreateURLLoaderFactory is only called if the network service is enabled.  If it\u0027s called when it\u0027s disabled, then we\u0027re using two different resources schedulers (one attached to the URLLoaderFactory, one to the ResourceDispatcherHost) which strikes me as a bad idea and worth avoiding; thus my suggestion about only allocating the resource scheduler here and seeing if there are any crashes.  But one way or another I\u0027d like to make sure that we\u0027re not allocating two different resource schedulers in any configuration before landing this CL; leaving resource_scheduler_ null (with a comment) if we\u0027re not enabling the network service seems like a reasonable way to guarantee that.\n\n+mmenke: Is it true that NetworkContext::CreateURLLoaderFactory is only called if the network service is enabled?",
+      "parentUuid": "bbb64c21_fa0c20dd",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
