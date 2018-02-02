@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "base/metrics/histogram_functions.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
@@ -102,6 +103,12 @@ void FrameSinkManagerImpl::InvalidateFrameSinkId(
 
   // Destroy the [Root]CompositorFrameSinkImpl if there is one.
   sink_map_.erase(frame_sink_id);
+}
+
+void FrameSinkManagerImpl::EnableSynchronizationReporting(
+    const FrameSinkId& frame_sink_id,
+    const std::string& reporting_label) {
+  synchronization_event_labels_.emplace(frame_sink_id, reporting_label);
 }
 
 void FrameSinkManagerImpl::SetFrameSinkDebugLabel(
@@ -405,7 +412,20 @@ void FrameSinkManagerImpl::OnFirstSurfaceActivation(
     client_->OnFirstSurfaceActivation(surface_info);
 }
 
-void FrameSinkManagerImpl::OnSurfaceActivated(const SurfaceId& surface_id) {}
+void FrameSinkManagerImpl::OnSurfaceActivated(
+    const SurfaceId& surface_id,
+    base::Optional<base::TimeDelta> duration) {
+  // If |duration| is populated then there was a synchronization event prior
+  // to this activation.
+  auto it = synchronization_event_labels_.find(surface_id.frame_sink_id());
+  if (duration && client_ && it != synchronization_event_labels_.end()) {
+    TRACE_EVENT_INSTANT2(
+        "viz", "SurfaceSynchronizationEvent", TRACE_EVENT_SCOPE_THREAD,
+        "duration_ms", duration->InMilliseconds(), "client_label", it->second);
+    base::UmaHistogramCustomCounts(it->second, duration->InMilliseconds(), 1,
+                                   10000, 50);
+  }
+}
 
 bool FrameSinkManagerImpl::OnSurfaceDamaged(const SurfaceId& surface_id,
                                             const BeginFrameAck& ack) {
