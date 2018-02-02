@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55da244_eaedd236",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5381,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Add more context, since translators will see this description in isolation.  A row in what?",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c362f443_6e44a97e",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Can we avoid adding more files to c/b/ui/ directly?  Maybe create a hung_renderer/ subdirectory with you as OWNER and put these in there along with any tests/related existing files?",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4612592d_c867121c",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Or could use std::any_of()",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f7a295_810b214e",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Or could use std::find_if()",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529d03bd_58fab349",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: NOTREACHED()?",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31f7d2f_df2733ff",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Or could use std::copy_if(), although I think that might require a redesign of the TabContentsIterator to actually act like a proper iterator (which wouldn\u0027t be a bad thing...)",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd6d473_76ac7127",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "That may be true, but the raw host is also going to be unreadable punycode for IDNs.  I think you still want to run through the formatting code to get a \"readable\" hostname out.",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310943fa_ac06f20b",
+        "filename": "chrome/browser/ui/hung_renderer_core.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "No namespaces in chrome/ code.  (I had to go look up the namespace style thread to ensure this was recommended practice.)\n\nI might change \"Affected\" to \"HungProcess\" to make the names less generic.  Another possibility would be if the current Mac and Views code share any common bits that could be factored to a base class, which could then get these added as static methods.  (Just making a class to hold these methods alone would violate the style guide.)",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9793c99_219aeda0",
+        "filename": "chrome/browser/ui/hung_renderer_core.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Might be nice if they were in some sort of \"tab order\" or \"most recently used\" order, if that\u0027s implementable.",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7cf8fd_7c5f1a63",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Can we use a ScopedObserver?",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7c3060_4a77dc46",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: auto, or could inline into the loop",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b05e1d_0064c76c",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T04:38:27Z",
+      "side": 1,
+      "message": "Nit: Hmm, I wonder if it\u0027s really right to do this just to get the TabDestroyed() call from this method, since it seems to necessitate adding the null-check there.  Or was that necessary anyway as a bugfix?\n\nI guess I\u0027m not sure whether, conceptually, it makes sense to say \"the null tab was destroyed\".  Maybe some other organization of where the delegate callback goes (and what it\u0027s named?) makes more sense?",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
