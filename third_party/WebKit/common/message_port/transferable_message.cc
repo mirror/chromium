@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "third_party/WebKit/common/message_port/transferable_message.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 
 namespace blink {
 
