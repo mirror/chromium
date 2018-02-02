@@ -21,9 +21,11 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/login/lock_screen_utils.h"
+#include "chrome/browser/chromeos/login/reauth_stats.h"
 #include "chrome/browser/chromeos/login/screens/network_error.h"
 #include "chrome/browser/chromeos/login/signin_partition_manager.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host_webui.h"
 #include "chrome/browser/chromeos/login/ui/user_adding_screen.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_impl.h"
@@ -343,6 +345,8 @@ void GaiaScreenHandler::LoadGaiaWithPartitionAndVersionAndConsent(
   params.SetBoolean("readOnlyEmail", true);
   params.SetString("email", context.email);
   params.SetString("gapsCookie", context.gaps_cookie);
+  params.SetInteger("userCount",
+                    LoginDisplayHost::default_host()->GetUsers().size());
 
   UpdateAuthParams(&params, IsRestrictiveProxy());
 
@@ -530,6 +534,11 @@ void GaiaScreenHandler::RegisterMessages() {
               &GaiaScreenHandler::HandleCompleteAdAuthentication);
   AddCallback("cancelAdAuthentication",
               &GaiaScreenHandler::HandleCancelActiveDirectoryAuth);
+  AddRawCallback("showAddUser", &GaiaScreenHandler::HandleShowAddUser);
+  AddCallback("updateGaiaDialogSize",
+              &GaiaScreenHandler::HandleUpdateGaiaDialogSize);
+  AddCallback("updateGaiaDialogVisibility",
+              &GaiaScreenHandler::HandleUpdateGaiaDialogVisibility);
 
   // Allow UMA metrics collection from JS.
   web_ui()->AddMessageHandler(std::make_unique<MetricsHandler>());
@@ -757,6 +766,36 @@ void GaiaScreenHandler::HandleGaiaUIReady() {
   LoginDisplayHost::default_host()->OnGaiaScreenReady();
 }
 
+void GaiaScreenHandler::HandleUpdateGaiaDialogSize(int width, int height) {
+  LoginDisplayHost::default_host()->UpdateGaiaDialogSize(width, height);
+}
+
+void GaiaScreenHandler::HandleUpdateGaiaDialogVisibility(bool visible) {
+  LoginDisplayHost::default_host()->UpdateGaiaDialogVisibility(visible);
+}
+
+void GaiaScreenHandler::HandleShowAddUser(const base::ListValue* args) {
+  // TODO: Add trace event for gaia webui in views login screen.
+  TRACE_EVENT_ASYNC_STEP_INTO0("ui", "ShowLoginWebUI",
+                               LoginDisplayHostWebUI::kShowLoginWebUIid,
+                               "ShowAddUser");
+
+  std::string email;
+  // |args| can be null if it's OOBE.
+  if (args)
+    args->GetString(0, &email);
+  set_populated_email(email);
+  if (!email.empty())
+    SendReauthReason(AccountId::FromUserEmail(email));
+  OnShowAddUser();
+}
+
+void GaiaScreenHandler::OnShowAddUser() {
+  signin_screen_handler_->is_account_picker_showing_first_time_ = false;
+  lock_screen_utils::EnforcePolicyInputMethods(std::string());
+  ShowGaiaAsync();
+}
+
 void GaiaScreenHandler::DoCompleteLogin(const std::string& gaia_id,
                                         const std::string& typed_email,
                                         const std::string& password,
@@ -839,7 +878,7 @@ void GaiaScreenHandler::ShowSigninScreenForTest(const std::string& username,
   if (frame_state() == GaiaScreenHandler::FRAME_STATE_LOADED) {
     SubmitLoginFormForTest();
   } else if (frame_state() != GaiaScreenHandler::FRAME_STATE_LOADING) {
-    signin_screen_handler_->OnShowAddUser();
+    OnShowAddUser();
   }
 }
 

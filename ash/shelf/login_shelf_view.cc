@@ -232,7 +232,7 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
       Shell::Get()->login_screen_controller()->LoginAsGuest();
       break;
     case kAddUser:
-      NOTIMPLEMENTED();
+      Shell::Get()->login_screen_controller()->ShowGaiaSignin();
       break;
   }
 }
