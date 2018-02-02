@@ -990,14 +990,20 @@ public class DownloadManagerService
      * Removes a download from the list.
      * @param downloadGuid GUID of the download.
      * @param isOffTheRecord Whether the download is off the record.
+     * @param externallyRemoved If the file is externally removed by other applications.
      */
     @Override
-    public void removeDownload(final String downloadGuid, boolean isOffTheRecord) {
+    public void removeDownload(
+            final String downloadGuid, boolean isOffTheRecord, boolean externallyRemoved) {
         mHandler.post(() -> {
             nativeRemoveDownload(getNativeDownloadManagerService(), downloadGuid, isOffTheRecord);
             removeDownloadProgress(downloadGuid);
         });
 
+        if (externallyRemoved) return;
+
+        // Let Android DownloadManager to remove the file only if the user removed the file in
+        // Chrome. If the user renamed or moved the file, Chrome should keep it intact.
         new AsyncTask<Void, Void, Void>() {
             @Override
             public Void doInBackground(Void... params) {
