@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_POLICY_UNTRUSTED_AUTHORITY_CERTS_CACHE_H_
-#define CHROME_BROWSER_CHROMEOS_POLICY_UNTRUSTED_AUTHORITY_CERTS_CACHE_H_
+#ifndef CHROME_BROWSER_CHROMEOS_POLICY_TEMP_CERTS_CACHE_NSS_H_
+#define CHROME_BROWSER_CHROMEOS_POLICY_TEMP_CERTS_CACHE_NSS_H_
 
 #include <string>
 #include <vector>
@@ -14,14 +14,13 @@
 
 namespace policy {
 
-// Holds untrusted intermediate authority certificates in memory as
-// ScopedCERTCertificates, making them available for client certificate
-// discovery.
-class UntrustedAuthorityCertsCache {
+// Holds NSS temporary certificates in memory as ScopedCERTCertificates, making
+// them available e.g. for client certificate discovery.
+class TempCertsCacheNSS {
  public:
-  explicit UntrustedAuthorityCertsCache(
+  explicit TempCertsCacheNSS(
       const std::vector<std::string>& onc_x509_authority_certs);
-  ~UntrustedAuthorityCertsCache();
+  ~TempCertsCacheNSS();
 
   static std::vector<std::string> GetUntrustedAuthoritiesFromDeviceOncPolicy();
 
@@ -37,9 +36,9 @@ class UntrustedAuthorityCertsCache {
   // permanent databases, nor are the trust settings mutated to trust them.
   net::ScopedCERTCertificateList untrusted_authority_certs_;
 
-  DISALLOW_COPY_AND_ASSIGN(UntrustedAuthorityCertsCache);
+  DISALLOW_COPY_AND_ASSIGN(TempCertsCacheNSS);
 };
 
 }  // namespace policy
 
-#endif  // CHROME_BROWSER_CHROMEOS_POLICY_UNTRUSTED_AUTHORITY_CERTS_CACHE_H_
+#endif  // CHROME_BROWSER_CHROMEOS_POLICY_TEMP_CERTS_CACHE_NSS_H_
