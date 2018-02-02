@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "39ccc688_95bdc722",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T19:51:16Z",
+      "side": 1,
+      "message": "No worries - I just tripped over the terminology as I was looking to find a good sentinel value...",
+      "parentUuid": "b7cd9ec3_ad6a8aa0",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd3ba520_0592f06b",
         "filename": "components/metrics/stability_metrics_provider.cc",
         "patchSetId": 4
