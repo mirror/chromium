@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
 #include "chrome/browser/ui/toolbar/back_forward_menu_model.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
+#include "chrome/browser/ui/views/toolbar/browser_actions_container.h"
 #include "chrome/browser/upgrade_observer.h"
 #include "components/prefs/pref_member.h"
 #include "components/translate/core/browser/translate_step.h"
@@ -33,7 +34,6 @@
 
 class AppMenuButton;
 class Browser;
-class BrowserActionsContainer;
 class HomeButton;
 class ReloadButton;
 class ToolbarButton;
@@ -47,6 +47,7 @@ class ToolbarView : public views::AccessiblePaneView,
                     public views::MenuButtonListener,
                     public ui::AcceleratorProvider,
                     public LocationBarView::Delegate,
+                    public BrowserActionsContainer::Delegate,
                     public CommandObserver,
                     public views::ButtonListener,
                     public AppMenuIconController::Delegate,
@@ -97,9 +98,6 @@ class ToolbarView : public views::AccessiblePaneView,
                            translate::TranslateErrors::Type error_type,
                            bool is_user_gesture);
 
-  // Returns the maximum width the browser actions container can have.
-  int GetMaxBrowserActionsWidth() const;
-
   // Accessors.
   Browser* browser() const { return browser_; }
   BrowserActionsContainer* browser_actions() const { return browser_actions_; }
@@ -126,6 +124,13 @@ class ToolbarView : public views::AccessiblePaneView,
   ContentSettingBubbleModelDelegate* GetContentSettingBubbleModelDelegate()
       override;
 
+  // BrowserActionsContainer::Delegate:
+  views::MenuButton* GetOverflowReferenceView() override;
+  int GetMaxBrowserActionsWidth() const override;
+  std::unique_ptr<ToolbarActionsBar> GetToolbarActionsBar(
+      ToolbarActionsBarDelegate* delegate,
+      ToolbarActionsBar* main_bar) const override;
+
   // CommandObserver:
   void EnabledStateChangedForCommand(int id, bool enabled) override;
 
@@ -148,6 +153,7 @@ class ToolbarView : public views::AccessiblePaneView,
   void OnThemeChanged() override;
   const char* GetClassName() const override;
   bool AcceleratorPressed(const ui::Accelerator& acc) override;
+  void ChildPreferredSizeChanged(views::View* child) override;
 
  protected:
   // AccessiblePaneView:

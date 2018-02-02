@@ -930,6 +930,13 @@ void BrowserView::FullscreenStateChanged() {
   ProcessFullscreen(false, GURL(), EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE);
 }
 
+void BrowserView::SetBrowserActionsContainer(
+    BrowserActionsContainer* container) {
+  // There should only be one BrowserActionsContainer.
+  DCHECK(!browser_actions_container_);
+  browser_actions_container_ = container;
+}
+
 LocationBar* BrowserView::GetLocationBar() const {
   return GetLocationBarView();
 }
@@ -1000,8 +1007,9 @@ void BrowserView::FocusToolbar() {
 }
 
 ToolbarActionsBar* BrowserView::GetToolbarActionsBar() {
-  return toolbar_ && toolbar_->browser_actions() ?
-      toolbar_->browser_actions()->toolbar_actions_bar() : nullptr;
+  return browser_actions_container_
+             ? browser_actions_container_->toolbar_actions_bar()
+             : nullptr;
 }
 
 void BrowserView::ToolbarSizeChanged(bool is_animating) {
@@ -2098,6 +2106,8 @@ void BrowserView::InitViews() {
   toolbar_ = new ToolbarView(browser_.get());
   top_container_->AddChildView(toolbar_);
   toolbar_->Init();
+  if (toolbar_->browser_actions())
+    SetBrowserActionsContainer(toolbar_->browser_actions());
 
   // The infobar container must come after the toolbar so its arrow paints on
   // top.

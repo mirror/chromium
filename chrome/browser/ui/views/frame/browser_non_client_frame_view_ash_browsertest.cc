@@ -21,7 +21,6 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/command_updater.h"
-#include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_test.h"
@@ -32,6 +31,7 @@
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller_test.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/toolbar/browser_actions_bar_browsertest.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
@@ -41,6 +41,7 @@
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
+#include "chrome/browser/ui/views/toolbar/extension_toolbar_menu_view.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/web_application_info.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -97,7 +98,7 @@ void ExitFullscreenModeAndWait(BrowserView* browser_view) {
 using views::Widget;
 
 using BrowserNonClientFrameViewAshTest = InProcessBrowserTest;
-using HostedAppNonClientFrameViewAshTest = ExtensionBrowserTest;
+using HostedAppNonClientFrameViewAshTest = BrowserActionsBarBrowserTest;
 
 IN_PROC_BROWSER_TEST_F(BrowserNonClientFrameViewAshTest, NonClientHitTest) {
   BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser());
@@ -499,15 +500,6 @@ IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, HostedAppFrame) {
   EXPECT_EQ(SK_ColorBLUE, frame_header->GetInactiveFrameColor());
   EXPECT_EQ(SK_ColorWHITE, button_container->active_icon_color_);
 
-  // Show the menu.
-  HostedAppButtonContainer::AppMenuButton* menu_button =
-      button_container->app_menu_button_;
-
-  ui::MouseEvent e(ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(),
-                   ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON, 0);
-  menu_button->OnMousePressed(e);
-  EXPECT_TRUE(menu_button->menu()->IsShowing());
-
   // Show a content setting icon.
   auto& content_setting_views =
       frame_view->hosted_app_button_container_->content_setting_views_;
@@ -569,6 +561,36 @@ IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, HostedAppFrame) {
   EXPECT_EQ(gfx::Rect(0, 30), frame_header->title_render_text_->display_rect());
   EXPECT_EQ(gfx::Rect(60, 30),
             frame_header->app_and_domain_render_text_->display_rect());
+
+  // Even though 2 are visible in the browser, no extension actions should show.
+  BrowserActionsContainer* browser_actions =
+      frame_view->hosted_app_button_container_->browser_actions_container_;
+  ToolbarActionsBar* toolbar_actions_bar =
+      browser_actions->toolbar_actions_bar();
+  LoadExtensions();
+  toolbar_model()->SetVisibleIconCount(2);
+  EXPECT_EQ(0u, browser_actions->VisibleBrowserActions());
+
+  // Show the menu.
+  HostedAppButtonContainer::AppMenuButton* menu_button =
+      button_container->app_menu_button_;
+
+  ui::MouseEvent e(ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(),
+                   ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON, 0);
+  menu_button->OnMousePressed(e);
+  EXPECT_TRUE(menu_button->menu()->IsShowing());
+
+  // All extension actions should always be showing in the menu.
+  EXPECT_EQ(3u, menu_button->menu()
+                    ->extension_toolbar_for_testing()
+                    ->container_for_testing()
+                    ->VisibleBrowserActions());
+
+  // Popping out an extension makes its action show in the bar.
+  base::OnceClosure closure = base::BindOnce(&base::DoNothing);
+  toolbar_actions_bar->PopOutAction(toolbar_actions_bar->GetActions()[2], false,
+                                    closure);
+  EXPECT_EQ(1u, browser_actions->VisibleBrowserActions());
 }
 
 namespace {

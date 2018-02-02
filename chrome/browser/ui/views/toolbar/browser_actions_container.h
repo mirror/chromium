@@ -108,10 +108,29 @@ class BrowserActionsContainer : public views::View,
                                 public ToolbarActionView::Delegate,
                                 public views::WidgetObserver {
  public:
+  class Delegate {
+   public:
+    virtual views::MenuButton* GetOverflowReferenceView() = 0;
+
+    // Returns the maximum width the browser actions container can have. A value
+    // of -1 means there is no maximum.
+    virtual int GetMaxBrowserActionsWidth() const = 0;
+
+    virtual std::unique_ptr<ToolbarActionsBar> GetToolbarActionsBar(
+        ToolbarActionsBarDelegate* delegate,
+        ToolbarActionsBar* main_bar) const = 0;
+  };
+
   // Constructs a BrowserActionContainer for a particular |browser| object. For
   // documentation of |main_container|, see class comments.
+  //
+  // |needs_resize_area| determines whether the bar can be dragged to resize it.
+  // When false, the bar may still resize due to popout actions. Does nothing in
+  // overflow mode.
   BrowserActionsContainer(Browser* browser,
-                          BrowserActionsContainer* main_container);
+                          BrowserActionsContainer* main_container,
+                          Delegate* delegate,
+                          bool needs_resize_area);
   ~BrowserActionsContainer() override;
 
   // Get the number of toolbar actions being displayed.
@@ -119,6 +138,8 @@ class BrowserActionsContainer : public views::View,
 
   // Returns the browser this container is associated with.
   Browser* browser() const { return browser_; }
+
+  Delegate* delegate() { return delegate_; }
 
   ToolbarActionsBar* toolbar_actions_bar() {
     return toolbar_actions_bar_.get();
@@ -234,6 +255,8 @@ class BrowserActionsContainer : public views::View,
   const ToolbarActionsBar::PlatformSettings& platform_settings() const {
     return toolbar_actions_bar_->platform_settings();
   }
+
+  Delegate* const delegate_;
 
   // The controlling ToolbarActionsBar, which handles most non-view logic.
   std::unique_ptr<ToolbarActionsBar> toolbar_actions_bar_;

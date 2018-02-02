@@ -73,8 +73,11 @@ class TestToolbarActionsBarHelperViews : public TestToolbarActionsBarHelper {
 TestToolbarActionsBarHelperViews::TestToolbarActionsBarHelperViews(
     Browser* browser,
     BrowserActionsContainer* main_bar)
-    : browser_actions_container_(
-          new BrowserActionsContainer(browser, main_bar)),
+    : browser_actions_container_(new BrowserActionsContainer(
+          browser,
+          main_bar,
+          BrowserView::GetBrowserViewForBrowser(browser)->toolbar(),
+          true)),
       container_parent_(browser_actions_container_) {
   container_parent_.set_owned_by_client();
   container_parent_.SetSize(gfx::Size(1000, 1000));
