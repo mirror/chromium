@@ -72,10 +72,14 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
+  void MainMessageLoopStart() override;
   int PreCreateThreads() override;
   void PostCreateThreads() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   void PreMainMessageLoopRun() override;
   bool MainMessageLoopRun(int* result_code) override;
   void PostMainMessageLoopRun() override;
@@ -135,6 +139,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // always called and early outs if not first-run. Return value is an exit
   // status, RESULT_CODE_NORMAL_EXIT indicates success.
   int ApplyFirstRunPrefs();
+
+  int InitializeResourceBundle();
 
   // Methods for Main Message Loop -------------------------------------------
 
@@ -211,6 +217,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // real task scheduler has been created.
   scoped_refptr<DeferringTaskRunner> initial_task_runner_;
 #endif
+  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainParts);
 };
