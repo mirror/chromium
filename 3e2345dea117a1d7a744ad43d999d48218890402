@@ -34,6 +34,24 @@
       "revId": "3e2345dea117a1d7a744ad43d999d48218890402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd4e689_408c88f0",
+        "filename": "gpu/command_buffer/build_raster_cmd_buffer.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-02T21:45:39Z",
+      "side": 1,
+      "message": "Oh, sorry, I confused myself, this is for RasterInterface, not GLES2Interface.\n\nstill LGTM.",
+      "parentUuid": "c231c778_094a9c32",
+      "revId": "3e2345dea117a1d7a744ad43d999d48218890402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
