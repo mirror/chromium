@@ -16,6 +16,24 @@
       "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bf24ae_0fe72583",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-02T23:50:31Z",
+      "side": 1,
+      "message": "AdjustForScrolledContent calls GraphicsContext::Clip, and then nothing else is painted. So the resulting picture is non-empty (1 clip op). So the check in the other file if (!record || record-\u003esize() \u003d\u003d 0) fails because it\u0027s a non-empty record generated here. \n\nIn theory the record can itself know if it actually draws anything, but that code isn\u0027t implemented.",
+      "parentUuid": "0d6be5e4_b303a492",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
