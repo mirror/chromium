@@ -65,6 +65,14 @@ InProcessVideoCaptureDeviceLauncher::~InProcessVideoCaptureDeviceLauncher() {
   DCHECK(state_ == State::READY_TO_LAUNCH);
 }
 
+// static
+std::unique_ptr<VideoCaptureDeviceLauncher>
+VideoCaptureDeviceLauncher::CreateInProcessVideoCaptureDeviceLauncher(
+    scoped_refptr<base::SingleThreadTaskRunner> device_task_runner) {
+  return std::make_unique<InProcessVideoCaptureDeviceLauncher>(
+      device_task_runner, nullptr);
+}
+
 void InProcessVideoCaptureDeviceLauncher::LaunchDeviceAsync(
     const std::string& device_id,
     MediaStreamType stream_type,
