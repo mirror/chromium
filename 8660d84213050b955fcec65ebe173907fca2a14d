@@ -22,6 +22,30 @@
       "revId": "8660d84213050b955fcec65ebe173907fca2a14d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a68997a_4dc3ad4e",
+        "filename": "third_party/libvpx/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126910
+      },
+      "writtenOn": "2018-02-02T18:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66b05558_5ed49346",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "8660d84213050b955fcec65ebe173907fca2a14d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
