@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb0f8d16_a81a0a22",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316f4c2c_aef640e8",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc934239_685cdf93",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f712b8f1_ec7d18cc",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc934239_685cdf93",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43510f7e_7e39a801",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-01T22:53:34Z",
       "side": 1,
       "message": "Add a comment \"why\" we don\u0027t store window info if we have one.\n\nAlso it might be better if you flip the conditional and continue;",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 47
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d89490_38d57d9f",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Instead, I added a TODO here. Because I am thinking of the choice between two options. I am inclined to the second one. Will have a try and add test coverage.",
+      "parentUuid": "43510f7e_7e39a801",
       "range": {
         "startLine": 64,
         "startChar": 9,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4d4b24ce_99ba57b5",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e10e8a9_dd1c7834",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 77
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c9535f7_ba5e3f28",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2018-02-01T22:53:34Z",
       "side": 1,
       "message": "Nit: Please add a comment explaining why we want the display with the biggest intersection.",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 73
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad805975_f37c1bd1",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "hmm... I started to think that we shall do GetDisplayNearestPoint(persistent_window_bounds.origin). It may behave differently on 3+ displays.\n\nHow about adding document until I sorted this out?",
+      "parentUuid": "3c9535f7_ba5e3f28",
       "range": {
         "startLine": 89,
         "startChar": 55,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8ce86916_23719cda",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f882ec2b_5c71c015",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a15f720_8d8d77bc",
         "filename": "ash/display/persistent_window_controller.h",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b0be46_5ddb2771",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a15f720_8d8d77bc",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "096e309e_daaddf4d",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1b340c_9c0c79a0",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c16739a7_50733def",
         "filename": "ash/shell.h",
         "patchSetId": 2
@@ -197,6 +389,30 @@
       "writtenOn": "2018-02-01T22:53:34Z",
       "side": 1,
       "message": "Since this needs |window_tree_host_manager_|, move this declaration after |window_tree_host_manager_|.",
+      "range": {
+        "startLine": 671,
+        "startChar": 2,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5df71bd_67cd4060",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "no longer needed in ctor now. Do we still want a move?",
+      "parentUuid": "c16739a7_50733def",
       "range": {
         "startLine": 671,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "f149ce5d_0fbceae8",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Since we have SetPreAutoManageWindowBounds and SetPreAddedToWorkspaceWindowBounds here, can we keep local style here first? If under_score_setter style is preferred, it could be addressed later.",
+      "parentUuid": "47b6dfef_b8e62191",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 1
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f29f2bf0_ea7d4a75",
         "filename": "ash/wm/window_state.h",
         "patchSetId": 2
@@ -252,6 +492,30 @@
       "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9e694c_4e51dcb5",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T01:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29f2bf0_ea7d4a75",
+      "range": {
+        "startLine": 449,
+        "startChar": 17,
+        "endLine": 449,
+        "endChar": 46
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
