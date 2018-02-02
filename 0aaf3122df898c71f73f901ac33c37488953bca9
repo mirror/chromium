@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc2ef1d_29301661",
+        "filename": "components/metrics/metrics_pref_names.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "comment - especially mention if this is platform specific",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6370eccc_e11fbf2b",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "technically this is non-zero",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3ba520_0592f06b",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "for clarity abnormally-\u003euncleanly",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1db610_16cfa32b",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "I think you could add a bit more detail how this works - does this mean if any of the last 3 sessions were unclean - and how does the timestamp interact with what we\u0027re checking.",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c008f8_453e8f94",
+        "filename": "components/metrics/stability_metrics_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "function",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa8cd98_f5fa1925",
+        "filename": "components/metrics/stability_metrics_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "can you mention how the last_live_timestamp gets used here",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b92f51_bc44f38b",
+        "filename": "components/metrics/stability_metrics_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "I think you could clarify this - how changing the time of the crash makes one clean / one unclean",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b17f80_0a16ef87",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 85103,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-02-02T04:28:00Z",
+      "side": 1,
+      "message": "I\u0027d put unit as \u0027crashes\u0027",
+      "revId": "0aaf3122df898c71f73f901ac33c37488953bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
