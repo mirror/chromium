@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/common/navigation.mojom.h"
 #include "content/common/navigation_params.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/mock_render_process_host.h"
@@ -27,6 +28,8 @@ class HostPortPair;
 }
 
 namespace content {
+
+class MockNavigationClientImpl;
 
 class TestRenderFrameHostCreationObserver : public WebContentsObserver {
  public:
@@ -229,6 +232,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   // Used to track and forward outgoing navigation requests from the host.
   std::unique_ptr<NavigationInterceptor> navigation_interceptor_;
+
+  // Unbound navigation request
+  std::unique_ptr<MockNavigationClientImpl> navigation_client_impl_;
 
   DISALLOW_COPY_AND_ASSIGN(TestRenderFrameHost);
 };
