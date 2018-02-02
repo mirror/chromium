@@ -241,6 +241,17 @@ void FrameSinkManagerImpl::CreateVideoCapturer(
       std::make_unique<FrameSinkVideoCapturerImpl>(this, std::move(request)));
 }
 
+void FrameSinkManagerImpl::EvictSurfaces(
+    const std::vector<SurfaceId>& surface_ids) {
+  for (const SurfaceId& surface_id : surface_ids) {
+    auto it = support_map_.find(surface_id.frame_sink_id());
+    if (it == support_map_.end())
+      return;
+    if (it->second->current_surface_id() == surface_id)
+      it->second->EvictCurrentSurface();
+  }
+}
+
 void FrameSinkManagerImpl::RegisterCompositorFrameSinkSupport(
     const FrameSinkId& frame_sink_id,
     CompositorFrameSinkSupport* support) {
