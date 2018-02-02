@@ -16,6 +16,24 @@
       "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0e4c94_0e3f8052",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-02-02T21:57:59Z",
+      "side": 1,
+      "message": "The dict only works for buildbot. \n\nSorry for the confusion, Robbie\u0027s request is he wants to kill \"GetActiveMaster()\" even if we haven\u0027t migrated everything to LUCI yet. To do that, we need a dict to convert buildbot\u0027s mastername to perf_dashboard_machine_group",
+      "parentUuid": "ba50781e_d260add3",
+      "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
