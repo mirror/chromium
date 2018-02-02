@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cc752047_0e820524",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T20:32:06Z",
+      "side": 1,
+      "message": "When you drag a tab between windows the WindowTreeHost *changes*. This means you attempt to remove the observer from the wrong compositor. Probably best thing is to add a test that simulates this to ensure you don\u0027t break anything. So, please add a test that moves the RHWVA between different WTHs to ensure the right thing happens.",
+      "parentUuid": "a8713599_ff709c5c",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 126,
+        "endChar": 46
+      },
+      "revId": "88b07a1c7354dc79a83651c63c61382eeb1553ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32db0f48_03326301",
         "filename": "content/browser/renderer_host/legacy_render_widget_host_win.h",
         "patchSetId": 47
