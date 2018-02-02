@@ -71,8 +71,8 @@ class ClearStorageTask : public Task {
   // The policy controller which is used to determine if a page needs to be
   // cleared. Not owned.
   ClientPolicyController* policy_controller_;
-  ClearStorageCallback callback_;
   base::Time clearup_time_;
+  ClearStorageCallback callback_;
 
   base::WeakPtrFactory<ClearStorageTask> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(ClearStorageTask);

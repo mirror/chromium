@@ -228,8 +228,8 @@ ClearStorageTask::ClearStorageTask(OfflinePageMetadataStoreSQL* store,
     : store_(store),
       archive_manager_(archive_manager),
       policy_controller_(policy_controller),
-      callback_(std::move(callback)),
       clearup_time_(clearup_time),
+      callback_(std::move(callback)),
       weak_ptr_factory_(this) {
   DCHECK(store_);
   DCHECK(archive_manager_);

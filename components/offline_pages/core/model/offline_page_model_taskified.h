@@ -49,20 +49,12 @@ class OfflinePageModelTaskified : public OfflinePageModel,
                                   public TaskQueue::Delegate {
  public:
   // Initial delay after which a list of items for upgrade will be generated.
-  // TODO(fgorski): We need to measure the cost of opening and closing the DB,
-  // before we split |kInitializingTaskDelay| and
-  // |kInitialUpgradeSelectionDelay| further apart, than 20 seconds.
   static constexpr base::TimeDelta kInitialUpgradeSelectionDelay =
       base::TimeDelta::FromSeconds(45);
 
-  // Initial delay of other tasks triggered at the startup.
-  static constexpr base::TimeDelta kInitializingTaskDelay =
-      base::TimeDelta::FromSeconds(30);
-
-  // The time that the storage cleanup will be triggered again since the last
-  // one.
+  // Minimum allowed delay between storage cleanups.
   static constexpr base::TimeDelta kClearStorageInterval =
-      base::TimeDelta::FromMinutes(30);
+      base::TimeDelta::FromMinutes(1);
 
   OfflinePageModelTaskified(
       std::unique_ptr<OfflinePageMetadataStoreSQL> store,
@@ -173,19 +165,10 @@ class OfflinePageModelTaskified : public OfflinePageModel,
       DeletePageResult result,
       const std::vector<OfflinePageModel::DeletedPageInfo>& infos);
 
-  // Methods for clearing temporary pages.
-  void PostClearLegacyTemporaryPagesTask();
-  void ClearLegacyTemporaryPages();
-  void PostClearCachedPagesTask(bool is_initializing);
-  void ClearCachedPages();
-  void OnClearCachedPagesDone(base::Time start_time,
-                              size_t deleted_page_count,
+  // Methods for clearing temporary pages and consistency check.
+  void ScheduleMaintenanceTasks();
+  void OnClearCachedPagesDone(size_t deleted_page_count,
                               ClearStorageTask::ClearStorageResult result);
-
-  // Methods for consistency check.
-  void PostCheckMetadataConsistencyTask(bool is_initializing);
-  void CheckTemporaryPagesConsistency();
-  void CheckPersistentPagesConsistency();
 
   // Method for upgrade to public storage.
   void PostSelectItemsMarkedForUpgrade();
