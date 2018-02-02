@@ -52,6 +52,24 @@
       "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92653a58_4446c89e",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-02T17:03:12Z",
+      "side": 1,
+      "message": "It seems we have three choices:\n1) Have a two-param method, without default value.\n2) Just like in this patchset, have a two-param method, but with default value.\n3) Have two methods.\n\nIf (3) goes against the convention, I slightly prefer (2) to avoid having base::nullopt at most of the callsites.\n\nBut I don\u0027t have a strong opinion. I am happy to do any of the three as long as you both think it makes sense.\n\nPlease let me know.\nThanks!",
+      "parentUuid": "a2cfcb82_fd684fd6",
+      "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
