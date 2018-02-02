@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0b507fc_0e6b5834",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T22:08:55Z",
+      "side": 1,
+      "message": "If possible, assert this is on the compositor thread.",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 28
+      },
+      "revId": "2bb1820c61190da864e523a3c5b0134940a7f051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
