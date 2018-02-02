@@ -34,6 +34,24 @@
       "revId": "d558e3fa895e6f770ebec640899e2a8621603727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed6671b_435a4eab",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-02T17:00:53Z",
+      "side": 1,
+      "message": "Good catch. Added TODO to only report this if never backgrounded.",
+      "parentUuid": "326cdf03_ca47dbb1",
+      "revId": "d558e3fa895e6f770ebec640899e2a8621603727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
