@@ -16,6 +16,24 @@
       "revId": "578453c0f8e1b1f0b5138e89c9af44600cde222e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ba69d0_cfaee514",
+        "filename": "ash/public/cpp/menu_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-02T00:00:03Z",
+      "side": 1,
+      "message": "Done.\n\nI was referring to https://cs.chromium.org/chromium/src/base/no_destructor.h?type\u003dcs\u0026q\u003dbase::NoDe\u0026sq\u003dpackage:chromium\u0026l\u003d23. And my first try was to return item_not_found; directly, but it didn\u0027t convert. And I didn\u0027t try to return *item_not_found because I saw it\u0027s for lambda.\n\nBut it makes sense to return *item_not_found since it\u0027s a \u0027const mojo::StructPtr\u003cash::mojom::MenuItem\u003e\u0027 after \u0027*ing\u0027 the base::NoDestructor",
+      "parentUuid": "41dfdff3_a0ab4969",
+      "revId": "578453c0f8e1b1f0b5138e89c9af44600cde222e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
