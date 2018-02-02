@@ -481,6 +481,23 @@
     },
     {
       "key": {
+        "uuid": "7b2c470a_c5f7f23b",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T01:19:37Z",
+      "side": 1,
+      "message": "nit: zlib style uses FILENAME_H\n\nand a matching  \n \n#endif  /* FILENAME_H */\n\nPlease fix everywhere.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f49e0685_a58234f5",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 13
@@ -564,6 +581,24 @@
       "side": 1,
       "message": "But old C compilers which require int will fail for other reasons: The include for the intrinsics.\n\nAt the end of the day, the minimum compiler requirement for contrib/optimizations/arm/ guarantees bool is supported.\n\nIf someone needs to use an old C compiler, they cannot use contrib/optimizations/arm/.\n\n\n\nIt may be possible to use a new compiler set to an old standard. That seems like a rare case though. And importantly, I don\u0027t think that is a case we want to support. Anything inside contrib/ becomes our responsibility to support. The cost of supporting everything becomes very high and provides us little benefit. It isn\u0027t worth it.",
       "parentUuid": "9e95f3bd_60d4bd2b",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8462a353_56fef970",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T01:19:37Z",
+      "side": 1,
+      "message": "The amount of back/for on this matter should be a warning to us that we\u0027re giving upstream the opportunity quibble about it.  You yourself mentioned that in a code review with me the other day, you called it \"risk\".\n\nYour points about compiler support are true and all, and I see Adenilson\u0027s points about type usage, but what I see is the potential that you\u0027ll need to re-explain it all to upstream (and that adds risk).\n\nIt has been said in many places that the \"job of the maintainer is to say no\". So if your give the maintainer any excuse they\u0027ll say \"no\", simply because they are too busy and short on time, dealing with better patches that do follow the ways of zlib. \n\nThis patch has diverged from the ways of zlib in various places, adding risk.  If we follow the ways of zlib, risk is minimized.  Looking back at the code reviews for the Intel patch [1], reviewers did not question the use of int for the x86 feature enables at all, it was a non-issue.\n\nIf you want to make it an issue upstream, you increase the risk of the maintainer saying \"no\" since portability is what they value over all else (its one of the key reasons that zlib has been successful).  If you use int, the maintainer has few reasons to say \"no\", imho, but if you use bool, I\u0027m not so sure.\n\n[1] https://codereview.chromium.org/552123005",
+      "parentUuid": "c89c93e3_5f3b51c6",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
