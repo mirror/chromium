@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "eebaf301_a350fc2f",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:10:02Z",
+      "side": 1,
+      "message": "Is this even needed? Could you do invalid\u003d\"[[!activePrinter.printerPPDPath]]",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ab3873d_8ca1ee7c",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 3
