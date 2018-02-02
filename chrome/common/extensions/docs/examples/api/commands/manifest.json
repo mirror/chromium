@@ -13,8 +13,8 @@
   "commands": {
     "toggle-feature": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Y",
-        "mac": "MacCtrl+Shift+Y"
+        "default": "Ctrl+Shift+G",
+        "mac": "MacCtrl+Shift+G"
        },
       "description": "Send a 'toggle-feature' event to the extension"
     },
