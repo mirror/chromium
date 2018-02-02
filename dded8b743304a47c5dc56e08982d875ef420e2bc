@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "688d9dd8_3870312c",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-02-02T20:07:56Z",
+      "side": 1,
+      "message": "That\u0027s exactly what I don\u0027t want implementations doing :)\n\nHave updated that test and, temporarily, set the probability to 100% to flush out any other tests. (I missed content_unittests the first time.)\n\nWill ping when CL is ready to review again.",
+      "parentUuid": "b7479d80_12383399",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c91aa1_832b026c",
         "filename": "content/browser/webauth/collected_client_data.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2018-02-01T14:20:23Z",
       "side": 1,
       "message": "Is there an URL we can reference here so that people have an easier time to figure out what this is? The current text is probably too generic to be easily searched for.",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a9c882_e6018200",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-02-02T20:07:56Z",
+      "side": 1,
+      "message": "Not sure. This was intended to be self-explanatory. I could also add \" so parse the JSON and test individual fields\" if you think that\u0027ll help. Or do you think that we should put a file in docs/ and reference it?",
+      "parentUuid": "73c91aa1_832b026c",
       "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
