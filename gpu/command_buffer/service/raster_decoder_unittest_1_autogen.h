@@ -197,4 +197,33 @@ TEST_P(RasterDecoderTest1, TexParameteriInvalidArgs1_0) {
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
 }
+
+TEST_P(RasterDecoderTest1, UnpremultiplyAndDitherCopyCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, UnpremultiplyAndDitherCopyCHROMIUM(1, 2, 3, 4, 5, 6));
+  SpecializedSetup<cmds::UnpremultiplyAndDitherCopyCHROMIUM, 0>(true);
+  cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  cmd.Init(1, 2, 3, 4, 5, 6);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(RasterDecoderTest1, UnpremultiplyAndDitherCopyCHROMIUMInvalidArgs4_0) {
+  EXPECT_CALL(*gl_, UnpremultiplyAndDitherCopyCHROMIUM(_, _, _, _, _, _))
+      .Times(0);
+  SpecializedSetup<cmds::UnpremultiplyAndDitherCopyCHROMIUM, 0>(false);
+  cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  cmd.Init(1, 2, 3, 4, -1, 6);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+}
+
+TEST_P(RasterDecoderTest1, UnpremultiplyAndDitherCopyCHROMIUMInvalidArgs5_0) {
+  EXPECT_CALL(*gl_, UnpremultiplyAndDitherCopyCHROMIUM(_, _, _, _, _, _))
+      .Times(0);
+  SpecializedSetup<cmds::UnpremultiplyAndDitherCopyCHROMIUM, 0>(false);
+  cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  cmd.Init(1, 2, 3, 4, 5, -1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+}
 #endif  // GPU_COMMAND_BUFFER_SERVICE_RASTER_DECODER_UNITTEST_1_AUTOGEN_H_
