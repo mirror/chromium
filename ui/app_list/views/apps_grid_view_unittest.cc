@@ -221,6 +221,20 @@ class AppsGridViewTest : public views::ViewsTestBase,
     apps_grid_view_->OnKeyPressed(key_event);
   }
 
+  // Tests that the order of item views in the AppsGridView is in accordance
+  // with the order in the view model.
+  void TestAppListItemViewIndice() {
+    const views::ViewModelT<AppListItemView>* view_model =
+        apps_grid_view_->view_model_for_test();
+    DCHECK_GT(view_model->view_size(), 0);
+    int initial_index = apps_grid_view_->GetIndexOf(view_model->view_at(0));
+    DCHECK_NE(initial_index, -1);
+    for (int i = 0; i < view_model->view_size(); ++i) {
+      EXPECT_EQ(view_model->view_at(i),
+                apps_grid_view_->child_at(i + initial_index));
+    }
+  }
+
   AppListView* app_list_view_ = nullptr;    // Owned by native widget.
   AppsGridView* apps_grid_view_ = nullptr;  // Owned by |app_list_view_|.
   ContentsView* contents_view_ = nullptr;   // Owned by |app_list_view_|.
@@ -500,6 +514,7 @@ TEST_F(AppsGridViewTest, MouseDragItemReorder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
             model_->GetModelContent());
+  TestAppListItemViewIndice();
 
   // Drag left, past the folder dropping circle.
   gfx::Vector2d last_drag_vector(drag_vector);
@@ -509,6 +524,7 @@ TEST_F(AppsGridViewTest, MouseDragItemReorder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(std::string("Item 1,Item 0,Item 2,Item 3"),
             model_->GetModelContent());
+  TestAppListItemViewIndice();
 
   // Drag down, between apps 2 and 3. The gap should open up, making space for
   // app 1 in the bottom left.
@@ -520,6 +536,7 @@ TEST_F(AppsGridViewTest, MouseDragItemReorder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(std::string("Item 0,Item 2,Item 1,Item 3"),
             model_->GetModelContent());
+  TestAppListItemViewIndice();
 
   // Drag up, between apps 0 and 2. The gap should open up, making space for app
   // 1 in the top right.
@@ -531,6 +548,7 @@ TEST_F(AppsGridViewTest, MouseDragItemReorder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
             model_->GetModelContent());
+  TestAppListItemViewIndice();
 
   // Dragging down past the last app should reorder to the last position.
   last_drag_vector = drag_vector;
@@ -541,6 +559,7 @@ TEST_F(AppsGridViewTest, MouseDragItemReorder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(std::string("Item 0,Item 2,Item 3,Item 1"),
             model_->GetModelContent());
+  TestAppListItemViewIndice();
 }
 
 TEST_F(AppsGridViewTest, MouseDragFolderReorder) {
@@ -565,6 +584,7 @@ TEST_F(AppsGridViewTest, MouseDragFolderReorder) {
   EXPECT_EQ("Item 2", model_->top_level_item_list()->item_at(0)->id());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(1)->id());
   test_api_->LayoutToIdealBounds();
+  TestAppListItemViewIndice();
 }
 
 TEST_F(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {

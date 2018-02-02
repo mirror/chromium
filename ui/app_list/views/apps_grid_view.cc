@@ -678,6 +678,7 @@ void AppsGridView::EndDrag(bool cancel) {
   SetAsFolderDroppingTarget(folder_drop_target_, false);
   ClearDragState();
   AnimateToIdealBounds();
+  UpdateAppListItemViewsIndice();
 
   StopPageFlipTimer();
 }
@@ -1589,6 +1590,11 @@ void AppsGridView::UpdateColsAndRowsForFolder() {
   rows_per_page_ = (items_in_one_page - 1) / cols_ + 1;
 }
 
+void AppsGridView::UpdateAppListItemViewsIndice() {
+  for (int i = 0; i < view_model_.view_size(); ++i)
+    ReorderChildView(view_model_.view_at(i), -1);
+}
+
 void AppsGridView::DispatchDragEventForReparent(Pointer pointer,
                                                 const gfx::Point& drag_point) {
   folder_delegate_->DispatchDragEventForReparent(pointer, drag_point);
@@ -1630,6 +1636,7 @@ void AppsGridView::EndDragFromReparentItemInRootLevel(
   }
   ClearDragState();
   AnimateToIdealBounds();
+  UpdateAppListItemViewsIndice();
 
   StopPageFlipTimer();
 }
