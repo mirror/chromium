@@ -578,6 +578,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d56568_75fdd83a",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T18:39:35Z",
+      "side": 1,
+      "message": "Are you sure the FIP UI uses it?  All I saw was a reference to kLocationBarBorderThicknessDip, which the find bar wants so it can overlap the omnibox border.  Preserving that wouldn\u0027t require continuing to have a separate base class.",
+      "parentUuid": "f7e88385_af4f4190",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
