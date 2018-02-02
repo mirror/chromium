@@ -23,12 +23,14 @@ using ClientSpecificId = uint16_t;
 constexpr Id kInvalidServerId = 0;
 
 enum class WindowMusType {
-  // The window is an embed root. That is, the client received this window by
-  // way of another client calling Embed().
-  // NOTE: in the client that called Embed() the window type is LOCAL.
+  // The window is an embed root in the embedded client. That is, the client
+  // received this window by way of another client calling Embed().
+  // NOTE: in the client that called Embed() the window type is LOCAL (or
+  // EMBED_IN_OWNER).
   EMBED,
 
-  // The window is an embedded client in an owner client.
+  // Embed() was called on the window by the local client. In other words this
+  // in the embedder side of an embedding.
   EMBED_IN_OWNER,
 
   // The window was created by requesting a top level

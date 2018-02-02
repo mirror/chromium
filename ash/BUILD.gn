@@ -1084,6 +1084,7 @@ component("ash") {
     "//services/preferences/public/cpp",
     "//services/service_manager/public/cpp",
     "//services/ui/public/interfaces/input_devices",
+    "//services/ui/ws2:lib",
 
     # TODO(msw): Remove this; only ash_with_content should depend on webkit.
     "//third_party/WebKit/public:blink_headers",
