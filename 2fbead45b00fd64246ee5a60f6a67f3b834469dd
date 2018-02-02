@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1751e0ac_1857ea5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T23:16:15Z",
+      "side": 1,
+      "message": "Bug number?",
+      "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9db9fc_ab0c5e48",
+        "filename": "chrome/browser/chromeos/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T23:16:15Z",
+      "side": 1,
+      "message": "chrome/browser/chromeos should not depend on cc, see comment in https://cs.chromium.org/chromium/src/chrome/browser/DEPS?type\u003dcs\u0026q\u003df:src/chrome/.*DEPS+cc/base\u0026sq\u003dpackage:chromium\u0026l\u003d89",
+      "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bd7ba8_01c098ad",
+        "filename": "services/resource_coordinator/public/cpp/tracing/base_agent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T23:16:15Z",
+      "side": 1,
+      "message": "nit: please document what this does, why it exists, etc.",
+      "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
