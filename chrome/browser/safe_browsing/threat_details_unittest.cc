@@ -22,7 +22,7 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/browser/threat_details_history.h"
-#include "components/safe_browsing/common/safebrowsing_messages.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -517,18 +517,21 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails) {
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
   // Send a message from the DOM, with 2 nodes, a parent and a child.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node child_node;
-  child_node.url = GURL(kDOMChildURL);
-  child_node.tag_name = "iframe";
-  child_node.parent = GURL(kDOMParentURL);
-  child_node.attributes.push_back(std::make_pair("src", kDOMChildURL));
-  params.push_back(child_node);
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node parent_node;
-  parent_node.url = GURL(kDOMParentURL);
-  parent_node.children.push_back(GURL(kDOMChildURL));
-  params.push_back(parent_node);
-  report->OnReceivedThreatDOMDetails(main_rfh(), params);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> params;
+  mojom::ThreatDOMDetailsNodePtr child_node;
+  child_node->url = GURL(kDOMChildURL);
+  child_node->tag_name = "iframe";
+  child_node->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr = mojom::AttributeNameValue::New();
+  attr->name = "src";
+  attr->value = kDOMChildURL;
+  child_node->attributes.push_back(std::move(attr));
+  params.push_back(std::move(child_node));
+  mojom::ThreatDOMDetailsNodePtr parent_node;
+  parent_node->url = GURL(kDOMParentURL);
+  parent_node->children.push_back(GURL(kDOMChildURL));
+  params.push_back(std::move(parent_node));
+  report->OnReceivedThreatDOMDetails(main_rfh(), std::move(params));
 
   std::string serialized = WaitForThreatDetailsDone(
       report.get(), false /* did_proceed*/, 0 /* num_visit */);
@@ -592,53 +595,77 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
 
   // Define two sets of DOM nodes - one for an outer page containing an iframe,
   // and then another for the inner page containing the contents of that iframe.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> outer_params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_div;
-  outer_child_div.node_id = 1;
-  outer_child_div.child_node_ids.push_back(2);
-  outer_child_div.tag_name = "div";
-  outer_child_div.parent = GURL(kDOMParentURL);
-  outer_child_div.attributes.push_back(std::make_pair("id", "outer"));
-  outer_params.push_back(outer_child_div);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> outer_params;
+  mojom::ThreatDOMDetailsNodePtr outer_child_div =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_child_div->node_id = 1;
+  outer_child_div->child_node_ids.push_back(2);
+  outer_child_div->tag_name = "div";
+  outer_child_div->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr = mojom::AttributeNameValue::New();
+  attr->name = "id";
+  attr->value = "outer";
+  outer_child_div->attributes.push_back(std::move(attr));
+  outer_params.push_back(std::move(outer_child_div));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_iframe;
-  outer_child_iframe.node_id = 2;
-  outer_child_iframe.parent_node_id = 1;
-  outer_child_iframe.url = GURL(kDOMChildURL);
-  outer_child_iframe.tag_name = "iframe";
-  outer_child_iframe.parent = GURL(kDOMParentURL);
-  outer_child_iframe.attributes.push_back(std::make_pair("src", kDOMChildURL));
-  outer_child_iframe.attributes.push_back(std::make_pair("foo", "bar"));
-  outer_child_iframe.child_frame_routing_id = child_rfh->GetRoutingID();
-  outer_params.push_back(outer_child_iframe);
+  mojom::ThreatDOMDetailsNodePtr outer_child_iframe =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_child_iframe->node_id = 2;
+  outer_child_iframe->parent_node_id = 1;
+  outer_child_iframe->url = GURL(kDOMChildURL);
+  outer_child_iframe->tag_name = "iframe";
+  outer_child_iframe->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr1 = mojom::AttributeNameValue::New();
+  attr1->name = "src";
+  attr1->value = kDOMChildURL;
+  outer_child_iframe->attributes.push_back(std::move(attr1));
+  mojom::AttributeNameValuePtr attr2 = mojom::AttributeNameValue::New();
+  attr2->name = "foo";
+  attr2->value = "bar";
+  outer_child_iframe->attributes.push_back(std::move(attr2));
+  outer_child_iframe->child_frame_routing_id = child_rfh->GetRoutingID();
+  outer_params.push_back(std::move(outer_child_iframe));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_summary_node;
-  outer_summary_node.url = GURL(kDOMParentURL);
-  outer_summary_node.children.push_back(GURL(kDOMChildURL));
-  outer_params.push_back(outer_summary_node);
+  mojom::ThreatDOMDetailsNodePtr outer_summary_node =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_summary_node->url = GURL(kDOMParentURL);
+  outer_summary_node->children.push_back(GURL(kDOMChildURL));
+  outer_params.push_back(std::move(outer_summary_node));
 
   // Now define some more nodes for the body of the iframe.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> inner_params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_div;
-  inner_child_div.node_id = 1;
-  inner_child_div.tag_name = "div";
-  inner_child_div.parent = GURL(kDOMChildURL);
-  inner_child_div.attributes.push_back(std::make_pair("id", "inner"));
-  inner_child_div.attributes.push_back(std::make_pair("bar", "baz"));
-  inner_params.push_back(inner_child_div);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> inner_params;
+  mojom::ThreatDOMDetailsNodePtr inner_child_div =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_child_div->node_id = 1;
+  inner_child_div->tag_name = "div";
+  inner_child_div->parent = GURL(kDOMChildURL);
+  mojom::AttributeNameValuePtr attr3 = mojom::AttributeNameValue::New();
+  attr3->name = "id";
+  attr3->value = "inner";
+  inner_child_div->attributes.push_back(std::move(attr3));
+  mojom::AttributeNameValuePtr attr4 = mojom::AttributeNameValue::New();
+  attr4->name = "bar";
+  attr4->value = "baz";
+  inner_child_div->attributes.push_back(std::move(attr4));
+  inner_params.push_back(std::move(inner_child_div));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_script;
-  inner_child_script.node_id = 2;
-  inner_child_script.url = GURL(kDOMChildUrl2);
-  inner_child_script.tag_name = "script";
-  inner_child_script.parent = GURL(kDOMChildURL);
-  inner_child_script.attributes.push_back(std::make_pair("src", kDOMChildUrl2));
-  inner_params.push_back(inner_child_script);
+  mojom::ThreatDOMDetailsNodePtr inner_child_script =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_child_script->node_id = 2;
+  inner_child_script->url = GURL(kDOMChildUrl2);
+  inner_child_script->tag_name = "script";
+  inner_child_script->parent = GURL(kDOMChildURL);
+  mojom::AttributeNameValuePtr attr5 = mojom::AttributeNameValue::New();
+  attr5->name = "src";
+  attr5->value = kDOMChildUrl2;
+  inner_child_script->attributes.push_back(std::move(attr5));
+  inner_params.push_back(std::move(inner_child_script));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_summary_node;
-  inner_summary_node.url = GURL(kDOMChildURL);
-  inner_summary_node.children.push_back(GURL(kDOMChildUrl2));
-  inner_params.push_back(inner_summary_node);
+  mojom::ThreatDOMDetailsNodePtr inner_summary_node =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_summary_node->url = GURL(kDOMChildURL);
+  inner_summary_node->children.push_back(GURL(kDOMChildUrl2));
+  inner_params.push_back(std::move(inner_summary_node));
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_UNWANTED);
@@ -722,9 +749,19 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
     scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
         ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
+    std::vector<mojom::ThreatDOMDetailsNodePtr> outer_params_copy;
+    for (auto& node : outer_params) {
+      outer_params_copy.push_back(node.Clone());
+    }
+    std::vector<mojom::ThreatDOMDetailsNodePtr> inner_params_copy;
+    for (auto& node : inner_params) {
+      inner_params_copy.push_back(node.Clone());
+    }
+
     // Send both sets of nodes from different render frames.
-    report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
-    report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
+    report->OnReceivedThreatDOMDetails(main_rfh(),
+                                       std::move(outer_params_copy));
+    report->OnReceivedThreatDOMDetails(child_rfh, std::move(inner_params_copy));
 
     std::string serialized = WaitForThreatDetailsDone(
         report.get(), false /* did_proceed*/, 0 /* num_visit */);
@@ -767,8 +804,8 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
         ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
     // Send both sets of nodes from different render frames.
-    report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
-    report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
+    report->OnReceivedThreatDOMDetails(child_rfh, std::move(inner_params));
+    report->OnReceivedThreatDOMDetails(main_rfh(), std::move(outer_params));
 
     std::string serialized = WaitForThreatDetailsDone(
         report.get(), false /* did_proceed*/, 0 /* num_visit */);
@@ -794,37 +831,46 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
       ->NavigateAndCommit(GURL(kLandingURL));
   content::RenderFrameHost* child_rfh =
       content::RenderFrameHostTester::For(main_rfh())->AppendChild("subframe");
-
   // Define two sets of DOM nodes - one for an outer page containing a frame,
   // and then another for the inner page containing the contents of that frame.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> outer_params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_node;
-  outer_child_node.url = GURL(kDataURL);
-  outer_child_node.tag_name = "frame";
-  outer_child_node.parent = GURL(kDOMParentURL);
-  outer_child_node.attributes.push_back(std::make_pair("src", kDataURL));
-  outer_params.push_back(outer_child_node);
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_summary_node;
-  outer_summary_node.url = GURL(kDOMParentURL);
-  outer_summary_node.children.push_back(GURL(kDataURL));
+  std::vector<mojom::ThreatDOMDetailsNodePtr> outer_params;
+  mojom::ThreatDOMDetailsNodePtr outer_child_node =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_child_node->url = GURL(kDataURL);
+  outer_child_node->tag_name = "frame";
+  outer_child_node->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr = mojom::AttributeNameValue::New();
+  attr->name = "src";
+  attr->value = kDataURL;
+  outer_child_node->attributes.push_back(std::move(attr));
+  outer_params.push_back(std::move(outer_child_node));
+  mojom::ThreatDOMDetailsNodePtr outer_summary_node =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_summary_node->url = GURL(kDOMParentURL);
+  outer_summary_node->children.push_back(GURL(kDataURL));
   // Set |child_frame_routing_id| for this node to something non-sensical so
   // that the child frame lookup fails.
-  outer_summary_node.child_frame_routing_id = -100;
-  outer_params.push_back(outer_summary_node);
+  outer_summary_node->child_frame_routing_id = -100;
+  outer_params.push_back(std::move(outer_summary_node));
 
   // Now define some more nodes for the body of the frame. The URL of this
   // inner frame is "about:blank".
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> inner_params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_node;
-  inner_child_node.url = GURL(kDOMChildUrl2);
-  inner_child_node.tag_name = "script";
-  inner_child_node.parent = GURL(kBlankURL);
-  inner_child_node.attributes.push_back(std::make_pair("src", kDOMChildUrl2));
-  inner_params.push_back(inner_child_node);
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_summary_node;
-  inner_summary_node.url = GURL(kBlankURL);
-  inner_summary_node.children.push_back(GURL(kDOMChildUrl2));
-  inner_params.push_back(inner_summary_node);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> inner_params;
+  mojom::ThreatDOMDetailsNodePtr inner_child_node =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_child_node->url = GURL(kDOMChildUrl2);
+  inner_child_node->tag_name = "script";
+  inner_child_node->parent = GURL(kBlankURL);
+  mojom::AttributeNameValuePtr attr1 = mojom::AttributeNameValue::New();
+  attr1->name = "src";
+  attr1->value = kDOMChildUrl2;
+  inner_child_node->attributes.push_back(std::move(attr1));
+  inner_params.push_back(std::move(inner_child_node));
+  mojom::ThreatDOMDetailsNodePtr inner_summary_node =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_summary_node->url = GURL(kBlankURL);
+  inner_summary_node->children.push_back(GURL(kDOMChildUrl2));
+  inner_params.push_back(std::move(inner_summary_node));
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_UNWANTED);
@@ -886,9 +932,8 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
   base::HistogramTester histograms;
 
   // Send both sets of nodes from different render frames.
-  report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
-  report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
-
+  report->OnReceivedThreatDOMDetails(main_rfh(), std::move(outer_params));
+  report->OnReceivedThreatDOMDetails(child_rfh, std::move(inner_params));
   std::string serialized = WaitForThreatDetailsDone(
       report.get(), false /* did_proceed*/, 0 /* num_visit */);
   ClientSafeBrowsingReportRequest actual;
@@ -920,87 +965,125 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_TrimToAdTags) {
 
   // Define two sets of DOM nodes - one for an outer page containing an iframe,
   // and then another for the inner page containing the contents of that iframe.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> outer_params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_div;
-  outer_div.node_id = 1;
-  outer_div.tag_name = "div";
-  outer_div.parent = GURL(kDOMParentURL);
-  outer_div.attributes.push_back(std::make_pair("id", "outer"));
-  outer_params.push_back(outer_div);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> outer_params;
+  mojom::ThreatDOMDetailsNodePtr outer_div = mojom::ThreatDOMDetailsNode::New();
+  outer_div->node_id = 1;
+  outer_div->tag_name = "div";
+  outer_div->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr = mojom::AttributeNameValue::New();
+  attr->name = "id";
+  attr->value = "outer";
+  outer_div->attributes.push_back(std::move(attr));
+  outer_params.push_back(std::move(outer_div));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_sibling_script;
-  outer_sibling_script.node_id = 2;
-  outer_sibling_script.url = GURL(kReferrerURL);
-  outer_sibling_script.child_node_ids.push_back(3);
-  outer_sibling_script.child_node_ids.push_back(4);
-  outer_sibling_script.tag_name = "script";
-  outer_sibling_script.parent = GURL(kDOMParentURL);
-  outer_sibling_script.attributes.push_back(
-      std::make_pair("src", kReferrerURL));
-  outer_sibling_script.attributes.push_back(
-      std::make_pair("id", "outer-sibling"));
-  outer_params.push_back(outer_sibling_script);
+  mojom::ThreatDOMDetailsNodePtr outer_sibling_script =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_sibling_script->node_id = 2;
+  outer_sibling_script->url = GURL(kReferrerURL);
+  outer_sibling_script->child_node_ids.push_back(3);
+  outer_sibling_script->child_node_ids.push_back(4);
+  outer_sibling_script->tag_name = "script";
+  outer_sibling_script->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr1 = mojom::AttributeNameValue::New();
+  attr1->name = "src";
+  attr1->value = kReferrerURL;
+  outer_sibling_script->attributes.push_back(std::move(attr1));
+  mojom::AttributeNameValuePtr attr2 = mojom::AttributeNameValue::New();
+  attr2->name = "id";
+  attr2->value = "outer-sibling";
+  outer_sibling_script->attributes.push_back(std::move(attr2));
+  outer_params.push_back(std::move(outer_sibling_script));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node sibling_script;
-  sibling_script.node_id = 3;
-  sibling_script.url = GURL(kFirstRedirectURL);
-  sibling_script.tag_name = "script";
-  sibling_script.parent = GURL(kDOMParentURL);
-  sibling_script.parent_node_id = 2;
-  sibling_script.attributes.push_back(std::make_pair("src", kFirstRedirectURL));
-  sibling_script.attributes.push_back(std::make_pair("id", "sibling"));
-  outer_params.push_back(sibling_script);
+  mojom::ThreatDOMDetailsNodePtr sibling_script =
+      mojom::ThreatDOMDetailsNode::New();
+  sibling_script->node_id = 3;
+  sibling_script->url = GURL(kFirstRedirectURL);
+  sibling_script->tag_name = "script";
+  sibling_script->parent = GURL(kDOMParentURL);
+  sibling_script->parent_node_id = 2;
+  mojom::AttributeNameValuePtr attr3 = mojom::AttributeNameValue::New();
+  attr3->name = "src";
+  attr3->value = kFirstRedirectURL;
+  sibling_script->attributes.push_back(std::move(attr3));
+  mojom::AttributeNameValuePtr attr4 = mojom::AttributeNameValue::New();
+  attr4->name = "id";
+  attr4->value = "sibling";
+  sibling_script->attributes.push_back(std::move(attr4));
+  outer_params.push_back(std::move(sibling_script));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_ad_tag_div;
-  outer_ad_tag_div.node_id = 4;
-  outer_ad_tag_div.parent_node_id = 2;
-  outer_ad_tag_div.child_node_ids.push_back(5);
-  outer_ad_tag_div.tag_name = "div";
-  outer_ad_tag_div.parent = GURL(kDOMParentURL);
-  outer_ad_tag_div.attributes.push_back(
-      std::make_pair("data-google-query-id", "ad-tag"));
-  outer_params.push_back(outer_ad_tag_div);
+  mojom::ThreatDOMDetailsNodePtr outer_ad_tag_div =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_ad_tag_div->node_id = 4;
+  outer_ad_tag_div->parent_node_id = 2;
+  outer_ad_tag_div->child_node_ids.push_back(5);
+  outer_ad_tag_div->tag_name = "div";
+  outer_ad_tag_div->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr5 = mojom::AttributeNameValue::New();
+  attr5->name = "data-google-query-id";
+  attr5->value = "ad-tag";
+  outer_ad_tag_div->attributes.push_back(std::move(attr5));
+  outer_params.push_back(std::move(outer_ad_tag_div));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_iframe;
-  outer_child_iframe.node_id = 5;
-  outer_child_iframe.parent_node_id = 4;
-  outer_child_iframe.url = GURL(kDOMChildURL);
-  outer_child_iframe.tag_name = "iframe";
-  outer_child_iframe.parent = GURL(kDOMParentURL);
-  outer_child_iframe.attributes.push_back(std::make_pair("src", kDOMChildURL));
-  outer_child_iframe.attributes.push_back(std::make_pair("foo", "bar"));
-  outer_child_iframe.child_frame_routing_id = child_rfh->GetRoutingID();
-  outer_params.push_back(outer_child_iframe);
+  mojom::ThreatDOMDetailsNodePtr outer_child_iframe =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_child_iframe->node_id = 5;
+  outer_child_iframe->parent_node_id = 4;
+  outer_child_iframe->url = GURL(kDOMChildURL);
+  outer_child_iframe->tag_name = "iframe";
+  outer_child_iframe->parent = GURL(kDOMParentURL);
+  mojom::AttributeNameValuePtr attr6 = mojom::AttributeNameValue::New();
+  attr6->name = "src";
+  attr6->value = kDOMChildURL;
+  outer_child_iframe->attributes.push_back(std::move(attr6));
+  mojom::AttributeNameValuePtr attr7 = mojom::AttributeNameValue::New();
+  attr7->name = "foo";
+  attr7->value = "bar";
+  outer_child_iframe->attributes.push_back(std::move(attr7));
+  outer_child_iframe->child_frame_routing_id = child_rfh->GetRoutingID();
+  outer_params.push_back(std::move(outer_child_iframe));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_summary_node;
-  outer_summary_node.url = GURL(kDOMParentURL);
-  outer_summary_node.children.push_back(GURL(kDOMChildURL));
-  outer_summary_node.children.push_back(GURL(kReferrerURL));
-  outer_summary_node.children.push_back(GURL(kFirstRedirectURL));
-  outer_params.push_back(outer_summary_node);
+  mojom::ThreatDOMDetailsNodePtr outer_summary_node =
+      mojom::ThreatDOMDetailsNode::New();
+  outer_summary_node->url = GURL(kDOMParentURL);
+  outer_summary_node->children.push_back(GURL(kDOMChildURL));
+  outer_summary_node->children.push_back(GURL(kReferrerURL));
+  outer_summary_node->children.push_back(GURL(kFirstRedirectURL));
+  outer_params.push_back(std::move(outer_summary_node));
 
   // Now define some more nodes for the body of the iframe.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> inner_params;
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_div;
-  inner_child_div.node_id = 1;
-  inner_child_div.tag_name = "div";
-  inner_child_div.parent = GURL(kDOMChildURL);
-  inner_child_div.attributes.push_back(std::make_pair("id", "inner"));
-  inner_child_div.attributes.push_back(std::make_pair("bar", "baz"));
-  inner_params.push_back(inner_child_div);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> inner_params;
+  mojom::ThreatDOMDetailsNodePtr inner_child_div =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_child_div->node_id = 1;
+  inner_child_div->tag_name = "div";
+  inner_child_div->parent = GURL(kDOMChildURL);
+  mojom::AttributeNameValuePtr attr8 = mojom::AttributeNameValue::New();
+  attr8->name = "id";
+  attr8->value = "inner";
+  inner_child_div->attributes.push_back(std::move(attr8));
+  mojom::AttributeNameValuePtr attr9 = mojom::AttributeNameValue::New();
+  attr9->name = "bar";
+  attr9->value = "baz";
+  inner_child_div->attributes.push_back(std::move(attr9));
+  inner_params.push_back(std::move(inner_child_div));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_script;
-  inner_child_script.node_id = 2;
-  inner_child_script.url = GURL(kDOMChildUrl2);
-  inner_child_script.tag_name = "script";
-  inner_child_script.parent = GURL(kDOMChildURL);
-  inner_child_script.attributes.push_back(std::make_pair("src", kDOMChildUrl2));
-  inner_params.push_back(inner_child_script);
+  mojom::ThreatDOMDetailsNodePtr inner_child_script =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_child_script->node_id = 2;
+  inner_child_script->url = GURL(kDOMChildUrl2);
+  inner_child_script->tag_name = "script";
+  inner_child_script->parent = GURL(kDOMChildURL);
+  mojom::AttributeNameValuePtr attr10 = mojom::AttributeNameValue::New();
+  attr10->name = "src";
+  attr10->value = kDOMChildUrl2;
+  inner_child_script->attributes.push_back(std::move(attr10));
+  inner_params.push_back(std::move(inner_child_script));
 
-  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_summary_node;
-  inner_summary_node.url = GURL(kDOMChildURL);
-  inner_summary_node.children.push_back(GURL(kDOMChildUrl2));
-  inner_params.push_back(inner_summary_node);
+  mojom::ThreatDOMDetailsNodePtr inner_summary_node =
+      mojom::ThreatDOMDetailsNode::New();
+  inner_summary_node->url = GURL(kDOMChildURL);
+  inner_summary_node->children.push_back(GURL(kDOMChildUrl2));
+  inner_params.push_back(std::move(inner_summary_node));
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_UNWANTED);
@@ -1108,8 +1191,10 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_TrimToAdTags) {
       /*trim_to_ad_tags=*/true);
 
   // Send both sets of nodes from different render frames.
-  trimmed_report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
-  trimmed_report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
+  trimmed_report->OnReceivedThreatDOMDetails(child_rfh,
+                                             std::move(inner_params));
+  trimmed_report->OnReceivedThreatDOMDetails(main_rfh(),
+                                             std::move(outer_params));
 
   std::string serialized = WaitForThreatDetailsDone(
       trimmed_report.get(), false /* did_proceed*/, 0 /* num_visit */);
@@ -1353,8 +1438,8 @@ TEST_F(ThreatDetailsTest, HTTPCache) {
                      base::RetainedRef(profile()->GetRequestContext())));
 
   // The cache collection starts after the IPC from the DOM is fired.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
-  report->OnReceivedThreatDOMDetails(main_rfh(), params);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> params;
+  report->OnReceivedThreatDOMDetails(main_rfh(), std::move(params));
 
   // Let the cache callbacks complete.
   base::RunLoop().RunUntilIdle();
@@ -1437,8 +1522,8 @@ TEST_F(ThreatDetailsTest, HttpsResourceSanitization) {
                      base::RetainedRef(profile()->GetRequestContext())));
 
   // The cache collection starts after the IPC from the DOM is fired.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
-  report->OnReceivedThreatDOMDetails(main_rfh(), params);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> params;
+  report->OnReceivedThreatDOMDetails(main_rfh(), std::move(params));
 
   // Let the cache callbacks complete.
   base::RunLoop().RunUntilIdle();
@@ -1515,8 +1600,8 @@ TEST_F(ThreatDetailsTest, HTTPCacheNoEntries) {
   // No call to FillCache
 
   // The cache collection starts after the IPC from the DOM is fired.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
-  report->OnReceivedThreatDOMDetails(main_rfh(), params);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> params;
+  report->OnReceivedThreatDOMDetails(main_rfh(), std::move(params));
 
   // Let the cache callbacks complete.
   base::RunLoop().RunUntilIdle();
@@ -1571,8 +1656,8 @@ TEST_F(ThreatDetailsTest, HistoryServiceUrls) {
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
   // The redirects collection starts after the IPC from the DOM is fired.
-  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
-  report->OnReceivedThreatDOMDetails(main_rfh(), params);
+  std::vector<mojom::ThreatDOMDetailsNodePtr> params;
+  report->OnReceivedThreatDOMDetails(main_rfh(), std::move(params));
 
   // Let the redirects callbacks complete.
   base::RunLoop().RunUntilIdle();

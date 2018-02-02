@@ -6,7 +6,8 @@
         "browser": [
           "autofill::mojom::AutofillAgent",
           "autofill::mojom::PasswordAutofillAgent",
-          "autofill::mojom::PasswordGenerationAgent"
+          "autofill::mojom::PasswordGenerationAgent",
+          "safe_browsing::mojom::ThreatReport"
         ]
       }
     }

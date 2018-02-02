@@ -20,6 +20,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/common/safebrowsing_types.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
@@ -34,8 +35,6 @@ class HistoryService;
 namespace net {
 class URLRequestContextGetter;
 }  // namespace net
-
-struct SafeBrowsingHostMsg_ThreatDOMDetails_Node;
 
 namespace safe_browsing {
 
@@ -103,9 +102,13 @@ class ThreatDetails : public base::RefCountedThreadSafe<
 
   void OnRedirectionCollectionReady();
 
-  // content::WebContentsObserver implementation.
-  bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* render_frame_host) override;
+  // Message handler.
+  void OnReceivedThreatDOMDetails(
+      content::RenderFrameHost* sender,
+      const std::vector<mojom::ThreatDOMDetailsNodePtr> params);
+
+  // TODO(evem): try and move this to private
+  void RequestThreatDOMDetails(content::RenderFrameHost* frame);
 
  protected:
   friend class ThreatDetailsFactoryImpl;
@@ -127,7 +130,7 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // Called on the IO thread with the DOM details.
   virtual void AddDOMDetails(
       const int frame_tree_node_id,
-      const std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node>& params,
+      const std::vector<mojom::ThreatDOMDetailsNodePtr>& params,
       const KeyToFrameTreeIdMap& child_frame_tree_map);
 
   // The report protocol buffer.
@@ -166,11 +169,6 @@ class ThreatDetails : public base::RefCountedThreadSafe<
       const std::string& tagname,
       const std::vector<GURL>* children);
 
-  // Message handler.
-  void OnReceivedThreatDOMDetails(
-      content::RenderFrameHost* sender,
-      const std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node>& params);
-
   void AddRedirectUrlList(const std::vector<GURL>& urls);
 
   // Adds an HTML Element to the DOM structure. |frame_tree_node_id| is the
@@ -183,7 +181,7 @@ class ThreatDetails : public base::RefCountedThreadSafe<
                      const int element_node_id,
                      const std::string& tag_name,
                      const int parent_element_node_id,
-                     const std::vector<AttributeNameValue>& attributes,
+                     const std::vector<mojom::AttributeNameValuePtr> attributes,
                      const ClientSafeBrowsingReportRequest::Resource* resource);
 
   // Called when the report is complete. Runs |done_callback_|.
