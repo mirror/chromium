@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3c9075_401c612b",
+        "filename": "ui/aura/mus/client_surface_embedder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-02T20:08:00Z",
+      "side": 1,
+      "message": "Move this to .cc",
+      "revId": "e910e3c027429ffd566c8a7b3434a66a80e02f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
