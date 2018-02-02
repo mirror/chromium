@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c906947_7c4ef7d2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-02T10:15:08Z",
+      "side": 1,
+      "message": "nit: We can just return here because |is_empty_item_| is initialized with |false|.",
+      "revId": "f6787dbf39027642539c45154e87a32d82117319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5468e629_ec0d3b2a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-02T10:15:08Z",
+      "side": 1,
+      "message": "nit: to reduce indentation it is better to write:\n\nif (type !\u003d NGInlineItem::kOpenTag) {\n  is_empty_item_ \u003d true;\n  return;\n}",
+      "revId": "f6787dbf39027642539c45154e87a32d82117319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
