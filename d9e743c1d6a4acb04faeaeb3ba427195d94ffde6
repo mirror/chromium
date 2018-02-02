@@ -34,6 +34,24 @@
       "revId": "d9e743c1d6a4acb04faeaeb3ba427195d94ffde6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a03c32_f16fc6f9",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T11:31:18Z",
+      "side": 1,
+      "message": "Ah, makes sense.",
+      "parentUuid": "9c8cc6e1_2a096133",
+      "revId": "d9e743c1d6a4acb04faeaeb3ba427195d94ffde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
