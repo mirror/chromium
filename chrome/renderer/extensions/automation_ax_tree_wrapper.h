@@ -48,6 +48,12 @@ class AutomationAXTreeWrapper : public ui::AXEventGenerator {
                               bool root_changed,
                               const std::vector<Change>& changes) override;
 
+  // AXTreeDelegate overrides.
+  void OnTargetRelationChanged(ui::AXTree* tree,
+                               ax::mojom::IntAttribute relation_attr,
+                               ui::AXNode* target_node,
+                               ui::AXNode* source_node) override;
+
   // Given an event, return true if the event is handled by
   // AXEventGenerator, and false if it's not. Temporary, this will be
   // removed with the AXEventGenerator refactoring is complete.
