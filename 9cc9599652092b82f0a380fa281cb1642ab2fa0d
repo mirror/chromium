@@ -285,6 +285,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c594faca_c3386aba",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T13:02:52Z",
+      "side": 0,
+      "message": "After offline discussion: 2. is actually folden into 4. on implementatin level. On a high level it still exists though (by just enumerating the state matrix).",
+      "parentUuid": "7a47ebbd_cf860937",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
