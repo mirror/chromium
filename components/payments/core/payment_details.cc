@@ -35,14 +35,14 @@ PaymentDetails::PaymentDetails(const PaymentDetails& other) {
 PaymentDetails& PaymentDetails::operator=(const PaymentDetails& other) {
   id = other.id;
   if (other.total)
-    total = std::make_unique<PaymentItem>(*other.total);
+    total = other.total.Clone();
   else
-    total.reset(nullptr);
+    total.reset();
 
   display_items.clear();
   display_items.reserve(other.display_items.size());
   for (const auto& item : other.display_items) {
-    display_items.push_back(item);
+    display_items.push_back(item.Clone());
   }
 
   shipping_options = std::vector<PaymentShippingOption>(other.shipping_options);
@@ -51,9 +51,7 @@ PaymentDetails& PaymentDetails::operator=(const PaymentDetails& other) {
 }
 
 bool PaymentDetails::operator==(const PaymentDetails& other) const {
-  return id == other.id &&
-         ((!total && !other.total) ||
-          (total && other.total && *total == *other.total)) &&
+  return id == other.id && total.Equals(other.total) &&
          display_items == other.display_items &&
          shipping_options == other.shipping_options &&
          modifiers == other.modifiers && error == other.error;
@@ -78,8 +76,8 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
     return false;
   }
   if (total_dict) {
-    total = std::make_unique<PaymentItem>();
-    if (!total->FromDictionaryValue(*total_dict))
+    total = mojom::PaymentItem::New();
+    if (!PaymentItemFromDictionaryValue(*total_dict, total.get()))
       return false;
   }
 
@@ -90,11 +88,12 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
       if (!display_items_list->GetDictionary(i, &payment_item_dict)) {
         return false;
       }
-      PaymentItem payment_item;
-      if (!payment_item.FromDictionaryValue(*payment_item_dict)) {
+      auto payment_item = mojom::PaymentItem::New();
+      if (!PaymentItemFromDictionaryValue(*payment_item_dict,
+                                          payment_item.get())) {
         return false;
       }
-      display_items.push_back(payment_item);
+      display_items.push_back(payment_item.Clone());
     }
   }
 
@@ -125,8 +124,9 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
       const base::DictionaryValue* modifier_total_dict = nullptr;
       if (modifier_dict->GetDictionary(kPaymentDetailsTotal,
                                        &modifier_total_dict)) {
-        modifier.total = std::make_unique<PaymentItem>();
-        if (!modifier.total->FromDictionaryValue(*modifier_total_dict))
+        modifier.total = mojom::PaymentItem::New();
+        if (!PaymentItemFromDictionaryValue(*modifier_total_dict,
+                                            modifier.total.get()))
           return false;
       }
       const base::ListValue* additional_display_items_list = nullptr;
@@ -134,14 +134,15 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
                                  &additional_display_items_list)) {
         for (size_t j = 0; j < additional_display_items_list->GetSize(); ++j) {
           const base::DictionaryValue* additional_display_item_dict = nullptr;
-          PaymentItem additional_display_item;
+          auto additional_display_item = mojom::PaymentItem::New();
           if (!additional_display_items_list->GetDictionary(
                   i, &additional_display_item_dict) ||
-              !additional_display_item.FromDictionaryValue(
-                  *additional_display_item_dict)) {
+              PaymentItemFromDictionaryValue(*additional_display_item_dict,
+                                             additional_display_item.get())) {
             return false;
           }
-          modifier.additional_display_items.push_back(additional_display_item);
+          modifier.additional_display_items.push_back(
+              additional_display_item.Clone());
         }
       }
       modifiers.push_back(modifier);

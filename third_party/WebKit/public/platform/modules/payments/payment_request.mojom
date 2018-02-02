@@ -55,12 +55,6 @@ interface PaymentRequestClient {
   WarnNoFavicon();
 };
 
-struct PaymentItem {
-  string label;
-  PaymentCurrencyAmount amount;
-  bool pending;
-};
-
 struct PaymentShippingOption {
   string id;
   string label;

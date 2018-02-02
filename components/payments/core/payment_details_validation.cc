@@ -17,7 +17,7 @@ namespace {
 // fields, except for "id", which is present only in ShippingOption.
 template <typename T>
 bool ValidateShippingOptionOrPaymentItem(const T& item,
-                                         const PaymentItem& total,
+                                         const mojom::PaymentItem& total,
                                          std::string* error_message) {
   if (!item.amount) {
     *error_message = "Amount required";
@@ -51,18 +51,18 @@ bool ValidateShippingOptionOrPaymentItem(const T& item,
   return true;
 }
 
-bool ValidateDisplayItems(const std::vector<PaymentItem>& items,
-                          const PaymentItem& total,
+bool ValidateDisplayItems(const std::vector<mojom::PaymentItemPtr>& items,
+                          const mojom::PaymentItem& total,
                           std::string* error_message) {
   for (const auto& item : items) {
-    if (!ValidateShippingOptionOrPaymentItem(item, total, error_message))
+    if (!ValidateShippingOptionOrPaymentItem(*item, total, error_message))
       return false;
   }
   return true;
 }
 
 bool ValidateShippingOptions(const std::vector<PaymentShippingOption>& options,
-                             const PaymentItem& total,
+                             const mojom::PaymentItem& total,
                              std::string* error_message) {
   std::set<std::string> uniqueIds;
   for (const auto& option : options) {
@@ -85,7 +85,7 @@ bool ValidateShippingOptions(const std::vector<PaymentShippingOption>& options,
 
 bool ValidatePaymentDetailsModifiers(
     const std::vector<PaymentDetailsModifier>& modifiers,
-    const PaymentItem& total,
+    const mojom::PaymentItem& total,
     std::string* error_message) {
   if (modifiers.empty()) {
     *error_message = "Must specify at least one payment details modifier";

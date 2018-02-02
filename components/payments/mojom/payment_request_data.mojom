@@ -50,3 +50,10 @@ struct PaymentCurrencyAmount {
   // (for example, USD for US Dollars).
   string currency_system = "urn:iso:std:iso:4217";
 };
+
+struct PaymentItem {
+  string label;
+  PaymentCurrencyAmount amount;
+  bool pending;
+};
+

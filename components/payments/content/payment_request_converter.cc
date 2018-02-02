@@ -16,28 +16,18 @@
 
 namespace payments {
 namespace {
-PaymentItem ConvertPaymentItem(const mojom::PaymentItemPtr& item_entry) {
-  PaymentItem item;
-  item.label = item_entry->label;
-  if (item_entry->amount)
-    item.amount = item_entry->amount.Clone();
-  item.pending = item_entry->pending;
-  return item;
-}
-
 PaymentDetailsModifier ConvertPaymentDetailsModifier(
     const mojom::PaymentDetailsModifierPtr& modifier_entry) {
   PaymentDetailsModifier modifier;
   if (modifier_entry->total) {
-    modifier.total = std::make_unique<PaymentItem>(
-        ConvertPaymentItem(modifier_entry->total));
+    modifier.total = modifier_entry->total.Clone();
   }
   modifier.additional_display_items.reserve(
       modifier_entry->additional_display_items.size());
   for (const mojom::PaymentItemPtr& additional_display_item :
        modifier_entry->additional_display_items) {
     modifier.additional_display_items.push_back(
-        ConvertPaymentItem(additional_display_item));
+        additional_display_item.Clone());
   }
   if (modifier_entry->method_data)
     modifier.method_data =
@@ -117,13 +107,12 @@ PaymentDetails ConvertPaymentDetails(
     const mojom::PaymentDetailsPtr& details_entry) {
   PaymentDetails details;
   if (details_entry->total) {
-    details.total =
-        std::make_unique<PaymentItem>(ConvertPaymentItem(details_entry->total));
+    details.total = details_entry->total.Clone();
   }
   details.display_items.reserve(details_entry->display_items.size());
   for (const mojom::PaymentItemPtr& display_item :
        details_entry->display_items) {
-    details.display_items.push_back(ConvertPaymentItem(display_item));
+    details.display_items.push_back(display_item.Clone());
   }
   details.shipping_options.reserve(details_entry->shipping_options.size());
   for (const mojom::PaymentShippingOptionPtr& shipping_option :
