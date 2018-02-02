@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaa8cdcb_97d36499",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd248aed_9da62d40",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4c05bd0_d85cb737",
         "filename": "ash/magnifier/docked_magnifier_controller.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4b93e8_c39aa628",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "Done. Changed to a BindingSet\u003c\u003e.",
+      "parentUuid": "d4c05bd0_d85cb737",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "836e561b_78385eee",
+        "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t know we had that. I was looking for point.mojom instead. Thanks!\n\nDone.",
+      "parentUuid": "e87fcd10_6b4fe98f",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be6db87_275e5c94",
         "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f0f3dd_f6bd1c35",
+        "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "I wanted to highlight that Chrome should use this to notify with focus changes in webpages in non-editable nodes since ash will observe the text input caret changes in editable nodes by itself using the InputMethod.\n\nBut now that I realized this could actually be used by any client to center around any point, it actually makes sense to make it have a generic name.\n\nDone.",
+      "parentUuid": "8be6db87_275e5c94",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8ba3a0c2_7bad3e65",
+        "filename": "ash/public/interfaces/docked_magnifier_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "463baf50_d4da8b6b",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe6df61_11f30948",
         "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5d836f8d_923f8dd4",
+        "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffe6df61_11f30948",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23557c9f_8c3dc8d6",
         "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ce3b8d_eeee556a",
+        "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T02:11:04Z",
+      "side": 1,
+      "message": "Yes, the idea is that ash is capable of watching editable nodes changes using the InputMethod of the window tree host. The input method way gives us the ability to watch editable changes in webpages as well as the native UI, whereas NOTIFICATION_FOCUS_CHANGED_IN_PAGE works only for webpages. This will be implemented in the DockedMagnifierController in a future CL.\n\nI added a comment to clarify.",
+      "parentUuid": "23557c9f_8c3dc8d6",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
