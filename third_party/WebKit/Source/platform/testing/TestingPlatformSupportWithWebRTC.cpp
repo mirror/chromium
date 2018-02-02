@@ -59,13 +59,6 @@ WebRTCErrorType MockWebRTCPeerConnectionHandler::SetConfiguration(
   return WebRTCErrorType::kNone;
 }
 
-bool MockWebRTCPeerConnectionHandler::AddStream(const WebMediaStream&,
-                                                const WebMediaConstraints&) {
-  return true;
-}
-
-void MockWebRTCPeerConnectionHandler::RemoveStream(const WebMediaStream&) {}
-
 void MockWebRTCPeerConnectionHandler::GetStats(const WebRTCStatsRequest&) {}
 
 void MockWebRTCPeerConnectionHandler::GetStats(

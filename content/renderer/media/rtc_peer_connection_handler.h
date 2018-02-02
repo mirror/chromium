@@ -141,9 +141,6 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   virtual void OnaddICECandidateResult(const blink::WebRTCVoidRequest& request,
                                        bool result);
 
-  bool AddStream(const blink::WebMediaStream& stream,
-                 const blink::WebMediaConstraints& options) override;
-  void RemoveStream(const blink::WebMediaStream& stream) override;
   void GetStats(const blink::WebRTCStatsRequest& request) override;
   void GetStats(
       std::unique_ptr<blink::WebRTCStatsReportCallback> callback) override;

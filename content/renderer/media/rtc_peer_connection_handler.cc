@@ -1744,82 +1744,6 @@ void RTCPeerConnectionHandler::OnaddICECandidateResult(
   return webkit_request.RequestSucceeded();
 }
 
-bool RTCPeerConnectionHandler::AddStream(
-    const blink::WebMediaStream& stream,
-    const blink::WebMediaConstraints& options) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::addStream");
-  for (const auto& adapter_ref : local_streams_) {
-    if (adapter_ref->adapter().IsEqual(stream)) {
-      DVLOG(1) << "RTCPeerConnectionHandler::addStream called with the same "
-               << "stream twice. id=" << stream.Id().Utf8();
-      return false;
-    }
-  }
-
-  if (peer_connection_tracker_) {
-    peer_connection_tracker_->TrackAddStream(
-        this, stream, PeerConnectionTracker::SOURCE_LOCAL);
-  }
-
-  PerSessionWebRTCAPIMetrics::GetInstance()->IncrementStreamCounter();
-
-  local_streams_.push_back(
-      stream_adapter_map_->GetOrCreateLocalStreamAdapter(stream));
-
-  webrtc::MediaStreamInterface* webrtc_stream =
-      local_streams_.back()->adapter().webrtc_stream().get();
-  track_metrics_.AddStream(MediaStreamTrackMetrics::SENT_STREAM,
-                           webrtc_stream);
-
-  if (!options.IsEmpty()) {
-    // TODO(perkj): |mediaConstraints| is the name of the optional constraints
-    // argument in RTCPeerConnection.idl. It has been removed from the spec and
-    // should be removed from blink as well.
-    LOG(WARNING)
-        << "mediaConstraints is not a supported argument to addStream.";
-    LOG(WARNING) << "mediaConstraints was " << options.ToString().Utf8();
-  }
-
-  return native_peer_connection_->AddStream(webrtc_stream);
-}
-
-void RTCPeerConnectionHandler::RemoveStream(
-    const blink::WebMediaStream& stream) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::removeStream");
-  // Find the webrtc stream.
-  scoped_refptr<webrtc::MediaStreamInterface> webrtc_stream;
-  for (auto adapter_it = local_streams_.begin();
-       adapter_it != local_streams_.end(); ++adapter_it) {
-    if ((*adapter_it)->adapter().IsEqual(stream)) {
-      webrtc_stream = (*adapter_it)->adapter().webrtc_stream();
-      local_streams_.erase(adapter_it);
-      break;
-    }
-  }
-  // If the stream was added using addTrack() we might not find it here. When
-  // addStream() and removeStream() is implemented on top of addTrack() and
-  // removeTrack() this won't be a problem and this code will go away.
-  // https://crbug.com/738929
-  if (!webrtc_stream)
-    return;
-  // TODO(tommi): Make this async (PostTaskAndReply).
-  native_peer_connection_->RemoveStream(webrtc_stream.get());
-
-  if (peer_connection_tracker_) {
-    peer_connection_tracker_->TrackRemoveStream(
-        this, stream, PeerConnectionTracker::SOURCE_LOCAL);
-  }
-  PerSessionWebRTCAPIMetrics::GetInstance()->DecrementStreamCounter();
-  track_metrics_.RemoveStream(MediaStreamTrackMetrics::SENT_STREAM,
-                              webrtc_stream.get());
-  // Make sure |rtp_senders_| is up-to-date. When |AddStream| and |RemoveStream|
-  // is implemented using |AddTrack| and |RemoveTrack|, add and remove
-  // |rtp_senders_| there. https://crbug.com/738929
-  GetSenders();
-}
-
 void RTCPeerConnectionHandler::GetStats(
     const blink::WebRTCStatsRequest& request) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -1884,30 +1808,32 @@ RTCPeerConnectionHandler::GetSenders() {
   for (size_t i = 0; i < web_senders.size(); ++i) {
     uintptr_t id = RTCRtpSender::getId(webrtc_senders[i]);
     auto it = rtp_senders_.find(id);
-    if (it == rtp_senders_.end()) {
-      rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track =
-          webrtc_senders[i]->track();
-      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
-          track_adapter;
-      if (webrtc_track) {
-        track_adapter = track_adapter_map_->GetLocalTrackAdapter(webrtc_track);
-        DCHECK(track_adapter);
-      }
-      it =
-          rtp_senders_
-              .insert(std::make_pair(
-                  id, std::make_unique<RTCRtpSender>(
-                          task_runner_, signaling_thread(), stream_adapter_map_,
-                          webrtc_senders[i].get(), std::move(track_adapter))))
-              .first;
-    }
+    DCHECK(it != rtp_senders_.end());
+    /*    if (it == rtp_senders_.end()) {
+          rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track =
+              webrtc_senders[i]->track();
+          std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
+              track_adapter;
+          if (webrtc_track) {
+            track_adapter =
+       track_adapter_map_->GetLocalTrackAdapter(webrtc_track);
+            DCHECK(track_adapter);
+          }
+          it =
+              rtp_senders_
+                  .insert(std::make_pair(
+                      id, std::make_unique<RTCRtpSender>(
+                              task_runner_, signaling_thread(),
+       stream_adapter_map_, webrtc_senders[i].get(), std::move(track_adapter))))
+                  .first;
+        }*/
     web_senders[i] = it->second->ShallowCopy();
   }
   // TODO(hbos): When |AddStream| and |RemoveStream| are implemented using
   // |AddTrack| and |RemoveTrack|, add and remove |rtp_senders_| there instead
   // of figuring out which ones are no longer used here.
   // https://crbug.com/738929
-  for (auto it = rtp_senders_.begin(); it != rtp_senders_.end();) {
+  /*for (auto it = rtp_senders_.begin(); it != rtp_senders_.end();) {
     bool sender_exists = false;
     for (auto webrtc_sender : webrtc_senders) {
       if (RTCRtpSender::getId(webrtc_sender) == it->first) {
@@ -1919,7 +1845,7 @@ RTCPeerConnectionHandler::GetSenders() {
       it = rtp_senders_.erase(it);
     else
       ++it;
-  }
+  }*/
   return web_senders;
 }
 
@@ -1939,6 +1865,9 @@ std::unique_ptr<blink::WebRTCRtpSender> RTCPeerConnectionHandler::AddTrack(
         stream_adapter_map_->GetOrCreateLocalStreamAdapter(streams[i]);
     webrtc_streams[i] = stream_adapters[i]->adapter().webrtc_stream().get();
   }
+
+  // TODO(hbos): Is this the first occurrence of streams? Increment counters.
+  // Decrement at removeTrack() if last occurrence.
 
   rtc::scoped_refptr<webrtc::RtpSenderInterface> webrtc_sender =
       native_peer_connection_->AddTrack(track_adapter->webrtc_track(),
@@ -2049,23 +1978,18 @@ blink::WebRTCDTMFSenderHandler* RTCPeerConnectionHandler::CreateDTMFSender(
     const blink::WebMediaStreamTrack& track) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!track.IsNull());
+  DCHECK(track.Source().GetType() == blink::WebMediaStreamSource::kTypeAudio);
   TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createDTMFSender");
   DVLOG(1) << "createDTMFSender.";
-
-  // Find the WebRtc track referenced by the blink track's ID.
-  webrtc::AudioTrackInterface* webrtc_track = nullptr;
-  for (const auto& adapter_ref : local_streams_) {
-    webrtc_track = adapter_ref->adapter().webrtc_stream()->FindAudioTrack(
-        track.Id().Utf8());
-    if (webrtc_track)
-      break;
-  }
-  if (!webrtc_track) {
+  auto adapter_ref = track_adapter_map_->GetLocalTrackAdapter(track);
+  if (!adapter_ref) {
     DLOG(ERROR) << "Audio track with ID '" << track.Id().Utf8()
                 << "' has no known WebRtc sink.";
     return nullptr;
   }
-
+  webrtc::AudioTrackInterface* webrtc_track =
+      static_cast<webrtc::AudioTrackInterface*>(adapter_ref->webrtc_track());
+  DCHECK(webrtc_track);
   rtc::scoped_refptr<webrtc::DtmfSenderInterface> sender(
       native_peer_connection_->CreateDtmfSender(webrtc_track));
   if (!sender) {
@@ -2074,7 +1998,6 @@ blink::WebRTCDTMFSenderHandler* RTCPeerConnectionHandler::CreateDTMFSender(
   }
   if (peer_connection_tracker_)
     peer_connection_tracker_->TrackCreateDTMFSender(this, track);
-
   return new RtcDtmfSenderHandler(sender);
 }
 
