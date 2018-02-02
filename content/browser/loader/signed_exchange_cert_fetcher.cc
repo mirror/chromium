@@ -5,10 +5,18 @@
 #include "content/browser/loader/signed_exchange_cert_fetcher.h"
 
 #include "base/strings/string_piece.h"
+#include "content/common/throttling_url_loader.h"
+#include "content/public/common/shared_url_loader_factory.h"
+#include "content/public/common/url_loader_throttle.h"
+#include "net/base/load_flags.h"
+#include "net/http/http_status_code.h"
 
 namespace content {
 
 namespace {
+
+const net::NetworkTrafficAnnotationTag kCertFetcherTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("cert_fetcher", R"()");
 
 bool ConsumeByte(base::StringPiece* data, uint8_t* out) {
   if (data->empty())
@@ -39,6 +47,7 @@ bool Consume3Bytes(base::StringPiece* data, uint32_t* out) {
 
 }  // namespace
 
+// static
 base::Optional<std::vector<base::StringPiece>>
 SignedExchangeCertFetcher::GetCertChainFromMessage(base::StringPiece message) {
   uint8_t cert_request_context_size = 0;
@@ -91,6 +100,116 @@ SignedExchangeCertFetcher::GetCertChainFromMessage(base::StringPiece message) {
     message.remove_prefix(extensions_size);
   }
   return certs;
+}
+
+// static
+std::unique_ptr<SignedExchangeCertFetcher>
+SignedExchangeCertFetcher::CreateAndStart(
+    scoped_refptr<SharedURLLoaderFactory> shared_url_loader_factory,
+    std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+    const GURL& cert_url,
+    bool force_fetch,
+    CertificateCallback callback) {
+  std::unique_ptr<SignedExchangeCertFetcher> cert_fetcher(
+      new SignedExchangeCertFetcher(std::move(shared_url_loader_factory),
+                                    std::move(throttles), cert_url, force_fetch,
+                                    std::move(callback)));
+  cert_fetcher->Start();
+  return cert_fetcher;
+}
+
+SignedExchangeCertFetcher::SignedExchangeCertFetcher(
+    scoped_refptr<SharedURLLoaderFactory> shared_url_loader_factory,
+    std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+    const GURL& cert_url,
+    bool force_fetch,
+    CertificateCallback callback)
+    : shared_url_loader_factory_(std::move(shared_url_loader_factory)),
+      throttles_(std::move(throttles)),
+      resource_request_(std::make_unique<network::ResourceRequest>()),
+      callback_(std::move(callback)) {
+  // TODO: fill more data.
+  resource_request_->url = cert_url;
+  resource_request_->resource_type = RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE;
+  resource_request_->load_flags = net::LOAD_DO_NOT_SEND_AUTH_DATA |
+                                  net::LOAD_DO_NOT_SAVE_COOKIES |
+                                  net::LOAD_DO_NOT_SEND_COOKIES;
+  if (force_fetch)
+    resource_request_->load_flags |= net::LOAD_DISABLE_CACHE;
+
+  // Is it OK?
+  resource_request_->request_initiator = url::Origin::Create(cert_url);
+  resource_request_->render_frame_id = MSG_ROUTING_NONE;
+}
+
+SignedExchangeCertFetcher::~SignedExchangeCertFetcher() {}
+
+// network::mojom::URLLoaderClient
+void SignedExchangeCertFetcher::OnReceiveResponse(
+    const network::ResourceResponseHead& head,
+    const base::Optional<net::SSLInfo>& ssl_info,
+    network::mojom::DownloadedTempFilePtr downloaded_file) {
+  if (head.headers->response_code() != net::HTTP_OK)
+    Abort();
+}
+
+void SignedExchangeCertFetcher::OnReceiveRedirect(
+    const net::RedirectInfo& redirect_info,
+    const network::ResourceResponseHead& head) {
+  Abort();
+}
+void SignedExchangeCertFetcher::OnDataDownloaded(int64_t data_length,
+                                                 int64_t encoded_length) {}
+void SignedExchangeCertFetcher::OnUploadProgress(
+    int64_t current_position,
+    int64_t total_size,
+    OnUploadProgressCallback callback) {}
+void SignedExchangeCertFetcher::OnReceiveCachedMetadata(
+    const std::vector<uint8_t>& data) {}
+void SignedExchangeCertFetcher::OnTransferSizeUpdated(
+    int32_t transfer_size_diff) {}
+void SignedExchangeCertFetcher::OnStartLoadingResponseBody(
+    mojo::ScopedDataPipeConsumerHandle body) {
+  drainer_.reset(new mojo::common::DataPipeDrainer(this, std::move(body)));
+}
+
+void SignedExchangeCertFetcher::OnComplete(
+    const network::URLLoaderCompletionStatus& status) {}
+
+void SignedExchangeCertFetcher::OnDataAvailable(const void* data,
+                                                size_t num_bytes) {
+  if (original_body_string_.size() + num_bytes >= 1024 * 1024) {
+    Abort();
+    return;
+  }
+  original_body_string_.append(static_cast<const char*>(data), num_bytes);
+}
+
+void SignedExchangeCertFetcher::OnDataComplete() {
+  drainer_ = nullptr;
+  base::Optional<std::vector<base::StringPiece>> der_certs =
+      GetCertChainFromMessage(original_body_string_);
+  if (!der_certs) {
+    Abort();
+    return;
+  }
+  std::move(callback_).Run(
+      net::X509Certificate::CreateFromDERCertChain(*der_certs));
+}
+
+void SignedExchangeCertFetcher::Start() {
+  url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
+      std::move(shared_url_loader_factory_), std::move(throttles_),
+      0 /* routing_id */, 0 /* request_id */,
+      network::mojom::kURLLoadOptionNone, resource_request_.get(), this,
+      kCertFetcherTrafficAnnotation, base::ThreadTaskRunnerHandle::Get());
+}
+
+void SignedExchangeCertFetcher::Abort() {
+  url_loader_ = nullptr;
+  drainer_ = nullptr;
+  if (callback_)
+    std::move(callback_).Run(scoped_refptr<net::X509Certificate>());
 }
 
 }  // namespace content
