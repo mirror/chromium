@@ -9,17 +9,20 @@ Polymer({
     /** @type {!print_preview.Destination} */
     destination: Object,
 
-    /** @private {string} */
-    searchHint_: {
-      type: String,
-      notify: true,
-    },
+    /** @type {?RegExp} */
+    searchQuery: Object,
 
     /** @type {boolean} */
     stale: {
       type: Boolean,
       notify: true,
       reflectToAttribute: true,
+    },
+
+    /** @private {string} */
+    searchHint_: {
+      type: String,
+      notify: true,
     },
   },
 
@@ -37,10 +40,9 @@ Polymer({
     this.stale = this.destination.isOfflineOrInvalid;
   },
 
-  /** @param {?RegExp} searchQuery The search query to update for. */
-  update: function(searchQuery) {
-    this.updateSearchHint_(searchQuery);
-    this.updateHighlighting_(searchQuery);
+  update: function() {
+    this.updateSearchHint_(this.searchQuery);
+    this.updateHighlighting_(this.searchQuery);
   },
 
   /**
@@ -48,13 +50,11 @@ Polymer({
    * @private
    */
   updateSearchHint_: function(searchQuery) {
-    if (!searchQuery) {
-      this.searchHint_ = '';
-      return;
-    }
-    this.searchHint_ = this.destination.extraPropertiesToMatch
-                           .filter(p => p.match(searchQuery))
-                           .join(' ');
+    this.searchHint_ = !this.searchQuery ?
+        '' :
+        this.destination.extraPropertiesToMatch
+            .filter(p => p.match(searchQuery))
+            .join(' ');
   },
 
   /**
