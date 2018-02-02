@@ -22,6 +22,30 @@
       "revId": "4205796c5eaad4920f283b5f7275e8b781cac169",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2525bcb4_085a19fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-02T20:23:17Z",
+      "side": 1,
+      "message": "isShowingTrustedOfflinePage returns false in this case. So Ted\u0027s suggestion should be used.",
+      "parentUuid": "e98435b3_2c009600",
+      "range": {
+        "startLine": 226,
+        "startChar": 45,
+        "endLine": 226,
+        "endChar": 72
+      },
+      "revId": "4205796c5eaad4920f283b5f7275e8b781cac169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
