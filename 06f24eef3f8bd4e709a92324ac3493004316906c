@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "68462ace_4142ffa6",
+        "filename": "chrome/browser/devtools/device/cast_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-02-02T00:40:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a8ddfd63_ebf37bb7",
+      "range": {
+        "startLine": 203,
+        "startChar": 65,
+        "endLine": 203,
+        "endChar": 77
+      },
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c714d2_06c8c66d",
         "filename": "chrome/browser/devtools/device/cast_device_provider.h",
         "patchSetId": 1
@@ -176,6 +200,24 @@
       "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9ceec2_c49e0737",
+        "filename": "chrome/browser/local_discovery/service_discovery_device_lister.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-02-02T00:40:38Z",
+      "side": 1,
+      "message": "Agree that none of these options is obviously the best.  Implemented option 2.",
+      "parentUuid": "1c7f89b9_9a7ea17b",
+      "revId": "06f24eef3f8bd4e709a92324ac3493004316906c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
