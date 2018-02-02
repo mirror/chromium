@@ -60,6 +60,8 @@ KeywordHintView::KeywordHintView(views::ButtonListener* listener,
 
   trailing_label_ =
       CreateLabel(font_list, text_color, background_color);
+
+  SetFocusBehavior(FocusBehavior::NEVER);
 }
 
 KeywordHintView::~KeywordHintView() {}
@@ -84,6 +86,7 @@ void KeywordHintView::SetKeyword(const base::string16& keyword) {
   bool is_extension_keyword;
   base::string16 short_name(
       url_service->GetKeywordShortName(keyword, &is_extension_keyword));
+  SetAccessibleName(short_name);
 
   if (is_touch_ui) {
     int message_id = is_extension_keyword
