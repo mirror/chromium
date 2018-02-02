@@ -222,6 +222,50 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   return
       [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
 }
+
+// Utility function for checking if a WKNavigationAction is initiated by the
+// user.
+bool IsUserInitiatedNavigationAction(WKNavigationAction* action) {
+  NSString* actionDescription = [action description];
+
+  NSRegularExpression* clickTypeRegex = [NSRegularExpression
+      regularExpressionWithPattern:@"\\bsyntheticClickType = ([0-2]);"
+                           options:NSRegularExpressionCaseInsensitive
+                             error:nil];
+  NSTextCheckingResult* clickTypeMatchingResult = [clickTypeRegex
+      firstMatchInString:actionDescription
+                 options:0
+                   range:NSMakeRange(0, [actionDescription length])];
+
+  // SyntheticClickType represents the user action that happened to initiate
+  // this navigation values can be {0: NoTap, 1: OneFingerTap, 2: TwoFingerTap}.
+  int clickType =
+      [[actionDescription substringWithRange:[clickTypeMatchingResult
+                                                 rangeAtIndex:1]] integerValue];
+
+  NSRegularExpression* positionRegex = [NSRegularExpression
+      regularExpressionWithPattern:
+          @"\\bposition x = ([0-9]+\\.?[0-9][0-9]) y = "
+          @"([0-9]+\\.?[0-9][0-9])\\b"
+                           options:NSRegularExpressionCaseInsensitive
+                             error:nil];
+  NSTextCheckingResult* positionMatchingResult = [positionRegex
+      firstMatchInString:actionDescription
+                 options:0
+                   range:NSMakeRange(0, [actionDescription length])];
+
+  // positionX & positionY represent the location of the screen where the user
+  // tapped to initiate the navigation action.
+  float positionX = [[actionDescription
+      substringWithRange:[positionMatchingResult rangeAtIndex:1]] floatValue];
+  float positionY = [[actionDescription
+      substringWithRange:[positionMatchingResult rangeAtIndex:2]] floatValue];
+
+  // Don't depend on clickType if VoiceOver is turned on.
+  return (positionY || positionX) &&
+         (clickType || UIAccessibilityIsVoiceOverRunning());
+}
+
 }  // namespace
 
 #pragma mark -
@@ -4061,7 +4105,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
       referrer.length ? GURL(base::SysNSStringToUTF8(referrer)) : _documentURL;
 
   WebState* childWebState = _webStateImpl->CreateNewWebState(
-      requestURL, openerURL, [self userIsInteracting]);
+      requestURL, openerURL, IsUserInitiatedNavigationAction(action));
   if (!childWebState)
     return nil;
 
