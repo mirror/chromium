@@ -361,10 +361,9 @@
         },
         "trigger_script": {
           "args": [
-	    "--bot-id=swarm846-c4",
-	    "--bot-id=swarm847-c4"
+	    "[{\"id\": \"swarm846-c4\", \"pool\": \"Chrome-perf-fyi\"}, {\"id\": \"swarm847-c4\", \"pool\": \"Chrome-perf-fyi\"}]"
           ],
-          "script": "//tools/perf/perf_device_trigger.py"
+          "script": "//testing/trigger_scripts/perf_device_trigger.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
