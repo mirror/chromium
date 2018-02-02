@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d42994_513bea16",
+        "filename": "base/base_paths_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-02T23:54:27Z",
+      "side": 1,
+      "message": "packages\u0027",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030d047c_82cc3ba1",
+        "filename": "base/path_service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-02T23:54:27Z",
+      "side": 1,
+      "message": "not",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fcd77c_6857bd04",
+        "filename": "base/test/test_support_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-02T23:54:27Z",
+      "side": 1,
+      "message": "Can you help me understand how a _android.cc file would use DIR_ASSETS when the android impl of DIR_ASSERTS returns false and explains base::android::OpenApkAsset() must be used instead?",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400a5f45_f2cd00c9",
+        "filename": "content/shell/app/shell_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-02T23:54:27Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this DCHECK on android?",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
