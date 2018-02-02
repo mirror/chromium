@@ -1,6 +1,7 @@
 # These tests currently fail when they run with --enable-blink-features=LayoutNG
 # See https://crbug.com/591099.
 
+
 # Need support for getBoundingClientRect() with LayoutNG.
 crbug.com/755750 accessibility/selection-affinity.html [ Failure ]
 
