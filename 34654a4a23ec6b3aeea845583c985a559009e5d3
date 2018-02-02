@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e6ca93_b5edd63b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-02T23:13:19Z",
+      "side": 1,
+      "message": "nit: Maybe just color since incognito primary color may be passed in here and isn\u0027t technically a theme?",
+      "range": {
+        "startLine": 440,
+        "startChar": 14,
+        "endLine": 440,
+        "endChar": 56
+      },
+      "revId": "34654a4a23ec6b3aeea845583c985a559009e5d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
