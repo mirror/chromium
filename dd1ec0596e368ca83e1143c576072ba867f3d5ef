@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "190c8110_ead13255",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "You use _dirname for var names, i think i prefer just _dir which also makes name less confusing and match rest of file, can fix in future cl.",
+      "revId": "dd1ec0596e368ca83e1143c576072ba867f3d5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f706b14b_4a25be1b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "Finished generating.",
+      "revId": "dd1ec0596e368ca83e1143c576072ba867f3d5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274b4851_50685d97",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "This will get wrong on Windows. Leave a FIXME mentioning windows or think of a generic cross platform fix.",
+      "revId": "dd1ec0596e368ca83e1143c576072ba867f3d5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0a7ac2_0370dd23",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "please fix error message, directly seems wrong here.",
+      "revId": "dd1ec0596e368ca83e1143c576072ba867f3d5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "45e669d2_d9fc8683",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "Can you please add a comment in future cl here so that we don\u0027t forget why we do this case and unknowingly add assert.",
+      "parentUuid": "111d9848_eb5963c9",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e774b2_c1cc8768",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "fc4c6b75_f3ac3bd4",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "Ok makes sense, skip and i remember the assert now.",
+      "parentUuid": "8e3b0978_d511502b",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f536bb7_be48a19e",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -346,6 +382,24 @@
       "side": 1,
       "message": "Let\u0027s say a component C maps to two directories: dir1/ and dir2, and after running test targets, nothing in dir2/ is exercised, then I think we probably don\u0027t want to display dir2/ under component C in the report because it\u0027s empty anyway. WDYT?",
       "parentUuid": "726aca0c_d26dc4d0",
+      "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef0b25e_61c97ef8",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-02T03:32:04Z",
+      "side": 1,
+      "message": "Ok, if that code is not instrumented in target, then fine to skip. if it was instrumented, we would already see 0 right ?",
+      "parentUuid": "b1cd356f_d9083772",
       "revId": "0e2ef63cf67dce71f038e219bf54ed20362168c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
