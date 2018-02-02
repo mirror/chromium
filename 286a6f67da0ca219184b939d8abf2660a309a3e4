@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbf04c14_bda9e24a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-02T01:42:46Z",
+      "side": 1,
+      "message": "You need to be precise, you are not fixing the LocalSurfaceId, you updated the function ToString(). You are giving the impression that the LocalSurfaceId assignment was wrong.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "286a6f67da0ca219184b939d8abf2660a309a3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585d254b_797c4fb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-02T01:42:46Z",
+      "side": 1,
+      "message": "You don\u0027t need to mention the bug id in title. It\u0027s already included in the description.",
+      "revId": "286a6f67da0ca219184b939d8abf2660a309a3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f286e62f_b57e4cd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-02T01:42:46Z",
+      "side": 1,
+      "message": "its",
+      "range": {
+        "startLine": 9,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "286a6f67da0ca219184b939d8abf2660a309a3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c6e56f_d4735326",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-02T01:42:46Z",
+      "side": 1,
+      "message": "combine these 2 sentence into 1 sentence.",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "286a6f67da0ca219184b939d8abf2660a309a3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79b6bcc_844aef35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-02T01:42:46Z",
+      "side": 1,
+      "message": "use:\nTEST: test_name",
+      "revId": "286a6f67da0ca219184b939d8abf2660a309a3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05af9195_41f14ed0",
+        "filename": "base/unguessable_token_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-02T01:42:46Z",
+      "side": 1,
+      "message": "You need to find a way to change the command line flag such that VLOG_IS_ON(1) is true for 1 test and VLOG_IS_ON(1) is false for the 1 test. In your current implementation, it only tests for 1 scenario.",
+      "revId": "286a6f67da0ca219184b939d8abf2660a309a3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
