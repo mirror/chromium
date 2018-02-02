@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1233738b_4d93e9d9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-02T05:06:01Z",
+      "side": 1,
+      "message": "Maybe you can write TODO: Remove these members once IncrementalShadowDOM is enabled by default.",
+      "revId": "fb0b609a3346fd760392367047680db7c7899f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
