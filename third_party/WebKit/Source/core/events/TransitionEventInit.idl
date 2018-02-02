@@ -6,6 +6,6 @@
 
 dictionary TransitionEventInit : EventInit {
     DOMString propertyName = "";
-    double elapsedTime = 0.0;
+    float elapsedTime = 0.0;
     DOMString pseudoElement = "";
 };
