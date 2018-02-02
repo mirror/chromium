@@ -231,6 +231,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2079ab9b_a3a1c175",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T12:21:31Z",
+      "side": 0,
+      "message": "HeapVector\u003cWeakMember\u003c\u003e\u003e is forbidden. I think we have a static_assert for it.\n\nIf we want to support HeapVector\u003cWeakMember\u003c\u003e\u003e, I think we should just implement a special weak processing for it. i.e., the behavior 2 won\u0027t be needed.",
+      "parentUuid": "18d7eaba_1ded23f5",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
