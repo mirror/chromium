@@ -488,7 +488,6 @@ blink_core_sources("layout") {
     sources += [
       "LayoutThemeLinux.cpp",
       "LayoutThemeLinux.h",
-      "WebFontRenderingLinux.cpp",
     ]
   }
 
@@ -496,7 +495,6 @@ blink_core_sources("layout") {
     sources += [
       "LayoutThemeAndroid.cpp",
       "LayoutThemeAndroid.h",
-      "WebFontRenderingAndroid.cpp",
     ]
   }
 
