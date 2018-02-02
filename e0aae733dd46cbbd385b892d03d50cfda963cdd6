@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1edffb9e_c8a29471",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-02T21:39:22Z",
+      "side": 1,
+      "message": "how about pass the process id to here, and then use this version: https://cs.chromium.org/chromium/src/content/browser/bad_message.h?rcl\u003d801862cf21e7217aae758124949a9dd401f07feb\u0026l\u003d238",
+      "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3a0362_ef0cc052",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-02T21:39:22Z",
+      "side": 1,
+      "message": "else frame_future-\u003eSetFrame(nullptr) and move SetFrameFutureOnUIThread into this check\n\nactually, glancing at the code on the left side, I think I missed this in the earlier review for adding bridge, that SetFrameFutureOnUIThread needs to return a boolean that it\u0027s registered with filter already, or at least be responsible for not dropping a future if it fails to register with the filter\n\nand this looks even more complicated with mojo\n\nAlthough any bugs in this area is probably hidden by the fact that we always do synchronous draws until at last one succeeds before start doing async ones..\n\n\nalso style, can we have a consistent check for this, either the null check, or IsReadyForSynchronousCall",
+      "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6866ce_053d6920",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-02T21:39:22Z",
+      "side": 1,
+      "message": "did you ever work out the that problem with the pop up test?\n\nmaybe the problem is that with window.open pop ups, sync_compositor_ can actually be null here in webview. Those pop ups are weird because it\u0027s WebContents that\u0027s created from within content rather than created by embedder, so some initialization stuff are out of order..\n\nwhich means more state tracking :(",
+      "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
