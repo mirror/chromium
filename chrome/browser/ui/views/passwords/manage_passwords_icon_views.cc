@@ -28,6 +28,12 @@ ManagePasswordsIconViews::ManagePasswordsIconViews(CommandUpdater* updater)
 
 ManagePasswordsIconViews::~ManagePasswordsIconViews() {}
 
+void ManagePasswordsIconViews::SetHighlighted() {
+  views::InkDrop* ink_drop = GetInkDrop();
+  if (ink_drop && !ink_drop->IsHighlightFadingInOrVisible())
+    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+}
+
 void ManagePasswordsIconViews::SetState(password_manager::ui::State state) {
   if (state_ == state)
     return;
