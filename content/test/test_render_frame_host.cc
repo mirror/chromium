@@ -38,6 +38,12 @@
 
 namespace content {
 
+MockNavigationClientImpl::MockNavigationClientImpl(
+    mojom::NavigationClientRequest request)
+    : navigation_client_binding_(this, std::move(request)) {}
+
+MockNavigationClientImpl::~MockNavigationClientImpl() {}
+
 TestRenderFrameHostCreationObserver::TestRenderFrameHostCreationObserver(
     WebContents* web_contents)
     : WebContentsObserver(web_contents), last_created_frame_(nullptr) {}
@@ -117,7 +123,8 @@ TestRenderFrameHost::TestRenderFrameHost(SiteInstance* site_instance,
                                         : nullptr),
       contents_mime_type_("text/html"),
       simulate_history_list_was_cleared_(false),
-      last_commit_was_error_page_(false) {}
+      last_commit_was_error_page_(false),
+      navigation_client_impl_(nullptr) {}
 
 TestRenderFrameHost::~TestRenderFrameHost() {
 }
@@ -496,24 +503,28 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
   // initialized. Do it if it hasn't happened yet.
   InitializeRenderFrameIfNeeded();
 
-  if (IsBrowserSideNavigationEnabled()) {
-    // TODO(mkwst): The initiator origin here is incorrect.
-    mojom::BeginNavigationParamsPtr begin_params =
-        mojom::BeginNavigationParams::New(
-            std::string() /* headers */, net::LOAD_NORMAL,
-            false /* skip_service_worker */, REQUEST_CONTEXT_TYPE_HYPERLINK,
-            blink::WebMixedContentContextType::kBlockable,
-            false /* is_form_submission */, GURL() /* searchable_form_url */,
-            std::string() /* searchable_form_encoding */, url::Origin(),
-            GURL() /* client_side_redirect_url */);
-    CommonNavigationParams common_params;
-    common_params.url = url;
-    common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);
-    common_params.transition = ui::PAGE_TRANSITION_LINK;
-    common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
-    common_params.has_user_gesture = has_user_gesture;
-    BeginNavigation(common_params, std::move(begin_params));
-  }
+  // TODO(mkwst): The initiator origin here is incorrect.
+  mojom::BeginNavigationParamsPtr begin_params =
+      mojom::BeginNavigationParams::New(
+          std::string() /* headers */, net::LOAD_NORMAL,
+          false /* skip_service_worker */, REQUEST_CONTEXT_TYPE_HYPERLINK,
+          blink::WebMixedContentContextType::kBlockable,
+          false /* is_form_submission */, GURL() /* searchable_form_url */,
+          std::string() /* searchable_form_encoding */, url::Origin(),
+          GURL() /* client_side_redirect_url */);
+  CommonNavigationParams common_params;
+  common_params.url = url;
+  common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);
+  common_params.transition = ui::PAGE_TRANSITION_LINK;
+  common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
+  common_params.has_user_gesture = has_user_gesture;
+
+  mojom::NavigationClientPtr navigation_client_ptr;
+  navigation_client_impl_ = std::make_unique<MockNavigationClientImpl>(
+      mojo::MakeRequest(&navigation_client_ptr));
+
+  BeginNavigation(common_params, std::move(begin_params),
+                  std::move(navigation_client_ptr));
 }
 
 void TestRenderFrameHost::DidChangeOpener(int opener_routing_id) {
