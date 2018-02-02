@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff195114_5f8e08f3",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T20:31:28Z",
+      "side": 1,
+      "message": "There\u0027s ambiguity if |index| is right on the border. Maybe clarify\nin the comments whether it returns the first or second in that case?",
+      "revId": "1216db4486bd666525a4759974053aafe42fc07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
