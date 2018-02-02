@@ -16,6 +16,24 @@
       "revId": "e91762cb3bf2132aea21c16707f6ef7791d728c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2340abe4_5d9a9e18",
+        "filename": "url/url_canon_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-02T03:14:13Z",
+      "side": 1,
+      "message": "Äck",
+      "parentUuid": "863048ba_f308ac60",
+      "revId": "e91762cb3bf2132aea21c16707f6ef7791d728c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
