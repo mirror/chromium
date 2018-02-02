@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3661fce7_9b3b303e",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-02-02T13:34:08Z",
+      "side": 1,
+      "message": "\u003e Why not just leave it VECTOR_MATH_SIMD?  We already know it\u0027s a name space.\n\nHere we know that it\u0027s a name space whose name is the value of the VECTOR_MATH_SIMD_NAMESPACE_NAME macro (SSE in the case of VectorMathSSE.cpp and AVX in the case of VectorMathAVX.cpp in I8f1b6b7bce4d4ebfc254ed7d67758a68c20ec93a). I\u0027m not sure it is obvious from macro definition (in VectorMathSSE.cpp) that the macro defines a name space name unless the macro name contains some reference to purpose.\n\n\u003e And also, see https://google.github.io/styleguide/cppguide.html#Namespace_Names\n\nAre you saying that the name space name (SSE) should be lowercased? To me it seems that blink name space names are not yet transitioned to follow Google C++ Style Guide (VectorMath is camelcased etc.).",
+      "parentUuid": "8d499283_89aa503b",
+      "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16c8a466_50473ac0",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
         "patchSetId": 2
@@ -51,6 +69,23 @@
       "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57063b20_c16f2c43",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathSSE.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-02-02T13:34:08Z",
+      "side": 1,
+      "message": "The VECTOR_MATH_SIMD_NAMESPACE_NAME is defined here.",
+      "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
