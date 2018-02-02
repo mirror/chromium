@@ -46,6 +46,30 @@
       "revId": "ab3017280ac4866e11bf8457654111d0e45ef1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e045d6f_49e73e8b",
+        "filename": "chrome/browser/android/ntp/get_remote_suggestions_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-02T17:20:36Z",
+      "side": 1,
+      "message": "Hehe, I think it just prevented the _header_ file from being included, but for compiling the definition that\u0027s not necessary :)",
+      "parentUuid": "33caa2c4_d68c0e4d",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "ab3017280ac4866e11bf8457654111d0e45ef1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
