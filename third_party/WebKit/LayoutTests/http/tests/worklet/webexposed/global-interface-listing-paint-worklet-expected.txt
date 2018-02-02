@@ -120,7 +120,6 @@ CONSOLE MESSAGE: line 147: interface CSSUnitValue : CSSNumericValue
 CONSOLE MESSAGE: line 147:     getter unit
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter unit
 CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSUnparsedValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     getter length
@@ -404,7 +403,6 @@ CONSOLE MESSAGE: line 147: interface CSSUnitValue : CSSNumericValue
 CONSOLE MESSAGE: line 147:     getter unit
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter unit
 CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSUnparsedValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     getter length
