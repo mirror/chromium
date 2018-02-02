@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ebab97_bdfe6bf8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-02T16:08:23Z",
+      "side": 1,
+      "message": "Nit: we\u0027d like to emphasize these are in-flight (open) CLs, and Gerrit is the only Code Review we have now, so perhaps \"exportable in-flight CLs\" would be clearer.",
+      "revId": "d3111e2126e2692d03eac0bfd860610474373a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d051d3b_8f977bb9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-02T16:08:23Z",
+      "side": 1,
+      "message": "For symmetry, could you also add a message here? e.g.\n\n\"In-flight CLs cannot be exported because of the following error:\"",
+      "revId": "d3111e2126e2692d03eac0bfd860610474373a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd3791f_70989636",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-02T16:08:23Z",
+      "side": 1,
+      "message": "I wouldn\u0027t say these are non-fatal. You may say both Gerrit \u0026 Git errors are \"non-fatal\" in the sense that individual errors wouldn\u0027t prevent other CLs/commits to be exported. However, Git errors are a bit more \"fatal\" than that: if a merge conflict persists, manual gardening will be needed, otherwise the commit may risk being overwritten once it slips out of the history window. Hence, I\u0027d suggest the following message:\n\n\"Attention: The following errors have prevented some commits from being exported.\"\n\nLastly, I think it\u0027d be clearer if we move the messages to the end, i.e. move `process_chromium_commits` before this `if git_errors` block.",
+      "revId": "d3111e2126e2692d03eac0bfd860610474373a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
