@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e05d2a_5717ae4e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/dom/interfaces-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T20:17:58Z",
+      "side": 0,
+      "message": "Wow, wasn\u0027t expecting this file to go away. Hooray!",
+      "revId": "1f977216838ab364205dcd288b0b3efc0de1b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accb7f5b_34ef044d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/interfaces.https-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T20:17:58Z",
+      "side": 0,
+      "message": "FYI, I filed https://github.com/w3c/web-platform-tests/issues/9367 - payment-request is pulling in dom.idl but not using add_untested_idls()",
+      "revId": "1f977216838ab364205dcd288b0b3efc0de1b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
