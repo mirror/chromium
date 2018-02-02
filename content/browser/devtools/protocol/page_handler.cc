@@ -23,6 +23,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/devtools/devtools_session.h"
+#include "content/browser/devtools/protocol/devtools_download_manager.h"
 #include "content/browser/devtools/protocol/devtools_download_manager_delegate.h"
 #include "content/browser/devtools/protocol/devtools_download_manager_helper.h"
 #include "content/browser/devtools/protocol/emulation_handler.h"
@@ -408,6 +409,22 @@ void PageHandler::Navigate(const std::string& url,
   }
 }
 
+void PageHandler::OnDownloadStarted(
+    content::DownloadItem* item,
+    content::DownloadInterruptReason interrupt_reason) {
+  static const char kDownloadPrefix[] = "download:";
+
+  if (interrupt_reason != DOWNLOAD_INTERRUPT_REASON_NONE)
+    return;
+  if (!enabled_) {
+    item->Cancel(true);
+    return;
+  }
+
+  frontend_->DownloadStarted(kDownloadPrefix + item->GetGuid(),
+                             item->GetSuggestedFilename(), item->GetMimeType());
+}
+
 void PageHandler::NavigationReset(NavigationRequest* navigation_request) {
   auto navigate_callback = navigate_callbacks_.find(
       navigation_request->frame_tree_node()->devtools_frame_token());
@@ -750,10 +767,14 @@ Response PageHandler::SetDownloadBehavior(const std::string& behavior,
   // Override download manager delegate.
   content::BrowserContext* browser_context = web_contents->GetBrowserContext();
   DCHECK(browser_context);
-  content::DownloadManager* download_manager =
-      content::BrowserContext::GetDownloadManager(browser_context);
-  download_manager_delegate_ =
-      DevToolsDownloadManagerDelegate::TakeOver(download_manager);
+  if (behavior == Page::SetDownloadBehavior::BehaviorEnum::Stream) {
+    DevToolsDownloadManager::CreateForBrowserContext(browser_context);
+  } else {
+    content::DownloadManager* download_manager =
+        content::BrowserContext::GetDownloadManager(browser_context);
+    download_manager_delegate_ =
+        DevToolsDownloadManagerDelegate::TakeOver(download_manager);
+  }
 
   // Ensure that there is one helper attached. If there's already one, we reuse
   // it.
@@ -767,6 +788,12 @@ Response PageHandler::SetDownloadBehavior(const std::string& behavior,
     download_helper->SetDownloadBehavior(
         DevToolsDownloadManagerHelper::DownloadBehavior::ALLOW);
     download_helper->SetDownloadPath(download_path.fromJust());
+  }
+  if (behavior == Page::SetDownloadBehavior::BehaviorEnum::Stream) {
+    download_helper->SetDownloadBehavior(
+        DevToolsDownloadManagerHelper::DownloadBehavior::STREAM);
+    download_helper->SetCallback(base::BindRepeating(
+        &PageHandler::OnDownloadStarted, base::Unretained(this)));
   }
 
   return Response::OK();

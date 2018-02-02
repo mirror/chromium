@@ -10,12 +10,13 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(
     content::protocol::DevToolsDownloadManagerHelper);
 
 namespace content {
+
 namespace protocol {
 
 DevToolsDownloadManagerHelper::DevToolsDownloadManagerHelper(
     content::WebContents* contents)
-    : download_behavior_(
-          DevToolsDownloadManagerHelper::DownloadBehavior::DENY) {}
+    : download_behavior_(DevToolsDownloadManagerHelper::DownloadBehavior::DENY),
+      callback_(nullptr) {}
 
 DevToolsDownloadManagerHelper::~DevToolsDownloadManagerHelper() {}
 
@@ -41,6 +42,16 @@ std::string DevToolsDownloadManagerHelper::GetDownloadPath() {
 
 void DevToolsDownloadManagerHelper::SetDownloadPath(const std::string& path) {
   download_path_ = path;
+}
+
+void DevToolsDownloadManagerHelper::SetCallback(
+    const content::DownloadUrlParameters::OnStartedCallback& callback) {
+  callback_ = callback;
+}
+
+const content::DownloadUrlParameters::OnStartedCallback&
+DevToolsDownloadManagerHelper::GetCallback() {
+  return callback_;
 }
 
 }  // namespace protocol

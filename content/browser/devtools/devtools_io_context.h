@@ -20,6 +20,7 @@ class SequencedTaskRunner;
 }
 
 namespace content {
+class BrowserContext;
 class ChromeBlobStorageContext;
 class StoragePartition;
 
@@ -73,7 +74,9 @@ class DevToolsIOContext {
                                    StoragePartition*,
                                    const std::string& handle,
                                    const std::string& uuid);
-
+  scoped_refptr<ROStream> OpenDownload(BrowserContext*,
+                                       const std::string& handle,
+                                       const std::string& uuid);
   bool Close(const std::string& handle);
   void DiscardAllStreams();
   void OnBlobOpenComplete(const std::string& handle, bool success);

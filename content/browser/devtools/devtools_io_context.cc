@@ -18,6 +18,10 @@
 #include "base/third_party/icu/icu_utf.h"
 #include "base/threading/thread_restrictions.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
+#include "content/browser/devtools/protocol/devtools_download_item.h"
+#include "content/browser/devtools/protocol/devtools_download_manager.h"
+#include "content/browser/download/download_task_runner.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
 #include "net/base/io_buffer.h"
@@ -42,7 +46,20 @@ base::SequencedTaskRunner* impl_task_runner() {
   return s_sequenced_task_unner.Get().get();
 }
 
+bool IsTextMimeType(const std::string& mime_type) {
+  static const char* kTextMIMETypePrefixes[] = {
+      "text/", "application/x-javascript", "application/json",
+      "application/xml"};
+  for (size_t i = 0; i < arraysize(kTextMIMETypePrefixes); ++i) {
+    if (base::StartsWith(mime_type, kTextMIMETypePrefixes[i],
+                         base::CompareCase::INSENSITIVE_ASCII))
+      return true;
+  }
+  return false;
+}
+
 using storage::BlobReader;
+using content::protocol::DevToolsDownloadItem;
 
 unsigned s_last_stream_handle = 0;
 
@@ -102,8 +119,8 @@ bool TempFileStream::InitOnFileSequenceIfNeeded() {
                          base::File::FLAG_DELETE_ON_CLOSE;
   file_.Initialize(temp_path, flags);
   if (!file_.IsValid()) {
-    LOG(ERROR) << "Failed to open temporary file: " << temp_path.value()
-        << ", " << base::File::ErrorToString(file_.error_details());
+    LOG(ERROR) << "Failed to open temporary file: " << temp_path.value() << ", "
+               << base::File::ErrorToString(file_.error_details());
     had_errors_ = true;
     DeleteFile(temp_path, false);
     return false;
@@ -234,8 +251,6 @@ class BlobStream : public DevToolsIOContext::ROStream {
   void OnBlobConstructionComplete(storage::BlobStatus status);
   void OnCalculateSizeComplete(int net_error);
 
-  static bool IsTextMimeType(const std::string& mime_type);
-
   std::unique_ptr<storage::BlobDataHandle> blob_handle_;
   OpenCallback open_callback_;
   std::unique_ptr<BlobReader> blob_reader_;
@@ -252,19 +267,6 @@ void BlobStream::ReadRequest::Fail() {
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(std::move(callback), nullptr, false,
                                          ROStream::StatusFailure));
-}
-
-// static
-bool BlobStream::IsTextMimeType(const std::string& mime_type) {
-  static const char* kTextMIMETypePrefixes[] = {
-      "text/", "application/x-javascript", "application/json",
-      "application/xml"};
-  for (size_t i = 0; i < arraysize(kTextMIMETypePrefixes); ++i) {
-    if (base::StartsWith(mime_type, kTextMIMETypePrefixes[i],
-                         base::CompareCase::INSENSITIVE_ASCII))
-      return true;
-  }
-  return false;
 }
 
 void BlobStream::Open(scoped_refptr<ChromeBlobStorageContext> context,
@@ -458,6 +460,143 @@ void BlobStream::OnCalculateSizeComplete(int net_error) {
   BeginRead();
 }
 
+class DownloadStream : public DevToolsIOContext::ROStream {
+ public:
+  DownloadStream(BrowserContext* context)
+      : DevToolsIOContext::ROStream(
+            BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
+        browser_context_(context),
+        failed_(false),
+        is_binary_(false) {}
+
+  void Open(const std::string& download_guid);
+  // |position| gets ignored since there's no offset support on streams.
+  void Read(off_t position, size_t max_size, ReadCallback callback) override;
+  void Close(bool invoke_pending_callbacks) override;
+
+ private:
+  void ReadComplete(DevToolsDownloadItem* download_item,
+                    ReadCallback callback,
+                    size_t bytes_read);
+  ~DownloadStream() override = default;
+
+  // Convenience function to retrieve a download item from the
+  // |download_manager|. Note that download item is not owned by this class.
+  static DevToolsDownloadItem* GetDownloadItem(
+      protocol::DevToolsDownloadManager* download_manager,
+      const std::string& download_guid);
+
+  void ReadOnDownload(protocol::DevToolsDownloadManager* download_manager,
+                      size_t max_size,
+                      ReadCallback callback);
+  void OnReadComplete(int bytes_read);
+
+  BrowserContext* browser_context_;  // Not owned.
+  std::string guid_;
+  bool failed_;
+  bool is_binary_;
+  scoped_refptr<net::IOBuffer> buff_;
+
+  DISALLOW_COPY_AND_ASSIGN(DownloadStream);
+};
+
+// static
+DevToolsDownloadItem* DownloadStream::GetDownloadItem(
+    protocol::DevToolsDownloadManager* download_manager,
+    const std::string& download_guid) {
+  if (!download_manager)
+    return nullptr;
+  return static_cast<DevToolsDownloadItem*>(
+      download_manager->GetDownloadByGuid(download_guid));
+}
+
+void DownloadStream::Open(const std::string& download_guid) {
+  DevToolsDownloadItem* download_item = GetDownloadItem(
+      protocol::DevToolsDownloadManager::FromBrowserContext(browser_context_),
+      download_guid);
+  if (!download_item) {
+    failed_ = true;
+    return;
+  }
+  guid_ = download_guid;
+  is_binary_ = !IsTextMimeType(download_item->GetMimeType());
+}
+
+void DownloadStream::Read(off_t position,
+                          size_t max_size,
+                          ReadCallback callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  if (failed_) {
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            base::BindOnce(std::move(callback), nullptr, false,
+                                           ROStream::StatusFailure));
+    return;
+  }
+
+  GetDownloadTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DownloadStream::ReadOnDownload, this,
+                     protocol::DevToolsDownloadManager::FromBrowserContext(
+                         browser_context_),
+                     max_size, std::move(callback)));
+}
+
+void DownloadStream::ReadOnDownload(
+    protocol::DevToolsDownloadManager* download_manager,
+    size_t max_size,
+    ReadCallback callback) {
+  DevToolsDownloadItem* download_item =
+      GetDownloadItem(download_manager, guid_);
+  if (!download_item) {
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            base::BindOnce(std::move(callback), nullptr, false,
+                                           ROStream::StatusFailure));
+    return;
+  }
+
+  buff_ = new net::IOBuffer(max_size);
+  download_item->Read(buff_, max_size,
+                      base::BindOnce(&DownloadStream::ReadComplete, this,
+                                     download_item, std::move(callback)));
+}
+
+void DownloadStream::ReadComplete(DevToolsDownloadItem* download_item,
+                                  ReadCallback callback,
+                                  size_t bytes_read) {
+  if (download_item->GetState() == DownloadItem::CANCELLED ||
+      (bytes_read < 0)) {
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            base::BindOnce(std::move(callback), nullptr, false,
+                                           ROStream::StatusFailure));
+    return;
+  }
+
+  std::unique_ptr<std::string> data(new std::string());
+  Status status = download_item->GetState() == DownloadItem::COMPLETE
+                      ? StatusEOF
+                      : StatusSuccess;
+  if (is_binary_) {
+    Base64Encode(base::StringPiece(buff_->data(), bytes_read), data.get());
+  } else {
+    *data = std::string(buff_->data(), bytes_read);
+  }
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback), std::move(data), is_binary_, status));
+}
+
+void DownloadStream::Close(bool invoke_pending_callbacks) {
+  protocol::DevToolsDownloadManager* download_manager =
+      protocol::DevToolsDownloadManager::FromBrowserContext(browser_context_);
+  DevToolsDownloadItem* download_item =
+      GetDownloadItem(download_manager, guid_);
+  if (!download_item)
+    return;
+  download_manager->CloseDownload(download_item);
+}
+
 }  // namespace
 
 DevToolsIOContext::ROStream::ROStream(
@@ -506,6 +645,18 @@ scoped_refptr<DevToolsIOContext::ROStream> DevToolsIOContext::OpenBlob(
                base::BindOnce(&DevToolsIOContext::OnBlobOpenComplete,
                               weak_factory_.GetWeakPtr(), handle));
   DCHECK(inserted);
+  return std::move(result);
+}
+
+scoped_refptr<DevToolsIOContext::ROStream> DevToolsIOContext::OpenDownload(
+    BrowserContext* context,
+    const std::string& handle,
+    const std::string& uuid) {
+  scoped_refptr<DownloadStream> result = new DownloadStream(context);
+  bool inserted = streams_.insert(std::make_pair(handle, result)).second;
+  DCHECK(inserted);
+
+  result->Open(uuid);
   return std::move(result);
 }
 
