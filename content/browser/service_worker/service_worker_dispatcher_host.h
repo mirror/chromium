@@ -148,8 +148,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports);
 
-  void OnTerminateWorker(int handle_id);
-
   void DispatchExtendableMessageEvent(
       scoped_refptr<ServiceWorkerVersion> worker,
       const base::string16& message,

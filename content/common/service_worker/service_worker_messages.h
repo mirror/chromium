@@ -110,11 +110,6 @@ IPC_MESSAGE_CONTROL5(
     url::Origin /* source_origin */,
     std::vector<blink::MessagePortChannel> /* sent_message_ports */)
 
-// Tells the browser to terminate a service worker. Used in layout tests to
-// verify behavior when a service worker isn't running.
-IPC_MESSAGE_CONTROL1(ServiceWorkerHostMsg_TerminateWorker,
-                     int /* handle_id */)
-
 // Sends MessageEvent to a client (renderer->browser).
 IPC_MESSAGE_ROUTED3(
     ServiceWorkerHostMsg_PostMessageToClient,

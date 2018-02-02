@@ -84,6 +84,10 @@ void ServiceWorkerHandle::RegisterIntoDispatcherHost(
   dispatcher_host_->RegisterServiceWorkerHandle(base::WrapUnique(this));
 }
 
+void ServiceWorkerHandle::Terminate() {
+  version_->StopWorker(base::BindOnce(&base::DoNothing));
+}
+
 base::WeakPtr<ServiceWorkerHandle> ServiceWorkerHandle::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
