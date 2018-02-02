@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac9f054_ebd9789e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-02T20:34:38Z",
+      "side": 1,
+      "message": "This method should move to RenderWidgetHostViewMac. The this pointer you\u0027re passing is a RenderWidgetHostViewMac. If it\u0027s not segfaulting it\u0027s probably because we don\u0027t use the this pointer.",
+      "range": {
+        "startLine": 1179,
+        "startChar": 18,
+        "endLine": 1179,
+        "endChar": 53
+      },
+      "revId": "a6a6b0cdbafedff910d5051b5039a640a959927d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
