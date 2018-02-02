@@ -67,8 +67,7 @@ class ProfilingService : public service_manager::Service,
       bool keep_small_allocations,
       bool strip_path_from_mapped_files,
       mojom::ProfilingService::DumpProcessesForTracingCallback callback,
-      bool success,
-      memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
+      VmRegions vm_regions);
 
   // State needed to manage service lifecycle and lifecycle of bound clients.
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
