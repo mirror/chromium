@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83180ce1_5ea57512",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-02-02T22:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca20fe3e_d0ad1cb7",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 49
+      },
+      "revId": "829cb5bfc4b4462f1a945f6ff76cd9a6e8b8361a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cbb9f61_133fd0d1",
         "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "829cb5bfc4b4462f1a945f6ff76cd9a6e8b8361a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169551fb_6cf5539d",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-02-02T22:32:48Z",
+      "side": 1,
+      "message": "I think I agree. I\u0027ve removed this for now in the latest patchset, and we\u0027ll see what strings review ends up with overall.",
+      "parentUuid": "4cbb9f61_133fd0d1",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 3
+      },
+      "revId": "829cb5bfc4b4462f1a945f6ff76cd9a6e8b8361a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
