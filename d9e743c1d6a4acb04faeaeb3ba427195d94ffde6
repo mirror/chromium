@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2eafc16_d0ca7f93",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T11:21:03Z",
+      "side": 1,
+      "message": "Would you help me understand how this happens?\n\nWe delay tracing all hash tables that have weak members, so ephemeron should run only at the final atomic phase...?",
+      "revId": "d9e743c1d6a4acb04faeaeb3ba427195d94ffde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
