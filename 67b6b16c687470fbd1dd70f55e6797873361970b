@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9a511d_af242c9d",
+        "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-02T05:12:09Z",
+      "side": 0,
+      "message": "Not sure why this was within the loop.",
+      "range": {
+        "startLine": 303,
+        "startChar": 16,
+        "endLine": 303,
+        "endChar": 30
+      },
+      "revId": "67b6b16c687470fbd1dd70f55e6797873361970b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

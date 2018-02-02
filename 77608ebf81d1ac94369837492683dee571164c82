@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "465e7f3a_484b6ca4",
+        "filename": "extensions/common/extension.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-02T05:12:09Z",
+      "side": 1,
+      "message": "Had to do this to make it a compile time constant for static assert.",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "77608ebf81d1ac94369837492683dee571164c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7b8698_9c23750a",
+        "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-02T05:12:09Z",
+      "side": 1,
+      "message": "SCHEME_ALL is -1 which is a bit sad since we are relying on the binary representation of negative nos, which is probably platform dependent.",
+      "range": {
+        "startLine": 314,
+        "startChar": 7,
+        "endLine": 314,
+        "endChar": 27
+      },
+      "revId": "77608ebf81d1ac94369837492683dee571164c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
