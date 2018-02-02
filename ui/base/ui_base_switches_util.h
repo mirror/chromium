@@ -16,6 +16,8 @@ UI_BASE_EXPORT bool IsTouchDragDropEnabled();
 // --mus-hosting-viz is set.
 UI_BASE_EXPORT bool IsMusHostingViz();
 
+UI_BASE_EXPORT bool IsTouchableAppContextMenuEnabled();
+
 }  // namespace switches
 
 #endif  // UI_BASE_UI_BASE_SWITCHES_UTIL_H_
