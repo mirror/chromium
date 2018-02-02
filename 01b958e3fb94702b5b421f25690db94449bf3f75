@@ -305,6 +305,24 @@
     },
     {
       "key": {
+        "uuid": "163fad65_0b53d9e5",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-02T15:20:56Z",
+      "side": 1,
+      "message": "Hm, not sure why that is but current approach looks ok too.",
+      "parentUuid": "775ed1ac_50a46dd5",
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f3400e5_c8b1f2de",
         "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
         "patchSetId": 11
