@@ -44,7 +44,8 @@ std::unique_ptr<CastWebView> CastWebContentsManager::CreateWebView(
     bool transparent,
     bool allow_media_access,
     bool is_headless,
-    bool enable_touch_input) {
+    bool enable_touch_input,
+    bool enabled_for_dev) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 #if BUILDFLAG(ENABLE_CHROMECAST_EXTENSIONS)
   if (extension) {
@@ -55,7 +56,7 @@ std::unique_ptr<CastWebView> CastWebContentsManager::CreateWebView(
 #endif
   return std::make_unique<CastWebViewDefault>(
       delegate, this, browser_context_, site_instance, transparent,
-      allow_media_access, is_headless, enable_touch_input);
+      allow_media_access, is_headless, enable_touch_input, enabled_for_dev);
 }
 
 void CastWebContentsManager::DelayWebContentsDeletion(
