@@ -5,11 +5,29 @@
 cr.define('sync.confirmation', function() {
   'use strict';
 
+  function recordConsent() {
+    // Verify that the clicked actually is one with the 'consent-confirmation'
+    // attribute.
+    var consentConfirmation = this.getAttribute('consent-confirmation');
+    assert(consentConfirmation);
+
+    // Get the consent description.
+    var consentDescription = Array
+                                 .from(document.querySelectorAll(
+                                     '[consent-description]:not([hidden])'))
+                                 .map(element => element.textContent);
+    assert(consentDescription);
+
+    chrome.send('recordConsent', [consentDescription, consentConfirmation]);
+  }
+
   function onConfirm(e) {
+    recordConsent();
     chrome.send('confirm');
   }
 
   function onUndo(e) {
+    recordConsent();
     chrome.send('undo');
   }
 

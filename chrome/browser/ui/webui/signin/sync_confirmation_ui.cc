@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/webui/signin/sync_confirmation_ui.h"
 
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
@@ -14,6 +15,7 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/webui/web_ui_util.h"
 
 SyncConfirmationUI::SyncConfirmationUI(content::WebUI* web_ui)
@@ -90,6 +92,31 @@ SyncConfirmationUI::SyncConfirmationUI(content::WebUI* web_ui)
     }
   }
 
+  // NOTE: This vector should contain all strings passed to |source|. While this
+  // can't be easily verified due to WebUIDataSource being an opaque interface
+  // with no getters, omissions here can be spotted by SyncConfirmationHandler,
+  // which is the consumer of this data, not being able to find a particular
+  // string resource.
+  std::vector<int> string_grd_ids = {
+      IDS_SYNC_CONFIRMATION_DICE_CHROME_SYNC_MESSAGE,
+      IDS_SYNC_CONFIRMATION_DICE_PERSONALIZE_SERVICES_BODY,
+      IDS_SYNC_CONFIRMATION_DICE_GOOGLE_SERVICES_BODY,
+      IDS_SYNC_CONFIRMATION_DICE_SYNC_SETTINGS_LINK_BODY,
+      IDS_SYNC_CONFIRMATION_DICE_SYNC_SETTINGS_DESCRIPTION,
+      IDS_SYNC_CONFIRMATION_CHROME_SYNC_TITLE,
+      IDS_SYNC_CONFIRMATION_CHROME_SYNC_MESSAGE,
+      IDS_SYNC_CONFIRMATION_PERSONALIZE_SERVICES_TITLE,
+      IDS_SYNC_CONFIRMATION_PERSONALIZE_SERVICES_BODY,
+      IDS_SYNC_DISABLED_CONFIRMATION_DETAILS,
+      title_ids,
+      confirm_button_ids,
+      undo_button_ids};
+
+  for (int id : string_grd_ids) {
+    string_to_grd_id_map_[base::UTF16ToUTF8(l10n_util::GetStringUTF16(id))] =
+        id;
+  }
+
   source->AddLocalizedString("syncConfirmationTitle", title_ids);
   source->AddLocalizedString("syncConfirmationConfirmLabel",
                              confirm_button_ids);
@@ -103,7 +130,9 @@ SyncConfirmationUI::SyncConfirmationUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(profile, source);
 }
 
+SyncConfirmationUI::~SyncConfirmationUI() {}
+
 void SyncConfirmationUI::InitializeMessageHandlerWithBrowser(Browser* browser) {
-  web_ui()->AddMessageHandler(
-      std::make_unique<SyncConfirmationHandler>(browser));
+  web_ui()->AddMessageHandler(std::make_unique<SyncConfirmationHandler>(
+      browser, string_to_grd_id_map_));
 }
