@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2f218213_77000045",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-02T23:36:05Z",
+      "side": 1,
+      "message": "1. If we unify enums and want separate histograms, some values of histograms will be unused. It might be confusing to see that some values are always 0. \nTherefor to minimize the duplication scope I put all this code in metrics part.\n\n2. I am not into casting enums, that is very error prone. Also both histograms have distinctive values (\u0027sign out\u0027 for LOCK and \u0027browse as guest\u0027 for LOGIN) so making one subset of the other doesn\u0027t even solve the problem [1]\n\n3. Problem 1 can be solved by doing one histogram with values follwoing the pattern:\nkShutdownLock\nkShutdownLogin\nkSignOut(Lock)\nkBrowsAsGuest(Login)  \nThis would be monstrous histogram. Data could be filtered, although it was not easy to do with basic UMA dashboard that I used in the past.  \n\nWDYT?",
+      "parentUuid": "45fa896c_ab5c7303",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7935466a_a4a48fd3",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
