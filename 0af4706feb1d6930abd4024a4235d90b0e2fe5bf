@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36da7038_7ed91f75",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-02T20:08:40Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 47
+      },
+      "revId": "0af4706feb1d6930abd4024a4235d90b0e2fe5bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f29fdb_0ba7c402",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-02T20:08:40Z",
+      "side": 1,
+      "message": "It looks like view.h, widget.h, and dialog_client_view.h are all unused.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "0af4706feb1d6930abd4024a4235d90b0e2fe5bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b115840_90cd3b5a",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-02T20:08:40Z",
+      "side": 1,
+      "message": "This can go under the DialogDelegate label above (which should be DialogDelegateView now). I don\u0027t think you need to restrict the visibility.",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "0af4706feb1d6930abd4024a4235d90b0e2fe5bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14edab49_ae4c9b2e",
+        "filename": "chrome/browser/ui/views/download/download_danger_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-02T20:08:40Z",
+      "side": 1,
+      "message": "I think you can just call (this\u0027s) GetHeightForWidth here, it should have the same result with a FillLayout. Then you don\u0027t need a pointer to the label.",
+      "range": {
+        "startLine": 228,
+        "startChar": 40,
+        "endLine": 228,
+        "endChar": 57
+      },
+      "revId": "0af4706feb1d6930abd4024a4235d90b0e2fe5bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
