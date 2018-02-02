@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95d737a5_fc3c00c6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/MediaList.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-02-02T09:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74dd1ae7_8e3ad38e",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c07d0f_c9517841",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/cssimportrule.html",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e4c3014c_9802f3b8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/cssimportrule.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-02-02T09:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c07d0f_c9517841",
+      "range": {
+        "startLine": 88,
+        "startChar": 35,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7202661_90202942",
         "filename": "third_party/WebKit/Source/core/css/CSSImportRule.idl",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d75076d_2f157066",
+        "filename": "third_party/WebKit/Source/core/css/CSSImportRule.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-02-02T09:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7202661_90202942",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "eb3b9ee5c88349dd221cb765f821243c28777727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
