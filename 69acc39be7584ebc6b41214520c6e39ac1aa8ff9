@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b760220_eae14ffd",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T11:02:36Z",
+      "side": 1,
+      "message": "i think the compiler is trying to tell yo uthat static strings need to be defined out-of-line",
+      "revId": "69acc39be7584ebc6b41214520c6e39ac1aa8ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

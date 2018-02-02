@@ -69,6 +69,24 @@
       "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deae9572_37213cbf",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T11:02:36Z",
+      "side": 1,
+      "message": "much cleaner! i like it.",
+      "parentUuid": "317c03e8_adf4d207",
+      "revId": "df3deff0d8ebbcc1681c3667e963813bb0cd03dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
