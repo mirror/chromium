@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df5ef9c5_7920629a",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-02T21:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d610e616_e3bd566a",
+      "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4f270c_d29ff570",
         "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b7a79e_ff66f410",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-02T21:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4f270c_d29ff570",
+      "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eecb5d6a_d05b1768",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridgeImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-02T21:28:25Z",
+      "side": 1,
+      "message": "Done. PSB should be abstract, following the example of AppHooks.",
+      "parentUuid": "0c2e703f_263eba89",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 56
+      },
+      "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
