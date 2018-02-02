@@ -46,6 +46,30 @@
       "revId": "b28d0bc62494d2e374ecd5d67c2a2ce58ed83efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cd9479_ae4a515e",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T17:43:23Z",
+      "side": 1,
+      "message": "For these particular colors, they\u0027re not reused, but future colors that will be added here, many of them will be reused. So for consistency, I changed these ones to constants.",
+      "parentUuid": "820fb7f4_a79646a8",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "b28d0bc62494d2e374ecd5d67c2a2ce58ed83efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
