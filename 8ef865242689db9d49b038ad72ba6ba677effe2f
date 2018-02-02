@@ -22,6 +22,30 @@
       "revId": "8ef865242689db9d49b038ad72ba6ba677effe2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ab2787_109a6362",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_infobar_delegate_android.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-02-02T01:45:59Z",
+      "side": 1,
+      "message": "A mini-infobar is a half-height infobar on Android, also known as using \"compact layout\". A number of existing infobars, including reader mode and data saver, are mini infobars.\n\nRemoved mini.",
+      "parentUuid": "36744e7a_be19f9ae",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "8ef865242689db9d49b038ad72ba6ba677effe2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
