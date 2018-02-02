@@ -6,7 +6,6 @@
 
 #include "base/location.h"
 #include "base/threading/thread.h"
-#include "components/grpc_support/test/quic_test_server.h"
 #include "crypto/sha2.h"
 #include "net/base/net_errors.h"
 #include "net/cert/asn1_util.h"
@@ -200,12 +199,12 @@ namespace cronet {
 
 void CronetTestBase::SetUp() {
   ::testing::Test::SetUp();
-  grpc_support::StartQuicTestServer();
+  quic_server_.Start();
   delegate_ = [[TestDelegate alloc] init];
 }
 
 void CronetTestBase::TearDown() {
-  grpc_support::ShutdownQuicTestServer();
+  quic_server_.Shutdown();
   ::testing::Test::TearDown();
 }
 
