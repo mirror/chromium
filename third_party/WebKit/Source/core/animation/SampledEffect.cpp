@@ -8,7 +8,7 @@ namespace blink {
 
 SampledEffect::SampledEffect(KeyframeEffectReadOnly* effect)
     : effect_(effect),
-      sequence_number_(effect->GetAnimation()->SequenceNumber()),
+      sequence_number_(effect->GetAnimationSequenceNumber()),
       priority_(effect->GetPriority()) {}
 
 void SampledEffect::Clear() {
@@ -19,7 +19,7 @@ void SampledEffect::Clear() {
 // Design doc:
 // https://docs.google.com/document/d/1NomOWRrGQHlynQGO64CgdqRPAAEHhi3fSa8sf0Ip6xE
 bool SampledEffect::WillNeverChange() const {
-  return !effect_ || !effect_->GetAnimation();
+  return !effect_ || !effect_->HasAnimation();
 }
 
 void SampledEffect::RemoveReplacedInterpolations(

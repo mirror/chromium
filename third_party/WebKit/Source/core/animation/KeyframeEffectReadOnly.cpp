@@ -112,15 +112,16 @@ KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
   DCHECK(model_);
 }
 
-void KeyframeEffectReadOnly::Attach(Animation* animation) {
+void KeyframeEffectReadOnly::Attach(AnimationEffectClient* client) {
   if (target_) {
-    target_->EnsureElementAnimations().Animations().insert(animation);
+    target_->EnsureElementAnimations().Animations().insert(
+        client->GetAnimation());
     target_->SetNeedsAnimationStyleRecalc();
     if (RuntimeEnabledFeatures::WebAnimationsSVGEnabled() &&
         target_->IsSVGElement())
       ToSVGElement(target_)->SetWebAnimationsPending();
   }
-  AnimationEffectReadOnly::Attach(animation);
+  AnimationEffectReadOnly::Attach(client);
 }
 
 void KeyframeEffectReadOnly::Detach() {
@@ -129,14 +130,6 @@ void KeyframeEffectReadOnly::Detach() {
   if (sampled_effect_)
     ClearEffects();
   AnimationEffectReadOnly::Detach();
-}
-
-void KeyframeEffectReadOnly::SpecifiedTimingChanged() {
-  if (GetAnimation()) {
-    // FIXME: Needs to consider groups when added.
-    DCHECK_EQ(GetAnimation()->effect(), this);
-    GetAnimation()->SetCompositorPending(true);
-  }
 }
 
 static EffectStack& EnsureEffectStack(Element* element) {
@@ -225,7 +218,7 @@ void KeyframeEffectReadOnly::ClearEffects() {
 
   sampled_effect_->Clear();
   sampled_effect_ = nullptr;
-  RestartAnimationOnCompositor();
+  GetAnimation()->RestartAnimationOnCompositor();
   target_->SetNeedsAnimationStyleRecalc();
   if (RuntimeEnabledFeatures::WebAnimationsSVGEnabled() &&
       target_->IsSVGElement())
@@ -399,11 +392,6 @@ bool KeyframeEffectReadOnly::CancelAnimationOnCompositor() {
   return true;
 }
 
-void KeyframeEffectReadOnly::RestartAnimationOnCompositor() {
-  if (CancelAnimationOnCompositor())
-    GetAnimation()->SetCompositorPending(true);
-}
-
 void KeyframeEffectReadOnly::CancelIncompatibleAnimationsOnCompositor() {
   if (target_ && GetAnimation() && model_->HasFrames()) {
     CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
@@ -428,6 +416,19 @@ void KeyframeEffectReadOnly::AttachCompositedLayers() {
   DCHECK(GetAnimation());
   CompositorAnimations::AttachCompositedLayers(
       *target_, GetAnimation()->CompositorPlayer());
+}
+
+bool KeyframeEffectReadOnly::HasAnimation() const {
+  return !!client_;
+}
+
+bool KeyframeEffectReadOnly::HasPlayingAnimation() const {
+  return client_ && client_->Playing();
+}
+
+unsigned KeyframeEffectReadOnly::GetAnimationSequenceNumber() const {
+  DCHECK(client_);
+  return client_->SequenceNumber();
 }
 
 void KeyframeEffectReadOnly::Trace(blink::Visitor* visitor) {
