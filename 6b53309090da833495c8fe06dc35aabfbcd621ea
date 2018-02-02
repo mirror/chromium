@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8993cab_d448d3a0",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-02T10:28:17Z",
+      "side": 1,
+      "message": "I find this approach is error prone - could we instead just mark these as consent blocks and use the HTML node text as the constent.",
+      "range": {
+        "startLine": 136,
+        "startChar": 19,
+        "endLine": 136,
+        "endChar": 30
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af58dac_8490e437",
+        "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-02T10:28:17Z",
+      "side": 1,
+      "message": "I think we should extract the text of the inner node instead of the identifier of the resource.",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c2c80b_87bbc512",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-02T10:28:17Z",
+      "side": 1,
+      "message": "I think this should not be a public method of the SyncConfirmationUI (if it is really needed, then pass in to SyncConfirmationHandler via a the constructor or a Setter).",
+      "range": {
+        "startLine": 162,
+        "startChar": 25,
+        "endLine": 162,
+        "endChar": 50
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e59d18_c85fe9e6",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-02T10:28:17Z",
+      "side": 1,
+      "message": "I would really like for us to pass this consent to the sync flow helper (DiceTurnOnSyncHelper for DICE and OneClickSigninSyncStarter for pre-DICE). Those classes are supposed to hold all logic for enabling sync and should know when this data should be recorded.\nHaving this ping-pong between the sync confirmation dialog and these helpers classes seems wrong to me.\n\nI see 2 options:\n* pass the consent information on LoginUIServiceFactory::GetForProfile(profile_)-\u003eSyncConfirmationUIClosed.\n* add a new observer method for the LoginUIServiceFactory::Observer https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/signin/login_ui_service.h?rcl\u003df7379b6fa682ab90e32f08c69ba91fe2a35714cd\u0026l\u003d49",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ba259b_2ab2aae5",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_ui.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-02-02T10:28:17Z",
+      "side": 1,
+      "message": "This should not be a public method (prefer passing it to the handler on its constructor if this is really needed).",
+      "range": {
+        "startLine": 28,
+        "startChar": 44,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
