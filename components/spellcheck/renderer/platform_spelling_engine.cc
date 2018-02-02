@@ -4,14 +4,30 @@
 
 #include "components/spellcheck/renderer/platform_spelling_engine.h"
 
-#include "components/spellcheck/common/spellcheck_messages.h"
 #include "content/public/renderer/render_thread.h"
+#include "services/service_manager/public/cpp/local_interface_provider.h"
 
 using content::RenderThread;
 
 SpellingEngine* CreateNativeSpellingEngine(
     service_manager::LocalInterfaceProvider* embedder_provider) {
-  return new PlatformSpellingEngine();
+  return new PlatformSpellingEngine(embedder_provider);
+}
+
+PlatformSpellingEngine::PlatformSpellingEngine(
+    service_manager::LocalInterfaceProvider* embedder_provider)
+    : embedder_provider_(embedder_provider) {}
+
+PlatformSpellingEngine::~PlatformSpellingEngine() = default;
+
+spellcheck::mojom::SpellCheckHost&
+PlatformSpellingEngine::GetOrBindSpellCheckHost() {
+  if (spell_check_host_)
+    return *spell_check_host_;
+
+  if (embedder_provider_)
+    embedder_provider_->GetInterface(&spell_check_host_);
+  return *spell_check_host_;
 }
 
 void PlatformSpellingEngine::Init(base::File bdict_file) {
@@ -31,9 +47,11 @@ bool PlatformSpellingEngine::IsEnabled() {
 // all engines share a similar path for async requests.
 bool PlatformSpellingEngine::CheckSpelling(const base::string16& word_to_check,
                                            int tag) {
+  // There's no SpellCheckHost in tests that don't provide |embedder_provider_|.
+  if (!spell_check_host_ && !embedder_provider_)
+    return false;
   bool word_correct = false;
-  RenderThread::Get()->Send(new SpellCheckHostMsg_CheckSpelling(
-      word_to_check, tag, &word_correct));
+  GetOrBindSpellCheckHost().CheckSpelling(word_to_check, tag, &word_correct);
   return word_correct;
 }
 
@@ -43,6 +61,9 @@ bool PlatformSpellingEngine::CheckSpelling(const base::string16& word_to_check,
 void PlatformSpellingEngine::FillSuggestionList(
     const base::string16& wrong_word,
     std::vector<base::string16>* optional_suggestions) {
-    RenderThread::Get()->Send(new SpellCheckHostMsg_FillSuggestionList(
-        wrong_word, optional_suggestions));
+  // There's no SpellCheckHost in tests that don't provide |embedder_provider_|.
+  if (!spell_check_host_ && !embedder_provider_)
+    return;
+  GetOrBindSpellCheckHost().FillSuggestionList(wrong_word,
+                                               optional_suggestions);
 }
