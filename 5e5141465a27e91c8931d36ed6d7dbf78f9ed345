@@ -34,6 +34,24 @@
       "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2cfcb82_fd684fd6",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:12:12Z",
+      "side": 1,
+      "message": "convention in content/public is to keep the API to a minimum. so having 2 methods with 1 calling the other goes against that convention.",
+      "parentUuid": "07eee02a_675612d0",
+      "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

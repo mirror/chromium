@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ab26cd_e7cadc7e",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:12:12Z",
+      "side": 1,
+      "message": "is description ever set when custom_reason !\u003d network::mojom::URLLoader::kClientDisconnectReason?",
+      "revId": "d7d4b234acfb205e2e1a7c389b11681c5fd2ac2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e282d8a0_7bc276a0",
+        "filename": "content/public/browser/resource_request_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-02T01:12:12Z",
+      "side": 1,
+      "message": "nit: please document",
+      "revId": "d7d4b234acfb205e2e1a7c389b11681c5fd2ac2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
