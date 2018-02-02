@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a2e8263_1a2fc368",
+        "filename": "components/crash/content/app/crashpad.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-02T00:00:43Z",
+      "side": 1,
+      "message": "nit; \\n to separate.",
+      "revId": "308369e3dc8c2e1f454f235ea55d4a65a428ab71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec6397a_9470983b",
+        "filename": "components/crash/content/app/crashpad.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-02T00:00:43Z",
+      "side": 1,
+      "message": "If this is going to have to be hacked through layers, then maybe TODO bug: remove me, too.",
+      "revId": "308369e3dc8c2e1f454f235ea55d4a65a428ab71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
