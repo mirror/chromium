@@ -1081,9 +1081,12 @@ void FeatureInfo::InitializeFeatures() {
   // TODO(mcasas): connect in Windows, https://crbug.com/803451
   // XR30 support was introduced in GLES 3.0/ OpenGL 4.2, before that it was
   // signalled via a specific extension.
+  // TODO(mcasas): remove the swiftshader provision when it accepts our data
+  // format https://crbug.com/swiftshader/95.
   feature_flags_.chromium_image_xr30 =
-      gl_version_info_->is_es3 || gl_version_info_->IsAtLeastGL(4, 2) ||
-      gl::HasExtension(extensions, "GL_EXT_texture_type_2_10_10_10_REV");
+      !gl_version_info_->is_swiftshader &&
+      (gl_version_info_->is_es3 || gl_version_info_->IsAtLeastGL(4, 2) ||
+       gl::HasExtension(extensions, "GL_EXT_texture_type_2_10_10_10_REV"));
 #endif
   if (feature_flags_.chromium_image_xr30){
     validators_.texture_internal_format.AddValue(GL_RGB10_A2_EXT);
