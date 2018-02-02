@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8713599_ff709c5c",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-02-02T16:12:54Z",
+      "side": 1,
+      "message": "I move the stop animation_observer to SetHost. Now it include tab change and close.",
+      "parentUuid": "cb00a3fa_f27b0206",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 126,
+        "endChar": 46
+      },
+      "revId": "88b07a1c7354dc79a83651c63c61382eeb1553ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32db0f48_03326301",
         "filename": "content/browser/renderer_host/legacy_render_widget_host_win.h",
         "patchSetId": 47
@@ -45,6 +69,30 @@
       "revId": "88b07a1c7354dc79a83651c63c61382eeb1553ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b05dd60_45333a97",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-02-02T16:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32db0f48_03326301",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 22
+      },
+      "revId": "88b07a1c7354dc79a83651c63c61382eeb1553ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
