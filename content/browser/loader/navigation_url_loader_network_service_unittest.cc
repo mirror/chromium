@@ -27,6 +27,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "services/network/public/cpp/features.h"
+#include "services/network/resource_scheduler_client.h"
 #include "services/network/url_loader.h"
 #include "services/network/url_request_context_owner.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -40,12 +41,19 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
  public:
   explicit TestURLLoaderRequestHandler(
       base::Optional<network::ResourceRequest>* most_recent_resource_request)
-      : most_recent_resource_request_(most_recent_resource_request) {
+      : most_recent_resource_request_(most_recent_resource_request),
+        resource_scheduler_(false) {
     net::URLRequestContextBuilder context_builder;
     context_builder.set_proxy_resolution_service(
         net::ProxyResolutionService::CreateDirect());
     context_ =
         new network::NetworkURLRequestContextGetter(context_builder.Build());
+    constexpr int child_id = 4;
+    constexpr int route_id = 8;
+    resource_scheduler_client_ =
+        base::MakeRefCounted<network::ResourceSchedulerClient>(
+            child_id, route_id, &resource_scheduler_,
+            context_->GetURLRequestContext()->network_quality_estimator());
   }
 
   ~TestURLLoaderRequestHandler() override {}
@@ -63,10 +71,11 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
                    network::mojom::URLLoaderClientPtr client) {
     *most_recent_resource_request_ = resource_request;
     // The URLLoader will delete itself upon completion.
-    new network::URLLoader(
-        context_, nullptr, std::move(request), 0 /* options */,
-        resource_request, false /* report_raw_headers */, std::move(client),
-        TRAFFIC_ANNOTATION_FOR_TESTS, 0 /* process_id */, nullptr);
+    new network::URLLoader(context_, nullptr, std::move(request),
+                           0 /* options */, resource_request,
+                           false /* report_raw_headers */, std::move(client),
+                           TRAFFIC_ANNOTATION_FOR_TESTS, 0 /* process_id */,
+                           resource_scheduler_client_, nullptr);
   }
 
   bool MaybeCreateLoaderForResponse(
@@ -81,6 +90,8 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
   base::Optional<network::ResourceRequest>*
       most_recent_resource_request_;  // NOT OWNED.
   scoped_refptr<network::NetworkURLRequestContextGetter> context_;
+  network::ResourceScheduler resource_scheduler_;
+  scoped_refptr<network::ResourceSchedulerClient> resource_scheduler_client_;
 };
 
 }  // namespace
