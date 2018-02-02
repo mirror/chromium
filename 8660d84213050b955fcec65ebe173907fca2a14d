@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b05558_5ed49346",
+        "filename": "third_party/libvpx/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2018-02-02T18:55:09Z",
+      "side": 1,
+      "message": "Could you update this to 1.7.0 please? I missed that in the last update.",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "8660d84213050b955fcec65ebe173907fca2a14d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
