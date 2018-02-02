@@ -84,6 +84,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
       mojom::VideoDetectorObserverPtr observer) override;
   void CreateVideoCapturer(
       mojom::FrameSinkVideoCapturerRequest request) override;
+  void EvictSurfaces(const std::vector<SurfaceId>& surface_ids) override;
 
   // CompositorFrameSinkSupport, hierarchy, and BeginFrameSource can be
   // registered and unregistered in any order with respect to each other.
