@@ -36,6 +36,15 @@ class CastMediaSinkServiceImpl
       public cast_channel::CastSocket::Observer,
       public DiscoveryNetworkMonitor::Observer {
  public:
+  class Observer {
+   public:
+    virtual ~Observer() = default;
+
+    virtual void OnSinkAdded(const MediaSinkInternal& sink);
+    virtual void OnSinkUpdated(const MediaSinkInternal& sink);
+    virtual void OnSinkRemoved(const MediaSink::Id& sink_id);
+  };
+
   using SinkSource = CastDeviceCountMetrics::SinkSource;
 
   // Default Cast control port to open Cast Socket from DIAL sink.
@@ -53,6 +62,7 @@ class CastMediaSinkServiceImpl
   // |url_request_context_getter|: URLRequestContextGetter used for making
   // network requests.
   CastMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
+                           Observer* observer,
                            cast_channel::CastSocketService* cast_socket_service,
                            DiscoveryNetworkMonitor* network_monitor,
                            const scoped_refptr<net::URLRequestContextGetter>&
@@ -300,6 +310,9 @@ class CastMediaSinkServiceImpl
 
   // Map of sinks with opened cast channels keyed by IP endpoint.
   MediaSinkInternalMap current_sinks_map_;
+
+  // Observer to notify when a sink is added, updated, or removed.
+  Observer* const observer_;
 
   // Raw pointer of leaky singleton CastSocketService, which manages adding and
   // removing Cast channels.
