@@ -70,6 +70,12 @@ class BASE_EXPORT UnguessableToken {
   // Hex representation of the unguessable token.
   std::string ToString() const;
 
+  // Don't call these functions explicitly.
+  // They're called from ToString() depending on
+  // whether --enable-logging flag is set or not
+  std::string ToShortString() const;
+  std::string ToLongString() const;
+
   explicit operator bool() const { return !is_empty(); }
 
   bool operator<(const UnguessableToken& other) const {

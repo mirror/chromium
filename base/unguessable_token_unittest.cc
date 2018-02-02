@@ -80,14 +80,19 @@ TEST(UnguessableTokenTest, VerifyValueSerialization) {
 
 TEST(UnguessableTokenTest, VerifyToString) {
   UnguessableToken token = UnguessableToken::Deserialize(0x123, 0xABC);
-  std::string expected = "0000012300000ABC";
+  UnguessableToken BigToken =
+      UnguessableToken::Deserialize(0x123456789, 0xABCABCABC);
 
-  EXPECT_EQ(expected, token.ToString());
+  std::string expectedShort = "0123..0ABC", expectedLong = "0000012300000ABC";
 
-  std::string expected_stream = "(0000012300000ABC)";
-  std::stringstream stream;
-  stream << token;
-  EXPECT_EQ(expected_stream, stream.str());
+  std::string BigExpectedShort = "123456789ABCABCABC";
+  std::string BigExpectedLong = "123456789ABCABCABC";
+
+  EXPECT_EQ(expectedShort, token.ToShortString());
+  EXPECT_EQ(expectedLong, token.ToLongString());
+
+  EXPECT_EQ(BigExpectedShort, BigToken.ToShortString());
+  EXPECT_EQ(BigExpectedLong, BigToken.ToLongString());
 }
 
 TEST(UnguessableTokenTest, VerifySmallerThanOperator) {
