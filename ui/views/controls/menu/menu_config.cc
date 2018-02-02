@@ -45,6 +45,7 @@ MenuConfig::MenuConfig()
       show_delay(400),
       corner_radius(0) {
   Init();
+  corner_radius = 25;
 }
 
 MenuConfig::~MenuConfig() {}

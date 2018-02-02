@@ -199,6 +199,9 @@ void ShelfContextMenuModel::AddItems(ui::SimpleMenuModel* model,
           submenus->push_back(std::move(submenu));
         }
         break;
+    default:
+      break;
+
     }
     if (!item->image.isNull()) {
       model->SetIcon(model->GetIndexOfCommandId(item->command_id),

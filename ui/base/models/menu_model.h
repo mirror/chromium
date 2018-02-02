@@ -32,7 +32,8 @@ class UI_BASE_EXPORT MenuModel {
     TYPE_RADIO,
     TYPE_SEPARATOR,
     TYPE_BUTTON_ITEM,
-    TYPE_SUBMENU
+    TYPE_SUBMENU//,
+    //TYPE_TOUCHABLE
   };
 
   virtual ~MenuModel() {}

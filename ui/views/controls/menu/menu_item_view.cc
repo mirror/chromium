@@ -546,6 +546,11 @@ void MenuItemView::ChildrenChanged() {
   removed_items_.clear();
 }
 
+/*
+ * Layout within the horizontal MenuItemView.
+ * This could be a single touchable, but how are we going
+ * to make them layout horizontally?
+ */
 void MenuItemView::Layout() {
   if (!has_children())
     return;
@@ -555,6 +560,7 @@ void MenuItemView::Layout() {
     gfx::Size size = child->GetPreferredSize();
     child->SetBounds(0, GetTopMargin(), size.width(), size.height());
   } else {
+
     // Child views are laid out right aligned and given the full height. To
     // right align start with the last view and progress to the first.
     int x = width() - (use_right_margin_ ? item_right_margin_ : 0);
