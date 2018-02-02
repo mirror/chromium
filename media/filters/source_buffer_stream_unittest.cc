@@ -5835,6 +5835,60 @@ TEST_P(SourceBufferStreamTest, SapType2WithNonkeyframePtsInEarlierRange) {
   CheckNoNextBuffer();
 }
 
+// BIG TODO refine this test case once solution approach is decided and
+// implemented.
+TEST_P(
+    SourceBufferStreamTest,
+    MultipleOverlaps_PreserveAdjacency_EstimatedDurationOnOneOfTheAppendedBuffers) {
+  // Append a GOP that has fudge room as its interval (e.g. 2 frames of same
+  // duration >= minimum 1ms).
+  NewCodedFrameGroupAppend("0D10K 10D10");
+  CheckExpectedRangesByTimestamp("{ [0,20) }");
+
+  // Trigger a DTS discontinuity so later 21ms append also is discontinuous and
+  // retains 10ms*2 fudge room.
+  NewCodedFrameGroupAppend("100D10K");
+  CheckExpectedRangesByTimestamp("{ [0,20) [100,110) }");
+
+  // Append another keyframe that starts within fudge room distance of the
+  // nonkeyframe in the GOP appended, above.
+  NewCodedFrameGroupAppend("21D10K");
+  CheckExpectedRangesByTimestamp("{ [0,31) [100,110) }");
+
+  // Overlap-append the original GOP with a single estimated-duration keyframe.
+  // Though its timestamp is not within fudge room of the next keyframe, that
+  // next keyframe at time 21ms was in the overlapped range and is retained in
+  // the result of the overlap append's range.
+  NewCodedFrameGroupAppend("0D10EK");
+  CheckExpectedRangesByTimestamp("{ [0,31) [100,110) }");
+  // That new keyframe at time 0 now has derived estimated duration 21ms.  That
+  // increased estimated duration did *not* increase the fudge room (which is
+  // still 2 * 10ms = 20ms.) So the next line, which splices in a new frame at
+  // time 21 causes the estimated keyframe at time 0 to not have a timestamp
+  // within fudge room of the new range that starts right at 21ms, the same time
+  // that ends the first buffered range, violating IsRangeListSorted DCHECK.
+  NewCodedFrameGroupAppend("21D10K");  // --> BOOM.
+  CheckExpectedRangesByTimestamp(" BIG TODO ");
+
+  // Potential solution A: because CanSeekTo uses both BufferedEndTime and
+  // FudgeRoom, CanAppendBuffersToEnd should consider allowing any range with
+  // any time in its [EndTime,BufferedEndTime] (instead of just EndTime) that is
+  // within fudge room of what's attempting to append to its end, to be
+  // considered appendable. This seems to increase consistency of logic, while
+  // not letting estimated duration edge case logic seep further.
+  //
+  // Alternative solution B: plumb any updating of estimated duration into the
+  // "potentially increase fudge room and mergealladjacentranges" logic. This is
+  // ugly because the estimated duration updates occur in SBR subclasses, later
+  // than the initial scans in SBS::Append that perform this work.
+  //
+  // Alternative solution C: limit updating of estimated durations to only those
+  // that occur as result of "continuous appends". Tracking that might involve
+  // something like a "CFG counter" associated with the
+  // estimated-duration-buffer that could be compared to the current CFG counter
+  // to see if the estimated duration should be adjusted. Definitely ugly.
+}
+
 INSTANTIATE_TEST_CASE_P(LegacyByDts,
                         SourceBufferStreamTest,
                         Values(BufferingApi::kLegacyByDts));
