@@ -85100,6 +85100,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Stability.Internals.SystemCrashCount" units="crashes">
+  <owner>siggi@chromium.org</owner>
+  <summary>
+    Number of times a browser crash was detected, where the browser was last
+    known to be alive in a Windows system session that terminated abnormally.
+  </summary>
+</histogram>
+
 <histogram name="Stability.Internals.VersionMismatchCount" units="counts">
   <owner>manzagop@chromium.org</owner>
   <summary>
