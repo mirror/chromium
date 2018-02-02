@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df95430_2d843db1",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/enter-picture-in-picture.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-02T09:34:16Z",
+      "side": 1,
+      "message": "t.step_func_done",
+      "range": {
+        "startLine": 13,
+        "startChar": 52,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "64ac9d76df66aa339d4bfc437d28c77320f01fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27efca7_3b04efa9",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/enter-picture-in-picture.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-02T09:34:16Z",
+      "side": 1,
+      "message": "Can you check the `pictureInPictureElement` here? It should be set when the event fired.",
+      "revId": "64ac9d76df66aa339d4bfc437d28c77320f01fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fad432a_486dbe83",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-02T09:34:16Z",
+      "side": 1,
+      "message": "FWIW, I think the spec says that you should do this *after* setting the element.",
+      "revId": "64ac9d76df66aa339d4bfc437d28c77320f01fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
