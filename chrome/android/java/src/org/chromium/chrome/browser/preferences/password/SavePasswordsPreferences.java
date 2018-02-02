@@ -35,6 +35,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.ContentUriUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -106,6 +107,10 @@ public class SavePasswordsPreferences
     public static final String PREF_SAVE_PASSWORDS_SWITCH = "save_passwords_switch";
     public static final String PREF_AUTOSIGNIN_SWITCH = "autosignin_switch";
 
+    // A PasswordEntryEditor receives a boolean value with this key. If set true, the the entry was
+    // part of a search result.
+    public static final String EXTRA_FOUND_VIA_SEARCH = "found_via_search_args";
+
     private static final String PREF_KEY_CATEGORY_SAVED_PASSWORDS = "saved_passwords";
     private static final String PREF_KEY_CATEGORY_EXCEPTIONS = "exceptions";
     private static final String PREF_KEY_MANAGE_ACCOUNT_LINK = "manage_account_link";
@@ -116,6 +121,11 @@ public class SavePasswordsPreferences
 
     // Name of the subdirectory in cache which stores the exported passwords file.
     private static final String PASSWORDS_CACHE_DIR = "/passwords";
+
+    // Name of the histogram that records whether the user visiting the settings triggered the
+    // search.
+    private static final String HISTOGRAM_SEARCH_TRIGGERED =
+            "PasswordManager.Android.PasswordSearchTriggered";
 
     private static final int ORDER_SWITCH = 0;
     private static final int ORDER_AUTO_SIGNIN_CHECKBOX = 1;
@@ -143,6 +153,7 @@ public class SavePasswordsPreferences
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
     private TextMessagePreference mEmptyView;
+    private boolean mSearchTriggered;
     private Menu mMenuForTesting;
 
     // Contains the reference to the progress-bar dialog after the user confirms the password
@@ -179,6 +190,7 @@ public class SavePasswordsPreferences
         }
         if (savedInstanceState.containsKey(SAVED_STATE_SEARCH_QUERY)) {
             mSearchQuery = savedInstanceState.getString(SAVED_STATE_SEARCH_QUERY);
+            mSearchTriggered = mSearchQuery != null; // Checked and recorded in onDestroy().
         }
     }
 
@@ -212,6 +224,7 @@ public class SavePasswordsPreferences
         searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                mSearchTriggered = true;
                 filterPasswords(""); // Hide other menu elements.
                 return true; // Continue expanding.
             }
@@ -640,6 +653,9 @@ public class SavePasswordsPreferences
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (providesPasswordSearch()) {
+            RecordHistogram.recordBooleanHistogram(HISTOGRAM_SEARCH_TRIGGERED, mSearchTriggered);
+        }
         PasswordManagerHandlerProvider.getInstance().removeObserver(this);
     }
 
@@ -660,6 +676,7 @@ public class SavePasswordsPreferences
             Intent intent = PreferencesLauncher.createIntentForSettingsPage(
                     getActivity(), PasswordEntryEditor.class.getName());
             intent.putExtra(Preferences.EXTRA_SHOW_FRAGMENT_ARGUMENTS, preference.getExtras());
+            intent.putExtra(SavePasswordsPreferences.EXTRA_FOUND_VIA_SEARCH, mSearchQuery != null);
             startActivity(intent);
         }
         return true;

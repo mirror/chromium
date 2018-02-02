@@ -20,6 +20,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasTyp
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
@@ -35,10 +36,15 @@ import static org.hamcrest.Matchers.startsWith;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.PerformException;
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.util.TreeIterables;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.view.MenuItem;
@@ -55,6 +61,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.MetricsUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -69,12 +76,14 @@ import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Tests for the "Save Passwords" settings screen.
  */
 @RunWith(BaseJUnit4ClassRunner.class)
 public class SavePasswordsPreferencesTest {
+    private static final long UI_UPDATING_TIMEOUT_MS = 3000;
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
 
@@ -249,6 +258,40 @@ public class SavePasswordsPreferencesTest {
                 System.currentTimeMillis(), ReauthenticationManager.REAUTH_SCOPE_BULK);
         Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
                 .perform(click());
+    }
+
+    /**
+     * Waits until a view matching the given matcher appears. Times out if no view was found until
+     * the UI_UPDATING_TIMEOUT_MS expired.
+     * @param viewMatcher The matcher matching the view that should be waited for.
+     */
+    private void waitForView(Matcher<View> viewMatcher) {
+        Espresso.onView(isRoot()).perform(new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isRoot();
+            }
+
+            @Override
+            public String getDescription() {
+                return "wait for " + UI_UPDATING_TIMEOUT_MS + "ms to match "
+                        + viewMatcher.toString();
+            }
+
+            @Override
+            public void perform(UiController uiController, View root) {
+                final long start_time = System.currentTimeMillis();
+                do {
+                    for (View view : TreeIterables.breadthFirstViewTraversal(root))
+                        if (viewMatcher.matches(view)) return;
+                    uiController.loopMainThreadForAtLeast(100);
+                } while (System.currentTimeMillis() - start_time < UI_UPDATING_TIMEOUT_MS);
+                throw new PerformException.Builder()
+                        .withActionDescription(this.getDescription())
+                        .withCause(new TimeoutException())
+                        .build();
+            }
+        });
     }
 
     /**
@@ -1091,8 +1134,10 @@ public class SavePasswordsPreferencesTest {
 
         // Open the search and filter all but "Zeus".
         Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        waitForView(withId(R.id.search_src_text));
         Espresso.onView(withId(R.id.search_src_text))
                 .perform(click(), typeText("Zeu"), closeSoftKeyboard());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
         Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).check(matches(isDisplayed()));
@@ -1103,13 +1148,20 @@ public class SavePasswordsPreferencesTest {
         // reauthentication challenge.
         ReauthenticationManager.recordLastReauth(
                 System.currentTimeMillis(), ReauthenticationManager.REAUTH_SCOPE_ONE_AT_A_TIME);
+        Instrumentation.ActivityMonitor monitor =
+                InstrumentationRegistry.getInstrumentation().addMonitor(
+                        new IntentFilter(Intent.ACTION_VIEW), null, false);
         Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).perform(click());
+        monitor.waitForActivityWithTimeout(UI_UPDATING_TIMEOUT_MS);
+        Assert.assertEquals("Monitor for has not been called", 1, monitor.getHits());
+        InstrumentationRegistry.getInstrumentation().removeMonitor(monitor);
         Espresso.onView(withContentDescription(R.string.password_entry_editor_view_stored_password))
                 .perform(click());
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         Espresso.onView(withText(ZEUS_ON_EARTH.getPassword())).check(matches(isDisplayed()));
-        Espresso.pressBack(); // Go back to the search list.
+        Espresso.onView(withContentDescription(R.string.abc_action_bar_up_description))
+                .perform(click()); // Go back to the search list.
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
@@ -1119,7 +1171,57 @@ public class SavePasswordsPreferencesTest {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         // The search bar should still be open and still display the search query.
+        waitForView(withId(R.id.search_src_text));
         Espresso.onView(withId(R.id.search_src_text)).check(matches(isDisplayed()));
         Espresso.onView(withId(R.id.search_src_text)).check(matches(withText("Zeu")));
+    }
+
+    /**
+     * Check that triggering searches and inspected search results are recorded in histograms.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIsRecordedInHistograms() throws Exception {
+        MetricsUtils.HistogramDelta triggered_delta = new MetricsUtils.HistogramDelta(
+                "PasswordManager.Android.PasswordSearchTriggered", 1);
+        MetricsUtils.HistogramDelta untriggered_delta = new MetricsUtils.HistogramDelta(
+                "PasswordManager.Android.PasswordSearchTriggered", 0);
+        MetricsUtils.HistogramDelta viewed_after_search_delta = new MetricsUtils.HistogramDelta(
+                "PasswordManager.Android.PasswordCredentialEntry", 3);
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        // Open the search and filter all but "Zeus".
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        Espresso.onView(withId(R.id.search_src_text))
+                .perform(click(), typeText("Zeu"), closeSoftKeyboard());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        Instrumentation.ActivityMonitor monitor =
+                InstrumentationRegistry.getInstrumentation().addMonitor(
+                        new IntentFilter(Intent.ACTION_VIEW), null, false);
+        ;
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName()))
+                .check(matches(isDisplayed()))
+                .perform(click());
+        monitor.waitForActivityWithTimeout(UI_UPDATING_TIMEOUT_MS);
+        Assert.assertEquals("Monitor for has not been called", 1, monitor.getHits());
+        InstrumentationRegistry.getInstrumentation().removeMonitor(monitor);
+        Espresso.onView(withContentDescription(R.string.abc_action_bar_up_description))
+                .perform(click()); // Go back to the search list.
+        waitForView(withId(R.id.search_src_text));
+        Assert.assertEquals(1, viewed_after_search_delta.getDelta());
+
+        Espresso.onView(withContentDescription("Collapse")).perform(click()); // Finish search.
+        Espresso.onView(withContentDescription(R.string.abc_action_bar_up_description))
+                .perform(click()); // Close preferences.
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        Assert.assertEquals(0, untriggered_delta.getDelta());
+        Assert.assertEquals(1, triggered_delta.getDelta());
     }
 }
