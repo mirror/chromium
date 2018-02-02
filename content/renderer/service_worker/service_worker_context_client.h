@@ -257,6 +257,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   // client, which means it is coming through the ControllerServiceWorkerImpl.
   void DispatchOrQueueFetchEvent(
       const network::ResourceRequest& request,
+      const std::string& client_id,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback);
@@ -312,6 +313,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       DispatchFetchEventCallback callback) override;
   void DispatchFetchEvent(
       const network::ResourceRequest& request,
+      const std::string& client_id,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override;

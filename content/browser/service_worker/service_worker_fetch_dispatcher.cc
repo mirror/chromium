@@ -458,11 +458,13 @@ class ServiceWorkerFetchDispatcher::URLLoaderAssets
 // S13nServiceWorker
 ServiceWorkerFetchDispatcher::ServiceWorkerFetchDispatcher(
     std::unique_ptr<network::ResourceRequest> request,
+    const std::string& client_id,
     scoped_refptr<ServiceWorkerVersion> version,
     const net::NetLogWithSource& net_log,
     base::OnceClosure prepare_callback,
     FetchCallback fetch_callback)
     : request_(std::move(request)),
+      client_id_(client_id),
       version_(std::move(version)),
       resource_type_(static_cast<ResourceType>(request_->resource_type)),
       net_log_(net_log),
@@ -602,7 +604,8 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
     DCHECK(request_);
     DCHECK(!legacy_request_);
     version_->event_dispatcher()->DispatchFetchEvent(
-        *request_, std::move(preload_handle_), std::move(response_callback_ptr),
+        *request_, client_id_, std::move(preload_handle_),
+        std::move(response_callback_ptr),
         base::BindOnce(&ServiceWorkerFetchDispatcher::OnFetchEventFinished,
                        base::Unretained(version_.get()), event_finish_id,
                        url_loader_assets_));

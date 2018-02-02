@@ -318,7 +318,8 @@ TEST_F(ServiceWorkerContextClientTest, DispatchFetchEvent) {
   mojom::ServiceWorkerFetchResponseCallbackPtr fetch_callback_ptr;
   fetch_callback_request = mojo::MakeRequest(&fetch_callback_ptr);
   pipes.event_dispatcher->DispatchFetchEvent(
-      *request, nullptr /* preload_handle */, std::move(fetch_callback_ptr),
+      *request, "" /* client_id */, nullptr /* preload_handle */,
+      std::move(fetch_callback_ptr),
       base::BindOnce(
           [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
   task_runner()->RunUntilIdle();
@@ -354,7 +355,8 @@ TEST_F(ServiceWorkerContextClientTest,
   auto request = std::make_unique<network::ResourceRequest>();
   request->url = expected_url;
   context_client->DispatchOrQueueFetchEvent(
-      *request, nullptr /* preload_handle */, std::move(fetch_callback_ptr),
+      *request, "" /* client_id */, nullptr /* preload_handle */,
+      std::move(fetch_callback_ptr),
       base::BindOnce(
           [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
   task_runner()->RunUntilIdle();
@@ -401,7 +403,7 @@ TEST_F(ServiceWorkerContextClientTest,
     auto request = std::make_unique<network::ResourceRequest>();
     request->url = expected_url;
     pipes.controller->DispatchFetchEvent(
-        *request, std::move(fetch_callback_ptr),
+        *request, "" /* client_id */, std::move(fetch_callback_ptr),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
     task_runner()->RunUntilIdle();
@@ -449,7 +451,7 @@ TEST_F(ServiceWorkerContextClientTest,
     auto request = std::make_unique<network::ResourceRequest>();
     request->url = expected_url_1;
     pipes.controller->DispatchFetchEvent(
-        *request, std::move(fetch_callback_ptr),
+        *request, "" /* client_id */, std::move(fetch_callback_ptr),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
     task_runner()->RunUntilIdle();
@@ -464,7 +466,8 @@ TEST_F(ServiceWorkerContextClientTest,
     auto request = std::make_unique<network::ResourceRequest>();
     request->url = expected_url_2;
     pipes.event_dispatcher->DispatchFetchEvent(
-        *request, nullptr /* preload_handle */, std::move(fetch_callback_ptr),
+        *request, "" /* client_id */, nullptr /* preload_handle */,
+        std::move(fetch_callback_ptr),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
     task_runner()->RunUntilIdle();

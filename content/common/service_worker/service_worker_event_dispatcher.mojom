@@ -113,6 +113,7 @@ interface ServiceWorkerEventDispatcher {
           mojo.common.mojom.Time dispatch_event_time);
   // S13nServiceWorker
   DispatchFetchEvent(network.mojom.URLRequest request,
+                     string client_id,
                      FetchEventPreloadHandle? preload_handle,
                      ServiceWorkerFetchResponseCallback response_callback)
       => (blink.mojom.ServiceWorkerEventStatus status,

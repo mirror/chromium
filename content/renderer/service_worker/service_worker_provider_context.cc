@@ -337,7 +337,8 @@ void ServiceWorkerProviderContext::SetController(
       // factory (this part is inherently racy).
       state->controller_connector->ResetControllerConnection(
           mojom::ControllerServiceWorkerPtr(
-              std::move(controller_info->endpoint)));
+              std::move(controller_info->endpoint)),
+          controller_info->client_id);
     } else if (state->controller) {
       // Case (C): never had a controller, but got a new one now.
       // Set a new |state->controller_connector| so that subsequent resource
@@ -346,7 +347,8 @@ void ServiceWorkerProviderContext::SetController(
           std::move(controller_info->endpoint));
       state->controller_connector =
           base::MakeRefCounted<ControllerServiceWorkerConnector>(
-              container_host_.get(), std::move(controller_ptr));
+              container_host_.get(), std::move(controller_ptr),
+              controller_info->client_id);
     }
   }
 

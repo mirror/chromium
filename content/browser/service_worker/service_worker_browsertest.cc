@@ -881,8 +881,9 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
       request->method = "GET";
       request->resource_type = resource_type;
       fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-          std::move(request), version_, net::NetLogWithSource(),
-          std::move(prepare_callback), std::move(fetch_callback));
+          std::move(request), "" /* client_id */, version_,
+          net::NetLogWithSource(), std::move(prepare_callback),
+          std::move(fetch_callback));
     } else {
       auto legacy_request = std::make_unique<ServiceWorkerFetchRequest>(
           url, "GET", ServiceWorkerHeaderMap(), Referrer(),

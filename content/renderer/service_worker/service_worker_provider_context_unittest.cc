@@ -243,6 +243,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
   // mojom::ControllerServiceWorker:
   void DispatchFetchEvent(
       const network::ResourceRequest& request,
+      const std::string& client_id,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override {
     fetch_event_count_++;

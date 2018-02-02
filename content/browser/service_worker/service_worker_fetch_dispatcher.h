@@ -57,6 +57,7 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
   // S13nServiceWorker
   ServiceWorkerFetchDispatcher(
       std::unique_ptr<network::ResourceRequest> request,
+      const std::string& client_id,
       scoped_refptr<ServiceWorkerVersion> version,
       const net::NetLogWithSource& net_log,
       base::OnceClosure prepare_callback,
@@ -123,6 +124,8 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
 
   // S13nServiceWorker
   std::unique_ptr<network::ResourceRequest> request_;
+  std::string client_id_;
+
   // Non-S13nServiceWorker
   std::unique_ptr<ServiceWorkerFetchRequest> legacy_request_;
 

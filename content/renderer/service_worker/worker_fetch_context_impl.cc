@@ -274,6 +274,7 @@ void WorkerFetchContextImpl::ResetServiceWorkerURLLoaderFactory() {
     return;
   }
   network::mojom::URLLoaderFactoryPtr service_worker_url_loader_factory;
+  // TODO(bashi): Pass client_id somehow.
   mojo::MakeStrongBinding(
       std::make_unique<ServiceWorkerSubresourceLoaderFactory>(
           base::MakeRefCounted<ControllerServiceWorkerConnector>(

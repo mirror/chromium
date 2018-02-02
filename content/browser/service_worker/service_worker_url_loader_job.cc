@@ -74,10 +74,12 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
     URLLoaderRequestHandler::LoaderCallback callback,
     Delegate* delegate,
     const network::ResourceRequest& resource_request,
+    const std::string& client_id,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
     : loader_callback_(std::move(callback)),
       delegate_(delegate),
       resource_request_(resource_request),
+      client_id_(client_id),
       url_loader_factory_getter_(std::move(url_loader_factory_getter)),
       binding_(this),
       weak_factory_(this) {
@@ -175,7 +177,7 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
 
   // Dispatch the fetch event.
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-      std::move(request), active_worker,
+      std::move(request), client_id_, active_worker,
       net::NetLogWithSource() /* TODO(scottmg): net log? */,
       base::BindOnce(&ServiceWorkerURLLoaderJob::DidPrepareFetchEvent,
                      weak_factory_.GetWeakPtr(),

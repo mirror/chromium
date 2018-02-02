@@ -37,6 +37,7 @@ interface ControllerServiceWorker {
   // settled. |response_callback| is called once the promise to respondWith()
   // settles, or when the event handler ran without calling respondWith().
   DispatchFetchEvent(network.mojom.URLRequest request,
+                     string client_id,
                      ServiceWorkerFetchResponseCallback response_callback)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
@@ -55,6 +56,7 @@ struct ControllerServiceWorkerInfo {
   // S13nServiceWorker:
   // Non-null if the controller has fetch event handlers.
   ControllerServiceWorker? endpoint;
+  string client_id;
 
   // Represents ServiceWorkerContainer#controller.
   // Null if there is no controller.

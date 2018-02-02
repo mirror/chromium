@@ -69,6 +69,7 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
       URLLoaderRequestHandler::LoaderCallback loader_callback,
       Delegate* delegate,
       const network::ResourceRequest& resource_request,
+      const std::string& client_id,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter);
 
   ~ServiceWorkerURLLoaderJob() override;
@@ -146,6 +147,7 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
 
   Delegate* delegate_;
   network::ResourceRequest resource_request_;
+  std::string client_id_;
   scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter_;
   std::unique_ptr<ServiceWorkerFetchDispatcher> fetch_dispatcher_;
   std::unique_ptr<StreamWaiter> stream_waiter_;
