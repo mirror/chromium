@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e7807030_ae39ecce",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-02T13:41:26Z",
+      "side": 1,
+      "message": "Name changes, as per offline discussion. Comment no longer necessary, I hope.",
+      "parentUuid": "6bca500b_e107a0b9",
+      "range": {
+        "startLine": 516,
+        "startChar": 6,
+        "endLine": 516,
+        "endChar": 7
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6c25cc6_c7358d02",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "writtenOn": "2018-02-01T14:52:17Z",
       "side": 1,
       "message": "Start the comment saying what the function does, and say when it should be called after that.\nAlso, the name is somewhat misleading, since the \"On\" part kind of suggests that this is a callback that you register somewhere to track a \"BrowserContextInitialized\" event.\nPerhaps a better name would be something like MakeRemoteLogsAvailableForUpload().",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "23cb314029b972631c8db9d1c376d12cf273344f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28f2ed0_9a895fa4",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-02-02T13:41:26Z",
+      "side": 1,
+      "message": "Name changed and comment revised.",
+      "parentUuid": "f6c25cc6_c7358d02",
       "range": {
         "startLine": 59,
         "startChar": 5,
