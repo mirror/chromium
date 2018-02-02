@@ -38,13 +38,13 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_layout.h"
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
+#include "chrome/browser/ui/views/location_bar/omnibox_background_border.h"
 #include "chrome/browser/ui/views/location_bar/selected_keyword_view.h"
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
@@ -545,8 +545,17 @@ void LocationBarView::Layout() {
 
   const int edge_thickness = GetHorizontalEdgeThickness();
 
+  // Add some padding to prevent text or Views displayed at the end of
+  // LocationBarView going too close to the ending border. This is also a
+  // compromise to avoid having to clip the corners of |omnibox_view_| when
+  // LocationBarView is a pill-shape.
+  constexpr int kRoundedPaddingHeightFactor = 3;
+  const int end_padding = OmniboxBackgroundBorder::IsRounded()
+                              ? location_height / kRoundedPaddingHeightFactor
+                              : 0;
+
   // Perform layout.
-  int full_width = width() - (2 * edge_thickness);
+  int full_width = width() - (2 * edge_thickness) - end_padding;
 
   int entry_width = full_width;
   leading_decorations.LayoutPass1(&entry_width);
@@ -592,7 +601,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   } else {
     // This border color will be blended on top of the toolbar (which may use an
     // image in the case of themes).
-    SetBackground(std::make_unique<BackgroundWith1PxBorder>(
+    SetBackground(std::make_unique<OmniboxBackgroundBorder>(
         GetColor(BACKGROUND), GetBorderColor()));
   }
   SchedulePaint();
@@ -1025,16 +1034,8 @@ void LocationBarView::OnPaint(gfx::Canvas* canvas) {
   View::OnPaint(canvas);
 
   if (show_focus_rect_ && omnibox_view_->HasFocus()) {
-    cc::PaintFlags flags;
-    flags.setAntiAlias(true);
-    flags.setColor(GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::NativeTheme::kColorId_FocusedBorderColor));
-    flags.setStyle(cc::PaintFlags::kStroke_Style);
-    flags.setStrokeWidth(1);
-    gfx::RectF focus_rect(GetLocalBounds());
-    focus_rect.Inset(gfx::InsetsF(0.5f));
-    canvas->DrawRoundRect(focus_rect,
-                          BackgroundWith1PxBorder::kCornerRadius + 0.5f, flags);
+    static_cast<OmniboxBackgroundBorder*>(background())
+        ->PaintFocusRing(canvas, GetNativeTheme(), GetLocalBounds());
   }
 }
 
