@@ -33,6 +33,24 @@
       "revId": "754a341882ba011f4ddb0cbc0d647d859099a519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d03ec8_58eb69fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-02T21:53:33Z",
+      "side": 1,
+      "message": "The implemenntation of isShowingOfflinePage() returns true when mOfflinePageCreationDate is not null. For some untrusted offline pages, we cannot get creation date. I think romax uses empty string as a workaround in order to make isShowingOfflinePage() return true for those untrusted offline pages without creation date.\n\nThis makes it very hard to understand the whole logic. I think we should introduce an enum to describe the state of offline page in a tab, like\n  enum OfflinePageState {\n    kNoOfflinePage,\n    kTrustedOfflinePage,\n    kUntrustedOfflinePage\n  }\nmIsOfflinePageTrusted should be changed to be based on this enum. isShowingOfflinePage should also be changed to check this enum state.",
+      "parentUuid": "07e47cb3_2bf3748d",
+      "revId": "754a341882ba011f4ddb0cbc0d647d859099a519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
