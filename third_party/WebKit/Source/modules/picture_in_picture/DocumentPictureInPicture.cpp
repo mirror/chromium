@@ -37,8 +37,6 @@ ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
         DOMException::Create(kInvalidStateError, kNoPictureInPictureElement));
   }
 
-  // TODO(crbug.com/806249): Call element.exitPictureInPicture().
-
   PictureInPictureController::Ensure(document).UnsetPictureInPictureElement();
 
   picture_in_picture_element->DispatchEvent(
