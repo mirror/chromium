@@ -276,6 +276,18 @@ enum WebAXAriaCurrentState {
   kWebAXAriaCurrentStateTime
 };
 
+enum class WebAXAriaHasPopupState {
+  kUndefined = 0,
+  kFalse,
+  kTrue,
+  kMenu,
+  kListbox,
+  kTree,
+  kGrid,
+  kDialog
+};
+
+
 // Only used by HTML form controls and any other element that has
 // an aria-invalid attribute specified.
 enum WebAXInvalidState {

@@ -560,7 +560,9 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   virtual String AriaAutoComplete() const { return String(); }
   virtual void AriaOwnsElements(AXObjectVector& owns) const {}
   virtual void AriaDescribedbyElements(AXObjectVector&) const {}
-  virtual bool AriaHasPopup() const { return false; }
+  virtual AriaHasPopupState AriaHasPopup() const {
+    return AriaHasPopupState::kUndefined;
+  }
   virtual bool IsEditable() const { return false; }
   bool IsEditableRoot() const;
   virtual bool ComputeIsEditableRoot() const { return false; }

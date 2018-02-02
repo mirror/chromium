@@ -20,9 +20,6 @@ void AXStateFromBlink(const blink::WebAXObject& o, ui::AXNodeData* dst) {
   if (o.CanSetFocusAttribute())
     dst->AddState(ax::mojom::State::kFocusable);
 
-  if (o.Role() == blink::kWebAXRolePopUpButton || o.AriaHasPopup())
-    dst->AddState(ax::mojom::State::kHaspopup);
-
   if (o.IsHovered())
     dst->AddState(ax::mojom::State::kHovered);
 
@@ -462,6 +459,31 @@ ax::mojom::TextStyle AXTextStyleFromBlink(blink::WebAXTextStyle text_style) {
     browser_text_style |=
         static_cast<int32_t>(ax::mojom::TextStyle::kTextStyleLineThrough);
   return static_cast<ax::mojom::TextStyle>(browser_text_style);
+}
+
+ax::mojom::AriaHasPopupState AXAriaHasPopupStateFromBlink(
+    blink::WebAXAriaHasPopupState has_popup) {
+  switch (has_popup) {
+    case blink::WebAXAriaHasPopupState::kUndefined:
+      return ax::mojom::AriaHasPopupState::kUndefined;
+    case blink::WebAXAriaHasPopupState::kFalse
+      return ax::mojom::AriaHasPopupState::kFalse;
+    case blink::WebAXAriaHasPopupState::kTrue
+      return ax::mojom::AriaHasPopupState::kTrue;
+    case blink::WebAXAriaHasPopupState::kMenu
+      return ax::mojom::AriaHasPopupState::kMenu;
+    case blink::WebAXAriaHasPopupState::kListbox
+      return ax::mojom::AriaHasPopupState::kListbox;
+    case blink::WebAXAriaHasPopupState::kTree
+      return ax::mojom::AriaHasPopupState::kTree;
+    case blink::WebAXAriaHasPopupState::kGrid
+      return ax::mojom::AriaHasPopupState::kGrid;
+    case blink::WebAXAriaHasPopupState::kDialog
+      return ax::mojom::AriaHasPopupState::kDialog;
+  }
+
+  NOTREACHED();
+  return ax::mojom::AriaHaspopupState::kUndefined;
 }
 
 ax::mojom::AriaCurrentState AXAriaCurrentStateFromBlink(

@@ -1357,14 +1357,32 @@ void AXLayoutObject::AriaDescribedbyElements(
                                        describedby);
 }
 
-bool AXLayoutObject::AriaHasPopup() const {
+AriaHasPopupState AXLayoutObject::AriaHasPopup() const {
   const AtomicString& has_popup =
       GetAOMPropertyOrARIAAttribute(AOMStringProperty::kHasPopUp);
-  if (!has_popup.IsNull())
-    return !has_popup.IsEmpty() && !EqualIgnoringASCIICase(has_popup, "false");
 
-  return RoleValue() == kComboBoxMenuButtonRole ||
-         RoleValue() == kTextFieldWithComboBoxRole;
+  if (has_popup.IsNull())
+    return AriaHasPopupState::kUndefined;
+  if (has_popup.IsEmpty() ||
+      EqualIgnoringASCIICase(has_popup, "false"))
+    return AriaHasPopupState::kFalse;
+  if (EqualIgnoringASCIICase(has_popup, "true"))
+    return AriaHasPopupState::kTrue;
+  if (EqualIgnoringASCIICase(has_popup, "menu"))
+    return AriaHasPopupState::kMenu;
+  if (EqualIgnoringASCIICase(has_popup, "listbox"))
+    return AriaHasPopupState::kListbox;
+  if (EqualIgnoringASCIICase(has_popup, "tree"))
+    return AriaHasPopupState::kTree;
+  if (EqualIgnoringASCIICase(has_popup, "grid"))
+    return AriaHasPopupState::kGrid;
+  if (EqualIgnoringASCIICase(has_popup, "dialog"))
+    return AriaHasPopupState::kDialog;
+  // An unknown value should return false.
+  if (!has_popup.IsEmpty())
+    return AriaHasPopupState::kFalse;
+
+  return AXObject::AriaHasPopup();
 }
 
 // TODO : Aria-dropeffect and aria-grabbed are deprecated in aria 1.1

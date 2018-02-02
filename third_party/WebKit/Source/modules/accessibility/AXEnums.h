@@ -217,6 +217,17 @@ enum AriaCurrentState {
   kAriaCurrentStateTime
 };
 
+enum class AriaHasPopupState {
+  kUndefined = 0,
+  kFalse,
+  kTrue,
+  kMenu,
+  kListbox,
+  kTree,
+  kGrid,
+  kDialog
+};
+
 enum InvalidState {
   kInvalidStateUndefined = 0,
   kInvalidStateFalse,
