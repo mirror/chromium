@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "f5a2b953_5ec8da73",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-02T00:08:16Z",
+      "side": 1,
+      "message": "I agree with the issues you are pointing out. And I also have to agree with the conclusion that solving them would require disproportional effort (even if it concerns me that it does). \n\n\u003d\u003e Agreed to keeping the two implementations separate.",
+      "parentUuid": "e712e2e0_318d6ca9",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "552b510c_0d8388be",
         "filename": "chrome/browser/media/single_client_video_capture_host.h",
         "patchSetId": 6
