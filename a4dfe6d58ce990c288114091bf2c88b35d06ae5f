@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e2f4597_f113ff0a",
+        "filename": "chrome/browser/platform_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Done. Removed",
+      "parentUuid": "eaffb4b2_cb2b8c29",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc7e0b4_c204eacf",
         "filename": "chrome/browser/ui/autofill/autofill_popup_view.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1818c8c2_bdeeae20",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc7e0b4_c204eacf",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "38d07798_6ab75df3",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_bridge_views.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3af6fb77_051ee828",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de7ff75e_1db319d8",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e48aed_a50e5f92",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Had a look and it still dismisses when it\u0027s resized.\nIt looks like ChromeAutofillClient observes WebContentsObserver::MainFrameWasResized and hides the popup when that gets called. However, it doesn\u0027t dismiss when you move the window. Note: this is also an issue with the non-toolkit popup. I added a TODO for this",
+      "parentUuid": "de7ff75e_1db319d8",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e2616f74_71171e71",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea6fef3_e47053de",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "520793de_2f249746",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 10
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "51a37d70_64ca8c20",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520793de_2f249746",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20b6d0e1_50567598",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
         "patchSetId": 10
@@ -118,6 +226,24 @@
       "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18976ecc_d20b29a3",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-02-02T19:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b6d0e1_50567598",
+      "revId": "a4dfe6d58ce990c288114091bf2c88b35d06ae5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
