@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a852770_760d1923",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/background.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a0d0557_22ed8bba",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28e2e657_61a7452f",
         "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bafca76c_68eace20",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28e2e657_61a7452f",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497c9608_4af7268c",
         "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
         "patchSetId": 18
@@ -50,6 +86,24 @@
       "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2e458d_0474ffe1",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497c9608_4af7268c",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "997111e2_d8f07893",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "That\u0027s awesome - thanks!",
+      "parentUuid": "2220944c_bd477d52",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 3
+      },
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65659d5d_1c8cca31",
         "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/popup.js",
         "patchSetId": 18
@@ -90,6 +168,24 @@
       "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb0d62d_b7681ffb",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/popup.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65659d5d_1c8cca31",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "163c4e34_9236f09f",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "It does change the background. You open the popup and click the colored button - but now it changes the background with:\n\nchrome.tabs.executeScript(\n          tabs[0].id,\n          {code: \u0027document.body.style.backgroundColor \u003d \"\u0027 + color + \u0027\";\u0027});\n    })\n\ninstead of a separate content script file.",
+      "parentUuid": "dbad8528_6ac0b423",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 67
+      },
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07f32896_952dece0",
         "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
         "patchSetId": 18
@@ -127,6 +247,30 @@
       "writtenOn": "2018-01-26T20:25:38Z",
       "side": 1,
       "message": "Is this supposed to be in the background.js version that\u0027s downloadable, or no?",
+      "range": {
+        "startLine": 301,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 11
+      },
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bbf89a_b3730d26",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1252550
+      },
+      "writtenOn": "2018-02-02T00:13:05Z",
+      "side": 1,
+      "message": "Between this tutorial and the OAuth, I\u0027ve tried to work around the confusion by adding a link at the top to download the completed extension. WDYT?",
+      "parentUuid": "07f32896_952dece0",
       "range": {
         "startLine": 301,
         "startChar": 4,
