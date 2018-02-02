@@ -9,14 +9,26 @@
 
 #include "base/callback.h"
 #include "base/optional.h"
+#include "content/public/common/resource_type.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/base/completion_callback.h"
+#include "net/cert/cert_status_flags.h"
 #include "net/filter/filter_source_stream.h"
 #include "net/ssl/ssl_info.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "url/gurl.h"
 
+namespace net {
+class URLRequestContext;
+}  // namespace net
+
 namespace content {
+
+class ResourceContext;
+class SignedExchangeCertFetcher;
+class URLLoaderFactoryGetter;
+class URLLoaderFactoryImpl;
+class URLLoaderThrottle;
 
 // IMPORTANT: Currenly SignedExchangeHandler doesn't implement any CBOR parsing
 // logic nor verifying logic. It just behaves as if the passed body is a signed
@@ -32,12 +44,19 @@ class SignedExchangeHandler final : public net::FilterSourceStream {
                               const std::string& request_method,
                               const network::ResourceResponseHead&,
                               base::Optional<net::SSLInfo>)>;
+  using URLLoaderThrottlesGetter = base::RepeatingCallback<
+      std::vector<std::unique_ptr<content::URLLoaderThrottle>>()>;
 
   // Once constructed |this| starts reading the |body| and parses the response
   // as a signed HTTP exchange. The response body of the exchange can be read
   // from |this| as a net::SourceStream after |headers_callback| is called.
-  SignedExchangeHandler(std::unique_ptr<net::SourceStream> body,
-                        ExchangeHeadersCallback headers_callback);
+  SignedExchangeHandler(
+      std::unique_ptr<net::SourceStream> body,
+      ExchangeHeadersCallback headers_callback,
+      URLLoaderFactoryGetter* default_url_loader_factory_getter,
+      ResourceContext* resource_context,
+      net::URLRequestContext* request_context,
+      URLLoaderThrottlesGetter url_loader_throttles_getter);
   ~SignedExchangeHandler() override;
 
   // net::FilterSourceStream:
@@ -54,6 +73,9 @@ class SignedExchangeHandler final : public net::FilterSourceStream {
   void DidReadForHeaders(bool completed_syncly, int result);
   bool MaybeRunHeadersCallback();
 
+  void OnCertVerified(net::CertStatus cert_staus,
+                      const base::Optional<net::SSLInfo>& ssl_info);
+
   // TODO(https://crbug.com/803774): Remove this.
   void FillMockExchangeHeaders();
 
@@ -61,7 +83,6 @@ class SignedExchangeHandler final : public net::FilterSourceStream {
   GURL request_url_;
   std::string request_method_;
   network::ResourceResponseHead response_head_;
-  base::Optional<net::SSLInfo> ssl_info_;
 
   ExchangeHeadersCallback headers_callback_;
 
@@ -74,6 +95,16 @@ class SignedExchangeHandler final : public net::FilterSourceStream {
   // parser.
   std::string original_body_string_;
   size_t body_string_offset_ = 0;
+
+  // Used only when NetworkService is enabled.
+  scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
+  // Used only when NetworkService is disabled to keep a URLLoaderFactoryImpl
+  // for fetching certificate.
+  std::unique_ptr<URLLoaderFactoryImpl> url_loader_factory_impl_;
+  ResourceContext* resource_context_;
+  net::URLRequestContext* request_context_;
+  URLLoaderThrottlesGetter url_loader_throttles_getter_;
+  std::unique_ptr<SignedExchangeCertFetcher> cert_fetcher_;
 
   base::WeakPtrFactory<SignedExchangeHandler> weak_factory_;
 
