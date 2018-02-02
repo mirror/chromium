@@ -16,6 +16,24 @@
       "revId": "70a888921a9eff10238fe9aec307811ce0c84eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736b2477_35e4cbf8",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-02-02T19:31:35Z",
+      "side": 1,
+      "message": "Ack. No, that\u0027s a mistake. Thanks for pointing it out.",
+      "parentUuid": "b4ff4b35_8c39a12e",
+      "revId": "70a888921a9eff10238fe9aec307811ce0c84eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
