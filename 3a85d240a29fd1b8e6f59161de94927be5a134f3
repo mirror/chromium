@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5885cb_60a3d3ac",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T17:55:55Z",
+      "side": 1,
+      "message": "Can we verify with tests and/or DCHECK that these are equal. I\u0027m concerned that GURL::spec() may have a trailing / whereas origin_.Serialize() does not.\n\nWe may already have a test which verifies this - if so, great! But if not a change here would mean we would lose old data on upgrade.\n\ne.g. add:\n\nDCHECK_EQ(origin_.Serialize(), origin_.GetURL().spec());\n\nIf that fails, then we may need to append \"/\" to the result of Serialize().",
+      "revId": "3a85d240a29fd1b8e6f59161de94927be5a134f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9547cb8f_54544b68",
+        "filename": "content/browser/cache_storage/cache_storage_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T17:55:55Z",
+      "side": 1,
+      "message": "Can this be removed?",
+      "revId": "3a85d240a29fd1b8e6f59161de94927be5a134f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
