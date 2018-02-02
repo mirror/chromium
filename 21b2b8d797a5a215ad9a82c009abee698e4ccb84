@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "87f8da9f_e4999440",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T23:07:31Z",
+      "side": 1,
+      "message": "This is mainly following the convention of adding code files to chromeos target.  Added a BUILD.gn in src-internal and have things deps on that.  Unfortunately I don\u0027t think we will be free of worrying keeping src/src-internal in sync though :(",
+      "parentUuid": "f68312f9_7a2769c8",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 49
+      },
+      "revId": "21b2b8d797a5a215ad9a82c009abee698e4ccb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3595b7_6f72a9af",
         "filename": "chromeos/services/assistant/BUILD.gn",
         "patchSetId": 7
