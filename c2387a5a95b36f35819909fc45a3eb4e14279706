@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b83c929f_0384a4f8",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-02-02T07:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3be1db86_7e834d87",
+      "range": {
+        "startLine": 287,
+        "startChar": 58,
+        "endLine": 287,
+        "endChar": 73
+      },
+      "revId": "c2387a5a95b36f35819909fc45a3eb4e14279706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bded5bb8_1f8b0b7c",
         "filename": "components/arc/ime/arc_ime_service.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c2387a5a95b36f35819909fc45a3eb4e14279706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09deaf1_1a55b6b9",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-02-02T07:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bded5bb8_1f8b0b7c",
+      "range": {
+        "startLine": 387,
+        "startChar": 24,
+        "endLine": 387,
+        "endChar": 62
+      },
+      "revId": "c2387a5a95b36f35819909fc45a3eb4e14279706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
