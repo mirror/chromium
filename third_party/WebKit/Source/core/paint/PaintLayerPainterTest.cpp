@@ -51,7 +51,7 @@ class PaintLayerPainterTest : public PaintControllerPaintTest {
 
 INSTANTIATE_TEST_CASE_P(All,
                         PaintLayerPainterTest,
-                        ::testing::ValuesIn(kDefaultPaintTestConfigurations));
+                        ::testing::ValuesIn(kAllSlimmingPaintTestConfigurations));
 
 TEST_P(PaintLayerPainterTest, CachedSubsequence) {
   SetBodyInnerHTML(R"HTML(

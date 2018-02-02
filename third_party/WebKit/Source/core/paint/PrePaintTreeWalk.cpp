@@ -92,6 +92,7 @@ void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
                             const PrePaintTreeWalkContext& parent_context) {
   if (frame_view.ShouldThrottleRendering()) {
     // Skip the throttled frame. Will update it when it becomes unthrottled.
+    LOG(ERROR) << "------- throttled " << &frame_view;
     return;
   }
 

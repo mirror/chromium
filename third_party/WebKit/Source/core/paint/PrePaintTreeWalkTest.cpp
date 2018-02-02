@@ -59,7 +59,7 @@ class PrePaintTreeWalkTest : public PaintControllerPaintTest {
 
 INSTANTIATE_TEST_CASE_P(All,
                         PrePaintTreeWalkTest,
-                        ::testing::ValuesIn(kDefaultPaintTestConfigurations));
+                        ::testing::ValuesIn(kAllSlimmingPaintTestConfigurations));
 
 TEST_P(PrePaintTreeWalkTest, PropertyTreesRebuiltWithBorderInvalidation) {
   SetBodyInnerHTML(R"HTML(

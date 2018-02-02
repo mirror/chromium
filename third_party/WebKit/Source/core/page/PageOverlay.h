@@ -77,6 +77,7 @@ class CORE_EXPORT PageOverlay : public GraphicsLayerClient,
                      GraphicsContext&,
                      GraphicsLayerPaintingPhase,
                      const IntRect& interest_rect) const override;
+  bool ShouldThrottleRendering() const override { return false; }
   String DebugName(const GraphicsLayer*) const override;
 
  private:

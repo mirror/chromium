@@ -5460,16 +5460,26 @@ void LocalFrameView::SetNeedsIntersectionObservation() {
 }
 
 bool LocalFrameView::ShouldThrottleRendering() const {
+  if (!CanThrottleRendering())
+    return false;
+
   bool throttled_for_global_reasons = CanThrottleRendering() &&
                                       frame_->GetDocument() &&
                                       Lifecycle().ThrottlingAllowed();
+  if (!throttled_for_global_reasons)
+    LOG(ERROR) << " ==== throttle not allowed";
+  if (needs_forced_compositing_update_)
+    LOG(ERROR) << " ==== needs_forced_compositing_update_";
   if (!throttled_for_global_reasons || needs_forced_compositing_update_)
     return false;
 
   // Only lifecycle phases up to layout are needed to generate an
   // intersection observation.
-  return !needs_intersection_observation_ ||
+  bool b = !needs_intersection_observation_ ||
          GetFrame().LocalFrameRoot().View()->past_layout_lifecycle_update_;
+  if (!b)
+    LOG(ERROR) << " ==== rrrrrrrrrrrrrrr";
+  return b;
 }
 
 bool LocalFrameView::CanThrottleRendering() const {
