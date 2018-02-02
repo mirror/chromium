@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c62d7b94_ee061dbf",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-02T07:18:57Z",
+      "side": 1,
+      "message": "Ah... but I guess the code to actually use URLLoader when S13nServiceWorker is on but NetworkService is off isn\u0027t actually landed yet.......\n\nI guess we can just land this as-is and update later.",
+      "parentUuid": "cb423089_7de98bef",
+      "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b60d576d_c62b3c73",
         "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
         "patchSetId": 2
