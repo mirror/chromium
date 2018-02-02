@@ -22,6 +22,30 @@
       "revId": "373668c41c0d2858102d7367cdc2094dca6550cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fa9642_fe75ac75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-02T22:39:38Z",
+      "side": 1,
+      "message": "Aha, sneaky. Done.",
+      "parentUuid": "a15d68be_f38f8e0f",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "373668c41c0d2858102d7367cdc2094dca6550cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
