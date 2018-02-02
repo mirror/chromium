@@ -52,6 +52,24 @@
       "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8e2aca_4bc3c8e8",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-02T20:56:27Z",
+      "side": 1,
+      "message": "1. The size in CFs shouldn\u0027t matter cuz HitTestRegionList data is not related to CFs after submission.\n2. As discussed offline, changed all surfaces to have different FSID and submit HTRL to its own CFSS. Thanks for the help!",
+      "parentUuid": "b5979a42_9b199ae4",
+      "revId": "8a53ebf174a4cf32599eaa04abaf2dc6c0c0740e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
