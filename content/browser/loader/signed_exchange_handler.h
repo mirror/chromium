@@ -31,6 +31,7 @@ class SignedExchangeHandler final : public net::FilterSourceStream {
       base::OnceCallback<void(const GURL& request_url,
                               const std::string& request_method,
                               const network::ResourceResponseHead&,
+                              std::unique_ptr<net::SourceStream> payload_stream,
                               base::Optional<net::SSLInfo>)>;
 
   // Once constructed |this| starts reading the |body| and parses the response

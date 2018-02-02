@@ -191,6 +191,7 @@ void WebPackageLoader::OnHTTPExchangeFound(
     const GURL& request_url,
     const std::string& request_method,
     const network::ResourceResponseHead& resource_response,
+    std::unique_ptr<net::SourceStream> payload_stream,
     base::Optional<net::SSLInfo> ssl_info) {
   // TODO(https://crbug.com/803774): Handle no-GET request_method as a error.
   DCHECK(original_response_timing_info_);
@@ -211,7 +212,7 @@ void WebPackageLoader::OnHTTPExchangeFound(
   pending_body_consumer_ = std::move(data_pipe.consumer_handle);
 
   body_data_pipe_adapter_ = std::make_unique<SourceStreamToDataPipe>(
-      signed_exchange_handler_.get(), std::move(data_pipe.producer_handle),
+      std::move(payload_stream), std::move(data_pipe.producer_handle),
       base::BindOnce(&WebPackageLoader::FinishReadingBody,
                      base::Unretained(this)));
 

@@ -5,6 +5,7 @@
 #include "content/browser/loader/signed_exchange_handler.h"
 
 #include "base/feature_list.h"
+#include "content/browser/loader/merkle_integrity_source_stream.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/system/string_data_pipe_producer.h"
 #include "net/base/io_buffer.h"
@@ -13,6 +14,33 @@
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {
+
+namespace {
+
+constexpr char kMiHeader[] = "MI";
+
+// Temporary, until we implement streaming CBOR parser
+class BufferSourceStream : public net::SourceStream {
+ public:
+  BufferSourceStream(const uint8_t* buf, int len)
+      : net::SourceStream(SourceStream::TYPE_NONE), ptr_(buf), len_(len) {}
+  int Read(net::IOBuffer* dest_buffer,
+           int buffer_size,
+           const net::CompletionCallback& callback) override {
+    int bytes = std::min(len_, buffer_size);
+    memcpy(dest_buffer->data(), ptr_, bytes);
+    ptr_ += bytes;
+    len_ -= bytes;
+    return bytes;
+  }
+  std::string Description() const override { return "buffer"; }
+
+ private:
+  const uint8_t* ptr_;
+  int len_;
+};
+
+}  // namespace
 
 SignedExchangeHandler::SignedExchangeHandler(
     std::unique_ptr<net::SourceStream> upstream,
@@ -105,8 +133,24 @@ bool SignedExchangeHandler::MaybeRunHeadersCallback() {
   // TODO(https://crbug.com/803774): This is just for testing, we should
   // implement the CBOR parsing here.
   FillMockExchangeHeaders();
+
+  // TODO: Check that the Signature header entry has integrity="mi".
+  std::string mi_header_value;
+  if (!response_head_.headers->EnumerateHeader(nullptr, kMiHeader,
+                                               &mi_header_value)) {
+    return false;  // ???
+  }
+  // TODO: payload should be extracted from CBOR
+  const char kDummyMsg[] =
+      "\0\0\0\0\0\0\0\x29When I grow up, I want to be a watermelon";
+  auto payload_stream = std::make_unique<BufferSourceStream>(
+      reinterpret_cast<const uint8_t*>(kDummyMsg), sizeof(kDummyMsg) - 1);
+  auto mi_stream = std::make_unique<MerkleIntegritySourceStream>(
+      mi_header_value, std::move(payload_stream));
+
   std::move(headers_callback_)
-      .Run(request_url_, request_method_, response_head_, ssl_info_);
+      .Run(request_url_, request_method_, response_head_, std::move(mi_stream),
+           ssl_info_);
 
   // TODO(https://crbug.com/803774) Consume the bytes size that were
   // necessary to read out the headers.
@@ -123,6 +167,8 @@ void SignedExchangeHandler::FillMockExchangeHeaders() {
   // TODO(https://crbug.com/803774): Get more headers by parsing CBOR.
   scoped_refptr<net::HttpResponseHeaders> headers(
       new net::HttpResponseHeaders("HTTP/1.1 200 OK"));
+  headers->AddHeader(
+      "MI: mi-sha256=dcRDgR2GM35DluAV13PzgnG6-pvQwPywfFvAu1UeFrs");
   response_head_.headers = headers;
   response_head_.mime_type = "text/html";
 }
