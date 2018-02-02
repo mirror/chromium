@@ -847,10 +847,9 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
   ASSERT_TRUE(file_path);
   ASSERT_FALSE(file_path->empty());
 
-  // A failure is reported, because not everything could be written. The file
+  // Failure is reported, because not everything could be written. The file
   // will also be closed.
-  const auto pc = PeerConnectionKey(key.render_process_id, key.lid);
-  EXPECT_CALL(observer, OnLocalLogStopped(pc)).Times(1);
+  EXPECT_CALL(observer, OnLocalLogStopped(key)).Times(1);
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log),
             std::make_pair(false, false));
 
@@ -858,7 +857,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, "ignored"),
             std::make_pair(false, false));
 
-  ExpectLocalFileContents(*file_path, log.substr(0, file_size_limit_bytes));
+  ExpectLocalFileContents(*file_path, "");
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
@@ -1593,7 +1592,7 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid,
                                  file_size_limit_bytes));
 
-  // A failure is reported, because not everything could be written. The file
+  // Failure is reported, because not everything could be written. The file
   // will also be closed.
   EXPECT_CALL(observer, OnRemoteLogStopped(key)).Times(1);
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log),
@@ -1603,7 +1602,7 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, "ignored"),
             std::make_pair(false, false));
 
-  ExpectRemoteFileContents(*file_path, log.substr(0, log.length() / 2));
+  ExpectRemoteFileContents(*file_path, "");
 }
 
 TEST_F(WebRtcEventLogManagerTest,
@@ -1694,37 +1693,31 @@ TEST_F(WebRtcEventLogManagerTest, DifferentRemoteLogsMayHaveDifferentMaximums) {
   NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
   SetRemoteLogsObserver(&observer);
 
-  const std::vector<PeerConnectionKey> keys = {
-      PeerConnectionKey(rph_->GetID(), 0), PeerConnectionKey(rph_->GetID(), 1)};
-  std::vector<base::Optional<base::FilePath>> file_paths(keys.size());
-  for (size_t i = 0; i < keys.size(); i++) {
+  const std::string logs[2] = {"abra", "cadabra"};
+  std::vector<base::Optional<base::FilePath>> file_paths(arraysize(logs));
+  std::vector<PeerConnectionKey> keys;
+  for (size_t i = 0; i < arraysize(logs); i++) {
+    keys.emplace_back(rph_->GetID(), i);
     ON_CALL(observer, OnRemoteLogStarted(keys[i], _))
         .WillByDefault(Invoke(SaveFilePathTo(&file_paths[i])));
   }
-
-  const size_t file_size_limits_bytes[2] = {3, 5};
-  CHECK_EQ(arraysize(file_size_limits_bytes), keys.size());
-
-  const std::string log = "lorem ipsum";
 
   for (size_t i = 0; i < keys.size(); i++) {
     ASSERT_TRUE(PeerConnectionAdded(keys[i].render_process_id, keys[i].lid));
     ASSERT_TRUE(StartRemoteLogging(
         keys[i].render_process_id, keys[i].lid,
-        kRemoteBoundLogFileHeaderSizeBytes + file_size_limits_bytes[i]));
-
-    ASSERT_LT(file_size_limits_bytes[i], log.length());
-
-    // A failure is reported, because not everything could be written. The file
-    // will also be closed.
-    ASSERT_EQ(
-        OnWebRtcEventLogWrite(keys[i].render_process_id, keys[i].lid, log),
-        std::make_pair(false, false));
+        kRemoteBoundLogFileHeaderSizeBytes + logs[i].length()));
   }
 
   for (size_t i = 0; i < keys.size(); i++) {
-    ExpectRemoteFileContents(*file_paths[i],
-                             log.substr(0, file_size_limits_bytes[i]));
+    // The write is successful, but the file closed, indicating that the maximum
+    // file size has been reached.
+    EXPECT_CALL(observer, OnRemoteLogStopped(keys[i])).Times(1);
+    ASSERT_EQ(
+        OnWebRtcEventLogWrite(keys[i].render_process_id, keys[i].lid, logs[i]),
+        std::make_pair(false, true));
+    ASSERT_TRUE(file_paths[i]);
+    ExpectRemoteFileContents(*file_paths[i], logs[i]);
   }
 }
 
