@@ -158,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "cc173035_7676193e",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-02T18:38:41Z",
+      "side": 1,
+      "message": "At this point we can hide BML dependency by accessing AudioManager through a global AudioManager::Get() if that\u0027s something you would like.\nStill we do depend on BML state, since AudioManager is created/global getter initialized by BML, and that has to be done before Mojo initialization (otherwise there is a risk the global AudioManager instance will be accessed concurrently from the main thread by BML initialization code and from IO thread by Mojo, right?)",
+      "parentUuid": "f37a96e8_72835237",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
