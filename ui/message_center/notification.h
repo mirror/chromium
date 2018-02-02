@@ -285,6 +285,8 @@ class MESSAGE_CENTER_EXPORT Notification {
 
   const NotifierId& notifier_id() const { return notifier_id_; }
 
+  void set_app_id(const std::string& app_id) { notifier_id_.id = app_id; }
+
   void set_profile_id(const std::string& profile_id) {
     notifier_id_.profile_id = profile_id;
   }

@@ -7,10 +7,13 @@
 #include <utility>
 #include <vector>
 
+#include "ash/message_center/message_center_controller.h"
+#include "ash/shell.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/arc/notification/arc_notification_delegate.h"
+#include "ui/base/ui_base_features.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image.h"
 #include "ui/message_center/notification.h"
@@ -60,6 +63,8 @@ ArcNotificationItemImpl::ArcNotificationItemImpl(
       profile_id_(profile_id),
       notification_key_(notification_key),
       notification_id_(kNotificationIdPrefix + notification_key_),
+      is_touchable_app_context_menu_enabled_(
+          features::IsTouchableAppContextMenuEnabled()),
       weak_ptr_factory_(this) {}
 
 ArcNotificationItemImpl::~ArcNotificationItemImpl() {
@@ -123,7 +128,14 @@ void ArcNotificationItemImpl::OnUpdatedFromAndroid(
   for (auto& observer : observers_)
     observer.OnItemUpdated();
 
-  message_center_->AddNotification(std::move(notification));
+  if (ash::Shell::HasInstance() && is_touchable_app_context_menu_enabled_) {
+    ash::Shell::Get()
+        ->message_center_controller()
+        ->UpdateNotifierIdAndAddNotification(data->package_name.value(),
+                                             std::move(notification));
+  } else {
+    message_center_->AddNotification(std::move(notification));
+  }
 }
 
 void ArcNotificationItemImpl::OnClosedFromAndroid() {

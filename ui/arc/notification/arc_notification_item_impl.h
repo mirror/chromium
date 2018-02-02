@@ -85,6 +85,9 @@ class ArcNotificationItemImpl : public ArcNotificationItem {
   //   (2) the removing is initiated by manager
   bool being_removed_by_manager_ = false;
 
+  // Whether the touchable app context menu is enabled.
+  const bool is_touchable_app_context_menu_enabled_;
+
   base::ThreadChecker thread_checker_;
   base::WeakPtrFactory<ArcNotificationItemImpl> weak_ptr_factory_;
 

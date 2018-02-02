@@ -130,7 +130,8 @@ void ArcNotificationManager::OnNotificationPosted(
   const std::string& key = data->key;
   auto it = items_.find(key);
   if (it == items_.end()) {
-    // Show a notification on the primary logged-in user's desktop.
+    // Show a notification on the primary logged-in user's desktop and badge the
+    // app icon in the shelf if the icon exists.
     // TODO(yoshiki): Reconsider when ARC supports multi-user.
     auto item = std::make_unique<ArcNotificationItemImpl>(
         this, message_center_, key, main_profile_id_);

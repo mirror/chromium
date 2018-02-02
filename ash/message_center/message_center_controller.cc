@@ -4,6 +4,8 @@
 
 #include "ash/message_center/message_center_controller.h"
 
+#include "ui/app_list/app_list_features.h"
+#include "ui/base/ui_base_features.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notifier_id.h"
@@ -51,7 +53,9 @@ MessageCenterController::MessageCenterController()
     : fullscreen_notification_blocker_(MessageCenter::Get()),
       inactive_user_notification_blocker_(MessageCenter::Get()),
       session_state_notification_blocker_(MessageCenter::Get()),
-      binding_(this) {}
+      binding_(this),
+      is_touchable_app_context_menu_enabled_(
+          features::IsTouchableAppContextMenuEnabled()) {}
 
 MessageCenterController::~MessageCenterController() = default;
 
@@ -104,6 +108,28 @@ void MessageCenterController::SetNotifierSettingsListener(
     client_->GetNotifierList(base::BindOnce(
         &MessageCenterController::OnGotNotifierList, base::Unretained(this)));
   }
+}
+
+void MessageCenterController::UpdateNotifierIdAndAddNotification(
+    const std::string& package_name,
+    std::unique_ptr<message_center::Notification> notification) {
+  // |client_| may not be bound in unit tests.
+  if (client_.is_bound()) {
+    client_->GetAppId(
+        package_name,
+        base::BindOnce(&MessageCenterController::OnGotAppId,
+                       base::Unretained(this), std::move(notification)));
+  } else {
+    OnGotAppId(std::move(notification), std::string());
+  }
+}
+
+void MessageCenterController::OnGotAppId(
+    std::unique_ptr<message_center::Notification> notification,
+    const std::string& app_id) {
+  if (!app_id.empty())
+    notification->set_app_id(app_id);
+  MessageCenter::Get()->AddNotification(std::move(notification));
 }
 
 void MessageCenterController::OnGotNotifierList(
