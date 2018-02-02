@@ -31,15 +31,6 @@ class ChromeBrowserState;
 // Presents a promo's navigation controller.
 - (void)showPromo:(UIViewController*)promo;
 
-// Removes browsing data from |browserState| for datatypes in |mask|.
-// |browserState| cannot be null and must not be off the record.
-// |completionHandler| is called when this operation finishes.
-- (void)removeBrowsingDataFromBrowserState:
-            (ios::ChromeBrowserState*)browserState
-                                      mask:(int)mask
-                                timePeriod:(browsing_data::TimePeriod)timePeriod
-                         completionHandler:(ProceduralBlock)completionHandler;
-
 // Dismisses all modal dialogs, excluding the omnibox if |dismissOmnibox| is
 // NO, then call |completion|.
 - (void)dismissModalDialogsWithCompletion:(ProceduralBlock)completion

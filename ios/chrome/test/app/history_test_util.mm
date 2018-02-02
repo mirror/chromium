@@ -5,9 +5,8 @@
 #import "ios/chrome/test/app/history_test_util.h"
 
 #include "components/browsing_data/core/browsing_data_utils.h"
-#import "ios/chrome/app/main_controller.h"
-#import "ios/chrome/app/main_controller_private.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#import "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h"
 #include "ios/chrome/browser/browsing_data/ios_chrome_browsing_data_remover.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/testing/wait_util.h"
@@ -19,10 +18,9 @@
 namespace chrome_test_util {
 
 bool ClearBrowsingHistory() {
-  MainController* main_controller = GetMainController();
-  ios::ChromeBrowserState* active_state = GetOriginalBrowserState();
   __block bool did_complete = false;
-  [main_controller
+  ios::ChromeBrowserState* active_state = GetOriginalBrowserState();
+  [[BrowsingDataRemovalController sharedInstance]
       removeBrowsingDataFromBrowserState:active_state
                                     mask:IOSChromeBrowsingDataRemover::
                                              REMOVE_HISTORY
@@ -35,10 +33,10 @@ bool ClearBrowsingHistory() {
   // This code waits for success or timeout, then returns. This needs to be
   // fixed so that failure is correctly marked here, or the caller handles
   // waiting for the operation to complete. Wait for history to be cleared.
-  return testing::WaitUntilConditionOrTimeout(testing::kWaitForUIElementTimeout,
-                                              ^{
-                                                return did_complete;
-                                              });
+  return
+      testing::WaitUntilConditionOrTimeout(testing::kWaitForUIElementTimeout, ^{
+        return did_complete;
+      });
 }
 
 }  // namespace chrome_test_util

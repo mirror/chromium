@@ -20,6 +20,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#import "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/signin/account_tracker_service_factory.h"
 #include "ios/chrome/browser/signin/authentication_service.h"
@@ -277,9 +278,10 @@ const int64_t kAuthenticationFlowTimeoutSeconds = 10;
 - (void)clearData:(ios::ChromeBrowserState*)browserState {
   DCHECK(!AuthenticationServiceFactory::GetForBrowserState(browserState)
               ->GetAuthenticatedUserEmail());
-  BrowserStateDataRemover::ClearData(browserState, ^{
-    [_delegate didClearData];
-  });
+  BrowserStateDataRemover::ClearData(
+      browserState, [BrowsingDataRemovalController sharedInstance], ^{
+        [_delegate didClearData];
+      });
 }
 
 - (BOOL)shouldHandleMergeCaseForIdentity:(ChromeIdentity*)identity

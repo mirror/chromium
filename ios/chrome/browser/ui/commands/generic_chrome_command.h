@@ -22,9 +22,6 @@
 // Mark inherited initializer as unavailable to prevent calling it by mistake.
 - (instancetype)init NS_UNAVAILABLE;
 
-// Convenience method to execute this command on the main window.
-- (void)executeOnMainWindow;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_GENERIC_CHROME_COMMAND_H_

@@ -99,6 +99,7 @@ source_set("browsing_data_internal") {
     "//ios/chrome/browser/sessions:serialisation",
     "//ios/chrome/browser/signin",
     "//ios/chrome/browser/snapshots",
+    "//ios/chrome/browser/ui/commands",
     "//ios/web",
     "//net",
   ]

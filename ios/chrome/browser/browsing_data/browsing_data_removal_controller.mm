@@ -25,6 +25,7 @@
 #include "ios/chrome/browser/sessions/session_util.h"
 #include "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #import "ios/chrome/browser/snapshots/snapshots_util.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/external_file_remover.h"
 #import "ios/chrome/browser/ui/external_file_remover_factory.h"
 #include "ios/web/public/web_thread.h"
@@ -122,6 +123,14 @@ void DoNothing(uint32_t n) {}
   base::hash_map<ios::ChromeBrowserState*, int> _pendingRemovalCount;
 }
 
+@synthesize dispatcher = _dispatcher;
+
++ (instancetype)sharedInstance {
+  static BrowsingDataRemovalController* g_controller =
+      [[BrowsingDataRemovalController alloc] init];
+  return g_controller;
+}
+
 - (instancetype)init {
   if ((self = [super init])) {
     _browsingDataRemoverHelper.reset(new BrowsingDataRemoverHelper());
@@ -142,6 +151,12 @@ void DoNothing(uint32_t n) {}
 
   [self incrementPendingRemovalCountForBrowserState:browserState];
 
+  // TODO(crbug.com/632772): Remove web usage disabling once
+  // https://bugs.webkit.org/show_bug.cgi?id=149079 has been fixed.
+  if (mask & IOSChromeBrowsingDataRemover::REMOVE_SITE_DATA) {
+    [self.dispatcher prepareForBrowsingDataRemoval];
+  }
+
   ProceduralBlock browsingDataCleared = ^{
     [self decrementPendingRemovalCountForBrowserState:browserState];
     if (AccountConsistencyService* accountConsistencyService =
@@ -149,6 +164,7 @@ void DoNothing(uint32_t n) {}
                 browserState)) {
       accountConsistencyService->OnBrowsingDataRemoved();
     }
+    [self.dispatcher browsingDataWasRemoved];
     if (completionHandler) {
       completionHandler();
     }

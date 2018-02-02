@@ -47,9 +47,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
-#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/icons/chrome_icon.h"
 #import "ios/chrome/browser/ui/settings/time_range_selector_collection_view_controller.h"
@@ -638,20 +636,12 @@ const int kMaxTimesHistoryNoticeShown = 1;
 - (void)clearDataForDataTypes:(int)dataTypeMask {
   DCHECK(dataTypeMask);
 
-  BrowsingDataRemovalController* browsingDataRemovalController =
-      [[BrowsingDataRemovalController alloc] init];
-
-  if (dataTypeMask & IOSChromeBrowsingDataRemover::REMOVE_SITE_DATA) {
-    [self.dispatcher prepareForBrowsingDataRemoval];
-  }
-
-  [browsingDataRemovalController
+  DCHECK([BrowsingDataRemovalController sharedInstance].dispatcher);
+  [[BrowsingDataRemovalController sharedInstance]
       removeBrowsingDataFromBrowserState:_browserState
                                     mask:dataTypeMask
                               timePeriod:_timePeriod
-                       completionHandler:^{
-                         [self.dispatcher browsingDataWasRemoved];
-                       }];
+                       completionHandler:nil];
 
   if (dataTypeMask & IOSChromeBrowsingDataRemover::REMOVE_COOKIES) {
     base::Time beginDeleteTime =

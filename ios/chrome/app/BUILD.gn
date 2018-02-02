@@ -182,6 +182,7 @@ source_set("app_internal") {
     "//ios/chrome/browser/search_engines",
     "//ios/chrome/browser/share_extension",
     "//ios/chrome/browser/signin",
+    "//ios/chrome/browser/signin:browser_state_data_remover",
     "//ios/chrome/browser/snapshots",
     "//ios/chrome/browser/suggestions",
     "//ios/chrome/browser/sync",

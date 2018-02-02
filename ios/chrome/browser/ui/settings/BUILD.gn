@@ -129,6 +129,7 @@ source_set("settings") {
     "//ios/chrome/browser/sync",
     "//ios/chrome/browser/translate",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/ui:chrome_web_view_factory",
     "//ios/chrome/browser/ui/alert_coordinator",
     "//ios/chrome/browser/ui/authentication",
     "//ios/chrome/browser/ui/authentication:authentication_ui",

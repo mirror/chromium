@@ -112,6 +112,7 @@ source_set("unit_tests") {
     "uikit_ui_util_unittest.mm",
   ]
   deps = [
+    ":chrome_web_view_factory",
     ":native_content_controller_test_xib",
     ":resources_unit_tests",
     ":test_support",
@@ -240,8 +241,6 @@ source_set("ui_internal") {
     "browser_view_controller.mm",
     "browser_view_controller_dependency_factory.h",
     "browser_view_controller_dependency_factory.mm",
-    "chrome_web_view_factory.h",
-    "chrome_web_view_factory.mm",
     "external_file_controller.h",
     "external_file_controller.mm",
     "external_file_remover.h",
@@ -262,6 +261,7 @@ source_set("ui_internal") {
     "page_not_available_controller.mm",
   ]
   deps = [
+    ":chrome_web_view_factory",
     ":notifications",
     ":resources",
     ":ui",
@@ -436,6 +436,21 @@ source_set("ui_internal") {
     "StoreKit.framework",
     "UIKit.framework",
     "WebKit.framework",
+  ]
+}
+
+source_set("chrome_web_view_factory") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "chrome_web_view_factory.h",
+    "chrome_web_view_factory.mm",
+  ]
+  deps = [
+    "//base",
+    "//ios/chrome/browser/browser_state",
+    "//ios/public/provider/chrome/browser/ui",
+    "//ios/web",
+    "//net",
   ]
 }
 

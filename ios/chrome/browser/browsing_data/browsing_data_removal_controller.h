@@ -10,6 +10,7 @@
 #import "base/ios/block_types.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
 
+@protocol ApplicationCommands;
 @class BrowserViewController;
 
 namespace ios {
@@ -19,6 +20,9 @@ class ChromeBrowserState;
 // This class is responsible for removing browsing data associated with a
 // ChromeBrowserState.
 @interface BrowsingDataRemovalController : NSObject
+
+// The shared instance.
++ (instancetype)sharedInstance;
 
 // Removes browsing data from |browserState| for datatypes in |mask|.
 // |mask| is obtained from IOSChromeBrowsingDataRemover::RemoveDataMask.
@@ -47,6 +51,10 @@ class ChromeBrowserState;
 
 // Returns YES if browsing data for |browserState| is still being cleared.
 - (BOOL)hasPendingRemovalOperations:(ios::ChromeBrowserState*)browserState;
+
+// The dispatcher used by this instance. Needs to be set when calling
+// -removeBrowsingDataFromBrowserState:mask:timePeriod:completionHandler:.
+@property(nonatomic, weak) id<ApplicationCommands> dispatcher;
 
 @end
 

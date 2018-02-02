@@ -7,7 +7,6 @@
 #import <UIKit/UIKit.h>
 
 #include "base/logging.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -27,12 +26,6 @@
     _tag = tag;
   }
   return self;
-}
-
-- (void)executeOnMainWindow {
-  UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
-  DCHECK(mainWindow);
-  [mainWindow chromeExecuteCommand:self];
 }
 
 @end

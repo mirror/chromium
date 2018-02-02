@@ -108,10 +108,6 @@
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
 #import "ios/chrome/browser/ui/authentication/signed_in_accounts_view_controller.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
-#import "ios/chrome/browser/ui/chrome_web_view_factory.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
@@ -258,14 +254,18 @@ class MainControllerAuthenticationServiceDelegate
 MainControllerAuthenticationServiceDelegate::
     MainControllerAuthenticationServiceDelegate(
         ios::ChromeBrowserState* browser_state)
-    : browser_state_(browser_state) {}
+    : browser_state_(browser_state) {
+  DCHECK(browser_state_);
+}
 
 MainControllerAuthenticationServiceDelegate::
     ~MainControllerAuthenticationServiceDelegate() = default;
 
 void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
     ProceduralBlock completion) {
-  BrowserStateDataRemover::ClearData(browser_state_, completion);
+  BrowserStateDataRemover::ClearData(
+      browser_state_, [BrowsingDataRemovalController sharedInstance],
+      completion);
 }
 
 }  // namespace
@@ -350,9 +350,6 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 
   // Registrar for pref changes notifications to the local state.
   PrefChangeRegistrar _localStatePrefChangeRegistrar;
-
-  // Clears browsing data from ChromeBrowserStates.
-  BrowsingDataRemovalController* _browsingDataRemovalController;
 
   // The class in charge of showing/hiding the memory debugger when the
   // appropriate pref changes.
@@ -506,8 +503,6 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 - (void)scheduleShowPromo;
 // Crashes the application if requested.
 - (void)crashIfRequested;
-// Returns the BrowsingDataRemovalController. Lazily creates one if necessary.
-- (BrowsingDataRemovalController*)browsingDataRemovalController;
 // Clears incognito data that is specific to iOS and won't be cleared by
 // deleting the browser state.
 - (void)clearIOSSpecificIncognitoData;
@@ -695,6 +690,9 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
                                        tabModelObserver:self
                              applicationCommandEndpoint:self];
 
+  // Set the dispatcher for the BrowsingDataRemovalController shared instance.
+  [BrowsingDataRemovalController sharedInstance].dispatcher = self;
+
   // Force an obvious initialization of the AuthenticationService. This must
   // be done before creation of the UI to ensure the service is initialised
   // before use (it is a security issue, so accessing the service CHECK if
@@ -825,7 +823,7 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
   void (^completion)() = ^{
     [self activateBVCAndMakeCurrentBVCPrimary];
   };
-  [self.browsingDataRemovalController
+  [[BrowsingDataRemovalController sharedInstance]
       removeIOSSpecificIncognitoBrowsingDataFromBrowserState:otrBrowserState
                                                         mask:removeAllMask
                                            completionHandler:completion];
@@ -844,7 +842,8 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
     [_tabSwitcherController setOtrTabModel:nil];
 
   [_browserViewWrangler
-      deleteIncognitoTabModelState:self.browsingDataRemovalController];
+      deleteIncognitoTabModelState:[BrowsingDataRemovalController
+                                       sharedInstance]];
 
   if (otrBVCIsCurrent) {
     [self activateBVCAndMakeCurrentBVCPrimary];
@@ -856,18 +855,10 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
     [_tabSwitcherController setOtrTabModel:self.otrTabModel];
 }
 
-- (BrowsingDataRemovalController*)browsingDataRemovalController {
-  if (!_browsingDataRemovalController) {
-    _browsingDataRemovalController =
-        [[BrowsingDataRemovalController alloc] init];
-  }
-  return _browsingDataRemovalController;
-}
-
 - (void)activateBVCAndMakeCurrentBVCPrimary {
   // If there are pending removal operations, the activation will be deferred
   // until the callback for |removeBrowsingDataFromBrowserState:| is received.
-  if (![self.browsingDataRemovalController
+  if (![[BrowsingDataRemovalController sharedInstance]
           hasPendingRemovalOperations:self.currentBrowserState]) {
     [self.mainBVC setActive:YES];
     [self.otrBVC setActive:YES];
@@ -930,6 +921,10 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 
   [_browserViewWrangler shutdown];
   _browserViewWrangler = nil;
+
+  // Uninstall the dispatcher from BrowsingDataRemovalController shared
+  // instance.
+  [BrowsingDataRemovalController sharedInstance].dispatcher = nil;
 
   _chromeMain.reset();
 }
@@ -1602,43 +1597,6 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
                                  completion:nil];
 }
 
-#pragma mark - chromeExecuteCommand
-
-- (IBAction)chromeExecuteCommand:(id)sender {
-  NSInteger command = [sender tag];
-
-  switch (command) {
-    case IDC_CLEAR_BROWSING_DATA_IOS: {
-      // Clear both the main browser state and the associated incognito
-      // browser state.
-      ClearBrowsingDataCommand* command =
-          base::mac::ObjCCastStrict<ClearBrowsingDataCommand>(sender);
-      ios::ChromeBrowserState* browserState =
-          [command browserState]->GetOriginalChromeBrowserState();
-      int mask = [command mask];
-      browsing_data::TimePeriod timePeriod = [command timePeriod];
-      [self removeBrowsingDataFromBrowserState:browserState
-                                          mask:mask
-                                    timePeriod:timePeriod
-                             completionHandler:nil];
-
-      if (mask & IOSChromeBrowsingDataRemover::REMOVE_COOKIES) {
-        base::Time beginDeleteTime =
-            browsing_data::CalculateBeginDeleteTime(timePeriod);
-        [ChromeWebViewFactory clearExternalCookies:browserState
-                                          fromTime:beginDeleteTime
-                                            toTime:base::Time::Max()];
-      }
-      break;
-    }
-    default:
-      // Unknown commands get dropped with a warning.
-      NOTREACHED() << "Unknown command id " << command;
-      LOG(WARNING) << "Unknown command id " << command;
-      break;
-  }
-}
-
 #pragma mark - chromeExecuteCommand helpers
 
 - (void)openUrlFromSettings:(OpenUrlCommand*)command {
@@ -2030,31 +1988,6 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
   // since it may never have been loaded (or have been swapped out).
   [self.currentBVC loadViewIfNeeded];
   return self.currentBVC;
-}
-
-#pragma mark - Browsing data clearing
-
-- (void)removeBrowsingDataFromBrowserState:
-            (ios::ChromeBrowserState*)browserState
-                                      mask:(int)mask
-                                timePeriod:(browsing_data::TimePeriod)timePeriod
-                         completionHandler:(ProceduralBlock)completionHandler {
-  // TODO(crbug.com/632772): Remove web usage disabling once
-  // https://bugs.webkit.org/show_bug.cgi?id=149079 has been fixed.
-  if (mask & IOSChromeBrowsingDataRemover::REMOVE_SITE_DATA) {
-    [self prepareForBrowsingDataRemoval];
-  }
-  ProceduralBlock browsingDataRemoved = ^{
-    [self browsingDataWasRemoved];
-    if (completionHandler) {
-      completionHandler();
-    }
-  };
-  [self.browsingDataRemovalController
-      removeBrowsingDataFromBrowserState:browserState
-                                    mask:mask
-                              timePeriod:timePeriod
-                       completionHandler:browsingDataRemoved];
 }
 
 #pragma mark - Navigation Controllers
@@ -2583,10 +2516,11 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
   };
 
   callbackCounter->IncrementCount();
-  [self removeBrowsingDataFromBrowserState:_mainBrowserState
-                                      mask:removeAllMask
-                                timePeriod:browsing_data::TimePeriod::ALL_TIME
-                         completionHandler:decrementCallbackCounterCount];
+  [[BrowsingDataRemovalController sharedInstance]
+      removeBrowsingDataFromBrowserState:_mainBrowserState
+                                    mask:removeAllMask
+                              timePeriod:browsing_data::TimePeriod::ALL_TIME
+                       completionHandler:decrementCallbackCounterCount];
 }
 
 @end
