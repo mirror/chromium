@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0c03fdb_db4d11fe",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-02T13:43:39Z",
+      "side": 1,
+      "message": "Applied and tried another approach for tests.",
+      "parentUuid": "3632a722_15d1bd06",
+      "range": {
+        "startLine": 623,
+        "startChar": 37,
+        "endLine": 623,
+        "endChar": 59
+      },
+      "revId": "adb78a22183c944a7fb13498aea137741a22ab55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe9d84e_c0278168",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "adb78a22183c944a7fb13498aea137741a22ab55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6049e5_321fcb78",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-02T13:43:39Z",
+      "side": 1,
+      "message": "It should have no effect but you recommendation to move this is good and it\u0027s now in MediaEngagementService.",
+      "parentUuid": "7fe9d84e_c0278168",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "adb78a22183c944a7fb13498aea137741a22ab55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
