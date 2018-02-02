@@ -142,6 +142,30 @@
       "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a0e60f_eab65fb7",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-02-02T08:51:06Z",
+      "side": 1,
+      "message": "Current code checks CapsLock status after every key press events, so if you enable CapsLock on the VK and press Enter/Arrow keys on the VK then you will see the CapsLock notification and CapsLock becomes enabled throughout OS (including physical keyboard).\n\nThis CL is going to fix the issue by enabling CapsLock throughout OS immediately after pressing CapsLock key on the VK.",
+      "parentUuid": "bef323bf_7adf1697",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
