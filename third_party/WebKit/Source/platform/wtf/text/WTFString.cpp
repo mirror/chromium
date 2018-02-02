@@ -22,9 +22,11 @@
 
 #include "platform/wtf/text/WTFString.h"
 
+#include <stdarg.h>
+#include <algorithm>
+#include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "platform/wtf/ASCIICType.h"
-#include "platform/wtf/DataLog.h"
 #include "platform/wtf/HexNumber.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/StringExtras.h"
@@ -35,8 +37,6 @@
 #include "platform/wtf/text/IntegerToStringConversion.h"
 #include "platform/wtf/text/UTF8.h"
 #include "platform/wtf/text/Unicode.h"
-#include <algorithm>
-#include <stdarg.h>
 
 namespace WTF {
 
@@ -817,7 +817,7 @@ std::ostream& operator<<(std::ostream& out, const String& string) {
 
 #ifndef NDEBUG
 void String::Show() const {
-  DataLogF("%s\n", AsciiDebug(Impl()).data());
+  LOG(DEBUG) << AsciiDebug(Impl()).data();
 }
 #endif
 
