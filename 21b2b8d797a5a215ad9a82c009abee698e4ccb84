@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "997adf28_5e0feb23",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T17:52:41Z",
+      "side": 1,
+      "message": "These are from src-internal, for things that\u0027s private, it is guarded by the internal only gn arg.\n\nThis internal folder is added by ourselves, for things that very internal, e.g. constants, protobufs etc\n\nhttps://chrome-internal-review.googlesource.com/c/chrome/assistant/+/559501",
+      "parentUuid": "e7ecadc6_03d8d1f5",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 49
+      },
+      "revId": "21b2b8d797a5a215ad9a82c009abee698e4ccb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3595b7_6f72a9af",
         "filename": "chromeos/services/assistant/BUILD.gn",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "75cc15a3_df85dd06",
+        "filename": "chromeos/services/assistant/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T17:52:41Z",
+      "side": 1,
+      "message": "No one is using it in this patch.  I was trying get something to depended on this to test building the service. Removing it for now.",
+      "parentUuid": "1d3595b7_6f72a9af",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "21b2b8d797a5a215ad9a82c009abee698e4ccb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b5b800_b8ff11fc",
         "filename": "chromeos/services/assistant/BUILD.gn",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "21b2b8d797a5a215ad9a82c009abee698e4ccb84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba19067_6aef6feb",
+        "filename": "chromeos/services/assistant/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-02T17:52:41Z",
+      "side": 1,
+      "message": "Removing this group.",
+      "parentUuid": "e6b5b800_b8ff11fc",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "21b2b8d797a5a215ad9a82c009abee698e4ccb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
