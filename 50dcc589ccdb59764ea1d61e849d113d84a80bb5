@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1ed860_544f3b3f",
+        "filename": "sandbox/win/src/job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-02T19:46:37Z",
+      "side": 1,
+      "message": "Note that this comment up here kind of says that the fallthroughs are intentional.",
+      "revId": "50dcc589ccdb59764ea1d61e849d113d84a80bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bb52df_5e45ec51",
+        "filename": "sandbox/win/src/policy_low_level.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-02T19:46:37Z",
+      "side": 1,
+      "message": "This comment too says that fallthrough is intentional.",
+      "revId": "50dcc589ccdb59764ea1d61e849d113d84a80bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
