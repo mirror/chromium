@@ -168,11 +168,6 @@ BasePage* BaseArena::FindPageFromAddress(Address address) {
 #endif
 
 void BaseArena::MakeConsistentForGC() {
-  ClearFreeLists();
-
-  // Verification depends on the allocation point being cleared.
-  Verify();
-
 #if DCHECK_IS_ON()
   DCHECK(IsConsistentForGC());
 #endif
@@ -233,9 +228,19 @@ size_t BaseArena::ObjectPayloadSizeForTesting() {
   return object_payload_size;
 }
 
+size_t NormalPageArena::ObjectPayloadSizeForTesting() {
+  SetAllocationPoint(nullptr, 0);
+  return BaseArena::ObjectPayloadSizeForTesting();
+}
+
 void BaseArena::PrepareForSweep() {
   DCHECK(GetThreadState()->IsInGC());
   DCHECK(SweepingCompleted());
+
+  ClearFreeLists();
+
+  // Verification depends on the allocation point being cleared.
+  Verify();
 
   // Move all pages to a list of unswept pages.
   first_unswept_page_ = first_page_;
