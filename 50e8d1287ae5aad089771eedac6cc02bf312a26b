@@ -181,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "cc027695_ee63a4f0",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-02-02T20:06:12Z",
+      "side": 1,
+      "message": "Wait I might have missed your point.  Are you saying we shouldn\u0027t even bother separating kProgrammaticScroll into kBrowserScroll and kScriptScroll, because their behavior should be identical with respect to supressing history restore?\n\nIf so I am totally on board with leaving ScrollType as is. :)",
+      "parentUuid": "992ec33e_ffc139bb",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
