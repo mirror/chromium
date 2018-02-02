@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3e558c20_678187ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T08:29:15Z",
+      "side": 1,
+      "message": "\u003e I see. Looking at the code it seems like each task runner is created with a \"task type\", which means that there can be multiple task runners for each frame, i.e. there is no single \"per-frame task runner\".\n\nRight, but one pair with one task type and one frame is associated to one task runner, and only one task type is considered in this CL.\n\nWe are replacing per-thread task runners with per-web-frame task runners, so I don\u0027t think the words \u0027per-frame task runners\u0027 was wrong. Maybe \u0027per-frame task runner with an appropriate task type\u0027 is more precise?",
+      "parentUuid": "4e6f71b4_939506f4",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91432324_b1e90c20",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "e7f2cbc2_952c4632",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T08:29:15Z",
+      "side": 1,
+      "message": "\u003e If I\u0027m guessing correctly, (1) is the goal. In that case this change looks reasonable.\n\nCorrect, 1 is our goal. (OOPIF would make frames run on other processes, but this is a different topic here).\n\n\u003e OTOH if you are taking time to convert all code to avoid ThreadTaskRunnerHandle::Get() then you should consider updating it to use SequencedTaskRunner instead of SingleThreadTaskRunner, which will make it easier to migrate to (3) longer term. Has this been considered?\n\nWe don\u0027t plan to make frames run on different threads like 2 or 3 so far. Our aim to make the current scheduling cleverer.",
+      "parentUuid": "3730c3fa_3ad64abc",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff5ea012_177eec80",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -164,6 +212,30 @@
       "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479a9929_0843947c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T08:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff5ea012_177eec80",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "80d7baaf_5706cfa3",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T08:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25bb8462_6c8c788b",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "099783b1_19125a98",
         "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
         "patchSetId": 1
@@ -213,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "bfb6962b_f8451364",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T08:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099783b1_19125a98",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 32
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae45d72_4076f4e8",
         "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
         "patchSetId": 1
@@ -233,6 +353,30 @@
       "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69655ccc_d293fb78",
+        "filename": "content/renderer/media/webrtc/media_stream_video_webrtc_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T08:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae45d72_4076f4e8",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 51
+      },
+      "revId": "a34bb686f1b42c617d9fa8b5b26b51081a48a1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
