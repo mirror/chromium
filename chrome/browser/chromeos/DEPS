@@ -3,6 +3,8 @@ include_rules = [
   # //ash/public/interfaces and eliminate this.
   "+ash",
 
+  "+cc/base",
+
   # TODO(ananta): Remove this when we move files which display UI in
   # chrome/browser/chromeos to chrome/browser/ui/views/chromeos
   # crbug.com/728877
@@ -27,6 +29,7 @@ include_rules = [
   "+mojo/edk/embedder",
   "+services/device/public",
   "+services/metrics/public",
+  "+services/resource_coordinator/public",
   "+services/viz/public/interfaces",
   # Chromeos should not use ozone directly, it must go through mojo as ozone
   # does not run in process in mus.
