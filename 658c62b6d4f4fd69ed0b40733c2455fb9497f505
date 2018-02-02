@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d4818f7_4d3636a9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-02T09:11:24Z",
+      "side": 1,
+      "message": "I think you also need to hide it on Regular x Regular no? (this is when the tab strip is present).",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 80
+      },
+      "revId": "658c62b6d4f4fd69ed0b40733c2455fb9497f505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb5b609_a058d5d5",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-02T09:11:24Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "658c62b6d4f4fd69ed0b40733c2455fb9497f505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

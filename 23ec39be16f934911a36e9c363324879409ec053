@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "4ef7c605_ef66a2f4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-02T09:11:24Z",
+      "side": 1,
+      "message": "BVC is adding the layout guides that should be used through the app.\nThe perf test is adding them because it is not part of the standard view hierarchy.\n\nTo add the layout guides to the NTP view, I think multiple elements should be taken into account:\n- Those layout guide might be used by the subviews of the NTP, they would access the wrong one. For example the voice search animation might need a voice search layout guide. The button inside the NTP would access the NTP layout guide, the subview of the BVC would access another one.\n- It is easier to forget to add one layout guide to this view (when adding one in BVC), creating subtle problems.\n\nAnyway, I think for now we still don\u0027t know how to do it exactly. I think it is better to have a flag in the ToolbarVC, but if you think this is a better solution I won\u0027t push back.",
+      "parentUuid": "382ee07c_37999ec6",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d97e5a_5aed43d2",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
         "patchSetId": 6
@@ -281,6 +305,30 @@
       "revId": "23ec39be16f934911a36e9c363324879409ec053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2229e135_321329f9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-02-02T09:11:24Z",
+      "side": 1,
+      "message": "I am surprised that it is throwing an exception, but it is fine to add it here.",
+      "parentUuid": "bf3f36b5_181cf0cb",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 61
+      },
+      "revId": "23ec39be16f934911a36e9c363324879409ec053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
