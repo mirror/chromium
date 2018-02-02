@@ -307,6 +307,10 @@ public class PageInfoPopup implements OnClickListener {
     // Creation date of an offline copy, if web contents contains an offline page.
     private String mOfflinePageCreationDate;
 
+    // Whether offline page is trusted to not have been modified, if web contents contains an
+    // offline page.
+    private boolean mIsOfflinePageTrusted;
+
     // The name of the content publisher, if any.
     private String mContentPublisher;
 
@@ -319,16 +323,18 @@ public class PageInfoPopup implements OnClickListener {
      * @param activity                 Activity which is used for showing a popup.
      * @param tab                      Tab for which the pop up is shown.
      * @param offlinePageCreationDate  Date when the offline page was created.
+     * @param isOfflinePageTrusted     Whether offline page is trusted (to not have been modified).
      * @param publisher                The name of the content publisher, if any.
      */
     private PageInfoPopup(Activity activity, Tab tab, String offlinePageCreationDate,
-            String publisher) {
+            boolean isOfflinePageTrusted, String publisher) {
         mContext = activity;
         mTab = tab;
         mIsBottomPopup = mTab.getActivity().getBottomSheet() != null;
 
         if (offlinePageCreationDate != null) {
             mOfflinePageCreationDate = offlinePageCreationDate;
+            mIsOfflinePageTrusted = isOfflinePageTrusted;
         }
         mWindowAndroid = mTab.getWebContents().getTopLevelNativeWindow();
         mContentPublisher = publisher;
@@ -708,9 +714,23 @@ public class PageInfoPopup implements OnClickListener {
             messageBuilder.append(
                     mContext.getString(R.string.page_info_domain_hidden, mContentPublisher));
         } else if (isShowingOfflinePage()) {
-            messageBuilder.append(String.format(
-                    mContext.getString(R.string.page_info_connection_offline),
-                    mOfflinePageCreationDate));
+            // Switch on page being trusted or not.
+            if (mIsOfflinePageTrusted) {
+                messageBuilder.append(
+                        String.format(mContext.getString(R.string.page_info_connection_offline),
+                                mOfflinePageCreationDate));
+            } else {
+                // For untrusted pages, if there's a creation date, show it in the message.
+                if (!mOfflinePageCreationDate.isEmpty()) {
+                    messageBuilder.append(String.format(
+                            mContext.getString(
+                                    R.string.page_info_offline_page_not_trusted_with_date),
+                            mOfflinePageCreationDate));
+                } else {
+                    messageBuilder.append(mContext.getString(
+                            R.string.page_info_offline_page_not_trusted_without_date));
+                }
+            }
         } else {
             if (!TextUtils.equals(summary, details)) {
                 mConnectionSummary.setVisibility(View.VISIBLE);
@@ -1028,16 +1048,26 @@ public class PageInfoPopup implements OnClickListener {
         }
 
         String offlinePageCreationDate = null;
+        boolean isOfflinePageTrusted = false;
 
         OfflinePageItem offlinePage = OfflinePageUtils.getOfflinePage(tab);
         if (offlinePage != null) {
-            // Get formatted creation date of the offline page.
-            Date creationDate = new Date(offlinePage.getCreationTimeMs());
-            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-            offlinePageCreationDate = df.format(creationDate);
+            isOfflinePageTrusted = OfflinePageUtils.isShowingTrustedOfflinePage(tab);
+            // Get formatted creation date of the offline page. If the page was shared (so the
+            // creation date cannot be acquired), make date an empty string and there will be
+            // specific processing for showing different string in UI.
+            long pageCreationTimeMs = offlinePage.getCreationTimeMs();
+            if (pageCreationTimeMs == 0) {
+                offlinePageCreationDate = "";
+            } else {
+                Date creationDate = new Date(offlinePage.getCreationTimeMs());
+                DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+                offlinePageCreationDate = df.format(creationDate);
+            }
         }
 
-        new PageInfoPopup(activity, tab, offlinePageCreationDate, contentPublisher);
+        new PageInfoPopup(
+                activity, tab, offlinePageCreationDate, isOfflinePageTrusted, contentPublisher);
     }
 
     private static native long nativeInit(PageInfoPopup popup, WebContents webContents);
