@@ -27,6 +27,10 @@ using ReadLogSourceParams = api::feedback_private::ReadLogSourceParams;
 using ReadLogSourceResult = api::feedback_private::ReadLogSourceResult;
 using SystemLogsResponse = system_logs::SystemLogsResponse;
 
+// The maximum number of accesses on a single log source that can be allowed
+// before the next recharge increment. See access_rate_limiter.h for more info.
+const int kMaxNumBurstAccesses = 10;
+
 // The minimum time between consecutive reads of a log source by a particular
 // extension.
 constexpr base::TimeDelta kDefaultRateLimitingTimeout =
@@ -228,7 +232,8 @@ bool LogSourceAccessManager::UpdateSourceAccessTime(ResourceId id) {
   const SourceAndExtension& key = *iter->second;
   if (rate_limiters_.find(key) == rate_limiters_.end()) {
     rate_limiters_.emplace(
-        key, std::make_unique<AccessRateLimiter>(1, GetMinTimeBetweenReads(),
+        key, std::make_unique<AccessRateLimiter>(kMaxNumBurstAccesses,
+                                                 GetMinTimeBetweenReads(),
                                                  tick_clock_.get()));
   }
   return rate_limiters_[key]->AttemptAccess();
