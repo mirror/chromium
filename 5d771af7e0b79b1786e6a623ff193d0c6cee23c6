@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "835a0931_a1a52742",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T15:49:55Z",
+      "side": 1,
+      "message": "optional: since you are already here. Do you mind adding braces to this multiline if-statement?",
+      "revId": "5d771af7e0b79b1786e6a623ff193d0c6cee23c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d78e7dc_53f4d11d",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T15:49:55Z",
+      "side": 1,
+      "message": "nit: Can we shift this before line 215 (before the VerifyDomainAuthentication check)?\nIf we are requesting a websocket-supported session and the session doesn\u0027t support websocket, there is no need to verify domain.",
+      "revId": "5d771af7e0b79b1786e6a623ff193d0c6cee23c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
