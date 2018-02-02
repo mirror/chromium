@@ -2707,6 +2707,14 @@ if (enable_java_templates) {
     _incremental_test_runner_target_name =
         "${_test_runner_target_name}_incremental"
     _incremental_test_name = "${invoker.target_name}_incremental"
+    if (android_sdk_release == "p") {
+        invoker.deps += [
+            "//third_party/android_support_test_runner:optional_android_test_base_java",
+            "//third_party/android_support_test_runner:optional_android_test_mock_java",
+            "//third_party/android_support_test_runner:optional_android_test_runner_java",
+            ]
+    }
+
     if (incremental_apk_by_default) {
       _incremental_test_runner_target_name = _test_runner_target_name
       _incremental_test_name = invoker.target_name

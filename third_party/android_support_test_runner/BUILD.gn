@@ -22,3 +22,18 @@ android_aar_prebuilt("rules_java") {
   testonly = true
   aar_path = "lib/rules.aar"
 }
+
+android_java_prebuilt("optional_android_test_base_java") {
+  testonly = true
+  jar_path = "lib/android.test.base.jar"
+}
+
+android_java_prebuilt("optional_android_test_mock_java") {
+  testonly = true
+  jar_path = "lib/android.test.mock.jar"
+}
+
+android_java_prebuilt("optional_android_test_runner_java") {
+  testonly = true
+  jar_path = "lib/android.test.runner.jar"
+}

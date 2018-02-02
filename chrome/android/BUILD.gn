@@ -1174,6 +1174,9 @@ instrumentation_test_apk("chrome_public_test_apk") {
     "//chrome/android/webapk/shell_apk:shell_apk_javatests",
     "//chrome/browser/profiling_host:profiling_host_javatests",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/android_support_test_runner:optional_android_test_base_java",
+    "//third_party/android_support_test_runner:optional_android_test_mock_java",
+    "//third_party/android_support_test_runner:optional_android_test_runner_java",
   ]
   additional_apks = [
     "//chrome/android/webapk/libs/runtime_library/javatests/apk_with_webapk_service:apk_with_webapk_service",
