@@ -16,6 +16,24 @@
       "revId": "21a2ceaf10bbf9fb037914d67e37edc266fdaa8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ca93fa_1703f936",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-02T18:54:38Z",
+      "side": 1,
+      "message": "Ah, that makes sense, I uploaded a new patch set addressing this, please take another look, thanks.",
+      "parentUuid": "091b8361_f12a9e6d",
+      "revId": "21a2ceaf10bbf9fb037914d67e37edc266fdaa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
