@@ -16,6 +16,24 @@
       "revId": "cbce1149c9ae08297b816effbf456c02f97df8db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c3ffa9_03715e2a",
+        "filename": "content/test/data/download/download-attribute-blob.html",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-02-02T13:16:42Z",
+      "side": 0,
+      "message": "ah :/\n\nAdmittedly, I didn\u0027t read the test, but just the spec and concluded that there was no guarantee that this should work",
+      "parentUuid": "adb305c0_b903948e",
+      "revId": "cbce1149c9ae08297b816effbf456c02f97df8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
