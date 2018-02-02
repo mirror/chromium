@@ -665,8 +665,12 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     // for just CSS clip-path but without a CSS mask. In that case we need to
     // paint a fully filled mask (which will subsequently clipped by the
     // clip-path), otherwise the mask layer will be empty.
-    FillMaskingFragment(context, layer_fragments[0].background_rect,
-                        *paint_layer_.GetCompositedLayerMapping()->MaskLayer());
+    const GraphicsLayer* mask_layer =
+        paint_layer_.GetCompositedLayerMapping()->MaskLayer();
+    ClipRect layer_rect = LayoutRect(
+        LayoutPoint(LayoutSize(mask_layer->OffsetFromLayoutObject())),
+        LayoutSize(mask_layer->Size()));
+    FillMaskingFragment(context, layer_rect, *mask_layer);
   }
 
   clip_path_clipper = WTF::nullopt;
