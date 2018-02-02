@@ -21,10 +21,6 @@ class FakePowerManagerClient;
 class FakeSessionManagerClient;
 }  // namespace chromeos
 
-namespace gfx {
-class Vector3dF;
-}  // namespace gfx
-
 namespace ash {
 
 class LockStateController;
@@ -41,18 +37,6 @@ class PowerButtonTestBase : public AshTestBase {
 
   using ButtonType = PowerButtonController::ButtonType;
 
-  // Vector pointing up (e.g. keyboard in clamshell).
-  static constexpr gfx::Vector3dF kUpVector = {
-      0, 0, TabletPowerButtonController::kGravity};
-
-  // Vector pointing down (e.g. keyboard in tablet sitting on table).
-  static constexpr gfx::Vector3dF kDownVector = {
-      0, 0, -TabletPowerButtonController::kGravity};
-
-  // Vector pointing sideways (e.g. screen in 90-degree clamshell).
-  static constexpr gfx::Vector3dF kSidewaysVector = {
-      0, TabletPowerButtonController::kGravity, 0};
-
   // AshTestBase:
   void SetUp() override;
 
@@ -61,16 +45,15 @@ class PowerButtonTestBase : public AshTestBase {
   void ResetPowerButtonController();
 
   // Initializes |power_button_controller_| and other members that point at
-  // objects owned by it. If |send_accelerometer_update| is true, an
-  // accelerometer update is sent to create TabletPowerButtonController and
+  // objects owned by it. If |is_tablet_mode_switch_set| is true, will call
+  // SetTabletModeSwitch to create TabletPowerButtonController and
   // PowerButtonScreenshotController.
-  void InitPowerButtonControllerMembers(bool send_accelerometer_update);
+  void InitPowerButtonControllerMembers(bool is_tablet_mode_switch_set);
 
-  // Sends an update with screen and keyboard accelerometer readings to
-  // PowerButtonController, and also |tablet_controller_| if it's non-null and
-  // has registered as an observer.
-  void SendAccelerometerUpdate(const gfx::Vector3dF& screen,
-                               const gfx::Vector3dF& keyboard);
+  // Sends the SwitchStates |result| to PowerButtonController to help initialize
+  // |tablet_controller_| and |screenshot_controller_|.
+  void SetTabletModeSwitch(
+      base::Optional<chromeos::PowerManagerClient::SwitchStates> result);
 
   // Sets the flag for forcing clamshell-like power button behavior and resets
   // |power_button_controller_|.
