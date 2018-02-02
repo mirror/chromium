@@ -16,6 +16,10 @@
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 
+namespace gpu {
+class GpuMemoryBufferImplFactory;
+}
+
 namespace viz {
 
 namespace mojom {
@@ -87,6 +91,9 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
                          BASE_HASH_NAMESPACE::hash<gfx::GpuMemoryBufferId>>;
   std::unordered_map<int, AllocatedBuffers> allocated_buffers_;
   std::unordered_set<int> pending_buffers_;
+
+  std::unique_ptr<gpu::GpuMemoryBufferImplFactory>
+      gpu_memory_buffer_impl_factory_;
 
   const gpu::GpuMemoryBufferConfigurationSet native_configurations_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;

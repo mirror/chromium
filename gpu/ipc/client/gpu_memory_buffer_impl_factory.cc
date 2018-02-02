@@ -1,24 +1,49 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gpu/ipc/common/gpu_memory_buffer_support.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 
 #include "base/logging.h"
 #include "build/build_config.h"
-#include "ui/gl/gl_bindings.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
+
+#if defined(OS_MACOSX)
+#include "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.h"
+#endif
 
 #if defined(OS_LINUX)
-#include "ui/gfx/client_native_pixmap_factory.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.h"
+#include "ui/gfx/linux/client_native_pixmap_factory_dmabuf.h"
+#endif
+
+#if defined(USE_OZONE)
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
+#endif
+
+#if defined(OS_WIN)
+#include "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h"
 #endif
 
 #if defined(OS_ANDROID)
 #include "base/android/android_hardware_buffer_compat.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
 #endif
 
 namespace gpu {
 
-gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
+GpuMemoryBufferImplFactory::GpuMemoryBufferImplFactory() {
+#if defined(USE_OZONE)
+  client_native_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
+#elif defined(OS_LINUX)
+  client_native_pixmap_factory_ = gfx::CreateClientNativePixmapFactoryDmabuf();
+#endif
+}
+
+GpuMemoryBufferImplFactory::~GpuMemoryBufferImplFactory() {}
+
+gfx::GpuMemoryBufferType
+GpuMemoryBufferImplFactory::GetNativeGpuMemoryBufferType() {
 #if defined(OS_MACOSX)
   return gfx::IO_SURFACE_BUFFER;
 #elif defined(OS_ANDROID)
@@ -32,8 +57,9 @@ gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 #endif
 }
 
-bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
-                                                   gfx::BufferUsage usage) {
+bool GpuMemoryBufferImplFactory::IsNativeGpuMemoryBufferConfigurationSupported(
+    gfx::BufferFormat format,
+    gfx::BufferUsage usage) {
   DCHECK_NE(gfx::SHARED_MEMORY_BUFFER, GetNativeGpuMemoryBufferType());
 
 #if defined(OS_MACOSX)
@@ -76,12 +102,7 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
   NOTREACHED();
   return false;
 #elif defined(OS_LINUX)
-  if (!gfx::ClientNativePixmapFactory::GetInstance()) {
-    // unittests don't have to set ClientNativePixmapFactory.
-    return false;
-  }
-  return gfx::ClientNativePixmapFactory::GetInstance()
-      ->IsConfigurationSupported(format, usage);
+  return client_native_pixmap_factory_->IsConfigurationSupported(format, usage);
 #elif defined(OS_WIN)
   switch (usage) {
     case gfx::BufferUsage::GPU_READ:
@@ -102,6 +123,44 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
   DCHECK_EQ(GetNativeGpuMemoryBufferType(), gfx::EMPTY_BUFFER);
   return false;
 #endif
+}
+
+std::unique_ptr<GpuMemoryBufferImpl>
+GpuMemoryBufferImplFactory::CreateFromHandle(
+    const gfx::GpuMemoryBufferHandle& handle,
+    const gfx::Size& size,
+    gfx::BufferFormat format,
+    gfx::BufferUsage usage,
+    const GpuMemoryBufferImpl::DestructionCallback& callback) {
+  switch (handle.type) {
+    case gfx::SHARED_MEMORY_BUFFER:
+      return GpuMemoryBufferImplSharedMemory::CreateFromHandle(
+          handle, size, format, usage, callback);
+#if defined(OS_MACOSX)
+    case gfx::IO_SURFACE_BUFFER:
+      return GpuMemoryBufferImplIOSurface::CreateFromHandle(
+          handle, size, format, usage, callback);
+#endif
+#if defined(OS_LINUX)
+    case gfx::NATIVE_PIXMAP:
+      return GpuMemoryBufferImplNativePixmap::CreateFromHandle(
+          client_native_pixmap_factory_.get(), handle, size, format, usage,
+          callback);
+#endif
+#if defined(OS_WIN)
+    case gfx::DXGI_SHARED_HANDLE:
+      return GpuMemoryBufferImplDXGI::CreateFromHandle(handle, size, format,
+                                                       usage, callback);
+#endif
+#if defined(OS_ANDROID)
+    case gfx::ANDROID_HARDWARE_BUFFER:
+      return GpuMemoryBufferImplAndroidHardwareBuffer::CreateFromHandle(
+          handle, size, format, usage, callback);
+#endif
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
 }  // namespace gpu

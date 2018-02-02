@@ -21,6 +21,7 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/system/platform_handle.h"
@@ -30,6 +31,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gfx/linux/client_native_pixmap_factory_dmabuf.h"
 
 namespace {
 // Callback into Android to force screen updates if the queue gets this big.
@@ -93,6 +95,8 @@ ArcScreenCaptureSession::ArcScreenCaptureSession(
       notifier_(std::move(notifier)),
       size_(size),
       desktop_window_(nullptr),
+      client_native_pixmap_factory_dmabuf_(
+          gfx::CreateClientNativePixmapFactoryDmabuf()),
       weak_ptr_factory_(this) {}
 
 mojom::ScreenCaptureSessionPtr ArcScreenCaptureSession::Initialize(
@@ -190,8 +194,8 @@ void ArcScreenCaptureSession::SetOutputBuffer(
       stride * kBytesPerPixel, 0, stride * kBytesPerPixel * size_.height(), 0);
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer =
       gpu::GpuMemoryBufferImplNativePixmap::CreateFromHandle(
-          handle, size_, gfx::BufferFormat::RGBX_8888,
-          gfx::BufferUsage::SCANOUT,
+          client_native_pixmap_factory_dmabuf_.get(), handle, size_,
+          gfx::BufferFormat::RGBX_8888, gfx::BufferUsage::SCANOUT,
           gpu::GpuMemoryBufferImpl::DestructionCallback());
   if (!gpu_memory_buffer) {
     LOG(ERROR) << "Failed creating GpuMemoryBuffer";

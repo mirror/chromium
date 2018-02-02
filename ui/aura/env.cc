@@ -49,10 +49,6 @@ Env::~Env() {
   if (is_override_input_injector_factory_)
     ui::SetSystemInputInjectorFactory(nullptr);
 
-#if defined(USE_OZONE)
-  gfx::ClientNativePixmapFactory::ResetInstance();
-#endif
-
   for (EnvObserver& observer : observers_)
     observer.OnWillDestroyEnv();
 
@@ -164,9 +160,6 @@ Env::Env(Mode mode)
       is_touch_down_(false),
       get_last_mouse_location_from_mus_(mode_ == Mode::MUS),
       input_state_lookup_(InputStateLookup::Create()),
-#if defined(USE_OZONE)
-      native_pixmap_factory_(ui::CreateClientNativePixmapFactoryOzone()),
-#endif
       context_factory_(nullptr),
       context_factory_private_(nullptr) {
   DCHECK(lazy_tls_ptr.Pointer()->Get() == NULL);
@@ -177,10 +170,6 @@ void Env::Init() {
   if (mode_ == Mode::MUS) {
     EnableMusOSExchangeDataProvider();
     EnableMusOverrideInputInjector();
-#if defined(USE_OZONE)
-    // Required by all Aura-using clients of services/ui
-    gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
-#endif
     return;
   }
 
@@ -197,7 +186,6 @@ void Env::Init() {
   params.using_mojo = command_line->HasSwitch(switches::kEnableDrmMojo);
 
   ui::OzonePlatform::InitializeForUI(params);
-  gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
 #endif
   if (!ui::PlatformEventSource::GetInstance())
     event_source_ = ui::PlatformEventSource::CreateDefault();

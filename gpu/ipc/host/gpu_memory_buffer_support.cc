@@ -7,8 +7,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "build/build_config.h"
-#include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
-#include "gpu/ipc/common/gpu_memory_buffer_support.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "gpu/ipc/host/gpu_switches.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_implementation.h"
@@ -36,6 +35,8 @@ bool AreNativeGpuMemoryBuffersEnabled() {
 GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
   GpuMemoryBufferConfigurationSet configurations;
 
+  GpuMemoryBufferImplFactory gpu_memory_buffer_impl_factory;
+
 #if defined(USE_OZONE) || defined(OS_MACOSX) || defined(OS_WIN) || \
     defined(OS_ANDROID)
   if (AreNativeGpuMemoryBuffersEnabled()) {
@@ -55,7 +56,8 @@ GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT};
     for (auto format : kNativeFormats) {
       for (auto usage : kNativeUsages) {
-        if (IsNativeGpuMemoryBufferConfigurationSupported(format, usage))
+        if (gpu_memory_buffer_impl_factory
+                .IsNativeGpuMemoryBufferConfigurationSupported(format, usage))
           configurations.insert(std::make_pair(format, usage));
       }
     }
@@ -79,7 +81,8 @@ GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
         gfx::BufferUsage::SCANOUT_VDA_WRITE};
     for (auto format : kGPUReadWriteFormats) {
       for (auto usage : kGPUReadWriteUsages) {
-        if (IsNativeGpuMemoryBufferConfigurationSupported(format, usage))
+        if (gpu_memory_buffer_impl_factory
+                .IsNativeGpuMemoryBufferConfigurationSupported(format, usage))
           configurations.insert(std::make_pair(format, usage));
       }
     }

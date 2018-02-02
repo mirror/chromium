@@ -22,6 +22,10 @@
 #include "gpu/ipc/common/surface_handle.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 
+namespace gpu {
+class GpuMemoryBufferImplFactory;
+}
+
 namespace content {
 
 class CONTENT_EXPORT BrowserGpuMemoryBufferManager
@@ -119,6 +123,9 @@ class CONTENT_EXPORT BrowserGpuMemoryBufferManager
                                   const gpu::SyncToken& sync_token);
 
   uint64_t ClientIdToTracingProcessId(int client_id) const;
+
+  std::unique_ptr<gpu::GpuMemoryBufferImplFactory>
+      gpu_memory_buffer_impl_factory_;
 
   const gpu::GpuMemoryBufferConfigurationSet native_configurations_;
   const int gpu_client_id_;

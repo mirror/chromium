@@ -24,6 +24,8 @@ source_set("ipc_client_sources") {
     "gpu_channel_host.h",
     "gpu_memory_buffer_impl.cc",
     "gpu_memory_buffer_impl.h",
+    "gpu_memory_buffer_impl_factory.cc",
+    "gpu_memory_buffer_impl_factory.h",
     "gpu_memory_buffer_impl_shared_memory.cc",
     "gpu_memory_buffer_impl_shared_memory.h",
   ]

@@ -11,6 +11,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "mojo/public/cpp/system/buffer.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -18,6 +19,10 @@
 #include "ui/gfx/buffer_format_util.h"
 
 using DestructionCallback = base::Callback<void(const gpu::SyncToken& sync)>;
+
+namespace gpu {
+class GpuMemoryBufferImplFactory;
+}
 
 namespace ui {
 
@@ -33,7 +38,9 @@ void NotifyDestructionOnCorrectThread(
 }  // namespace
 
 ClientGpuMemoryBufferManager::ClientGpuMemoryBufferManager(mojom::GpuPtr gpu)
-    : thread_("GpuMemoryThread"), weak_ptr_factory_(this) {
+    : thread_("GpuMemoryThread"),
+      gpu_memory_buffer_impl_factory_(new gpu::GpuMemoryBufferImplFactory),
+      weak_ptr_factory_(this) {
   CHECK(thread_.Start());
   // The thread is owned by this object. Which means the task will not run if
   // the object has been destroyed. So Unretained() is safe.
@@ -151,7 +158,7 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
       base::Bind(&ClientGpuMemoryBufferManager::DeletedGpuMemoryBuffer,
                  weak_ptr_, gmb_handle.id);
   std::unique_ptr<gpu::GpuMemoryBufferImpl> buffer(
-      gpu::GpuMemoryBufferImpl::CreateFromHandle(
+      gpu_memory_buffer_impl_factory_->CreateFromHandle(
           gmb_handle, size, format, usage,
           base::Bind(&NotifyDestructionOnCorrectThread, thread_.task_runner(),
                      callback)));

@@ -22,6 +22,7 @@
 #include "components/exo/sub_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/xdg_shell_surface.h"
+#include "ui/gfx/linux/client_native_pixmap_factory_dmabuf.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
@@ -116,7 +117,8 @@ std::unique_ptr<Buffer> Display::CreateLinuxDMABufBuffer(
 
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer =
       gpu::GpuMemoryBufferImplNativePixmap::CreateFromHandle(
-          handle, size, format, gfx::BufferUsage::GPU_READ,
+          client_native_pixmap_factory_dmabuf_.get(), handle, size, format,
+          gfx::BufferUsage::GPU_READ,
           gpu::GpuMemoryBufferImpl::DestructionCallback());
   if (!gpu_memory_buffer) {
     LOG(ERROR) << "Failed to create GpuMemoryBuffer from handle";

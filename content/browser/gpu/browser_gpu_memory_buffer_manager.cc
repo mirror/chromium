@@ -21,6 +21,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gl/gl_switches.h"
@@ -66,7 +67,8 @@ struct BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferRequest {
 BrowserGpuMemoryBufferManager::BrowserGpuMemoryBufferManager(
     int gpu_client_id,
     uint64_t gpu_client_tracing_id)
-    : native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
+    : gpu_memory_buffer_impl_factory_(new gpu::GpuMemoryBufferImplFactory()),
+      native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
       gpu_client_id_(gpu_client_id),
       gpu_client_tracing_id_(gpu_client_tracing_id) {
   DCHECK(!g_gpu_memory_buffer_manager);
@@ -318,7 +320,7 @@ void BrowserGpuMemoryBufferManager::HandleGpuMemoryBufferCreatedOnIO(
 
   // Note: Unretained is safe as IO thread is stopped before manager is
   // destroyed.
-  request->result = gpu::GpuMemoryBufferImpl::CreateFromHandle(
+  request->result = gpu_memory_buffer_impl_factory_->CreateFromHandle(
       handle, request->size, request->format, request->usage,
       base::Bind(
           &GpuMemoryBufferDeleted,
