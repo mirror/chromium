@@ -22,6 +22,30 @@
       "revId": "e48301f48acc1f00f8df480d509e72b565ce4508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7759f22b_96759f39",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-02-02T11:07:37Z",
+      "side": 1,
+      "message": "If we emit a write barrier for the backing store, the backing store will get registered to the marking callback stack. You may remember I had a CL to disable promptly free for marked backings. This was why that was necessary.\n\nWe need to either\n- mark the backing and emit write barriers for elements\n- emit write barrier for the backing and disable promptly free for marked backings",
+      "parentUuid": "b8f71d7f_c35d960f",
+      "range": {
+        "startLine": 82,
+        "startChar": 31,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "e48301f48acc1f00f8df480d509e72b565ce4508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
