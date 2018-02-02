@@ -16,6 +16,24 @@
       "revId": "1d27b2eb8c431f0b6b5567d474de2e9fe47707b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a35e8f8_39371970",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-02T18:47:02Z",
+      "side": 0,
+      "message": "Fine with both, Done.",
+      "parentUuid": "4e8ecf97_a0982f85",
+      "revId": "1d27b2eb8c431f0b6b5567d474de2e9fe47707b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
