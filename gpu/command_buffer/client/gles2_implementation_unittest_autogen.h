@@ -2834,6 +2834,17 @@ TEST_F(GLES2ImplementationTest, LoseContextCHROMIUM) {
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
+TEST_F(GLES2ImplementationTest, UnpremultiplyAndDitherCopyCHROMIUM) {
+  struct Cmds {
+    cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init(1, 2, 3, 4, 5, 6);
+
+  gl_->UnpremultiplyAndDitherCopyCHROMIUM(1, 2, 3, 4, 5, 6);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
 TEST_F(GLES2ImplementationTest, DrawBuffersEXT) {
   GLenum data[1][1] = {{0}};
   struct Cmds {

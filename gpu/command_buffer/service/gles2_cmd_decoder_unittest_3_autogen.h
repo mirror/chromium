@@ -279,6 +279,35 @@ TEST_P(GLES2DecoderTest3, SwapBuffersValidArgs) {
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
 }
 
+TEST_P(GLES2DecoderTest3, UnpremultiplyAndDitherCopyCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, UnpremultiplyAndDitherCopyCHROMIUM(1, 2, 3, 4, 5, 6));
+  SpecializedSetup<cmds::UnpremultiplyAndDitherCopyCHROMIUM, 0>(true);
+  cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  cmd.Init(1, 2, 3, 4, 5, 6);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(GLES2DecoderTest3, UnpremultiplyAndDitherCopyCHROMIUMInvalidArgs4_0) {
+  EXPECT_CALL(*gl_, UnpremultiplyAndDitherCopyCHROMIUM(_, _, _, _, _, _))
+      .Times(0);
+  SpecializedSetup<cmds::UnpremultiplyAndDitherCopyCHROMIUM, 0>(false);
+  cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  cmd.Init(1, 2, 3, 4, -1, 6);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+}
+
+TEST_P(GLES2DecoderTest3, UnpremultiplyAndDitherCopyCHROMIUMInvalidArgs5_0) {
+  EXPECT_CALL(*gl_, UnpremultiplyAndDitherCopyCHROMIUM(_, _, _, _, _, _))
+      .Times(0);
+  SpecializedSetup<cmds::UnpremultiplyAndDitherCopyCHROMIUM, 0>(false);
+  cmds::UnpremultiplyAndDitherCopyCHROMIUM cmd;
+  cmd.Init(1, 2, 3, 4, 5, -1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+}
+
 TEST_P(GLES2DecoderTest3, SwapIntervalValidArgs) {
   SpecializedSetup<cmds::SwapInterval, 0>(true);
   cmds::SwapInterval cmd;
