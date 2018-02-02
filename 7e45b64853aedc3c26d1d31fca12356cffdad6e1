@@ -16,6 +16,24 @@
       "revId": "7e45b64853aedc3c26d1d31fca12356cffdad6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9e7bb6_cde86e6d",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-02T01:26:38Z",
+      "side": 1,
+      "message": "Interesting.  I agree with Justin\u0027s observation.\n\nNonetheless, the first and third conditions seem to behave correctly on Mac...",
+      "parentUuid": "92c7bf52_f36c1f61",
+      "revId": "7e45b64853aedc3c26d1d31fca12356cffdad6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
