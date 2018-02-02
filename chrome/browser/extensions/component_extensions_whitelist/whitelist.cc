@@ -28,6 +28,7 @@ bool IsComponentExtensionWhitelisted(const std::string& extension_id) {
   const char* const kAllowed[] = {
     extension_misc::kInAppPaymentsSupportAppId,
     extension_misc::kMediaRouterStableExtensionId,
+    extension_misc::kMediaRouterInternalExtensionId,
     extension_misc::kPdfExtensionId,
 #if defined(OS_CHROMEOS)
     extension_misc::kChromeVoxExtensionId,
@@ -78,6 +79,7 @@ bool IsComponentExtensionWhitelisted(int manifest_resource_id) {
 #endif
     case IDR_NETWORK_SPEECH_SYNTHESIS_MANIFEST:
     case IDR_WEBSTORE_MANIFEST:
+    case IDR_MEDIA_ROUTER_MANIFEST:
 
 #if defined(OS_CHROMEOS)
     // Separate ChromeOS list, as it is quite large.

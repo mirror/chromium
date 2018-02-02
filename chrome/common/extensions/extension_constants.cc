@@ -61,6 +61,8 @@ const char kTextEditorAppId[] = "mmfbcljfglbokpmkimbfghdkjmjhdgbg";
 const char kYoutubeAppId[] = "blpcfgokakmgnkcojhhkbfbldkacnbeo";
 const char kInAppPaymentsSupportAppId[] = "nmmhkkegccagdldgiimedpiccmgmieda";
 const char kMediaRouterStableExtensionId[] = "pkedcjkdefgpdelpbcmbmeomcjbeemfm";
+const char kMediaRouterInternalExtensionId[] =
+    "enhhojjnijigcajfphajepfemndkmdlo";
 
 #if defined(OS_CHROMEOS)
 // The extension id for the built-in component extension.

@@ -14,11 +14,6 @@ namespace extensions {
 
 namespace {
 
-// The switch load-media-router-component-extension is defined in
-// chrome/common/chrome_switches.cc, but we can't depend on chrome here.
-const char kLoadMediaRouterComponentExtensionFlag[] =
-    "load-media-router-component-extension";
-
 class CommonSwitches {
  public:
   CommonSwitches()
@@ -43,15 +38,7 @@ class CommonSwitches {
         embedded_extension_options(switches::kEmbeddedExtensionOptions,
                                    FeatureSwitch::DEFAULT_DISABLED),
         trace_app_source(switches::kTraceAppSource,
-                         FeatureSwitch::DEFAULT_ENABLED),
-        load_media_router_component_extension(
-            kLoadMediaRouterComponentExtensionFlag,
-#if defined(GOOGLE_CHROME_BUILD)
-            FeatureSwitch::DEFAULT_ENABLED)
-#else
-            FeatureSwitch::DEFAULT_DISABLED)
-#endif  // defined(GOOGLE_CHROME_BUILD)
-  {
+                         FeatureSwitch::DEFAULT_ENABLED) {
   }
 
   FeatureSwitch force_dev_mode_highlighting;
@@ -65,7 +52,6 @@ class CommonSwitches {
   FeatureSwitch scripts_require_action;
   FeatureSwitch embedded_extension_options;
   FeatureSwitch trace_app_source;
-  FeatureSwitch load_media_router_component_extension;
 };
 
 base::LazyInstance<CommonSwitches>::DestructorAtExit g_common_switches =
@@ -93,9 +79,6 @@ FeatureSwitch* FeatureSwitch::embedded_extension_options() {
 }
 FeatureSwitch* FeatureSwitch::trace_app_source() {
   return &g_common_switches.Get().trace_app_source;
-}
-FeatureSwitch* FeatureSwitch::load_media_router_component_extension() {
-  return &g_common_switches.Get().load_media_router_component_extension;
 }
 
 FeatureSwitch::ScopedOverride::ScopedOverride(FeatureSwitch* feature,

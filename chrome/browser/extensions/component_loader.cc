@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/component_loader.h"
 
 #include <string>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/files/file_util.h"
@@ -375,6 +376,14 @@ void ComponentLoader::AddChromeOsSpeechSynthesisExtension() {
                  extension_misc::kChromeVoxExtensionId));
 }
 #endif
+
+void ComponentLoader::AddMediaRouterExtension() {
+  const extensions::ExtensionId& mr_extension_id =
+      media_router::GetMediaRouterExtensionId();
+  if (media_router::IsMediaRouterInternalExtensionId(mr_extension_id)) {
+    Add(1 /** FIXME **/, base::FilePath(FILE_PATH_LITERAL("media_router")));
+  }
+}
 
 void ComponentLoader::AddWithNameAndDescription(
     int manifest_resource_id,

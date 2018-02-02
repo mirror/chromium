@@ -1173,6 +1173,17 @@ const FeatureEntry::FeatureVariation kWebXrRenderPathVariations[] = {
      nullptr}};
 #endif  // defined(OS_ANDROID) && BUILDFLAG(ENABLE_VR)
 
+#if !defined(OS_ANDROID)
+const FeatureEntry::Choice kLoadMediaRouterComponentExtension[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kLoadMediaRouterComponentExtensionInternal,
+     switches::kLoadMediaRouterComponentExtension, "internal"},
+    {flag_descriptions::kLoadMediaRouterComponentExtensionExternal,
+     switches::kLoadMediaRouterComponentExtension, "external"},
+    {flag_descriptions::kLoadMediaRouterComponentExtensionNone,
+     switches::kLoadMediaRouterComponentExtension, "none"}};
+#endif  // !defined(OS_ANDROID)
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.

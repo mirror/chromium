@@ -170,6 +170,7 @@ class ComponentLoader {
   void AddHangoutServicesExtension();
   void AddImageLoaderExtension();
   void AddNetworkSpeechSynthesisExtension();
+  void AddMediaRouterExtension();
 
   void AddWithNameAndDescription(int manifest_resource_id,
                                  const base::FilePath& root_directory,

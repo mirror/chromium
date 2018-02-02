@@ -4,9 +4,12 @@
 
 #include "chrome/browser/media/router/media_router_feature.h"
 
+#include <string>
+
+#include "base/commandline.h"
 #include "base/feature_list.h"
-#include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/extensions/extension_constants.h"
 #include "content/public/browser/browser_context.h"
 #include "extensions/features/features.h"
 #include "ui/base/ui_features.h"
@@ -78,5 +81,38 @@ bool PresentationReceiverWindowEnabled() {
 #endif
 }
 #endif
+
+#if !defined(OS_ANDROID)
+extensions::ExtensionId GetMediaRouterExtensionId() {
+  const std::string& switch_value =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kLoadMediaRouterComponentExtension);
+  // This flag used to be boolean, so we also check for legacy 0/1 values.
+  if (switch_value == "internal") {
+    return extension_misc::kMediaRouterInternalExtensionId;
+  } else if (switch_value == "external" || switch_value == "1") {
+    return extension_misc::kMediaRouterStableExtensionId;
+  } else if (switch_value == "none" || switch_value == "0") {
+    return "";
+  } else {  // Default
+#if defined(GOOGLE_CHROME_BUILD)
+    return extension_misc::kMediaRouterStableExtensionId;
+#else
+    return extension_misc::kMediaRouterInternalExtensionId;
+#endif  // defined(GOOGLE_CHROME_BUILD)
+  }
+}
+
+bool IsMediaRouterExternalComponent(
+    const extensions::ExtensionId& extension_id) {
+  return extension_id == extension_misc::kMediaRouterStableExtensionId;
+}
+
+bool IsMediaRouterInternalComponent(
+    const extensions::ExtensionId& extension_id) {
+  return extension_id == extension_misc::kMediaRouterInternalExtensionId;
+}
+
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace media_router
