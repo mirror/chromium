@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8089452a_e1db955e",
+        "filename": "third_party/polymer/v1_0/components-chromium/iron-media-query/iron-media-query.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-02T19:47:16Z",
+      "side": 1,
+      "message": "Only change from 1.0.8 -\u003e 2.0.0? lol",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 8
+      },
+      "revId": "7be76540e3006e69a8ad7a515bc9c870c6157a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
