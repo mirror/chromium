@@ -141,6 +141,30 @@
       "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dda40c0_0a9353f6",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-02T07:12:19Z",
+      "side": 1,
+      "message": "If I understand your proposal, we\u0027d do something like:\n\n  WindowMetrics new_ukm_metrics \u003d\n      UpdateAndGetSanitizedVersion(browser_, \u0026current_metrics_);\n\nThis function would do two things (change state, and generate a transformation of that state). I\u0027d rather explicitly do the bookkeeping (UpdateMetrics) and subsequent sanitizing (SanitizeWindowMetricsForUkm).\n\nIn case you\u0027re asking why we need a separate |current_metrics_| and sanitized |last_reported_metrics_|: to build the sanitized WindowMetrics, we have to start with the saved non-sanitized WindowMetrics that has the raw values -- otherwise we can\u0027t track counters like MaximizeCount that get bucketized. That\u0027s|current_metrics_|.",
+      "parentUuid": "ad066a68_a7db552d",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 35
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
