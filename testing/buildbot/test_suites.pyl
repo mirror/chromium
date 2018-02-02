@@ -201,7 +201,18 @@
     },
   },
 
-  'android_nougat_vr_gtests': {
+  'android_nougat_gtests': {
+    'chrome_public_test_apk': {
+      'swarming': {
+        'shards': 5,
+      },
+    },
+    'webview_instrumentation_test_apk': {
+      'swarming': {
+        'expiration': 10800,
+        'shards': 5,
+      },
+    },
     'chrome_public_test_vr_apk-pixelxl-cardboard-nougat': {
       'args': [
         '--shared-prefs-file=//chrome/android/shared_preference_files/test/vr_cardboard_skipdon_setupcomplete.json',
