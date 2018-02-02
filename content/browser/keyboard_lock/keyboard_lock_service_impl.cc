@@ -8,8 +8,19 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+
+namespace {
+// These values must stay in sync with tools/metrics/histograms.xml.
+enum KeyboardLockMethods {
+  kRequestAllKeys = 0,
+  kRequestSomeKeys = 1,
+  kCancelLock = 2,
+  kMaxValue = 3
+};
+}  // namespace
 
 namespace content {
 
@@ -33,12 +44,22 @@ void KeyboardLockServiceImpl::CreateMojoService(
 void KeyboardLockServiceImpl::RequestKeyboardLock(
     const std::vector<std::string>& key_codes,
     RequestKeyboardLockCallback callback) {
-  // TODO(zijiehe): Implementation required.
+  if (key_codes.empty()) {
+    UMA_HISTOGRAM_ENUMERATION("KeyboardLock.ApiCalled", kRequestAllKeys,
+                              kMaxValue);
+  } else {
+    UMA_HISTOGRAM_ENUMERATION("KeyboardLock.ApiCalled", kRequestSomeKeys,
+                              kMaxValue);
+  }
+
+  // TODO(joedow): Implementation required.
   std::move(callback).Run(blink::mojom::KeyboardLockRequestResult::SUCCESS);
 }
 
 void KeyboardLockServiceImpl::CancelKeyboardLock() {
-  // TODO(zijiehe): Implementation required.
+  UMA_HISTOGRAM_ENUMERATION("KeyboardLock.ApiCalled", kCancelLock, kMaxValue);
+
+  // TODO(joedow): Implementation required.
 }
 
 }  // namespace content
