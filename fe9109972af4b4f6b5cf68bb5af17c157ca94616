@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b31cb2f0_67806aeb",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-02T22:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0a97e3_19e560af",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 19
+      },
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24edabe7_6756e304",
         "filename": "chrome/browser/vr/model/color_scheme.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "59dc5fae_a6c6c409",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-02T22:10:40Z",
+      "side": 1,
+      "message": "Yes.  Good catch.  Not the selection or cursor, but the foreground text.  Interestingly, in Clank\u0027s omnibox, the text color doesn\u0027t change with selection, but on desktop it does, and RenderText gives us the flexibility, so I put it in the scheme.",
+      "parentUuid": "24edabe7_6756e304",
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3765a829_7ffb98db",
         "filename": "chrome/browser/vr/model/text_input_info.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2018-02-02T20:37:47Z",
       "side": 1,
       "message": "why are we talking abs here? Shouldn\u0027t selection end always be \u003e selection start?",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5811ac_c281a2f4",
+        "filename": "chrome/browser/vr/model/text_input_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-02T22:10:40Z",
+      "side": 1,
+      "message": "RenderText uses a Range for selection, which makes no promise of ordering.  I was thinking that if text were selected with a right-to-left drag, we\u0027d have end \u003c start.  I\u0027ll leave this for now as it\u0027s harmless, but we should investigate whether there\u0027s any mismatch between web and keyboard on whether end can be less than start.",
+      "parentUuid": "3765a829_7ffb98db",
       "range": {
         "startLine": 33,
         "startChar": 18,
@@ -85,6 +151,30 @@
       "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699cb2a2_2e7f00bd",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-02T22:10:40Z",
+      "side": 1,
+      "message": "Yes, it\u0027s coming out in the follow-on CL that reworks all of this init.",
+      "parentUuid": "93aa9353_34114f56",
+      "range": {
+        "startLine": 1877,
+        "startChar": 6,
+        "endLine": 1877,
+        "endChar": 21
+      },
+      "revId": "fe9109972af4b4f6b5cf68bb5af17c157ca94616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
