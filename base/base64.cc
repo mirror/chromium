@@ -10,6 +10,7 @@
 
 namespace base {
 
+
 void Base64Encode(const StringPiece& input, std::string* output) {
   std::string temp;
   temp.resize(modp_b64_encode_len(input.size()));  // makes room for null byte
