@@ -16,6 +16,24 @@
       "revId": "34ec527d123dcdac22196a29c3731d0b72199166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8811ad_9f247cb6",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2018-02-02T08:22:34Z",
+      "side": 1,
+      "message": "Thank you Peter. This patch was too naive and could affect others too much. I came up with another solution thanks to your comment. Maybe new patch can sort out what you concerned.\n\nPS. OnWindowClosing() seems to be called several times, though. Please check out test case.",
+      "parentUuid": "9eda43ab_d1b29c7b",
+      "revId": "34ec527d123dcdac22196a29c3731d0b72199166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
