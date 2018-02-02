@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2924a03a_21b8fca9",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-02T23:17:32Z",
+      "side": 1,
+      "message": "nit: Could this be a DCHECK_NE instead?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "0c4152ba4853d0ff678900e2d4f8cc7359e575a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
