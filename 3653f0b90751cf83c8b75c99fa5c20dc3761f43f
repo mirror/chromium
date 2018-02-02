@@ -244,6 +244,24 @@
       "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d444d3c6_f30c6325",
+        "filename": "chrome/browser/chromeos/docked_magnifier/docked_magnifier_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T17:02:41Z",
+      "side": 1,
+      "message": "Ah, I see. Interesting. It is a little odd that we have these two separate mechanisms, but the fact that IME solves it for both native UI as well as web seems pretty useful. SGTM.\n\nJust idle curiosity here, how does this work for tabbing between native UI elements, like the status tray? I think some of those can be activated with keyboard, but they don\u0027t take text input. Does the IME code path still handle those? Or do we not track those changes? We don\u0027t seem to track them with the existing screen magnifier, dunno if that\u0027s a behavior we would want to support. (Don\u0027t block this CL on an answer to this, I\u0027m just curious.)",
+      "parentUuid": "41ce3b8d_eeee556a",
+      "revId": "3653f0b90751cf83c8b75c99fa5c20dc3761f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
