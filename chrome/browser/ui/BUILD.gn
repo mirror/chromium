@@ -2287,6 +2287,7 @@ split_static_library("ui") {
     sources += [
       "input_method/input_method_engine_base.cc",
       "input_method/input_method_engine_base.h",
+      "input_method/input_method_export.h",
     ]
 
     if (!is_chromeos) {

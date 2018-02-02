@@ -18,8 +18,8 @@ class RenderFrameHost;
 
 namespace input_method {
 
-class InputMethodEngine : public InputMethodEngineBase,
-                          public ui::ImeWindowObserver {
+class INPUT_METHOD_EXPORT InputMethodEngine : public InputMethodEngineBase,
+                                              public ui::ImeWindowObserver {
  public:
   InputMethodEngine();
 
