@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52521a78_62a73638",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T19:43:02Z",
+      "side": 1,
+      "message": "Nit: \"Internal\" not necessary",
+      "revId": "1ba4289bf25a7dff9e96a98a0be1adc48b3d8cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff2b639_101fc364",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T19:43:02Z",
+      "side": 1,
+      "message": "Nit: This can become function-local to GetBorderRadiusInternal()",
+      "revId": "1ba4289bf25a7dff9e96a98a0be1adc48b3d8cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
