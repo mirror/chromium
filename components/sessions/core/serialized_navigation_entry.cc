@@ -5,6 +5,7 @@
 #include "components/sessions/core/serialized_navigation_entry.h"
 
 #include <stddef.h>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/pickle.h"
@@ -59,6 +60,7 @@ sync_pb::SyncEnums_PageTransition ToSyncPageTransition(
 
     // Non-core values listed here although unreachable:
     case ui::PAGE_TRANSITION_CORE_MASK:
+    case ui::PAGE_TRANSITION_FROM_ARC:
     case ui::PAGE_TRANSITION_BLOCKED:
     case ui::PAGE_TRANSITION_FORWARD_BACK:
     case ui::PAGE_TRANSITION_FROM_ADDRESS_BAR:

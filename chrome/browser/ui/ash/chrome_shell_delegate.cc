@@ -314,7 +314,7 @@ void ChromeShellDelegate::OpenUrlFromArc(const GURL& url) {
   chrome::AddSelectedTabWithURL(
       displayer.browser(), url_to_open,
       ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
-                                ui::PAGE_TRANSITION_FROM_API));
+                                ui::PAGE_TRANSITION_FROM_ARC));
 
   // Since the ScopedTabbedBrowserDisplayer does not guarantee that the
   // browser will be shown on the active desktop, we ensure the visibility.
