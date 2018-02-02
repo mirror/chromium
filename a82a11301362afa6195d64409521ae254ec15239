@@ -22,6 +22,30 @@
       "revId": "a82a11301362afa6195d64409521ae254ec15239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d25ea5d_502fc020",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImageTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-02-02T04:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c70b4e_71c8b8a5",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "a82a11301362afa6195d64409521ae254ec15239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
