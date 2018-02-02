@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e9f5121_9afe8026",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-02-02T18:15:41Z",
+      "side": 1,
+      "message": "Sorry, I can\u0027t remember all of these fine details that don\u0027t show in the diff.\n\nI can\u0027t help but think there\u0027s some other way of doing this instead of macro defining the name space name.  But I can\u0027t think of any right now.\n\nSo leave things as you have it.",
+      "parentUuid": "3661fce7_9b3b303e",
+      "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16c8a466_50473ac0",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
         "patchSetId": 2
