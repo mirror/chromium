@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b0e86ea_69b5e6ec",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-02-02T10:44:52Z",
+      "side": 1,
+      "message": "I\u0027m thinking about adding a new SharedMemoryPlatformHandle class that \n- Will be used by the new region API to hide the fact that we need two handles for EventuallyReadOnlySharedMemoryRegion.\n- Will currently wrap one or two SharedMemoryHandles but in the future will have its own implementation.\n- Will have checks that we construct a read-only region only from a read-only handle, a writable region from a writable handle, etc\n- Will be move only + duplicateable.\n\nWDYT?",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "49225dcd177a41246f3375225a5b45c9c6f24a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
