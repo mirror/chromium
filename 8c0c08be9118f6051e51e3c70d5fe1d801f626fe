@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60f63be2_deaca893",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T12:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7bd47de_9cf3f26f",
+      "revId": "8c0c08be9118f6051e51e3c70d5fe1d801f626fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d229566_7e21dfea",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "8c0c08be9118f6051e51e3c70d5fe1d801f626fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bc16dc_03c70e46",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T12:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d229566_7e21dfea",
+      "revId": "8c0c08be9118f6051e51e3c70d5fe1d801f626fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
