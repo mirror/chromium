@@ -34,6 +34,24 @@
       "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accca1de_ebb5489a",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-02-02T22:02:29Z",
+      "side": 1,
+      "message": "then let\u0027s use mastername here like other master-level mixins. It would be more consistent for this file and for perf because that dict would be used in both buildbot and luci in the same way, as opposed to using \"perf_dashboard_machine_group\" if it exists and otherwise using (\"mastername\" property + the dict)",
+      "parentUuid": "de0e4c94_0e3f8052",
+      "revId": "cbe8ce9011f1d0774675e59d9d9c53bbe4848927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
