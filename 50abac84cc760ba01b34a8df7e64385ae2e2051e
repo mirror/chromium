@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f3aaed_6dcc9744",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T16:36:28Z",
+      "side": 1,
+      "message": "children -\u003e child",
+      "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4531baf_3e69f458",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T16:36:28Z",
+      "side": 1,
+      "message": "What happens if there aren\u0027t any inline text boxes?\n\nIt could be missing due to a bug, but there are legitimate circumstances\nwhere there might not be inline text boxes, if the text is part of the\naccessibility tree but not displayed.",
+      "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6716e1f3_782e869e",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T16:36:28Z",
+      "side": 1,
+      "message": "Update this comment?",
+      "revId": "50abac84cc760ba01b34a8df7e64385ae2e2051e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
