@@ -41,7 +41,6 @@
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/permissions/permissions_info.h"
 #include "extensions/common/switches.h"
-#include "extensions/common/url_pattern.h"
 #include "net/base/filename_util.h"
 #include "url/url_util.h"
 
@@ -86,11 +85,6 @@ const int Extension::kValidWebExtentSchemes =
 const int Extension::kValidBookmarkAppSchemes = URLPattern::SCHEME_HTTP |
                                                 URLPattern::SCHEME_HTTPS |
                                                 URLPattern::SCHEME_EXTENSION;
-
-const int Extension::kValidHostPermissionSchemes =
-    URLPattern::SCHEME_CHROMEUI | URLPattern::SCHEME_HTTP |
-    URLPattern::SCHEME_HTTPS | URLPattern::SCHEME_FILE |
-    URLPattern::SCHEME_FTP | URLPattern::SCHEME_WS | URLPattern::SCHEME_WSS;
 
 //
 // Extension
