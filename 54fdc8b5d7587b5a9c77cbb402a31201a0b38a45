@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39d5b0c2_d45ca93c",
+        "filename": "chrome/test/data/webui/settings/a11y/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-02T01:40:39Z",
+      "side": 1,
+      "message": "Yes! Missed this \u003e_\u003c (I was modifying the deleted file and wasn\u0027t getting changes to test results)",
+      "parentUuid": "4d23cbbf_80d874c4",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "54fdc8b5d7587b5a9c77cbb402a31201a0b38a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11c7af30_2ef9c836",
         "filename": "chrome/test/data/webui/settings/a11y/edit_dictionary_a11y_test.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "54fdc8b5d7587b5a9c77cbb402a31201a0b38a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973bc74a_ecf7cdae",
+        "filename": "chrome/test/data/webui/settings/a11y/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-02T01:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11c7af30_2ef9c836",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "54fdc8b5d7587b5a9c77cbb402a31201a0b38a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
