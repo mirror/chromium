@@ -787,6 +787,24 @@
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b777fa_d7961c19",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-02T00:12:05Z",
+      "side": 1,
+      "message": "Yes, that\u0027s sort of right.\n\nAs-is, this doesn\u0027t do any crash handling, it just embeds a copy of the crashpad handler code into this binary that could be run, but never is.\n\nHere, you need to do one of two things:\n\n1. Call CrashpadClient::StartHandler() to start the out-of-process handler and set up the exception handler in this process.\n\nor\n\n2. If you can be sure that chrome\u0027s running already, better would be to do what all child processes in chrome do, which is to use https://cs.chromium.org/chromium/src/third_party/crashpad/crashpad/client/crashpad_client.h?type\u003dcs\u0026q\u003dSetHandlerIPCPipe\u0026sq\u003dpackage:chromium\u0026l\u003d174, which connects to the out-of-process handler that\u0027s already running (which is started by the browser at startup.)\n\n\nIf you need to do #1 because chrome isn\u0027t necessarily running (and so you can\u0027t share reporting with chrome), it\u0027s going to be more complicated. We\u0027ll need to talk more because then you\u0027ll need to figure out what happens to UMA data, consent for uploading crashes, etc.",
+      "parentUuid": "3833021d_ef83e9d2",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
