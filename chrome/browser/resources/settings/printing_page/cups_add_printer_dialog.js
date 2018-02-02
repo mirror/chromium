@@ -258,6 +258,10 @@ Polymer({
       type: Boolean,
       value: false,
     },
+    invalidPPD_: {
+      type: Boolean,
+      value: false,
+    }
   },
 
   close: function() {
