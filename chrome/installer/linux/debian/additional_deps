@@ -10,7 +10,6 @@
 # xdg-utils: For OS integration.
 ca-certificates
 fonts-liberation
-libappindicator1
 libnss3 (>= 3.26)
 lsb-release
 wget
