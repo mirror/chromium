@@ -22,6 +22,30 @@
       "revId": "e0b27d14c02d8df7cef2befd6e6435225a2e9537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346b1384_49de70e4",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-02-02T22:44:16Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e98b8cef_469e5903",
+      "range": {
+        "startLine": 772,
+        "startChar": 11,
+        "endLine": 772,
+        "endChar": 16
+      },
+      "revId": "e0b27d14c02d8df7cef2befd6e6435225a2e9537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
