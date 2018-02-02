@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7598afbc_15fbdb4c",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "I think you dropped \"results\" in the new version. :)",
+      "parentUuid": "aca0a87a_b4302219",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "000975da_ff0fef49",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -328,6 +352,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a185a56_0f60c46b",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "While the style guide [1] agrees that it\u0027s fine to say \"auto\" if the type is unimportant, I don\u0027t think there is agreement about whether the type is unimportant here.\n\nPlease consider that while to you and now it is \"immediately clear what [the code] is doing inside this function\", this can be different for other people or as the code evolves.\n\nGoing back to the style guide, the bar for when a type is unimportant is set by its example \"When the type doesn\u0027t matter because it isn\u0027t being used for anything other than equality comparison.\" Your code here goes deeper than that. There are multiple different structures to capture some information about forms (e.g., FormData, FormFieldData, PasswordFormFillData, PasswordForm), and even with some experience in the code, I often need to check what type I\u0027m looking at precisely. I don\u0027t want to need to follow a chain of type aliases and jump out of context to obtain that information.\n\nFormFieldData is a concise name and not a clutter. The \"noisy\" names mentioned by the style guide are rather SomeWeirdFactory::InnerObject::TypeDefinedCompletelyByItsName, in which case auto is much more helpful.\n\nFinally, about const: while indeed FieldPointersVector defines that the elements are pointers to const objects, this is not obvious, because of the use of the alias FieldPointersVector. Therefore saying \"const\" is useful here (and below). Again, please consider that your current knowledge of the code is much better than the average compared to other people reading it (like me), so let\u0027s help those other people to be confident in what they read.\n\n[1] https://google.github.io/styleguide/cppguide.html#auto",
+      "parentUuid": "fa3464d5_c071585b",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -895,6 +943,30 @@
     },
     {
       "key": {
+        "uuid": "534147d3_fa38fa1f",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "The style guide [1] is rather clear here: \"[W]e strongly recommend that you use const whenever it makes sense to do so.\"\n\nFor readability in particular: so far this is a short function and it\u0027s clear that |is_there_focusable_password_field| is never assigned again. But functions grow, and a couple of lines added change that easily. It is important to know that |is_there_focusable_password_field| is just an abbreviation and not an evolving parameter, and saying \"const\" accomplishes this perfectly.\n\n[1] https://google.github.io/styleguide/cppguide.html#Use_of_const",
+      "parentUuid": "62d99d2c_9e96010e",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 6
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a3e6fad_89a1b8cb",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -939,6 +1011,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eaa9cbe_c1dccae1",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "As for \"why\": The sentence \"...has the same logic as...\" is bound to become outdated rather sooner than later, and at that point will actively harm understanding that code.\n\nSo either write a TODO with an associated bug, saying that we are still considering to share the logic between iOS and the rest. Or delete the sentence completely.",
+      "parentUuid": "9d57cb45_d6efb2e5",
+      "range": {
+        "startLine": 161,
+        "startChar": 55,
+        "endLine": 162,
+        "endChar": 79
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -1071,6 +1167,30 @@
       "side": 1,
       "message": "Common example of useless and outdated comments :) (that\u0027s all from upstream function).\nI\u0027ve updated many comments for this function. Please check them again.",
       "parentUuid": "576adc07_471ce07f",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 20
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7221456a_8ac87155",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "Thanks, I like the new comments very much!",
+      "parentUuid": "f7bbc725_420827fb",
       "range": {
         "startLine": 193,
         "startChar": 11,
@@ -1362,6 +1482,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe989ec6_45c5013e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "While our code might have examples of both using namespaces in //ios/chrome and not, the guidance has consistently been to no use namespaces in //ios/chrome. For example, blundell@, a former Bling-team engineer and a person responsible for components, servicification and a lot of shaping of the codebase itself, summarises it in [1].\n\nTherefore we should keep things in the global namespace here as well. (Using anonymous namespaces inside .cc/.mm files is fine.)\n\n\n[1] https://groups.google.com/a/chromium.org/forum/#!msg/chromium-dev/8ROncnL1t4k/mxDlejj6AwAJ",
+      "parentUuid": "aeaf5b6f_2da95a0d",
+      "range": {
+        "startLine": 300,
+        "startChar": 10,
+        "endLine": 300,
+        "endChar": 19
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538358a3_c85add23",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723134f4_e6a4e4a3",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "A drawback is that even if |value| is set, |is_empty| can still be true. In that case, |is_empty| gets ignored in GetFormData, but that\u0027s not clear here.\n\nThis can be simplified. Case-by-case, you need to express three situations:\n(1) .value should be a particular non-empty value,\n(2) .value should be a non-empty value generated arbitrarily by GetFormData,\n(3) .value should be empty\n\nYou can signal all three through just .value:\n(1) .value \u003d \"The particular value\"\n(2) .value \u003d nullptr\n(3) .value \u003d \"\"\n\nThen just get rid of .is_empty completely and replace checking .is_empty with (.value \u0026\u0026 *value\u003d\u003d0).",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426ba924_0468ca13",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "It\u0027s not clear what a \"default value\" is. On first reading I thought you mean the default value in HTML (empty). But it means just some generated value defined inside GetFormData. Perhaps consider my alternative suggestion above.",
+      "range": {
+        "startLine": 47,
+        "startChar": 60,
+        "endLine": 47,
+        "endChar": 73
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdb65c7_fa2c0fc5",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "Please address, remove or clarify this TODO.",
+      "range": {
+        "startLine": 47,
+        "startChar": 75,
+        "endLine": 48,
+        "endChar": 17
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3a95c8_5f7cb751",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "tiny nit: Capitalise the beginning of the sentence: An ...",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 10
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aeddd48_252c5e51",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "nit: This should be also enclosed in ||, to be consistent with the rest of the sentence.",
+      "range": {
+        "startLine": 95,
+        "startChar": 20,
+        "endLine": 95,
+        "endChar": 39
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c63444_4b35bb19",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "This comment looks out of place.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 26
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07541dba_3db8f2c2",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "Just for record, here I totally agree with your choice to use auto, because it addresses the style guide\u0027s usage to avoid duplicities -- the type is already mentioned in listing the values in the range.",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 13
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c41976d_1534cd98",
+        "filename": "ios/chrome/browser/passwords/form_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-02-02T10:01:06Z",
+      "side": 1,
+      "message": "While correct, this code is a bit hard to understand. What about:\n\nif (expected_indices.IsEmpty())\n  EXPECT_FALSE(parsed_form) \u003c\u003c \"Expected no parsed results\";\nelse\n  EXPECT_TRUE(parsed_form) \u003c\u003c \"The form is expected to be parsed successfully\";",
+      "range": {
+        "startLine": 153,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 68
+      },
+      "revId": "7da887a58143a70fd993f8df56a1067b6ad79c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
