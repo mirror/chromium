@@ -112,5 +112,7 @@ const char kWindowSize[] = "window-size";
 // Whitelist for Negotitate Auth servers.
 const char kAuthServerWhitelist[] = "auth-server-whitelist";
 
+const char kFontRenderHinting[] = "font-render-hinting";
+
 }  // namespace switches
 }  // namespace headless

@@ -57,6 +57,9 @@ class HeadlessBrowserContextOptions {
   const base::Callback<void(WebPreferences*)>&
   override_web_preferences_callback() const;
 
+  // See HeadlessBrowser::Options::font_render_hinting.
+  gfx::FontRenderParams::Hinting font_render_hinting() const;
+
  private:
   friend class HeadlessBrowserContext::Builder;
 
@@ -77,6 +80,8 @@ class HeadlessBrowserContextOptions {
       override_web_preferences_callback_;
 
   ProtocolHandlerMap protocol_handlers_;
+
+  base::Optional<gfx::FontRenderParams::Hinting> font_render_hinting_;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessBrowserContextOptions);
 };
