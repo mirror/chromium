@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac92c685_58ae5458",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-02T21:10:38Z",
+      "side": 1,
+      "message": "Still worth rewording to make it clear that these are web frames, not video frames.",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "aecd4d98bb645c89786ac18e39db536b6d4ef926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
