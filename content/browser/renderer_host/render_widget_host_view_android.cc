@@ -1706,7 +1706,7 @@ void RenderWidgetHostViewAndroid::SendBeginFrame(viz::BeginFrameArgs args) {
   args.deadline = sync_compositor_ ? base::TimeTicks()
   : args.frame_time + (args.interval * 0.6);
   if (sync_compositor_) {
-    sync_compositor_->SendBeginFrame(view_.GetWindowAndroid(), args);
+    sync_compositor_->BeginFrame(view_.GetWindowAndroid(), args);
   } else if (renderer_compositor_frame_sink_) {
     renderer_compositor_frame_sink_->OnBeginFrame(args);
   }
@@ -2171,6 +2171,11 @@ viz::LocalSurfaceId RenderWidgetHostViewAndroid::GetLocalSurfaceId() const {
   if (delegated_frame_host_)
     return delegated_frame_host_->GetLocalSurfaceId();
   return viz::LocalSurfaceId();
+}
+
+void RenderWidgetHostViewAndroid::OnRenderWidgetInit() {
+  if (sync_compositor_)
+    sync_compositor_->InitMojo();
 }
 
 bool RenderWidgetHostViewAndroid::OnMouseEvent(
