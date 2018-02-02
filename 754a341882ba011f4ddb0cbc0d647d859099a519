@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50d6cdd_c8b9cb4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-02T20:47:03Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty handles null || \"\" so we generally recommend using that",
+      "revId": "754a341882ba011f4ddb0cbc0d647d859099a519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e47cb3_2bf3748d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-02T20:47:03Z",
+      "side": 1,
+      "message": "why the empty string vs null?",
+      "revId": "754a341882ba011f4ddb0cbc0d647d859099a519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
