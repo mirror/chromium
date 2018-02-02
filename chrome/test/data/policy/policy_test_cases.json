@@ -3518,6 +3518,16 @@
     "note": "Chrome OS device policy used by authpolicyd only, not used in Chrome"
   },
 
+  "CrostiniAllowed": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "crostini_allowed": false
+    },
+    "pref_mappings": [
+      { "pref": "cros.crostini_allowed"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {

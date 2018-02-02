@@ -964,6 +964,12 @@ message DeviceUserPolicyLoopbackProcessingModeProto {
   optional Mode mode = 1 [default = USER_POLICY_MODE_DEFAULT];
 }
 
+// Setting to control if project Crostini, i.e. run Linux VMs on Chrome OS is
+// allowed.
+message CrostiniAllowedProto {
+  optional bool crostini_allowed = 1 [default = true];
+}
+
 message ChromeDeviceSettingsProto {
   reserved 61;
   optional DevicePolicyRefreshRateProto device_policy_refresh_rate = 1;
@@ -1046,4 +1052,5 @@ message ChromeDeviceSettingsProto {
       65;
   optional DeviceUserPolicyLoopbackProcessingModeProto
       device_user_policy_loopback_processing_mode_proto = 66;
+  optional CrostiniAllowedProto crostini_allowed = 67;
 }

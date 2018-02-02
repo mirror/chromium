@@ -993,6 +993,14 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
         std::make_unique<base::Value>(container.unaffiliated_arc_allowed()),
         nullptr);
   }
+
+  if (policy.has_crostini_allowed()) {
+    const em::CrostiniAllowedProto& container(policy.crostini_allowed());
+    policies->Set(key::kCrostiniAllowed, POLICY_LEVEL_MANDATORY,
+                  POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+                  std::make_unique<base::Value>(container.crostini_allowed()),
+                  nullptr);
+  }
 }
 }  // namespace
 

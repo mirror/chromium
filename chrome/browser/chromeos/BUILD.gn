@@ -492,6 +492,8 @@ source_set("chromeos") {
     "chrome_browser_main_chromeos.h",
     "chrome_service_name.cc",
     "chrome_service_name.h",
+    "crostini/crostini_util.cc",
+    "crostini/crostini_util.h",
     "customization/customization_document.cc",
     "customization/customization_document.h",
     "customization/customization_wallpaper_downloader.cc",

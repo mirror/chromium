@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/dbus/finch_features_service_provider_delegate.h"
 
 #include "base/feature_list.h"
+#include "chrome/browser/chromeos/crostini/crostini_util.h"
 #include "chrome/common/chrome_features.h"
 
 namespace chromeos {
@@ -14,7 +15,8 @@ FinchFeaturesServiceProviderDelegate::FinchFeaturesServiceProviderDelegate() {}
 FinchFeaturesServiceProviderDelegate::~FinchFeaturesServiceProviderDelegate() {}
 
 bool FinchFeaturesServiceProviderDelegate::IsCrostiniEnabled() {
-  return base::FeatureList::IsEnabled(features::kCrostini);
+  return base::FeatureList::IsEnabled(features::kCrostini) &&
+         crostini::IsCrostiniAllowed();
 }
 
 }  // namespace chromeos
