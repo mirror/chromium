@@ -1254,7 +1254,7 @@ void FrameSelection::ClearLayoutSelection() {
   layout_selection_->ClearSelection();
 }
 
-std::pair<unsigned, unsigned> FrameSelection::LayoutSelectionStartEndForNG(
+LayoutSelectionStatus FrameSelection::LayoutSelectionStartEndForNG(
     const NGPhysicalTextFragment& text_fragment) {
   return layout_selection_->SelectionStartEndForNG(text_fragment);
 }
