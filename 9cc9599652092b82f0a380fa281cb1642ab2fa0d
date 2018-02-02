@@ -123,6 +123,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123af642_54552ddb",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-02T04:53:30Z",
+      "side": 0,
+      "message": "Thanks for the digging!\n\nHmm. I understand the situation but don\u0027t fully understand why we need a new mode.\n\nWhat we need is the following three patterns, isn\u0027t it?\n\n- Trace: Strongly trace strong members. Weak members are simply zeroed out.\n\n- TraceInCollection with kWeakHandling: Strongly trace strong members. Specially handle weak members.\n\n- TraceInCollection with kNoWeakHandling: Strongly trace both strong and weak members.",
+      "parentUuid": "910fe4c1_ea45b527",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
