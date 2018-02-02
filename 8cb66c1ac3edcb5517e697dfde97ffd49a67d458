@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48db511c_60c9f1fe",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-02T14:56:56Z",
+      "side": 1,
+      "message": "nit: Plan B\nAnd clarify only one media section is \"for two tracks of the same kind\" which is relevant to number of sections",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09288968_9f69e664",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-02T14:56:56Z",
+      "side": 1,
+      "message": "nit: Clarify test name here too e.g. one media section per track",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f305e2d8_b8b55bdc",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-02T14:56:56Z",
+      "side": 1,
+      "message": "Add similar test for Plan B?\n\nAdd similar tests (Unified Plan + Plan B) for 2 audio tracks and 2 video tracks to distinguish between two sections being created because two transceivers are created (Unified Plan) or because there is one audio section and one video section (Plan B)? That or a test with 3 tracks.",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0607f3_38ff358b",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-02T14:56:56Z",
+      "side": 1,
+      "message": "Why does this crash? Can you add a bug link?",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48290e78_6e97e077",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-02-02T14:56:56Z",
+      "side": 1,
+      "message": "This was easier than I expected :) Nice.",
+      "revId": "8cb66c1ac3edcb5517e697dfde97ffd49a67d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
