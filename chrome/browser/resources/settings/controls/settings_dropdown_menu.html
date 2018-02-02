@@ -25,7 +25,10 @@
         display: none;
       }
     </style>
-    <template is="dom-if" if="[[pref.controlledBy]]" restamp>
+    <template is="dom-if" if="[[isPolicyIndicatorVisible_(pref.controlledBy,
+                                                          policyIndicatorEnd,
+                                                          'start')]]"
+        restamp>
       <cr-policy-pref-indicator pref="[[pref]]"></cr-policy-pref-indicator>
     </template>
     <div class="md-select-wrapper">
@@ -42,6 +45,11 @@
       </select>
       <span class="md-select-underline"></span>
     </div>
+    <template is="dom-if" if="[[isPolicyIndicatorVisible_(pref.controlledBy,
+                                                          policyIndicatorEnd,
+                                                          'end')]]" restamp>
+      <cr-policy-pref-indicator pref="[[pref]]"></cr-policy-pref-indicator>
+    </template>
   </template>
   <script src="settings_dropdown_menu.js"></script>
 </dom-module>
