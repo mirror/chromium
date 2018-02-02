@@ -469,6 +469,13 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 #if defined(TOOLKIT_VIEWS)
   RegisterBrowserViewLocalPrefs(registry);
 #endif
+
+#if !defined(OS_ANDROID)
+#if !defined(OS_CHROMEOS)
+  registry->RegisterIntegerPref(prefs::kRelaunchNotification, 0);
+#endif  // !defined(OS_CHROMEOS)
+  registry->RegisterIntegerPref(prefs::kRelaunchNotificationPeriod, 168);  // 1w
+#endif  // !defined(OS_ANDROID)
 }
 
 // Register prefs applicable to all profiles.
