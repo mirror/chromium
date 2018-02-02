@@ -105,7 +105,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       mojom::BeginNavigationParamsPtr begin_params,
       int current_history_list_offset,
       int current_history_list_length,
-      bool override_user_agent);
+      bool override_user_agent,
+      mojom::NavigationClientPtr navigation_client);
 
   ~NavigationRequest() override;
 
@@ -213,7 +214,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                     bool browser_initiated,
                     bool from_begin_navigation,
                     const FrameNavigationEntry* frame_navigation_entry,
-                    const NavigationEntryImpl* navitation_entry);
+                    const NavigationEntryImpl* navitation_entry,
+                    mojom::NavigationClientPtr navigation_client);
 
   // NavigationURLLoaderDelegate implementation.
   void OnRequestRedirected(
@@ -299,6 +301,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // renderer process.
   void UpdateRequestNavigationParamsHistory();
 
+  void OnAbortNavigation();
+
   FrameTreeNode* frame_tree_node_;
 
   // Initialized on creation of the NavigationRequest. Sent to the renderer when
@@ -374,6 +378,11 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   // See comment on accessor.
   base::UnguessableToken devtools_navigation_token_;
+
+  // The NavigationClient interface for this navigation.
+  // It is expected to be bound until this navigation commits or is canceled.
+  // For now, this is used only in the case of a browser initiated navigation.
+  mojom::NavigationClientPtr navigation_client_;
 
   base::WeakPtrFactory<NavigationRequest> weak_factory_;
 

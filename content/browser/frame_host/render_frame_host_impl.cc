@@ -928,7 +928,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidChangeFrameOwnerProperties)
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateTitle, OnUpdateTitle)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidBlockFramebust, OnDidBlockFramebust)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_AbortNavigation, OnAbortNavigation)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DispatchLoad, OnDispatchLoad)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ForwardResourceTimingToParent,
                         OnForwardResourceTimingToParent)
@@ -1294,7 +1293,7 @@ void RenderFrameHostImpl::Init() {
   if (pending_navigate_) {
     frame_tree_node()->navigator()->OnBeginNavigation(
         frame_tree_node(), pending_navigate_->first,
-        std::move(pending_navigate_->second));
+        std::move(pending_navigate_->second), nullptr /* QUOI CA ? */);
     pending_navigate_.reset();
   }
 }
@@ -2414,14 +2413,6 @@ void RenderFrameHostImpl::OnDidBlockFramebust(const GURL& url) {
   delegate_->OnDidBlockFramebust(url);
 }
 
-void RenderFrameHostImpl::OnAbortNavigation() {
-  TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnAbortNavigation",
-               "frame_tree_node", frame_tree_node_->frame_tree_node_id());
-  if (!is_active())
-    return;
-  frame_tree_node()->navigator()->OnAbortNavigation(frame_tree_node());
-}
-
 void RenderFrameHostImpl::OnForwardResourceTimingToParent(
     const ResourceTimingInfo& resource_timing) {
   // Don't forward the resource timing if this RFH is pending deletion. This can
@@ -3034,7 +3025,8 @@ void RenderFrameHostImpl::IssueKeepAliveHandle(
 //  otherwise mojo bad message reporting.
 void RenderFrameHostImpl::BeginNavigation(
     const CommonNavigationParams& common_params,
-    mojom::BeginNavigationParamsPtr begin_params) {
+    mojom::BeginNavigationParamsPtr begin_params,
+    mojom::NavigationClientPtr navigation_client) {
   if (!is_active())
     return;
 
@@ -3072,7 +3064,8 @@ void RenderFrameHostImpl::BeginNavigation(
   }
 
   frame_tree_node()->navigator()->OnBeginNavigation(
-      frame_tree_node(), validated_params, std::move(begin_params));
+      frame_tree_node(), validated_params, std::move(begin_params),
+      std::move(navigation_client));
 }
 
 void RenderFrameHostImpl::SubresourceResponseStarted(const GURL& url,
