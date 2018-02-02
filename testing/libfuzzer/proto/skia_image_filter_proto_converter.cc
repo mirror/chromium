@@ -764,7 +764,7 @@ void Converter::WriteNum(const T num) {
     output_.push_back(num_arr[idx]);
 }
 
-void Converter::WriteNum(const uint64_t num) {
+void Converter::WriteNum(const size_t num) {
   CHECK_LE(num, UINT32_MAX);
   WriteNum(static_cast<uint32_t>(num));
 }
