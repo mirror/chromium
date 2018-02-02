@@ -240,6 +240,34 @@ void RenderWidgetHostViewEventHandler::UnlockMouse() {
   host_->LostMouseLock();
 }
 
+void RenderWidgetHostViewEventHandler::ReserveKeys() {
+#if defined(OS_WIN)
+  aura::Window* root_window = window_->GetRootWindow();
+  if (!root_window) {
+    return;
+  }
+  aura::WindowTreeHost* window_tree_host = root_window->GetHost();
+  if (!window_tree_host) {
+    return;
+  }
+  window_tree_host->ReserveKeys();
+#endif  // defined(OS_WIN)
+}
+
+void RenderWidgetHostViewEventHandler::ClearReservedKeys() {
+#if defined(OS_WIN)
+  aura::Window* root_window = window_->GetRootWindow();
+  if (!root_window) {
+    return;
+  }
+  aura::WindowTreeHost* window_tree_host = root_window->GetHost();
+  if (!window_tree_host) {
+    return;
+  }
+  window_tree_host->ClearReservedKeys();
+#endif  // defined(OS_WIN)
+}
+
 void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnKeyEvent");
 
@@ -247,6 +275,18 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
     popup_child_event_handler_->OnKeyEvent(event);
     if (event->handled())
       return;
+  }
+
+  if (event->FromPlatformHook()) {
+    LOG(WARNING) << "event->FromPlatformHook(): " << event->key_code();
+    NativeWebKeyboardEvent webkit_event(*event);
+    if (webkit_event.windows_key_code != ui::VKEY_ESCAPE) {
+      webkit_event.skip_in_browser = true;
+    }
+    delegate_->ForwardKeyboardEventWithLatencyInfo(webkit_event,
+                                                   *event->latency(), nullptr);
+    event->SetHandled();
+    return;
   }
 
   bool mark_event_as_handled = true;

@@ -50,6 +50,7 @@ namespace views {
 
 class FullscreenHandler;
 class HWNDMessageHandlerDelegate;
+class PlatformHook;
 class WindowsSessionChangeObserver;
 
 // These two messages aren't defined in winuser.h, but they are sent to windows
@@ -190,6 +191,11 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   void SetCapture();
   void ReleaseCapture();
   bool HasCapture() const;
+
+  // Lock/Unlock processing of future keyboard events.
+  // TODO: Allow reservation of specific keys.
+  void ReserveKeys();
+  void ClearReservedKeys();
 
   FullscreenHandler* fullscreen_handler() { return fullscreen_handler_.get(); }
 
@@ -758,6 +764,8 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // True if the window should have no border and its contents should be
   // partially or fully transparent.
   bool is_translucent_ = false;
+
+  std::unique_ptr<PlatformHook> platform_hook_;
 
   // This is a map of the HMONITOR to full screeen window instance. It is safe
   // to keep a raw pointer to the HWNDMessageHandler instance as we track the

@@ -131,11 +131,15 @@ void ExclusiveAccessManager::OnTabClosing(WebContents* web_contents) {
 
 bool ExclusiveAccessManager::HandleUserKeyPress(
     const content::NativeWebKeyboardEvent& event) {
+  LOG(WARNING) << "ExclusiveAccessManager::HandleUserKeyPress: " << event.windows_key_code;
   if (event.windows_key_code != ui::VKEY_ESCAPE) {
     OnUserInput();
     return false;
   }
 
+  // TODO: FILTER BASED ON EVENT FLAG.  IF EVENT HAS THE 'PLATFORM HOOK' FLAG,
+  // THEN WE KNOW TO APPLY THE PRESS AND HOLD BEHVAVIOR, OTHERWISE USE THE
+  // NORMAL BEHAVIOR.
   if (IsExperimentalKeyboardLockUIEnabled()) {
     if (event.GetType() == content::NativeWebKeyboardEvent::kKeyUp &&
         hold_timer_.IsRunning()) {

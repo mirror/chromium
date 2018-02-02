@@ -110,6 +110,14 @@ void WinWindow::ReleaseCapture() {
     ::ReleaseCapture();
 }
 
+void WinWindow::ReserveKeys() {
+  NOTIMPLEMENTED();
+}
+
+void WinWindow::ClearReservedKeys() {
+  NOTIMPLEMENTED();
+}
+
 void WinWindow::ToggleFullscreen() {}
 
 void WinWindow::Maximize() {}

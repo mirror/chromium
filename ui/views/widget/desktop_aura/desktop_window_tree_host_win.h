@@ -127,6 +127,8 @@ class VIEWS_EXPORT DesktopWindowTreeHostWin
   gfx::Point GetLocationOnScreenInPixels() const override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void ReserveKeys() override;
+  void ClearReservedKeys() override;
   void SetCursorNative(gfx::NativeCursor cursor) override;
   void OnCursorVisibilityChangedNative(bool show) override;
   void MoveCursorToScreenLocationInPixels(

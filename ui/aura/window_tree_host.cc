@@ -242,6 +242,14 @@ void WindowTreeHost::Hide() {
     compositor()->SetVisible(false);
 }
 
+void WindowTreeHost::ReserveKeys() {
+  NOTIMPLEMENTED();
+}
+
+void WindowTreeHost::ClearReservedKeys() {
+  NOTIMPLEMENTED();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // WindowTreeHost, protected:
 

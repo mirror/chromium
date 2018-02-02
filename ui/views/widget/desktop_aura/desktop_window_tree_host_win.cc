@@ -558,6 +558,14 @@ void DesktopWindowTreeHostWin::ReleaseCapture() {
   message_handler_->ReleaseCapture();
 }
 
+void DesktopWindowTreeHostWin::ReserveKeys() {
+  message_handler_->ReserveKeys();
+}
+
+void DesktopWindowTreeHostWin::ClearReservedKeys() {
+  message_handler_->ClearReservedKeys();
+}
+
 void DesktopWindowTreeHostWin::SetCursorNative(gfx::NativeCursor cursor) {
   ui::CursorLoaderWin cursor_loader;
   cursor_loader.SetPlatformCursor(&cursor);

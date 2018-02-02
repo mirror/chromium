@@ -413,6 +413,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
+      keyboard_lock_host_(event_handler_.get(), host_),
       frame_sink_id_(switches::IsMusHostingViz()
                          ? viz::FrameSinkId()
                          : host_->AllocateFrameSinkId(is_guest_view_hack_)),
@@ -1221,6 +1222,16 @@ bool RenderWidgetHostViewAura::LockMouse() {
 
 void RenderWidgetHostViewAura::UnlockMouse() {
   event_handler_->UnlockMouse();
+}
+
+void RenderWidgetHostViewAura::ReserveKeys(
+    const std::vector<std::string>& codes,
+    base::OnceCallback<void(bool)> done) {
+  keyboard_lock_host_.ReserveKeys(codes, std::move(done));
+}
+
+void RenderWidgetHostViewAura::ClearReservedKeys() {
+  keyboard_lock_host_.ClearReservedKeys();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

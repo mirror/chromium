@@ -47,6 +47,10 @@ void HeadlessWindow::SetCapture() {}
 
 void HeadlessWindow::ReleaseCapture() {}
 
+void HeadlessWindow::ReserveKeys() {}
+
+void HeadlessWindow::ClearReservedKeys() {}
+
 void HeadlessWindow::ToggleFullscreen() {}
 
 void HeadlessWindow::Maximize() {}

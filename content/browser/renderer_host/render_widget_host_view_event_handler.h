@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "content/browser/keyboard_lock/keyboard_lock.h"
 #include "content/browser/renderer_host/input/mouse_wheel_phase_handler.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/native_web_keyboard_event.h"
@@ -51,7 +52,8 @@ class TouchSelectionControllerClientAura;
 // RenderWidgetHostViewEventHandler::Delegate implementations may have
 // overlapping functionality with the ui::TextInputClient.
 class CONTENT_EXPORT RenderWidgetHostViewEventHandler
-    : public ui::EventHandler {
+    : public ui::EventHandler,
+      public KeyboardLock {
  public:
   // An interface to provide platform specific logic needed for event handling.
   class Delegate {
@@ -146,6 +148,12 @@ class CONTENT_EXPORT RenderWidgetHostViewEventHandler
   void OnScrollEvent(ui::ScrollEvent* event) override;
   void OnTouchEvent(ui::TouchEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
+
+  // Lock/Unlock processing of future keyboard events.
+  // TODO: Allow reservation of specific keys.
+  // content::KeyboardLock interface.
+  void ReserveKeys() override;
+  void ClearReservedKeys() override;
 
   // Used to set the mouse_wheel_phase_handler_ timer timeout for testing.
   void set_mouse_wheel_wheel_phase_handler_timeout(base::TimeDelta timeout) {
