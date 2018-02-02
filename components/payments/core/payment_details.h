@@ -44,12 +44,12 @@ class PaymentDetails {
   std::string id;
 
   // The total amount of the payment request.
-  std::unique_ptr<PaymentItem> total;
+  mojom::PaymentItemPtr total;
 
   // Line items for the payment request that the user agent may display. For
   // example, it might include details of products or breakdown of tax and
   // shipping.
-  std::vector<PaymentItem> display_items;
+  std::vector<mojom::PaymentItemPtr> display_items;
 
   // The different shipping options for the user to choose from. If empty, this
   // indicates that the merchant cannot ship to the current shipping address.

@@ -8,11 +8,7 @@
 #include <memory>
 #include <string>
 
-#include "components/payments/core/payment_currency_amount.h"
-
-// C++ bindings for the PaymentRequest API PaymentItem. Conforms to the
-// following spec:
-// https://w3c.github.io/payment-request/#dom-paymentitem
+#include "components/payments/mojom/payment_request_data.mojom.h"
 
 namespace base {
 class DictionaryValue;
@@ -20,38 +16,11 @@ class DictionaryValue;
 
 namespace payments {
 
-// Information indicating what the payment request is for and the value asked
-// for.
-class PaymentItem {
- public:
-  PaymentItem();
-  ~PaymentItem();
+bool PaymentItemFromDictionaryValue(const base::DictionaryValue& value,
+                                    mojom::PaymentItem* item);
 
-  PaymentItem(const PaymentItem& other);
-
-  bool operator==(const PaymentItem& other) const;
-  bool operator!=(const PaymentItem& other) const;
-  PaymentItem& operator=(const PaymentItem& other);
-
-  // Populates the properties of this PaymentItem from |value|. Returns true if
-  // the required values are present.
-  bool FromDictionaryValue(const base::DictionaryValue& value);
-
-  // Creates a base::DictionaryValue with the properties of this
-  // PaymentItem.
-  std::unique_ptr<base::DictionaryValue> ToDictionaryValue() const;
-
-  // A human-readable description of the item.
-  std::string label;
-
-  // The monetary amount for the item.
-  mojom::PaymentCurrencyAmountPtr amount;
-
-  // When set to true this flag means that the amount field is not final. This
-  // is commonly used to show items such as shipping or tax amounts that depend
-  // upon selection of shipping address or shipping option.
-  bool pending;
-};
+std::unique_ptr<base::DictionaryValue> PaymentItemToDictionaryValue(
+    const mojom::PaymentItem& item);
 
 }  // namespace payments
 

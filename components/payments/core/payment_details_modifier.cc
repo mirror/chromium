@@ -31,13 +31,13 @@ PaymentDetailsModifier& PaymentDetailsModifier::operator=(
     const PaymentDetailsModifier& other) {
   method_data = other.method_data;
   if (other.total) {
-    total = std::make_unique<PaymentItem>(*other.total);
+    total = other.total.Clone();
   } else {
-    total.reset(nullptr);
+    total.reset();
   }
-  additional_display_items = std::vector<PaymentItem>();
+  additional_display_items = std::vector<mojom::PaymentItemPtr>();
   for (const auto& item : other.additional_display_items)
-    additional_display_items.emplace_back(item);
+    additional_display_items.push_back(item.Clone());
   return *this;
 }
 
@@ -45,7 +45,7 @@ bool PaymentDetailsModifier::operator==(
     const PaymentDetailsModifier& other) const {
   return method_data == other.method_data &&
          ((!total && !other.total) ||
-          (total && other.total && *total == *other.total)) &&
+          (total && other.total && total.Equals(other.total))) &&
          additional_display_items == other.additional_display_items;
 }
 
@@ -67,7 +67,7 @@ PaymentDetailsModifier::ToDictionaryValue() const {
   result->SetString(kPaymentDetailsModifierData, method_data.data);
   if (total) {
     result->SetDictionary(kPaymentDetailsModifierTotal,
-                          total->ToDictionaryValue());
+                          PaymentItemToDictionaryValue(*total));
   }
 
   return result;

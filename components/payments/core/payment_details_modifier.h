@@ -45,7 +45,7 @@ class PaymentDetailsModifier {
 
   // This value overrides the total field in the PaymentDetails dictionary for
   // the payment method identifiers in the supportedMethods field.
-  std::unique_ptr<PaymentItem> total;
+  mojom::PaymentItemPtr total;
 
   // Provides additional display items that are appended to the displayItems
   // field in the PaymentDetails dictionary for the payment method identifiers
@@ -53,7 +53,7 @@ class PaymentDetailsModifier {
   // discount or surcharge line item indicating the reason for the different
   // total amount for the selected payment method that the user agent may
   // display.
-  std::vector<PaymentItem> additional_display_items;
+  std::vector<mojom::PaymentItemPtr> additional_display_items;
 };
 
 }  // namespace payments

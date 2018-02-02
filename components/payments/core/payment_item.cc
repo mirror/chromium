@@ -5,6 +5,7 @@
 #include "components/payments/core/payment_item.h"
 
 #include "base/values.h"
+#include "components/payments/core/payment_currency_amount.h"
 
 namespace payments {
 
@@ -18,37 +19,20 @@ static const char kPaymentItemPending[] = "pending";
 
 }  // namespace
 
-PaymentItem::PaymentItem()
-    : amount(mojom::PaymentCurrencyAmount::New()), pending(false) {}
+std::unique_ptr<base::DictionaryValue> PaymentItemToDictionaryValue(
+    const mojom::PaymentItem& item) {
+  auto result = std::make_unique<base::DictionaryValue>();
+  result->SetString(kPaymentItemLabel, item.label);
+  result->SetDictionary(kPaymentItemAmount,
+                        PaymentCurrencyAmountToDictionaryValue(*item.amount));
+  result->SetBoolean(kPaymentItemPending, item.pending);
 
-PaymentItem::~PaymentItem() = default;
-
-PaymentItem::PaymentItem(const PaymentItem& other) {
-  *this = other;
+  return result;
 }
 
-bool PaymentItem::operator==(const PaymentItem& other) const {
-  return label == other.label && amount.Equals(other.amount) &&
-         pending == other.pending;
-}
-
-bool PaymentItem::operator!=(const PaymentItem& other) const {
-  return !(*this == other);
-}
-
-PaymentItem& PaymentItem::operator=(const PaymentItem& other) {
-  label = other.label;
-  if (other.amount) {
-    amount = other.amount->Clone();
-  } else {
-    amount.reset();
-  }
-  pending = other.pending;
-  return *this;
-}
-
-bool PaymentItem::FromDictionaryValue(const base::DictionaryValue& value) {
-  if (!value.GetString(kPaymentItemLabel, &label)) {
+bool PaymentItemFromDictionaryValue(const base::DictionaryValue& value,
+                                    mojom::PaymentItem* item) {
+  if (!value.GetString(kPaymentItemLabel, &item->label)) {
     return false;
   }
 
@@ -56,25 +40,16 @@ bool PaymentItem::FromDictionaryValue(const base::DictionaryValue& value) {
   if (!value.GetDictionary(kPaymentItemAmount, &amount_dict)) {
     return false;
   }
-  amount = mojom::PaymentCurrencyAmount::New();
-  if (!PaymentCurrencyAmountFromDictionaryValue(*amount_dict, amount.get())) {
+  item->amount = mojom::PaymentCurrencyAmount::New();
+  if (!PaymentCurrencyAmountFromDictionaryValue(*amount_dict,
+                                                item->amount.get())) {
     return false;
   }
 
   // Pending is optional.
-  value.GetBoolean(kPaymentItemPending, &pending);
+  value.GetBoolean(kPaymentItemPending, &item->pending);
 
   return true;
-}
-
-std::unique_ptr<base::DictionaryValue> PaymentItem::ToDictionaryValue() const {
-  auto result = std::make_unique<base::DictionaryValue>();
-  result->SetString(kPaymentItemLabel, label);
-  result->SetDictionary(kPaymentItemAmount,
-                        PaymentCurrencyAmountToDictionaryValue(*amount));
-  result->SetBoolean(kPaymentItemPending, pending);
-
-  return result;
 }
 
 }  // namespace payments
