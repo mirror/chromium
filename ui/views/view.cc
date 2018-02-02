@@ -291,8 +291,8 @@ void View::ReorderChildView(View* view, int index) {
   ReorderLayers();
 }
 
-void View::RemoveChildView(View* view) {
-  DoRemoveChildView(view, true, true, false, NULL);
+void View::RemoveChildView(View* view, bool delete_if_owned /* = false */) {
+  DoRemoveChildView(view, true, true, delete_if_owned, NULL);
 }
 
 void View::RemoveAllChildViews(bool delete_children) {

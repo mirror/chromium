@@ -829,7 +829,7 @@ gfx::Rect BrowserView::GetBounds() const {
 
 gfx::Size BrowserView::GetContentsSize() const {
   DCHECK(initialized_);
-  return GetTabContentsContainerView()->size();
+  return contents_web_view_->size();
 }
 
 bool BrowserView::IsMaximized() const {
@@ -1429,10 +1429,6 @@ LocationBarView* BrowserView::GetLocationBarView() const {
   return toolbar_ ? toolbar_->location_bar() : nullptr;
 }
 
-views::View* BrowserView::GetTabContentsContainerView() const {
-  return contents_web_view_;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView, TabStripModelObserver implementation:
 
@@ -1857,7 +1853,7 @@ void BrowserView::GetAccessiblePanes(std::vector<views::View*>* panes) {
     panes->push_back(infobar_container_);
   if (download_shelf_.get())
     panes->push_back(download_shelf_.get());
-  panes->push_back(GetTabContentsContainerView());
+  panes->push_back(contents_web_view_);
   if (devtools_web_view_->visible())
     panes->push_back(devtools_web_view_);
 }

@@ -485,4 +485,53 @@ TEST_F(WebViewUnitTest, DetachedWebViewDestructor) {
   webview.reset();
 }
 
+// Test that the specified crashed overlay view is shown when a WebContents
+// is in a crashed state.
+TEST_F(WebViewUnitTest, CrashedOverlayView) {
+  const std::unique_ptr<content::WebContents> web_contents(CreateWebContents());
+  std::unique_ptr<WebView> webview(
+      new WebView(web_contents->GetBrowserContext()));
+  View* contents_view = top_level_widget()->GetContentsView();
+  contents_view->AddChildView(webview.get());
+  webview->SetWebContents(web_contents.get());
+
+  View* crashed_overlay_view = new View();
+  webview->SetCrashedOverlayView(crashed_overlay_view);
+  EXPECT_FALSE(crashed_overlay_view->IsDrawn());
+
+  web_contents->SetIsCrashed(base::TERMINATION_STATUS_PROCESS_CRASHED, -1);
+  EXPECT_TRUE(web_contents->IsCrashed());
+
+  static_cast<content::WebContentsObserver*>(webview.get())
+      ->RenderViewDeleted(nullptr);
+  EXPECT_TRUE(crashed_overlay_view->IsDrawn());
+}
+
+// Test that a crashed overlay view isn't deleted if it's owned by client.
+TEST_F(WebViewUnitTest, CrashedOverlayViewOwnedbyClient) {
+  const std::unique_ptr<content::WebContents> web_contents(CreateWebContents());
+  std::unique_ptr<WebView> webview(
+      new WebView(web_contents->GetBrowserContext()));
+  View* contents_view = top_level_widget()->GetContentsView();
+  contents_view->AddChildView(webview.get());
+  webview->SetWebContents(web_contents.get());
+
+  View* crashed_overlay_view = new View();
+  crashed_overlay_view->set_owned_by_client();
+  webview->SetCrashedOverlayView(crashed_overlay_view);
+  EXPECT_FALSE(crashed_overlay_view->IsDrawn());
+
+  web_contents->SetIsCrashed(base::TERMINATION_STATUS_PROCESS_CRASHED, -1);
+  EXPECT_TRUE(web_contents->IsCrashed());
+
+  static_cast<content::WebContentsObserver*>(webview.get())
+      ->RenderViewDeleted(nullptr);
+  EXPECT_TRUE(crashed_overlay_view->IsDrawn());
+
+  webview->SetCrashedOverlayView(nullptr);
+
+  // This shouldn't crash, we still own this.
+  delete crashed_overlay_view;
+}
+
 }  // namespace views
