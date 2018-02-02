@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6455c99d_868093e2",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "Perhaps provide a comment explaining how this value is derived.",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1f4dbb_8abf1e91",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "!Array",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0ef02d_dc50217b",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "Why is this necessary? If no destinations exist yet,  matchingDestinationsCount_ will be zero and therefore nothing will show, no?",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2037e3a_c2790956",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "Is this still needed? We used to undo showAll when closing the dialog, but showAll is not longer there, so is there anything to undo?",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 4
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bf3442_570044fa",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "Not needed. JS compiler\u0027s PolymerPass already derives the type from the \"type: Boolean\". We only need to document types Object and Array, as well as @private because compiler can\u0027t infer private vs public.",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e6701e_6b7cf5f2",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "Can this be private now? Also do we need notify: true, for any of |stale| or |searchHint|? They don\u0027t seem to be part of any 2-way binding.",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28399207_d62466d7",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T18:29:50Z",
+      "side": 1,
+      "message": "Can we just refer to this.searchQuery within updateSearchHint_ and updateHighlighting_? We probably don\u0027t need to pass any arguments.",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
