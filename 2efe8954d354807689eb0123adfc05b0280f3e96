@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac6d2040_3c7940d1",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Bug:  If we have 1 UDP and 1 HTTPS server, and the UDP server is marked as bad, this would jump to the HTTPS server, right?  I think we need to move the NextGoodServerIndex logic back to MakeAttempt?  (+tests)\n\nThat does have implications for use of NextFirstServerIndex, though.  Hrm...",
+      "range": {
+        "startLine": 1009,
+        "startChar": 29,
+        "endLine": 1009,
+        "endChar": 48
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6143c5cd_db9e370e",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Suggest renaming this to something like \"transaction_complete_run_loop_\", to make it a little more explicit what it\u0027s for waiting on.",
+      "range": {
+        "startLine": 308,
+        "startChar": 22,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d8a3d5_08b36f7c",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "DCHECK(!loop_to_quit_);",
+      "range": {
+        "startLine": 345,
+        "startChar": 20,
+        "endLine": 345,
+        "endChar": 41
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7ceca8_273ab502",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Should create this before StartTransaction.  While transactions can\u0027t complete synchronously, anyways, it would be able to handle them if they did, with that change, so a bit more future proof..",
+      "range": {
+        "startLine": 347,
+        "startChar": 37,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a564dcc_6c0ddbf8",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "nit:  Suggest headers -\u003e \"response headers\".  Response headers are already very strongly implied, just think it doesn\u0027t hurt to always prefix it to avoid any doubt.",
+      "range": {
+        "startLine": 379,
+        "startChar": 25,
+        "endLine": 379,
+        "endChar": 0
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee220ee_08d17e41",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Bug:  If we still have left over data, this is incorrect.  Have to copy leftover_data_len_ to a temporary, set it to 0, and then call DoBufferCopy with the value in the temporary slot.  Alternatively, could have DoBufferCopy unconditionally write to leftover_data_len_ and leftover_data_ (Write 0 / nullptr if all data was written), and then remove this line.",
+      "range": {
+        "startLine": 465,
+        "startChar": 26,
+        "endLine": 465,
+        "endChar": 27
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71a807d_68825f40",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "The final read can be async as well.  Test that case?  2 cases here seem interesting to me:  0 byte body read sync, full response body read followed by async 0 byte read (Could make the read sync, async, or both, for added coverage).\n\nSorry for insisting on so many tests, but uncommon sync/async calls have been the source of more than one bug in the past.\n\nYou don\u0027t actually need to update this code to test this case, just add a 0-byte async read to the end of data_provider_.",
+      "range": {
+        "startLine": 470,
+        "startChar": 15,
+        "endLine": 470,
+        "endChar": 0
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfa68b4_7bb0df6f",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "I still think this is a bit of a misnomer.  Suggest instead:\n\nif (request-\u003eurl().path() \u003d\u003d \"/redirect\") {\n  bool server_found \u003d false;\n  ...\n  EXPECT_TRUE(server_found);\n}\n\nWith a comment about redirect destinations not appearing in the list.  Also, suggest replacing \"/redirect\" with \"/redirect-destination\".  EmbeddedTestServer\u0027s default handlers use \"/server-redirect\" to mean the source of the redirect, not the destination, so this path may be a bit confusing.",
+      "range": {
+        "startLine": 596,
+        "startChar": 9,
+        "endLine": 596,
+        "endChar": 22
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485a7738_a18f8118",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "nit:  ASync -\u003e Async",
+      "range": {
+        "startLine": 1408,
+        "startChar": 27,
+        "endLine": 1408,
+        "endChar": 48
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf913c6_494581f0",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Some of these should be testing what happens now that HTTP servers (And UDP, in some cases) are marked as bad.",
+      "range": {
+        "startLine": 1473,
+        "startChar": 22,
+        "endLine": 1473,
+        "endChar": 34
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb318d7_15583fd1",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Verify that if we make another request, it goes directly to UDP?  See other comment about this being broken.  :(  Or check that it goes to HTTP, if that\u0027s desired.",
+      "range": {
+        "startLine": 1486,
+        "startChar": 35,
+        "endLine": 1486,
+        "endChar": 55
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83924f2f_0b395ae6",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Cookeis -\u003e Cookies",
+      "range": {
+        "startLine": 1552,
+        "startChar": 27,
+        "endLine": 1552,
+        "endChar": 49
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4be9195_bdf01cb4",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we both have the first response try to set a cookie, and manually set a cookie for the server domain, and then manually look at the cookie store after the request, to make sure it isn\u0027t set?  As-is, nothing tries to set a cookie, so this test should trivially pass.  And it\u0027s possible that we only don\u0027t set cookies, or don\u0027t set them, so manually mucking with the cookie store is also needed.",
+      "range": {
+        "startLine": 1562,
+        "startChar": 21,
+        "endLine": 1562,
+        "endChar": 22
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1441c76a_ad40a8c6",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1570,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we need any query/response data here, just an empty SocketDataProvider?",
+      "range": {
+        "startLine": 1570,
+        "startChar": 22,
+        "endLine": 1570,
+        "endChar": 31
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1014768e_a020e51a",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T20:59:27Z",
+      "side": 1,
+      "message": "Error seems too general.  MalformedDnsResponse?",
+      "range": {
+        "startLine": 1580,
+        "startChar": 48,
+        "endLine": 1580,
+        "endChar": 0
+      },
+      "revId": "2efe8954d354807689eb0123adfc05b0280f3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
