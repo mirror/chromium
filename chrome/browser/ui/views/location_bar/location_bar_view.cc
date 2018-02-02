@@ -38,13 +38,13 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_layout.h"
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
+#include "chrome/browser/ui/views/location_bar/omnibox_background_border.h"
 #include "chrome/browser/ui/views/location_bar/selected_keyword_view.h"
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
@@ -113,6 +113,20 @@
 
 using content::WebContents;
 using views::View;
+
+namespace {
+
+// Portion of the location bar height that is used for additional horizontal
+// padding at the end of the location bar in rounded mode.
+constexpr int kRoundedPaddingHeightFactor = 4;
+constexpr int kRoundedPaddingHeightFactorForIME = 2;
+
+bool InRoundedMode() {
+  return ui::MaterialDesignController::GetMode() ==
+         ui::MaterialDesignController::MATERIAL_TOUCH_OPTIMIZED;
+}
+
+}  // namespace
 
 // LocationBarView -----------------------------------------------------------
 
@@ -535,9 +549,12 @@ void LocationBarView::Layout() {
   if (HasFocus() && !keyword.empty() &&
       omnibox_view_->model()->is_keyword_hint() &&
       !omnibox_view_->IsImeComposing()) {
+    const int end_padding_for_keyword_hint =
+        InRoundedMode() ? location_height / kRoundedPaddingHeightFactor
+                        : item_padding;
     trailing_decorations.AddDecoration(vertical_padding, location_height, true,
-                                       0, item_padding, item_padding,
-                                       keyword_hint_view_);
+                                       0, end_padding_for_keyword_hint,
+                                       item_padding, keyword_hint_view_);
     keyword_hint_view_->SetKeyword(keyword);
   }
 
@@ -563,8 +580,27 @@ void LocationBarView::Layout() {
   leading_decorations.LayoutPass3(&location_bounds, &available_width);
   trailing_decorations.LayoutPass3(&location_bounds, &available_width);
 
+  // Add some padding to prevent long URLs or searches going too close to the
+  // ending edge of the |LocationBarView|. This is also a compromise to avoid
+  // having to clip the corners of |omnibox_view_| when |LocationBarView| is a
+  // pill-shape.
+  if (InRoundedMode() && (keyword_hint_view_->visible() ||
+                          !trailing_decorations.HasVisibleDecorations())) {
+    location_bounds.Inset(
+        0, 0, location_bounds.height() / kRoundedPaddingHeightFactor, 0);
+  }
+
   // Layout |ime_inline_autocomplete_view_| next to the user input.
   if (ime_inline_autocomplete_view_->visible()) {
+    // The |location_bounds| width gets ignored here, so make sure the inset
+    // above is preserved and prevent the ending corners of
+    // |ime_inline_autocomplete_view_| from touching |LocationBarView|'s border.
+    // Note the value is bigger here because |ime_inline_autocomplete_view_| has
+    // less padding from the border.
+    const int end_padding_for_ime =
+        InRoundedMode()
+            ? location_bounds.height() / kRoundedPaddingHeightFactorForIME
+            : 0;
     int width =
         gfx::GetStringWidth(ime_inline_autocomplete_view_->text(),
                             ime_inline_autocomplete_view_->font_list()) +
@@ -572,15 +608,16 @@ void LocationBarView::Layout() {
     // All the target languages (IMEs) are LTR, and we do not need to support
     // RTL so far.  In other words, no testable RTL environment so far.
     int x = location_needed_width;
-    if (width > entry_width)
+    if (width > entry_width - end_padding_for_ime)
       x = 0;
-    else if (location_needed_width + width > entry_width)
-      x = entry_width - width;
+    else if (location_needed_width + width > entry_width - end_padding_for_ime)
+      x = entry_width - width - end_padding_for_ime;
     location_bounds.set_width(x);
     ime_inline_autocomplete_view_->SetBounds(
         location_bounds.right(), location_bounds.y(),
         std::min(width, entry_width), location_bounds.height());
   }
+
   omnibox_view_->SetBoundsRect(location_bounds);
 }
 
@@ -592,7 +629,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   } else {
     // This border color will be blended on top of the toolbar (which may use an
     // image in the case of themes).
-    SetBackground(std::make_unique<BackgroundWith1PxBorder>(
+    SetBackground(std::make_unique<OmniboxBackgroundBorder>(
         GetColor(BACKGROUND), GetBorderColor()));
   }
   SchedulePaint();
@@ -1025,16 +1062,11 @@ void LocationBarView::OnPaint(gfx::Canvas* canvas) {
   View::OnPaint(canvas);
 
   if (show_focus_rect_ && omnibox_view_->HasFocus()) {
-    cc::PaintFlags flags;
-    flags.setAntiAlias(true);
-    flags.setColor(GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::NativeTheme::kColorId_FocusedBorderColor));
-    flags.setStyle(cc::PaintFlags::kStroke_Style);
-    flags.setStrokeWidth(1);
-    gfx::RectF focus_rect(GetLocalBounds());
-    focus_rect.Inset(gfx::InsetsF(0.5f));
-    canvas->DrawRoundRect(focus_rect,
-                          BackgroundWith1PxBorder::kCornerRadius + 0.5f, flags);
+    OmniboxBackgroundBorder::PaintFocusRing(
+        canvas, GetNativeTheme(),
+        OmniboxBackgroundBorder::GetBorderRadius(height() *
+                                                 canvas->image_scale()),
+        GetLocalBounds());
   }
 }
 
