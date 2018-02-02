@@ -222,7 +222,16 @@ TEST_F(DNRManifestTest, InvalidHostScheme) {
       kJSONRulesFilename, {"http://*/*", "foo://*/*", "http://*/foo*"});
   SetManifest(std::move(manifest));
   LoadAndExpectError(ErrorUtils::FormatErrorMessage(
-      errors::kInvalidDeclarativeHost, "foo://*/*",
+      errors::kInvalidDeclarativeHostScheme, "foo://*/*",
+      keys::kDeclarativeNetRequestKey, keys::kDeclarativeHostsKey));
+}
+
+TEST_F(DNRManifestTest, InvalidHostScheme_Chrome) {
+  std::unique_ptr<base::DictionaryValue> manifest = CreateManifest(
+      kJSONRulesFilename, {"http://*/*", "chrome://*/*", "http://*/foo*"});
+  SetManifest(std::move(manifest));
+  LoadAndExpectError(ErrorUtils::FormatErrorMessage(
+      errors::kInvalidDeclarativeHostScheme, "chrome://*/*",
       keys::kDeclarativeNetRequestKey, keys::kDeclarativeHostsKey));
 }
 
