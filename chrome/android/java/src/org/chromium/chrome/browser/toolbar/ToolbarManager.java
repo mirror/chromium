@@ -500,6 +500,13 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 }
             }
 
+            @Override
+            public void onNavigationEntriesDeleted(Tab tab) {
+                if (tab == mToolbarModel.getTab()) {
+                    updateButtonStatus();
+                }
+            }
+
             private void handleIPHForSuccessfulPageLoad(final Tab tab) {
                 if (mTextBubble != null) {
                     mTextBubble.dismiss();
