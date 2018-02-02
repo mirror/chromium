@@ -10,6 +10,7 @@
 
 #include <list>
 #include <memory>
+#include <queue>
 #include <string>
 
 #include "base/callback.h"
@@ -34,7 +35,7 @@ class BufferingFrameProvider;
 class BufferingState;
 class CodedFrameProvider;
 class DecoderBufferBase;
-class DecryptContextImpl;
+class StreamDecryptor;
 struct EncryptionScheme;
 
 class AvPipelineImpl : MediaPipelineBackend::Decoder::Delegate {
@@ -78,6 +79,9 @@ class AvPipelineImpl : MediaPipelineBackend::Decoder::Delegate {
       const ::media::VideoDecoderConfig& video_config) = 0;
   virtual const EncryptionScheme& GetEncryptionScheme(StreamId id) const = 0;
 
+  // Create a decoder for decrypt and decode.
+  virtual std::unique_ptr<StreamDecryptor> CreateDecryptor() = 0;
+
   // Setting the frame provider must be done in the |kUninitialized| state.
   void SetCodedFrameProvider(std::unique_ptr<CodedFrameProvider> frame_provider,
                              size_t max_buffer_size,
@@ -98,8 +102,12 @@ class AvPipelineImpl : MediaPipelineBackend::Decoder::Delegate {
                           uint32_t system_code) override;
   void OnVideoResolutionChanged(const Size& size) override;
 
+  void OnDecryptorPushBufferComplete(bool success);
+
   // Feed the pipeline, getting the frames from |frame_provider_|.
   void FetchBuffer();
+
+  void FetchReadyBuffer();
 
   // Callback invoked when receiving a new frame from |frame_provider_|.
   void OnNewFrame(const scoped_refptr<DecoderBufferBase>& buffer,
@@ -108,16 +116,19 @@ class AvPipelineImpl : MediaPipelineBackend::Decoder::Delegate {
 
   // Process a pending buffer.
   void ProcessPendingBuffer();
-  void PushPendingBuffer();
+  void DoPushBufferCompleteTask(MediaPipelineBackend::BufferStatus status);
+
+  // Pushes one ready buffer if possible.
+  bool MaybePushReadyBuffer();
+
+  // Pushes one ready buffer to decoder.
+  void PushReadyBuffer(scoped_refptr<DecoderBufferBase> buffer);
 
   // Callbacks:
   // - when BrowserCdm updated its state.
   // - when BrowserCdm has been destroyed.
   void OnCdmStateChanged();
   void OnCdmDestroyed();
-  void OnBufferDecrypted(std::unique_ptr<DecryptContextImpl> decrypt_context,
-                         scoped_refptr<DecoderBufferBase> buffer,
-                         bool success);
 
   // Callback invoked when a media buffer has been buffered by |frame_provider_|
   // which is a BufferingFrameProvider.
@@ -159,7 +170,7 @@ class AvPipelineImpl : MediaPipelineBackend::Decoder::Delegate {
   // Indicate whether there is a pending buffer read.
   bool pending_read_;
 
-  // Pending buffer (not pushed to device yet)
+  // Pending buffer (not pushed to decryptor yet)
   scoped_refptr<DecoderBufferBase> pending_buffer_;
 
   // Buffer that has been pushed to the device but not processed yet.
@@ -168,6 +179,11 @@ class AvPipelineImpl : MediaPipelineBackend::Decoder::Delegate {
   // CdmContext, if available.
   CastCdmContext* cast_cdm_context_;
   int player_tracker_callback_id_;
+
+  // Decryptor to get clear buffers. All the buffers (clear or encrypted) will
+  // be pushed to |decryptor_| before being pushed to |decoder_|. |decryptor_|
+  // can do nothing if the media backend is able to handle encrypted buffer.
+  std::unique_ptr<StreamDecryptor> decryptor_;
 
   base::WeakPtr<AvPipelineImpl> weak_this_;
   base::WeakPtrFactory<AvPipelineImpl> weak_factory_;

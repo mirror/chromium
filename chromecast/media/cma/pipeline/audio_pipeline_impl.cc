@@ -8,10 +8,14 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
+#include "chromecast/base/task_runner_impl.h"
 #include "chromecast/media/cma/base/buffering_defs.h"
 #include "chromecast/media/cma/base/cma_logging.h"
 #include "chromecast/media/cma/base/coded_frame_provider.h"
 #include "chromecast/media/cma/base/decoder_config_adapter.h"
+#include "chromecast/media/cma/pipeline/backend_decryptor.h"
+#include "chromecast/media/cma/pipeline/cdm_decryptor.h"
 #include "chromecast/public/media/decoder_config.h"
 #include "media/base/audio_decoder_config.h"
 
@@ -20,6 +24,10 @@ namespace media {
 
 namespace {
 const size_t kMaxAudioFrameSize = 32 * 1024;
+
+bool ShouldUseSoftwareDecoder(AudioCodec codec) {
+  return codec == kCodecOpus || codec == kCodecFLAC;
+}
 }
 
 AudioPipelineImpl::AudioPipelineImpl(
@@ -42,10 +50,9 @@ AudioPipelineImpl::~AudioPipelineImpl() {}
   }
 
   DCHECK(audio_config.IsValidConfig());
-  AudioConfig cast_audio_config =
+  audio_config_ =
       DecoderConfigAdapter::ToCastAudioConfig(kPrimary, audio_config);
-  encryption_scheme_ = cast_audio_config.encryption_scheme;
-  if (!audio_decoder_->SetConfig(cast_audio_config)) {
+  if (!audio_decoder_->SetConfig(audio_config_)) {
     return ::media::PIPELINE_ERROR_INITIALIZATION_FAILED;
   }
   set_state(kFlushed);
@@ -64,10 +71,8 @@ void AudioPipelineImpl::OnUpdateConfig(
     CMALOG(kLogControl) << __FUNCTION__ << " id:" << id << " "
                         << audio_config.AsHumanReadableString();
 
-    AudioConfig cast_audio_config =
-        DecoderConfigAdapter::ToCastAudioConfig(id, audio_config);
-    encryption_scheme_ = cast_audio_config.encryption_scheme;
-    bool success = audio_decoder_->SetConfig(cast_audio_config);
+    audio_config_ = DecoderConfigAdapter::ToCastAudioConfig(id, audio_config);
+    bool success = audio_decoder_->SetConfig(audio_config_);
     if (!success && !client().playback_error_cb.is_null())
       client().playback_error_cb.Run(::media::PIPELINE_ERROR_DECODE);
   }
@@ -75,7 +80,24 @@ void AudioPipelineImpl::OnUpdateConfig(
 
 const EncryptionScheme& AudioPipelineImpl::GetEncryptionScheme(
     StreamId id) const {
-  return encryption_scheme_;
+  return audio_config_.encryption_scheme;
+}
+
+std::unique_ptr<StreamDecryptor> AudioPipelineImpl::CreateDecryptor() {
+  if (!audio_config_.encryption_scheme.is_encrypted() ||
+      !MediaPipelineBackend::CreateAudioDecryptor ||
+      !ShouldUseSoftwareDecoder(audio_config_.codec)) {
+    return std::make_unique<CdmDecryptor>();
+  }
+
+  if (!backend_task_runner_)
+    backend_task_runner_.reset(new TaskRunnerImpl());
+
+  auto decryptor = base::WrapUnique(MediaPipelineBackend::CreateAudioDecryptor(
+      audio_config_.encryption_scheme, backend_task_runner_.get()));
+
+  DCHECK(decryptor);
+  return std::make_unique<BackendDecryptor>(std::move(decryptor));
 }
 
 void AudioPipelineImpl::UpdateStatistics() {

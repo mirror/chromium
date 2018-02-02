@@ -289,10 +289,12 @@ void MediaPipelineImpl::Flush(const base::Closure& flush_cb) {
   pending_flush_task_->video_flushed = !video_pipeline_;
   pending_flush_task_->done_cb = flush_cb;
   if (audio_pipeline_) {
+    LOG(ERROR) << "Flush audio";
     audio_pipeline_->Flush(
         base::Bind(&MediaPipelineImpl::OnFlushDone, weak_this_, true));
   }
   if (video_pipeline_) {
+    LOG(ERROR) << "Flush video";
     video_pipeline_->Flush(
         base::Bind(&MediaPipelineImpl::OnFlushDone, weak_this_, false));
   }
