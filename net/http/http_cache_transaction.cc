@@ -1590,9 +1590,7 @@ int HttpCache::Transaction::DoSendRequest() {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoSendRequest");
   DCHECK(mode_ & WRITE || mode_ == NONE);
   DCHECK(!network_trans_.get());
-
   send_request_since_ = TimeTicks::Now();
-
   // Create a network transaction.
   int rv =
       cache_->network_layer_->CreateTransaction(priority_, &network_trans_);
