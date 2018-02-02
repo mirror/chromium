@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1339f9_a5b8a1fe",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-02-02T23:58:06Z",
+      "side": 1,
+      "message": "Should this be DidStartNavigation() to trigger the histogram collection?",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 32
+      },
+      "revId": "fee7ab80058125dba7495145a370a4be219ebe17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8343e7_5043370f",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-02-02T23:58:06Z",
+      "side": 1,
+      "message": "In addition to this unit test, it might be nice to have tests verifying that the security level logged is that of the form-sending page and not the form action page. One possibility would be to add a browser test that loads the form in one security level and submits to a page with a different security level. Another might be to check that the WebContents used for the navigation handle sent to DidStartNavigation is for the expected URL and not the URL of the form action.",
+      "range": {
+        "startLine": 145,
+        "startChar": 44,
+        "endLine": 145,
+        "endChar": 67
+      },
+      "revId": "fee7ab80058125dba7495145a370a4be219ebe17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
