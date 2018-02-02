@@ -71,6 +71,63 @@
     },
     {
       "key": {
+        "uuid": "371b7136_caa34550",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-02-02T02:57:37Z",
+      "side": 1,
+      "message": "The following may be a bit easier to read?\n\n  return path.BaseName().MaybeAsASCII() \u003d\u003d \"foo.txt\";",
+      "range": {
+        "startLine": 344,
+        "startChar": 27,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9dd102_0d0e77c9",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-02-02T02:57:37Z",
+      "side": 1,
+      "message": "How about adding a comment that says that we want to extract only \"foo.txt\" out of files in test.zip. Would be also good to mention what other files are included in the zip file, that should not be extracted.",
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bcf1f8_ddf61643",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-02-02T02:57:37Z",
+      "side": 1,
+      "message": "to ensure that only foo.txt is extracted, a more reliable way would be to make sure test_dir_ contains only one file that\u0027s named \"foo.txt\"? file_enumerator.h may be useful.",
+      "revId": "0a93b794402047e189fa03f7698644a56bdddeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f6d4328_5c859354",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 6

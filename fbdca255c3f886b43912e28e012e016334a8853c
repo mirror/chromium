@@ -104,6 +104,30 @@
       "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ebbc60_cc0fabb0",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-02-02T02:57:37Z",
+      "side": 0,
+      "message": "good catch. please remove these too!",
+      "parentUuid": "604824c2_f8d8ec05",
+      "range": {
+        "startLine": 411,
+        "startChar": 49,
+        "endLine": 411,
+        "endChar": 0
+      },
+      "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
