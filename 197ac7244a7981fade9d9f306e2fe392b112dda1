@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58079deb_aba82a05",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-02-02T04:00:19Z",
+      "side": 1,
+      "message": "I can\u0027t get why we need to send key down event for update the CAPSLOCK state. Could you explain why we need this in more detail?\n\nAlso, this code leaves SHIFT_LEFT key as pressed because a key up event is not sent. Is it intentional?",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
