@@ -518,6 +518,8 @@ class CONTENT_EXPORT RenderWidget
   gfx::Size GetSizeForWebWidget() const;
   virtual void ResizeWebWidget();
 
+  virtual blink::WebView* GetWebView();
+
   // Close the underlying WebWidget and stop the compositor.
   virtual void Close();
 
@@ -525,6 +527,8 @@ class CONTENT_EXPORT RenderWidget
   // It is safe to call this multiple times, which happens in the case of
   // frame widgets beings closed, since subsequent calls are ignored.
   void CloseWebWidget();
+
+  void UpdateWebViewWithDeviceScaleFactor();
 
   // Used to force the size of a window when running layout tests.
   void SetWindowRectSynchronously(const gfx::Rect& new_window_rect);

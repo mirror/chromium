@@ -19,6 +19,8 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/native_widget_types.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace aura {
 
 namespace {
@@ -36,11 +38,17 @@ TestScreen* TestScreen::Create(const gfx::Size& size,
   const gfx::Size kDefaultSize(800, 600);
   // Use (0,0) because the desktop aura tests are executed in
   // native environment where the display's origin is (0,0).
+  base::debug::StackTrace().Print();
   return new TestScreen(gfx::Rect(size.IsEmpty() ? kDefaultSize : size),
                         window_tree_client);
 }
 
-TestScreen::~TestScreen() {}
+TestScreen::~TestScreen() {
+  if (host_) {
+    host_->window()->RemoveObserver(this);
+    delete host_;
+  }
+}
 
 WindowTreeHost* TestScreen::CreateHostForPrimaryDisplay() {
   DCHECK(!host_);
@@ -148,8 +156,10 @@ void TestScreen::OnWindowBoundsChanged(Window* window,
 }
 
 void TestScreen::OnWindowDestroying(Window* window) {
-  if (host_->window() == window)
+  if (host_->window() == window) {
+    host_->window()->RemoveObserver(this);
     host_ = NULL;
+  }
 }
 
 gfx::Point TestScreen::GetCursorScreenPoint() {
