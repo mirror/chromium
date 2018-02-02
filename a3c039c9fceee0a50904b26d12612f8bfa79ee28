@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2f698ab_0341fc5d",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T00:50:03Z",
+      "side": 1,
+      "message": "Done. Thanks, this makes ownership much more clear.\n\nSince SadTabView is owned by SadTabHelper, I now have it\ncall set_owned_by_client() and override RemovedFromWidget()\nto detect if it\u0027s no longer a child of the WebView.\n\nI added a second argument to View::RemoveChildView to\nmake this possible. Alternatively I could make WebView\na friend of View or make owned_by_client() public, but\nit seemed like that was an implementation detail that\nshould stay within View if possible.",
+      "parentUuid": "f6ea25f6_664fa471",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "a3c039c9fceee0a50904b26d12612f8bfa79ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af71b7fd_199623e3",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-01T21:01:07Z",
       "side": 1,
       "message": "Why do you need to chang ethe preferred size?",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 61
+      },
+      "revId": "a3c039c9fceee0a50904b26d12612f8bfa79ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46c0f9a_91563ea8",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T00:50:03Z",
+      "side": 1,
+      "message": "Oops, not needed.",
+      "parentUuid": "af71b7fd_199623e3",
       "range": {
         "startLine": 103,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee80b757_d0304050",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T00:50:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d29cdc2_e29c4862",
+      "range": {
+        "startLine": 104,
+        "startChar": 27,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "a3c039c9fceee0a50904b26d12612f8bfa79ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06beaceb_d229e5c8",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2018-02-01T21:01:07Z",
       "side": 1,
       "message": "Be sure and update the bounds of crashed_overlay_view_ as necessary. Easy way is likely to install a FillLayout. If you do that, on 104 you can call Layout().",
+      "range": {
+        "startLine": 343,
+        "startChar": 55,
+        "endLine": 343,
+        "endChar": 76
+      },
+      "revId": "a3c039c9fceee0a50904b26d12612f8bfa79ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c290f56d_52805329",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T00:50:03Z",
+      "side": 1,
+      "message": "I tried that and it was more complicated to get it to work, since\nholder_ (the NativeViewHost) is also a child, and it has special\nsizing requirements.\n\nRight now I\u0027m changing the bounds in OnBoundsChanged, the same\nplace where holder_ is resized. It seems to work well in practice.\nDoes that seem reasonable?",
+      "parentUuid": "06beaceb_d229e5c8",
       "range": {
         "startLine": 343,
         "startChar": 55,
