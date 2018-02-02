@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e47c2bec_3935a125",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-02T18:52:40Z",
+      "side": 1,
+      "message": "please also explain what the suffix means.",
+      "range": {
+        "startLine": 227,
+        "startChar": 20,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "dbd225ceb35806a4aaee24bd1c80a2593c4308fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
