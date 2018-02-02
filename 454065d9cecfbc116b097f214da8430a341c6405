@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84ef587_ea9e38d6",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T03:02:57Z",
+      "side": 1,
+      "message": "I think this should go after security.icon",
+      "revId": "454065d9cecfbc116b097f214da8430a341c6405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d746feb_49a391fb",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-02T03:02:57Z",
+      "side": 1,
+      "message": "Raymes, do you think the order of these is OK?",
+      "revId": "454065d9cecfbc116b097f214da8430a341c6405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
