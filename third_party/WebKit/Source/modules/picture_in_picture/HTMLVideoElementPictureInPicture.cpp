@@ -33,13 +33,12 @@ ScriptPromise HTMLVideoElementPictureInPicture::requestPictureInPicture(
     ScriptState* script_state,
     HTMLVideoElement& element) {
   Document& document = element.GetDocument();
-  if (!document.GetFrame()) {
-    return ScriptPromise::RejectWithDOMException(
-        script_state, DOMException::Create(kInvalidStateError, kDetachedError));
-  }
-
   switch (
       PictureInPictureController::Ensure(document).IsElementAllowed(element)) {
+    case Status::kFrameDetached:
+      return ScriptPromise::RejectWithDOMException(
+          script_state,
+          DOMException::Create(kInvalidStateError, kDetachedError));
     case Status::kDisabledByFeaturePolicy:
       return ScriptPromise::RejectWithDOMException(
           script_state,
@@ -56,6 +55,7 @@ ScriptPromise HTMLVideoElementPictureInPicture::requestPictureInPicture(
       break;
   }
 
+  // Frame is not null as we've just checked frame was not detached above.
   LocalFrame* frame = element.GetFrame();
   if (!Frame::ConsumeTransientUserActivation(frame)) {
     return ScriptPromise::RejectWithDOMException(
