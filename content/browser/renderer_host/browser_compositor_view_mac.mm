@@ -17,7 +17,6 @@
 #include "content/browser/renderer_host/compositor_resize_lock.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/context_factory.h"
-#include "media/base/video_frame.h"
 #include "ui/accelerated_widget_mac/accelerated_widget_mac.h"
 #include "ui/accelerated_widget_mac/window_resize_helper_mac.h"
 #include "ui/base/layout.h"
@@ -264,32 +263,9 @@ void BrowserCompositorMac::CopyFromCompositingSurface(
       src_subrect, dst_size, callback_with_decrement, preferred_color_type);
 }
 
-void BrowserCompositorMac::CopyToVideoFrameCompleted(
-    base::WeakPtr<BrowserCompositorMac> browser_compositor,
-    const base::Callback<void(const gfx::Rect&, bool)>& callback,
-    const gfx::Rect& rect,
-    bool result) {
-  callback.Run(rect, result);
-  if (browser_compositor) {
-    browser_compositor->outstanding_copy_count_ -= 1;
-    browser_compositor->UpdateState();
-  }
-}
-
-void BrowserCompositorMac::CopyFromCompositingSurfaceToVideoFrame(
-    const gfx::Rect& src_subrect,
-    scoped_refptr<media::VideoFrame> target,
-    const base::Callback<void(const gfx::Rect&, bool)>& callback) {
-  DCHECK(delegated_frame_host_);
-  DCHECK(state_ == HasAttachedCompositor);
-  outstanding_copy_count_ += 1;
-
-  auto callback_with_decrement =
-      base::Bind(&BrowserCompositorMac::CopyToVideoFrameCompleted,
-                 weak_factory_.GetWeakPtr(), callback);
-
-  delegated_frame_host_->CopyFromCompositingSurfaceToVideoFrame(
-      src_subrect, std::move(target), callback_with_decrement);
+bool BrowserCompositorMac::CanCopyFromCompositingSurface() const {
+  return delegated_frame_host_ &&
+         delegated_frame_host_->CanCopyFromCompositingSurface();
 }
 
 viz::FrameSinkId BrowserCompositorMac::GetRootFrameSinkId() {

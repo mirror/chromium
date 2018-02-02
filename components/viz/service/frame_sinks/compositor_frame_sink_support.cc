@@ -58,7 +58,7 @@ CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
   DCHECK(capture_clients_.empty());
 }
 
-void CompositorFrameSinkSupport::SetAggregatedDamageCallback(
+void CompositorFrameSinkSupport::SetAggregatedDamageCallbackForTesting(
     AggregatedDamageCallback callback) {
   aggregated_damage_callback_ = std::move(callback);
 }
