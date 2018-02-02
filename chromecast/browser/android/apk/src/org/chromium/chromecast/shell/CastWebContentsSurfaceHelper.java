@@ -9,16 +9,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.FrameLayout;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.chromecast.base.CastSwitches;
 import org.chromium.content.browser.ActivityContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentView;
@@ -191,9 +192,9 @@ class CastWebContentsSurfaceHelper {
             }
         };
         mContentViewRenderView.onNativeLibraryLoaded(mWindow);
-        // Setting the background color to black avoids rendering a white splash screen
+        // Setting the background color avoids rendering a white splash screen
         // before the players are loaded. See https://crbug/307113 for details.
-        mContentViewRenderView.setSurfaceViewBackgroundColor(Color.BLACK);
+        mContentViewRenderView.setSurfaceViewBackgroundColor(getBackgroundColor());
 
         mCastWebContentsLayout.addView(mContentViewRenderView,
                 new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
@@ -299,6 +300,22 @@ class CastWebContentsSurfaceHelper {
 
     boolean isTouchInputEnabled() {
         return mTouchInputEnabled;
+    }
+
+    private static int getBackgroundColor() {
+        String colorString =
+                CommandLine.getInstance().getSwitchValue(CastSwitches.CAST_APP_BACKGROUND_COLOR);
+        int colorValue = 0xFF000000; // black
+        try {
+            if (colorString != null) {
+                // parseLong and cast to int because color codes don't fit in signed 32-bit integers
+                colorValue = (int) Long.parseLong(colorString, 16);
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Invalid value for %s (%s). Using default of FF000000.",
+                    CastSwitches.CAST_APP_BACKGROUND_COLOR, colorString);
+        }
+        return colorValue;
     }
 
     private LocalBroadcastManager getLocalBroadcastManager() {
