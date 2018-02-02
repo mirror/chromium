@@ -69,8 +69,7 @@ class NET_EXPORT Socket {
   virtual int Write(IOBuffer* buf,
                     int buf_len,
                     const CompletionCallback& callback,
-                    const NetworkTrafficAnnotationTag& traffic_annotation =
-                        NO_TRAFFIC_ANNOTATION_BUG_656607) = 0;
+                    const NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   // Set the receive buffer size (in bytes) for the socket.
   // Note: changing this value can affect the TCP window size on some platforms.
