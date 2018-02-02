@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c860033b_939c097e",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T22:13:12Z",
+      "side": 1,
+      "message": "Blank line between properties missing. Also @private missing.\n\nAlso, since this is used in the SetManufacturerModelBehavior, it should be defined in the behavior. Not here. And since it has to be there, I don\u0027t think it should be private.",
+      "revId": "723de8df80082c84f3bb7b2aa971f5cdfac8ff1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4699dd07_27578a13",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T22:13:12Z",
+      "side": 1,
+      "message": "Drive-by nit: Use shorthand syntax.\n\nmanufacturerList: Array,\nand\nmodeList: Array,",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "723de8df80082c84f3bb7b2aa971f5cdfac8ff1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
