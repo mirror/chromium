@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6acc51dd_661818dc",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-02T17:07:57Z",
+      "side": 1,
+      "message": "Didn\u0027t we discuss this already?",
+      "range": {
+        "startLine": 577,
+        "startChar": 3,
+        "endLine": 577,
+        "endChar": 4
+      },
+      "revId": "703caf9d8471b74a664a15dceac49e08a303a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981d1a18_897889de",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-02T17:07:57Z",
+      "side": 1,
+      "message": "What about ASSERT_TRUE(base::ReadFileToString(... , as you have it in other tests?",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 9
+      },
+      "revId": "703caf9d8471b74a664a15dceac49e08a303a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
