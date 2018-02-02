@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8853954e_baa0a68b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-02T17:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5b3916_33900ade",
+      "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "200b4a46_19bed847",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "44b0c98d_e64544b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-02T17:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "200b4a46_19bed847",
+      "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b17615_efd98480",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e453555f_ae1959b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PackageMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-02-02T17:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34b17615_efd98480",
+      "revId": "00b670b4c157a083463b2e5d6e7ae819fe085bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
