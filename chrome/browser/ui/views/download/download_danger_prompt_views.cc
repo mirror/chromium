@@ -22,7 +22,7 @@
 #include "ui/base/ui_features.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/label.h"
-#include "ui/views/layout/grid_layout.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_client_view.h"
@@ -34,14 +34,12 @@ using safe_browsing::ClientSafeBrowsingReportRequest;
 
 namespace {
 
-const int kMessageWidth = 320;
-
 // Views-specific implementation of download danger prompt dialog. We use this
 // class rather than a TabModalConfirmDialog so that we can use custom
 // formatting on the text in the body of the dialog.
 class DownloadDangerPromptViews : public DownloadDangerPrompt,
                                   public content::DownloadItem::Observer,
-                                  public views::DialogDelegate {
+                                  public views::DialogDelegateView {
  public:
   DownloadDangerPromptViews(content::DownloadItem* item,
                             bool show_context,
@@ -54,17 +52,17 @@ class DownloadDangerPromptViews : public DownloadDangerPrompt,
   // views::DialogDelegate:
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   base::string16 GetWindowTitle() const override;
-  void DeleteDelegate() override;
   ui::ModalType GetModalType() const override;
   bool Cancel() override;
   bool Accept() override;
   bool Close() override;
-  views::View* GetContentsView() override;
-  views::Widget* GetWidget() override;
-  const views::Widget* GetWidget() const override;
 
   // content::DownloadItem::Observer:
   void OnDownloadUpdated(content::DownloadItem* download) override;
+
+ protected:
+  // views::View:
+  gfx::Size CalculatePreferredSize() const override;
 
  private:
   base::string16 GetAcceptButtonTitle() const;
@@ -81,7 +79,7 @@ class DownloadDangerPromptViews : public DownloadDangerPrompt,
 
   std::unique_ptr<ExperienceSamplingEvent> sampling_event_;
 
-  views::View* contents_view_;
+  views::Label* message_body_label_;
 };
 
 DownloadDangerPromptViews::DownloadDangerPromptViews(
@@ -91,27 +89,19 @@ DownloadDangerPromptViews::DownloadDangerPromptViews(
     : download_(item),
       show_context_(show_context),
       done_(done),
-      contents_view_(NULL) {
+      message_body_label_(nullptr) {
   download_->AddObserver(this);
-
-  contents_view_ = new views::View;
 
   set_margins(ChromeLayoutProvider::Get()->GetDialogInsetsForContentType(
       views::TEXT, views::TEXT));
-  views::GridLayout* layout = contents_view_->SetLayoutManager(
-      std::make_unique<views::GridLayout>(contents_view_));
+  SetLayoutManager(std::make_unique<views::FillLayout>());
 
-  views::ColumnSet* column_set = layout->AddColumnSet(0);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::FIXED, kMessageWidth, 0);
+  message_body_label_ = new views::Label(GetMessageBody());
+  message_body_label_->SetMultiLine(true);
+  message_body_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  message_body_label_->SetAllowCharacterBreak(true);
 
-  views::Label* message_body_label = new views::Label(GetMessageBody());
-  message_body_label->SetMultiLine(true);
-  message_body_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  message_body_label->SetAllowCharacterBreak(true);
-
-  layout->StartRow(0, 0);
-  layout->AddView(message_body_label);
+  AddChildView(message_body_label_);
 
   RecordOpenedDangerousConfirmDialog(download_->GetDangerType());
 
@@ -186,11 +176,6 @@ base::string16 DownloadDangerPromptViews::GetWindowTitle() const {
   }
 }
 
-void DownloadDangerPromptViews::DeleteDelegate() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  delete this;
-}
-
 ui::ModalType DownloadDangerPromptViews::GetModalType() const {
   return ui::MODAL_TYPE_CHILD;
 }
@@ -222,18 +207,6 @@ bool DownloadDangerPromptViews::Close() {
   return true;
 }
 
-views::View* DownloadDangerPromptViews::GetContentsView() {
-  return contents_view_;
-}
-
-views::Widget* DownloadDangerPromptViews::GetWidget() {
-  return contents_view_->GetWidget();
-}
-
-const views::Widget* DownloadDangerPromptViews::GetWidget() const {
-  return contents_view_->GetWidget();
-}
-
 // content::DownloadItem::Observer:
 void DownloadDangerPromptViews::OnDownloadUpdated(
     content::DownloadItem* download) {
@@ -244,6 +217,15 @@ void DownloadDangerPromptViews::OnDownloadUpdated(
     RunDone(DISMISS);
     Cancel();
   }
+}
+
+gfx::Size DownloadDangerPromptViews::CalculatePreferredSize() const {
+  DCHECK(message_body_label_);
+  int preferred_width = ChromeLayoutProvider::Get()->GetDistanceMetric(
+                            DISTANCE_BUBBLE_PREFERRED_WIDTH) -
+                        margins().width();
+  return gfx::Size(preferred_width,
+                   message_body_label_->GetHeightForWidth(preferred_width));
 }
 
 base::string16 DownloadDangerPromptViews::GetAcceptButtonTitle() const {
