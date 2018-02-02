@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "d799f178_214c6e5e",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-02T02:31:38Z",
+      "side": 1,
+      "message": "Ack. another option would be a DiceAccountsMenuDelegate, which could have multiple methods\n\n void OnAccountSelected(const AccountInfo\u0026 info);\n void OnSyncToAnotherAccountSelected();",
+      "parentUuid": "8ba499da_ffaf3471",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c787990_f7e4654b",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 4
