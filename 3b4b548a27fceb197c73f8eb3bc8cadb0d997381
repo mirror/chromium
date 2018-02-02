@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9ad2a29_4d8aeff3",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": "This class holds *two* things: the symbols from the library, and the object file sections :)\n\nRearranging the code will bring benefits. For example this change has made it clear that patch_orderfile rescans the object directory for symbols.\n\nIn general, I\u0027m trying to organize things functionally rather than procedurally. What I mean by that is that currently all this orderfile stuff is done as a list of steps with complex interdependancies. Doing things like assembling an orderfile manually from multiple profile runs isn\u0027t possible with the current code, because the profile step is mixed in with setting up a build and performing a compile.",
+      "parentUuid": "56f803b8_b74a9c7a",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "698fbba9_04c32c85",
         "filename": "tools/cygprofile/cyglog_to_orderfile.py",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d8c48b1c_84ef0ca1",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698fbba9_04c32c85",
+      "range": {
+        "startLine": 41,
+        "startChar": 35,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd90f865_3804bc9d",
         "filename": "tools/cygprofile/cyglog_to_orderfile.py",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-01T16:06:46Z",
       "side": 1,
       "message": "nit: http, their certificate expired ~1 year ago",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d987e01c_4d450a96",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": ":P probably best to keep that warning in place as maybe this is no longer the best link. At any rate, this was one of the copy-paste bits.",
+      "parentUuid": "fd90f865_3804bc9d",
       "range": {
         "startLine": 125,
         "startChar": 5,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6121bdec_873b3a47",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": "Let me meditate on this. These SymbolInfos indeed replace the symbol_extractor type. They both make the tests easier to read by removing unnecessary parameters, as well as making an assertion about what parts of the symbol are actually used in the implementation. I\u0027m not sure if that second aspect is a bug or feature. On the one hand, it implicitly exposes details of the implementation to the test; on the other hand, a test that uses None in a field which in practice is never None, may cause different behavior if that field is used in the implementation. By using a test-specific SymbolInfo type the test will crash instead and expose those implicit test case assumptions, making them easier to fix.",
+      "parentUuid": "dd4d480c_4af0e1a2",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "308f210e_627c0dc6",
         "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2018-02-01T16:06:46Z",
       "side": 1,
       "message": "Why reintroducing symbol_extractor.SymbolInfo under a different name?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e147806_ed39ec91",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": "Because some tests exercise code that uses the section field; see the previous comment.",
+      "parentUuid": "308f210e_627c0dc6",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "630a6b6e_256e87ed",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": "(intentionally left unresolved for future pass through comments)",
+      "parentUuid": "ec176dc0_296836fa",
+      "range": {
+        "startLine": 33,
+        "startChar": 30,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70de7a24_954336a0",
         "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2018-02-01T16:06:46Z",
       "side": 1,
       "message": "I think the order of test methods was alphabetical, what is the new ordering principle?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b1316c_3afe40bc",
+        "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-02T10:51:08Z",
+      "side": 1,
+      "message": "These tests are related to offsets found at odd adresses, see the comment in _SymbolsAtOffset.\n\nI have no idea if this is actually used now or if this is ancient history, but I didn\u0027t want to accidentally change any semantics.",
+      "parentUuid": "70de7a24_954336a0",
       "range": {
         "startLine": 56,
         "startChar": 6,
