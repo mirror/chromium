@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c27afcaf_6cecee53",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2018-02-02T21:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b969eea1_f6f52ff5",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 79
+      },
+      "revId": "8747349d1ce39c53b3bf1caef58455cf180540ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70ceb682_754f5cb8",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5a57f6a5_0c7ab8f2",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2018-02-02T21:28:46Z",
+      "side": 1,
+      "message": "black",
+      "parentUuid": "70ceb682_754f5cb8",
+      "range": {
+        "startLine": 308,
+        "startChar": 25,
+        "endLine": 308,
+        "endChar": 35
+      },
+      "revId": "8747349d1ce39c53b3bf1caef58455cf180540ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17eafc85_d861efd3",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "8747349d1ce39c53b3bf1caef58455cf180540ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bb55e1_5c4f623e",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2018-02-02T21:28:46Z",
+      "side": 1,
+      "message": "parseInt doesn\u0027t work with the traditional hex color code format (8 nibbles, where FFFFFFFF is opaque white) because int is signed, so colors with more than 50% opacity overflow int. Parsing and long and casting down to int reinterprets the lower 32 bits as an int, resulting in the expected interpretation.",
+      "parentUuid": "17eafc85_d861efd3",
+      "range": {
+        "startLine": 310,
+        "startChar": 31,
+        "endLine": 310,
+        "endChar": 45
+      },
+      "revId": "8747349d1ce39c53b3bf1caef58455cf180540ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
