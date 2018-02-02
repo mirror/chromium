@@ -91078,7 +91078,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.DetachDuration" units="ms">
+<histogram base="true" name="TaskScheduler.DetachDuration" units="ms">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <owner>robliao@chromium.org</owner>
@@ -91090,7 +91090,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.NumTasksBeforeDetach" units="tasks">
+<histogram base="true" name="TaskScheduler.NumTasksBeforeDetach" units="tasks">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <owner>robliao@chromium.org</owner>
@@ -91100,7 +91100,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.NumTasksBetweenWaits" units="tasks">
+<histogram base="true" name="TaskScheduler.NumTasksBetweenWaits" units="tasks">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <owner>robliao@chromium.org</owner>
@@ -112366,7 +112366,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="UserBlockingTaskPriority_MayBlock"
       label="Applies to tasks posted with a USER_BLOCKING priority and
              MayBlock() or WithBaseSyncPrimitives()."/>
-  <affected-histogram name="TaskScheduler.TaskLatencyMicroseconds"/>
+  <affected-histogram name="TaskScheduler.TaskLatencyMicroseconds">
+    <obsolete>
+      Deprecated 01/2018. In favor of explicit .Browser suffix.
+    </obsolete>
+  </affected-histogram>
+  <affected-histogram name="TaskScheduler.TaskLatencyMicroseconds.Browser"/>
   <affected-histogram
       name="TaskScheduler.TaskLatencyMicroseconds.ContentChild"/>
   <affected-histogram name="TaskScheduler.TaskLatencyMicroseconds.Renderer"/>
