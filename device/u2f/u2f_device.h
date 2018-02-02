@@ -11,12 +11,11 @@
 
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
-#include "device/u2f/u2f_apdu_response.h"
+#include "components/apdu/apdu_command.h"
+#include "components/apdu/apdu_response.h"
 #include "device/u2f/u2f_return_code.h"
 
 namespace device {
-
-class U2fApduCommand;
 
 // Device abstraction for an individual U2F device. A U2F device defines the
 // standardized Register, Sign, and GetVersion methods.
@@ -33,7 +32,7 @@ class U2fDevice {
       base::OnceCallback<void(bool success, ProtocolVersion version)>;
   using DeviceCallback =
       base::OnceCallback<void(bool success,
-                              std::unique_ptr<U2fApduResponse> response)>;
+                              std::unique_ptr<apdu::APDUResponse> response)>;
   using WinkCallback = base::OnceCallback<void()>;
 
   static constexpr auto kDeviceTimeout = base::TimeDelta::FromSeconds(3);
@@ -60,21 +59,22 @@ class U2fDevice {
  protected:
   // Pure virtual function defined by each device type, implementing
   // the device communication transaction.
-  virtual void DeviceTransact(std::unique_ptr<U2fApduCommand> command,
+  virtual void DeviceTransact(std::unique_ptr<apdu::APDUCommand> command,
                               DeviceCallback callback) = 0;
   virtual base::WeakPtr<U2fDevice> GetWeakPtr() = 0;
 
  private:
-  void OnRegisterComplete(MessageCallback callback,
-                          bool success,
-                          std::unique_ptr<U2fApduResponse> register_response);
+  void OnRegisterComplete(
+      MessageCallback callback,
+      bool success,
+      std::unique_ptr<apdu::APDUResponse> register_response);
   void OnSignComplete(MessageCallback callback,
                       bool success,
-                      std::unique_ptr<U2fApduResponse> sign_response);
+                      std::unique_ptr<apdu::APDUResponse> sign_response);
   void OnVersionComplete(VersionCallback callback,
                          bool legacy,
                          bool success,
-                         std::unique_ptr<U2fApduResponse> version_response);
+                         std::unique_ptr<apdu::APDUResponse> version_response);
 
   DISALLOW_COPY_AND_ASSIGN(U2fDevice);
 };

@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "device/u2f/u2f_apdu_command.h"
+#include "components/apdu/apdu_command.h"
 #include "device/u2f/u2f_device.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -18,7 +18,6 @@ namespace device {
 
 class MockU2fDevice : public U2fDevice {
  public:
-
   MockU2fDevice();
   ~MockU2fDevice() override;
 
@@ -33,17 +32,17 @@ class MockU2fDevice : public U2fDevice {
   // TODO(crbug.com/729950): Remove these workarounds once support for move-only
   // types is added to GMock.
   MOCK_METHOD2(DeviceTransactPtr,
-               void(U2fApduCommand* command, DeviceCallback& cb));
-  void DeviceTransact(std::unique_ptr<U2fApduCommand> command,
+               void(apdu::APDUCommand* command, DeviceCallback& cb));
+  void DeviceTransact(std::unique_ptr<apdu::APDUCommand> command,
                       DeviceCallback cb) override;
   base::WeakPtr<U2fDevice> GetWeakPtr() override;
-  static void TransactNoError(std::unique_ptr<U2fApduCommand> command,
+  static void TransactNoError(std::unique_ptr<apdu::APDUCommand> command,
                               DeviceCallback cb);
-  static void NotSatisfied(U2fApduCommand* cmd, DeviceCallback& cb);
-  static void WrongData(U2fApduCommand* cmd, DeviceCallback& cb);
-  static void NoErrorSign(U2fApduCommand* cmd, DeviceCallback& cb);
-  static void NoErrorRegister(U2fApduCommand* cmd, DeviceCallback& cb);
-  static void SignWithCorruptedResponse(U2fApduCommand* cmd,
+  static void NotSatisfied(apdu::APDUCommand* cmd, DeviceCallback& cb);
+  static void WrongData(apdu::APDUCommand* cmd, DeviceCallback& cb);
+  static void NoErrorSign(apdu::APDUCommand* cmd, DeviceCallback& cb);
+  static void NoErrorRegister(apdu::APDUCommand* cmd, DeviceCallback& cb);
+  static void SignWithCorruptedResponse(apdu::APDUCommand* cmd,
                                         DeviceCallback& cb);
   static void WinkDoNothing(WinkCallback& cb);
 

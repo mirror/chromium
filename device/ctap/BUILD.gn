@@ -62,3 +62,13 @@ fuzzer_test("ctap_response_fuzzer") {
   seed_corpus = "ctap_response_fuzzer_corpus/"
   libfuzzer_options = [ "max_len=65537" ]
 }
+
+fuzzer_test("u2f_apdu_fuzzer") {
+  sources = [
+    "u2f_apdu_fuzzer.cc",
+  ]
+  deps = [
+    ":ctap",
+  ]
+  libfuzzer_options = [ "max_len=65537" ]
+}

@@ -12,6 +12,8 @@
 #include <vector>
 
 #include "base/cancelable_callback.h"
+#include "components/apdu/apdu_command.h"
+#include "components/apdu/apdu_response.h"
 #include "device/u2f/u2f_device.h"
 #include "services/device/public/interfaces/hid.mojom.h"
 
@@ -27,7 +29,7 @@ class U2fHidDevice : public U2fDevice {
   ~U2fHidDevice() final;
 
   // Send a U2f command to this device
-  void DeviceTransact(std::unique_ptr<U2fApduCommand> command,
+  void DeviceTransact(std::unique_ptr<apdu::APDUCommand> command,
                       DeviceCallback callback) final;
   // Send a wink command if supported
   void TryWink(WinkCallback callback) final;
@@ -56,18 +58,18 @@ class U2fHidDevice : public U2fDevice {
 
   // Open a connection to this device
   void Connect(ConnectCallback callback);
-  void OnConnect(std::unique_ptr<U2fApduCommand> command,
+  void OnConnect(std::unique_ptr<apdu::APDUCommand> command,
                  DeviceCallback callback,
                  device::mojom::HidConnectionPtr connection);
   // Ask device to allocate a unique channel id for this connection
-  void AllocateChannel(std::unique_ptr<U2fApduCommand> command,
+  void AllocateChannel(std::unique_ptr<apdu::APDUCommand> command,
                        DeviceCallback callback);
   void OnAllocateChannel(std::vector<uint8_t> nonce,
-                         std::unique_ptr<U2fApduCommand> command,
+                         std::unique_ptr<apdu::APDUCommand> command,
                          DeviceCallback callback,
                          bool success,
                          std::unique_ptr<U2fMessage> message);
-  void Transition(std::unique_ptr<U2fApduCommand> command,
+  void Transition(std::unique_ptr<apdu::APDUCommand> command,
                   DeviceCallback callback);
   // Write all message packets to device, and read response if expected
   void WriteMessage(std::unique_ptr<U2fMessage> message,
@@ -97,7 +99,7 @@ class U2fHidDevice : public U2fDevice {
   void ArmTimeout(DeviceCallback callback);
   void OnTimeout(DeviceCallback callback);
   void OnDeviceTransact(bool success,
-                        std::unique_ptr<U2fApduResponse> response);
+                        std::unique_ptr<apdu::APDUResponse> response);
   base::WeakPtr<U2fDevice> GetWeakPtr() override;
 
   uint32_t channel_id_ = kBroadcastChannel;
@@ -105,7 +107,7 @@ class U2fHidDevice : public U2fDevice {
   State state_ = State::INIT;
 
   base::CancelableOnceClosure timeout_callback_;
-  std::queue<std::pair<std::unique_ptr<U2fApduCommand>, DeviceCallback>>
+  std::queue<std::pair<std::unique_ptr<apdu::APDUCommand>, DeviceCallback>>
       pending_transactions_;
 
   // All the U2fHidDevice instances are owned by U2fRequest. So it is safe to

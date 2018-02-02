@@ -15,7 +15,6 @@
 #include "device/bluetooth/bluetooth_discovery_filter.h"
 #include "device/bluetooth/bluetooth_discovery_session.h"
 #include "device/bluetooth/bluetooth_uuid.h"
-#include "device/u2f/u2f_apdu_command.h"
 #include "device/u2f/u2f_ble_device.h"
 #include "device/u2f/u2f_ble_uuids.h"
 

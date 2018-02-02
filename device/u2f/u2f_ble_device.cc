@@ -6,7 +6,7 @@
 
 #include "base/bind.h"
 #include "base/strings/string_piece.h"
-#include "device/u2f/u2f_apdu_command.h"
+#include "components/apdu/apdu_response.h"
 #include "device/u2f/u2f_ble_frames.h"
 #include "device/u2f/u2f_ble_transaction.h"
 
@@ -74,7 +74,7 @@ U2fBleConnection::ReadCallback U2fBleDevice::GetReadCallbackForTesting() {
                              base::Unretained(this));
 }
 
-void U2fBleDevice::DeviceTransact(std::unique_ptr<U2fApduCommand> command,
+void U2fBleDevice::DeviceTransact(std::unique_ptr<apdu::APDUCommand> command,
                                   DeviceCallback callback) {
   pending_frames_.emplace(
       U2fBleFrame(U2fCommandType::CMD_MSG, command->GetEncodedCommand()),
@@ -82,7 +82,7 @@ void U2fBleDevice::DeviceTransact(std::unique_ptr<U2fApduCommand> command,
           [](DeviceCallback callback, base::Optional<U2fBleFrame> frame) {
             std::move(callback).Run(
                 frame.has_value(),
-                frame ? U2fApduResponse::CreateFromMessage(frame->data())
+                frame ? apdu::APDUResponse::CreateFromMessage(frame->data())
                       : nullptr);
           },
           std::move(callback)));
