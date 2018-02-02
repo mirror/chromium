@@ -122,6 +122,7 @@ HttpNetworkTransaction::~HttpNetworkTransaction() {
 int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
                                   const CompletionCallback& callback,
                                   const NetLogWithSource& net_log) {
+  DCHECK(request_info->traffic_annotation.is_valid());
   net_log_ = net_log;
   request_ = request_info;
   url_ = request_->url;
