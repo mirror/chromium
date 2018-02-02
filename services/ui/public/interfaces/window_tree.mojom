@@ -511,6 +511,7 @@ interface WindowTreeClient {
   // frame_size and device_scale_factor in a layer.
   // TODO(fsamuel): Surface IDs should be passed to parents directly instead of
   // going through the window server. http://crbug.com/655231
+  // TODO(sky): this is no longer necessary with aura based window-service.
   OnWindowSurfaceChanged(uint32 window_id,
                          viz.mojom.SurfaceInfo surface_info);
 

@@ -58,6 +58,8 @@ service_test("services_unittests") {
     if (use_ozone || (!is_chromeos && !is_mac && !is_ios)) {
       deps += [ "//services/ui/ws:tests" ]
     }
+
+    deps += [ "//services/ui/ws2:tests" ]
   }
 
   if (is_android) {
@@ -123,6 +125,7 @@ catalog("services_unittests_catalog") {
     if (use_ozone || (!is_chromeos && !is_ios)) {
       catalog_deps += [ "//services/ui/ws:tests_catalog" ]
     }
+    catalog_deps += [ "//services/ui/ws2:tests_catalog" ]
   }
 }
 
