@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4934054_cb83a3d7",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-02T15:15:09Z",
+      "side": 1,
+      "message": "Please file a bug in crbug/ and put the TODO here as\n// TODO(crbug.com/xxx): ...",
+      "range": {
+        "startLine": 1124,
+        "startChar": 37,
+        "endLine": 1124,
+        "endChar": 49
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2eb2f9_a41ae2bc",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-02T15:15:09Z",
+      "side": 1,
+      "message": "Is it possible to preserve the old implementation when this feature flag is not enabled?",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 62
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f3edfc_8dc7c106",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-02T15:15:09Z",
+      "side": 1,
+      "message": "Same here. Can we preserve the old implementation when this feature flag is not enabled?",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 61
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bf5ae3_0a536097",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-02T15:15:09Z",
+      "side": 1,
+      "message": "Looks like this can return a nullptr as provider here.",
+      "range": {
+        "startLine": 130,
+        "startChar": 41,
+        "endLine": 130,
+        "endChar": 67
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df9bc14_08b77a2a",
+        "filename": "ios/public/provider/chrome/browser/mailto/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-02T15:15:09Z",
+      "side": 1,
+      "message": "Please fix.",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
