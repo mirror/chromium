@@ -8,19 +8,16 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
+#include "chromeos/network/onc/onc_parsed_certificates.h"
 #include "components/onc/onc_constants.h"
 #include "net/cert/scoped_nss_types.h"
-
-namespace base {
-class ListValue;
-}
 
 namespace chromeos {
 namespace onc {
 
 class CHROMEOS_EXPORT CertificateImporter {
  public:
-  typedef base::Callback<void(
+  typedef base::OnceCallback<void(
       bool success,
       net::ScopedCERTCertificateList onc_trusted_certificates)>
       DoneCallback;
@@ -37,9 +34,9 @@ class CHROMEOS_EXPORT CertificateImporter {
   // |onc_trusted_certificates| will contain the list of certificates that
   // were imported and requested the TrustBit "Web".
   // Never calls |done_callback| after this importer is destructed.
-  virtual void ImportCertificates(const base::ListValue& certificates,
+  virtual void ImportCertificates(const OncParsedCertificates& certificates,
                                   ::onc::ONCSource source,
-                                  const DoneCallback& done_callback) = 0;
+                                  DoneCallback done_callback) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CertificateImporter);
