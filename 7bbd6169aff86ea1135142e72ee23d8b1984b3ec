@@ -254,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "3ccf7007_768f90dd",
+        "filename": "ui/chromeos/search_box/search_box_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T18:37:19Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "2ab927cd_38cc4d74",
+      "revId": "7bbd6169aff86ea1135142e72ee23d8b1984b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a66aa8d_e2b867ae",
         "filename": "ui/chromeos/search_box/views/search_box_view.cc",
         "patchSetId": 2

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32c8f952_bee92aba",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T18:37:19Z",
+      "side": 1,
+      "message": "contents is much better. I need to rename because I am calling contents_view() here.",
+      "parentUuid": "dc3506e7_24cadf05",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427887be_a800e592",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a592d5_2075b389",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T18:37:19Z",
+      "side": 1,
+      "message": "The intention is that to keep the git history as much as possible by not moving functions.As As discussed on chat, I will group functions together in a following up cl.",
+      "parentUuid": "427887be_a800e592",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7618826_b0d0ee09",
+        "filename": "ui/chromeos/search_box/search_box_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T18:37:19Z",
+      "side": 1,
+      "message": "Add DCHECK.",
+      "parentUuid": "dc8b957b_810d3777",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e453cd_585a299b",
         "filename": "ui/chromeos/search_box/search_box_view_base.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0419a875_2609ee94",
+        "filename": "ui/chromeos/search_box/search_box_view_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T18:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e453cd_585a299b",
+      "revId": "bd37c7055f42e1fef0b1179d942fc61795fbb7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
