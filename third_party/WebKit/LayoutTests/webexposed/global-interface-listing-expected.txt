@@ -622,6 +622,7 @@ interface CSSImportRule : CSSRule
     getter media
     getter styleSheet
     method constructor
+    setter media
 interface CSSKeyframeRule : CSSRule
     attribute @@toStringTag
     getter keyText
@@ -679,6 +680,7 @@ interface CSSMediaRule : CSSConditionRule
     attribute @@toStringTag
     getter media
     method constructor
+    setter media
 interface CSSNamespaceRule : CSSRule
     attribute @@toStringTag
     getter namespaceURI
