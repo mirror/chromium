@@ -37,6 +37,7 @@
 #include "third_party/skia/include/effects/SkOverdrawColorFilter.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/src/gpu/gl/GrGLDefines.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
@@ -211,10 +212,10 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
     // surface.
     GrGLFramebufferInfo framebuffer_info;
     framebuffer_info.fFBOID = 0;
+    framebuffer_info.fFormat = GR_GL_RGBA8;
     GrBackendRenderTarget render_target(
         current_frame()->device_viewport_size.width(),
-        current_frame()->device_viewport_size.height(), 0, 8,
-        kRGBA_8888_GrPixelConfig, framebuffer_info);
+        current_frame()->device_viewport_size.height(), 0, 8, framebuffer_info);
 
     root_surface_ = SkSurface::MakeFromBackendRenderTarget(
         gr_context, render_target, kBottomLeft_GrSurfaceOrigin, nullptr,
@@ -639,7 +640,40 @@ void SkiaRenderer::DrawUnsupportedQuad(const DrawQuad* quad) {
 void SkiaRenderer::CopyDrawnRenderPass(
     std::unique_ptr<CopyOutputRequest> request) {
   // TODO(weiliangc): Make copy request work. (crbug.com/644851)
-  NOTIMPLEMENTED();
+  TRACE_EVENT0("viz", "SkiaRenderer::CopyDrawnRenderPass");
+
+  gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
+  if (request->has_area())
+    copy_rect.Intersect(request->area());
+
+  if (copy_rect.IsEmpty())
+    return;
+
+  gfx::Rect window_copy_rect = MoveFromDrawToWindowSpace(copy_rect);
+
+  sk_sp<SkSurface> current_surface =
+      current_frame()->current_render_pass == current_frame()->root_render_pass
+          ? root_surface_
+          : non_root_surface_;
+  sk_sp<SkImage> copy_image = current_surface->makeImageSnapshot()->makeSubset(
+      RectToSkIRect(window_copy_rect));
+
+  if (request->result_format() == CopyOutputResult::Format::RGBA_BITMAP) {
+    // Send copy request by copying into a bitmap.
+    SkBitmap bitmap;
+    bitmap.allocPixels(SkImageInfo::MakeN32(window_copy_rect.width(),
+                                            window_copy_rect.height(),
+                                            kPremul_SkAlphaType));
+    if (!copy_image->makeNonTextureImage()->asLegacyBitmap(
+            &bitmap, SkImage::kRO_LegacyBitmapMode))
+      bitmap.reset();
+
+    request->SendResult(
+        std::make_unique<CopyOutputSkBitmapResult>(copy_rect, bitmap));
+    return;
+  }
+
+  NOTREACHED();
 }
 
 void SkiaRenderer::SetEnableDCLayers(bool enable) {
