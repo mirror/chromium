@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb890b91_82064a08",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectPropertiesSection.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-02-02T00:34:12Z",
+      "side": 1,
+      "message": "Without this rule, expanding `{x: document.body}` in console will not highlight the `document.body` on hover.\n\nIt\u0027s also important that this is `min-width` not `width`, so that objects in WatchExpressions will have full-width hover target.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "1479960441424a99bc99283900338e277ab73ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
