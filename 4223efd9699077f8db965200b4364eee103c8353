@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dcf04034_984c54a2",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-02T22:13:31Z",
+      "side": 1,
+      "message": "Instead of a hack, I just skip the max length tests when testing this path.",
+      "parentUuid": "7ca6505a_6b86af5c",
+      "range": {
+        "startLine": 170,
+        "startChar": 35,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "4223efd9699077f8db965200b4364eee103c8353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739ba043_9523af44",
         "filename": "content/public/common/simple_url_loader_stream_handler.h",
         "patchSetId": 7
