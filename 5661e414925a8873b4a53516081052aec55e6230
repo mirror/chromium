@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "94d765df_c534310d",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-02T00:39:28Z",
+      "side": 1,
+      "message": "Would be cleaner if it was always an array (just of size 1 for some tests).",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "896e3d38_479a043f",
         "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
         "patchSetId": 1
@@ -18,6 +41,75 @@
         "startChar": 21,
         "endLine": 18,
         "endChar": 36
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020badd5_e19bfa4c",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-02T00:39:28Z",
+      "side": 1,
+      "message": "I\u0027m confused, why do we need to end the session here, but not in the else branch below? And what are we catching?",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe11c2ff_36b7b1fc",
+        "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-02T00:39:28Z",
+      "side": 1,
+      "message": "Can an XRSession be created without a frame? If not, could we cache dpr at creation time or something so we don\u0027t have to worry about this presumably edge case?",
+      "range": {
+        "startLine": 193,
+        "startChar": 25,
+        "endLine": 193,
+        "endChar": 50
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f6ae33_da55fc65",
+        "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-02T00:39:28Z",
+      "side": 1,
+      "message": "Can we use ResizeObserver?",
+      "range": {
+        "startLine": 257,
+        "startChar": 16,
+        "endLine": 257,
+        "endChar": 38
       },
       "revId": "5661e414925a8873b4a53516081052aec55e6230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
