@@ -6692,7 +6692,10 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           GetRequestContextTypeForWebURLRequest(info.url_request),
           GetMixedContentContextTypeForWebURLRequest(info.url_request),
           is_form_submission, searchable_form_url, searchable_form_encoding,
-          initiator_origin, client_side_redirect_url);
+          initiator_origin, client_side_redirect_url,
+          network::mojom::URLLoaderFactoryPtrInfo(
+              request.GetURLLoaderFactory(),
+              network::mojom::URLLoaderFactory::Version_));
 
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
                                   std::move(begin_navigation_params));

@@ -36,6 +36,7 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/dom/events/Event.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -130,12 +131,18 @@ class ScheduledURLNavigation : public ScheduledNavigation {
       should_check_main_world_content_security_policy_ =
           kDoNotCheckContentSecurityPolicy;
     }
+
+    if (origin_document && url.ProtocolIs("blob") &&
+        RuntimeEnabledFeatures::MojoBlobURLsEnabled()) {
+      origin_document->GetPublicURLManager().Resolve(
+          url_, MakeRequest(&url_loader_factory_));
+    }
   }
 
   void Fire(LocalFrame* frame) override {
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
-    FrameLoadRequest request(OriginDocument(), ResourceRequest(url_), "_self",
+    FrameLoadRequest request(OriginDocument(), CreateResourceRequest(), "_self",
                              should_check_main_world_content_security_policy_);
     request.SetReplacesCurrentItem(ReplacesCurrentItem());
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
@@ -149,8 +156,18 @@ class ScheduledURLNavigation : public ScheduledNavigation {
 
   KURL Url() const override { return url_; }
 
+  ResourceRequest CreateResourceRequest() const {
+    ResourceRequest result(url_);
+    network::mojom::blink::URLLoaderFactoryPtr factory_clone;
+    if (url_loader_factory_)
+      url_loader_factory_->Clone(MakeRequest(&factory_clone));
+    result.SetURLLoaderFactory(std::move(factory_clone));
+    return result;
+  }
+
  private:
   KURL url_;
+  network::mojom::blink::URLLoaderFactoryPtr url_loader_factory_;
   ContentSecurityPolicyDisposition
       should_check_main_world_content_security_policy_;
 };
@@ -173,7 +190,8 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
   void Fire(LocalFrame* frame) override {
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
-    FrameLoadRequest request(OriginDocument(), ResourceRequest(Url()), "_self");
+    FrameLoadRequest request(OriginDocument(), CreateResourceRequest(),
+                             "_self");
     request.SetReplacesCurrentItem(ReplacesCurrentItem());
     if (EqualIgnoringFragmentIdentifier(frame->GetDocument()->Url(),
                                         request.GetResourceRequest().Url())) {
