@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4091a7d5_32bb9983",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-02T14:43:54Z",
+      "side": 1,
+      "message": "Please see the CL description on \"why\": we need AudioManager::GetTaskRunner() to register the service on AudioManager thread.\n\nI don\u0027t have much experience with startup optimization: could you elaborate on what impact on startup time the change can have?\nIt\u0027s still a part of the same startup task (BrowserThreadsStarted()), just executed earlier within it. So moving it up only means some asynchronous tasks may be posted a bit later to some other threads. So I assume this move may affect startup time only in case startup sequence waits synchronously for execution of some of those tasks posted to other threads. Is it the case?",
+      "parentUuid": "159f3f92_a5fc853e",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6751234d_a2da6b87",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
@@ -81,6 +99,24 @@
       "writtenOn": "2018-02-01T20:38:54Z",
       "side": 1,
       "message": "Why not just use a base::Feature?",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c922889_e5986bde",
+        "filename": "services/audio/public/cpp/audio_system_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-02T14:43:54Z",
+      "side": 1,
+      "message": "I\u0027m planning to delete this after switching to service-based implementation, old code path will be deprecated.\nSo I can make it a Feature, but what is a benefit (vs pulling in another header in here)?",
+      "parentUuid": "aa22e794_225a8bdd",
       "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
