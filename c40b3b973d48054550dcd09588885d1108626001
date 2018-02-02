@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8a8dc68_9ca684e1",
+        "filename": "third_party/gles1_conform",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "223e8abf_b60ab8a0",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f567e1b_dfd8c567",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b48761_d1943e88",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "line_number.",
+      "parentUuid": "5f567e1b_dfd8c567",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "93139cb2_0ece2f80",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a33348b0_01a5ff77",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a41b21_0d56de2d",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289e719b_3f50223f",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "This problem currently already exists for different fonts/size. I would like to tackle it in another cl.\n\nFor your simple test, \"go[CTRL]od\", with an icon view for [CTRL], the two \"o\"s align good. I attached an image to the bug.",
+      "parentUuid": "77a41b21_0d56de2d",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "842a714c_ffa50a0a",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c254f7_d071be5f",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dbe2a95_c92264fe",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1336c062_49b766e0",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dbe2a95_c92264fe",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c29ea02e_fd1eced3",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c37cf322_8874ee4a",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9afeda43_d05bb668",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fff1e2_e553fb8b",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9afeda43_d05bb668",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "05a2da03_3047f815",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Very good suggestion! Thank you.",
+      "parentUuid": "ec3518f8_4e7179f8",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "001c8a95_48458921",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a30ea4e_86b43b9e",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "001c8a95_48458921",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "06b6040a_d5b04b4a",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "I was worrying about this (callers forget to call AddCustomView). Thanks.",
+      "parentUuid": "945a7588_508c7be5",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0228c146_3f8665ef",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c39bdb6_07ef3505",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Agree. Then I will store the flip the alignment in the class member.",
+      "parentUuid": "0228c146_3f8665ef",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "f8571e06_f19ecfea",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "97eb3a10_8048d72f",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51706e3a_1bd19fde",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 2
@@ -237,6 +471,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54486fce_103b2dfc",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51706e3a_1bd19fde",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "65de8fb5_0576f99b",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Thanks for the detailed comments. As another comment not to set the label\u0027s horizontal alignment, then we can save the flipped alignment.",
+      "parentUuid": "c5c4b3f3_22e1c3f9",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cce1bba_fdb27849",
         "filename": "ui/views/controls/styled_label_unittest.cc",
         "patchSetId": 2
@@ -271,6 +541,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c86f80f_e4d75db7",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cce1bba_fdb27849",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "ac603ec4_ff0bdaf6",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b0ea56_33d10e3e",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc38840_ddd68b9b",
         "filename": "ui/views/controls/styled_label_unittest.cc",
         "patchSetId": 2
@@ -305,6 +611,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee1c31a_7826f624",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Removed in this test file.",
+      "parentUuid": "7cc38840_ddd68b9b",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "61ea5bc9_18bf9763",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0decf650_41779ad1",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44278f7d_6b8ad6fc",
         "filename": "ui/views/controls/styled_label_unittest.cc",
         "patchSetId": 2
@@ -339,6 +681,24 @@
       "revId": "c40b3b973d48054550dcd09588885d1108626001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fce70c_e94a1497",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-02T00:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44278f7d_6b8ad6fc",
+      "revId": "c40b3b973d48054550dcd09588885d1108626001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
