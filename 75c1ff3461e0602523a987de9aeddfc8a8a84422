@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f489804e_68792b89",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-02T02:31:38Z",
+      "side": 0,
+      "message": "This bot doesn\u0027t actually exist.",
+      "revId": "75c1ff3461e0602523a987de9aeddfc8a8a84422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
