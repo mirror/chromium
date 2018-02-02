@@ -73,7 +73,10 @@ struct CAPTURE_EXPORT VideoCaptureDeviceDescriptor {
   // Friendly name of a device, plus the model identifier in parentheses.
   std::string GetNameAndModel() const;
 
-  std::string display_name;  // Name that is intended for display in the UI
+  // Name that is intended for display in the UI.
+  const std::string& get_display_name() const { return display_name; }
+  void set_display_name(const std::string& name);
+
   std::string device_id;
   // A unique hardware identifier of the capture device.
   // It is of the form "[vid]:[pid]" when a USB device is detected, and empty
@@ -99,6 +102,9 @@ struct CAPTURE_EXPORT VideoCaptureDeviceDescriptor {
   };
 
   base::Optional<CameraCalibration> camera_calibration;
+
+ private:
+  std::string display_name;  // Name that is intended for display in the UI
 };
 
 using VideoCaptureDeviceDescriptors = std::vector<VideoCaptureDeviceDescriptor>;

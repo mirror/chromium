@@ -35,7 +35,7 @@ std::unique_ptr<VideoCaptureDevice> FileVideoCaptureDeviceFactory::CreateDevice(
       base::FilePath(base::SysUTF8ToWide(device_descriptor.display_name))));
 #else
   return std::unique_ptr<VideoCaptureDevice>(new FileVideoCaptureDevice(
-      base::FilePath(device_descriptor.display_name)));
+      base::FilePath(device_descriptor.get_display_name())));
 #endif
 }
 
