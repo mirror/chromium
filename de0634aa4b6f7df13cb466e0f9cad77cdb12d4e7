@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8913682d_f9354bad",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T01:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccceba41_e4bd2ce2",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6325e9_06fa7786",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
         "patchSetId": 7
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ee3eb85d_9c054f2e",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T01:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "398dd374_065eb16a",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "956c389b_b30fc1cd",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 7
@@ -85,6 +121,24 @@
       "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48782d66_83afb893",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T01:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "956c389b_b30fc1cd",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1a1128ab_b55a1b2d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T01:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6385f94b_e08fe27c",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "227695e5_806f1971",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.h",
         "patchSetId": 7
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e6a56690_a4c91b2b",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T01:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "227695e5_806f1971",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e321c7_822de2b2",
         "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
         "patchSetId": 7
@@ -136,6 +226,24 @@
       "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4316993_913ea9d6",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T01:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e321c7_822de2b2",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
