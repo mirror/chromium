@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "dd8f1576_d6675f7d",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T21:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12c1c93e_5a25a35b",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 47
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e10e8a9_dd1c7834",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 2
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "Yes, please. Add a comment and a TODO.",
       "parentUuid": "ad805975_f37c1bd1",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 73
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ec4fd5_ca1587fb",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T21:27:38Z",
+      "side": 1,
+      "message": "Think it twice. We could just do:\n\nconst auto\u0026 display \u003d GetDisplayManager()-\u003eGetDisplayForId(persistent_display_id);\n\nThis ensures correctness. And I think this line doesn\u0027t need comment.",
+      "parentUuid": "b6b68549_2d0ceab1",
       "range": {
         "startLine": 89,
         "startChar": 55,
@@ -485,6 +533,30 @@
       "side": 1,
       "message": "Yes, because the ctor still depends on window_tree_host_manager_ when it adds the observer.\n\nThis is to be safe and future-proof. I know that you create the controller in Shell::Init() after window_tree_host_manager_ is created, but the order of declaration should match the order of construction/initialization.",
       "parentUuid": "a5df71bd_67cd4060",
+      "range": {
+        "startLine": 671,
+        "startChar": 2,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b8878f_01977451",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T21:27:38Z",
+      "side": 1,
+      "message": "ack, done",
+      "parentUuid": "47fa6435_a4b1dcf9",
       "range": {
         "startLine": 671,
         "startChar": 2,
