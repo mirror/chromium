@@ -7,6 +7,7 @@
 #include "base/pickle.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/autofill/core/common/autofill_features.h"
 #include "components/autofill/core/common/autofill_util.h"
 
 namespace autofill {
@@ -129,7 +130,8 @@ FormFieldData::FormFieldData()
       should_autocomplete(true),
       role(ROLE_ATTRIBUTE_OTHER),
       text_direction(base::i18n::UNKNOWN_DIRECTION),
-      properties_mask(0) {}
+      properties_mask(0),
+      label_source(LabelSource::UNKNOWN) {}
 
 FormFieldData::FormFieldData(const FormFieldData& other) = default;
 
@@ -159,7 +161,11 @@ bool FormFieldData::SameFieldAs(const FormFieldData& field) const {
 }
 
 bool FormFieldData::SimilarFieldAs(const FormFieldData& field) const {
-  return label == field.label && name == field.name && id == field.id &&
+  return (label == field.label ||
+          (base::FeatureList::IsEnabled(
+               features::kAutofillSkipInferedLabelInComparing) &&
+           label_source == field.label_source && label_source != LABEL_TAG)) &&
+         name == field.name && id == field.id &&
          form_control_type == field.form_control_type &&
          IsCheckable(check_status) == IsCheckable(field.check_status);
 }

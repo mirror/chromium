@@ -49,6 +49,20 @@ struct FormFieldData {
     CHECKED,
   };
 
+  // The source from which the label is inferred.
+  enum LabelSource {
+    UNKNOWN,  // The source is unknown.
+    LABEL_TAG,
+    P_TAG,
+    DIV_TABLE,
+    TD_TAG,
+    DD_TAG,
+    LI_TAG,
+    PLACE_HOLDER,
+    COMBINED,  // Combined with various elements.
+    VALUE,     // label is the value of element.
+  };
+
   FormFieldData();
   FormFieldData(const FormFieldData& other);
   ~FormFieldData();
@@ -99,6 +113,8 @@ struct FormFieldData {
   // value is "US" and the contents are "United States".
   std::vector<base::string16> option_values;
   std::vector<base::string16> option_contents;
+
+  LabelSource label_source;
 };
 
 // Serialize and deserialize FormFieldData. These are used when FormData objects
