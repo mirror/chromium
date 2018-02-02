@@ -70,6 +70,30 @@
       "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f2fe6e_7284b439",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2018-02-02T06:32:13Z",
+      "side": 1,
+      "message": "I can apply the change to ChromeOS.\nBut pleas send \"Capslock\" key other than \"Shift\" key",
+      "parentUuid": "c2c2b1fd_731ef998",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
