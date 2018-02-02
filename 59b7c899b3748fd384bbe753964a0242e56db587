@@ -22,6 +22,30 @@
       "revId": "59b7c899b3748fd384bbe753964a0242e56db587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b67403d_f5ec6517",
+        "filename": "chrome/installer/linux/debian/additional_deps",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2018-02-02T21:58:31Z",
+      "side": 0,
+      "message": "Except that we don\u0027t attempt to load the libappindicator1 libs. We load the libappindicator3-1 libs if available (at least for the supported Gtk3 builds). So this line really is unnecessary.",
+      "parentUuid": "bfd5e890_3e984ad0",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "59b7c899b3748fd384bbe753964a0242e56db587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

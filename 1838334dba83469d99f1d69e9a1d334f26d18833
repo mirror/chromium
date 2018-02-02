@@ -22,6 +22,30 @@
       "revId": "1838334dba83469d99f1d69e9a1d334f26d18833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b99a1c_01cf8297",
+        "filename": "chrome/installer/linux/debian/update_dist_package_versions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2018-02-02T21:58:31Z",
+      "side": 1,
+      "message": "Ack.\n\nI thought I overheard a conversation saying they should be updated as individual files are changed, but looking at the C++ style guide (I know, this is a python file) it explicitly says not to change it after file creation. So I\u0027ll change it back.",
+      "parentUuid": "44a90179_bb3a8889",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "1838334dba83469d99f1d69e9a1d334f26d18833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
