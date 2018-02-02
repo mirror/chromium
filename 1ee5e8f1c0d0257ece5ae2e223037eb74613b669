@@ -409,6 +409,30 @@
     },
     {
       "key": {
+        "uuid": "e751097e_434e6a2c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-02T17:09:22Z",
+      "side": 1,
+      "message": "CRWWebController does not install FindElementResultHandler. So guess I don\u0027t understand 2 things:\n - why CRWWebController has changes\n - why CRWWebController is used in JavaScript tests\n\n\nIf the intention here to test JavaScript then we could use stock WKWebView, add message handler and verify that handler was called. This would be a test for actual API contract of __gCrWeb.findElementAtPoint. In Addition to that we can also test CRWContextMenuController by calling it\u0027s public API.\n\nWDYT?",
+      "parentUuid": "6a0adbfc_6ee46183",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 31
+      },
+      "revId": "1ee5e8f1c0d0257ece5ae2e223037eb74613b669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b39294d_3093c473",
         "filename": "ios/web/web_state/ui/html_element_fetch_request.h",
         "patchSetId": 10
