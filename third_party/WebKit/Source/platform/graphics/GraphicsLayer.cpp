@@ -117,6 +117,8 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
   layer_->Layer()->SetLayerClient(this);
 
   UpdateTrackingRasterInvalidations();
+
+  LOG(ERROR) << "++++++++ Create GraphicsLayer: client=" << client << " throttle=" << (client && client->ShouldThrottleRendering()) << " this=" << this << " ";
 }
 
 GraphicsLayer::~GraphicsLayer() {
@@ -312,6 +314,9 @@ void GraphicsLayer::PaintRecursively() {
 }
 
 void GraphicsLayer::PaintRecursivelyInternal() {
+  if (!client_) // || client_->ShouldThrottleRendering())
+    return;
+
   if (DrawsContent())
     Paint(nullptr);
 
@@ -345,7 +350,7 @@ void GraphicsLayer::Paint(const IntRect* interest_rect,
   GetPaintController().CommitNewDisplayItems();
 
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName();
+    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName() << " " << this << " client=" << client_;
     // Generate raster invalidations for SPv175 (but not SPv2).
     IntRect layer_bounds(layer_state_->offset, ExpandedIntSize(Size()));
     EnsureRasterInvalidator().Generate(layer_bounds, AllChunkPointers(),
@@ -373,8 +378,9 @@ bool GraphicsLayer::PaintWithoutCommit(
     GraphicsContext::DisabledMode disabled_mode) {
   DCHECK(DrawsContent());
 
-  if (!client_)
+  if (!client_) // || client_->ShouldThrottleRendering())
     return false;
+
   if (FirstPaintInvalidationTracking::IsEnabled())
     debug_info_.ClearAnnotatedInvalidateRects();
   IncrementPaintCount();
@@ -395,7 +401,7 @@ bool GraphicsLayer::PaintWithoutCommit(
 
   GraphicsContext context(GetPaintController(), disabled_mode, nullptr);
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName();
+    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName() << " this=" << this << " client=" << client_;
     GetPaintController().UpdateCurrentPaintChunkProperties(WTF::nullopt,
                                                            layer_state_->state);
   }
@@ -1319,14 +1325,14 @@ CompositorElementId GraphicsLayer::GetElementId() const {
 }
 
 sk_sp<PaintRecord> GraphicsLayer::CapturePaintRecord() const {
-  if (!DrawsContent())
-    return nullptr;
+  if (!DrawsContent() || !client_) //  || client_->ShouldThrottleRendering())
+    return sk_sp<PaintRecord>(new PaintRecord);
 
   FloatRect bounds(IntRect(IntPoint(0, 0), ExpandedIntSize(Size())));
   GraphicsContext graphics_context(GetPaintController());
   graphics_context.BeginRecording(bounds);
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName();
+    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName() << " this=" << this << " client=" << client_;
     GetPaintController().GetPaintArtifact().Replay(
         graphics_context, layer_state_->state, layer_state_->offset);
   } else {
@@ -1393,7 +1399,7 @@ void GraphicsLayer::PaintContents(WebDisplayItemList* web_display_item_list,
     Paint(nullptr, disabled_mode);
 
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName();
+    DCHECK(layer_state_) << "No layer state for GraphicsLayer: " << DebugName() << " this=" << this << " clent=" << client_;
     PaintChunksToCcLayer::ConvertInto(
         AllChunkPointers(), layer_state_->state,
         gfx::Vector2dF(layer_state_->offset.X(), layer_state_->offset.Y()),

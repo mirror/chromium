@@ -21,7 +21,7 @@
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
 #include "platform/graphics/paint/TransformPaintPropertyNode.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/PaintTestConfigurations.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/WebDisplayItemList.h"
@@ -52,11 +52,8 @@ class MockWebDisplayItemList : public WebDisplayItemList {
 }  // namespace
 
 class FrameThrottlingTest : public SimTest,
-                            public ::testing::WithParamInterface<bool>,
-                            private ScopedRootLayerScrollingForTest {
+                            public PaintTestConfigurations {
  protected:
-  FrameThrottlingTest() : ScopedRootLayerScrollingForTest(GetParam()) {}
-
   void SetUp() override {
     SimTest::SetUp();
     WebView().Resize(WebSize(640, 480));
@@ -109,7 +106,8 @@ class FrameThrottlingTest : public SimTest,
   }
 };
 
-INSTANTIATE_TEST_CASE_P(All, FrameThrottlingTest, ::testing::Bool());
+INSTANTIATE_TEST_CASE_P(All, FrameThrottlingTest,
+                        ::testing::ValuesIn(kAllSlimmingPaintTestConfigurations));
 
 TEST_P(FrameThrottlingTest, ThrottleInvisibleFrames) {
   SimRequest main_resource("https://example.com/", "text/html");
@@ -1391,6 +1389,33 @@ TEST_P(FrameThrottlingTest, RebuildCompositedLayerTreeOnLayerRemoval) {
   }
   EXPECT_EQ(DocumentLifecycle::kCompositingClean,
             frame_element->contentDocument()->Lifecycle().GetState());
+}
+
+TEST_P(FrameThrottlingTest, LifecycleUpdateAfterUnthrottledCompositingUpdate) {
+  ScopedSlimmingPaintV175ForTest spv175(true);
+
+  SimRequest main_resource("https://example.com/", "text/html");
+  SimRequest frame_resource("https://example.com/iframe.html", "text/html");
+
+  LoadURL("https://example.com/");
+  main_resource.Complete("<iframe id=frame sandbox src=iframe.html></iframe>");
+  frame_resource.Complete("");
+
+  // Move the frame offscreen to make them throttled.
+  CompositeFrame();
+  auto* frame_element =
+      ToHTMLIFrameElement(GetDocument().getElementById("frame"));
+  frame_element->setAttribute(styleAttr, "transform: translateY(480px)");
+  GetDocument().View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+
+  {
+    // Then do a full lifecycle with throttling enabled. This should not crash.
+    DocumentLifecycle::AllowThrottlingScope throttling_scope(
+        GetDocument().Lifecycle());
+    EXPECT_TRUE(
+        frame_element->contentDocument()->View()->ShouldThrottleRendering());
+    GetDocument().View()->UpdateAllLifecyclePhases();
+  }
 }
 
 }  // namespace blink

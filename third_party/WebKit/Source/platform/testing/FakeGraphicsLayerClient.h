@@ -28,6 +28,7 @@ class FakeGraphicsLayerClient : public GraphicsLayerClient {
                      GraphicsContext&,
                      GraphicsLayerPaintingPhase,
                      const IntRect&) const override {}
+  bool ShouldThrottleRendering() const override { return false; }
 
   void SetIsTrackingRasterInvalidations(bool is_tracking_raster_invalidations) {
     is_tracking_raster_invalidations_ = is_tracking_raster_invalidations;

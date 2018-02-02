@@ -87,6 +87,7 @@ class PLATFORM_EXPORT GraphicsLayerClient {
                              GraphicsContext&,
                              GraphicsLayerPaintingPhase,
                              const IntRect& interest_rect) const = 0;
+  virtual bool ShouldThrottleRendering() const = 0;
 
   virtual bool IsTrackingRasterInvalidations() const { return false; }
 

@@ -267,6 +267,7 @@ class CORE_EXPORT VisualViewport final
                      GraphicsContext&,
                      GraphicsLayerPaintingPhase,
                      const IntRect&) const override;
+  bool ShouldThrottleRendering() const override { return false; }
   String DebugName(const GraphicsLayer*) const override;
 
   void SetupScrollbar(WebScrollbar::Orientation);

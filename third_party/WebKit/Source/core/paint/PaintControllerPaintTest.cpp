@@ -19,7 +19,7 @@ namespace blink {
 
 INSTANTIATE_TEST_CASE_P(All,
                         PaintControllerPaintTest,
-                        ::testing::ValuesIn(kDefaultPaintTestConfigurations));
+                        ::testing::ValuesIn(kAllSlimmingPaintTestConfigurations));
 
 using PaintControllerPaintTestForSPv2 = PaintControllerPaintTest;
 INSTANTIATE_TEST_CASE_P(
