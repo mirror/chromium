@@ -84,6 +84,11 @@ WebRtcEventLogManager::WebRtcEventLogManager()
 
 WebRtcEventLogManager::~WebRtcEventLogManager() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  for (RenderProcessHost* host : observed_render_process_hosts_) {
+    host->RemoveObserver(this);
+  }
+
   DCHECK(g_webrtc_event_log_manager);
   g_webrtc_event_log_manager = nullptr;
 }
@@ -105,6 +110,17 @@ void WebRtcEventLogManager::PeerConnectionAdded(
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // TODO: !!! Maybe I could just get that as a pointer from caller?
+  RenderProcessHost* host = RenderProcessHost::FromID(render_process_id);
+  auto it = observed_render_process_hosts_.find(host);
+  if (it == observed_render_process_hosts_.end()) {
+    // This is the first PeerConnection which we see that's associated
+    // with this RPH.
+    host->AddObserver(this);
+    observed_render_process_hosts_.insert(host);
+  }
+
   task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::PeerConnectionAddedInternal,
@@ -204,6 +220,37 @@ scoped_refptr<base::SequencedTaskRunner>&
 WebRtcEventLogManager::GetTaskRunnerForTesting() {
   // Testing function only - threading left for the caller's discretion.
   return task_runner_;
+}
+
+void WebRtcEventLogManager::RenderProcessExited(RenderProcessHost* host,
+                                                base::TerminationStatus status,
+                                                int exit_code) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  RenderProcessHostExitedDestroyed(host);
+}
+
+void WebRtcEventLogManager::RenderProcessHostDestroyed(
+    RenderProcessHost* host) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  RenderProcessHostExitedDestroyed(host);
+}
+
+void WebRtcEventLogManager::RenderProcessHostExitedDestroyed(
+    RenderProcessHost* host) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(host);
+
+  auto it = observed_render_process_hosts_.find(host);
+  if (it == observed_render_process_hosts_.end()) {
+    return;  // We've never seen PeerConnections associated with this RPH.
+  }
+  host->RemoveObserver(this);
+  observed_render_process_hosts_.erase(host);
+
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::RenderProcessExitedInternal,
+                     base::Unretained(this), host->GetID()));
 }
 
 void WebRtcEventLogManager::OnLocalLogStarted(PeerConnectionKey peer_connection,
@@ -388,6 +435,12 @@ void WebRtcEventLogManager::OnWebRtcEventLogWriteInternal(
         base::BindOnce(std::move(reply),
                        std::make_pair(local_result, remote_result)));
   }
+}
+
+void WebRtcEventLogManager::RenderProcessExitedInternal(int render_process_id) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  local_logs_manager_.RenderProcessHostExitedDestroyed(render_process_id);
+  remote_logs_manager_.RenderProcessHostExitedDestroyed(render_process_id);
 }
 
 void WebRtcEventLogManager::SetLocalLogsObserverInternal(

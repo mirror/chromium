@@ -80,6 +80,22 @@ class NullWebRtcEventLogUploader : public WebRtcEventLogUploader {
   };
 };
 
+class MockWebRtcLocalEventLogsObserver : public WebRtcLocalEventLogsObserver {
+ public:
+  ~MockWebRtcLocalEventLogsObserver() override = default;
+  MOCK_METHOD2(OnLocalLogStarted,
+               void(PeerConnectionKey, const base::FilePath&));
+  MOCK_METHOD1(OnLocalLogStopped, void(PeerConnectionKey));
+};
+
+class MockWebRtcRemoteEventLogsObserver : public WebRtcRemoteEventLogsObserver {
+ public:
+  ~MockWebRtcRemoteEventLogsObserver() override = default;
+  MOCK_METHOD2(OnRemoteLogStarted,
+               void(PeerConnectionKey, const base::FilePath&));
+  MOCK_METHOD1(OnRemoteLogStopped, void(PeerConnectionKey));
+};
+
 }  // namespace
 
 class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
@@ -104,6 +120,9 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
         std::make_unique<NullWebRtcEventLogUploader::Factory>());
     browser_context_ = CreateBrowserContext();
     rph_ = std::make_unique<MockRenderProcessHost>(browser_context_.get());
+
+    SetLocalLogsObserver(&local_observer_);
+    SetRemoteLogsObserver(&remote_observer_);
   }
 
   ~WebRtcEventLogManagerTest() override {
@@ -122,6 +141,7 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
 
   void DestroyUnitUnderTest() {
     SetLocalLogsObserver(nullptr);
+    SetRemoteLogsObserver(nullptr);
     manager_.reset();
   }
 
@@ -207,6 +227,7 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
     return result;
   }
 
+ private:
   void SetLocalLogsObserver(WebRtcLocalEventLogsObserver* observer) {
     manager_->SetLocalLogsObserver(observer, VoidReplyClosure());
     WaitForReply();
@@ -217,6 +238,7 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
     WaitForReply();
   }
 
+ public:
   void SetWebRtcEventLogUploaderFactoryForTesting(
       std::unique_ptr<WebRtcEventLogUploader::Factory> factory) {
     // TODO(eladalon): Discuss with Guido and resolve this TODO before landing:
@@ -382,36 +404,21 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
     bool enabled;
   };
   std::queue<WebRtcStateChangeInstruction> webrtc_state_change_instructions_;
+
+  // Observers for local/remote logging being started/stopped. By having them
+  // here, we achieve two goals:
+  // 1. Reduce boilerplate in the tests themselves.
+  // 2. Avoid lifetime issues, where the observer might be deallocated before
+  //    a RenderProcessHost is deallocated (which can potentially trigger a
+  //    callback on the observer).
+  NiceMock<MockWebRtcLocalEventLogsObserver> local_observer_;
+  NiceMock<MockWebRtcRemoteEventLogsObserver> remote_observer_;
 };
 
 namespace {
 
 // Common default/arbitrary values.
 static constexpr int kPeerConnectionId = 478;
-
-class MockWebRtcLocalEventLogsObserver : public WebRtcLocalEventLogsObserver {
- public:
-  ~MockWebRtcLocalEventLogsObserver() override = default;
-  MOCK_METHOD2(OnLocalLogStarted,
-               void(PeerConnectionKey, const base::FilePath&));
-  MOCK_METHOD1(OnLocalLogStopped, void(PeerConnectionKey));
-};
-
-class MockWebRtcRemoteEventLogsObserver : public WebRtcRemoteEventLogsObserver {
- public:
-  ~MockWebRtcRemoteEventLogsObserver() override = default;
-  MOCK_METHOD2(OnRemoteLogStarted,
-               void(PeerConnectionKey, const base::FilePath&));
-  MOCK_METHOD1(OnRemoteLogStopped, void(PeerConnectionKey));
-};
-
-class MockWebRtcEventLogUploaderObserver
-    : public WebRtcEventLogUploaderObserver {
- public:
-  ~MockWebRtcEventLogUploaderObserver() override = default;
-  MOCK_METHOD2(OnWebRtcEventLogUploadComplete,
-               void(const base::FilePath&, bool));
-};
 
 auto SaveFilePathTo(base::Optional<base::FilePath>* output) {
   return [output](PeerConnectionKey ignored_key, base::FilePath file_path) {
@@ -642,47 +649,37 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogStartedNotCalledIfLocalLoggingEnabledWithoutPeerConnections) {
-  MockWebRtcLocalEventLogsObserver observer;
-  EXPECT_CALL(observer, OnLocalLogStarted(_, _)).Times(0);
-  SetLocalLogsObserver(&observer);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(_, _)).Times(0);
   ASSERT_TRUE(EnableLocalLogging());
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogStoppedNotCalledIfLocalLoggingDisabledWithoutPeerConnections) {
-  MockWebRtcLocalEventLogsObserver observer;
-  EXPECT_CALL(observer, OnLocalLogStopped(_)).Times(0);
-  SetLocalLogsObserver(&observer);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(_)).Times(0);
   ASSERT_TRUE(EnableLocalLogging());
   ASSERT_TRUE(DisableLocalLogging());
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogStartedCalledForPeerConnectionAddedAndLocalLoggingEnabled) {
-  MockWebRtcLocalEventLogsObserver observer;
   PeerConnectionKey peer_connection(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnLocalLogStarted(peer_connection, _)).Times(1);
-  SetLocalLogsObserver(&observer);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(peer_connection, _)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(EnableLocalLogging());
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogStartedCalledForLocalLoggingEnabledAndPeerConnectionAdded) {
-  MockWebRtcLocalEventLogsObserver observer;
   PeerConnectionKey peer_connection(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnLocalLogStarted(peer_connection, _)).Times(1);
-  SetLocalLogsObserver(&observer);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(peer_connection, _)).Times(1);
   ASSERT_TRUE(EnableLocalLogging());
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogStoppedCalledAfterLocalLoggingDisabled) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   PeerConnectionKey peer_connection(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnLocalLogStopped(peer_connection)).Times(1);
-  SetLocalLogsObserver(&observer);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(peer_connection)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(EnableLocalLogging());
   ASSERT_TRUE(DisableLocalLogging());
@@ -690,33 +687,17 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogStoppedCalledAfterPeerConnectionRemoved) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   PeerConnectionKey peer_connection(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnLocalLogStopped(peer_connection)).Times(1);
-  SetLocalLogsObserver(&observer);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(peer_connection)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(EnableLocalLogging());
-  ASSERT_TRUE(PeerConnectionRemoved(rph_->GetID(), kPeerConnectionId));
-}
-
-TEST_F(WebRtcEventLogManagerTest, RemovedLocalLogsObserverReceivesNoCalls) {
-  StrictMock<MockWebRtcLocalEventLogsObserver> observer;
-  EXPECT_CALL(observer, OnLocalLogStarted(_, _)).Times(0);
-  EXPECT_CALL(observer, OnLocalLogStopped(_)).Times(0);
-  SetLocalLogsObserver(&observer);
-  SetLocalLogsObserver(nullptr);
-  ASSERT_TRUE(EnableLocalLogging());
-  ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(PeerConnectionRemoved(rph_->GetID(), kPeerConnectionId));
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogCreatesEmptyFileWhenStarted) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -731,13 +712,10 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogCreatesEmptyFileWhenStarted) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogCreateAndWriteToFile) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -756,13 +734,10 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogCreateAndWriteToFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleWritesToSameFile) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -788,13 +763,10 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleWritesToSameFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   const std::string log = "There lies the port; the vessel puffs her sail:";
@@ -808,7 +780,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
   // A failure is reported, because not everything could be written. The file
   // will also be closed.
   const auto pc = PeerConnectionKey(key.render_process_id, key.lid);
-  EXPECT_CALL(observer, OnLocalLogStopped(pc)).Times(1);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(pc)).Times(1);
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log),
             std::make_pair(false, false));
 
@@ -820,13 +792,10 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   ASSERT_TRUE(EnableLocalLogging(kWebRtcEventLogManagerUnlimitedFileSize));
@@ -848,13 +817,10 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -865,7 +831,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
   const std::string log_before = "log_before_stop";
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log_before),
             std::make_pair(true, false));
-  EXPECT_CALL(observer, OnLocalLogStopped(key)).Times(1);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(key)).Times(1);
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
   const std::string log_after = "log_after_stop";
@@ -876,20 +842,17 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogOnlyWritesTheLogsAfterStarted) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   // Calls to Write() before the log was started are ignored.
-  EXPECT_CALL(observer, OnLocalLogStarted(_, _)).Times(0);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(_, _)).Times(0);
   const std::string log1 = "The lights begin to twinkle from the rocks:";
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log1),
             std::make_pair(false, false));
   ASSERT_TRUE(base::IsDirectoryEmpty(local_logs_base_dir_));
 
   base::Optional<base::FilePath> file_path;
-  EXPECT_CALL(observer, OnLocalLogStarted(key, _))
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(key, _))
       .Times(1)
       .WillOnce(Invoke(SaveFilePathTo(&file_path)));
 
@@ -913,9 +876,6 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogOnlyWritesTheLogsAfterStarted) {
 // Note: This test also covers the scenario LocalLogExistingFilesNotOverwritten,
 // which is therefore not explicitly tested.
 TEST_F(WebRtcEventLogManagerTest, LocalLoggingRestartCreatesNewFile) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const std::vector<std::string> logs = {"<setup>", "<punchline>", "<encore>"};
   std::vector<base::Optional<PeerConnectionKey>> keys(logs.size());
   std::vector<base::Optional<base::FilePath>> file_paths(logs.size());
@@ -923,7 +883,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLoggingRestartCreatesNewFile) {
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
 
   for (size_t i = 0; i < logs.size(); i++) {
-    ON_CALL(observer, OnLocalLogStarted(_, _))
+    ON_CALL(local_observer_, OnLocalLogStarted(_, _))
         .WillByDefault(Invoke(SaveKeyAndFilePathTo(&keys[i], &file_paths[i])));
     ASSERT_TRUE(EnableLocalLogging());
     ASSERT_TRUE(keys[i]);
@@ -941,9 +901,6 @@ TEST_F(WebRtcEventLogManagerTest, LocalLoggingRestartCreatesNewFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleActiveFiles) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   ASSERT_TRUE(EnableLocalLogging());
 
   std::list<MockRenderProcessHost> rphs;
@@ -958,7 +915,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleActiveFiles) {
 
   std::vector<base::Optional<base::FilePath>> file_paths(keys.size());
   for (size_t i = 0; i < keys.size(); i++) {
-    ON_CALL(observer, OnLocalLogStarted(keys[i], _))
+    ON_CALL(local_observer_, OnLocalLogStarted(keys[i], _))
         .WillByDefault(Invoke(SaveFilePathTo(&file_paths[i])));
     ASSERT_TRUE(PeerConnectionAdded(keys[i].render_process_id, keys[i].lid));
     ASSERT_TRUE(file_paths[i]);
@@ -983,29 +940,23 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleActiveFiles) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogLimitActiveLocalLogFiles) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   ASSERT_TRUE(EnableLocalLogging());
 
   const int kMaxLocalLogFiles =
       static_cast<int>(kMaxNumberLocalWebRtcEventLogFiles);
   for (int i = 0; i < kMaxLocalLogFiles; i++) {
     const PeerConnectionKey key(rph_->GetID(), i);
-    EXPECT_CALL(observer, OnLocalLogStarted(key, _)).Times(1);
+    EXPECT_CALL(local_observer_, OnLocalLogStarted(key, _)).Times(1);
     ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), i));
   }
 
-  EXPECT_CALL(observer, OnLocalLogStarted(_, _)).Times(0);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(_, _)).Times(0);
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kMaxLocalLogFiles));
 }
 
 // When a log reaches its maximum size limit, it is closed, and no longer
 // counted towards the limit.
 TEST_F(WebRtcEventLogManagerTest, LocalLogFilledLogNotCountedTowardsLogsLimit) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const std::string log = "very_short_log";
   ASSERT_TRUE(EnableLocalLogging(log.size()));
 
@@ -1013,7 +964,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFilledLogNotCountedTowardsLogsLimit) {
       static_cast<int>(kMaxNumberLocalWebRtcEventLogFiles);
   for (int i = 0; i < kMaxLocalLogFiles; i++) {
     const PeerConnectionKey key(rph_->GetID(), i);
-    EXPECT_CALL(observer, OnLocalLogStarted(key, _)).Times(1);
+    EXPECT_CALL(local_observer_, OnLocalLogStarted(key, _)).Times(1);
     ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   }
 
@@ -1024,34 +975,32 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFilledLogNotCountedTowardsLogsLimit) {
 
   // We now have room for one additional log.
   const PeerConnectionKey last_key(rph_->GetID(), kMaxLocalLogFiles);
-  EXPECT_CALL(observer, OnLocalLogStarted(last_key, _)).Times(1);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(last_key, _)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(last_key.render_process_id, last_key.lid));
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        LocalLogForRemovedPeerConnectionNotCountedTowardsLogsLimit) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   ASSERT_TRUE(EnableLocalLogging());
 
   const int kMaxLocalLogFiles =
       static_cast<int>(kMaxNumberLocalWebRtcEventLogFiles);
   for (int i = 0; i < kMaxLocalLogFiles; i++) {
     const PeerConnectionKey key(rph_->GetID(), i);
-    EXPECT_CALL(observer, OnLocalLogStarted(key, _)).Times(1);
+    EXPECT_CALL(local_observer_, OnLocalLogStarted(key, _)).Times(1);
     ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   }
 
   // When one peer connection is removed, one log is stopped, thereby allowing
   // an additional log to be opened.
-  EXPECT_CALL(observer, OnLocalLogStopped(PeerConnectionKey(rph_->GetID(), 0)))
+  EXPECT_CALL(local_observer_,
+              OnLocalLogStopped(PeerConnectionKey(rph_->GetID(), 0)))
       .Times(1);
   ASSERT_TRUE(PeerConnectionRemoved(rph_->GetID(), 0));
 
   // We now have room for one additional log.
   const PeerConnectionKey last_key(rph_->GetID(), kMaxLocalLogFiles);
-  EXPECT_CALL(observer, OnLocalLogStarted(last_key, _)).Times(1);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(last_key, _)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(last_key.render_process_id, last_key.lid));
 }
 
@@ -1065,12 +1014,9 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogSanityDestructorWithActiveFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogIllegalPath) {
-  StrictMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   // Since the log file won't be properly opened, these will not be called.
-  EXPECT_CALL(observer, OnLocalLogStarted(_, _)).Times(0);
-  EXPECT_CALL(observer, OnLocalLogStopped(_)).Times(0);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(_, _)).Times(0);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(_)).Times(0);
 
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
 
@@ -1086,12 +1032,9 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogIllegalPath) {
 TEST_F(WebRtcEventLogManagerTest, LocalLogLegalPathWithoutPermissionsSanity) {
   RemoveWritePermissionsFromDirectory(local_logs_base_dir_);
 
-  StrictMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   // Since the log file won't be properly opened, these will not be called.
-  EXPECT_CALL(observer, OnLocalLogStarted(_, _)).Times(0);
-  EXPECT_CALL(observer, OnLocalLogStopped(_)).Times(0);
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(_, _)).Times(0);
+  EXPECT_CALL(local_observer_, OnLocalLogStopped(_)).Times(0);
 
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
 
@@ -1115,9 +1058,6 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogLegalPathWithoutPermissionsSanity) {
 #endif  // defined(OS_POSIX) && !defined(OS_FUCHSIA)
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   // By writing a log after the empty string, we show that no odd behavior is
@@ -1126,7 +1066,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
 
   base::Optional<base::FilePath> file_path;
 
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
   ASSERT_TRUE(EnableLocalLogging());
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
@@ -1147,13 +1087,10 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
 TEST_F(WebRtcEventLogManagerTest, LocalLogFilenameMatchesExpectedFormat) {
   using StringType = base::FilePath::StringType;
 
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   const base::Time::Exploded frozen_time_exploded{
@@ -1195,14 +1132,11 @@ TEST_F(WebRtcEventLogManagerTest,
        LocalLogFilenameMatchesExpectedFormatRepeatedFilename) {
   using StringType = base::FilePath::StringType;
 
-  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
-  SetLocalLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path_1;
   base::Optional<base::FilePath> file_path_2;
-  EXPECT_CALL(observer, OnLocalLogStarted(key, _))
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillOnce(Invoke(SaveFilePathTo(&file_path_1)))
       .WillOnce(Invoke(SaveFilePathTo(&file_path_2)));
 
@@ -1255,17 +1189,13 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnRemoteLogStartedNotCalledIfRemoteLoggingNotEnabled) {
-  MockWebRtcRemoteEventLogsObserver observer;
-  EXPECT_CALL(observer, OnRemoteLogStarted(_, _)).Times(0);
-  SetRemoteLogsObserver(&observer);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(_, _)).Times(0);
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnRemoteLogStoppedNotCalledIfRemoteLoggingNotEnabled) {
-  MockWebRtcRemoteEventLogsObserver observer;
-  EXPECT_CALL(observer, OnRemoteLogStopped(_)).Times(0);
-  SetRemoteLogsObserver(&observer);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStopped(_)).Times(0);
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
@@ -1273,20 +1203,16 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnRemoteLogStartedCalledIfRemoteLoggingEnabled) {
-  MockWebRtcRemoteEventLogsObserver observer;
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnRemoteLogStarted(key, _)).Times(1);
-  SetRemoteLogsObserver(&observer);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(key, _)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid));
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnRemoteLogStoppedCalledIfRemoteLoggingEnabledThenPcRemoved) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnRemoteLogStopped(key)).Times(1);
-  SetRemoteLogsObserver(&observer);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStopped(key)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid));
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
@@ -1334,13 +1260,11 @@ TEST_F(WebRtcEventLogManagerTest,
 }
 
 TEST_F(WebRtcEventLogManagerTest, StartRemoteLoggingCreatesEmptyFile) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
   base::Optional<base::FilePath> file_path;
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnRemoteLogStarted(key, _))
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .Times(1)
       .WillOnce(Invoke(SaveFilePathTo(&file_path)));
-  SetRemoteLogsObserver(&observer);
 
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(StartRemoteLogging(rph_->GetID(), kPeerConnectionId));
@@ -1361,14 +1285,12 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileCreatedInCorrectDirectory) {
 
   // Prepare to store the logs' paths in distinct memory locations.
   base::Optional<base::FilePath> file_paths[kLogsNum];
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
   for (size_t i = 0; i < kLogsNum; i++) {
     const PeerConnectionKey key(rphs[i]->GetID(), kPeerConnectionId);
-    EXPECT_CALL(observer, OnRemoteLogStarted(key, _))
+    EXPECT_CALL(remote_observer_, OnRemoteLogStarted(key, _))
         .Times(1)
         .WillOnce(Invoke(SaveFilePathTo(&file_paths[i])));
   }
-  SetRemoteLogsObserver(&observer);
 
   // Start one log for each browser context.
   for (const auto& rph : rphs) {
@@ -1381,17 +1303,17 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileCreatedInCorrectDirectory) {
     ASSERT_TRUE(file_paths[i]);
     EXPECT_TRUE(browser_contexts[i]->GetPath().IsParent(*file_paths[i]));
   }
+
+  // SetRemoteLogsObserver(nullptr);
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        OnWebRtcEventLogWriteWritesToTheRemoteBoundFile) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
   base::Optional<base::FilePath> file_path;
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
-  EXPECT_CALL(observer, OnRemoteLogStarted(key, _))
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .Times(1)
       .WillOnce(Invoke(SaveFilePathTo(&file_path)));
-  SetRemoteLogsObserver(&observer);
 
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(StartRemoteLogging(rph_->GetID(), kPeerConnectionId));
@@ -1407,19 +1329,15 @@ TEST_F(WebRtcEventLogManagerTest, WriteToBothLocalAndRemoteFiles) {
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
 
-  NiceMock<MockWebRtcLocalEventLogsObserver> local_observer;
   base::Optional<base::FilePath> local_path;
-  EXPECT_CALL(local_observer, OnLocalLogStarted(key, _))
+  EXPECT_CALL(local_observer_, OnLocalLogStarted(key, _))
       .Times(1)
       .WillOnce(Invoke(SaveFilePathTo(&local_path)));
-  SetLocalLogsObserver(&local_observer);
 
-  NiceMock<MockWebRtcRemoteEventLogsObserver> remote_observer;
   base::Optional<base::FilePath> remote_path;
-  EXPECT_CALL(remote_observer, OnRemoteLogStarted(key, _))
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .Times(1)
       .WillOnce(Invoke(SaveFilePathTo(&remote_path)));
-  SetRemoteLogsObserver(&remote_observer);
 
   ASSERT_TRUE(EnableLocalLogging());
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid));
@@ -1442,13 +1360,10 @@ TEST_F(WebRtcEventLogManagerTest, WriteToBothLocalAndRemoteFiles) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, MultipleWritesToSameRemoteBoundLogfile) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnRemoteLogStarted(key, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
@@ -1471,12 +1386,9 @@ TEST_F(WebRtcEventLogManagerTest, MultipleWritesToSameRemoteBoundLogfile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnRemoteLogStarted(key, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   const std::string log = "tpyo";
@@ -1488,7 +1400,7 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
 
   // A failure is reported, because not everything could be written. The file
   // will also be closed.
-  EXPECT_CALL(observer, OnRemoteLogStopped(key)).Times(1);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStopped(key)).Times(1);
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log),
             std::make_pair(false, false));
 
@@ -1501,16 +1413,13 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
 
 TEST_F(WebRtcEventLogManagerTest,
        LogMultipleActiveRemoteLogsSameBrowserContext) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const std::vector<PeerConnectionKey> keys = {
       PeerConnectionKey(rph_->GetID(), 0), PeerConnectionKey(rph_->GetID(), 1),
       PeerConnectionKey(rph_->GetID(), 2)};
 
   std::vector<base::Optional<base::FilePath>> file_paths(keys.size());
   for (size_t i = 0; i < keys.size(); i++) {
-    ON_CALL(observer, OnRemoteLogStarted(keys[i], _))
+    ON_CALL(remote_observer_, OnRemoteLogStarted(keys[i], _))
         .WillByDefault(Invoke(SaveFilePathTo(&file_paths[i])));
     ASSERT_TRUE(PeerConnectionAdded(keys[i].render_process_id, keys[i].lid));
     ASSERT_TRUE(StartRemoteLogging(keys[i].render_process_id, keys[i].lid));
@@ -1538,9 +1447,6 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        LogMultipleActiveRemoteLogsDifferentBrowserContexts) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   constexpr size_t kLogsNum = 3;
   std::unique_ptr<TestBrowserContext> browser_contexts[kLogsNum] = {
       CreateBrowserContext(), CreateBrowserContext(), CreateBrowserContext()};
@@ -1557,7 +1463,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
   std::vector<base::Optional<base::FilePath>> file_paths(keys.size());
   for (size_t i = 0; i < keys.size(); i++) {
-    ON_CALL(observer, OnRemoteLogStarted(keys[i], _))
+    ON_CALL(remote_observer_, OnRemoteLogStarted(keys[i], _))
         .WillByDefault(Invoke(SaveFilePathTo(&file_paths[i])));
     ASSERT_TRUE(PeerConnectionAdded(keys[i].render_process_id, keys[i].lid));
     ASSERT_TRUE(StartRemoteLogging(keys[i].render_process_id, keys[i].lid));
@@ -1584,14 +1490,11 @@ TEST_F(WebRtcEventLogManagerTest,
 }
 
 TEST_F(WebRtcEventLogManagerTest, DifferentRemoteLogsMayHaveDifferentMaximums) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const std::vector<PeerConnectionKey> keys = {
       PeerConnectionKey(rph_->GetID(), 0), PeerConnectionKey(rph_->GetID(), 1)};
   std::vector<base::Optional<base::FilePath>> file_paths(keys.size());
   for (size_t i = 0; i < keys.size(); i++) {
-    ON_CALL(observer, OnRemoteLogStarted(keys[i], _))
+    ON_CALL(remote_observer_, OnRemoteLogStarted(keys[i], _))
         .WillByDefault(Invoke(SaveFilePathTo(&file_paths[i])));
   }
 
@@ -1621,12 +1524,9 @@ TEST_F(WebRtcEventLogManagerTest, DifferentRemoteLogsMayHaveDifferentMaximums) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogFileClosedWhenCapacityReached) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
   base::Optional<base::FilePath> file_path;
-  ON_CALL(observer, OnRemoteLogStarted(key, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
 
   const std::string log = "Let X equal X.";
@@ -1635,7 +1535,7 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileClosedWhenCapacityReached) {
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid, log.length()));
   ASSERT_TRUE(file_path);
 
-  EXPECT_CALL(observer, OnRemoteLogStopped(key)).Times(1);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStopped(key)).Times(1);
   EXPECT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log),
             std::make_pair(false, true));
 }
@@ -1679,8 +1579,9 @@ TEST_F(WebRtcEventLogManagerTest,
 }
 
 TEST_F(WebRtcEventLogManagerTest, GracefullyHandleFailureToStartRemoteLogFile) {
-  StrictMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);  // WebRTC logging will not be turned on.
+  // WebRTC logging will not be turned on.
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(_, _)).Times(0);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStopped(_)).Times(0);
 
   // Set up a BrowserContext whose directory we know, so that we would be
   // able to manipulate it.
@@ -1706,36 +1607,30 @@ TEST_F(WebRtcEventLogManagerTest, GracefullyHandleFailureToStartRemoteLogFile) {
 #endif  // defined(OS_POSIX) && !defined(OS_FUCHSIA)
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogLimitActiveLogFiles) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   for (int i = 0; i < kMaxActiveRemoteLogFiles + 1; i++) {
     ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), i));
   }
 
   int i;
   for (i = 0; i < kMaxActiveRemoteLogFiles; i++) {
-    EXPECT_CALL(observer,
+    EXPECT_CALL(remote_observer_,
                 OnRemoteLogStarted(PeerConnectionKey(rph_->GetID(), i), _))
         .Times(1);
     ASSERT_TRUE(StartRemoteLogging(rph_->GetID(), i));
   }
 
-  EXPECT_CALL(observer, OnRemoteLogStarted(_, _)).Times(0);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(_, _)).Times(0);
   EXPECT_FALSE(StartRemoteLogging(rph_->GetID(), i));
 }
 
 TEST_F(WebRtcEventLogManagerTest,
        RemoteLogFilledLogNotCountedTowardsLogsLimit) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const std::string log = "very_short_log";
 
   int i;
   for (i = 0; i < kMaxActiveRemoteLogFiles; i++) {
     ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), i));
-    EXPECT_CALL(observer,
+    EXPECT_CALL(remote_observer_,
                 OnRemoteLogStarted(PeerConnectionKey(rph_->GetID(), i), _))
         .Times(1);
     ASSERT_TRUE(StartRemoteLogging(rph_->GetID(), i, log.length()));
@@ -1748,7 +1643,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
   // We now have room for one additional log.
   ++i;
-  EXPECT_CALL(observer,
+  EXPECT_CALL(remote_observer_,
               OnRemoteLogStarted(PeerConnectionKey(rph_->GetID(), i), _))
       .Times(1);
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), i));
@@ -1757,13 +1652,10 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        RemoteLogForRemovedPeerConnectionNotCountedTowardsLogsLimit) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   for (int i = 0; i < kMaxActiveRemoteLogFiles; i++) {
     const PeerConnectionKey key(rph_->GetID(), i);
     ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
-    EXPECT_CALL(observer, OnRemoteLogStarted(key, _)).Times(1);
+    EXPECT_CALL(remote_observer_, OnRemoteLogStarted(key, _)).Times(1);
     ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid));
   }
 
@@ -1773,7 +1665,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
   // We now have room for one additional log.
   const PeerConnectionKey last_key(rph_->GetID(), kMaxActiveRemoteLogFiles);
-  EXPECT_CALL(observer, OnRemoteLogStarted(last_key, _)).Times(1);
+  EXPECT_CALL(remote_observer_, OnRemoteLogStarted(last_key, _)).Times(1);
   ASSERT_TRUE(PeerConnectionAdded(last_key.render_process_id, last_key.lid));
   ASSERT_TRUE(StartRemoteLogging(last_key.render_process_id, last_key.lid));
 }
@@ -1873,12 +1765,9 @@ TEST_P(WebRtcEventLogManagerTest, FinishedRemoteLogsUploadedAndFileDeleted) {
   // upload's success / failure.
   const bool upload_result = GetParam();
 
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), 1);
   base::Optional<base::FilePath> log_file;
-  ON_CALL(observer, OnRemoteLogStarted(key, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&log_file)));
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid));
@@ -1900,9 +1789,6 @@ TEST_P(WebRtcEventLogManagerTest, FinishedRemoteLogsUploadedAndFileDeleted) {
 // Note that SuppressUploading() and UnSuppressUploading() use the behavior
 // guaranteed by this test.
 TEST_F(WebRtcEventLogManagerTest, UploadOnlyWhenNoActivePeerConnections) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const PeerConnectionKey untracked(rph_->GetID(), 0);
   const PeerConnectionKey tracked(rph_->GetID(), 1);
 
@@ -1912,7 +1798,7 @@ TEST_F(WebRtcEventLogManagerTest, UploadOnlyWhenNoActivePeerConnections) {
   // The tracked peer connection's log is not uploaded when finished, because
   // another peer connection is still active.
   base::Optional<base::FilePath> log_file;
-  ON_CALL(observer, OnRemoteLogStarted(tracked, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(tracked, _))
       .WillByDefault(Invoke(SaveFilePathTo(&log_file)));
   ASSERT_TRUE(PeerConnectionAdded(tracked.render_process_id, tracked.lid));
   ASSERT_TRUE(StartRemoteLogging(tracked.render_process_id, tracked.lid));
@@ -2075,9 +1961,6 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogSanityDestructorWithActiveFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogEmptyStringHandledGracefully) {
-  NiceMock<MockWebRtcRemoteEventLogsObserver> observer;
-  SetRemoteLogsObserver(&observer);
-
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
   // By writing a log after the empty string, we show that no odd behavior is
@@ -2086,7 +1969,7 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogEmptyStringHandledGracefully) {
 
   base::Optional<base::FilePath> file_path;
 
-  ON_CALL(observer, OnRemoteLogStarted(key, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&file_path)));
   ASSERT_TRUE(PeerConnectionAdded(key.render_process_id, key.lid));
   ASSERT_TRUE(StartRemoteLogging(key.render_process_id, key.lid));
@@ -2311,16 +2194,12 @@ TEST_F(WebRtcEventLogManagerTest, SanityOverRecreatingTheSamePeerConnection) {
 TEST_F(WebRtcEventLogManagerTest, LogAllPossibleCharacters) {
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
 
-  NiceMock<MockWebRtcLocalEventLogsObserver> local_observer;
-  SetLocalLogsObserver(&local_observer);
   base::Optional<base::FilePath> local_log_file_path;
-  ON_CALL(local_observer, OnLocalLogStarted(key, _))
+  ON_CALL(local_observer_, OnLocalLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&local_log_file_path)));
 
-  NiceMock<MockWebRtcRemoteEventLogsObserver> remote_observer;
-  SetRemoteLogsObserver(&remote_observer);
   base::Optional<base::FilePath> remote_log_file_path;
-  ON_CALL(remote_observer, OnRemoteLogStarted(key, _))
+  ON_CALL(remote_observer_, OnRemoteLogStarted(key, _))
       .WillByDefault(Invoke(SaveFilePathTo(&remote_log_file_path)));
 
   ASSERT_TRUE(EnableLocalLogging());
