@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1f34d23b_e34ad2d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-02T06:10:32Z",
+      "side": 1,
+      "message": "Makes sense, thanks.  So Blink sends the inherited CSP to the browser process as part of installing the initial empty document.  I was curious whether anything here could have races, but I think both setting CSP self and receiving the initial CSP should be guaranteed to happen before the navigation is kicked off by BeginNavigation.",
+      "parentUuid": "508593be_45130417",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93ab67c5_e65f7f73",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4078722_d017ed0f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-02T06:10:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41cad2e9_c6bad1ca",
+      "range": {
+        "startLine": 594,
+        "startChar": 32,
+        "endLine": 596,
+        "endChar": 65
+      },
+      "revId": "369cff625aa9f507fcb75f7786f4a42fb6d1044e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e477903e_b672a0d8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-02T06:10:32Z",
+      "side": 1,
+      "message": "nit: a",
+      "range": {
+        "startLine": 589,
+        "startChar": 41,
+        "endLine": 589,
+        "endChar": 43
+      },
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8493350a_b51f5311",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-02T06:10:32Z",
+      "side": 1,
+      "message": "There\u0027s technically an \"initially blank document\". :)  I also think this paragraph could be a bit better organized; here is one suggestion:\n\nContent-Security-Policy: The CSP source \u0027self\u0027 is usually the origin of the current document, set by SetLastCommittedOrigin().  However, before a new frame commits its first navigation, \u0027self\u0027 should correspond to the origin of the parent (in case of a new iframe) or opener (in case of a new window).  This is necessary to correctly enforce CSP during the initial navigation.",
+      "range": {
+        "startLine": 590,
+        "startChar": 5,
+        "endLine": 590,
+        "endChar": 33
+      },
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ced06e1_796ab0f7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-02T06:10:32Z",
+      "side": 1,
+      "message": "I\u0027m curious what happens if a frame at foo.com later explicitly navigates to about:blank?  It seems in that case, if I understand the Blink logic correctly, we should also reset the CSP self back to its parent or opener.\n\nThis hopefully should just work if that explicit about:blank navigation sends the inherited parent/opener origin as part of DidCommitProvisionalLoad, so the right thing will be already done by SetLastCommittedOrigin().  But it\u0027d be nice to double-check that this is indeed what happens. :)",
+      "revId": "bb0e27e912c6c0137bfb7ad6771730b034224e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
