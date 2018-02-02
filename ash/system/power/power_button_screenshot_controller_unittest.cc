@@ -30,7 +30,7 @@ class PowerButtonScreenshotControllerTest : public PowerButtonTestBase {
   // PowerButtonTestBase:
   void SetUp() override {
     PowerButtonTestBase::SetUp();
-    InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+    InitPowerButtonControllerMembers(true /* is_tablet_mode_switch_set */);
     InitScreenshotTestApi();
     screenshot_delegate_ = GetScreenshotDelegate();
     EnableTabletMode(true);
@@ -330,7 +330,9 @@ class ClamshellPowerButtonScreenshotControllerTest
   void SetUp() override {
     PowerButtonScreenshotControllerTest::SetUp();
     ForceClamshellPowerButton();
-    SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+    SetTabletModeSwitch(chromeos::PowerManagerClient::SwitchStates{
+        chromeos::PowerManagerClient::LidState::OPEN,
+        chromeos::PowerManagerClient::TabletMode::ON});
     InitScreenshotTestApi();
   }
 

@@ -9,8 +9,8 @@
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
-#include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
 #include "ui/events/event_handler.h"
@@ -36,8 +36,7 @@ class TabletPowerButtonController;
 class ASH_EXPORT PowerButtonController
     : public ui::EventHandler,
       public display::DisplayConfigurator::Observer,
-      public chromeos::PowerManagerClient::Observer,
-      public chromeos::AccelerometerReader::Observer {
+      public chromeos::PowerManagerClient::Observer {
  public:
   enum class ButtonType {
     // Indicates normal power button type.
@@ -73,9 +72,10 @@ class ASH_EXPORT PowerButtonController
   void PowerButtonEventReceived(bool down,
                                 const base::TimeTicks& timestamp) override;
 
-  // Overridden from chromeos::AccelerometerReader::Observer:
-  void OnAccelerometerUpdated(
-      scoped_refptr<const chromeos::AccelerometerUpdate> update) override;
+  // Initializes the |tablet_controller_| and |screenshot_controller_| according
+  // to the tablet mode switch.
+  void OnGetSwitchStates(
+      base::Optional<chromeos::PowerManagerClient::SwitchStates> result);
 
   // Overrides the tick clock used by |this| for testing.
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
@@ -123,10 +123,6 @@ class ASH_EXPORT PowerButtonController
   // Saves the button type for this power button.
   ButtonType button_type_ = ButtonType::NORMAL;
 
-  // True if the device should observe accelerometer events to enter tablet
-  // mode.
-  bool enable_tablet_mode_ = false;
-
   // True if the device should show power button menu when the power button is
   // long-pressed.
   bool show_power_button_menu_ = false;
@@ -156,6 +152,8 @@ class ASH_EXPORT PowerButtonController
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
   // Only started when |force_clamshell_power_button_| is true.
   base::OneShotTimer display_off_timer_;
+
+  base::WeakPtrFactory<PowerButtonController> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonController);
 };

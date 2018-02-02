@@ -40,7 +40,7 @@ class TabletPowerButtonControllerTest : public PowerButtonTestBase {
 
   void SetUp() override {
     PowerButtonTestBase::SetUp();
-    InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+    InitPowerButtonControllerMembers(true /* is_tablet_mode_switch_set */);
     power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
     EXPECT_FALSE(power_manager_client_->backlights_forced_off());
 
@@ -492,7 +492,9 @@ TEST_F(TabletPowerButtonControllerTest, SyncTouchscreenEnabled) {
   // and PowerButtonController.
   power_manager_client_->SetBacklightsForcedOff(false);
   ResetPowerButtonController();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch(chromeos::PowerManagerClient::SwitchStates{
+      chromeos::PowerManagerClient::LidState::OPEN,
+      chromeos::PowerManagerClient::TabletMode::ON});
 
   // Run the event loop for PowerButtonDisplayController to get backlight state
   // and check that the global touchscreen status is correct.
@@ -508,7 +510,9 @@ TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   ResetPowerButtonController();
   EXPECT_FALSE(tablet_controller_);
 
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch(chromeos::PowerManagerClient::SwitchStates{
+      chromeos::PowerManagerClient::LidState::OPEN,
+      chromeos::PowerManagerClient::TabletMode::ON});
   EXPECT_TRUE(tablet_controller_);
 
   // If clamshell-like power button behavior is requested via a flag, the
@@ -517,7 +521,9 @@ TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kForceClamshellPowerButton);
   ResetPowerButtonController();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch(chromeos::PowerManagerClient::SwitchStates{
+      chromeos::PowerManagerClient::LidState::OPEN,
+      chromeos::PowerManagerClient::TabletMode::ON});
   EXPECT_FALSE(tablet_controller_);
 }
 
@@ -615,7 +621,9 @@ TEST_F(TabletPowerButtonControllerTest, TouchscreenEnabledClamshell) {
   ResetPowerButtonController();
   // Run the event loop for PowerButtonDisplayController to get backlight state.
   base::RunLoop().RunUntilIdle();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
+  SetTabletModeSwitch(chromeos::PowerManagerClient::SwitchStates{
+      chromeos::PowerManagerClient::LidState::OPEN,
+      chromeos::PowerManagerClient::TabletMode::ON});
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 }
 
@@ -676,7 +684,7 @@ using NoTabletModePowerButtonControllerTest = NoTabletModePowerButtonTestBase;
 // that hasn't tablet mode switch set, even it has seen accelerometer data.
 TEST_F(NoTabletModePowerButtonControllerTest,
        HasAccelerometerUpdateButNoTabletModeSwitch) {
-  InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+  InitPowerButtonControllerMembers(true /* is_tablet_mode_switch_set */);
   ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAshEnableTabletMode));
   EXPECT_FALSE(tablet_controller_);
@@ -692,7 +700,7 @@ class TabletPowerButtonControllerShowMenuTest : public PowerButtonTestBase {
   void SetUp() override {
     PowerButtonTestBase::SetUp();
 
-    InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
+    InitPowerButtonControllerMembers(true /* is_tablet_mode_switch_set */);
     EnableTabletMode(true);
 
     // Advance a duration longer than |kIgnorePowerButtonAfterResumeDelay| to
