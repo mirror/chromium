@@ -308,6 +308,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   NSMutableArray* _gestureRecognizers;
   // Toolbars to add to the web view.
   NSMutableArray* _webViewToolbars;
+  // Script message handlers to add to the web view.
+  NSMutableDictionary* _scriptMessageHandlers;
   // Flag to say if browsing is enabled.
   BOOL _webUsageEnabled;
   // The touch tracking recognizer allowing us to decide if a navigation is
@@ -589,6 +591,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Updates the internal state and informs the delegate that any outstanding load
 // operations are cancelled.
 - (void)loadCancelled;
+// Adds all script message handlers to |webView|.
+- (void)addScriptMessageHandlersToWebView:(WKWebView*)webView;
 // If YES, the page should be closed if it successfully redirects to a native
 // application, for example if a new tab redirects to the App Store.
 - (BOOL)shouldClosePageOnNativeApplicationLoad;
@@ -947,6 +951,7 @@ GURL URLEscapedForHistory(const GURL& url) {
     [[_webViewProxy scrollViewProxy] addObserver:self];
     _gestureRecognizers = [[NSMutableArray alloc] init];
     _webViewToolbars = [[NSMutableArray alloc] init];
+    _scriptMessageHandlers = [[NSMutableDictionary alloc] init];
     _pendingLoadCompleteActions = [[NSMutableArray alloc] init];
     web::BrowserState* browserState = _webStateImpl->GetBrowserState();
     _certVerificationController = [[CRWCertVerificationController alloc]
@@ -2094,6 +2099,50 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [_webViewToolbars removeObject:toolbarView];
   if (_webView)
     [_containerView removeToolbar:toolbarView];
+}
+
+- (void)addScriptMessageHandler:(void (^)(WKScriptMessage*))handler
+                 forMessageName:(NSString*)messageName {
+  DCHECK(handler);
+  DCHECK(messageName);
+  [_scriptMessageHandlers setObject:[handler copy] forKey:messageName];
+  if (_webView) {
+    CRWWKScriptMessageRouter* messageRouter =
+        [self webViewConfigurationProvider].GetScriptMessageRouter();
+    [messageRouter setScriptMessageHandler:handler
+                                      name:messageName
+                                   webView:_webView];
+  }
+}
+
+- (void)removeScriptMessageHandlerForMessageName:(NSString*)messageName {
+  [_scriptMessageHandlers removeObjectForKey:messageName];
+  if (_webView) {
+    CRWWKScriptMessageRouter* messageRouter =
+        [self webViewConfigurationProvider].GetScriptMessageRouter();
+    [messageRouter removeScriptMessageHandlerForName:messageName
+                                             webView:_webView];
+  }
+}
+
+- (void)addScriptMessageHandlersToWebView:(WKWebView*)webView {
+  CRWWKScriptMessageRouter* messageRouter =
+      [self webViewConfigurationProvider].GetScriptMessageRouter();
+  __weak CRWWebController* weakSelf = self;
+
+  // Add handler for crwebinvoke messages.
+  [messageRouter setScriptMessageHandler:^(WKScriptMessage* message) {
+    [weakSelf didReceiveScriptMessage:message];
+  }
+                                    name:kScriptMessageName
+                                 webView:webView];
+
+  // Add custom handlers.
+  for (NSString* messageName in _scriptMessageHandlers) {
+    [messageRouter setScriptMessageHandler:_scriptMessageHandlers[messageName]
+                                      name:messageName
+                                   webView:_webView];
+  }
 }
 
 - (CRWJSInjectionReceiver*)jsInjectionReceiver {
@@ -3838,8 +3887,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
           requireGestureRecognizerToFail:swipeRecognizer];
     }
 
+    web::BrowserState* browserState = self.webStateImpl->GetBrowserState();
     _contextMenuController =
         [[CRWContextMenuController alloc] initWithWebView:_webView
+                                             browserState:browserState
                                        injectionEvaluator:self
                                                  delegate:self];
 
@@ -3880,9 +3931,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // Unwind the old web view.
   // TODO(eugenebut): Remove CRWWKScriptMessageRouter once crbug.com/543374 is
   // fixed.
-  CRWWKScriptMessageRouter* messageRouter =
-      [self webViewConfigurationProvider].GetScriptMessageRouter();
   if (_webView) {
+    CRWWKScriptMessageRouter* messageRouter =
+        [self webViewConfigurationProvider].GetScriptMessageRouter();
     [messageRouter removeAllScriptMessageHandlersForWebView:_webView];
   }
   [_webView setNavigationDelegate:nil];
@@ -3895,12 +3946,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Set up the new web view.
   if (webView) {
-    __weak CRWWebController* weakSelf = self;
-    [messageRouter setScriptMessageHandler:^(WKScriptMessage* message) {
-      [weakSelf didReceiveScriptMessage:message];
-    }
-                                      name:kScriptMessageName
-                                   webView:webView];
+    [self addScriptMessageHandlersToWebView:webView];
     _windowIDJSManager = [[CRWJSWindowIDManager alloc] initWithWebView:webView];
   } else {
     _windowIDJSManager = nil;

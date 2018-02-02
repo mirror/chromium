@@ -14,10 +14,15 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+@class WKScriptMessage;
+
 namespace web {
 
 class WebClient;
 class WebState;
+
+// A block that takes a WKScriptMessage.
+typedef void (^ScriptMessageHandlerBlock)(WKScriptMessage*);
 
 // Base test fixture that provides WebState for testing.
 class WebTestWithWebState : public WebTest,
@@ -37,6 +42,13 @@ class WebTestWithWebState : public WebTest,
   // Adds a transient item to the NavigationManager associated with the
   // WebState.
   void AddTransientItem(const GURL& url);
+
+  // Adds a script message handler to receive JavaScript messages sent to
+  // |message_name| in |web_state()|.
+  void AddScriptMessageHandler(NSString* message_name,
+                               ScriptMessageHandlerBlock handler);
+  // Removes any script message handlers for |message_name| in |web_state()|.
+  void RemoveScriptMessageHandler(NSString* message_name);
 
   // Loads the specified HTML content with URL into the WebState.
   void LoadHtml(NSString* html, const GURL& url);
