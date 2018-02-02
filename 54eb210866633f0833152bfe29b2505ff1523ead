@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "46c08555_e82d2a03",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T00:18:26Z",
+      "side": 1,
+      "message": "What is a SoC?  I think you\u0027d appeal to more developers by saying \"ARM CPU feature detection\".",
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d58c2f4_0d502cf4",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T00:18:26Z",
+      "side": 1,
+      "message": "nit: space before this line.\n\nAlso alpha order these defines and also add some guidance for developers with a #error.\n\n#if defined(ARMV8_OS_ANDROID) \n  ...\n#elif defined(ARMV8_OS_LINUX)\n  ...\n#else\n#error CPU feature detection is not defined for your ARM device\n#endif",
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a4cab0_d0c14659",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T00:18:26Z",
+      "side": 1,
+      "message": "The code is clear without this comment, remove.",
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66d3f91_06f9cc65",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T00:18:26Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c732efa9_5cc244e9",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T00:18:26Z",
+      "side": 1,
+      "message": "This should go.  Sounds to me like a novice programmer went on voyage of self-discovery.  pthread_once has been standard use for many years, I don\u0027t think you need to worry about trying to re-explain it.",
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e85b8117_a178924a",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 21
@@ -109,6 +194,30 @@
       "side": 1,
       "message": "I think it is okay with out that.\nCurrently, the code reads like this to me:\n\nif neon\n  check_for_neon_support();\n\nIf we instead checked for ARMv7 or \u003eARMv6 or the such, it would read like:\nif \u003eARMv6 // secretly, this means if we\u0027re attempting neon support\n  check_for_neon_support();\n\n\nSo even without the comment, the code seems to clearly show the intention and rational to me. Maybe I\u0027m missing something?",
       "parentUuid": "5d3adb65_231a3bff",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "54eb210866633f0833152bfe29b2505ff1523ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdd6928_886ca85f",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-02T00:18:26Z",
+      "side": 1,
+      "message": "\u003e So even without the comment, the code seems to clearly show the intention and rational to me. Maybe I\u0027m missing something?\n\n\u003e Actually, thinking about it more, we probably just want to delete that comment. \n\nAgree, the code intent was clear about its requirements for NEON.\n\n\u003e It could help someone who is debugging why this optimization path isn\u0027t being taken on their cronet build. But that is a very, very specific situation. And if we plan to upstream this, that won\u0027t provide value to typical users.\n\nYes, I doubt anyone upstream would know what a cronet is :)\n\nPS: and FTR, cronet moved to ARMv7 as a minimum requirement recently (dropped support for ARMv6).",
+      "parentUuid": "08faa0c0_75d1bbd5",
       "range": {
         "startLine": 33,
         "startChar": 2,
