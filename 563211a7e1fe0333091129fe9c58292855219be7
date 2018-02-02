@@ -22,6 +22,30 @@
       "revId": "563211a7e1fe0333091129fe9c58292855219be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8019c01_13df4e38",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-02T22:26:55Z",
+      "side": 1,
+      "message": "Correct. It means the window is already snapped when the function is called. I modified the protocol as you suggested.",
+      "parentUuid": "1e813bf8_a6d4a5c6",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 21
+      },
+      "revId": "563211a7e1fe0333091129fe9c58292855219be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
