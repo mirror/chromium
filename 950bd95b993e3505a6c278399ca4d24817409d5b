@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e7f6d34_a1e19274",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-02T02:24:45Z",
+      "side": 1,
+      "message": "This element is now basically a no-op, should probably remove it and just call the AXObjectCache (no -Impl) method directly.",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 68
+      },
+      "revId": "950bd95b993e3505a6c278399ca4d24817409d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
