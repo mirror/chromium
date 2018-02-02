@@ -22,6 +22,29 @@
       "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96f7ee9_6de2c28e",
+        "filename": "ui/views/view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-02T23:57:58Z",
+      "side": 1,
+      "message": "Apparently you aren\u0027t the only needing this. https://chromium-review.googlesource.com/c/chromium/src/+/888543 added it, so if you sync you should be good.",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 22
+      },
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
