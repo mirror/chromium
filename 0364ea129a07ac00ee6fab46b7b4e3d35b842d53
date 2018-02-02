@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d19a198_57a2bc9c",
+        "filename": "mojo/public/cpp/bindings/array_traits_span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T20:12:40Z",
+      "side": 1,
+      "message": "Uhh. I cargo culted it but it seems to build without it...",
+      "parentUuid": "7d8a4b8b_94e4d670",
+      "revId": "0364ea129a07ac00ee6fab46b7b4e3d35b842d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce11dc3_0da0c8c1",
         "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T19:41:42Z",
       "side": 1,
       "message": "I\u0027m not clear why this needs to be optional when the others aren\u0027t. This is essentially a big union.",
+      "revId": "0364ea129a07ac00ee6fab46b7b4e3d35b842d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356b75a4_d2f1e416",
+        "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-02T20:12:40Z",
+      "side": 1,
+      "message": "Currently, matrix is marked as optional in the mojom struct: https://cs.chromium.org/chromium/src/services/viz/public/interfaces/compositing/filter_operation.mojom?rcl\u003db69c519b086c91b80cecda2af4910d12536392cc\u0026l\u003d38. If present, it is required to have 20 elements.\n\nPreviously, this serializer returned an empty span, which array traits formerly treated as implicitly null. This is OK.\n\nHowever, once empty spans are no longer considered null spans, this makes the serializer unhappy, since an empty 0-element span does not have 20 elements, nor is it null.\n\nReturning an optional lets the Mojo serializer know that this field is, in fact, null.\n\nI did consider making this a union, but there\u0027s a /lot/ of overlapping fields. I\u0027d rather try that in a followup, to avoid other code inadvertently depending on the empty span \u003d\u003d null span behavior (and this is blocking another CL in fact).",
+      "parentUuid": "0ce11dc3_0da0c8c1",
       "revId": "0364ea129a07ac00ee6fab46b7b4e3d35b842d53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
