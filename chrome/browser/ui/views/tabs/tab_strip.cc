@@ -45,6 +45,7 @@
 #include "ui/base/default_theme_provider.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/compositing_recorder.h"
@@ -378,6 +379,9 @@ void TabStrip::UpdateLoadingAnimations() {
 }
 
 void TabStrip::SetStackedLayout(bool stacked_layout) {
+  // Stacked layout is always enabled for touchable chrome.
+  if (ui::MaterialDesignController::IsTouchOptimizedMaterial())
+    stacked_layout = true;
   if (stacked_layout == stacked_layout_)
     return;
 
