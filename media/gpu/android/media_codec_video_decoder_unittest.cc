@@ -126,8 +126,8 @@ class MediaCodecVideoDecoderTest : public testing::Test {
                                                                   nullptr);
     surface_texture_ = surface_texture.get();
 
-    auto video_frame_factory =
-        std::make_unique<NiceMock<MockVideoFrameFactory>>();
+    auto video_frame_factory = PostOnlyOwner<NiceMock<MockVideoFrameFactory>>(
+        base::ThreadTaskRunnerHandle::Get());
     video_frame_factory_ = video_frame_factory.get();
     // Set up VFF to pass |surface_texture_| via its InitCb.
     const bool want_promotion_hint =

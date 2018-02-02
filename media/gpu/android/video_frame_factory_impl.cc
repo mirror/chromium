@@ -34,34 +34,37 @@ bool MakeContextCurrent(gpu::CommandBufferStub* stub) {
 
 }  // namespace
 
+#if 0
 VideoFrameFactoryImpl::VideoFrameFactoryImpl(
     scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
     GetStubCb get_stub_cb)
-    : gpu_task_runner_(std::move(gpu_task_runner)),
+    : //gpu_task_runner_(std::move(gpu_task_runner)),
       get_stub_cb_(std::move(get_stub_cb)) {}
 
 VideoFrameFactoryImpl::~VideoFrameFactoryImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  /*
   if (gpu_video_frame_factory_)
     gpu_task_runner_->DeleteSoon(FROM_HERE, gpu_video_frame_factory_.release());
+    */
 }
 
 void VideoFrameFactoryImpl::Initialize(bool wants_promotion_hint,
                                        InitCb init_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(!gpu_video_frame_factory_);
-  gpu_video_frame_factory_ = std::make_unique<GpuVideoFrameFactory>();
-  base::PostTaskAndReplyWithResult(
-      gpu_task_runner_.get(), FROM_HERE,
-      base::Bind(&GpuVideoFrameFactory::Initialize,
-                 base::Unretained(gpu_video_frame_factory_.get()),
-                 wants_promotion_hint, get_stub_cb_),
-      std::move(init_cb));
+  gpu_video_frame_factory_ = PostOnlyOwner<GpuVideoFrameFactory>();
+  gpu_video_frame_factory_->PostAndReply(FROM_HERE,
+      std::move(init_cb),
+      &GpuVideoFrameFactory::Initialize,
+                 wants_promotion_hint, get_stub_cb_);
 }
 
 void VideoFrameFactoryImpl::SetSurfaceBundle(
     scoped_refptr<AVDASurfaceBundle> surface_bundle) {
   scoped_refptr<CodecImageGroup> image_group;
+  // TODO(liberato): move this into MCVD::SetSurfaceBundle.  then we can
+  // remove VideoFrameFactoryImpl, and just post to the gpu factory.
   if (!surface_bundle) {
     // Clear everything, just so we're not holding a reference.
     surface_texture_ = nullptr;
@@ -82,11 +85,10 @@ void VideoFrameFactoryImpl::SetSurfaceBundle(
         base::MakeRefCounted<CodecImageGroup>(gpu_task_runner_, surface_bundle);
   }
 
-  gpu_task_runner_->PostTask(
+  gpu_video_frame_factory_->Post(
       FROM_HERE,
-      base::BindOnce(&GpuVideoFrameFactory::SetImageGroup,
-                     base::Unretained(gpu_video_frame_factory_.get()),
-                     std::move(image_group)));
+      &GpuVideoFrameFactory::SetImageGroup,
+                     std::move(image_group));
 }
 
 void VideoFrameFactoryImpl::CreateVideoFrame(
@@ -96,13 +98,12 @@ void VideoFrameFactoryImpl::CreateVideoFrame(
     PromotionHintAggregator::NotifyPromotionHintCB promotion_hint_cb,
     VideoDecoder::OutputCB output_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  gpu_task_runner_->PostTask(
+  gpu_video_frame_factory_->PostTask(
       FROM_HERE,
-      base::Bind(&GpuVideoFrameFactory::CreateVideoFrame,
-                 base::Unretained(gpu_video_frame_factory_.get()),
+      &GpuVideoFrameFactory::CreateVideoFrame,
                  base::Passed(&output_buffer), surface_texture_, timestamp,
                  natural_size, std::move(promotion_hint_cb),
-                 std::move(output_cb), base::ThreadTaskRunnerHandle::Get()));
+                 std::move(output_cb), base::ThreadTaskRunnerHandle::Get());
 }
 
 void VideoFrameFactoryImpl::RunAfterPendingVideoFrames(
@@ -112,6 +113,7 @@ void VideoFrameFactoryImpl::RunAfterPendingVideoFrames(
   gpu_task_runner_->PostTaskAndReply(
       FROM_HERE, base::BindOnce(&base::DoNothing), std::move(closure));
 }
+#endif
 
 GpuVideoFrameFactory::GpuVideoFrameFactory() : weak_factory_(this) {
   DETACH_FROM_THREAD(thread_checker_);
@@ -126,7 +128,7 @@ GpuVideoFrameFactory::~GpuVideoFrameFactory() {
 
 scoped_refptr<SurfaceTextureGLOwner> GpuVideoFrameFactory::Initialize(
     bool wants_promotion_hint,
-    VideoFrameFactoryImpl::GetStubCb get_stub_cb) {
+    GetStubCb get_stub_cb) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   wants_promotion_hint_ = wants_promotion_hint;
   stub_ = get_stub_cb.Run();
