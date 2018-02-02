@@ -419,6 +419,33 @@ void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
 
   fragment_data.SetVisualRect(new_visual_rect);
   fragment_data.SetLocationInBacking(new_location);
+
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return;
+
+  if (object.IsLayoutNGMixin()) {
+    if (NGPaintFragment* fragment = ToLayoutBlockFlow(object).PaintFragment())
+      fragment->SetVisualRect(new_visual_rect);
+    return;
+  }
+
+  if (object.IsInline()) {
+    auto fragments = NGPaintFragment::InlineFragmentsFor(&object);
+    if (fragments.IsEmpty())
+      return;
+    NGPhysicalOffset union_location(LayoutUnit::Max(), LayoutUnit::Max());
+    for (NGPaintFragment* fragment : fragments) {
+      const NGPhysicalOffset& offset = fragment->InlineOffsetToContainerBox();
+      union_location = NGPhysicalOffset(std::min(union_location.left, offset.left), std::min(union_location.top, offset.top));
+    }
+    for (NGPaintFragment* fragment : fragments) {
+      const NGPhysicalOffset& offset = fragment->InlineOffsetToContainerBox();
+      fragment->SetVisualRect(LayoutRect(
+        new_visual_rect.Location() + (offset - union_location).ToLayoutPoint(),
+        fragment->Size().ToLayoutSize()));
+    }
+    return;
+  }
 }
 
 void PaintInvalidator::InvalidatePaint(
@@ -584,6 +611,7 @@ void PaintInvalidator::InvalidatePaint(
     }
   }
 
+#if 0
   if (RuntimeEnabledFeatures::LayoutNGEnabled() && object.IsLayoutNGMixin()) {
     // If the LayoutObject has a paint fragment, it means this LayoutObject and
     // its descendants are painted by NG painter.
@@ -602,6 +630,7 @@ void PaintInvalidator::InvalidatePaint(
       paint_fragment->UpdateVisualRectFromLayoutObject();
     }
   }
+#endif
 
   if (object.MayNeedPaintInvalidationSubtree()) {
     context.subtree_flags |=

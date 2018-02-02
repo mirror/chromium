@@ -98,27 +98,36 @@ TEST_F(NGPaintFragmentTest, InlineBox) {
     <!DOCTYPE html>
     <style>
     html, body { margin: 0; }
-    div { font: 10px Ahem; }
+    div { font: 10px Ahem; width: 10ch; }
     </style>
     <body>
-      <div id="container">1234567890<span id="box">XXX<span></div>
+      <div id="container">12345 <span id="box">XXX YYY<span></div>
     </body>
   )HTML");
-  const NGPaintFragment& line_box = FirstLineBoxByElementId("container");
-  EXPECT_EQ(2u, line_box.Children().size());
+  const NGPaintFragment& container = RootPaintFragmentByElementId("container");
+  EXPECT_EQ(2u, container.Children().size());
+  const NGPaintFragment& line1 = *container.Children()[0];
+  EXPECT_EQ(2u, line1.Children().size());
 
   // Inline boxes without box decorations (border, background, etc.) do not
   // generate box fragments and that their child fragments are placed directly
   // under the line box.
-  const NGPaintFragment& outer_text = *line_box.Children()[0];
+  const NGPaintFragment& outer_text = *line1.Children()[0];
   EXPECT_EQ(NGPhysicalFragment::kFragmentText,
             outer_text.PhysicalFragment().Type());
-  EXPECT_EQ(LayoutRect(0, 0, 100, 10), outer_text.VisualRect());
+  EXPECT_EQ(LayoutRect(0, 0, 60, 10), outer_text.VisualRect());
 
-  const NGPaintFragment& inner_text = *line_box.Children()[1];
+  const NGPaintFragment& inner_text1 = *line1.Children()[1];
   EXPECT_EQ(NGPhysicalFragment::kFragmentText,
-            inner_text.PhysicalFragment().Type());
-  EXPECT_EQ(LayoutRect(100, 0, 30, 10), inner_text.VisualRect());
+            inner_text1.PhysicalFragment().Type());
+  EXPECT_EQ(LayoutRect(60, 0, 30, 10), inner_text1.VisualRect());
+
+  const NGPaintFragment& line2 = *container.Children()[1];
+  EXPECT_EQ(1u, line2.Children().size());
+  const NGPaintFragment& inner_text2 = *line2.Children()[0];
+  EXPECT_EQ(NGPhysicalFragment::kFragmentText,
+    inner_text2.PhysicalFragment().Type());
+  EXPECT_EQ(LayoutRect(0, 10, 30, 10), inner_text2.VisualRect());
 }
 
 TEST_F(NGPaintFragmentTest, InlineBoxWithDecorations) {
@@ -186,7 +195,7 @@ TEST_F(NGPaintFragmentTest, RelativeBlock) {
 
 // TODO(kojii): VisualRect for inline box with 'position: relative' is not
 // correct. Disabled for now.
-TEST_F(NGPaintFragmentTest, DISABLED_RelativeInline) {
+TEST_F(NGPaintFragmentTest, RelativeInline) {
   LoadAhem();
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
@@ -225,7 +234,7 @@ TEST_F(NGPaintFragmentTest, DISABLED_RelativeInline) {
 
 // TODO(kojii): VisualRect for inline box with 'position: relative' is not
 // correct. Disabled for now.
-TEST_F(NGPaintFragmentTest, DISABLED_RelativeBlockAndInline) {
+TEST_F(NGPaintFragmentTest, RelativeBlockAndInline) {
   LoadAhem();
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
