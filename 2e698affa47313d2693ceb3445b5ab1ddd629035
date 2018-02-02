@@ -498,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "ad1f6d56_414a8d57",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-02T20:13:05Z",
+      "side": 1,
+      "message": "Zlib seems to use this format for public headers (e.g. zlib.h, zutil.h) but not for internal ones (e.g. inftrees.h, inffast.h).\n\nThis CPU feature detection is, at least initially, for internal use *only*. Therefore I don\u0027t see the need to make such a change.\n\nPlus, this code is located in the \u0027contrib\u0027 folder. To quote Mark Adler on the subject: \n\"Something like that I would consider to be a third-party contribution, which would go in the contrib directory of the zlib distribution.\"\n\nAnd: \"Any method of coding is fine, so long as you document how to compile/assemble it, and with what.\".",
+      "parentUuid": "7b2c470a_c5f7f23b",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f49e0685_a58234f5",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 13
@@ -599,6 +617,24 @@
       "side": 1,
       "message": "The amount of back/for on this matter should be a warning to us that we\u0027re giving upstream the opportunity quibble about it.  You yourself mentioned that in a code review with me the other day, you called it \"risk\".\n\nYour points about compiler support are true and all, and I see Adenilson\u0027s points about type usage, but what I see is the potential that you\u0027ll need to re-explain it all to upstream (and that adds risk).\n\nIt has been said in many places that the \"job of the maintainer is to say no\". So if your give the maintainer any excuse they\u0027ll say \"no\", simply because they are too busy and short on time, dealing with better patches that do follow the ways of zlib. \n\nThis patch has diverged from the ways of zlib in various places, adding risk.  If we follow the ways of zlib, risk is minimized.  Looking back at the code reviews for the Intel patch [1], reviewers did not question the use of int for the x86 feature enables at all, it was a non-issue.\n\nIf you want to make it an issue upstream, you increase the risk of the maintainer saying \"no\" since portability is what they value over all else (its one of the key reasons that zlib has been successful).  If you use int, the maintainer has few reasons to say \"no\", imho, but if you use bool, I\u0027m not so sure.\n\n[1] https://codereview.chromium.org/552123005",
       "parentUuid": "c89c93e3_5f3b51c6",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4755caad_7ec8138c",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-02T20:13:05Z",
+      "side": 1,
+      "message": "Please see previous comment about Mark\u0027s input on what goes in the \u0027contrib\u0027 folder.",
+      "parentUuid": "8462a353_56fef970",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
