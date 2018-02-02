@@ -52,6 +52,24 @@
       "revId": "9f08e85bf4b64f0a4a0f397171ca46886a2755e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5f48fc_75cffb1c",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-02T06:03:22Z",
+      "side": 1,
+      "message": "Ah, I see.\nI will move it to public.\nThank you.",
+      "parentUuid": "7b4771ee_3dbf2b28",
+      "revId": "9f08e85bf4b64f0a4a0f397171ca46886a2755e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
