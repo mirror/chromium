@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c1ae733_bd33db0b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/interfaces/cssom.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-02T10:26:33Z",
+      "side": 1,
+      "message": "I don\u0027t think we should start exposing and testing the feature in web platform tests\nfor now, while it is behind the flag, or the spec becomes in good shape.",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fb3241_b380d801",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-02T10:26:33Z",
+      "side": 1,
+      "message": "Once the spec is finalized, let\u0027s move this to WPT.\n\n(could you add TODO, or can we track the task somewhere?)",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ed9750_e7deb3ba",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-02T10:26:33Z",
+      "side": 1,
+      "message": "Maybe these elements on line 6-10 and these texts are used later, when those constructed\nstylesheets start applying to those elements?\nYou can keep them with TODO comment, or please remove as they are unnecessary for now.",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d95d8c_2fc2b147",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-02T10:26:33Z",
+      "side": 1,
+      "message": "Can we have a test for \"alternate\" in CSStyleSheetInit?",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
