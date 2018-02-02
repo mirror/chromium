@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce8928e9_f79a236b",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-02T20:18:52Z",
+      "side": 1,
+      "message": "Can we specify this in the swarming properties for the 10.9 bot, so that it\u0027s still only in one place, but not have to modify the script?",
+      "parentUuid": "0006912d_5c9ee0d1",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada2934e_e3fddb53",
         "filename": "testing/buildbot/generate_buildbot_json.py",
         "patchSetId": 1
