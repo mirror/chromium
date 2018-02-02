@@ -137,7 +137,8 @@ AVDACodecImage* AVDAPictureBufferManager::GetImageForPicture(
 
 void AVDAPictureBufferManager::UseCodecBufferForPictureBuffer(
     int32_t codec_buf_index,
-    const PictureBuffer& picture_buffer) {
+    const PictureBuffer& picture_buffer,
+    base::TimeDelta pts) {
   // Notify the AVDACodecImage for picture_buffer that it should use the
   // decoded buffer codec_buf_index to render this frame.
   AVDACodecImage* avda_image = GetImageForPicture(picture_buffer.id());
@@ -146,7 +147,7 @@ void AVDAPictureBufferManager::UseCodecBufferForPictureBuffer(
   // until after the CC is done drawing it.
   pictures_out_for_display_.push_back(picture_buffer.id());
   avda_image->SetBufferMetadata(codec_buf_index, !!surface_texture_,
-                                state_provider_->GetSize());
+                                state_provider_->GetSize(), pts);
 
   // If the shared state has changed for this image, retarget its texture.
   if (avda_image->SetSharedState(shared_state_))
@@ -207,18 +208,22 @@ void AVDAPictureBufferManager::MaybeRenderEarly() {
 
     // Update the front buffer index as we move along to shorten the number of
     // candidate images we look at for back buffer rendering.
-    front_index = i;
-    first_renderable_image = avda_image;
+    if (avda_image->is_unrendered()) {
+      front_index = i;
+      first_renderable_image = avda_image;
+    }
 
     // If we find a front buffer, stop and indicate that front buffer rendering
     // is not possible since another image is already in the front buffer.
     if (avda_image->was_rendered_to_front_buffer()) {
+      LOG(ERROR) << "AVDA: " << avda_image << " is in front buffer";
       first_renderable_image = nullptr;
       break;
     }
   }
 
   if (first_renderable_image) {
+    LOG(ERROR) << "AVDA: rendering " << first_renderable_image << " early";
     first_renderable_image->UpdateSurface(
         AVDACodecImage::UpdateMode::RENDER_TO_FRONT_BUFFER);
   }

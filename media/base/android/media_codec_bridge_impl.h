@@ -95,6 +95,7 @@ class MEDIA_EXPORT MediaCodecBridgeImpl : public MediaCodecBridge {
                                        bool* key_frame) override;
 
   void ReleaseOutputBuffer(int index, bool render) override;
+  void ReleaseOutputBuffer(int index, base::TimeDelta render_time) override;
   MediaCodecStatus GetInputBuffer(int input_buffer_index,
                                   uint8_t** data,
                                   size_t* capacity) override;

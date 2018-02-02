@@ -63,7 +63,8 @@ class MEDIA_GPU_EXPORT AVDAPictureBufferManager {
   // Sets up |picture_buffer| so that its texture will refer to the image that
   // is represented by the decoded output buffer at codec_buffer_index.
   void UseCodecBufferForPictureBuffer(int32_t codec_buffer_index,
-                                      const PictureBuffer& picture_buffer);
+                                      const PictureBuffer& picture_buffer,
+                                      base::TimeDelta pts);
 
   // Assigns a picture buffer and attaches an image to its texture.
   void AssignOnePictureBuffer(const PictureBuffer& picture_buffer,

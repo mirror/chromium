@@ -163,7 +163,8 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
 
   // Sends the decoded frame specified by |codec_buffer_index| to the client.
   void SendDecodedFrameToClient(int32_t codec_buffer_index,
-                                int32_t bitstream_id);
+                                int32_t bitstream_id,
+                                base::TimeDelta pts);
 
   // Does pending IO tasks if any. Once this is called, it polls |media_codec_|
   // until it finishes pending tasks. For the polling, |kDecodePollDelay| is
