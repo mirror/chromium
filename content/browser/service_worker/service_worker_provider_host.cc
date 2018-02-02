@@ -804,6 +804,7 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
   if (ServiceWorkerUtils::IsServicificationEnabled())
     controller_info->endpoint = GetControllerServiceWorkerPtr().PassInterface();
 
+  usleep(100'000);
   container_->SetController(std::move(controller_info), used_features,
                             notify_controllerchange);
 }
