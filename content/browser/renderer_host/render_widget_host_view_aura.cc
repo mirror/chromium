@@ -724,8 +724,11 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
       NotifyRendererOfCursorVisibilityState(cursor_client->IsCursorVisible());
   }
 
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasShown(browser_latency_info);
+  if (delegated_frame_host_) {
+    delegated_frame_host_->WasShown(window_->GetLocalSurfaceId(),
+                                    window_->bounds().size(),
+                                    browser_latency_info);
+  }
 
 #if defined(OS_WIN)
   UpdateLegacyWin();
@@ -1586,8 +1589,11 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
     return;
 
   host_->WasResized();
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  if (delegated_frame_host_) {
+    delegated_frame_host_->WasResized(window_->GetLocalSurfaceId(),
+                                      window_->bounds().size(),
+                                      cc::DeadlinePolicy::UseDefaultDeadline());
+  }
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2041,8 +2047,11 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
 void RenderWidgetHostViewAura::WasResized(
     const cc::DeadlinePolicy& deadline_policy) {
   window_->AllocateLocalSurfaceId();
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasResized(deadline_policy);
+  if (delegated_frame_host_) {
+    delegated_frame_host_->WasResized(window_->GetLocalSurfaceId(),
+                                      window_->bounds().size(),
+                                      deadline_policy);
+  }
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2184,8 +2193,11 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
   if (!in_bounds_changed_)
     window_->SetBounds(rect);
   host_->WasResized();
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  if (delegated_frame_host_) {
+    delegated_frame_host_->WasResized(window_->GetLocalSurfaceId(),
+                                      window_->bounds().size(),
+                                      cc::DeadlinePolicy::UseDefaultDeadline());
+  }
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
