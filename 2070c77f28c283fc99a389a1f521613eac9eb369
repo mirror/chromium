@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcff98c3_4a354fee",
+        "filename": "components/sync/model/model_error.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T20:02:28Z",
+      "side": 1,
+      "message": "doesn\u0027t seem like this should be inlined",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8f1c8b_f8fcd8cd",
+        "filename": "components/sync/user_events/user_event_sync_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T20:02:28Z",
+      "side": 1,
+      "message": "nit: s/error.value()/*error",
+      "range": {
+        "startLine": 213,
+        "startChar": 41,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

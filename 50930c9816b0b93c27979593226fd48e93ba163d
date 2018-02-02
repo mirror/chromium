@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e40fad0_e5240ff4",
+        "filename": "components/sync/model/model_type_change_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T20:02:28Z",
+      "side": 0,
+      "message": "there is value in leaving this interface as purely virtual. I would sooner just get rid of the two-param function, then callsites either wrap the args with ModelError() or you make ModelError a struct (which it should be anyway) and callsites look like\n\n  ...-\u003eReportError({FROM_HERE, message});\n\nAlso, doesn\u0027t this \"convenience\" method totally defeat the purpose of Location? I thought FROM_HERE only works when it\u0027s inlined (hence \"HERE\").",
+      "range": {
+        "startLine": 104,
+        "startChar": 15,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "50930c9816b0b93c27979593226fd48e93ba163d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
