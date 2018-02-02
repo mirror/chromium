@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cadf1bd_9a3fa400",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-02T21:11:59Z",
+      "side": 1,
+      "message": "I will defer to derat@ for this suggestion.\n\nShall we change boolean parameter to PowerManagerClient::TabletMode to test, such as UNSUPPORTED case?",
+      "revId": "21db14e815ca14487d62b5457b9df88b40f1ae98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
