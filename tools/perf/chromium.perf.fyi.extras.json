@@ -291,8 +291,10 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
-          "script": "//tools/perf/upload_perf_results.py"
+          "script": "//tools/perf/process_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -324,8 +326,10 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
-          "script": "//tools/perf/upload_perf_results.py"
+          "script": "//tools/perf/process_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -361,8 +365,8 @@
         },
         "trigger_script": {
           "args": [
-	    "--bot-id=swarm846-c4",
-	    "--bot-id=swarm847-c4"
+      "--bot-id=swarm846-c4",
+      "--bot-id=swarm847-c4"
           ],
           "script": "//tools/perf/perf_device_trigger.py"
         },
