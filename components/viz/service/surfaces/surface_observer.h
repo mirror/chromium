@@ -5,6 +5,9 @@
 #ifndef COMPONENTS_VIZ_SERVICE_SURFACES_SURFACE_OBSERVER_H_
 #define COMPONENTS_VIZ_SERVICE_SURFACES_SURFACE_OBSERVER_H_
 
+#include "base/optional.h"
+#include "base/time/time.h"
+
 namespace viz {
 
 class Surface;
@@ -23,7 +26,8 @@ class SurfaceObserver {
   virtual void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) = 0;
 
   // Called when a CompositorFrame within |surface| activates.
-  virtual void OnSurfaceActivated(const SurfaceId& surface_id) = 0;
+  virtual void OnSurfaceActivated(const SurfaceId& surface_id,
+                                  base::Optional<base::TimeDelta> duration) = 0;
 
   // Called when a Surface was marked to be destroyed.
   virtual void OnSurfaceDestroyed(const SurfaceId& surface_id) = 0;
