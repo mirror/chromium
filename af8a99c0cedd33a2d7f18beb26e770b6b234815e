@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "502300e5_261d410b",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "This TODO is not clear at all, as discussed offline, please clarify, fix the fragile behavior and add test coverage.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd6443d_4cd63c3f",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "This ref can be problematic. GetDisplayNearestWindow() returns a temporary Display object that we don\u0027t store. For this display id, copying it is fine.",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cf1034_7575cee9",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "To avoid doing this in every for loop iteration, please move this outside the for-loop.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 59
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0848c5_c8bdb6c1",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "As discussed offline, this could be problematic if the display was added after other displays were added in such a way that display bounds changed that they no longer intersect with the persistent_window_bounds .\n\nAs agreed, please add a test to repro this case, and let\u0027s see the behavior.",
+      "range": {
+        "startLine": 107,
+        "startChar": 29,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c61272_4aba11d5",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "So it moved to display 0? Not for this CL, but we might want to consider moving windows to the nearest display in the layout.",
+      "range": {
+        "startLine": 143,
+        "startChar": 12,
+        "endLine": 143,
+        "endChar": 37
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b26ea31_46283ecc",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "second. Since the two non-primary displays are all secondaries.",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 145,
+        "endChar": 26
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7f2d41_d47c87f4",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 25
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44fb181_a6409725",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:49:46Z",
+      "side": 1,
+      "message": "We need the scenario when you connect the third before the second.",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
