@@ -69,6 +69,8 @@ class BrowserWindowCocoa
   gfx::Rect GetRestoredBounds() const override;
   std::string GetWorkspace() const override;
   bool IsVisibleOnAllWorkspaces() const override;
+  views::View* GetPageInfoAnchorView() const override;
+  gfx::Rect GetPageInfoAnchorRect() const override;
   ui::WindowShowState GetRestoredState() const override;
   gfx::Rect GetBounds() const override;
   gfx::Size GetContentsSize() const override;

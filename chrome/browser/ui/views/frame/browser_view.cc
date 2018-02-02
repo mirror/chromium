@@ -53,6 +53,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window_state.h"
+#include "chrome/browser/ui/bubble_anchor_util.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
 #include "chrome/browser/ui/tabs/tab_menu_model.h"
@@ -2556,6 +2557,21 @@ std::string BrowserView::GetWorkspace() const {
 
 bool BrowserView::IsVisibleOnAllWorkspaces() const {
   return frame_->IsVisibleOnAllWorkspaces();
+}
+
+views::View* BrowserView::GetPageInfoAnchorView() const {
+  if (!browser_->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR))
+    return nullptr;  // Fall back to GetAnchorPoint().
+  return GetLocationBarView()->GetSecurityBubbleAnchorView();
+}
+
+gfx::Rect BrowserView::GetPageInfoAnchorRect() const {
+  DCHECK(!browser_->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR));
+
+  int local_x = GetMirroredXInView(bubble_anchor_util::kNoToolbarLeftOffset);
+  gfx::Point origin = GetBoundsInScreen().origin();
+  origin += gfx::Vector2d(local_x, 0);
+  return gfx::Rect(origin, gfx::Size());
 }
 
 bool BrowserView::DoCutCopyPasteForWebContents(

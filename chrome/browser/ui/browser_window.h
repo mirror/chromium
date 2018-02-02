@@ -367,6 +367,12 @@ class BrowserWindow : public ui::BaseWindow {
   virtual std::string GetWorkspace() const = 0;
   virtual bool IsVisibleOnAllWorkspaces() const = 0;
 
+  // Return the anchor view or rectangle that should be used for the page info
+  // bubble. If an anchor view is returned, it will be used; otherwise, the
+  // anchor rect will be used (even if it is zero).
+  virtual views::View* GetPageInfoAnchorView() const = 0;
+  virtual gfx::Rect GetPageInfoAnchorRect() const = 0;
+
  protected:
   friend class BrowserCloseManager;
   friend class BrowserView;

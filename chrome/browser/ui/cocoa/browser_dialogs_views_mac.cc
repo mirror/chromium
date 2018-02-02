@@ -5,6 +5,7 @@
 #include <memory>
 #include <utility>
 
+#include "build/buildflag.h"
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
@@ -26,6 +27,7 @@
 #include "chrome/common/chrome_features.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/base/ui_features.h"
 
 // This file provides definitions of desktop browser dialog-creation methods for
 // Mac where a Cocoa browser is using Views dialogs. I.e. it is included in the
@@ -40,6 +42,9 @@ bool ShowPilotDialogsWithViewsToolkit() {
 }
 
 bool ShowAllDialogsWithViewsToolkit() {
+#if BUILDFLAG(MAC_VIEWS_BROWSER)
+  return true;
+#endif
   return ShowPilotDialogsWithViewsToolkit() &&
          base::FeatureList::IsEnabled(
              features::kShowAllDialogsWithViewsToolkit);

@@ -33,6 +33,7 @@
 #include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/browser_window_utils.h"
+#include "chrome/browser/ui/cocoa/bubble_anchor_helper.h"
 #import "chrome/browser/ui/cocoa/chrome_event_processing_window.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_controller.h"
 #import "chrome/browser/ui/cocoa/download/download_shelf_controller.h"
@@ -70,6 +71,7 @@
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/mac/coordinate_conversion.h"
 
 #if BUILDFLAG(ENABLE_ONE_CLICK_SIGNIN)
 #import "chrome/browser/ui/cocoa/one_click_signin_dialog_controller.h"
@@ -338,6 +340,16 @@ std::string BrowserWindowCocoa::GetWorkspace() const {
 
 bool BrowserWindowCocoa::IsVisibleOnAllWorkspaces() const {
   return false;
+}
+
+views::View* BrowserWindowCocoa::GetPageInfoAnchorView() const {
+  return nullptr;
+}
+
+gfx::Rect BrowserWindowCocoa::GetPageInfoAnchorRect() const {
+  return gfx::Rect(
+      gfx::ScreenPointFromNSPoint(GetPageInfoAnchorPointForBrowser(browser_)),
+      gfx::Size());
 }
 
 ui::WindowShowState BrowserWindowCocoa::GetRestoredState() const {

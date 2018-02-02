@@ -24,7 +24,6 @@
 #include "chrome/browser/ui/page_info/page_info.h"
 #include "chrome/browser/ui/page_info/page_info_dialog.h"
 #include "chrome/browser/ui/view_ids.h"
-#include "chrome/browser/ui/views/bubble_anchor_util_views.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
@@ -73,8 +72,6 @@
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
 #endif
 
-using bubble_anchor_util::GetPageInfoAnchorRect;
-using bubble_anchor_util::GetPageInfoAnchorView;
 using views::GridLayout;
 
 namespace {
@@ -526,9 +523,9 @@ views::BubbleDialogDelegateView* PageInfoBubbleView::CreatePageInfoBubble(
     content::WebContents* web_contents,
     const GURL& url,
     const security_state::SecurityInfo& security_info) {
-  views::View* anchor_view = GetPageInfoAnchorView(browser);
+  views::View* anchor_view = browser->window()->GetPageInfoAnchorView();
   gfx::Rect anchor_rect =
-      anchor_view ? gfx::Rect() : GetPageInfoAnchorRect(browser);
+      anchor_view ? gfx::Rect() : browser->window()->GetPageInfoAnchorRect();
   gfx::NativeView parent_window =
       platform_util::GetViewForWindow(browser->window()->GetNativeWindow());
 
@@ -1018,7 +1015,7 @@ void PageInfoBubbleView::StyledLabelLinkClicked(views::StyledLabel* label,
   }
 }
 
-#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+#if !defined(OS_MACOSX)
 void ShowPageInfoDialogImpl(Browser* browser,
                             content::WebContents* web_contents,
                             const GURL& virtual_url,

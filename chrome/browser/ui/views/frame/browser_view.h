@@ -376,6 +376,9 @@ class BrowserView : public BrowserWindow,
   std::string GetWorkspace() const override;
   bool IsVisibleOnAllWorkspaces() const override;
 
+  views::View* GetPageInfoAnchorView() const override;
+  gfx::Rect GetPageInfoAnchorRect() const override;
+
   BookmarkBarView* GetBookmarkBarView() const;
   LocationBarView* GetLocationBarView() const;
   views::View* GetTabContentsContainerView() const;

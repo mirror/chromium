@@ -16,7 +16,6 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/layout_constants.h"
-#include "chrome/browser/ui/views/bubble_anchor_util_views.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row_observer.h"
@@ -49,13 +48,13 @@ constexpr views::BubbleBorder::Arrow kPermissionAnchorArrow =
 
 // Returns the view to anchor the permission bubble to. May be null.
 views::View* GetPermissionAnchorView(Browser* browser) {
-  return bubble_anchor_util::GetPageInfoAnchorView(browser);
+  return browser->window()->GetPageInfoAnchorView();
 }
 
 // Returns the anchor rect to anchor the permission bubble to, as a fallback.
 // Only used if GetPermissionAnchorView() returns nullptr.
 gfx::Rect GetPermissionAnchorRect(Browser* browser) {
-  return bubble_anchor_util::GetPageInfoAnchorRect(browser);
+  return browser->window()->GetPageInfoAnchorRect();
 }
 
 }  // namespace
