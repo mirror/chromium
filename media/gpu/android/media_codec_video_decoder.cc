@@ -104,7 +104,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     AndroidOverlayMojoFactoryCB overlay_factory_cb,
     RequestOverlayInfoCB request_overlay_info_cb,
-    std::unique_ptr<VideoFrameFactory> video_frame_factory)
+    PostOnlyOwner<VideoFrameFactory> video_frame_factory)
     : codec_allocator_(codec_allocator),
       request_overlay_info_cb_(std::move(request_overlay_info_cb)),
       surface_chooser_helper_(
@@ -375,12 +375,12 @@ void MediaCodecVideoDecoder::TransitionToTargetSurface() {
   DCHECK(device_info_->IsSetOutputSurfaceSupported());
 
   if (!codec_->SetSurface(target_surface_bundle_)) {
-    video_frame_factory_->SetSurfaceBundle(nullptr);
+    SetSurfaceBundle(nullptr);
     EnterTerminalState(State::kError);
     return;
   }
 
-  video_frame_factory_->SetSurfaceBundle(target_surface_bundle_);
+  SetSurfaceBundle(target_surface_bundle_);
   CacheFrameInformation();
 }
 
@@ -400,7 +400,7 @@ void MediaCodecVideoDecoder::CreateCodec() {
   config->surface_bundle = target_surface_bundle_;
   // Note that this might be the same surface bundle that we've been using, if
   // we're reinitializing the codec without changing surfaces.  That's fine.
-  video_frame_factory_->SetSurfaceBundle(target_surface_bundle_);
+  SetSurfaceBundle(target_surface_bundle_);
   codec_allocator_->CreateMediaCodecAsync(
       codec_allocator_weak_factory_.GetWeakPtr(), std::move(config));
 }
@@ -639,11 +639,13 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
           SurfaceChooserHelper::FrameInformation::FRAME_INFORMATION_MAX) +
           1);  // PRESUBMIT_IGNORE_UMA_MAX
 
-  video_frame_factory_->CreateVideoFrame(
-      std::move(output_buffer), presentation_time,
+  video_frame_factory_->Post(
+      FROM_HERE, &VideoFrameFactory::CreateVideoFrame, std::move(output_buffer),
+      current_surface_texture_, presentation_time,
       decoder_config_.natural_size(), CreatePromotionHintCB(),
-      base::Bind(&MediaCodecVideoDecoder::ForwardVideoFrame,
-                 weak_factory_.GetWeakPtr(), reset_generation_));
+      BindToCurrentLoop(base::Bind(&MediaCodecVideoDecoder::ForwardVideoFrame,
+                                   weak_factory_.GetWeakPtr(),
+                                   reset_generation_)));
   return true;
 }
 
@@ -835,6 +837,35 @@ void MediaCodecVideoDecoder::NotifyPromotionHint(
 void MediaCodecVideoDecoder::CacheFrameInformation() {
   cached_frame_information_ =
       surface_chooser_helper_.ComputeFrameInformation(IsUsingOverlay());
+}
+
+void VideoFrameFactoryImpl::SetSurfaceBundle(
+    scoped_refptr<AVDASurfaceBundle> surface_bundle) {
+  scoped_refptr<CodecImageGroup> image_group;
+  // TODO(liberato): should we always use |target_surface_bundle_|?  we're
+  // called with nullptr once, but maybe we should clear it first.
+  if (!surface_bundle) {
+    // Clear everything, just so we're not holding a reference.
+    current_surface_texture_ = nullptr;
+  } else {
+    // If |surface_bundle| is using a SurfaceTexture, then get it.
+    current_surface_texture_ =
+        surface_bundle->overlay ? nullptr : surface_bundle->surface_texture;
+
+    // Start a new image group.  Note that there's no reason that we can't have
+    // more than one group per surface bundle; it's okay if we're called
+    // mulitiple times with the same surface bundle.  It just helps to combine
+    // the callbacks if we don't, especially since AndroidOverlay doesn't know
+    // how to remove destruction callbacks.  That's one reason why we don't just
+    // make the CodecImage register itself.  The other is that the threading is
+    // easier if we do it this way, since the image group is constructed on the
+    // proper thread to talk to the overlay.
+    image_group =
+        base::MakeRefCounted<CodecImageGroup>(gpu_task_runner_, surface_bundle);
+  }
+
+  video_frame_factory_->Post(FROM_HERE, &VideoFrameFactory::SetImageGroup,
+                             std::move(image_group));
 }
 
 }  // namespace media
