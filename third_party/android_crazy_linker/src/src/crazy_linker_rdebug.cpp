@@ -142,60 +142,9 @@ bool FindElfDynamicSection(const char* path,
   return false;
 }
 
-// Helper class to temporarily remap a page to readable+writable until
-// scope exit.
-class ScopedPageReadWriteRemapper {
- public:
-  ScopedPageReadWriteRemapper(void* address);
-  ~ScopedPageReadWriteRemapper();
-
-  // Releases the page so that the destructor does not undo the remapping.
-  void Release();
-
- private:
-  static const uintptr_t kPageSize = 4096;
-  uintptr_t page_address_;
-  int page_prot_;
-};
-
-ScopedPageReadWriteRemapper::ScopedPageReadWriteRemapper(void* address) {
-  page_address_ = reinterpret_cast<uintptr_t>(address) & ~(kPageSize - 1);
-  page_prot_ = 0;
-  if (!FindProtectionFlagsForAddress(address, &page_prot_)) {
-    LOG("Could not find protection flags for %p\n", address);
-    page_address_ = 0;
-    return;
-  }
-
-  // Note: page_prot_ may already indicate read/write, but because of
-  // possible races with the system linker we cannot be confident that
-  // this is reliable. So we always set read/write here.
-  //
-  // See commentary in WriteLinkMapField for more.
-  int new_page_prot = page_prot_ | PROT_READ | PROT_WRITE;
-  int ret = mprotect(
-      reinterpret_cast<void*>(page_address_), kPageSize, new_page_prot);
-  if (ret < 0) {
-    LOG_ERRNO("Could not remap page to read/write");
-    page_address_ = 0;
-  }
-}
-
-ScopedPageReadWriteRemapper::~ScopedPageReadWriteRemapper() {
-  if (page_address_) {
-    int ret =
-        mprotect(reinterpret_cast<void*>(page_address_), kPageSize, page_prot_);
-    if (ret < 0)
-      LOG_ERRNO("Could not remap page to old protection flags");
-  }
-}
-
-void ScopedPageReadWriteRemapper::Release() {
-  page_address_ = 0;
-  page_prot_ = 0;
-}
-
 }  // namespace
+
+RDebug::RDebug() = default;
 
 bool RDebug::Init() {
   // The address of '_r_debug' is in the DT_DEBUG entry of the current
@@ -256,128 +205,91 @@ bool RDebug::Init() {
   return false;
 }
 
+#if defined(CRAZY_DISABLE_GDB_SUPPORT)
+
+// When CRAZY_DISABLE_GDB_SUPPORT is defined, avoid modifying any of the
+// global data at |r_debug_|. These operations are inherently unsafe because
+// they could conflict with modifications performed by the system linker in
+// other threads. Even though the probability of such cases is very low, that
+// can happen on certain devices for various reasons. For more details see
+// https://crbug.com/.....
+//
+// Defining CRAZY_DISABLE_GDB_SUPPORT avoids these crashes completely, but
+// the libraries loaded through the crazy linker will not appear inside a
+// a debugger like GDB. It is recommended to only define this macro for
+// release builds.
+//
+// IMPORTANT NOTE: Breakpad and the stack unwinder do not rely on the
+// |_r_debug| list and should be able to generate valid stack traces in
+// case of crashes.
+//
+
+void RDebug::AddEntry(link_map_t*) {
+  // nothing.
+}
+
+void RDebug::DelEntry(link_map_t*) {
+  // nothing.
+}
+
+#else  // !CRAZY_DISABLE_GDB_SUPPORT)
+
+// Helper class to temporarily remap a page to readable+writable until
+// scope exit.
+class ScopedPageReadWriteRemapper {
+ public:
+  ScopedPageReadWriteRemapper(void* address);
+  ~ScopedPageReadWriteRemapper();
+
+  // Releases the page so that the destructor does not undo the remapping.
+  void Release();
+
+ private:
+  static const uintptr_t kPageSize = 4096;
+  uintptr_t page_address_;
+  int page_prot_;
+};
+
+ScopedPageReadWriteRemapper::ScopedPageReadWriteRemapper(void* address) {
+  page_address_ = reinterpret_cast<uintptr_t>(address) & ~(kPageSize - 1);
+  page_prot_ = 0;
+  if (!FindProtectionFlagsForAddress(address, &page_prot_)) {
+    LOG("Could not find protection flags for %p\n", address);
+    page_address_ = 0;
+    return;
+  }
+
+  // Note: page_prot_ may already indicate read/write, but because of
+  // possible races with the system linker we cannot be confident that
+  // this is reliable. So we always set read/write here.
+  //
+  // See commentary in WriteLinkMapField for more.
+  int new_page_prot = page_prot_ | PROT_READ | PROT_WRITE;
+  int ret = mprotect(reinterpret_cast<void*>(page_address_), kPageSize,
+                     new_page_prot);
+  if (ret < 0) {
+    LOG_ERRNO("Could not remap page to read/write");
+    page_address_ = 0;
+  }
+}
+
+ScopedPageReadWriteRemapper::~ScopedPageReadWriteRemapper() {
+  if (page_address_) {
+    int ret =
+        mprotect(reinterpret_cast<void*>(page_address_), kPageSize, page_prot_);
+    if (ret < 0)
+      LOG_ERRNO("Could not remap page to old protection flags");
+  }
+}
+
+void ScopedPageReadWriteRemapper::Release() {
+  page_address_ = 0;
+  page_prot_ = 0;
+}
+
 void RDebug::CallRBrk(int state) {
-#if !defined(CRAZY_DISABLE_R_BRK)
   r_debug_->r_state = state;
   r_debug_->r_brk();
-#endif  // !CRAZY_DISABLE_R_BRK
-}
-
-namespace {
-
-// Helper class providing a simple scoped pthreads mutex.
-class ScopedMutexLock {
- public:
-  explicit ScopedMutexLock(pthread_mutex_t* mutex) : mutex_(mutex) {
-    pthread_mutex_lock(mutex_);
-  }
-  ~ScopedMutexLock() {
-    pthread_mutex_unlock(mutex_);
-  }
-
- private:
-  pthread_mutex_t* mutex_;
-};
-
-// Helper runnable class. Handler is one of the two static functions
-// AddEntryInternal() or DelEntryInternal(). Calling these invokes
-// AddEntryImpl() or DelEntryImpl() respectively on rdebug.
-class RDebugRunnable {
- public:
-  RDebugRunnable(rdebug_callback_handler_t handler,
-                 RDebug* rdebug,
-                 link_map_t* entry,
-                 bool is_blocking)
-      : handler_(handler), rdebug_(rdebug),
-        entry_(entry), is_blocking_(is_blocking), has_run_(false) {
-    pthread_mutex_init(&mutex_, NULL);
-    pthread_cond_init(&cond_, NULL);
-  }
-
-  static void Run(void* opaque);
-  static void WaitForCallback(void* opaque);
-
- private:
-  rdebug_callback_handler_t handler_;
-  RDebug* rdebug_;
-  link_map_t* entry_;
-  bool is_blocking_;
-  bool has_run_;
-  pthread_mutex_t mutex_;
-  pthread_cond_t cond_;
-};
-
-// Callback entry point.
-void RDebugRunnable::Run(void* opaque) {
-  RDebugRunnable* runnable = static_cast<RDebugRunnable*>(opaque);
-
-  LOG("Callback received, runnable=%p", runnable);
-  (*runnable->handler_)(runnable->rdebug_, runnable->entry_);
-
-  if (!runnable->is_blocking_) {
-    delete runnable;
-    return;
-  }
-
-  LOG("Signalling callback, runnable=%p", runnable);
-  {
-    ScopedMutexLock m(&runnable->mutex_);
-    runnable->has_run_ = true;
-    pthread_cond_signal(&runnable->cond_);
-  }
-}
-
-// For blocking callbacks, wait for the call to Run().
-void RDebugRunnable::WaitForCallback(void* opaque) {
-  RDebugRunnable* runnable = static_cast<RDebugRunnable*>(opaque);
-
-  if (!runnable->is_blocking_) {
-    LOG("Non-blocking, not waiting, runnable=%p", runnable);
-    return;
-  }
-
-  LOG("Waiting for signal, runnable=%p", runnable);
-  {
-    ScopedMutexLock m(&runnable->mutex_);
-    while (!runnable->has_run_)
-      pthread_cond_wait(&runnable->cond_, &runnable->mutex_);
-  }
-
-  delete runnable;
-}
-
-}  // namespace
-
-// Helper function to schedule AddEntry() and DelEntry() calls onto another
-// thread where possible. Running them there avoids races with the system
-// linker, which expects to be able to set r_map pages readonly when it
-// is not using them and which may run simultaneously on the main thread.
-bool RDebug::PostCallback(rdebug_callback_handler_t handler,
-                          link_map_t* entry,
-                          bool is_blocking) {
-  if (!post_for_later_execution_) {
-    LOG("Deferred execution disabled");
-    return false;
-  }
-
-  RDebugRunnable* runnable =
-      new RDebugRunnable(handler, this, entry, is_blocking);
-  void* context = post_for_later_execution_context_;
-
-  if (!(*post_for_later_execution_)(context, &RDebugRunnable::Run, runnable)) {
-    LOG("Deferred execution enabled, but posting failed");
-    delete runnable;
-    return false;
-  }
-
-  LOG("Posted for later execution, runnable=%p", runnable);
-
-  if (is_blocking) {
-    RDebugRunnable::WaitForCallback(runnable);
-    LOG("Completed execution, runnable=%p", runnable);
-  }
-
-  return true;
 }
 
 // Helper function for AddEntryImpl and DelEntryImpl.
@@ -385,7 +297,7 @@ bool RDebug::PostCallback(rdebug_callback_handler_t handler,
 // 'l_next' field in a neighbouring linkmap_t.  If link_pointer is in a
 // page that is mapped readonly, the page is remapped to be writable before
 // assignment.
-void RDebug::WriteLinkMapField(link_map_t** link_pointer, link_map_t* entry) {
+static void WriteLinkMapField(link_map_t** link_pointer, link_map_t* entry) {
   ScopedPageReadWriteRemapper mapper(link_pointer);
   LOG("Remapped page for %p for read/write", link_pointer);
 
@@ -410,8 +322,7 @@ void RDebug::WriteLinkMapField(link_map_t** link_pointer, link_map_t* entry) {
   LOG("Released mapper, leaving page read/write");
 }
 
-void RDebug::AddEntryImpl(link_map_t* entry) {
-  ScopedLockedGlobals globals;  // TODO(digit): Remove this lock.
+void RDebug::AddEntry(link_map_t* entry) {
   LOG("Adding: %s", entry->l_name);
   if (!init_)
     Init();
@@ -468,8 +379,7 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
   CallRBrk(RT_CONSISTENT);
 }
 
-void RDebug::DelEntryImpl(link_map_t* entry) {
-  ScopedLockedGlobals globals;  // TODO(digit): Remove this lock.
+void RDebug::DelEntry(link_map_t* entry) {
   LOG("Deleting: %s", entry->l_name);
   if (!r_debug_)
     return;
@@ -494,5 +404,7 @@ void RDebug::DelEntryImpl(link_map_t* entry) {
   // Tell GDB the list modification has completed.
   CallRBrk(RT_CONSISTENT);
 }
+
+#endif  // !CRAZY_DISABLE_GDB_SUPPORT
 
 }  // namespace crazy

@@ -346,10 +346,6 @@ crazy_status_t crazy_library_find_from_address(
 // zero, the library be unloaded from the process.
 void crazy_library_close(crazy_library_t* library) _CRAZY_PUBLIC;
 
-// Close a library, with associated context to support delayed operations.
-void crazy_library_close_with_context(crazy_library_t* library,
-                                      crazy_context_t* context) _CRAZY_PUBLIC;
-
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

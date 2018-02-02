@@ -5,6 +5,14 @@
 import("//build/config/android/config.gni")
 import("//testing/test.gni")
 
+declare_args() {
+  # Set this to true to allow release builds to support debugging
+  # the binaries with GDB. This is an inherently thread-racy feature
+  # that can result in very rare runtime crashes, hence why it is
+  # disabled by default.
+  android_enable_debuggable_release_builds = false
+}
+
 assert(is_android)
 
 config("crazy_config") {
@@ -24,7 +32,6 @@ group("android_crazy_linker_tests") {
     ":crazy_linker_test_dl_wrappers_valid_handles",
     ":crazy_linker_test_dl_wrappers_with_system_handle",
     ":crazy_linker_test_load_library",
-    ":crazy_linker_test_load_library_callbacks",
     ":crazy_linker_test_load_library_depends",
     ":crazy_linker_test_relocated_shared_relro",
     ":crazy_linker_test_search_path_list",
@@ -111,12 +118,12 @@ template("crazy_linker_library") {
         "CRAZY_DEBUG=1",
       ]
     } else {
-      # Disable r_brk() calls for release builds. This is a work-around for
+      # Disable GDB support for release builds. This is a work-around for
       # unexplained runtime crashes that happen on Intel-based Android
       # devices that run ARM binaries through Houdini. For more details
       # see https://crbug.com/796938
       if (!is_debug) {
-        defines = [ "CRAZY_DISABLE_R_BRK" ]
+        defines = [ "CRAZY_DISABLE_GDB_SUPPORT" ]
       }
     }
 
@@ -285,18 +292,6 @@ executable("crazy_linker_test_load_library") {
 executable("crazy_linker_test_load_library_depends") {
   sources = [
     "src/tests/test_load_library_depends.cpp",
-  ]
-  data_deps = [
-    ":crazy_linker_tests_libbar",
-  ]
-  deps = [
-    ":android_crazy_linker",
-  ]
-}
-
-executable("crazy_linker_test_load_library_callbacks") {
-  sources = [
-    "src/tests/test_load_library_callbacks.cpp",
   ]
   data_deps = [
     ":crazy_linker_tests_libbar",
