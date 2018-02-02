@@ -8,6 +8,10 @@
 <body></body>
 <script>
 promise_test(t => {
-  return requestPictureInPictureWithTrustedClick(document.createElement('video'));
+  return requestPictureInPictureWithTrustedClick(document.createElement('video'))
+  .then(pipWindow => {
+    assert_equals(pipWindow.width, 300);
+    assert_equals(pipWindow.height, 150);
+  });
 });
 </script>
