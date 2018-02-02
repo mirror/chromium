@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d23cbbf_80d874c4",
+        "filename": "chrome/test/data/webui/settings/a11y/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T01:27:56Z",
+      "side": 1,
+      "message": "Let\u0027s remove console.log.",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "54fdc8b5d7587b5a9c77cbb402a31201a0b38a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c7af30_2ef9c836",
+        "filename": "chrome/test/data/webui/settings/a11y/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-02T01:27:56Z",
+      "side": 1,
+      "message": "Given that this is a copy of an existing TODO in manage_profile_a11y_test.js, let\u0027s create a bug to track these, and put the bug number here.",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "54fdc8b5d7587b5a9c77cbb402a31201a0b38a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
