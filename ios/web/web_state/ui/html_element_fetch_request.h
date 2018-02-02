@@ -11,7 +11,8 @@ namespace base {
 class TimeTicks;
 }  // namespace base
 
-// Tracks request details for fetching attributes of an element.
+// Tracks request details for fetching attributes of an element from
+// __gCrWeb.findElementAtPoint JavaScript API.
 @interface HTMLElementFetchRequest : NSObject
 
 // The time this object was created.

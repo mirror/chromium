@@ -225,6 +225,14 @@ class WebStateImpl;
 - (void)didFinishGoToIndexSameDocumentNavigationWithType:
     (web::NavigationInitiationType)type;
 
+// Adds a |handler| to the web view for JavaScript messages sent to
+// |messageName|.
+- (void)addScriptMessageHandler:(void (^)(WKScriptMessage*))handler
+                 forMessageName:(NSString*)messageName;
+// Removes the message script handler (if one exists) from the web view for
+// |messageName|.
+- (void)removeScriptMessageHandlerForMessageName:(NSString*)messageName;
+
 @end
 
 #pragma mark Testing

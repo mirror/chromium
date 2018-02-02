@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#import "ios/testing/wait_util.h"
 #import "ios/web/public/test/web_test_with_web_state.h"
 #import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
 #import "ios/web/public/web_state/ui/crw_web_view_scroll_view_proxy.h"
@@ -35,6 +36,19 @@ struct TestCoordinatesAndExpectedValue {
   id expected_value = nil;
 };
 
+// Request id used for __gCrWeb.findElementAtPoint call.
+NSString* const kRequestId = @"UNIQUE_IDENTIFIER";
+
+// Page html template for image tester helper functions.
+NSString* kPageContentTemplate =
+    @"<html><body style='margin-left:10px;margin-top:10px;'>"
+     "<div style='width:100px;height:100px;'>"
+     "  <p style='position:absolute;left:25px;top:25px;"
+     "      width:50px;height:50px'>"
+     "%@"
+     "    Chrome rocks!"
+     "  </p></div></body></html>";
+
 }  // namespace
 
 namespace web {
@@ -45,16 +59,8 @@ class ContextMenuJsTest : public web::WebTestWithWebState {
   // Verifies that __gCrWeb.getElementFromPoint returns |expected_value| for
   // the given image |html|.
   void ImageTesterHelper(NSString* html, NSDictionary* expected_value) {
-    NSString* page_content_template =
-        @"<html><body style='margin-left:10px;margin-top:10px;'>"
-         "<div style='width:100px;height:100px;'>"
-         "  <p style='position:absolute;left:25px;top:25px;"
-         "      width:50px;height:50px'>"
-         "%@"
-         "    Chrome rocks!"
-         "  </p></div></body></html>";
     NSString* page_content =
-        [NSString stringWithFormat:page_content_template, html];
+        [NSString stringWithFormat:kPageContentTemplate, html];
 
     TestCoordinatesAndExpectedValue test_data[] = {
         // Point outside the document margins.
@@ -72,6 +78,60 @@ class ContextMenuJsTest : public web::WebTestWithWebState {
       EXPECT_NSEQ(data.expected_value, result)
           << " in test " << i << ": (" << data.x << ", " << data.y << ")";
     }
+  }
+  // Verifies that __gCrWeb.findElementAtPoint returns |expected_value| for
+  // the given image |html|.
+  void ImageTesterHelper_FindElementAtPoint(NSString* html,
+                                            NSDictionary* expected_value) {
+    NSString* page_content =
+        [NSString stringWithFormat:kPageContentTemplate, html];
+
+    // Adds a script message handler that stores the dictionary result for the
+    // found element. Sets |message_received| flag upon completion.
+    __block bool message_received = false;
+    __block id result = nil;
+    AddScriptMessageHandler(@"FindElementResultHandler",
+                            ^(WKScriptMessage* message) {
+                              result = message.body;
+                              message_received = true;
+                            });
+    // The response dictionary will always contain the request id.
+    NSDictionary* not_found_expected_value =
+        @{kContextMenuElementRequestID : kRequestId};
+    TestCoordinatesAndExpectedValue test_data[] = {
+        // Point outside the document margins.
+        {0, 0, not_found_expected_value},
+        // Point inside the <p> element.
+        {20, 20, expected_value},
+        // Point outside the <p> element.
+        {GetWebViewContentSize().width / 2, 50, not_found_expected_value},
+    };
+    for (size_t i = 0; i < arraysize(test_data); i++) {
+      // Reset state variables reused on each iteration.
+      message_received = false;
+      result = nil;
+
+      LoadHtml(page_content);
+      ExecuteJavaScript(@"document.getElementsByTagName('p')");  // Force layout
+
+      CGSize contentSize = GetWebViewContentSize();
+      const TestCoordinatesAndExpectedValue& data = test_data[i];
+      NSString* const script = [NSString
+          stringWithFormat:@"__gCrWeb.findElementAtPoint('%@', %g, %g, %g, %g)",
+                           kRequestId, data.x, data.y, contentSize.width,
+                           contentSize.height];
+      ExecuteJavaScript(script);
+
+      // Wait for response.
+      BOOL success = testing::WaitUntilConditionOrTimeout(
+          testing::kWaitForJSCompletionTimeout, ^{
+            return message_received;
+          });
+      EXPECT_TRUE(success);
+      EXPECT_NSEQ(data.expected_value, result)
+          << " in test " << i << ": (" << data.x << ", " << data.y << ")";
+    }
+    RemoveScriptMessageHandler(@"FindElementResultHandler");
   }
   // Returns web view's content size from the current web state.
   CGSize GetWebViewContentSize() {
@@ -124,6 +184,47 @@ TEST_F(ContextMenuJsTest, GetLinkImageUrlAtPoint) {
     kContextMenuElementHyperlink : @"file:///linky",
   };
   ImageTesterHelper(html, expected_value);
+}
+
+// Tests that __gCrWeb.findElementAtPoint returns correct src.
+TEST_F(ContextMenuJsTest, GetImageUrlAtPoint_FindElementAtPoint) {
+  NSString* html =
+      @"<img id='foo' style='width:200;height:200;' src='file:///bogus'/>";
+  NSDictionary* expected_value = @{
+    kContextMenuElementRequestID : kRequestId,
+    kContextMenuElementSource : @"file:///bogus",
+    kContextMenuElementReferrerPolicy : @"default",
+  };
+  ImageTesterHelper_FindElementAtPoint(html, expected_value);
+}
+
+// Tests that __gCrWeb.findElementAtPoint function returns correct title.
+TEST_F(ContextMenuJsTest, GetImageTitleAtPoint_FindElementAtPoint) {
+  NSString* html =
+      @"<img id='foo' title='Hello world!'"
+       "style='width:200;height:200;' src='file:///bogus'/>";
+  NSDictionary* expected_value = @{
+    kContextMenuElementRequestID : kRequestId,
+    kContextMenuElementSource : @"file:///bogus",
+    kContextMenuElementReferrerPolicy : @"default",
+    kContextMenuElementTitle : @"Hello world!",
+  };
+  ImageTesterHelper_FindElementAtPoint(html, expected_value);
+}
+
+// Tests that __gCrWeb.findElementAtPoint function returns correct href.
+TEST_F(ContextMenuJsTest, GetLinkImageUrlAtPoint_FindElementAtPoint) {
+  NSString* html =
+      @"<a href='file:///linky'>"
+       "<img id='foo' style='width:200;height:200;' src='file:///bogus'/>"
+       "</a>";
+  NSDictionary* expected_value = @{
+    kContextMenuElementRequestID : kRequestId,
+    kContextMenuElementSource : @"file:///bogus",
+    kContextMenuElementReferrerPolicy : @"default",
+    kContextMenuElementHyperlink : @"file:///linky",
+  };
+  ImageTesterHelper_FindElementAtPoint(html, expected_value);
 }
 
 TEST_F(ContextMenuJsTest, TextAreaStopsProximity) {
