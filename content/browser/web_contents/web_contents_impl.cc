@@ -1322,6 +1322,10 @@ const std::string& WebContentsImpl::GetEncoding() const {
   return canonical_encoding_;
 }
 
+void WebContentsImpl::SetWasDiscarded(bool was_discarded) {
+  was_discarded_ = was_discarded;
+}
+
 void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   DCHECK(!is_being_destroyed_);
   ++capturer_count_;
@@ -5016,6 +5020,9 @@ void WebContentsImpl::DidStopLoading() {
         controller_.GetCurrentEntryIndex()));
   }
 
+  if (WasDiscarded())
+    SetWasDiscarded(false);
+
   LoadingStateChanged(true, false, details.get());
 }
 
@@ -5059,6 +5066,10 @@ WebContentsImpl::CreateThrottlesForNavigation(
     NavigationHandle* navigation_handle) {
   return GetContentClient()->browser()->CreateThrottlesForNavigation(
       navigation_handle);
+}
+
+bool WebContentsImpl::WasDiscarded() const {
+  return was_discarded_;
 }
 
 std::unique_ptr<NavigationUIData> WebContentsImpl::GetNavigationUIData(

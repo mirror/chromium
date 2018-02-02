@@ -150,6 +150,12 @@ class RenderFrameHostManagerTest : public ContentBrowserTest {
         original_file_path, replacement_text, replacement_path);
   }
 
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    const char kBlinkPageLifecycleFeature[] = "PageLifecycle";
+    command_line->AppendSwitchASCII(switches::kEnableBlinkFeatures,
+                                    kBlinkPageLifecycleFeature);
+  }
+
   void SetUpOnMainThread() override {
     // Support multiple sites on the test server.
     host_resolver()->AddRule("*", "127.0.0.1");
@@ -1477,6 +1483,129 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerSpoofingTest,
   // The visible entry should be null, resulting in about:blank in the address
   // bar.
   EXPECT_FALSE(contents->GetController().GetVisibleEntry());
+}
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       WasDiscardedWithInterruptedReload) {
+  const std::string kOriginalPath = "/original.html";
+  const std::string kFirstRedirectPath = "/redirect1.html";
+  const std::string kSecondRedirectPath = "/reidrect2.html";
+  net::test_server::ControllableHttpResponse original_response1(
+      embedded_test_server(), kOriginalPath);
+  net::test_server::ControllableHttpResponse original_response2(
+      embedded_test_server(), kOriginalPath);
+  net::test_server::ControllableHttpResponse original_response3(
+      embedded_test_server(), kOriginalPath);
+  net::test_server::ControllableHttpResponse first_redirect_response(
+      embedded_test_server(), kFirstRedirectPath);
+  net::test_server::ControllableHttpResponse second_redirect_response(
+      embedded_test_server(), kSecondRedirectPath);
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  const GURL kOriginalURL =
+      embedded_test_server()->GetURL("a.com", kOriginalPath);
+  const GURL kFirstRedirectURL =
+      embedded_test_server()->GetURL("b.com", kFirstRedirectPath);
+  const GURL kSecondRedirectURL =
+      embedded_test_server()->GetURL("c.com", kSecondRedirectPath);
+
+  // First navigate to the initial URL.
+  shell()->LoadURL(kOriginalURL);
+  original_response1.WaitForRequest();
+  original_response1.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "Cache-Control: no-cache, no-store, must-revalidate\r\n"
+      "Pragma: no-cache\r\n"
+      "\r\n");
+  original_response1.Send(
+      "<html>"
+      "<body></body>"
+      "</html>");
+  original_response1.Done();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  EXPECT_EQ(kOriginalURL, shell()->web_contents()->GetVisibleURL());
+
+  const char kDiscardedStateJS[] =
+      "window.domAutomationController.send("
+      "window.document.wasDiscarded);";
+  bool discarded_result1;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      shell()->web_contents(), kDiscardedStateJS, &discarded_result1));
+  EXPECT_FALSE(discarded_result1);
+
+  // Now discard and reload the page.
+  shell()->web_contents()->SetWasDiscarded(true);
+  TestNavigationManager first_reload(shell()->web_contents(), kOriginalURL);
+  shell()->web_contents()->GetController().Reload(
+      ReloadType::ORIGINAL_REQUEST_URL, false);
+  EXPECT_TRUE(first_reload.WaitForRequestStart());
+  first_reload.ResumeNavigation();
+
+  original_response2.WaitForRequest();
+  original_response2.Send(
+      "HTTP/1.1 302 FOUND\r\n"
+      "Location: " +
+      kSecondRedirectURL.spec() +
+      "\r\n"
+      "\r\n");
+  original_response2.Done();
+  second_redirect_response.WaitForRequest();
+  second_redirect_response.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n");
+  EXPECT_TRUE(first_reload.WaitForResponse());
+  first_reload.ResumeNavigation();
+
+  // The navigation is ready to commit, but not finished.
+  RenderFrameHostImpl* speculative_rfh =
+      static_cast<WebContentsImpl*>(shell()->web_contents())
+          ->GetFrameTree()
+          ->root()
+          ->render_manager()
+          ->speculative_frame_host();
+  CHECK(speculative_rfh);
+  EXPECT_TRUE(speculative_rfh->is_loading());
+
+  // The user requests a new reload while the previous reload hasn't committed
+  // yet.
+  TestNavigationManager second_reload(shell()->web_contents(), kOriginalURL);
+  shell()->web_contents()->GetController().Reload(
+      ReloadType::ORIGINAL_REQUEST_URL, false);
+  EXPECT_TRUE(second_reload.WaitForRequestStart());
+  speculative_rfh = static_cast<WebContentsImpl*>(shell()->web_contents())
+                        ->GetFrameTree()
+                        ->root()
+                        ->render_manager()
+                        ->speculative_frame_host();
+  EXPECT_FALSE(speculative_rfh);
+
+  // The second reload.
+  second_reload.ResumeNavigation();
+  original_response3.WaitForRequest();
+  original_response3.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "Cache-Control: no-cache, no-store, must-revalidate\r\n"
+      "Pragma: no-cache\r\n"
+      "\r\n");
+  original_response3.Send(
+      "<html>"
+      "<body></body>"
+      "</html>");
+  original_response3.Done();
+  second_reload.WaitForNavigationFinished();
+  speculative_rfh = static_cast<WebContentsImpl*>(shell()->web_contents())
+                        ->GetFrameTree()
+                        ->root()
+                        ->render_manager()
+                        ->speculative_frame_host();
+  EXPECT_FALSE(speculative_rfh);
+  bool discarded_result2;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      shell()->web_contents(), kDiscardedStateJS, &discarded_result2));
+  EXPECT_TRUE(discarded_result2);
 }
 
 // Ensures that a pending navigation's URL  is no longer visible after the

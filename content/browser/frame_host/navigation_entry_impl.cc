@@ -705,7 +705,8 @@ RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
     bool intended_as_new_entry,
     int pending_history_list_offset,
     int current_history_list_offset,
-    int current_history_list_length) const {
+    int current_history_list_length,
+    bool was_discarded) const {
   // Set the redirect chain to the navigation's redirects, unless returning to a
   // completed navigation (whose previous redirects don't apply).
   std::vector<GURL> redirects;
@@ -730,7 +731,8 @@ RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
       GetCanLoadLocalResources(), frame_entry.page_state(), GetUniqueID(),
       is_history_navigation_in_new_child, subframe_unique_names,
       intended_as_new_entry, pending_offset_to_send, current_offset_to_send,
-      current_length_to_send, IsViewSourceMode(), should_clear_history_list());
+      current_length_to_send, was_discarded, IsViewSourceMode(),
+      should_clear_history_list());
 #if defined(OS_ANDROID)
   if (GetDataURLAsString() &&
       GetDataURLAsString()->size() <= kMaxLengthOfDataURLString) {
