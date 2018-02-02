@@ -203,11 +203,20 @@ ScriptPromise LockManager::acquire(ScriptState* script_state,
     }
   }
 
+  if (options.steal() && options.ifAvailable()) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        "The 'steal' and 'ifAvailable' options cannot be used together.");
+    return ScriptPromise();
+  }
+
   mojom::blink::LockMode mode = Lock::StringToMode(options.mode());
 
   mojom::blink::LockManager::WaitMode wait =
-      options.ifAvailable() ? mojom::blink::LockManager::WaitMode::NO_WAIT
-                            : mojom::blink::LockManager::WaitMode::WAIT;
+      options.steal()
+          ? mojom::blink::LockManager::WaitMode::PREEMPT
+          : options.ifAvailable() ? mojom::blink::LockManager::WaitMode::NO_WAIT
+                                  : mojom::blink::LockManager::WaitMode::WAIT;
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
