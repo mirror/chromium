@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec0bc145_f62caad9",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-02T21:25:25Z",
+      "side": 1,
+      "message": "Because padding of the first-level child of paper-radio-group is overridden:\nhttps://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/paper-radio-group/paper-radio-group.html?rcl\u003d076f8e1b34687bb11ec7b32d08feb45a7cb67fb6\u0026l\u003d62",
+      "parentUuid": "598644d3_5c7146ce",
+      "revId": "3b1fe8a0650e5ffc9f06df0bf973793fd0ec1996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f470864_51a87502",
         "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
         "patchSetId": 4
