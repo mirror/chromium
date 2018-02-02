@@ -255,6 +255,9 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void DefaultEventHandler(Event*) override;
   bool ContainsRelatedTarget(Event*);
 
+  // Internal Picture-in-Picture related method.
+  void RefreshPictureInPictureButtonVisibility();
+
   // Internal cast related methods.
   void RemotePlaybackStateChanged();
   void RefreshCastButtonVisibility();
