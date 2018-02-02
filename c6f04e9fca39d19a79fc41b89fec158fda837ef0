@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7061a34f_77d1d054",
+        "filename": "third_party/closure_compiler/externs/system_display.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-02T03:30:34Z",
+      "side": 1,
+      "message": "I noticed that these spaces exit in L285 and L309, so I also keep these spaces here. Are these spaces for special format?",
+      "range": {
+        "startLine": 332,
+        "startChar": 28,
+        "endLine": 332,
+        "endChar": 33
+      },
+      "revId": "c6f04e9fca39d19a79fc41b89fec158fda837ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
