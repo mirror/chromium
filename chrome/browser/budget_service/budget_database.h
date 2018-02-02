@@ -63,7 +63,7 @@ class BudgetDatabase {
   friend class BudgetDatabaseTest;
 
   // Used to allow tests to change time for testing.
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+  void SetClockForTesting(base::Clock* clock);
 
   // Holds information about individual pieces of awarded budget. There is a
   // one-to-one mapping of these to the chunks in the underlying database.
@@ -150,7 +150,7 @@ class BudgetDatabase {
   std::map<url::Origin, BudgetInfo> budget_map_;
 
   // The clock used to vend times.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   base::WeakPtrFactory<BudgetDatabase> weak_ptr_factory_;
 

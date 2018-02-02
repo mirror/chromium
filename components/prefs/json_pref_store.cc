@@ -519,18 +519,17 @@ const int32_t
 JsonPrefStore::WriteCountHistogram::WriteCountHistogram(
     const base::TimeDelta& commit_interval,
     const base::FilePath& path)
-    : WriteCountHistogram(
-          commit_interval,
-          path,
-          std::unique_ptr<base::Clock>(new base::DefaultClock)) {}
+    : WriteCountHistogram(commit_interval,
+                          path,
+                          base::DefaultClock::GetInstance()) {}
 
 JsonPrefStore::WriteCountHistogram::WriteCountHistogram(
     const base::TimeDelta& commit_interval,
     const base::FilePath& path,
-    std::unique_ptr<base::Clock> clock)
+    base::Clock* clock)
     : commit_interval_(commit_interval),
       path_(path),
-      clock_(clock.release()),
+      clock_(clock),
       report_interval_(
           base::TimeDelta::FromMinutes(kHistogramWriteReportIntervalMins)),
       last_report_time_(clock_->Now()),

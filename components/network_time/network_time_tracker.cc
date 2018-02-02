@@ -202,16 +202,16 @@ void NetworkTimeTracker::RegisterPrefs(PrefRegistrySimple* registry) {
 }
 
 NetworkTimeTracker::NetworkTimeTracker(
-    std::unique_ptr<base::Clock> clock,
-    std::unique_ptr<base::TickClock> tick_clock,
+    base::Clock* clock,
+    base::TickClock* tick_clock,
     PrefService* pref_service,
     scoped_refptr<net::URLRequestContextGetter> getter)
     : server_url_(kTimeServiceURL),
       max_response_size_(1024),
       backoff_(base::TimeDelta::FromMinutes(kBackoffMinutes)),
       getter_(std::move(getter)),
-      clock_(std::move(clock)),
-      tick_clock_(std::move(tick_clock)),
+      clock_(clock),
+      tick_clock_(tick_clock),
       pref_service_(pref_service),
       time_query_completed_(false) {
   const base::DictionaryValue* time_mapping =

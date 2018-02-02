@@ -276,7 +276,7 @@ base::DictionaryValue* ChromeSSLHostStateDelegate::GetValidCertDecisionsDict(
 // session and stores it in decision entries. See the comment for
 // |current_expiration_guid_| for more information.
 ChromeSSLHostStateDelegate::ChromeSSLHostStateDelegate(Profile* profile)
-    : clock_(new base::DefaultClock()),
+    : clock_(base::DefaultClock::GetInstance()),
       profile_(profile),
       current_expiration_guid_(base::GenerateGUID()) {
   MigrateOldSettings(HostContentSettingsMapFactory::GetForProfile(profile));
@@ -488,6 +488,6 @@ bool ChromeSSLHostStateDelegate::DidHostRunInsecureContent(
   NOTREACHED();
   return false;
 }
-void ChromeSSLHostStateDelegate::SetClock(std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void ChromeSSLHostStateDelegate::SetClock(base::Clock* clock) {
+  clock_ = clock;
 }
