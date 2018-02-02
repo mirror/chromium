@@ -261,6 +261,24 @@
       "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5b4ee1_5012663c",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-02T23:49:06Z",
+      "side": 1,
+      "message": "Hi, I\u0027ve updated the comment to make it more clear. We can close the dialog by the \nsignin-back-button or by the buttons in the gaia-navigation. The former is what we use to close the dialog for normal gaia flow. \nSetting closable\u003d\u003dtrue will not hide the close button of gaia-navigation, the existing behavior should not be changed.",
+      "parentUuid": "93a2c871_16c6a2c7",
+      "revId": "de0634aa4b6f7df13cb466e0f9cad77cdb12d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
