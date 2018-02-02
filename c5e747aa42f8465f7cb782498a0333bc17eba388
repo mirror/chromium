@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d958b9e9_4df36043",
+        "filename": "components/browser_watcher/fetch_system_session_events_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Yeah, this is a bit of a boondoggle, exposing a protected interface for direct access is not super-kosher in my books.",
+      "parentUuid": "0f4b96ca_9acdb96a",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9b1318_20b45524",
         "filename": "components/browser_watcher/fetch_system_session_events_main_win.cc",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfbaa19_26cd1c2d",
+        "filename": "components/browser_watcher/fetch_system_session_events_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9b1318_20b45524",
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "07263572_9cdf7d73",
+        "filename": "components/metrics/system_session_analyzer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e0508d_16e8488d",
+      "range": {
+        "startLine": 203,
+        "startChar": 59,
+        "endLine": 203,
+        "endChar": 64
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad2fa8c7_eb34eeb9",
         "filename": "components/metrics/system_session_analyzer_win.cc",
         "patchSetId": 2
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "09228bcb_ec94444e",
+        "filename": "components/metrics/system_session_analyzer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Good catch - looks like the comment on the map is in error. Fixed.",
+      "parentUuid": "ad2fa8c7_eb34eeb9",
+      "range": {
+        "startLine": 241,
+        "startChar": 45,
+        "endLine": 241,
+        "endChar": 55
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f28f1d_98bffae1",
         "filename": "components/metrics/system_session_analyzer_win.h",
         "patchSetId": 2
@@ -126,6 +216,24 @@
       "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27eaee61_b341a6f1",
+        "filename": "components/metrics/system_session_analyzer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f28f1d_98bffae1",
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "02524e1c_92e073b5",
+        "filename": "components/metrics/system_session_analyzer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35fcf73_ceede44b",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 21
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bbf0368_f1796d4e",
         "filename": "components/metrics/system_session_analyzer_win.h",
         "patchSetId": 2
@@ -172,6 +304,30 @@
       "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd1f573_12f35784",
+        "filename": "components/metrics/system_session_analyzer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-02T14:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbf0368_f1796d4e",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "c5e747aa42f8465f7cb782498a0333bc17eba388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
