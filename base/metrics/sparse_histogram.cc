@@ -156,13 +156,11 @@ bool SparseHistogram::AddSamplesFromPickle(PickleIterator* iter) {
 }
 
 void SparseHistogram::WriteHTMLGraph(std::string* output) const {
-  output->append("<PRE>");
-  WriteAsciiImpl(true, "<br>", output);
-  output->append("</PRE>");
+  WriteAsciiImpl(true, output);
 }
 
 void SparseHistogram::WriteAscii(std::string* output) const {
-  WriteAsciiImpl(true, "\n", output);
+  WriteAsciiImpl(false, output);
 }
 
 void SparseHistogram::SerializeInfoImpl(Pickle* pickle) const {
@@ -219,65 +217,72 @@ void SparseHistogram::GetCountAndBucketData(Count* count,
   // TODO(kaiwang): Implement. (See HistogramBase::WriteJSON.)
 }
 
-void SparseHistogram::WriteAsciiImpl(bool graph_it,
-                                     const std::string& newline,
-                                     std::string* output) const {
+void SparseHistogram::WriteAsciiImpl(const bool is_html,
+                                     std::string* const output) const {
   // Get a local copy of the data so we are consistent.
   std::unique_ptr<HistogramSamples> snapshot = SnapshotSamples();
-  Count total_count = snapshot->TotalCount();
-  double scaled_total_count = total_count / 100.0;
+  Count sample_count = snapshot->TotalCount();
 
-  WriteAsciiHeader(total_count, output);
-  output->append(newline);
+  StringAppendF(output, is_html ? "<h2>%s</h2><pre>" : "%s\n\n",
+                histogram_name());
 
-  // Determine how wide the largest bucket range is (how many digits to print),
-  // so that we'll be able to right-align starts for the graphical bars.
-  // Determine which bucket has the largest sample count so that we can
-  // normalize the graphical bar-width relative to that sample count.
-  Count largest_count = 0;
-  Sample largest_sample = 0;
-  std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
-  while (!it->Done()) {
-    Sample min;
-    int64_t max;
-    Count count;
-    it->Get(&min, &max, &count);
-    if (min > largest_sample)
-      largest_sample = min;
-    if (count > largest_count)
-      largest_count = count;
-    it->Next();
+  // If there are no samples, display the mean as 0.0 instead of NaN.
+  const double mean = sample_count != 0
+                          ? static_cast<double>(snapshot->sum()) / sample_count
+                          : 0.0;
+  StringAppendF(output, "Samples: %d, Mean: %.1f, Flags: 0x%x\n\n",
+                sample_count, mean, flags());
+
+  if (sample_count != 0) {
+    *output += "+------------+------------+--------+------------+--------+\n";
+    *output += "|     Bucket |    Samples |      % |  Cumulated |      % |\n";
+    *output += "+------------+------------+--------+------------+--------+\n";
+
+    // Determine how wide the largest bucket range is (how many digits to
+    // print), so that we'll be able to right-align starts for the graphical
+    // bars.
+    Count count_max = 0;
+    for (const std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
+         !it->Done(); it->Next()) {
+      Sample min;
+      int64_t max;
+      Count count;
+      it->Get(&min, &max, &count);
+      count_max = std::max(count_max, count);
+    }
+
+    const double bar_scaling = 50.0 / count_max;
+    const double percent_scaling = 100.0 / sample_count;
+
+    Count previous = 0;
+    Count cumulated = 0;
+    // Output the actual histogram graph.
+    for (const std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
+         !it->Done(); it->Next()) {
+      Sample min;
+      int64_t max;
+      Count current;
+      it->Get(&min, &max, &current);
+
+      cumulated += current;
+      if (current != 0 || previous != 0) {
+        StringAppendF(output, "| %10s | %10d | %5.1f%% | %10d | %5.1f%% | ",
+                      GetSimpleAsciiBucketRange(min).c_str(), current,
+                      current * percent_scaling, cumulated,
+                      cumulated * percent_scaling);
+
+        output->append(current * bar_scaling, '*');
+        *output += '\n';
+      }
+      previous = current;
+    }
+
+    DCHECK_EQ(sample_count, cumulated);
+    *output += "+------------+------------+--------+------------+--------+\n";
   }
-  size_t print_width = GetSimpleAsciiBucketRange(largest_sample).size() + 1;
 
-  // iterate over each item and display them
-  it = snapshot->Iterator();
-  while (!it->Done()) {
-    Sample min;
-    int64_t max;
-    Count count;
-    it->Get(&min, &max, &count);
-
-    // value is min, so display it
-    std::string range = GetSimpleAsciiBucketRange(min);
-    output->append(range);
-    for (size_t j = 0; range.size() + j < print_width + 1; ++j)
-      output->push_back(' ');
-
-    if (graph_it)
-      WriteAsciiBucketGraph(count, largest_count, output);
-    WriteAsciiBucketValue(count, scaled_total_count, output);
-    output->append(newline);
-    it->Next();
-  }
-}
-
-void SparseHistogram::WriteAsciiHeader(const Count total_count,
-                                       std::string* output) const {
-  StringAppendF(output, "Histogram: %s recorded %d samples", histogram_name(),
-                total_count);
-  if (flags())
-    StringAppendF(output, " (flags = 0x%x)", flags());
+  if (is_html)
+    output->append("</pre>");
 }
 
 }  // namespace base

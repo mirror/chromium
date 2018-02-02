@@ -529,13 +529,11 @@ bool Histogram::AddSamplesFromPickle(PickleIterator* iter) {
 // The following methods provide a graphical histogram display.
 void Histogram::WriteHTMLGraph(std::string* output) const {
   // TBD(jar) Write a nice HTML bar chart, with divs an mouse-overs etc.
-  output->append("<PRE>");
-  WriteAsciiImpl(true, "<br>", output);
-  output->append("</PRE>");
+  WriteAsciiImpl(true, output);
 }
 
 void Histogram::WriteAscii(std::string* output) const {
-  WriteAsciiImpl(true, "\n", output);
+  WriteAsciiImpl(false, output);
 }
 
 bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
@@ -638,7 +636,7 @@ double Histogram::GetBucketSize(Count current, uint32_t i) const {
   return current/denominator;
 }
 
-const std::string Histogram::GetAsciiBucketRange(uint32_t i) const {
+std::string Histogram::GetAsciiBucketRange(uint32_t i) const {
   return GetSimpleAsciiBucketRange(ranges(i));
 }
 
@@ -691,109 +689,66 @@ std::unique_ptr<SampleVector> Histogram::SnapshotUnloggedSamples() const {
   return samples;
 }
 
-void Histogram::WriteAsciiImpl(bool graph_it,
-                               const std::string& newline,
-                               std::string* output) const {
+void Histogram::WriteAsciiImpl(const bool is_html,
+                               std::string* const output) const {
   // Get local (stack) copies of all effectively volatile class data so that we
   // are consistent across our output activities.
   std::unique_ptr<SampleVector> snapshot = SnapshotAllSamples();
   Count sample_count = snapshot->TotalCount();
 
-  WriteAsciiHeader(*snapshot, sample_count, output);
-  output->append(newline);
+  StringAppendF(output, is_html ? "<h2>%s</h2><pre>" : "%s\n\n",
+                histogram_name());
 
-  // Prepare to normalize graphical rendering of bucket contents.
-  double max_size = 0;
-  if (graph_it)
-    max_size = GetPeakBucketSize(*snapshot);
+  // If there are no samples, display the mean as 0.0 instead of NaN.
+  const double mean = sample_count != 0
+                          ? static_cast<double>(snapshot->sum()) / sample_count
+                          : 0.0;
+  StringAppendF(output, "Samples: %d, Mean: %.1f, Flags: 0x%x\n\n",
+                sample_count, mean, flags());
 
-  // Calculate space needed to print bucket range numbers.  Leave room to print
-  // nearly the largest bucket range without sliding over the histogram.
-  uint32_t largest_non_empty_bucket = bucket_count() - 1;
-  while (0 == snapshot->GetCountAtIndex(largest_non_empty_bucket)) {
-    if (0 == largest_non_empty_bucket)
-      break;  // All buckets are empty.
-    --largest_non_empty_bucket;
-  }
+  if (sample_count != 0) {
+    *output += "+------------+------------+--------+------------+--------+\n";
+    *output += "|     Bucket |    Samples |      % |  Cumulated |      % |\n";
+    *output += "+------------+------------+--------+------------+--------+\n";
 
-  // Calculate largest print width needed for any of our bucket range displays.
-  size_t print_width = 1;
-  for (uint32_t i = 0; i < bucket_count(); ++i) {
-    if (snapshot->GetCountAtIndex(i)) {
-      size_t width = GetAsciiBucketRange(i).size() + 1;
-      if (width > print_width)
-        print_width = width;
-    }
-  }
+    // Prepare to normalize graphical rendering of bucket contents.
+    const double bar_scaling = 50.0 / GetPeakBucketSize(*snapshot);
+    const double percent_scaling = 100.0 / sample_count;
 
-  int64_t remaining = sample_count;
-  int64_t past = 0;
-  // Output the actual histogram graph.
-  for (uint32_t i = 0; i < bucket_count(); ++i) {
-    Count current = snapshot->GetCountAtIndex(i);
-    if (!current && !PrintEmptyBucket(i))
-      continue;
-    remaining -= current;
-    std::string range = GetAsciiBucketRange(i);
-    output->append(range);
-    for (size_t j = 0; range.size() + j < print_width + 1; ++j)
-      output->push_back(' ');
-    if (0 == current && i < bucket_count() - 1 &&
-        0 == snapshot->GetCountAtIndex(i + 1)) {
-      while (i < bucket_count() - 1 &&
-             0 == snapshot->GetCountAtIndex(i + 1)) {
-        ++i;
+    Count previous = 0;
+    Count cumulated = 0;
+    // Output the actual histogram graph.
+    for (uint32_t i = 0; i < bucket_count(); ++i) {
+      const Count current = snapshot->GetCountAtIndex(i);
+      cumulated += current;
+      if (current != 0 || previous != 0) {
+        StringAppendF(output, "| %10s | %10d | %5.1f%% | %10d | %5.1f%% | ",
+                      GetAsciiBucketRange(i).c_str(), current,
+                      current * percent_scaling, cumulated,
+                      cumulated * percent_scaling);
+
+        output->append(GetBucketSize(current, i) * bar_scaling, '*');
+        *output += '\n';
       }
-      output->append("... ");
-      output->append(newline);
-      continue;  // No reason to plot emptiness.
+      previous = current;
     }
-    double current_size = GetBucketSize(current, i);
-    if (graph_it)
-      WriteAsciiBucketGraph(current_size, max_size, output);
-    WriteAsciiBucketContext(past, current, remaining, i, output);
-    output->append(newline);
-    past += current;
+
+    DCHECK_EQ(sample_count, cumulated);
+    *output += "+------------+------------+--------+------------+--------+\n";
   }
-  DCHECK_EQ(sample_count, past);
+
+  if (is_html)
+    output->append("</pre>");
 }
 
 double Histogram::GetPeakBucketSize(const SampleVectorBase& samples) const {
   double max = 0;
-  for (uint32_t i = 0; i < bucket_count() ; ++i) {
+  for (uint32_t i = 0; i < bucket_count(); ++i) {
     double current_size = GetBucketSize(samples.GetCountAtIndex(i), i);
     if (current_size > max)
       max = current_size;
   }
   return max;
-}
-
-void Histogram::WriteAsciiHeader(const SampleVectorBase& samples,
-                                 Count sample_count,
-                                 std::string* output) const {
-  StringAppendF(output, "Histogram: %s recorded %d samples", histogram_name(),
-                sample_count);
-  if (sample_count == 0) {
-    DCHECK_EQ(samples.sum(), 0);
-  } else {
-    double mean = static_cast<float>(samples.sum()) / sample_count;
-    StringAppendF(output, ", mean = %.1f", mean);
-  }
-  if (flags())
-    StringAppendF(output, " (flags = 0x%x)", flags());
-}
-
-void Histogram::WriteAsciiBucketContext(const int64_t past,
-                                        const Count current,
-                                        const int64_t remaining,
-                                        const uint32_t i,
-                                        std::string* output) const {
-  double scaled_sum = (past + current + remaining) / 100.0;
-  WriteAsciiBucketValue(current, scaled_sum, output);
-  if (0 < i) {
-    double percentage = past / scaled_sum;
-    StringAppendF(output, " {%3.1f%%}", percentage);
-  }
 }
 
 void Histogram::GetParameters(DictionaryValue* params) const {
@@ -971,12 +926,12 @@ double LinearHistogram::GetBucketSize(Count current, uint32_t i) const {
   DCHECK_GT(ranges(i + 1), ranges(i));
   // Adjacent buckets with different widths would have "surprisingly" many (few)
   // samples in a histogram if we didn't normalize this way.
-  double denominator = ranges(i + 1) - ranges(i);
-  return current/denominator;
+  const double denominator = ranges(i + 1) - ranges(i);
+  return current / denominator;
 }
 
-const std::string LinearHistogram::GetAsciiBucketRange(uint32_t i) const {
-  int range = ranges(i);
+std::string LinearHistogram::GetAsciiBucketRange(uint32_t i) const {
+  const int range = ranges(i);
   BucketDescriptionMap::const_iterator it = bucket_description_.find(range);
   if (it == bucket_description_.end())
     return Histogram::GetAsciiBucketRange(i);
