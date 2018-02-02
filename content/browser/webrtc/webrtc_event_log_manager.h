@@ -20,6 +20,7 @@
 #include "content/browser/webrtc/webrtc_remote_event_log_manager.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/render_process_host_observer.h"
 
 namespace content {
 
@@ -30,7 +31,8 @@ namespace content {
 // user from the WebRTCIntenals. (A log may simulatenously be written to both,
 // either, or none.)
 class CONTENT_EXPORT WebRtcEventLogManager
-    : public WebRtcLocalEventLogsObserver,
+    : public RenderProcessHostObserver,
+      public WebRtcLocalEventLogsObserver,
       public WebRtcRemoteEventLogsObserver {
  public:
   // To turn WebRTC on and off, we go through PeerConnectionTrackerProxy. In
@@ -191,6 +193,16 @@ class CONTENT_EXPORT WebRtcEventLogManager
 
   static WebRtcEventLogManager* g_webrtc_event_log_manager;
 
+  // RenderProcessHostObserver implementation.
+  void RenderProcessExited(RenderProcessHost* host,
+                           base::TerminationStatus status,
+                           int exit_code) override;
+  void RenderProcessHostDestroyed(RenderProcessHost* host) override;
+
+  // RenderProcessExited() and RenderProcessHostDestroyed() treated similarly
+  // by this function.
+  void RenderProcessHostExitedDestroyed(RenderProcessHost* host);
+
   // WebRtcLocalEventLogsObserver implementation:
   void OnLocalLogStarted(PeerConnectionKey peer_connection,
                          const base::FilePath& file_path) override;
@@ -233,6 +245,8 @@ class CONTENT_EXPORT WebRtcEventLogManager
       const std::string& message,
       base::OnceCallback<void(std::pair<bool, bool>)> reply);
 
+  void RenderProcessExitedInternal(int render_process_id);
+
   void SetLocalLogsObserverInternal(WebRtcLocalEventLogsObserver* observer,
                                     base::OnceClosure reply);
 
@@ -269,6 +283,12 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // in WebRTC, and for which client(s).
   std::map<PeerConnectionKey, LoggingTargetBitmap>
       peer_connections_with_event_logging_enabled_;
+
+  // The set of RenderProcessHosts with which the manager is registered for
+  // observation. Allows us to register for each RPH only once, and get notified
+  // when it exits (cleanly or due to a crash).
+  // This object is only to be accessed on the UI thread.
+  std::set<RenderProcessHost*> observed_render_process_hosts_;
 
   // In production, this holds a small object that just tells WebRTC (via
   // PeerConnectionTracker) to start/stop producing event logs for a specific
