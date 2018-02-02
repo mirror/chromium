@@ -59,7 +59,8 @@ WebSocket::~WebSocket() = default;
 void WebSocket::Accept(const HttpServerRequestInfo& request) {
   std::string version = request.GetHeaderValue("sec-websocket-version");
   if (version != "8" && version != "13") {
-    SendErrorResponse("Invalid request format. The version is not valid.");
+    SendErrorResponse("Invalid request format. The version is not valid.",
+                      NO_TRAFFIC_ANNOTATION_BUG_656607);
     return;
   }
 
@@ -67,7 +68,8 @@ void WebSocket::Accept(const HttpServerRequestInfo& request) {
   if (key.empty()) {
     SendErrorResponse(
         "Invalid request format. Sec-WebSocket-Key is empty or isn't "
-        "specified.");
+        "specified.",
+        NO_TRAFFIC_ANNOTATION_BUG_656607);
     return;
   }
   std::string encoded_hash;
@@ -91,7 +93,8 @@ void WebSocket::Accept(const HttpServerRequestInfo& request) {
     }
   }
   server_->SendRaw(connection_->id(),
-                   ValidResponseString(encoded_hash, response_extensions));
+                   ValidResponseString(encoded_hash, response_extensions),
+                   NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 WebSocket::ParseResult WebSocket::Read(std::string* message) {
@@ -120,12 +123,13 @@ WebSocket::ParseResult WebSocket::Read(std::string* message) {
   return result;
 }
 
-void WebSocket::Send(const std::string& message) {
+void WebSocket::Send(const std::string& message,
+                     const NetworkTrafficAnnotationTag traffic_annotation) {
   if (closed_)
     return;
   std::string encoded;
   encoder_->EncodeFrame(message, 0, &encoded);
-  server_->SendRaw(connection_->id(), encoded);
+  server_->SendRaw(connection_->id(), encoded, traffic_annotation);
 }
 
 void WebSocket::Fail() {
@@ -134,11 +138,13 @@ void WebSocket::Fail() {
   server_->Close(connection_->id());
 }
 
-void WebSocket::SendErrorResponse(const std::string& message) {
+void WebSocket::SendErrorResponse(
+    const std::string& message,
+    const NetworkTrafficAnnotationTag traffic_annotation) {
   if (closed_)
     return;
   closed_ = true;
-  server_->Send500(connection_->id(), message);
+  server_->Send500(connection_->id(), message, traffic_annotation);
 }
 
 }  // namespace net

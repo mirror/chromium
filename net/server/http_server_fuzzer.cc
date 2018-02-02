@@ -10,6 +10,7 @@
 #include "net/log/test_net_log.h"
 #include "net/server/http_server.h"
 #include "net/socket/fuzzed_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 
 namespace {
 
@@ -39,7 +40,7 @@ class WaitTillHttpCloseDelegate : public net::HttpServer::Delegate {
     if (action_flags_ & REPLY_TO_MESSAGE) {
       server_->Send200(connection_id,
                        data_provider_->ConsumeRandomLengthString(64),
-                       "text/html");
+                       "text/html", TRAFFIC_ANNOTATION_FOR_TESTS);
     }
   }
 
@@ -62,7 +63,8 @@ class WaitTillHttpCloseDelegate : public net::HttpServer::Delegate {
 
     if (action_flags_ & REPLY_TO_MESSAGE) {
       server_->SendOverWebSocket(connection_id,
-                                 data_provider_->ConsumeRandomLengthString(64));
+                                 data_provider_->ConsumeRandomLengthString(64),
+                                 TRAFFIC_ANNOTATION_FOR_TESTS);
     }
   }
 

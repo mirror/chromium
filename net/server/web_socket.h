@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -31,12 +32,14 @@ class WebSocket final {
 
   void Accept(const HttpServerRequestInfo& request);
   ParseResult Read(std::string* message);
-  void Send(const std::string& message);
+  void Send(const std::string& message,
+            const NetworkTrafficAnnotationTag traffic_annotation);
   ~WebSocket();
 
  private:
   void Fail();
-  void SendErrorResponse(const std::string& message);
+  void SendErrorResponse(const std::string& message,
+                         const NetworkTrafficAnnotationTag traffic_annotation);
 
   HttpServer* const server_;
   HttpConnection* const connection_;

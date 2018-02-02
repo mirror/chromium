@@ -109,9 +109,9 @@ void UiDevToolsServer::AttachClient(std::unique_ptr<UiDevToolsClient> client) {
 void UiDevToolsServer::SendOverWebSocket(int connection_id,
                                          const String& message) {
   io_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&net::HttpServer::SendOverWebSocket,
-                 base::Unretained(server_.get()), connection_id, message));
+      FROM_HERE, base::Bind(&net::HttpServer::SendOverWebSocket,
+                            base::Unretained(server_.get()), connection_id,
+                            message, NO_TRAFFIC_ANNOTATION_BUG_656607));
 }
 
 void UiDevToolsServer::Start(const std::string& address_string, uint16_t port) {

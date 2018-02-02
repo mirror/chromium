@@ -18,6 +18,7 @@
 #include "net/log/net_log_source.h"
 #include "net/server/http_server_request_info.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 const int kBufferSize = 100 * 1024 * 1024;  // 100 MB
@@ -105,7 +106,7 @@ void TestHttpServer::OnWebSocketRequest(
       server_->AcceptWebSocket(connection_id, info);
       break;
     case kNotFound:
-      server_->Send404(connection_id);
+      server_->Send404(connection_id, TRAFFIC_ANNOTATION_FOR_TESTS);
       break;
     case kClose:
       server_->Close(connection_id);
@@ -126,7 +127,8 @@ void TestHttpServer::OnWebSocketMessage(int connection_id,
     callback.Run();
   switch (action) {
     case kEchoMessage:
-      server_->SendOverWebSocket(connection_id, data);
+      server_->SendOverWebSocket(connection_id, data,
+                                 TRAFFIC_ANNOTATION_FOR_TESTS);
       break;
     case kCloseOnMessage:
       server_->Close(connection_id);
