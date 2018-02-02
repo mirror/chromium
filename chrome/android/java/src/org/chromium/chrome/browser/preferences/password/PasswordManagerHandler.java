@@ -62,6 +62,7 @@ public interface PasswordManagerHandler {
      *
      * @param index of exception entry.
      */
+
     void removeSavedPasswordException(int index);
 
     /**
@@ -70,4 +71,9 @@ public interface PasswordManagerHandler {
      * @param callback is called on completion, with the serialized passwords as argument.
      */
     void serializePasswords(Callback<String> callback);
+
+    /**
+     * Adds new credential to the database.
+     */
+    public void addPasswordEntry(String site, String username, String password, String origin);
 }

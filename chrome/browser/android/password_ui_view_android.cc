@@ -98,11 +98,12 @@ ScopedJavaLocalRef<jobject> PasswordUIViewAndroid::GetSavedPasswordEntry(
   if (!form) {
     return Java_PasswordUIView_createSavedPasswordEntry(
         env, ConvertUTF8ToJavaString(env, std::string()),
+        ConvertUTF8ToJavaString(env, std::string()),
         ConvertUTF16ToJavaString(env, base::string16()),
         ConvertUTF16ToJavaString(env, base::string16()));
   }
   return Java_PasswordUIView_createSavedPasswordEntry(
-      env,
+      env, ConvertUTF8ToJavaString(env, std::string()),
       ConvertUTF8ToJavaString(
           env, password_manager::GetShownOriginAndLinkUrl(*form).first),
       ConvertUTF16ToJavaString(env, form->username_value),
@@ -171,6 +172,22 @@ void PasswordUIViewAndroid::HandleSerializePasswords(
           &PasswordUIViewAndroid::PostSerializedPasswords,
           base::Unretained(this),
           base::android::ScopedJavaGlobalRef<jobject>(env, callback)));
+}
+
+void PasswordUIViewAndroid::HandleAddPasswordEntry(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>&,
+    const base::android::JavaParamRef<jstring>& site,
+    const base::android::JavaParamRef<jstring>& username,
+    const base::android::JavaParamRef<jstring>& password,
+    const base::android::JavaParamRef<jstring>& origin) {
+  autofill::PasswordForm form;
+  form.signon_realm = ConvertJavaStringToUTF8(env, site);
+  form.username_value = ConvertJavaStringToUTF16(env, username);
+  form.password_value = ConvertJavaStringToUTF16(env, password);
+  form.origin = GURL(ConvertJavaStringToUTF8(env, origin));
+
+  password_manager_presenter_.AddLogin(form);
 }
 
 ScopedJavaLocalRef<jstring> JNI_PasswordUIView_GetAccountDashboardURL(
