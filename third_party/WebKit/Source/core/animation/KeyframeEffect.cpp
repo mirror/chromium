@@ -79,7 +79,6 @@ KeyframeEffect* KeyframeEffect::Create(
       element, keyframes, composite, script_state, exception_state);
   if (exception_state.HadException())
     return nullptr;
-
   return Create(element, model, timing);
 }
 
@@ -123,6 +122,27 @@ void KeyframeEffect::setComposite(String composite_string) {
   EffectModel::CompositeOperation composite;
   if (EffectModel::StringToCompositeOperation(composite_string, composite))
     Model()->SetComposite(composite);
+}
+
+void KeyframeEffect::setKeyframes(ScriptState* script_state,
+                                  const ScriptValue& keyframes,
+                                  ExceptionState& exception_state) {
+  // TODO(smcgruer): This should work for transitions too. Probably requires us
+  // to rejig everything though, since you can totally mutate a transition
+  // Animation into a 'normal' one using setKeyframes (e.g. have multiple
+  // properties).
+  if (!Model()->IsStringKeyframeEffectModel())
+    return;
+
+  StringKeyframeVector new_keyframes = EffectInput::ParseKeyframesArgument(
+      Target(), keyframes, script_state, exception_state);
+  if (exception_state.HadException())
+    return;
+
+  // TODO(smcgruer): We need to do the check for CSSAdditiveAnimationsEnabled,
+  // like EffectInput::Convert, but that requires setting them on the model
+  // which we don't want to do if it'll throw later :/.
+  ToStringKeyframeEffectModel(Model())->SetFrames(new_keyframes);
 }
 
 AnimationEffectTiming* KeyframeEffect::timing() {
