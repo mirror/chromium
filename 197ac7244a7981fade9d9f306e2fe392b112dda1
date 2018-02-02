@@ -94,6 +94,30 @@
       "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a8ff79_3e5b881d",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-02-02T06:37:12Z",
+      "side": 1,
+      "message": "For this case, should we send \u0027CapsLock\u0027 key down if |e.type \u003d\u003d EventType.POINTER_DOWN| and key up if |e.type \u003d\u003d EventType.POINTER_UP| not to break tracking of pressed keys?",
+      "parentUuid": "e5f2fe6e_7284b439",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
