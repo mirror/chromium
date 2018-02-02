@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91edb28c_c15066cd",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "I looked into this and realized that it is not actually a set # of pixels, and this will break if I set font size to something different in chrome://settings. I instead added some code that is similar to some of the old UI\u0027s code for computing the height in JS when the dialog is shown or the window changes size. This now works across different font sizes. Let me know what you think.",
+      "parentUuid": "6455c99d_868093e2",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e1f4dbb_8abf1e91",
         "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60c4829_b82edd72",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e1f4dbb_8abf1e91",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "144cc851_508bf002",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d0ef02d_dc50217b",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2037e3a_c2790956",
         "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962cc75e_b92b42a3",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2037e3a_c2790956",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 4
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "10f9f07e_426fceb1",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6bf3442_570044fa",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e6701e_6b7cf5f2",
         "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "453d36e6_17a1700b",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e6701e_6b7cf5f2",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28399207_d62466d7",
         "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2756970b_5f3fc9c0",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-02T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28399207_d62466d7",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "3ebc7b5f5df1cc6deb682ca17914eb599fe1bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
