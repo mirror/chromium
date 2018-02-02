@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4e887a69_350d4f77",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-02T21:21:53Z",
+      "side": 1,
+      "message": "By audio system you mean AudioManager, Audio service or AudioSystem? I\u0027ll guess it\u0027s the service:\nWe register Audio service during Mojo initialization\ntogether with the rest of the services, because it\u0027s a standard approach now and I was not aware of synchronous waiting during a startup.\n\nNow that I know how it can cause a startup delay, I\u0027ll look into how to register the service later, outside of InitializeMojo() :)",
+      "parentUuid": "868c695d_a39bc020",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6751234d_a2da6b87",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
