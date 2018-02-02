@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d591426_f85ac7a8",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T01:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7035869_2c9d1b78",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdc456cd_0e8a4b9c",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03d64b7_1c16ddef",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T01:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdc456cd_0e8a4b9c",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ba057db9_388364d5",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T01:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d443b3a8_22a61062",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88961829_6ebc8185",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8ba499da_ffaf3471",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T01:58:38Z",
+      "side": 1,
+      "message": "This menu is not only going to be used in the ProfileChooserView! BookmarkBubble and some others will use it too, so we unfortunately can\u0027t do this.\n\nI added the comment for base::Unretained(..).",
+      "parentUuid": "88961829_6ebc8185",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c787990_f7e4654b",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64ac0a7_f3116d3f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-02-02T01:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c787990_f7e4654b",
+      "revId": "12187a58d4558a4f0665a2a9f61e5b03a70c5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
