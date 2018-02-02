@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82432738_981b7c85",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5890,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-02-02T19:06:59Z",
+      "side": 1,
+      "message": "Potential solution D: Allow CanAppendRangeToEnd \u0026\u0026 CanAppendBuffersToEnd to recognize that same-timestamp of first new buffer (or start time of buffers being appended, if earlier), if the same as the buffered end time of the current range, would be acceptable as adjacent (so long as that first new buffer is also a keyframe). This avoids the artificial increasing of fudge room upon estimated duration updates (solutions B\u0026C), ugliness around tracking estimated duration updates that are allowable or not based on actual CFG (solution C), and introducing fragility into BelongsToRange, etc by loosening their constraints on adjacency to include buffered end time.\n\nD, then A, then B, then C are my preferred solution options, in order.",
+      "revId": "abc9f616731195a5d96479cdecdb2bdfd2f8bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
