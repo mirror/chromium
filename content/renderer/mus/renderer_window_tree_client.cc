@@ -12,6 +12,7 @@
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 #include "components/viz/client/hit_test_data_provider.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "components/viz/common/features.h"
 #include "content/renderer/mash_util.h"
 #include "content/renderer/mus/mus_embedded_frame.h"
 #include "content/renderer/mus/mus_embedded_frame_delegate.h"

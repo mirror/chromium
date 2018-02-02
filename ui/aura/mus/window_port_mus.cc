@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
-#include "components/viz/host/host_frame_sink_manager.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
