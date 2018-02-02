@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 
@@ -33,12 +34,20 @@ void KeyboardLockServiceImpl::CreateMojoService(
 void KeyboardLockServiceImpl::RequestKeyboardLock(
     const std::vector<std::string>& key_codes,
     RequestKeyboardLockCallback callback) {
-  // TODO(zijiehe): Implementation required.
+  if (key_codes.empty()) {
+    UMA_HISTOGRAM_COUNTS("Keyboard.LockApi.RequestAllKeys", 1);
+  } else {
+    UMA_HISTOGRAM_COUNTS("Keyboard.LockApi.RequestSomeKeys", 1);
+  }
+
+  // TODO(joedow): Implementation required.
   std::move(callback).Run(blink::mojom::KeyboardLockRequestResult::SUCCESS);
 }
 
 void KeyboardLockServiceImpl::CancelKeyboardLock() {
-  // TODO(zijiehe): Implementation required.
+  UMA_HISTOGRAM_COUNTS("Keyboard.LockApi.CancelLock", 1);
+
+  // TODO(joedow): Implementation required.
 }
 
 }  // namespace content
