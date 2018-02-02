@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d14246e4_f72f4882",
+        "filename": "chrome/installer/linux/debian/additional_deps",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-02-02T23:26:12Z",
+      "side": 1,
+      "message": "While we\u0027re here, could you also add a copyright header to this and the RPM additional-deps files?  2018 copyright should do ;)\n\nIt might also be cleaner if you moved the comments in line with the packages.  I don\u0027t remember if the parser handles blank lines though, so you might need to use \u0027#\u0027 as a blank, or just skip empty lines in the parser.  You can test building the packages by building chorme/installer/linux",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 59
+      },
+      "revId": "b9a3bccd306283e3434bea9d8a975c878d6fef11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

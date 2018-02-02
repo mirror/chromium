@@ -46,6 +46,30 @@
       "revId": "59b7c899b3748fd384bbe753964a0242e56db587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f491a626_9870ab65",
+        "filename": "chrome/installer/linux/debian/additional_deps",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-02-02T23:26:12Z",
+      "side": 0,
+      "message": "Ack.\n\nIn that case, I think we should change this to libappindicator3-1 and add libappindicator3.so.1 as a manual RPM dependency.  We can remove them once we start statically linking the library and they become automatic dependencies.",
+      "parentUuid": "6b67403d_f5ec6517",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "59b7c899b3748fd384bbe753964a0242e56db587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
