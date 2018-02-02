@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6c3c2a09_2acf94f7",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-02T01:56:26Z",
+      "side": 1,
+      "message": "Cool. Would that affect the \u0027first time to paint\u0027 for the page too? (I am trying to think if this should be a diagnostic/sub-metric for another top-level metric, or itself be a top-level metric)",
+      "parentUuid": "2106ffa1_c6334dec",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "205360c2_20b236d4",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 6
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e0d9e2d9_a882ce94",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-02T01:56:26Z",
+      "side": 1,
+      "message": "Having it report for only specific clients makes sense to me. It\u0027s not just clear whether it needs to do the process-hop for doing the reporting. e.g. could this also be something like:\n\ndelegated_frame_host.cc:\n  host-\u003eRegisterFrameSinkId(frame_sink_id);\n  host-\u003eEnableSynchronizationReporting(\n      frame_sink_id, \"Compositing.MainFrameSynchronization.Duration\");",
+      "parentUuid": "e00da673_402c000d",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d93d20c2_b43f4e6d",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 6
@@ -138,6 +174,24 @@
       "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c1dc45_472093f7",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-02T01:56:26Z",
+      "side": 1,
+      "message": "Cool, thanks!",
+      "parentUuid": "83490166_578dacb7",
+      "revId": "1992ecea24767c8a32a722b948e4b88ec445b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
