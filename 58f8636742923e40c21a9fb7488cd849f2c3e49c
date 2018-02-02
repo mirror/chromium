@@ -290,6 +290,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e600f8_82f4df54",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-02T03:06:33Z",
+      "side": 1,
+      "message": "K, it looks to me like probably in this world the dropdown won\u0027t be using anything like this border class, so I think we would probably be good to just use a single class that is equivalent to this subclass.\n\nFor the moment that\u0027d mean that in Touchable Chrome mode your dropdown will look odd, but you\u0027ll fix that by totally changing how the dropdown is positioned and drawn anyway, so not a problem.",
+      "parentUuid": "7e6972ce_f8518997",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
