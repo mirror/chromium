@@ -78,7 +78,7 @@ bool MockInputMethodEngine::IsInterestedInKeyEvent() const {
 }
 
 void MockInputMethodEngine::ProcessKeyEvent(const ui::KeyEvent& key_event,
-                                            KeyEventDoneCallback& callback) {}
+                                            KeyEventDoneCallback callback) {}
 
 void MockInputMethodEngine::CandidateClicked(uint32_t index) {}
 

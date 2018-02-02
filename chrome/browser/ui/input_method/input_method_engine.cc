@@ -223,6 +223,11 @@ bool InputMethodEngine::SendKeyEvent(ui::KeyEvent* event,
   return true;
 }
 
+void InputMethodEngine::ProcessKeyEvent(const ui::KeyEvent& key_event,
+                                        KeyEventDoneCallback callback) {
+  InputMethodEngineBase::ProcessKeyEvent(key_event, std::move(callback));
+}
+
 bool InputMethodEngine::IsSpecialPage(ui::InputMethod* input_method) {
   Browser* browser = chrome::FindLastActive();
   DCHECK(browser);
