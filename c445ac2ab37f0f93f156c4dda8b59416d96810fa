@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a4afa0f_7a0cd2d8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-02-02T02:02:56Z",
+      "side": 1,
+      "message": "This suddenly became relevant because we trust legacy more than before to size its own objects. I\u0027ve now added a comment and DCHECK in ShrinkToAvoidFloats(), and more NG checks before entering said method. It\u0027s verboten to call that method if the containing block is NG. See patch set 21.",
+      "parentUuid": "0224217c_be3ee26b",
+      "range": {
+        "startLine": 2864,
+        "startChar": 48,
+        "endLine": 2864,
+        "endChar": 71
+      },
+      "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc907dbb_04b34e84",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 19
@@ -39,6 +63,24 @@
       "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513cd534_0cbf6b48",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-02-02T02:02:56Z",
+      "side": 1,
+      "message": "If this can happen outside of NG, you\u0027re right. I kind of assumed it wasn\u0027t possible. I\u0027ll add a DCHECK. See patch set 22.",
+      "parentUuid": "fc907dbb_04b34e84",
+      "revId": "c445ac2ab37f0f93f156c4dda8b59416d96810fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
