@@ -64,6 +64,7 @@ const char* const kKnownSettings[] = {
     kAllowRedeemChromeOsRegistrationOffers,
     kAttestationForContentProtectionEnabled,
     kCastReceiverName,
+    kCrostiniAllowed,
     kDeviceAttestationEnabled,
     kDeviceDisabled,
     kDeviceDisabledMessage,
@@ -626,6 +627,15 @@ void DecodeGenericPolicies(
         !container.device_hostname_template().empty()) {
       new_values_cache->SetString(kDeviceHostnameTemplate,
                                   container.device_hostname_template());
+    }
+  }
+
+  if (policy.has_crostini_allowed()) {
+    const em::CrostiniAllowedProto& container(policy.crostini_allowed());
+    if (container.has_crostini_allowed()) {
+      new_values_cache->SetValue(
+          kCrostiniAllowed,
+          std::make_unique<base::Value>(container.crostini_allowed()));
     }
   }
 }

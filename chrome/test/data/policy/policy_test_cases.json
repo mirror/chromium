@@ -3486,6 +3486,16 @@
     ]
   },
 
+  "CrostiniAllowed": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "crostini_allowed": false
+    },
+    "pref_mappings": [
+      { "pref": "cros.crostini_allowed"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {

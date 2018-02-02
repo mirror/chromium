@@ -938,6 +938,12 @@ message UnaffiliatedArcAllowedProto {
   optional bool unaffiliated_arc_allowed = 1;
 }
 
+// Setting to control if project Crostini, i.e. run Linux VMs on Chrome OS is
+// allowed.
+message CrostiniAllowedProto {
+  optional bool crostini_allowed = 1 [default = true];
+}
+
 message ChromeDeviceSettingsProto {
   reserved 61;
   optional DevicePolicyRefreshRateProto device_policy_refresh_rate = 1;
@@ -1016,4 +1022,5 @@ message ChromeDeviceSettingsProto {
       device_login_screen_auto_select_certificate_for_urls = 62;
   optional UnaffiliatedArcAllowedProto unaffiliated_arc_allowed = 63;
   optional NetworkHostnameProto network_hostname = 64;
+  optional CrostiniAllowedProto crostini_allowed = 65;
 }
