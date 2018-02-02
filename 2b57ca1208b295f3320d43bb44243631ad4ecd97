@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "39870508_eec47ef4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 39
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-02T03:30:54Z",
+      "side": 1,
+      "message": "It looks like some actual behaviour changes are being made in bookmark_app_navigation_throttle.cc. Can you explain these here?",
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91076fb1_d1f58a3f",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-02T03:30:54Z",
+      "side": 1,
+      "message": "What\u0027s with these TODOs? Isn\u0027t that the change being made by this CL?\n\n(Am I mistaken about what PROCEED does here?) If this does make a change, can you remove this TODO, update the CL description, and add these bugs to the Bug list?",
+      "range": {
+        "startLine": 286,
+        "startChar": 5,
+        "endLine": 286,
+        "endChar": 27
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97ddad1_cc4c6b78",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-02T03:30:54Z",
+      "side": 1,
+      "message": "Could this be an OR of some modifier enum like the one in ui/events/event_modifiers.h? So that the calls into here can be like \"MODIFIER_CONTROL\" instead of \"true /* ctrl_key */, false /* shift_key */\".\n\nAlso, it looks like shift_key is always false at the moment.",
+      "range": {
+        "startLine": 189,
+        "startChar": 46,
+        "endLine": 189,
+        "endChar": 54
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44035cf9_71e08968",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 39
