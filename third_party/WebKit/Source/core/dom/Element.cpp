@@ -2948,6 +2948,7 @@ void Element::UpdateFocusAppearanceWithOptions(
     const FocusOptions& options) {
   if (selection_behavior == SelectionBehaviorOnFocus::kNone)
     return;
+  LOG(INFO) << this << ": UpdateFocusAppearanceWithOptions, lifecycle: " << GetDocument().Lifecycle().GetState();
   if (IsRootEditableElement(*this)) {
     LocalFrame* frame = GetDocument().GetFrame();
     if (!frame)
@@ -2975,13 +2976,13 @@ void Element::UpdateFocusAppearanceWithOptions(
             .Build());
     if (!options.preventScroll())
       frame->Selection().RevealSelection();
-  } else if (GetLayoutObject() &&
+  }/* else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {
     if (!options.preventScroll()) {
       GetLayoutObject()->ScrollRectToVisible(BoundingBoxForScrollIntoView(),
                                              WebScrollIntoViewParams());
     }
-  }
+  }*/
 }
 
 void Element::blur() {

@@ -259,6 +259,7 @@
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
 #include "public/platform/InterfaceProvider.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebPrerenderingSupport.h"
@@ -4568,8 +4569,10 @@ bool Document::SetFocusedElement(Element* new_focused_element,
     }
   }
 
-  if (new_focused_element)
+  if (new_focused_element) {
     UpdateStyleAndLayoutTreeForNode(new_focused_element);
+   // EnsurePaintLocationDataValidForNode(new_focused_element);
+  }
   if (new_focused_element && new_focused_element->IsFocusable()) {
     if (IsRootEditableElement(*new_focused_element) &&
         !AcceptsEditingFocus(*new_focused_element)) {
@@ -4580,6 +4583,19 @@ bool Document::SetFocusedElement(Element* new_focused_element,
     // Set focus on the new node
     focused_element_ = new_focused_element;
     SetSequentialFocusNavigationStartingPoint(focused_element_.Get());
+
+    // SetFocused will dirty style (and layout), so before we do that we should
+    // scroll to the focused element.
+    if (!IsRootEditableElement(*focused_element_) && focused_element_->GetLayoutObject() &&
+        !focused_element_->GetLayoutObject()->IsLayoutEmbeddedContent()) {
+      // HACK: Default focus options don't prevent scroll, so hard-coding that
+      // here.
+      if (!false) {
+        focused_element_->GetLayoutObject()->ScrollRectToVisible(
+            focused_element_->BoundingBoxForScrollIntoView(),
+            WebScrollIntoViewParams());
+      }
+    }
 
     focused_element_->SetFocused(true, params.type);
     focused_element_->SetHasFocusWithinUpToAncestor(true, ancestor);

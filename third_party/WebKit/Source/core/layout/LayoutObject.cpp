@@ -1160,6 +1160,7 @@ inline const LayoutObject* EndOfContinuations(
 
 bool LayoutObject::GetUpperLeftCorner(ExpandScrollMargin expand,
                                       FloatPoint& point) const {
+  LOG(INFO) << "LayoutObject::GetUpperLeftCorner(, this: " << this;
   if (!IsInline() || IsAtomicInlineLevel()) {
     point = LocalToAbsolute(FloatPoint(), kUseTransforms);
     if (expand == ExpandScrollMargin::kExpand)
