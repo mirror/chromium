@@ -3646,6 +3646,7 @@ interface HTMLVideoElement : HTMLMediaElement
     getter disablePictureInPicture
     getter height
     getter onenterpictureinpicture
+    getter onleavepictureinpicture
     getter poster
     getter videoHeight
     getter videoWidth
@@ -3664,6 +3665,7 @@ interface HTMLVideoElement : HTMLMediaElement
     setter disablePictureInPicture
     setter height
     setter onenterpictureinpicture
+    setter onleavepictureinpicture
     setter poster
     setter width
 interface HashChangeEvent : Event
