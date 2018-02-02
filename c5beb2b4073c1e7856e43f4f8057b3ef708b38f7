@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84953868_0b571ba7",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 10782,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-02T01:02:34Z",
+      "side": 1,
+      "message": "(here and below) Q: Is this intentionally in title case?",
+      "range": {
+        "startLine": 10782,
+        "startChar": 50,
+        "endLine": 10782,
+        "endChar": 71
+      },
+      "revId": "c5beb2b4073c1e7856e43f4f8057b3ef708b38f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
