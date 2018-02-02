@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc067f0d_86f0b0e5",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-02T21:27:14Z",
+      "side": 1,
+      "message": "And paper-radio-group-item-padding is already set in settings css:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_vars_css.html?rcl\u003d076f8e1b34687bb11ec7b32d08feb45a7cb67fb6\u0026l\u003d65",
+      "parentUuid": "ec0bc145_f62caad9",
+      "revId": "3b1fe8a0650e5ffc9f06df0bf973793fd0ec1996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f470864_51a87502",
         "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
         "patchSetId": 4
