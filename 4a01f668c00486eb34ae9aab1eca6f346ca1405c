@@ -142,6 +142,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce80b0f_7e16df2a",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-02T17:30:11Z",
+      "side": 1,
+      "message": "I uploaded a new patch set reverting back to patch set 6. Please take another look, thanks.",
+      "parentUuid": "8471dbb8_b724bf6a",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
