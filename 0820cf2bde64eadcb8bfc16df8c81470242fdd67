@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "8e94b6a4_dea128bd",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-02-02T09:54:19Z",
+      "side": 1,
+      "message": "Thanks for the clarifications off-thread. I understand now that \"Authenticated\" means that sync is on, and that users that don\u0027t enable sync after going through a Dice content area login aren\u0027t counted as \"authenticated\".\n\nLGTM :)",
+      "parentUuid": "c001704b_f3cf1914",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a76a95d3_d9ef3f1b",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 7
