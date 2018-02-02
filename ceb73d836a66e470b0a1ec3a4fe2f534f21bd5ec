@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eb05d49_bc6672b5",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T18:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67a1d526_69466d6c",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1175d80e_06a8a8bd",
         "filename": "cc/animation/animation_host.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef482c5_40d41b31",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T18:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1175d80e_06a8a8bd",
+      "range": {
+        "startLine": 637,
+        "startChar": 62,
+        "endLine": 637,
+        "endChar": 64
+      },
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a4d6c84e_af20d6f4",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T18:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6bd5955_e0784e95",
+      "range": {
+        "startLine": 641,
+        "startChar": 48,
+        "endLine": 641,
+        "endChar": 49
+      },
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c5fdd7_ae1c73ce",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafba5a7_31bcaa91",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T18:20:16Z",
+      "side": 1,
+      "message": "Yes, I think that makes sense.",
+      "parentUuid": "e2c5fdd7_ae1c73ce",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "57ad6ac6_5d1fe702",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T18:20:16Z",
+      "side": 1,
+      "message": "The \"NotPaintIntoOwnBacking\" is confusing at this moment and I am going to change that. Here is the full story.\n\nBefore my CL here: https://chromium-review.googlesource.com/c/chromium/src/+/636305, we just return FailureCode::NotActionable(\"Element does not paint into own backing\") if paints_into_own_backing is false. In the above CL, I thought that if we hit the condition of |!paints_into_own_backing|, the only possibility is that we are in an experiment. So the FailureCode::NotPaintIntoOwnBacking has a meaning indicating that we are in a running experiment and that this animation is a main_thread_compositable animation.\n\nNow I realize that this is not always true. If we hit the condition of |!paints_into_own_backing|, we still need to distinguish two cases: whether it is svg related or not. If it is not svg related, we know that it is due to an experiment and it is a main_thread_compositable animation. But if it is svg related, it should just use the original code path which is the one before my above CL.\n\nI am going to rename the NotPaintIntoOwnBacking to AcceleratableAnimNotAccelerated.",
+      "parentUuid": "50bf0a9a_f63df6f2",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17060918_7e112ff6",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880a9f6c_61829a26",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-02T18:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17060918_7e112ff6",
+      "revId": "ceb73d836a66e470b0a1ec3a4fe2f534f21bd5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
