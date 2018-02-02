@@ -134,6 +134,17 @@ bool MoveWindowToDisplay(aura::Window* window, int64_t display_id) {
     aura::Window* root = Shell::GetRootWindowForDisplayId(display_id);
     if (root) {
       gfx::Rect bounds = window->bounds();
+      gfx::Rect root_bounds_in_screen = root->GetBoundsInScreen();
+      gfx::Rect target_bounds_in_screen(root_bounds_in_screen.x() + bounds.x(),
+                                        root_bounds_in_screen.y() + bounds.y(),
+                                        bounds.width(), bounds.height());
+      display::Screen* screen = display::Screen::GetScreen();
+      // Do not update the bounds when the target bounds's biggest intersection
+      // display is not the target display.
+      if (screen->GetDisplayMatching(target_bounds_in_screen).id() !=
+          display_id) {
+        return false;
+      }
       MoveWindowToRoot(window, root);
       // Client controlled won't update the bounds upon the root window
       // Change. Explicitly update the bounds so that the client can
