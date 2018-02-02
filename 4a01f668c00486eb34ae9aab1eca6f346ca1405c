@@ -124,6 +124,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8471dbb8_b724bf6a",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-02T16:13:25Z",
+      "side": 1,
+      "message": "Yes, that sounds best. Thanks!",
+      "parentUuid": "654f89e2_948d8d06",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
