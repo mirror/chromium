@@ -22,6 +22,30 @@
       "revId": "3b738190848e03707463a0e0262f4f21c27a448b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf882cc_3bde82ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-02-02T18:18:43Z",
+      "side": 1,
+      "message": "Thanks for your suggestion. A TODO added in class javadoc.",
+      "parentUuid": "9b601285_246293f3",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "3b738190848e03707463a0e0262f4f21c27a448b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
