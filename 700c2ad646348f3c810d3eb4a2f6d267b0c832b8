@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0600ebf6_f3dd6605",
+        "filename": "net/proxy_resolution/proxy_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-02-02T21:14:02Z",
+      "side": 1,
+      "message": "I\u0027ve given request a public destructor so that it can work with std::unique_ptr.  Would a reasonable thing to do be to make the constructor private as well, and make it a friend class of make_unique?",
+      "range": {
+        "startLine": 494,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 13
+      },
+      "revId": "700c2ad646348f3c810d3eb4a2f6d267b0c832b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

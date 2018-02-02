@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d61a620_1f168e35",
+        "filename": "net/proxy_resolution/proxy_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-02-02T21:14:02Z",
+      "side": 1,
+      "message": "I\u0027ve migrated the code here from ProxyResolutionService",
+      "range": {
+        "startLine": 873,
+        "startChar": 0,
+        "endLine": 873,
+        "endChar": 65
+      },
+      "revId": "dc203e5aaa734963be34ec4a8c0f5217a0967378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

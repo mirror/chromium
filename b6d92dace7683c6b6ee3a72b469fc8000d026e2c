@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231f7194_91a5dce5",
+        "filename": "net/proxy_resolution/proxy_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-02-02T21:14:02Z",
+      "side": 1,
+      "message": "Are these resets necessary if Cancel() is only being called in Request\u0027s destructor?",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 837,
+        "endChar": 62
+      },
+      "revId": "b6d92dace7683c6b6ee3a72b469fc8000d026e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1f1972_a3b2ff39",
+        "filename": "net/proxy_resolution/proxy_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-02-02T21:14:02Z",
+      "side": 1,
+      "message": "Is this helper function doing anything?",
+      "range": {
+        "startLine": 989,
+        "startChar": 0,
+        "endLine": 989,
+        "endChar": 47
+      },
+      "revId": "b6d92dace7683c6b6ee3a72b469fc8000d026e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
