@@ -282,6 +282,7 @@ class TabAndroid : public CoreTabHelperDelegate,
   void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) override;
   void NavigationEntryChanged(
       const content::EntryChangedDetails& change_details) override;
+  void NavigationEntriesDeleted() override;
 
  private:
   class MediaDownloadInProductHelp;
