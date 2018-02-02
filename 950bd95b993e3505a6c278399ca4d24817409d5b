@@ -22,6 +22,30 @@
       "revId": "950bd95b993e3505a6c278399ca4d24817409d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a1846a_665d39f4",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-02-02T02:34:24Z",
+      "side": 1,
+      "message": "As I have to do a null check on the element in order to get its computed accessible node, I think this needs to stay. Good catch on the -Impl though :)",
+      "parentUuid": "3e7f6d34_a1e19274",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 68
+      },
+      "revId": "950bd95b993e3505a6c278399ca4d24817409d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
