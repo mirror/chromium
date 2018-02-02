@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d33cb75_f886187d",
+        "filename": "media/base/decrypt_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-02T17:47:31Z",
+      "side": 1,
+      "message": "nit: What if there\u0027s no subsample?",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "6e923666d4ddf0cf050d6b68bc48eb6d436548d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0ae3bc_0f03ada6",
+        "filename": "media/base/decrypt_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-02T17:47:31Z",
+      "side": 1,
+      "message": "See: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d675003#c2\n\nToday we already have two ways to determine whether a DecoderBuffer is encrypted. Now we can even do decoder_buffer-\u003eencryption_scheme()-\u003eis_encrypted(), which makes things more confusing.\n\nWe don\u0027t have to fix everything here, but we should have a plan.",
+      "revId": "6e923666d4ddf0cf050d6b68bc48eb6d436548d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbc0d74_164058d8",
+        "filename": "media/base/decrypt_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-02T17:47:31Z",
+      "side": 1,
+      "message": "Personally I feel it\u0027ll be more clear to have two members: EncryptionScheme (e.g. cenc), and Pattern. For example, when you know it\u0027s cbcs, you need the |iv_|, |subsamples_|, and |pattern_| to be able to decrypt the sample. So it\u0027s odd that you put the pattern together with the scheme (cipher mode), but not the other two.\n\nThat may require more refactoring. For now, you can just put the current cipher mode and Pattern here I guess.",
+      "revId": "6e923666d4ddf0cf050d6b68bc48eb6d436548d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
