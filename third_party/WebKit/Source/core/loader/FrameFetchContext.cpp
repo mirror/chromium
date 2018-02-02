@@ -35,6 +35,7 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
@@ -460,6 +461,16 @@ void FrameFetchContext::PrepareRequest(ResourceRequest& request,
       document_loader_ && !document_loader_->Fetcher()->Archive() &&
       request.Url().IsValid()) {
     document_loader_->GetApplicationCacheHost()->WillStartLoading(request);
+  }
+
+  // Try to resolve blob: URLs.
+  if (document_ && request.Url().ProtocolIs("blob") &&
+      RuntimeEnabledFeatures::MojoBlobURLsEnabled() &&
+      !request.GetURLLoaderFactory()) {
+    network::mojom::blink::URLLoaderFactoryPtr url_loader_factory;
+    document_->GetPublicURLManager().Resolve(request.Url(),
+                                             MakeRequest(&url_loader_factory));
+    request.SetURLLoaderFactory(std::move(url_loader_factory));
   }
 }
 

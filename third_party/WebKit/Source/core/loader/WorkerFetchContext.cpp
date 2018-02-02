@@ -5,6 +5,7 @@
 #include "core/loader/WorkerFetchContext.h"
 
 #include "base/single_thread_task_runner.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
@@ -247,6 +248,16 @@ void WorkerFetchContext::PrepareRequest(ResourceRequest& request,
 
   WrappedResourceRequest webreq(request);
   web_context_->WillSendRequest(webreq);
+
+  // Try to resolve blob: URLs.
+  if (request.Url().ProtocolIs("blob") &&
+      RuntimeEnabledFeatures::MojoBlobURLsEnabled() &&
+      !request.GetURLLoaderFactory()) {
+    network::mojom::blink::URLLoaderFactoryPtr url_loader_factory;
+    global_scope_->GetPublicURLManager().Resolve(
+        request.Url(), MakeRequest(&url_loader_factory));
+    request.SetURLLoaderFactory(std::move(url_loader_factory));
+  }
 }
 
 void WorkerFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,

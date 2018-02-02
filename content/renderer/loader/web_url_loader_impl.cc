@@ -27,6 +27,7 @@
 #include "content/child/child_thread_impl.h"
 #include "content/child/scoped_child_process_reference.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/wrapper_shared_url_loader_factory.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/previews_state.h"
@@ -735,13 +736,24 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     extra_data = &empty_extra_data;
   extra_data->CopyToResourceRequest(resource_request.get());
 
+  scoped_refptr<SharedURLLoaderFactory> url_loader_factory =
+      url_loader_factory_;
+  mojo::ScopedMessagePipeHandle url_loader_factory_handle =
+      request.GetURLLoaderFactory();
+  if (url_loader_factory_handle.is_valid()) {
+    url_loader_factory = base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
+        network::mojom::URLLoaderFactoryPtrInfo(
+            std::move(url_loader_factory_handle),
+            network::mojom::URLLoaderFactory::Version_));
+  }
+
   if (sync_load_response) {
     DCHECK(defers_loading_ == NOT_DEFERRING);
 
     resource_dispatcher_->StartSync(
         std::move(resource_request), request.RequestorID(),
         extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-        sync_load_response, url_loader_factory_,
+        sync_load_response, std::move(url_loader_factory),
         extra_data->TakeURLLoaderThrottles());
     return;
   }
@@ -758,7 +770,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   request_id_ = resource_dispatcher_->StartAsync(
       std::move(resource_request), request.RequestorID(), task_runner_,
       extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-      false /* is_sync */, std::move(peer), url_loader_factory_,
+      false /* is_sync */, std::move(peer), std::move(url_loader_factory),
       extra_data->TakeURLLoaderThrottles(),
       std::move(url_loader_client_endpoints));
 

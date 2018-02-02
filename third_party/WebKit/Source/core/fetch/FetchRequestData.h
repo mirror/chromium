@@ -17,6 +17,7 @@
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom-blink.h"
 
 namespace blink {
 
@@ -90,6 +91,13 @@ class FetchRequestData final
   bool Keepalive() const { return keepalive_; }
   void SetKeepalive(bool b) { keepalive_ = b; }
 
+  network::mojom::blink::URLLoaderFactory* URLLoaderFactory() const {
+    return url_loader_factory_.get();
+  }
+  void SetURLLoaderFactory(network::mojom::blink::URLLoaderFactoryPtr factory) {
+    url_loader_factory_ = std::move(factory);
+  }
+
   // We use these strings instead of "no-referrer" and "client" in the spec.
   static AtomicString NoReferrerString() { return AtomicString(); }
   static AtomicString ClientReferrerString() {
@@ -131,6 +139,8 @@ class FetchRequestData final
   String mime_type_;
   String integrity_;
   bool keepalive_;
+  // URLLoaderFactory if this is a request for a blob: URL.
+  network::mojom::blink::URLLoaderFactoryPtr url_loader_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FetchRequestData);
 };

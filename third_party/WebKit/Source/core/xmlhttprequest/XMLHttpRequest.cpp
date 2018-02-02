@@ -41,6 +41,7 @@
 #include "core/fileapi/File.h"
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/Frame.h"
 #include "core/frame/Settings.h"
@@ -735,6 +736,12 @@ void XMLHttpRequest::open(const AtomicString& method,
 
   url_ = url;
 
+  if (url_.ProtocolIs("blob") &&
+      RuntimeEnabledFeatures::MojoBlobURLsEnabled()) {
+    GetExecutionContext()->GetPublicURLManager().Resolve(
+        url_, MakeRequest(&blob_url_loader_factory_));
+  }
+
   async_ = async;
 
   DCHECK(!loader_);
@@ -1094,6 +1101,9 @@ void XMLHttpRequest::CreateRequest(scoped_refptr<EncodedFormData> http_body,
 
   if (request_headers_.size() > 0)
     request.AddHTTPHeaderFields(request_headers_);
+
+  if (blob_url_loader_factory_)
+    request.SetURLLoaderFactory(std::move(blob_url_loader_factory_));
 
   ThreadableLoaderOptions options;
   options.timeout_milliseconds = timeout_milliseconds_;
