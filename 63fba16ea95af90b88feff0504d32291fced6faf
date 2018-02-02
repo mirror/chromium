@@ -16,6 +16,24 @@
       "revId": "63fba16ea95af90b88feff0504d32291fced6faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6941de_137271fa",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-02-02T14:38:58Z",
+      "side": 1,
+      "message": "newer \u0026 better, thanks! :)",
+      "parentUuid": "feb89775_4d00a15b",
+      "revId": "63fba16ea95af90b88feff0504d32291fced6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
