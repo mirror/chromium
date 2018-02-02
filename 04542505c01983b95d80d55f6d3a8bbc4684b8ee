@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7266d77a_eb08f462",
+        "filename": "chrome/test/data/webui/settings/a11y/edit_dictionary_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-02T02:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10eca96a_9ac75aac",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "04542505c01983b95d80d55f6d3a8bbc4684b8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1731f9a3_481dcc97",
         "filename": "chrome/test/data/webui/settings/a11y/manage_profile_a11y_test.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "04542505c01983b95d80d55f6d3a8bbc4684b8ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64708b06_4095468f",
+        "filename": "chrome/test/data/webui/settings/a11y/manage_profile_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-02T02:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1731f9a3_481dcc97",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "04542505c01983b95d80d55f6d3a8bbc4684b8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
