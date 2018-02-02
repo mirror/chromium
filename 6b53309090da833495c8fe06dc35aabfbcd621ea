@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f455609a_1c5314b5",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-02T17:06:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f8993cab_d448d3a0",
+      "range": {
+        "startLine": 136,
+        "startChar": 19,
+        "endLine": 136,
+        "endChar": 30
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af58dac_8490e437",
         "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.js",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4e4b5292_8f79347c",
+        "filename": "chrome/browser/resources/signin/sync_confirmation/sync_confirmation.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-02T17:06:29Z",
+      "side": 1,
+      "message": "I was going to say that it would be difficult to convert that back to the GRD ID (which we need to record), but actually yes, nothing prevents us from putting the actual strings in the string-\u003eID map.\n\nI think I was a bit mislead by my original thinking from the Android implementation.\n\nThanks!",
+      "parentUuid": "1af58dac_8490e437",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01c2c80b_87bbc512",
         "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93350ca7_714cdc15",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-02T17:06:29Z",
+      "side": 1,
+      "message": "Done. I\u0027m passing the map directly now.",
+      "parentUuid": "01c2c80b_87bbc512",
+      "range": {
+        "startLine": 162,
+        "startChar": 25,
+        "endLine": 162,
+        "endChar": 50
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64c65a5_92602d45",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_ui.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-02T17:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32ba259b_2ab2aae5",
+      "range": {
+        "startLine": 28,
+        "startChar": 44,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
