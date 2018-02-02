@@ -116,6 +116,23 @@
     },
     {
       "key": {
+        "uuid": "cd8987ee_2c8deecc",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-02T11:32:35Z",
+      "side": 1,
+      "message": "sorry i missed this before. InitializeProductDetailsForPrimaryModule should not be used in tests. the right thing is to place install_static::ScopedInstallDetails somewhere early in the test process startup. for an example, see chrome/test/base/run_all_unittests.cc. i suggest you drop your test\u0027s dependency on //base/test:run_all_unittests and make your own copy of base/test/run_all_unittests.cc in this directory that creates the ScopedInstallDetails for the test binary.",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bd5a59b_ab8d8d3b",
         "filename": "notification_helper/com_server_module_unittest.cc",
         "patchSetId": 74
