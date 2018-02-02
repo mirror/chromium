@@ -141,7 +141,6 @@ void StatisticsRecorder::WriteHTMLGraph(const std::string& query,
   StringAppendF(output, "<h1>Histograms (%zd)</h1>", histograms.size());
   for (const HistogramBase* const histogram : histograms) {
     histogram->WriteHTMLGraph(output);
-    *output += "<br><hr><br>";
   }
 }
 
@@ -156,8 +155,8 @@ void StatisticsRecorder::WriteGraph(const std::string& query,
   const Histograms histograms = Sort(WithName(GetHistograms(), query));
   StringAppendF(output, "Histograms (%zd)\n", histograms.size());
   for (const HistogramBase* const histogram : histograms) {
-    histogram->WriteAscii(output);
     output->append("\n");
+    histogram->WriteAscii(output);
   }
 }
 
