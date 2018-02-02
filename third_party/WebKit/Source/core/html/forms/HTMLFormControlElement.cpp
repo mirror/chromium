@@ -23,7 +23,7 @@
  */
 
 #include "core/html/forms/HTMLFormControlElement.h"
-
+#include <base/debug/stack_trace.h>
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/events/Event.h"
@@ -61,7 +61,6 @@ HTMLFormControlElement::HTMLFormControlElement(const QualifiedName& tag_name,
       will_validate_(true),
       is_valid_(true),
       validity_is_dirty_(false),
-      was_focused_by_mouse_(false),
       blocks_form_submission_(false) {
   SetHasCustomStyleCallbacks();
 }
@@ -397,18 +396,6 @@ bool HTMLFormControlElement::ShouldHaveFocusAppearance() const {
   return !was_focused_by_mouse_ || ShouldShowFocusRingOnMouseFocus();
 }
 
-void HTMLFormControlElement::DispatchFocusEvent(
-    Element* old_focused_element,
-    WebFocusType type,
-    InputDeviceCapabilities* source_capabilities) {
-  if (type != kWebFocusTypePage)
-    was_focused_by_mouse_ = type == kWebFocusTypeMouse;
-  // ContainerNode::handleStyleChangeOnFocusStateChange() will inform
-  // LayoutTheme about the focus state change.
-  HTMLElement::DispatchFocusEvent(old_focused_element, type,
-                                  source_capabilities);
-}
-
 void HTMLFormControlElement::WillCallDefaultEventHandler(const Event& event) {
   if (!was_focused_by_mouse_)
     return;
@@ -639,8 +626,6 @@ void HTMLFormControlElement::DispatchBlurEvent(
     Element* new_focused_element,
     WebFocusType type,
     InputDeviceCapabilities* source_capabilities) {
-  if (type != kWebFocusTypePage)
-    was_focused_by_mouse_ = false;
   HTMLElement::DispatchBlurEvent(new_focused_element, type,
                                  source_capabilities);
   HideVisibleValidationMessage();

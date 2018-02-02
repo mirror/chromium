@@ -25,7 +25,7 @@
  */
 
 #include "core/dom/Node.h"
-
+#include <base/debug/stack_trace.h>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/node_or_string.h"
 #include "core/css/CSSSelector.h"
@@ -909,6 +909,11 @@ const Node* Node::FocusDelegate() const {
 }
 
 bool Node::ShouldHaveFocusAppearance() const {
+  DCHECK(IsFocused());
+  return true;
+}
+
+bool Node::ShouldHaveFocusVisibleAppearance() const {
   DCHECK(IsFocused());
   return true;
 }

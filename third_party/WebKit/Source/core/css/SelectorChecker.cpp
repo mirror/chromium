@@ -936,6 +936,12 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
         element.SetChildrenOrSiblingsAffectedByFocus();
       }
       return MatchesFocusPseudoClass(element);
+    case CSSSelector::kPseudoFocusVisible:
+      if (mode_ == kResolvingStyle && !context.in_rightmost_compound) {
+        element_style_->SetUnique();
+        element.SetChildrenOrSiblingsAffectedByFocus();
+      }
+      return MatchesFocusVisiblePseudoClass(element);
     case CSSSelector::kPseudoFocusWithin:
       if (mode_ == kResolvingStyle) {
         if (context.in_rightmost_compound) {
@@ -1366,6 +1372,17 @@ bool SelectorChecker::MatchesFocusPseudoClass(const Element& element) {
   if (force_pseudo_state)
     return true;
   return element.IsFocused() && IsFrameFocused(element);
+}
+
+bool SelectorChecker::MatchesFocusVisiblePseudoClass(const Element& element) {
+  bool force_pseudo_state = false;
+  probe::forcePseudoState(const_cast<Element*>(&element),
+                          CSSSelector::kPseudoFocusVisible,
+                          &force_pseudo_state);
+  if (force_pseudo_state)
+    return true;
+  return element.IsFocused() && element.ShouldHaveFocusVisibleAppearance() &&
+         IsFrameFocused(element);
 }
 
 }  // namespace blink
