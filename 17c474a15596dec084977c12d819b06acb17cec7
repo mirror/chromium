@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e991c0_acd808f4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-user-scroll-end-manual.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T00:17:26Z",
+      "side": 1,
+      "message": "nit: \"keep scrolling _until_ background...\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "17c474a15596dec084977c12d819b06acb17cec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af39afcf_0db7f357",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/css/css-scroll-snap/snap-at-user-scroll-end-manual-automation.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T00:17:26Z",
+      "side": 1,
+      "message": "I\u0027m not up to date on how we do automation; is it ok that we\u0027re upstreaming this  if we\u0027re relying on gpuBenchmarking which is Chrome only?",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "17c474a15596dec084977c12d819b06acb17cec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffccc54_4792a4e1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/css/css-scroll-snap/snap-at-user-scroll-end-manual-automation.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T00:17:26Z",
+      "side": 1,
+      "message": "500 frames is 8 seconds. Do we really need to wait that long. Do you know if WPT have some guidelines on timeouts?",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "17c474a15596dec084977c12d819b06acb17cec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406331f1_c4345fed",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T00:17:26Z",
+      "side": 1,
+      "message": "Do we have any test coverage of scroll snapping for RTL and vertical pages? We should probably make sure we got those right. Just a thought unrelated to the changes here but please try it out on an RTL page and add a test or two in a followup.",
+      "range": {
+        "startLine": 301,
+        "startChar": 47,
+        "endLine": 301,
+        "endChar": 61
+      },
+      "revId": "17c474a15596dec084977c12d819b06acb17cec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b3398b_6ffcb291",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-02T00:17:26Z",
+      "side": 1,
+      "message": "having scroll_layer_ implies RootLayerScrollingEnabled so this can be just if(scroll_layer_)",
+      "range": {
+        "startLine": 540,
+        "startChar": 6,
+        "endLine": 540,
+        "endChar": 75
+      },
+      "revId": "17c474a15596dec084977c12d819b06acb17cec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
