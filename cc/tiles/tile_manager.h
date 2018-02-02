@@ -196,7 +196,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
               tiles[i]->desired_texture_size(),
               raster_buffer_provider_->GetResourceFormat(false),
               client_->GetRasterColorSpace()),
-          false, false);
+          false, false, false);
       draw_info.set_resource_ready_for_draw();
     }
   }
