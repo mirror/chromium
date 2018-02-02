@@ -63,6 +63,236 @@
       "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9e02660_6095c434",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "ComPtr should be used here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064e79d3_161d7f01",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "It is dangerous to reinterpret_cast a COM pointer. Use QueryInterface or its equivalents.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6e3c75_4a10ae6a",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "Generally this sort of assertion and commenting isn\u0027t necessary for a parameter to WaitableEvent(). We certainly don\u0027t do this in base. Has this been an issue in the past?",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 58
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f273d1_b86c89d2",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "ASSERT_HRESULT_SUCCEEDED(hr);",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031a39c6_398a9602",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "Clear the pointer using Reset(). This will result in a double-release. Release() should have been deleted by ComPtr. I\u0027m surprised this works, but maybe that\u0027s because it\u0027s an IUnknown pointer.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b04b5a5_992fc7b8",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "I found a better one. Use ASSERT_HRESULT_TRUE. Use Assert here since it doesn\u0027t make sense to proceed after this.",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a2c88e_d59ef610",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "See earlier comment. It is dangerous to call IUnknown::Release on a smart pointer.",
+      "range": {
+        "startLine": 92,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad93987_901285d1",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be static, and makes Trace() unsafe to call from multiple threads.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f45b79_5cfbad8b",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 71
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "No \"W\". The UNICODE flags will correctly update this.",
+      "range": {
+        "startLine": 20,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130c118a_98dd6914",
+        "filename": "notification_helper/trace_util.h",
+        "patchSetId": 71
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 1,
+      "message": "NOTIFICATION_HELPER_TRACE_UTIL_H_",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 40
+      },
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

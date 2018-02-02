@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3f77c12_57f1baae",
+        "filename": "BUILD.gn",
+        "patchSetId": 71
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-02T01:17:59Z",
+      "side": 0,
+      "message": "This cleanup is better served in a separate changelist. This changelist is quite large as it is.",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 3
+      },
+      "revId": "1d87f734be618048a4ded43eeb94a018c9689aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
