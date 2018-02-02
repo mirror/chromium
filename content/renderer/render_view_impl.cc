@@ -2112,8 +2112,8 @@ void RenderViewImpl::OnResize(const ResizeParams& params) {
     RenderWidget::OnResize(params);
   }
 
-  if (params.scroll_focused_node_into_view)
-    webview()->ScrollFocusedEditableElementIntoView();
+  if (params.scroll_focused_node_into_view && frame_widget_)
+    frame_widget_->ScrollFocusedEditableElementIntoView();
 }
 
 void RenderViewImpl::OnSetBackgroundOpaque(bool opaque) {

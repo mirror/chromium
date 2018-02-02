@@ -6565,8 +6565,13 @@ void RenderFrameImpl::ScrollFocusedEditableElementIntoRect(
     return;
   }
 
-  if (!render_view_->webview()->ScrollFocusedEditableElementIntoView())
+  if (!GetWebFrame()->LocalRoot()->FrameWidget() ||
+      !GetWebFrame()
+           ->LocalRoot()
+           ->FrameWidget()
+           ->ScrollFocusedEditableElementIntoView()) {
     return;
+  }
 
   rect_for_scrolled_focused_editable_node_ = rect;
   has_scrolled_focused_editable_node_into_rect_ = true;

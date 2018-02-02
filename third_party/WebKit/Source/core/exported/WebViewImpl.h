@@ -175,7 +175,6 @@ class CORE_EXPORT WebViewImpl final
   void FocusDocumentView(WebFrame*) override;
   void SetInitialFocus(bool reverse) override;
   void ClearFocusedElement() override;
-  bool ScrollFocusedEditableElementIntoView() override;
   void SmoothScroll(int target_x, int target_y, long duration_ms) override;
   void ZoomToFindInPageRect(const WebRect&);
   void AdvanceFocus(bool reverse) override;
@@ -378,12 +377,6 @@ class CORE_EXPORT WebViewImpl final
   void EnableTapHighlightAtPoint(
       const GestureEventWithHitTestResults& targeted_tap_event);
   void EnableTapHighlights(HeapVector<Member<Node>>&);
-  void ComputeScaleAndScrollForFocusedNode(Node* focused_node,
-                                           bool zoom_in_to_legible_scale,
-                                           float& scale,
-                                           IntPoint& scroll,
-                                           bool& need_animation);
-
   void AnimateDoubleTapZoom(const IntPoint&);
 
   void ResolveTapDisambiguation(double timestamp_seconds,
@@ -470,7 +463,25 @@ class CORE_EXPORT WebViewImpl final
     last_hidden_page_popup_ = page_popup;
   }
 
+  // Recursive and Programmatic Scrolling --------------------------------------
+  // Zooms the root layer into |rect|. |params| include extra information for
+  // measuring the scale and scroll.
+  void ApplyZoomForRecursiveScroll(const IntRect& rect,
+                                   const WebScrollIntoViewParams& params);
+  bool ShouldZoomToLegibleScale(const Element&);
+  void ZoomAndScrollToFocusedEditableElementRect(
+      const IntRect& element_bounds_in_root_frame,
+      const IntRect& caret_boudns_in_root_frame,
+      bool zoom_into_legible_scale);
+
  private:
+  FRIEND_TEST_ALL_PREFIXES(ParameterizedWebFrameTest,
+                           DivScrollIntoEditableTest);
+  FRIEND_TEST_ALL_PREFIXES(ParameterizedWebFrameTest,
+                           DivScrollIntoEditablePreservePageScaleTest);
+  FRIEND_TEST_ALL_PREFIXES(ParameterizedWebFrameTest,
+                           DivScrollIntoEditableTestZoomToLegibleScaleDisabled);
+
   void SetPageScaleFactorAndLocation(float, const FloatPoint&);
   void PropagateZoomFactorToLocalFrameRoots(Frame*, float);
 
@@ -557,6 +568,14 @@ class CORE_EXPORT WebViewImpl final
 
   CompositorMutatorImpl& Mutator();
   CompositorMutatorImpl* CompositorMutator();
+  bool ScrollFocusedEditableElementIntoView();
+  void ComputeScaleAndScrollForEditableElement(
+      const IntRect& element_bounds_in_root_frame,
+      const IntRect& caret_bounds_in_root_frame,
+      bool zoom_into_legible_scale,
+      float& scale,
+      IntPoint& scroll,
+      bool& need_animation);
 
   WebViewClient* client_;  // Can be 0 (e.g. unittests, shared workers, etc.)
 

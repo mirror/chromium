@@ -27,8 +27,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 #include "core/exported/WebViewImpl.h"
+#include "base/debug/stack_trace.h"
 
 #include <algorithm>
 #include <memory>
@@ -2445,59 +2445,75 @@ static bool IsElementEditable(const Element* element) {
 }
 
 bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
-  Frame* frame = GetPage()->MainFrame();
-  if (!frame)
+  if (!MainFrameImpl()->View())
     return false;
 
   Element* element = FocusedElement();
   if (!element || !IsElementEditable(element))
     return false;
 
-  if (frame->IsRemoteFrame()) {
-    // The rest of the logic here is not implemented for OOPIFs. For now instead
-    // of implementing the logic below (which involves finding the scale and
-    // scrolling point), editable elements inside OOPIFs are scrolled into view
-    // instead. However, a common logic should be implemented for both OOPIFs
-    // and in-process frames to assure a consistent behavior across all frame
-    // types (https://crbug.com/784982).
-    LayoutObject* layout_object = element->GetLayoutObject();
-    if (!layout_object)
-      return false;
-    layout_object->ScrollRectToVisible(element->BoundingBoxForScrollIntoView(),
-                                       WebScrollIntoViewParams());
-    return true;
-  }
+  WebRect caret_in_viewport, unused_end;
+  SelectionBounds(caret_in_viewport, unused_end);
+  ZoomAndScrollToFocusedEditableElementRect(
+      element->GetDocument().View()->AbsoluteToRootFrame(
+          PixelSnappedIntRect(element->Node::BoundingBox())),
+      GetPage()->GetVisualViewport().ViewportToRootFrame(caret_in_viewport),
+      ShouldZoomToLegibleScale(*element));
 
-  if (!frame->View())
-    return false;
+  return true;
+}
 
-  element->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+void WebViewImpl::ApplyZoomForRecursiveScroll(
+    const IntRect& rect,
+    const WebScrollIntoViewParams& params) {
+  IntRect approximate_caret_bounds_in_frame;
+  approximate_caret_bounds_in_frame.SetX(
+      rect.X() +
+      static_cast<int>(params.relative_rect_of_interest.x * rect.Width()));
+  approximate_caret_bounds_in_frame.SetY(
+      rect.Y() +
+      static_cast<int>(params.relative_rect_of_interest.y * rect.Height()));
+  approximate_caret_bounds_in_frame.SetWidth(
+      static_cast<int>(rect.Width() * params.relative_rect_of_interest.width));
+  approximate_caret_bounds_in_frame.SetHeight(static_cast<int>(
+      rect.Height() * params.relative_rect_of_interest.height));
 
-  bool zoom_in_to_legible_scale =
+  ZoomAndScrollToFocusedEditableElementRect(
+      rect, approximate_caret_bounds_in_frame, true);
+}
+
+bool WebViewImpl::ShouldZoomToLegibleScale(const Element& element) {
+  bool zoom_into_legible_scale =
       web_settings_->AutoZoomFocusedNodeToLegibleScale() &&
       !GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds();
 
-  if (zoom_in_to_legible_scale) {
+  if (zoom_into_legible_scale) {
     // When deciding whether to zoom in on a focused text box, we should
     // decide not to zoom in if the user won't be able to zoom out. e.g if the
     // textbox is within a touch-action: none container the user can't zoom
     // back out.
-    TouchAction action = TouchActionUtil::ComputeEffectiveTouchAction(*element);
+    TouchAction action = TouchActionUtil::ComputeEffectiveTouchAction(element);
     if (!(action & TouchAction::kTouchActionPinchZoom))
-      zoom_in_to_legible_scale = false;
+      zoom_into_legible_scale = false;
   }
 
+  return zoom_into_legible_scale;
+}
+
+void WebViewImpl::ZoomAndScrollToFocusedEditableElementRect(
+    const IntRect& element_bounds_in_root_frame,
+    const IntRect& caret_bounds_in_root_frame,
+    bool zoom_into_legible_scale) {
   float scale;
   IntPoint scroll;
-  bool need_animation;
-  ComputeScaleAndScrollForFocusedNode(element, zoom_in_to_legible_scale, scale,
-                                      scroll, need_animation);
+  bool need_animation = false;
+  ComputeScaleAndScrollForEditableElement(
+      element_bounds_in_root_frame, caret_bounds_in_root_frame,
+      zoom_into_legible_scale, scale, scroll, need_animation);
   if (need_animation) {
     StartPageScaleAnimation(scroll, false, scale,
                             scrollAndScaleAnimationDurationInSeconds);
   }
-
-  return true;
 }
 
 void WebViewImpl::SmoothScroll(int target_x, int target_y, long duration_ms) {
@@ -2506,29 +2522,25 @@ void WebViewImpl::SmoothScroll(int target_x, int target_y, long duration_ms) {
                           (double)duration_ms / 1000);
 }
 
-void WebViewImpl::ComputeScaleAndScrollForFocusedNode(
-    Node* focused_node,
-    bool zoom_in_to_legible_scale,
+void WebViewImpl::ComputeScaleAndScrollForEditableElement(
+    const IntRect& element_bounds_in_root_frame,
+    const IntRect& caret_bounds_in_root_frame,
+    bool zoom_into_legible_scale,
     float& new_scale,
     IntPoint& new_scroll,
     bool& need_animation) {
   VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
   LocalFrameView* main_frame_view = MainFrameImpl()->GetFrameView();
 
-  WebRect caret_in_viewport, unused_end;
-  SelectionBounds(caret_in_viewport, unused_end);
-
   // 'caretInDocument' is rect encompassing the blinking cursor relative to the
   // root document.
-  IntRect caret_in_document = main_frame_view->RootFrameToDocument(
-      visual_viewport.ViewportToRootFrame(caret_in_viewport));
+  IntRect caret_in_document =
+      main_frame_view->RootFrameToDocument(caret_bounds_in_root_frame);
 
-  LocalFrameView* textbox_view = focused_node->GetDocument().View();
   IntRect textbox_rect_in_document =
-      main_frame_view->RootFrameToDocument(textbox_view->AbsoluteToRootFrame(
-          PixelSnappedIntRect(focused_node->Node::BoundingBox())));
+      main_frame_view->RootFrameToDocument(element_bounds_in_root_frame);
 
-  if (!zoom_in_to_legible_scale) {
+  if (!zoom_into_legible_scale) {
     new_scale = PageScaleFactor();
   } else {
     // Pick a scale which is reasonably readable. This is the scale at which
