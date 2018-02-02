@@ -46,6 +46,30 @@
       "revId": "3ac8f25adc284590efca9e5f5a3ed069d36437c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b5b488_78352085",
+        "filename": "chrome/browser/password_manager/password_manager_util_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-02T12:59:22Z",
+      "side": 1,
+      "message": "I talked with other guys, in Chrome in such cases a header should be included. Unfortunetely typedef can\u0027t be forward declared :(.\nYeah, adding conditional compilation for OS_LINUX is good idea, please do it.",
+      "parentUuid": "d22b0420_445c3c2a",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "3ac8f25adc284590efca9e5f5a3ed069d36437c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
