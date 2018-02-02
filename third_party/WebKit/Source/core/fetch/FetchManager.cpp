@@ -751,6 +751,13 @@ void FetchManager::Loader::PerformHTTPFetch() {
     }
     request.SetKeepalive(true);
   }
+
+  if (request_->URLLoaderFactory()) {
+    network::mojom::blink::URLLoaderFactoryPtr factory_clone;
+    request_->URLLoaderFactory()->Clone(MakeRequest(&factory_clone));
+    request.SetURLLoaderFactory(std::move(factory_clone));
+  }
+
   // "3. Append `Host`, ..."
   // FIXME: Implement this when the spec is fixed.
 

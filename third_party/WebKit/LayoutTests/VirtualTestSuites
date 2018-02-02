@@ -618,5 +618,10 @@
     "prefix": "sampling-heap-profiler",
     "base": "inspector-protocol/memory",
     "args": ["--sampling-heap-profiler"]
+  },
+  {
+    "prefix": "mojo-blob-urls",
+    "base": "external/wpt/FileAPI/url",
+    "args": ["--enable-blink-features=MojoBlobURLs"]
   }
 ]
