@@ -20,6 +20,7 @@
 #include "chromecast/media/cma/base/coded_frame_provider.h"
 #include "chromecast/media/cma/base/decoder_buffer_base.h"
 #include "chromecast/media/cma/pipeline/decrypt_util.h"
+#include "chromecast/media/cma/pipeline/stream_decryptor.h"
 #include "chromecast/public/media/cast_decrypt_config.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/bind_to_current_loop.h"
@@ -45,8 +46,9 @@ AvPipelineImpl::AvPipelineImpl(MediaPipelineBackend::Decoder* decoder,
       playable_buffered_time_(::media::kNoTimestamp),
       enable_feeding_(false),
       pending_read_(false),
-      cast_cdm_context_(NULL),
+      cast_cdm_context_(nullptr),
       player_tracker_callback_id_(kNoCallbackId),
+      decryptor_(nullptr),
       weak_factory_(this),
       decrypt_weak_factory_(this) {
   DCHECK(decoder_);
@@ -140,6 +142,9 @@ void AvPipelineImpl::Flush(const base::Closure& flush_cb) {
   // in a double push.
   decrypt_weak_factory_.InvalidateWeakPtrs();
 
+  // Reset |decryptor_| to flush buffered frames in |decryptor_|.
+  decryptor_.reset();
+
   frame_provider_->Flush(base::Bind(&AvPipelineImpl::OnFlushDone, weak_this_));
 }
 
@@ -184,6 +189,19 @@ void AvPipelineImpl::FetchBuffer() {
       base::Bind(&AvPipelineImpl::OnNewFrame, weak_this_));
 }
 
+void AvPipelineImpl::FetchReadyBuffer() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  // Pipeline is flushed, do not fetch/push more buffers.
+  if (!decryptor_)
+    return;
+
+  bool pushed = MaybePushReadyBuffer();
+
+  if (!pushed && state_ != kError)
+    FetchBuffer();
+}
+
 void AvPipelineImpl::OnNewFrame(
     const scoped_refptr<DecoderBufferBase>& buffer,
     const ::media::AudioDecoderConfig& audio_config,
@@ -197,6 +215,11 @@ void AvPipelineImpl::OnNewFrame(
   if (audio_config.IsValidConfig() || video_config.IsValidConfig())
     OnUpdateConfig(buffer->stream_id(), audio_config, video_config);
 
+  if (!decryptor_) {
+    decryptor_ = CreateDecryptor();
+    DCHECK(decryptor_);
+  }
+
   pending_buffer_ = buffer;
   ProcessPendingBuffer();
 }
@@ -204,8 +227,6 @@ void AvPipelineImpl::OnNewFrame(
 void AvPipelineImpl::ProcessPendingBuffer() {
   if (!enable_feeding_)
     return;
-
-  DCHECK(!pushed_buffer_);
 
   // Break the feeding loop when the end of stream is reached.
   if (pending_buffer_->end_of_stream()) {
@@ -237,38 +258,48 @@ void AvPipelineImpl::ProcessPendingBuffer() {
     }
 
     DCHECK_NE(decrypt_context->GetKeySystem(), KEY_SYSTEM_NONE);
-
-    // If we can get the clear content, decrypt the pending buffer
-    if (decrypt_context->CanDecryptToBuffer()) {
-      auto buffer = pending_buffer_;
-      pending_buffer_ = nullptr;
-      DecryptDecoderBuffer(buffer, decrypt_context.get(),
-                           base::Bind(&AvPipelineImpl::OnBufferDecrypted,
-                                      decrypt_weak_factory_.GetWeakPtr(),
-                                      base::Passed(&decrypt_context)));
-
-      return;
-    }
-
     pending_buffer_->set_decrypt_context(std::move(decrypt_context));
   }
 
-  PushPendingBuffer();
+  decryptor_->PushBuffer(
+      std::move(pending_buffer_),
+      base::BindOnce(&AvPipelineImpl::OnDecryptorPushBufferComplete,
+                     decrypt_weak_factory_.GetWeakPtr()));
 }
 
-void AvPipelineImpl::PushPendingBuffer() {
-  DCHECK(pending_buffer_);
+bool AvPipelineImpl::MaybePushReadyBuffer() {
+  DCHECK(decryptor_);
+
+  scoped_refptr<DecoderBufferBase> buffer = nullptr;
+  bool success = decryptor_->GetNextReadyBuffer(&buffer);
+
+  if (!success) {
+    LOG(ERROR) << "Fail to decrypt buffer.";
+    // TODO(yucliu): We should report decrypt error here.
+    OnDecoderError();
+    return false;
+  }
+
+  if (buffer) {
+    PushReadyBuffer(std::move(buffer));
+    return true;
+  }
+
+  return false;
+}
+
+void AvPipelineImpl::PushReadyBuffer(scoped_refptr<DecoderBufferBase> buffer) {
   DCHECK(!pushed_buffer_);
 
-  if (!pending_buffer_->end_of_stream() && buffering_state_.get()) {
+  if (!buffer->end_of_stream() && buffering_state_.get()) {
     base::TimeDelta timestamp =
-        base::TimeDelta::FromMicroseconds(pending_buffer_->timestamp());
+        base::TimeDelta::FromMicroseconds(buffer->timestamp());
     if (timestamp != ::media::kNoTimestamp)
       buffering_state_->SetMaxRenderingTime(timestamp);
   }
 
-  pushed_buffer_ = pending_buffer_;
-  pending_buffer_ = nullptr;
+  pushed_buffer_ = std::move(buffer);
+
   MediaPipelineBackend::BufferStatus status =
       decoder_->PushBuffer(pushed_buffer_.get());
 
@@ -276,32 +307,33 @@ void AvPipelineImpl::PushPendingBuffer() {
     OnPushBufferComplete(status);
 }
 
-void AvPipelineImpl::OnBufferDecrypted(
-    std::unique_ptr<DecryptContextImpl> decrypt_context,
-    scoped_refptr<DecoderBufferBase> buffer,
-    bool success) {
-  if (!success) {
-    LOG(WARNING) << "Can't decrypt with decrypt_context";
-    buffer->set_decrypt_context(std::move(decrypt_context));
-  }
-
-  if (!enable_feeding_)
-    return;
-
-  pending_buffer_ = buffer;
-  PushPendingBuffer();
-}
-
-void AvPipelineImpl::OnPushBufferComplete(BufferStatus status) {
-  DCHECK(thread_checker_.CalledOnValidThread());
+void AvPipelineImpl::OnPushBufferComplete(
+    MediaPipelineBackend::BufferStatus status) {
   pushed_buffer_ = nullptr;
   if (status == MediaPipelineBackend::kBufferFailed) {
     LOG(WARNING) << "AvPipelineImpl: PushFrame failed";
     OnDecoderError();
     return;
   }
+
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&AvPipelineImpl::FetchBuffer, weak_this_));
+      FROM_HERE, base::BindOnce(&AvPipelineImpl::FetchReadyBuffer, weak_this_));
+}
+
+void AvPipelineImpl::OnDecryptorPushBufferComplete(bool success) {
+  if (!success) {
+    OnDecoderError();
+    return;
+  }
+
+  DCHECK(decryptor_);
+
+  bool pushed = MaybePushReadyBuffer();
+
+  if (!pushed && state_ != kError) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&AvPipelineImpl::FetchBuffer, weak_this_));
+  }
 }
 
 void AvPipelineImpl::OnEndOfStream() {
