@@ -177,7 +177,12 @@ public class AwContentsGarbageCollectionTest {
             providers[i] = ThreadUtils.runOnUiThreadBlocking(() -> {
                 WebContentsAccessibility.fromWebContents(containerView.getWebContents())
                         .setState(true);
-                return containerView.getAccessibilityNodeProvider();
+                AccessibilityNodeProvider nodeProvider =
+                        containerView.getAccessibilityNodeProvider();
+                if (nodeProvider == null) {
+                    nodeProvider = containerView.getAccessibilityNodeProvider();
+                }
+                return nodeProvider;
             });
             Assert.assertNotNull(providers[i]);
         }
