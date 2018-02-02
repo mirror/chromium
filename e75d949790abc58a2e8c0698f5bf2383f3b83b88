@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "501f587d_e53a4b3a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-02T07:17:26Z",
+      "side": 1,
+      "message": "thanks and actually it seems to be used in other cases too (NavigationMojoResponse?) But OK for me to just fix this outdated comment now.",
+      "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb423089_7de98bef",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-02T07:17:26Z",
+      "side": 1,
+      "message": "since now we have a S13nServiceWorker flag, I think can just say \"both with and without S13nServiceWorker\" (that\u0027s how most comments are referring to it).\n\nI guess we don\u0027t have a documentation about S13nServiceWorker. Above ServiceWorkerUtils::IsServicificationEnabled() you can have a comment like \"This is also called \"S13nServiceWorker\"\".",
+      "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60d576d_c62b3c73",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-02T07:17:26Z",
+      "side": 1,
+      "message": "// S13nServiceWorker",
+      "revId": "e75d949790abc58a2e8c0698f5bf2383f3b83b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
