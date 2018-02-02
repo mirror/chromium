@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_UI_TAB_MODAL_CONFIRM_DIALOG_H_
 #define CHROME_BROWSER_UI_TAB_MODAL_CONFIRM_DIALOG_H_
 
+#include "build/build_config.h"
 #include "chrome/browser/ui/tab_modal_confirm_dialog_delegate.h"
 
 namespace content {
@@ -18,6 +19,13 @@ class TabModalConfirmDialog : public TabModalConfirmDialogCloseDelegate {
   // the dialog.
   static TabModalConfirmDialog* Create(TabModalConfirmDialogDelegate* delegate,
                                        content::WebContents* web_contents);
+#if defined(OS_MACOSX)
+  // https://crbug.com/804950
+  static TabModalConfirmDialog* CreateCocoa(
+      TabModalConfirmDialogDelegate* delegate,
+      content::WebContents* web_contents);
+#endif
+
   // Accepts the dialog.
   virtual void AcceptTabModalDialog() = 0;
 
