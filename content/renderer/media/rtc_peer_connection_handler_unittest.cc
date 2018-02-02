@@ -384,6 +384,57 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
                                    MediaStreamRequestResult result,
                                    const blink::WebString& result_name) {}
 
+  bool AddStream(const blink::WebMediaStream& web_stream) {
+    bool any_track_added = false;
+    blink::WebVector<blink::WebMediaStreamTrack> web_audio_tracks;
+    web_stream.AudioTracks(web_audio_tracks);
+    for (const auto& web_audio_track : web_audio_tracks) {
+      if (pc_handler_->AddTrack(
+              web_audio_track,
+              std::vector<blink::WebMediaStream>({web_stream}))) {
+        any_track_added = true;
+      }
+    }
+    blink::WebVector<blink::WebMediaStreamTrack> web_video_tracks;
+    web_stream.VideoTracks(web_video_tracks);
+    for (const auto& web_video_track : web_video_tracks) {
+      if (pc_handler_->AddTrack(
+              web_video_track,
+              std::vector<blink::WebMediaStream>({web_stream}))) {
+        any_track_added = true;
+      }
+    }
+    return any_track_added;
+  }
+
+  std::unique_ptr<blink::WebRTCRtpSender> GetSenderForTrack(
+      const blink::WebMediaStreamTrack& web_track) {
+    for (auto& web_sender : pc_handler_->GetSenders()) {
+      if (web_sender->Track().UniqueId() == web_track.UniqueId())
+        return std::move(web_sender);
+    }
+    return nullptr;
+  }
+
+  bool RemoveStream(const blink::WebMediaStream& web_stream) {
+    bool any_track_removed = false;
+    blink::WebVector<blink::WebMediaStreamTrack> web_audio_tracks;
+    web_stream.AudioTracks(web_audio_tracks);
+    for (const auto& web_audio_track : web_audio_tracks) {
+      auto web_sender = GetSenderForTrack(web_audio_track);
+      if (web_sender && pc_handler_->RemoveTrack(web_sender.get()))
+        any_track_removed = true;
+    }
+    blink::WebVector<blink::WebMediaStreamTrack> web_video_tracks;
+    web_stream.VideoTracks(web_video_tracks);
+    for (const auto& web_video_track : web_video_tracks) {
+      auto web_sender = GetSenderForTrack(web_video_track);
+      if (web_sender && pc_handler_->RemoveTrack(web_sender.get()))
+        any_track_removed = true;
+    }
+    return any_track_removed;
+  }
+
   void InvokeOnAddStream(
       const rtc::scoped_refptr<webrtc::MediaStreamInterface>& remote_stream) {
     for (const auto& audio_track : remote_stream->GetAudioTracks()) {
@@ -742,7 +793,6 @@ TEST_F(RTCPeerConnectionHandlerTest, addAndRemoveStream) {
   std::string stream_label = "local_stream";
   blink::WebMediaStream local_stream(
       CreateLocalMediaStream(stream_label));
-  blink::WebMediaConstraints constraints;
 
   EXPECT_CALL(*mock_tracker_.get(),
               TrackAddStream(pc_handler_.get(),
@@ -752,16 +802,15 @@ TEST_F(RTCPeerConnectionHandlerTest, addAndRemoveStream) {
               TrackRemoveStream(pc_handler_.get(),
                                 testing::Ref(local_stream),
                                 PeerConnectionTracker::SOURCE_LOCAL));
-  EXPECT_TRUE(pc_handler_->AddStream(local_stream, constraints));
+  EXPECT_TRUE(AddStream(local_stream));
   EXPECT_EQ(stream_label, mock_peer_connection_->stream_label());
   EXPECT_EQ(1u,
       mock_peer_connection_->local_streams()->at(0)->GetAudioTracks().size());
   EXPECT_EQ(1u,
       mock_peer_connection_->local_streams()->at(0)->GetVideoTracks().size());
 
-  EXPECT_FALSE(pc_handler_->AddStream(local_stream, constraints));
-
-  pc_handler_->RemoveStream(local_stream);
+  EXPECT_FALSE(AddStream(local_stream));
+  EXPECT_TRUE(RemoveStream(local_stream));
   EXPECT_EQ(0u, mock_peer_connection_->local_streams()->count());
 
   StopAllTracks(local_stream);
@@ -771,7 +820,6 @@ TEST_F(RTCPeerConnectionHandlerTest, addStreamWithStoppedAudioAndVideoTrack) {
   std::string stream_label = "local_stream";
   blink::WebMediaStream local_stream(
       CreateLocalMediaStream(stream_label));
-  blink::WebMediaConstraints constraints;
 
   blink::WebVector<blink::WebMediaStreamTrack> audio_tracks;
   local_stream.AudioTracks(audio_tracks);
@@ -786,7 +834,7 @@ TEST_F(RTCPeerConnectionHandlerTest, addStreamWithStoppedAudioAndVideoTrack) {
           video_tracks[0].Source().GetExtraData());
   native_video_source->StopSource();
 
-  EXPECT_TRUE(pc_handler_->AddStream(local_stream, constraints));
+  EXPECT_TRUE(AddStream(local_stream));
   EXPECT_EQ(stream_label, mock_peer_connection_->stream_label());
   EXPECT_EQ(
       1u,
@@ -821,8 +869,7 @@ TEST_F(RTCPeerConnectionHandlerTest, GetStatsAfterClose) {
 TEST_F(RTCPeerConnectionHandlerTest, GetStatsWithLocalSelector) {
   blink::WebMediaStream local_stream(
       CreateLocalMediaStream("local_stream"));
-  blink::WebMediaConstraints constraints;
-  pc_handler_->AddStream(local_stream, constraints);
+  EXPECT_TRUE(AddStream(local_stream));
   blink::WebVector<blink::WebMediaStreamTrack> tracks;
   local_stream.AudioTracks(tracks);
   ASSERT_LE(1ul, tracks.size());
@@ -873,7 +920,6 @@ TEST_F(RTCPeerConnectionHandlerTest, GetStatsWithBadSelector) {
   // added to the PeerConnection.
   blink::WebMediaStream local_stream(
       CreateLocalMediaStream("local_stream_2"));
-  blink::WebMediaConstraints constraints;
   blink::WebVector<blink::WebMediaStreamTrack> tracks;
 
   local_stream.AudioTracks(tracks);
@@ -1496,15 +1542,9 @@ TEST_F(RTCPeerConnectionHandlerTest, CreateDataChannel) {
 TEST_F(RTCPeerConnectionHandlerTest, CreateDtmfSender) {
   std::string stream_label = "local_stream";
   blink::WebMediaStream local_stream(CreateLocalMediaStream(stream_label));
-  blink::WebMediaConstraints constraints;
-  pc_handler_->AddStream(local_stream, constraints);
+  EXPECT_TRUE(AddStream(local_stream));
 
   blink::WebVector<blink::WebMediaStreamTrack> tracks;
-  local_stream.VideoTracks(tracks);
-
-  ASSERT_LE(1ul, tracks.size());
-  EXPECT_FALSE(pc_handler_->CreateDTMFSender(tracks[0]));
-
   local_stream.AudioTracks(tracks);
   ASSERT_LE(1ul, tracks.size());
 

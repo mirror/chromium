@@ -1136,60 +1136,51 @@ void RTCPeerConnection::addStream(ScriptState* script_state,
                                   ExceptionState& exception_state) {
   if (ThrowExceptionIfSignalingStateClosed(signaling_state_, exception_state))
     return;
-
-  if (!stream) {
-    exception_state.ThrowDOMException(
-        kTypeMismatchError,
-        ExceptionMessages::ArgumentNullOrIncorrectType(1, "MediaStream"));
-    return;
+  if (!media_constraints.IsUndefinedOrNull()) {
+    MediaErrorState media_error_state;
+    WebMediaConstraints constraints =
+        MediaConstraintsImpl::Create(ExecutionContext::From(script_state),
+                                     media_constraints, media_error_state);
+    if (media_error_state.HadException()) {
+      media_error_state.RaiseException(exception_state);
+      return;
+    }
+    LOG(WARNING)
+        << "mediaConstraints is not a supported argument to addStream.";
+    LOG(WARNING) << "mediaConstraints was " << constraints.ToString().Utf8();
   }
 
-  if (getLocalStreams().Contains(stream))
-    return;
-
-  MediaErrorState media_error_state;
-  WebMediaConstraints constraints =
-      MediaConstraintsImpl::Create(ExecutionContext::From(script_state),
-                                   media_constraints, media_error_state);
-  if (media_error_state.HadException()) {
-    media_error_state.RaiseException(exception_state);
-    return;
+  MediaStreamVector streams;
+  streams.push_back(stream);
+  bool any_track_added = false;
+  for (const auto& track : stream->getTracks()) {
+    addTrack(track, streams, exception_state);
+    if (!exception_state.HadException())
+      any_track_added = true;
+    else
+      exception_state.ClearException();
   }
-
-  stream->RegisterObserver(this);
-  for (auto& track : stream->getTracks()) {
-    DCHECK(track->Component());
-    tracks_.insert(track->Component(), track);
-  }
-
-  bool valid = peer_handler_->AddStream(stream->Descriptor(), constraints);
-  if (!valid) {
+  if (!any_track_added) {
     exception_state.ThrowDOMException(kSyntaxError,
                                       "Unable to add the provided stream.");
     return;
   }
-  CreateMissingSendersForStream(stream);
+
+  stream->RegisterObserver(this);
 }
 
 void RTCPeerConnection::removeStream(MediaStream* stream,
                                      ExceptionState& exception_state) {
   if (ThrowExceptionIfSignalingStateClosed(signaling_state_, exception_state))
     return;
-
-  if (!stream) {
-    exception_state.ThrowDOMException(
-        kTypeMismatchError,
-        ExceptionMessages::ArgumentNullOrIncorrectType(1, "MediaStream"));
-    return;
+  for (const auto& track : stream->getTracks()) {
+    auto sender = FindSenderForTrackAndStream(track, stream);
+    if (!sender)
+      continue;
+    removeTrack(sender, exception_state);
+    exception_state.ClearException();
   }
-
-  if (!getLocalStreams().Contains(stream))
-    return;
-
   stream->UnregisterObserver(this);
-
-  peer_handler_->RemoveStream(stream->Descriptor());
-  RemoveUnusedSenders();
 }
 
 MediaStreamVector RTCPeerConnection::getLocalStreams() const {
@@ -1406,6 +1397,19 @@ MediaStreamTrack* RTCPeerConnection::GetTrack(
   return tracks_.at(static_cast<MediaStreamComponent*>(web_track));
 }
 
+RTCRtpSender* RTCPeerConnection::FindSenderForTrackAndStream(
+    MediaStreamTrack* track,
+    MediaStream* stream) {
+  for (const auto& rtp_sender : rtp_senders_.Values()) {
+    if (rtp_sender->track() == track) {
+      auto streams = rtp_sender->streams();
+      if (streams.size() == 1u && streams[0] == stream)
+        return rtp_sender;
+    }
+  }
+  return nullptr;
+}
+
 HeapVector<Member<RTCRtpReceiver>>::iterator RTCPeerConnection::FindReceiver(
     const WebRTCRtpReceiver& web_receiver) {
   for (auto it = rtp_receivers_.begin(); it != rtp_receivers_.end(); ++it) {
@@ -1415,71 +1419,28 @@ HeapVector<Member<RTCRtpReceiver>>::iterator RTCPeerConnection::FindReceiver(
   return rtp_receivers_.end();
 }
 
-void RTCPeerConnection::CreateMissingSendersForStream(MediaStream* stream) {
-  WebVector<std::unique_ptr<WebRTCRtpSender>> web_rtp_senders =
-      peer_handler_->GetSenders();
-  for (size_t i = 0; i < web_rtp_senders.size(); ++i) {
-    uintptr_t id = web_rtp_senders[i]->Id();
-    const auto it = rtp_senders_.find(id);
-    // Any senders created by other means such as addTrack() will already exist
-    // in |rtp_senders_| and not be examined further.
-    if (it != rtp_senders_.end())
-      continue;
-    // Any sender that exist in the lower layer but not in blink must have been
-    // created as a result of the operation that called
-    // CreateMissingSendersForStream(). We create a blink sender under the
-    // assumption that it is associated with |stream|.
-    DCHECK(web_rtp_senders[i]->Track());
-    MediaStreamTrack* track = GetTrack(web_rtp_senders[i]->Track());
-    DCHECK(track);
-    DCHECK(stream->getTracks().Contains(track));
-    HeapVector<Member<MediaStream>> streams;
-    streams.push_back(stream);
-    RTCRtpSender* rtp_sender =
-        new RTCRtpSender(this, std::move(web_rtp_senders[i]), track, streams);
-    rtp_senders_.insert(id, rtp_sender);
-  }
-}
-
-void RTCPeerConnection::RemoveUnusedSenders() {
-  std::set<uintptr_t> used_sender_ids;
-  for (const auto& web_rtp_sender : peer_handler_->GetSenders()) {
-    used_sender_ids.insert(web_rtp_sender->Id());
-  }
-  // HeapHashMap does not support remove-while-iterating so we save all the IDs
-  // of senders we want to erase.
-  std::set<uintptr_t> unused_sender_ids;
-  for (const auto& rtp_sender : rtp_senders_.Values()) {
-    uintptr_t id = rtp_sender->web_sender()->Id();
-    if (used_sender_ids.find(id) == used_sender_ids.end())
-      unused_sender_ids.insert(id);
-  }
-  for (auto sender_id : unused_sender_ids) {
-    rtp_senders_.erase(sender_id);
-  }
-}
-
 RTCDTMFSender* RTCPeerConnection::createDTMFSender(
     MediaStreamTrack* track,
     ExceptionState& exception_state) {
   if (ThrowExceptionIfSignalingStateClosed(signaling_state_, exception_state))
     return nullptr;
-
-  DCHECK(track);
-
-  bool is_local_stream_track = false;
-  for (const auto& local_stream : getLocalStreams()) {
-    if (local_stream->getTracks().Contains(track)) {
-      is_local_stream_track = true;
+  if (track->kind() != "audio") {
+    exception_state.ThrowDOMException(kSyntaxError,
+                                      "track.kind is not 'audio'.");
+    return nullptr;
+  }
+  bool is_local_track = false;
+  for (const auto& rtp_sender : rtp_senders_.Values()) {
+    if (rtp_sender->track() == track) {
+      is_local_track = true;
       break;
     }
   }
-  if (!is_local_stream_track) {
+  if (!is_local_track) {
     exception_state.ThrowDOMException(
-        kSyntaxError, "No local stream is available for the track provided.");
+        kSyntaxError, "No RTCRtpSender is available for the track provided.");
     return nullptr;
   }
-
   RTCDTMFSender* dtmf_sender = RTCDTMFSender::Create(
       GetExecutionContext(), peer_handler_.get(), track, exception_state);
   if (exception_state.HadException())
@@ -1496,20 +1457,23 @@ void RTCPeerConnection::close() {
 
 void RTCPeerConnection::OnStreamAddTrack(MediaStream* stream,
                                          MediaStreamTrack* track) {
-  DCHECK(track);
-  DCHECK(track->Component());
-  // Insert if not already present.
-  tracks_.insert(track->Component(), track);
-  CreateMissingSendersForStream(stream);
+  ExceptionState exception_state(nullptr, ExceptionState::kUnknownContext,
+                                 nullptr, nullptr);
+  MediaStreamVector streams;
+  streams.push_back(stream);
+  addTrack(track, streams, exception_state);
+  exception_state.ClearException();
 }
 
 void RTCPeerConnection::OnStreamRemoveTrack(MediaStream* stream,
                                             MediaStreamTrack* track) {
-  // Remove any senders that was removed from the lower layers as a result.
-  RemoveUnusedSenders();
-  // Don't remove |track| from |tracks_|, it may be referenced by another
-  // component. |tracks_| uses weak members and will automatically have |track|
-  // removed if destroyed.
+  auto sender = FindSenderForTrackAndStream(track, stream);
+  if (sender) {
+    ExceptionState exception_state(nullptr, ExceptionState::kUnknownContext,
+                                   nullptr, nullptr);
+    removeTrack(sender, exception_state);
+    exception_state.ClearException();
+  }
 }
 
 void RTCPeerConnection::NegotiationNeeded() {
