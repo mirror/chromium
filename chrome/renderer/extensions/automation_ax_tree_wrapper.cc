@@ -275,6 +275,17 @@ void AutomationAXTreeWrapper::OnAtomicUpdateFinished(
   text_changed_node_ids_.clear();
 }
 
+void AutomationAXTreeWrapper::OnTargetRelationChanged(
+    ui::AXTree* tree,
+    ax::mojom::IntAttribute relation_attr,
+    ui::AXNode* target_node,
+    ui::AXNode* source_node) {
+  if (relation_attr == ax::mojom::IntAttribute::kActivedescendantId) {
+    AddEvent(source_node,
+             ui::AXEventGenerator::Event::ACTIVE_DESCENDANT_CHANGED);
+  }
+}
+
 bool AutomationAXTreeWrapper::IsEventTypeHandledByAXEventGenerator(
     api::automation::EventType event_type) const {
   switch (event_type) {
