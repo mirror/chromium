@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "b23f8bc7_2296198d",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-02-02T18:21:24Z",
+      "side": 1,
+      "message": "Added screenshots to the CL description.",
+      "parentUuid": "317a0192_4084ee73",
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "606acde2_34b43701",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-02-02T18:21:24Z",
+      "side": 1,
+      "message": "If I were to do it that way, the page would show the error message before the user has even selected a file since the path would be empty by default.",
+      "parentUuid": "eebaf301_a350fc2f",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ab3873d_8ca1ee7c",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 3
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "98634740_3fcd6e8a",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-02-02T18:21:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab3873d_8ca1ee7c",
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c852f987_7941538f",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2a7e37_1ec91aaf",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-02-02T18:21:24Z",
+      "side": 1,
+      "message": "No I\u0027m using the \"invalid\" property of paper-input, which only displays the error message when it is true. So the error message will only be displayed when \"invalidPPD_\" is true.",
+      "parentUuid": "c852f987_7941538f",
+      "revId": "a1a64267cc7039a7b702306d10b4d32072cbe7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
