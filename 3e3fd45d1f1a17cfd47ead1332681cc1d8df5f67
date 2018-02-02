@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a680a1a0_c2ebf546",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-02-02T21:12:23Z",
+      "side": 1,
+      "message": "Is this guaranteed to happen at least once before first paint?",
+      "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
