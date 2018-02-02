@@ -22,6 +22,12 @@
 #include "ui/gl/extension_set.h"
 #include "ui/gl/gl_switches.h"
 
+#if defined(OS_ANDROID)
+#include "base/no_destructor.h"
+#include "base/synchronization/lock.h"
+#include "ui/gl/init/gl_factory.h"
+#endif  // OS_ANDROID
+
 namespace gpu {
 
 namespace {
@@ -392,5 +398,45 @@ bool PopGpuFeatureInfoCache(GpuFeatureInfo* gpu_feature_info) {
   g_gpu_feature_info_cache = nullptr;
   return true;
 }
+
+#if defined(OS_ANDROID)
+bool InitializeGLThreadSafe(base::CommandLine* command_line,
+                            bool ignore_gpu_blacklist,
+                            bool disable_gpu_driver_bug_workarounds,
+                            bool log_gpu_control_list_decisions,
+                            GPUInfo* out_gpu_info,
+                            GpuFeatureInfo* out_gpu_feature_info) {
+  static base::NoDestructor<base::Lock> gl_bindings_initialization_lock;
+  base::AutoLock auto_lock(*gl_bindings_initialization_lock);
+  DCHECK(command_line);
+  DCHECK(out_gpu_info && out_gpu_feature_info);
+  if (gl::GetGLImplementation() == gl::kGLImplementationNone) {
+    if (!gl::init::InitializeGLNoExtensionsOneOff()) {
+      VLOG(1) << "gl::init::InitializeGLNoExtensionsOneOff failed";
+      return false;
+    }
+    CollectContextGraphicsInfo(out_gpu_info);
+    *out_gpu_feature_info = ComputeGpuFeatureInfo(
+        *out_gpu_info, ignore_gpu_blacklist, disable_gpu_driver_bug_workarounds,
+        log_gpu_control_list_decisions, command_line, nullptr);
+    if (!out_gpu_feature_info->disabled_extensions.empty()) {
+      gl::init::SetDisabledExtensionsPlatform(
+          out_gpu_feature_info->disabled_extensions);
+    }
+    if (gl::init::InitializeExtensionSettingsOneOffPlatform()) {
+      VLOG(1) << "gl::init::InitializeExtensionSettingsOneOffPlatform failed";
+      return false;
+    }
+    CacheGPUInfo(*out_gpu_info);
+    CacheGpuFeatureInfo(*out_gpu_feature_info);
+  } else {
+    // GL bindings already initialized in another thread.
+    bool gpu_info_cached = PopGPUInfoCache(out_gpu_info);
+    bool gpu_feature_info_cached = PopGpuFeatureInfoCache(out_gpu_feature_info);
+    DCHECK(gpu_info_cached && gpu_feature_info_cached);
+  }
+  return true;
+}
+#endif  // OS_ANDROID
 
 }  // namespace gpu
