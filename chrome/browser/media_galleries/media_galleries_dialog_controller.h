@@ -34,6 +34,11 @@ class MediaGalleriesDialog {
   // Constructs a platform-specific dialog owned and controlled by |controller|.
   static MediaGalleriesDialog* Create(
       MediaGalleriesDialogController* controller);
+#if defined(OS_MACOSX)
+  // crbug/804950
+  static MediaGalleriesDialog* CreateCocoa(
+      MediaGalleriesDialogController* controller);
+#endif
  private:
   friend class TestMediaGalleriesAddScanResultsFunction;
 
