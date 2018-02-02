@@ -685,6 +685,9 @@ test("browser_tests") {
       "../browser/ui/blocked_content/popup_tracker_browsertest.cc",
       "../browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
       "../browser/ui/blocked_content/tab_under_blocker_browsertest.cc",
+      "../browser/ui/tabs/pinned_tab_service_browsertest.cc",
+      "../browser/ui/tabs/pinned_tab_test_utils.cc",
+      "../browser/ui/tabs/pinned_tab_test_utils.h",
 
       # If this list is used on Android in the future, these browser/speech/*
       # files will probably not be applicable.

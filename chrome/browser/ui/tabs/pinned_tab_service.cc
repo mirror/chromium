@@ -97,5 +97,12 @@ void PinnedTabService::OnBrowserClosing(Browser* browser) {
       browser->profile() == profile_ && IsOnlyNormalBrowser(browser)) {
     has_normal_browser_ = false;
     PinnedTabCodec::WritePinnedTabs(profile_);
+    save_pinned_tabs_ = false;
   }
+}
+
+void PinnedTabService::OnBrowserRemoved(Browser* browser) {
+  // Try wrting again because OnBrowserClosing can be skipped when it's
+  // triggered by TabstripEmpty().
+  OnBrowserClosing(browser);
 }
