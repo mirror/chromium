@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d610e616_e3bd566a",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-02-02T04:57:57Z",
+      "side": 1,
+      "message": "Can you add a comment explaining this? Why is it OK to exclude this \u0027.class\u0027 file, even for upstream builds?",
+      "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4f270c_d29ff570",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-02-02T04:57:57Z",
+      "side": 1,
+      "message": "Can we add a comment here to indicate that the PSBImpl we instantiate may not be the PSBImpl we see defined upstream?",
+      "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2e703f_263eba89",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridgeImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-02-02T04:57:57Z",
+      "side": 1,
+      "message": "Why is PSB not instantiable? That doesn\u0027t seem to be enforced in any way.\n\nShould PSB be an interface? Or perhaps abstract class?",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 56
+      },
+      "revId": "5504711512911af5f2bf1fdd7a9f72769b6cc7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
