@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39604914_46cb79b5",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2889,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-02T02:04:35Z",
+      "side": 1,
+      "message": "And if you want to use std::unique_ptr\u003cvoid, FPDFPageDeleter\u003e here, that\u0027s even better.",
+      "revId": "22e8a1fd21bbc0cfcc2ac681fb0d9009ffe2e1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
