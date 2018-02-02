@@ -2116,6 +2116,7 @@ jumbo_source_set("unit_tests") {
     "//testing/gtest",
     "//third_party/WebKit/Source/core/editing:unit_tests",
     "//third_party/WebKit/Source/core/fileapi:unit_tests",
+    "//third_party/WebKit/Source/core/messaging:unit_tests",
   ]
 
   # FIXME: Enable mojo unittests on Android after fixing data dependency.
