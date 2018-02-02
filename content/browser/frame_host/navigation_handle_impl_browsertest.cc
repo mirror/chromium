@@ -426,7 +426,7 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, VerifyPageTransition) {
     ui::PageTransition expected_transition = ui::PageTransitionFromInt(
         ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
 
-    EXPECT_TRUE(NavigateToURL(shell(), url));
+    EXPECT_TRUE(NavigateToURLFromAddressBar(shell(), url));
 
     EXPECT_TRUE(observer.has_committed());
     EXPECT_FALSE(observer.is_error());

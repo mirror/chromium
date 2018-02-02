@@ -1330,6 +1330,18 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     }
   }
 
+  // TODO(alexmos): is this needed for KEYWORD and KEYWORD_GENERATED?
+  // TODO(alexmos): Move into a helper.
+  if (frame_tree_node_->IsMainFrame() &&
+      (ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED) ||
+       ui::PageTransitionCoreTypeIs(transition,
+                                    ui::PAGE_TRANSITION_AUTO_BOOKMARK) ||
+       ui::PageTransitionCoreTypeIs(transition,
+                                    ui::PAGE_TRANSITION_GENERATED))) {
+    return SiteInstanceDescriptor(browser_context, dest_url,
+                                  SiteInstanceRelation::UNRELATED);
+  }
+
   // Start the new renderer in a new SiteInstance, but in the current
   // BrowsingInstance.
   return SiteInstanceDescriptor(browser_context, dest_url,
@@ -1487,14 +1499,24 @@ bool RenderFrameHostManager::IsCurrentlySameSite(RenderFrameHostImpl* candidate,
   }
 
   // It is possible that last_successful_url() was a nonstandard scheme (for
-  // example, "about:blank"). If so, examine the replicated origin to determine
-  // the site.
-  if (!candidate->GetLastCommittedOrigin().unique() &&
-      SiteInstanceImpl::IsSameWebSite(
-          browser_context,
-          GURL(candidate->GetLastCommittedOrigin().Serialize()), dest_url,
-          should_compare_effective_urls)) {
-    return true;
+  // example, "about:blank"). If so, examine the last committed origin to
+  // determine the site.
+  if (!candidate->GetLastCommittedOrigin().unique()) {
+    if (SiteInstanceImpl::IsSameWebSite(
+            browser_context,
+            GURL(candidate->GetLastCommittedOrigin().Serialize()), dest_url,
+            should_compare_effective_urls))
+      return true;
+  } else {
+    // If the last committed origin is unique, compare site URLs. This matters
+    // when |candidate|'s last navigation was a browser-initiated navigation to
+    // about:blank.  For example, for two browser-initiated navigations,
+    // foo.com -> about:blank -> foo.com, this allows the second navigation to
+    // be treated as same-site.
+    if (SiteInstanceImpl::IsSameWebSite(
+            browser_context, candidate->GetSiteInstance()->original_url(),
+            dest_url, should_compare_effective_urls))
+      return true;
   }
 
   // Not same-site.
