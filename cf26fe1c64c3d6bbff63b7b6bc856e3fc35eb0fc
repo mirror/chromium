@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d024d9a2_a0cde676",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T18:49:34Z",
+      "side": 1,
+      "message": "Nit; is_svg_element probably suffices. It\u0027s not \u0027related\u0027 if IsSVG() \u003d\u003d\u003e true, afaik :D",
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c800b44e_f23f9932",
+        "filename": "third_party/WebKit/Source/core/animation/test_data/transform-animation-on-svg.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-02T18:49:34Z",
+      "side": 1,
+      "message": "Nit; remove line here.",
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
