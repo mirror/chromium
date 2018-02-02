@@ -16,6 +16,24 @@
       "revId": "0d80b69576dcff20e8b92619cfdb89809d0b6a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2920079_cc182274",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-02T22:42:32Z",
+      "side": 1,
+      "message": "Actually, this change is doing something different.\n\nImagine you have a node a with active descendant b. b changes state (e.g. aria-selected).\n\nThe problem now is that ChromeVox or whoever else is observing |a| doesn\u0027t have any way to know b changed and.\n\nI\u0027ve updated the change description to better explain.",
+      "parentUuid": "c4a70b9b_23d64252",
+      "revId": "0d80b69576dcff20e8b92619cfdb89809d0b6a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
