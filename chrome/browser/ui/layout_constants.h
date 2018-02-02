@@ -43,6 +43,19 @@ enum LayoutConstant {
 
   // The horizontal space between most items in the toolbar.
   TOOLBAR_STANDARD_SPACING,
+
+  // The standard width of a touch tab. This does not include the endcap width.
+  TAB_TOUCH_WIDTH,
+
+  // The padding between tabs when stacked in touch mode.
+  TAB_STACK_PADDING,
+
+  // The standard tab width excluding the overlap.
+  TAB_STANDARD_WIDTH,
+
+  TAB_PRE_TITLE_SPACING,
+
+  TAB_AFTER_TITLE_SPACING,
 };
 
 enum LayoutInset {

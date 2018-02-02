@@ -123,6 +123,29 @@ const SkColor kDefaultColorToolbarStrokeTheme =
 const SkColor kDefaultColorToolbarStrokeThemeInactive =
     SkColorSetARGB(0x66, 0x4C, 0x4C, 0x4C);
 #endif  // OS_MACOSX
+
+// ----------------------------------------------------------------------------
+// Material Design 2
+
+// Color palette
+// Grey
+const SkColor kMD2ColorGrey800 = SkColorSetRGB(0x3C, 0x40, 0x43);
+const SkColor kMD2ColorGrey700 = SkColorSetRGB(0x5F, 0x63, 0x68);
+const SkColor kMD2ColorGrey400 = SkColorSetRGB(0xBD, 0xC1, 0xC6);
+const SkColor kMD2ColorGrey100 = SkColorSetRGB(0xF1, 0xF3, 0xF4);
+
+// Red
+const SkColor kMD2ColorRed800 = SkColorSetRGB(0xB3, 0x14, 0x12);
+const SkColor kMD2ColorRed600 = SkColorSetRGB(0xD9, 0x30, 0x25);
+
+// Red - dark
+const SkColor kMD2ColorRedDark800 = SkColorSetRGB(0xB4, 0x1B, 0x1A);
+const SkColor kMD2ColorRedDark600 = SkColorSetRGB(0xD3, 0x3B, 0x30);
+
+const SkColor kDefaultMD2ColorToolbar = SkColorSetRGB(0xFD, 0xFE, 0xFF);
+const SkColor kDefaultMD2ColorToolbarIncognito =
+    SkColorSetRGB(0x32, 0x36, 0x39);
+
 // ----------------------------------------------------------------------------
 
 // Strings used in alignment properties.
@@ -226,6 +249,14 @@ color_utils::HSL ThemeProperties::GetDefaultTint(int id, bool incognito) {
 
 // static
 SkColor ThemeProperties::GetDefaultColor(int id, bool incognito) {
+  const bool is_touch_optimized =
+      ui::MaterialDesignController::IsTouchOptimizedMaterial();
+  // 0 - Normal
+  // 1 - Incognito Normal
+  // 2 - Touch optimized Normal
+  // 3 - Touch optimized incognito
+  const int selector = incognito + 2 * is_touch_optimized;
+
   switch (id) {
     // Properties stored in theme pack.
     case COLOR_FRAME:
@@ -234,14 +265,50 @@ SkColor ThemeProperties::GetDefaultColor(int id, bool incognito) {
       return incognito ? kDefaultColorFrameIncognitoInactive
                        : kDefaultColorFrameInactive;
     case COLOR_TOOLBAR:
-      return incognito ? kDefaultColorToolbarIncognito : kDefaultColorToolbar;
+      switch (selector) {
+        case 0:
+          return kDefaultColorToolbar;
+        case 1:
+          return kDefaultColorToolbarIncognito;
+        case 2:
+          return kDefaultMD2ColorToolbar;
+        case 3:
+          return kDefaultMD2ColorToolbarIncognito;
+      }
     case COLOR_TAB_TEXT:
     case COLOR_BOOKMARK_TEXT:
-      return incognito ? kDefaultColorToolbarTextIncognito
-                       : kDefaultColorToolbarText;
+      switch (selector) {
+        case 0:
+          return kDefaultColorToolbarText;
+        case 1:
+          return kDefaultColorToolbarTextIncognito;
+        case 2:
+          return kMD2ColorGrey800;
+        case 3:
+          return kMD2ColorGrey100;
+      }
     case COLOR_BACKGROUND_TAB_TEXT:
-      return incognito ? kDefaultColorBackgroundTabTextIncognito
-                       : kDefaultColorBackgroundTabText;
+      switch (selector) {
+        case 0:
+          return kDefaultColorBackgroundTabText;
+        case 1:
+          return kDefaultColorBackgroundTabTextIncognito;
+        case 2:
+          return kMD2ColorGrey700;
+        case 3:
+          return kMD2ColorGrey400;
+      }
+    case COLOR_TAB_CLOSE_BUTTON_ICON_HOVER:
+      return incognito ? kMD2ColorGrey100 : kDefaultMD2ColorToolbar;
+    case COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE:
+      return incognito ? kMD2ColorGrey100 : kMD2ColorGrey800;
+    case COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorGrey700;
+    case COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER:
+      return incognito ? kMD2ColorRedDark600 : kMD2ColorRed600;
+    case COLOR_TAB_CLOSE_BUTTON_BACKGROUND_PRESSED:
+      return incognito ? kMD2ColorRedDark800 : kMD2ColorRed800;
+
     case COLOR_NTP_BACKGROUND:
       if (!incognito)
         return kDefaultColorNTPBackground;
