@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aed6123_a7f03bf8",
+        "filename": "chromeos/dbus/fake_sms_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-02T08:32:27Z",
+      "side": 0,
+      "message": "Note: this check is dropped because;\n- Real implementation assumes no null callback, and\n- actually there is no null callback passed here.",
+      "revId": "df24ae6906f83b6b3b7c5eda48b20710b246d5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
