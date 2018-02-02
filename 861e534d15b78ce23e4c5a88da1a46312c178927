@@ -823,6 +823,24 @@
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4322962d_eca1df36",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-02T00:44:36Z",
+      "side": 1,
+      "message": "Dang. I might be inclined to leave crash reporting out of this CL then as it can just as easily be added separately (before shipping the feature of course!), but this CL seems big enough as it is.",
+      "parentUuid": "d230b12a_12c50df3",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4b221fca_8fa611f4",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 71
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-02T00:44:36Z",
+      "side": 1,
+      "message": "This should be removed either way.",
+      "revId": "02dcd084c13a9247d41b81e35ecb5cfcb4a997d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f2ad206_905afdf9",
         "filename": "notification_helper/README.md",
         "patchSetId": 71
