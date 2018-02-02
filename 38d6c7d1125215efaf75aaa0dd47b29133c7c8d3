@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8faa029_6b16d490",
+        "filename": "components/signin/core/browser/profile_management_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-02-02T09:15:38Z",
+      "side": 1,
+      "message": "this should be in the .h (but I believe it is already there)",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 11
+      },
+      "revId": "38d6c7d1125215efaf75aaa0dd47b29133c7c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
