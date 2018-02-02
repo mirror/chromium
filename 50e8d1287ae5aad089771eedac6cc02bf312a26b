@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "bff68e97_87566044",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-02-02T02:26:38Z",
+      "side": 1,
+      "message": "Does user scrolling cancel browser restoration? Yes.\n\nThe split patch really touches lot of stuff. https://chromium-review.googlesource.com/c/chromium/src/+/897932",
+      "parentUuid": "836dfc75_7756741e",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
