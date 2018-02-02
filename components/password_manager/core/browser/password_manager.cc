@@ -495,6 +495,15 @@ void PasswordManager::OnPasswordFormSubmittedNoChecks(
     logger.LogMessage(Logger::STRING_ON_SAME_DOCUMENT_NAVIGATION);
   }
 
+  // If form action is a valid URL, browser will perform navigation on submit.
+  // There are special checks to save or not to save passwords after
+  // navigation.
+  // If form action is not a valid URL, it is likely a special case with login
+  // form disappearing, so it may be required to save password in
+  // |OnLoginSuccessful| right now.
+  if (password_form.form_data.action.is_valid())
+    return;
+
   ProvisionallySavePassword(password_form, driver);
 
   if (CanProvisionalManagerSave())
