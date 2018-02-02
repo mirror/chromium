@@ -16,6 +16,24 @@
       "revId": "fb0b609a3346fd760392367047680db7c7899f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7ec276_338307b8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-02-02T05:13:54Z",
+      "side": 1,
+      "message": "Yup, but there are many places to be removed in this file once IncrementalShadowDOM is enabled in default.\n\nLet me skip adding TODO for each. That might be annonying.",
+      "parentUuid": "1233738b_4d93e9d9",
+      "revId": "fb0b609a3346fd760392367047680db7c7899f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
