@@ -303,6 +303,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                           const blink::WebNode& toNode) override;
   void DidUpdateLayout() override;
 #if defined(OS_ANDROID)
+  // |touch_rect| is in physical pixels if --use-zoom-for-dsf is enabled.
+  // Otherwise, it is in DIPs.
   bool DidTapMultipleTargets(
       const blink::WebSize& inner_viewport_offset,
       const blink::WebRect& touch_rect,
