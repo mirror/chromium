@@ -736,7 +736,11 @@ group("gn_all") {
   }
 
   if (is_fuchsia) {
+    # TODO(fuchsia): Remove these, if possible, once Fuchsia bots build 'all'.
+    # See crbug.com/808287.
     deps += [
+      "//components/cronet/native:cronet_tests",
+      "//components/cronet/native:cronet_unittests",
       "//headless",
       "//headless:headless_shell",
       "//headless:headless_tests",
