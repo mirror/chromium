@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d6a87a98_184c2a0b",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T19:23:28Z",
+      "side": 1,
+      "message": "If you agree it\u0027s a good idea, yeah, let\u0027s do it.  A followup CL is fine.\n\nIf the various setters can be called after Open() and before Connect()/Bind(), there\u0027s no need to make SocketOptions contain those flags, is there?  The socket will just be provided in the Open() state and those setters can be called on it?",
+      "parentUuid": "f68fda11_ab24e972",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "529e140b_5d0ce0c2",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 8
@@ -472,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "93c68ac2_5e17761b",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T19:23:28Z",
+      "side": 1,
+      "message": "Yeah .... udp_socket_posix.cc doesn\u0027t make a sharp distinction between connected \u0026 bound sockets, and we are in this implementation, so I think of this as a place where we can somewhat clean up the interface.  Remember that the mojom comments say that if you connect a socket \"Subsequent packets received will be from |remote_addr|\".  This would seem to violate that interface contract; do we only receive multicast messages sent from our connected address?\n\nMy recommendation would be to make the documentation and this code say that only bound sockets can join multicast groups, and relax that only if you run into a consumer that requires the other functionality (which seems unlikely given that connect is still mostly syntactic sugar over using an unconnected UDP socket with sendto and recvfrom, but there may be something I\u0027m missing).",
+      "parentUuid": "6a874976_5ee0fbbb",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 25
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a7691ab_6663784d",
         "filename": "services/network/udp_socket.h",
         "patchSetId": 8
@@ -507,6 +555,30 @@
       "side": 1,
       "message": "It\u0027s overriden in udp_socket.cc\u0027s SocketWrapperImpl, so we can parse these options and set them on the underlying net::UDPSocket.",
       "parentUuid": "0a7691ab_6663784d",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c1d453_32f29533",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T19:23:28Z",
+      "side": 1,
+      "message": "I don\u0027t think that addresses my question?  The only place I could find where it\u0027s *called* is also udp_socket.cc.  So there\u0027s no need for it to be defined in the base class, only in the derived class, which is good because it minimizes and localizes the interface.  Is there something I\u0027m not seeing?",
+      "parentUuid": "07e83061_98af317c",
       "range": {
         "startLine": 74,
         "startChar": 16,

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823b5d0b_b0ad1909",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T19:23:28Z",
+      "side": 1,
+      "message": "nit, suggestion: My personal preference would be to write out the full URL rather than using a shortcut server, partially because readers can get information from looking at the URL rather than having to click through to figure out where it\u0027s going.",
+      "range": {
+        "startLine": 611,
+        "startChar": 3,
+        "endLine": 611,
+        "endChar": 22
+      },
+      "revId": "08c84c5f6d5d82bc07bbe4012790f2cfc4c99a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11075e26_32ff7cb2",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-02T19:23:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we also test sending/receiving data through multicast groups?",
+      "range": {
+        "startLine": 648,
+        "startChar": 28,
+        "endLine": 648,
+        "endChar": 42
+      },
+      "revId": "08c84c5f6d5d82bc07bbe4012790f2cfc4c99a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
