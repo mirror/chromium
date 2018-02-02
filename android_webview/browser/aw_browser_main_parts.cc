@@ -111,10 +111,10 @@ int AwBrowserMainParts::PreCreateThreads() {
         std::make_unique<AwBrowserTerminator>(crash_dir));
   }
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableWebViewVariations)) {
+  //if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  //        switches::kEnableWebViewVariations)) {
     aw_field_trial_creator_.SetUpFieldTrials();
-  }
+  //}
 
   return content::RESULT_CODE_NORMAL_EXIT;
 }

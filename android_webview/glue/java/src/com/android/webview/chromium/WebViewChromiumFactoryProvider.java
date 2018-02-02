@@ -48,11 +48,11 @@ import org.chromium.android_webview.AwQuotaManagerBridge;
 import org.chromium.android_webview.AwResource;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
+import org.chromium.android_webview.AwVariationsUtils;
 import org.chromium.android_webview.HttpAuthDatabase;
 import org.chromium.android_webview.ResourcesContextWrapperFactory;
 import org.chromium.android_webview.WebViewChromiumRunQueue;
 import org.chromium.android_webview.command_line.CommandLineUtil;
-import org.chromium.android_webview.variations.AwVariationsSeedHandler;
 import org.chromium.base.BuildConfig;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
@@ -67,14 +67,18 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.NativeLibraries;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.components.autofill.AutofillProvider;
+import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInfo;
+import org.chromium.components.variations.firstrun.VariationsSeedBridge;
 import org.chromium.content.browser.input.LGEmailActionModeWorkaround;
 import org.chromium.net.NetworkChangeNotifier;
 
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Entry point to the WebView. The system framework talks to this class to get instances of the
@@ -87,6 +91,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
     private static final String CHROMIUM_PREFS_NAME = "WebViewChromiumPrefs";
     private static final String VERSION_CODE_PREF = "lastVersionCodeUsed";
     private static final String HTTP_AUTH_DATABASE_FILE = "http_auth.db";
+    private static final long SEED_LOAD_TIMEOUT_MILLIS = 20;
 
     private final WebViewChromiumRunQueue mRunQueue = new WebViewChromiumRunQueue(
             () -> { return WebViewChromiumFactoryProvider.this.hasStarted(); });
@@ -99,7 +104,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         mRunQueue.addTask(task);
         try {
             return task.get(4, TimeUnit.SECONDS);
-        } catch (java.util.concurrent.TimeoutException e) {
+        } catch (TimeoutException e) {
             throw new RuntimeException("Probable deadlock detected due to WebView API being called "
                             + "on incorrect thread while the UI thread is blocked.", e);
         } catch (Exception e) {
@@ -122,6 +127,63 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
     /* package */ void addTask(Runnable task) {
         mRunQueue.addTask(task);
     }
+
+    // SeedLoaderTask wraps FutureTask in order to, asynchronously:
+    // 1. Load the new seed file, if any.
+    // 2. If no new seed file, load the old seed file, if any.
+    // 3. Make the loaded seed available via get() (or null if there was no seed).
+    // 4. If there was a new seed file, replace the old with the new (but only after making the
+    //    loaded seed available, as the replace need not block startup).
+    // 5. If there was no seed, or the loaded seed was expired, request a new seed.
+    private static class SeedLoaderTask implements Runnable {
+        private static final File OLD_SEED_FILE = AwVariationsUtils.getSeedFile();
+        private static final File NEW_SEED_FILE = AwVariationsUtils.getNewSeedFile();
+
+        private boolean mFoundNewSeed;
+        private boolean mNeedNewSeed;
+        private FutureTask<SeedInfo> mTask = new FutureTask<SeedInfo>(
+            new Callable<SeedInfo>() {
+                @Override
+                public SeedInfo call() {
+                    // First check for a new seed.
+                    SeedInfo seed = AwVariationsUtils.readSeedFile(NEW_SEED_FILE);
+                    // If a valid new seed was found, make a note to replace the old seed with
+                    // the new seed. (Don't do it now, to avaid delaying FutureTask.get().)
+                    mFoundNewSeed = (seed != null);
+                    if (!mFoundNewSeed) {
+                        // If there is no new seed, check for an old seed.
+                        seed = AwVariationsUtils.readSeedFile(OLD_SEED_FILE);
+                    }
+                    mNeedNewSeed = (seed == null || AwVariationsUtils.isExpired(seed));
+                    Log.e("blarg", "finishing callable");
+                    return seed;
+                }
+            }
+        );
+
+        @Override
+        public void run() {
+            mTask.run();
+
+            Log.e("blarg", "checking for rename");
+            if (mFoundNewSeed) {
+                if (!NEW_SEED_FILE.renameTo(OLD_SEED_FILE)) {
+                    Log.e("blarg", "Failed to swap out old seed " + OLD_SEED_FILE +
+                            " with new seed " + NEW_SEED_FILE);
+                }
+            }
+
+            if (mNeedNewSeed) {
+                Log.e("blarg", "requesting seed");
+                AwVariationsUtils.requestSeedFromService();
+            }
+        }
+
+        public SeedInfo get(long timeout, TimeUnit unit)
+                throws ExecutionException, InterruptedException, TimeoutException {
+            return mTask.get(timeout, unit);
+        }
+    };
 
     // Guards accees to the other members, and is notifyAll() signalled on the UI thread
     // when the chromium process has been started.
@@ -371,6 +433,27 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
             return;
         }
 
+        // The WebView package name must be set early because:
+        // - It's used to locate the service to which we copy crash minidumps. The name must be set
+        //   before a render process has a chance to crash - otherwise we might try to copy a
+        //   minidump without knowing what process to copy it to.
+        // - It's used to locate the service from which we get the variations seed, so it must be
+        //   set before initializing variations.
+        // - It's used to determine channel for UMA, so it must be set before initializing UMA.
+        final PackageInfo webViewPackageInfo = WebViewFactory.getLoadedPackageInfo();
+        final String webViewPackageName = webViewPackageInfo.packageName;
+        AwBrowserProcess.setWebViewPackageName(webViewPackageName);
+
+        boolean enableVariations =
+                CommandLine.getInstance().hasSwitch(AwSwitches.ENABLE_WEBVIEW_VARIATIONS);
+        Log.e("blarg", "enableVariations=" + enableVariations);
+        SeedLoaderTask seedLoaderTask = null;
+        if (enableVariations) {
+            // Begin asynchronously loading the variations seed.
+            seedLoaderTask = new SeedLoaderTask();
+            (new Thread(seedLoaderTask)).run();
+        }
+
         try {
             LibraryLoader.get(LibraryProcessType.PROCESS_WEBVIEW).ensureInitialized();
         } catch (ProcessInitException e) {
@@ -381,18 +464,11 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         PathService.override(DIR_RESOURCE_PAKS_ANDROID, "/system/framework/webview/paks");
 
         // Make sure that ResourceProvider is initialized before starting the browser process.
-        final PackageInfo webViewPackageInfo = WebViewFactory.getLoadedPackageInfo();
-        final String webViewPackageName = webViewPackageInfo.packageName;
         final Context context = ContextUtils.getApplicationContext();
         setUpResources(webViewPackageInfo, context);
         initPlatSupportLibrary();
         doNetworkInitializations(context);
         final boolean isExternalService = true;
-        // The WebView package name is used to locate the separate Service to which we copy crash
-        // minidumps. This package name must be set before a render process has a chance to crash -
-        // otherwise we might try to copy a minidump without knowing what process to copy it to.
-        // It's also used to determine channel for UMA, so it must be set before initializing UMA.
-        AwBrowserProcess.setWebViewPackageName(webViewPackageName);
         AwBrowserProcess.configureChildProcessLauncher(webViewPackageName, isExternalService);
         AwBrowserProcess.start();
         AwBrowserProcess.handleMinidumpsAndSetMetricsConsent(
@@ -425,10 +501,23 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
         mRunQueue.drainQueue();
 
-        boolean enableVariations =
-                CommandLine.getInstance().hasSwitch(AwSwitches.ENABLE_WEBVIEW_VARIATIONS);
         if (enableVariations) {
-            AwVariationsSeedHandler.bindToVariationsService();
+            try {
+                SeedInfo seed = seedLoaderTask.get(SEED_LOAD_TIMEOUT_MILLIS,
+                        TimeUnit.MILLISECONDS);
+                //SeedInfo seed = seedLoaderTask.get(0, TimeUnit.MILLISECONDS);
+                if (seed != null) {
+                    VariationsSeedBridge.setVariationsFirstRunSeed(seed.seedData, seed.signature,
+                            seed.country, seed.date, seed.isGzipCompressed);
+                    Log.e("blarg", "got seed");
+                }
+                else Log.e("blarg", "null seed");
+            } catch (TimeoutException e) {
+                // TODO(paulmiller): Log seed load time and success rate in UMA.
+                Log.e("blarg", "waiting for seed", e);
+            } catch (InterruptedException | ExecutionException e) {
+                Log.e("blarg", "waiting for seed", e);
+            }
         }
     }
 

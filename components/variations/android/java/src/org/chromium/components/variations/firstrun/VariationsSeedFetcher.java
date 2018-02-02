@@ -83,7 +83,10 @@ public class VariationsSeedFetcher {
             VariationsPlatform platform, String restrictMode, String milestone, String channel)
             throws MalformedURLException, IOException {
         String urlString = getConnectionString(platform, restrictMode, milestone, channel);
+        Log.e("blarg", "getServerConnection A isInterrupted=" + Thread.currentThread().isInterrupted() +
+                " urlString=" + urlString);
         URL url = new URL(urlString);
+        Log.e("blarg", "getServerConnection B isInterrupted=" + Thread.currentThread().isInterrupted());
         return (HttpURLConnection) url.openConnection();
     }
 
@@ -201,12 +204,15 @@ public class VariationsSeedFetcher {
         HttpURLConnection connection = null;
         try {
             long startTimeMillis = SystemClock.elapsedRealtime();
+            Log.e("blarg", "downloadContent A isInterrupted=" + Thread.currentThread().isInterrupted());
             connection = getServerConnection(platform, restrictMode, milestone, channel);
+            Log.e("blarg", "downloadContent B isInterrupted=" + Thread.currentThread().isInterrupted());
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(REQUEST_TIMEOUT);
             connection.setDoInput(true);
             connection.setRequestProperty("A-IM", "gzip");
             connection.connect();
+            //try { Thread.sleep(1000); } catch (Exception e) { throw new RuntimeException(e); }
             int responseCode = connection.getResponseCode();
             recordFetchResultOrCode(responseCode);
             if (responseCode != HttpURLConnection.HTTP_OK) {
