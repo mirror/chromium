@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b72fffc3_52b74e56",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-02T19:20:29Z",
+      "side": 1,
+      "message": "How does this handle deletions of entries in non-active tabs? I\u0027m guessing that this specific bug only repros for the active tab, and otherwise, the back/forward command state is updated when the active tab changes?",
+      "revId": "c1690fe7f583bcee4cfcdbf7644bc2b8a56bf365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae2f7b1_05d59152",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4548,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-02T19:20:29Z",
+      "side": 1,
+      "message": "I\u0027m a little surprised there isn\u0027t a suitable existing web contents observer that could trigger the command controller update in the loop below. Can you poke around to see if there might be something better than calling directly to the delegate/browser?",
+      "revId": "c1690fe7f583bcee4cfcdbf7644bc2b8a56bf365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
