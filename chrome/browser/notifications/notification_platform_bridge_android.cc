@@ -72,14 +72,8 @@ ScopedJavaLocalRef<jobject> JNI_NotificationPlatformBridge_ConvertToJavaBitmap(
 
 NotificationActionType GetNotificationActionType(
     message_center::ButtonInfo button) {
-  switch (button.type) {
-    case message_center::ButtonType::BUTTON:
-      return NotificationActionType::BUTTON;
-    case message_center::ButtonType::TEXT:
-      return NotificationActionType::TEXT;
-  }
-  NOTREACHED();
-  return NotificationActionType::TEXT;
+  return button.placeholder ? NotificationActionType::TEXT
+                            : NotificationActionType::BUTTON;
 }
 
 ScopedJavaLocalRef<jobjectArray> ConvertToJavaActionInfos(

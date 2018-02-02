@@ -1048,7 +1048,7 @@ void NotificationViewMD::CreateOrUpdateImageView(
 
 void NotificationViewMD::CreateOrUpdateActionButtonViews(
     const Notification& notification) {
-  std::vector<ButtonInfo> buttons = notification.buttons();
+  const std::vector<ButtonInfo>& buttons = notification.buttons();
   bool new_buttons = action_buttons_.size() != buttons.size();
 
   if (new_buttons || buttons.size() == 0) {
@@ -1062,9 +1062,9 @@ void NotificationViewMD::CreateOrUpdateActionButtonViews(
   for (size_t i = 0; i < buttons.size(); ++i) {
     ButtonInfo button_info = buttons[i];
     if (new_buttons) {
-      bool is_inline_reply = button_info.type == ButtonType::TEXT;
+      bool is_inline_reply = button_info.placeholder.has_value();
       NotificationButtonMD* button = new NotificationButtonMD(
-          this, is_inline_reply, button_info.title, button_info.placeholder);
+          this, is_inline_reply, button_info.title, *button_info.placeholder);
       action_buttons_.push_back(button);
       action_buttons_row_->AddChildView(button);
     } else {
