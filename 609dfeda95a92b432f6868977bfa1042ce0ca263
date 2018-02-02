@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a836e0_2a99eae0",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-02T21:10:57Z",
+      "side": 1,
+      "message": "Domenic, I can see how you might be unhappy with the current wording.  FWIW, an earlier patchset said simply \"Avoid breaking existing websites (e.g. by unintentionally blocking *resources* they depend on).\".\n\nAt any rate, IMHO getting the rest of the document right (how XSDB should work, which MIME types it should pay attention to, how it is or is not compatible with existing website) is more important than wordsmithing the goals.  I think we are all on the same page - we do not want to break existing websites (although the actual impact of XSDB has not been quantified yet and each of us might have different thresholds for acceptable level of breakage).",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
