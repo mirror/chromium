@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c442f8ee_97a59d21",
+        "filename": "services/ui/service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T23:02:48Z",
+      "side": 0,
+      "message": "nit: Remove member from header and remove includes from this file.",
+      "revId": "dd9c5e73df590b39a8b65b7f5ec75e58445acb2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c5f418_fc286bf7",
+        "filename": "ui/aura/env.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T23:02:48Z",
+      "side": 0,
+      "message": "nit: remove from header too",
+      "revId": "dd9c5e73df590b39a8b65b7f5ec75e58445acb2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d15a47_42037943",
+        "filename": "ui/gfx/client_native_pixmap_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-02T23:02:48Z",
+      "side": 0,
+      "message": "Hooray for fewer singletons!",
+      "revId": "dd9c5e73df590b39a8b65b7f5ec75e58445acb2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
