@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd5e890_3e984ad0",
+        "filename": "chrome/installer/linux/debian/additional_deps",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-02-02T19:07:44Z",
+      "side": 0,
+      "message": "We don\u0027t want to remove this until our code actually stops dlopen()ing and using the library",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "59b7c899b3748fd384bbe753964a0242e56db587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
