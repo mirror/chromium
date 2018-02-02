@@ -16,6 +16,24 @@
       "revId": "aa36bffbca291c237487d2374d416a9c59f4de2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411c3249_fb9c51b1",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-02T18:39:25Z",
+      "side": 0,
+      "message": "Done. I\u0027ve put it back with small modification.",
+      "parentUuid": "90dffc18_b933c9f5",
+      "revId": "aa36bffbca291c237487d2374d416a9c59f4de2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
