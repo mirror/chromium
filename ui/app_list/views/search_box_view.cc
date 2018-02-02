@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "ash/app_list/model/search/search_box_model.h"
@@ -17,7 +18,6 @@
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/app_list_util.h"
-#include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/resources/grit/app_list_resources.h"
 #include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/app_list/views/app_list_view.h"
@@ -197,7 +197,8 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
       view_delegate_(view_delegate),
       content_container_(new views::View),
       search_box_(new SearchBoxTextfield(this)),
-      app_list_view_(app_list_view) {
+      app_list_view_(app_list_view),
+      weak_ptr_factory_(this) {
   SetPaintToLayer();
   layer()->SetFillsBoundsOpaquely(false);
 
@@ -641,9 +642,8 @@ void SearchBoxView::Update() {
   NotifyQueryChanged();
 }
 
-void SearchBoxView::OnWallpaperColorsChanged() {
-  std::vector<SkColor> prominent_colors;
-  GetWallpaperProminentColors(&prominent_colors);
+void SearchBoxView::OnGetWallpaperProminentColors(
+    const std::vector<SkColor>& prominent_colors) {
   if (prominent_colors.empty())
     return;
   DCHECK_EQ(static_cast<size_t>(ColorProfileType::NUM_OF_COLOR_PROFILES),
@@ -662,6 +662,12 @@ void SearchBoxView::OnWallpaperColorsChanged() {
   SchedulePaint();
 }
 
+void SearchBoxView::OnWallpaperColorsChanged() {
+  GetWallpaperProminentColors(
+      base::BindOnce(&SearchBoxView::OnGetWallpaperProminentColors,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
+
 void SearchBoxView::UpdateSearchIcon() {
   const gfx::VectorIcon& google_icon =
       is_search_box_active() ? kIcGoogleColorIcon : kIcGoogleBlackIcon;
@@ -672,8 +678,9 @@ void SearchBoxView::UpdateSearchIcon() {
       gfx::CreateVectorIcon(icon, kSearchIconSize, search_box_color_));
 }
 
-void SearchBoxView::GetWallpaperProminentColors(std::vector<SkColor>* colors) {
-  view_delegate_->GetWallpaperProminentColors(colors);
+void SearchBoxView::GetWallpaperProminentColors(
+    AppListViewDelegate::GetWallpaperProminentColorsCallback callback) {
+  view_delegate_->GetWallpaperProminentColors(std::move(callback));
 }
 
 // TODO(crbug.com/755219): Unify this with UpdateBackgroundColor.
