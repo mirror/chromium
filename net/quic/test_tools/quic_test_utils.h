@@ -613,6 +613,8 @@ class MockQuicSpdySession : public QuicSpdySession {
                     bool fin,
                     size_t frame_len,
                     const QuicHeaderList& header_list));
+  MOCK_METHOD2(OnPriorityFrame,
+               void(QuicStreamId stream_id, SpdyPriority priority));
   MOCK_CONST_METHOD0(IsCryptoHandshakeConfirmed, bool());
   MOCK_METHOD2(OnPromiseHeaders,
                void(QuicStreamId stream_id, QuicStringPiece headers_data));
