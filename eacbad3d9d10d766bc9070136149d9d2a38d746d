@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0c257bae_58b9978b",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-02T00:16:40Z",
+      "side": 1,
+      "message": "I might be missing something, or this doesn\u0027t look like a desired behavior change to me.\n\nIn the existing code, we are using TextGranularity for two different purposes:\n\n1. The \u0027granularity\u0027 parameter in FrameSelection::Modify(), which is used by keyboard selection modification (e.g., arrow keys) and JS API Selection.modify(). It\u0027s a transient parameter of the operation.\n\n2. The granularity of the current FrameSelection, which applies only when:\n- the current selection is a range\n- the current selection is set by click/doubleclick/tripleclick + drag\nIt\u0027s stored in FrameSelection so that the selection can be continuously modified during the mouse drag\n\nSo, storing the granularity of FrameSelection::Modify() may lead to some unexpected behavior.\n\nIf this patch aims at getting the text granularity of the last FrameSelection::Modify(), maybe it should be passed in some other way.",
+      "parentUuid": "8c78dad0_0205d8f9",
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b0886f_7574bbdb",
         "filename": "third_party/WebKit/public/web/WebAXEnums.h",
         "patchSetId": 3
