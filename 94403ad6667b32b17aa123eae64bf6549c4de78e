@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "12c1c93e_5a25a35b",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "I think we should (+ the TODO you just added) still add a comment explaining your current decision you went for in this CL.\n\nAlways explain the \"why and side effects\" not the \"what\".",
+      "parentUuid": "e4d89490_38d57d9f",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 47
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e10e8a9_dd1c7834",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 2
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "hmm... I started to think that we shall do GetDisplayNearestPoint(persistent_window_bounds.origin). It may behave differently on 3+ displays.\n\nHow about adding document until I sorted this out?",
       "parentUuid": "3c9535f7_ba5e3f28",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 73
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b68549_2d0ceab1",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Yes, please. Add a comment and a TODO.",
+      "parentUuid": "ad805975_f37c1bd1",
       "range": {
         "startLine": 89,
         "startChar": 55,
@@ -425,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "47fa6435_a4b1dcf9",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Yes, because the ctor still depends on window_tree_host_manager_ when it adds the observer.\n\nThis is to be safe and future-proof. I know that you create the controller in Shell::Init() after window_tree_host_manager_ is created, but the order of declaration should match the order of construction/initialization.",
+      "parentUuid": "a5df71bd_67cd4060",
+      "range": {
+        "startLine": 671,
+        "startChar": 2,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b6dfef_b8e62191",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 2
@@ -469,6 +541,30 @@
       "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b29809_0bb96eb2",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f149ce5d_0fbceae8",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 1
+      },
+      "revId": "94403ad6667b32b17aa123eae64bf6549c4de78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

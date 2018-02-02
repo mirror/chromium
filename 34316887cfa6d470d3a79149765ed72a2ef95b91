@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8146b9a1_ea1198f5",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Nit: Reconcile sounds like the wrong word here?: https://www.google.com/search?q\u003dreconcile+definition\u0026oq\u003dreconc\u0026aqs\u003dchrome.3.69i57j0l5.5503j0j7\u0026sourceid\u003dchrome\u0026ie\u003dUTF-8\n\nYou just want to say: \"Decide on the correct behavior involving mixed mirror mode.\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2e2931_7bc369fb",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "It would be nice if you add a constructor for PersistentWindowInfo. This way you could do:\n\nwindow_state-\u003eSetPersistentWindowInfo(\n   PersistentWindowInfo(bounds_in_screen,\n                        display_id));",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 75
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92574583_b99cb0d7",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "ref?",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 18
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac4957e9_618ccd49",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "To make this look better, cache this outside the for loop.",
+      "range": {
+        "startLine": 90,
+        "startChar": 33,
+        "endLine": 90,
+        "endChar": 61
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77759eb_a79e4314",
+        "filename": "ash/display/persistent_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Nit: to restore \"to\"?",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720f50ab_3e6d9e88",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Nit: Move those right before:\n\n// Disconnects secondary display.\n\n(The idea is to keep your declarations as close as possible right before the places where they will be used).",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8ea576_0b4616ee",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "What happens when you connect all 3 together?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce1b944_4ef482bd",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "Nice tests! Thanks!",
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba53d37c_2cf576b5",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "You can move this right before persistent_window_info()",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 80
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106c6b04_c62a5736",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T18:42:29Z",
+      "side": 1,
+      "message": "to attempt to restore windows to their original bounds when displays are restored to their previous states?",
+      "range": {
+        "startLine": 448,
+        "startChar": 17,
+        "endLine": 448,
+        "endChar": 62
+      },
+      "revId": "34316887cfa6d470d3a79149765ed72a2ef95b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
