@@ -9,7 +9,8 @@
 namespace content {
 
 int GetMinThreadsInRendererTaskSchedulerForegroundPool() {
-  return base::SysInfo::NumberOfProcessors();
+  // Assume a busy main thread.
+  return std::max(1, base::SysInfo::NumberOfProcessors() - 1);
 }
 
 }  // namespace content
