@@ -18,6 +18,13 @@ class TabModalConfirmDialog : public TabModalConfirmDialogCloseDelegate {
   // the dialog.
   static TabModalConfirmDialog* Create(TabModalConfirmDialogDelegate* delegate,
                                        content::WebContents* web_contents);
+#if defined(OS_MACOSX)
+  // crbug/804950
+  static TabModalConfirmDialog* CreateCocoa(
+      TabModalConfirmDialogDelegate* delegate,
+      content::WebContents* web_contents);
+#endif
+
   // Accepts the dialog.
   virtual void AcceptTabModalDialog() = 0;
 

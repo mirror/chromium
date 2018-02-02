@@ -19,6 +19,11 @@ class ScreenCaptureNotificationUI : public content::MediaStreamUI {
   // the text that should be shown in the notification.
   static std::unique_ptr<ScreenCaptureNotificationUI> Create(
       const base::string16& text);
+#if defined(OS_MACOSX)
+  // crbug/804950
+  static std::unique_ptr<ScreenCaptureNotificationUI> CreateCocoa(
+      const base::string16& text);
+#endif
 };
 
 #endif  // CHROME_BROWSER_UI_SCREEN_CAPTURE_NOTIFICATION_UI_H_
