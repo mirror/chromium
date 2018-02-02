@@ -11,6 +11,8 @@
 int GetLayoutConstant(LayoutConstant constant) {
   const bool hybrid = ui::MaterialDesignController::GetMode() ==
                       ui::MaterialDesignController::MATERIAL_HYBRID;
+  const bool touch_optimized_material =
+      ui::MaterialDesignController::IsTouchOptimizedMaterial();
   switch (constant) {
     case LOCATION_BAR_BUBBLE_VERTICAL_PADDING:
       return hybrid ? 1 : 3;
@@ -27,11 +29,21 @@ int GetLayoutConstant(LayoutConstant constant) {
     case TABSTRIP_NEW_TAB_BUTTON_OVERLAP:
       return hybrid ? 6 : 5;
     case TAB_HEIGHT:
-      return hybrid ? 33 : 29;
+      return hybrid ? 33 : (touch_optimized_material ? 41 : 29);
     case TOOLBAR_ELEMENT_PADDING:
       return hybrid ? 8 : 0;
     case TOOLBAR_STANDARD_SPACING:
       return hybrid ? 8 : 4;
+    case TAB_TOUCH_WIDTH:
+      return touch_optimized_material ? 68 : 120;
+    case TAB_STACK_PADDING:
+      return touch_optimized_material ? 4 : 6;
+    case TAB_STANDARD_WIDTH:
+      return touch_optimized_material ? 245 : 193;
+    case TAB_PRE_TITLE_SPACING:
+      return touch_optimized_material ? 8 : 6;
+    case TAB_AFTER_TITLE_SPACING:
+      return touch_optimized_material ? 8 : 4;
   }
   NOTREACHED();
   return 0;
@@ -40,9 +52,12 @@ int GetLayoutConstant(LayoutConstant constant) {
 gfx::Insets GetLayoutInsets(LayoutInset inset) {
   const bool hybrid = ui::MaterialDesignController::GetMode() ==
                       ui::MaterialDesignController::MATERIAL_HYBRID;
+  const bool touch_optimized_material =
+      ui::MaterialDesignController::IsTouchOptimizedMaterial();
+
   switch (inset) {
     case TAB:
-      return gfx::Insets(1, hybrid ? 18 : 16);
+      return gfx::Insets(1, hybrid ? 18 : (touch_optimized_material ? 24 : 16));
   }
   NOTREACHED();
   return gfx::Insets();
