@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85157f68_7076ed73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-02T00:37:42Z",
+      "side": 1,
+      "message": "style: Please add line breaks at 70char for patch descriptions. When I switched to gerrit, I was also recommended manually adding these in. :)",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "52f74afb89d3cc8637ed1716e81cc4e616385b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
