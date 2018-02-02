@@ -16,6 +16,24 @@
       "revId": "51f6bf6cc386559883d467fec7f168dda767fb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c07b2ff_cbcb41dd",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-02T23:19:43Z",
+      "side": 1,
+      "message": "Yes, the comment implies it\u0027s possible but we need to go through\na few steps so it\u0027s best probably best to disable it for the \nmoment and reenable it afterwards (CrOs uses GLES 3.2 for example).\nAlso, my bad, OpenGL introduced GL_RGB10_A2 etc in v 3.3 :P",
+      "parentUuid": "72c355b2_ed7eec4b",
+      "revId": "51f6bf6cc386559883d467fec7f168dda767fb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
