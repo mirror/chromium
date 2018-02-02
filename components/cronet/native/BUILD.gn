@@ -39,6 +39,10 @@ source_set("cronet_native_impl") {
     "generated/cronet.idl_impl_struct.cc",
     "generated/cronet.idl_impl_struct.h",
   ]
+
+  if (is_fuchsia) {
+    sources += [ "../fuchsia/cronet_global_state_fuchsia.cc" ]
+  }
 }
 
 source_set("cronet_native_testutil") {
@@ -67,6 +71,7 @@ source_set("cronet_native_unittests") {
     ":cronet_native_impl",
     ":cronet_native_testutil",
     "//net:test_support",
+    "//testing/gtest",
   ]
 
   configs += [ ":cronet_native_include_config" ]
@@ -100,4 +105,33 @@ source_set("cronet_native_tests") {
     "engine_test.cc",
     "executors_test.cc",
   ]
+}
+
+# For platforms other than Android & iOS, build a platform-native Cronet
+# shared library and test binaries.
+if (!is_android && !is_ios) {
+  shared_library("cronet") {
+    deps = [
+      ":cronet_native_impl",
+    ]
+  }
+
+  test("cronet_unittests") {
+    testonly = true
+
+    deps = [
+      ":cronet_native_unittests",
+      "//testing/gtest:gtest_main",
+    ]
+  }
+
+  test("cronet_tests") {
+    testonly = true
+
+    deps = [
+      ":cronet",
+      ":cronet_native_tests",
+      "//testing/gtest:gtest_main",
+    ]
+  }
 }
