@@ -46,6 +46,11 @@
 #include <wrl/client.h>
 #endif
 
+#if DCHECK_IS_ON()
+#define AX_CHECKS
+#include "base/debug/stack_trace.h"
+#endif
+
 using ui::OSExchangeData;
 
 namespace gfx {
@@ -1100,6 +1105,12 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // Modifies |node_data| to reflect the current accessible state of this view.
   virtual void GetAccessibleNodeData(ui::AXNodeData* node_data) {}
 
+#if defined(AX_CHECKS)
+  base::debug::StackTrace* GetConstructorStackForDebugging() {
+    return &constructor_stack_for_debugging_;
+  }
+#endif
+
   // Handle a request from assistive technology to perform an action on this
   // view. Returns true on success, but note that the success/failure is
   // not propagated to the client that requested the action, since the
@@ -1709,6 +1720,11 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // True while iterating over |children_|. Used to detect and DCHECK when
   // |children_| is mutated during iteration.
   mutable bool iterating_;
+#endif
+
+#if defined(AX_CHECKS)
+  // Keep stack trace for constructor.
+  base::debug::StackTrace constructor_stack_for_debugging_;
 #endif
 
   bool can_process_events_within_subtree_;
