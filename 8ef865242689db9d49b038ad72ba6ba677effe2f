@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36744e7a_be19f9ae",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_infobar_delegate_android.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-02T01:36:11Z",
+      "side": 1,
+      "message": "what is a mini infobar? If this just said \"an infobar\" I wouldn\u0027t be asking questions because I\u0027d feel like I know what that is, but what makes an infobar \"mini\"?",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "8ef865242689db9d49b038ad72ba6ba677effe2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
