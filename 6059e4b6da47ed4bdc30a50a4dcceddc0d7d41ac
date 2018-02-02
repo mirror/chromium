@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c592ca6_8ed079d1",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-02T20:10:48Z",
+      "side": 1,
+      "message": "The problem is that login and lock targets are separate enumerations with different number of values. So what I can do is:  \n\n  LogUserClick(Foo1:Bar, Foo2:Bar);\n\nI pass the enum delimiter, when there is no corresponding value for the enum and I keep DCHECKs here.",
+      "parentUuid": "f49f4ff2_374bde8b",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7935466a_a4a48fd3",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c78ff4_606fd552",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-02T20:10:48Z",
+      "side": 1,
+      "message": "Added enum delimiters to do that.",
+      "parentUuid": "7935466a_a4a48fd3",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
