@@ -383,7 +383,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
 TEST_F(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
   VideoCaptureDeviceDescriptor invalid_descriptor;
   invalid_descriptor.device_id = "jibberish";
-  invalid_descriptor.display_name = "jibberish";
+  invalid_descriptor.set_display_name("jibberish");
 #if defined(OS_WIN)
   invalid_descriptor.capture_api =
       VideoCaptureDeviceFactoryWin::PlatformSupportsMediaFoundation()
@@ -409,6 +409,13 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
   device->AllocateAndStart(capture_params, std::move(video_capture_client_));
   device->StopAndDeAllocate();
 #endif
+}
+
+// See crbug.com/805411.
+TEST_F(VideoCaptureDeviceTest, RemoveTrailingWhitespaceFromDisplayName) {
+  VideoCaptureDeviceDescriptor descriptor;
+  descriptor.set_display_name("My WebCam\n");
+  EXPECT_EQ(descriptor.display_name(), "My WebCam");
 }
 
 // Allocates the first enumerated device, and expects a frame.
