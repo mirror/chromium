@@ -141,6 +141,24 @@
       "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eb1e036_121732e0",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-02T08:30:41Z",
+      "side": 0,
+      "message": "Sorry, I should have added a table of when we need what.\n\nBasically:\n1. Trace: Strongly trace and zero out weak members\n2. Trait::kWeakHandlingFlag \u003d\u003d kNoWeakHandling: Deferring to Trace\n3. Trait::kWeakHandlingFlag \u003d\u003d kWeakHandling and weakly tracing: TraceInCollection with whatever weak handling is defined\n4. Trait::kWeakHandlingFlag \u003d\u003d kWeakHandling and conservative (strong tracing: override kNoWeakHandling): TraceInCollection with whatever strong handling is defined\n\nWe had the additional flag to distinguish between mode 3. and 4. I removed that flag but added a bit more magic to figure out when we are in 3. and when we are in 4.",
+      "parentUuid": "123af642_54552ddb",
+      "revId": "9cc9599652092b82f0a380fa281cb1642ab2fa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
