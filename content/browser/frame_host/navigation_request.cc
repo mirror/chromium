@@ -281,8 +281,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           entry.GetSubframeUniqueNames(frame_tree_node),
           controller->GetPendingEntryIndex() == -1,
           controller->GetIndexOfEntry(&entry),
-          controller->GetLastCommittedEntryIndex(),
-          controller->GetEntryCount());
+          controller->GetLastCommittedEntryIndex(), controller->GetEntryCount(),
+          frame_tree_node->navigator()->GetDelegate()->WasDiscarded());
   request_params.post_content_type = post_content_type;
 
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
@@ -330,10 +330,11 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
       0,                              // nav_entry_id
       false,                          // is_history_navigation_in_new_child
       std::map<std::string, bool>(),  // subframe_unique_names
-      false,  // intended_as_new_entry
-      -1,     // |pending_history_list_offset| is set to -1 because
-              // history-navigations do not use this path. See comments above.
+      false,                          // intended_as_new_entry
+      -1,  // |pending_history_list_offset| is set to -1 because
+           // history-navigations do not use this path. See comments above.
       current_history_list_offset, current_history_list_length,
+      false,  // was_discarded
       false,  // is_view_source
       false /*should_clear_history_list*/);
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(

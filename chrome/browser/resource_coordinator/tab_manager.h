@@ -254,6 +254,7 @@ class TabManager : public TabStripModelObserver, public BrowserListObserver {
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ProtectVideoTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ReloadDiscardedTabContextMenu);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TabManagerBasics);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TabManagerWasDiscarded);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            GetUnsortedTabStatsIsInVisibleWindow);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
