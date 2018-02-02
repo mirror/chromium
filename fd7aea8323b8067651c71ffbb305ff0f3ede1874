@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9e4cc66_72eab3a0",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-02-02T03:00:50Z",
+      "side": 1,
+      "message": "I think this behavior is probably okay for reload of same URL, the more interesting case is if the user navigated elsewhere after interrupting first reload.\nIs that realistic? They\u0027d have to navigate away very fast during that first reload.\nI\u0027ll add a test for that on Monday if that\u0027s a realistic case (our workstations are now packed away for the MTV desk reshuffle).",
+      "range": {
+        "startLine": 1608,
+        "startChar": 33,
+        "endLine": 1608,
+        "endChar": 0
+      },
+      "revId": "fd7aea8323b8067651c71ffbb305ff0f3ede1874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
