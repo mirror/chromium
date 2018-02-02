@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4a70b9b_23d64252",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-02T22:27:49Z",
+      "side": 1,
+      "message": "I think it\u0027d be easy to modify UpdateReverseRelations to return\ntrue if it made any changes - just set the boolean if\nit gets to the lines of code where int_reverse_relations_ or\nintlist_reverse_relations_ are modified.\n\nThen you only need to notify when it really did change.",
+      "revId": "0d80b69576dcff20e8b92619cfdb89809d0b6a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
