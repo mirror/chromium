@@ -14,8 +14,15 @@ namespace views {
 class MessageBoxView;
 }
 
+// Dialog shown when the user tries to exit the browser or all incognito windows
+// while a download is in progress.
 class DownloadInProgressDialogView : public views::DialogDelegate {
  public:
+  // |dialog_type| should be either DOWNLOAD_CLOSE_BROWSER_SHUTDOWN to indicate
+  // the user is closing the browser or
+  // DOWNLOAD_CLOSE_LAST_WINDOW_IN_INCOGNITO_PROFILE to indicate the user is
+  // closing the last incognito window. |callback| will be called with true if
+  // the download should be canceled, or false if the download should proceed.
   static void Show(gfx::NativeWindow parent_window,
                    int download_count,
                    Browser::DownloadClosePreventionType dialog_type,
@@ -34,24 +41,18 @@ class DownloadInProgressDialogView : public views::DialogDelegate {
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   bool Cancel() override;
   bool Accept() override;
-
-  // views::WidgetDelegate:
   ui::ModalType GetModalType() const override;
+  bool ShouldShowCloseButton() const override;
   base::string16 GetWindowTitle() const override;
   void DeleteDelegate() override;
   views::Widget* GetWidget() override;
   const views::Widget* GetWidget() const override;
   views::View* GetContentsView() override;
 
+  const int download_count_;
   const bool app_modal_;
   const base::Callback<void(bool)> callback_;
   views::MessageBoxView* message_box_view_;
-
-  base::string16 title_text_;
-  base::string16 ok_button_text_;
-  base::string16 cancel_button_text_;
-
-  gfx::Size dialog_dimensions_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadInProgressDialogView);
 };

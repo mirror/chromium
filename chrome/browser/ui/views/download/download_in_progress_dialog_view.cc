@@ -35,24 +35,17 @@ DownloadInProgressDialogView::DownloadInProgressDialogView(
     Browser::DownloadClosePreventionType dialog_type,
     bool app_modal,
     const base::Callback<void(bool)>& callback)
-    : app_modal_(app_modal),
+    : download_count_(download_count),
+      app_modal_(app_modal),
       callback_(callback),
-      message_box_view_(NULL) {
+      message_box_view_(nullptr) {
   // This dialog should have been created within the same thread invocation
   // as the original test, so it's never ok to close.
   DCHECK_NE(Browser::DOWNLOAD_CLOSE_OK, dialog_type);
-  base::string16 explanation_text(l10n_util::GetPluralStringFUTF16(
-      (dialog_type == Browser::DOWNLOAD_CLOSE_BROWSER_SHUTDOWN)
-          ? IDS_DOWNLOAD_REMOVE_CONFIRM_EXPLANATION
-          : IDS_INCOGNITO_DOWNLOAD_REMOVE_CONFIRM_EXPLANATION,
-      download_count));
-  title_text_ = l10n_util::GetPluralStringFUTF16(
-      IDS_DOWNLOAD_REMOVE_CONFIRM_TITLE, download_count);
-  ok_button_text_ = l10n_util::GetPluralStringFUTF16(
-      IDS_DOWNLOAD_REMOVE_CONFIRM_OK_BUTTON_LABEL, download_count);
-  cancel_button_text_ = l10n_util::GetPluralStringFUTF16(
-      IDS_DOWNLOAD_REMOVE_CONFIRM_CANCEL_BUTTON_LABEL, download_count);
-
+  base::string16 explanation_text = l10n_util::GetStringUTF16(
+      dialog_type == Browser::DOWNLOAD_CLOSE_BROWSER_SHUTDOWN
+          ? IDS_ABANDON_DOWNLOAD_DIALOG_BROWSER_MESSAGE
+          : IDS_ABANDON_DOWNLOAD_DIALOG_INCOGNITO_MESSAGE);
   message_box_view_ = new views::MessageBoxView(
       views::MessageBoxView::InitParams(explanation_text));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::DOWNLOAD_IN_PROGRESS);
@@ -66,17 +59,19 @@ int DownloadInProgressDialogView::GetDefaultDialogButton() const {
 
 base::string16 DownloadInProgressDialogView::GetDialogButtonLabel(
     ui::DialogButton button) const {
-  return (button == ui::DIALOG_BUTTON_OK) ?
-      ok_button_text_ : cancel_button_text_;
+  return l10n_util::GetStringUTF16(
+      button == ui::DIALOG_BUTTON_OK
+          ? IDS_ABANDON_DOWNLOAD_DIALOG_EXIT_BUTTON
+          : IDS_ABANDON_DOWNLOAD_DIALOG_CONTINUE_BUTTON);
 }
 
 bool DownloadInProgressDialogView::Cancel() {
-  callback_.Run(false);
+  callback_.Run(false /* cancel_downloads */);
   return true;
 }
 
 bool DownloadInProgressDialogView::Accept() {
-  callback_.Run(true);
+  callback_.Run(true /* cancel_downloads */);
   return true;
 }
 
@@ -84,8 +79,13 @@ ui::ModalType DownloadInProgressDialogView::GetModalType() const {
   return app_modal_ ? ui::MODAL_TYPE_SYSTEM : ui::MODAL_TYPE_WINDOW;
 }
 
+bool DownloadInProgressDialogView::ShouldShowCloseButton() const {
+  return false;
+}
+
 base::string16 DownloadInProgressDialogView::GetWindowTitle() const {
-  return title_text_;
+  return l10n_util::GetPluralStringFUTF16(IDS_ABANDON_DOWNLOAD_DIALOG_TITLE,
+                                          download_count_);
 }
 
 void DownloadInProgressDialogView::DeleteDelegate() {
