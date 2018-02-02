@@ -9,14 +9,11 @@
 
 #include "base/macros.h"
 #include "components/viz/common/surfaces/surface_info.h"
+#include "ui/compositor/layer.h"
 #include "ui/gfx/geometry/insets.h"
 
 namespace gfx {
 class Insets;
-}
-
-namespace ui {
-class Layer;
 }
 
 namespace aura {
@@ -50,6 +47,10 @@ class ClientSurfaceEmbedder {
   ui::Layer* RightGutterForTesting() { return right_gutter_.get(); }
 
   ui::Layer* BottomGutterForTesting() { return bottom_gutter_.get(); }
+
+  const viz::SurfaceId& GetPrimarySurfaceIdForTesting() const {
+    return *surface_layer_->GetPrimarySurfaceId();
+  };
 
  private:
   // The window which embeds the client.
