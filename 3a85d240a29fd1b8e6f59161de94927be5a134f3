@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3b9a023_ea21ccbc",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-02T21:55:53Z",
+      "side": 1,
+      "message": "I did a local build with the code as-is and confirmed - an Origin serializes as e.g. \"http://example.com:80\" while a GURL serializes as \"http://example.com:80/\"\n\nSo I\u0027d advise changing this to:\n\n// GetURL().spec() is used here rather than Serialize() to ensure\n// backwards compatibility with older data. The serializations are\n// subtly different, e.g. Origin does not include a trailing \"/\".\nprotobuf_index.set_origin(origin_.GetURL().spec());",
+      "parentUuid": "9f5885cb_60a3d3ac",
+      "revId": "3a85d240a29fd1b8e6f59161de94927be5a134f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9547cb8f_54544b68",
         "filename": "content/browser/cache_storage/cache_storage_manager.h",
         "patchSetId": 1
