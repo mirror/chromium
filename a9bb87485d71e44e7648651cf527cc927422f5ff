@@ -592,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "e1464451_5a9609e2",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T21:50:00Z",
+      "side": 1,
+      "message": "Ack. Yea. From the conversion with Devlin, I think we will need to support it.\nThe legacy API (chrome.socket) has this problem. The replacement (chrome.sockets.udp) doesn\u0027t have this problem.",
+      "parentUuid": "c1cb6fa8_30339f1d",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 25
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7691ab_6663784d",
         "filename": "services/network/udp_socket.h",
         "patchSetId": 8
@@ -699,6 +723,30 @@
       "side": 1,
       "message": "We talked about this offline; this is a recording of the results of that conversation.\n\nI was confused in the calling pattern; the function is only called from within udp_socket.cc, but the call occurs from UDPSocket::Open -\u003e SocketWrapper::ConfigureOptions.  There\u0027s still a simplification that can be done, which is to combine it with SocketWrapper::Open (because the only place it\u0027s called from is right after the call to SocketWrapper::Open()) but this is limited enough in usage and doesn\u0027t affect interaction with consumers, so I\u0027m ok with either changing it or leaving it.",
       "parentUuid": "0ced49c7_a249eb39",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be7d7f76_176ffb2f",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-02T21:50:00Z",
+      "side": 1,
+      "message": "Ack. I decided to leave this as is.",
+      "parentUuid": "adfc5c32_d4a0cd51",
       "range": {
         "startLine": 74,
         "startChar": 16,
