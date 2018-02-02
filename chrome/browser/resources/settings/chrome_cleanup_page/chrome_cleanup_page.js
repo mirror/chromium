@@ -727,12 +727,6 @@ Polymer({
      * @enum {settings.ChromeCleanupCardIcon}
      */
     const icons = {
-      // Card's icon indicates a cleanup offer.
-      SYSTEM: {
-        statusIcon: 'settings:security',
-        statusIconClassName: 'status-icon-remove',
-      },
-
       // Card's icon indicates a warning (in case of failure).
       WARNING: {
         statusIcon: 'settings:error',
@@ -809,7 +803,7 @@ Polymer({
         settings.ChromeCleanerCardState.CLEANUP_OFFERED, {
           title: this.i18n('chromeCleanupTitleRemove'),
           explanation: this.i18n('chromeCleanupExplanationRemove'),
-          icon: icons.SYSTEM,
+          icon: null,
           actionButton: actionButtons.REMOVE,
           flags: settings.ChromeCleanupCardFlags.SHOW_LOGS_PERMISSIONS |
               settings.ChromeCleanupCardFlags.SHOW_ITEMS_TO_REMOVE |
@@ -831,7 +825,7 @@ Polymer({
         settings.ChromeCleanerCardState.REBOOT_REQUIRED, {
           title: this.i18n('chromeCleanupTitleRestart'),
           explanation: null,
-          icon: icons.DONE,
+          icon: null,
           actionButton: actionButtons.RESTART_COMPUTER,
           flags: settings.ChromeCleanupCardFlags.NONE,
         }
@@ -862,7 +856,7 @@ Polymer({
         settings.ChromeCleanerCardState.SCANNING_OFFERED, {
           title: this.i18n('chromeCleanupTitleFindAndRemove'),
           explanation: this.i18n('chromeCleanupExplanationFindAndRemove'),
-          icon: icons.SYSTEM,
+          icon: null,
           actionButton: actionButtons.FIND,
           flags: settings.ChromeCleanupCardFlags.SHOW_LOGS_PERMISSIONS,
         }
@@ -896,7 +890,8 @@ Polymer({
         }
       ],
       [
-        settings.ChromeCleanerCardState.CLEANER_DOWNLOAD_FAILED, {
+        settings.ChromeCleanerCardState.CLEANER_DOWNLOAD_FAILED,
+        {
           // TODO(crbug.com/776538): distinguish between missing network
           // connectivity and cleanups being disabled by the server.
           title: this.i18n('chromeCleanupTitleCleanupUnavailable'),

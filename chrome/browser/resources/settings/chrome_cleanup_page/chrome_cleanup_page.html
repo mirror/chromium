@@ -19,10 +19,11 @@
 <dom-module id="settings-chrome-cleanup-page">
   <template>
     <style include="settings-shared">
-      #waiting-spinner {
-        height: 20px;
-        width: 20px;
+      #action-button {
+        -webkit-margin-end: 0;
+        text-transform: none;
       }
+
       #learn-more {
         -webkit-margin-start: 0;
       }
@@ -51,7 +52,7 @@
       }
 
       .status-icon-container {
-        -webkit-padding-end: var(--settings-box-row-padding);
+        -webkit-padding-start: var(--settings-box-row-padding);
       }
 
       .status-icon-remove {
@@ -72,17 +73,14 @@
         min-height: 0;
         padding: 15px var(--settings-box-row-padding);
       }
+
+      #waiting-spinner {
+        height: 20px;
+        width: 20px;
+      }
     </style>
     <div class$="settings-box first
                  [[getTopSettingsBoxClass_(showExplanation_)]]">
-      <div class="status-icon-container">
-        <paper-spinner-lite id="waiting-spinner"
-            hidden="[[!isWaitingForResult_]]" active="[[isWaitingForResult_]]">
-        </paper-spinner-lite>
-        <iron-icon id="status-icon" hidden="[[isWaitingForResult_]]"
-            icon="[[statusIcon_]]" class$="[[statusIconClassName_]]">
-        </iron-icon>
-      </div>
       <div class="start">
         <div role="status">[[title_]]</div>
         <div hidden="[[!showExplanation_]]">
@@ -94,13 +92,19 @@
           </a>
         </div>
       </div>
-      <template is="dom-if" if="[[showActionButton_]]">
-        <div class="separator"></div>
-        <paper-button id="action-button" class="primary-button"
-            on-tap="proceed_">
-          [[actionButtonLabel_]]
-        </paper-button>
-      </template>
+      <paper-button id="action-button" class="action-button"
+          on-tap="proceed_" hidden="[[!showActionButton_]]">
+        [[actionButtonLabel_]]
+      </paper-button>
+      <div class="status-icon-container" hidden="[[showActionButton_]]">
+        <paper-spinner-lite id="waiting-spinner"
+            hidden="[[!isWaitingForResult_]]"
+            active="[[isWaitingForResult_]]">
+        </paper-spinner-lite>
+        <iron-icon id="status-icon" hidden="[[isWaitingForResult_]]"
+            icon="[[statusIcon_]]" class$="[[statusIconClassName_]]">
+        </iron-icon>
+      </div>
     </div>
     <settings-toggle-button hidden="[[!showLogsPermission_]]"
         id="chromeCleanupLogsUploadControl"
