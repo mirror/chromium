@@ -1048,6 +1048,7 @@ class RTCPeerConnectionHandler::WebRtcSetRemoteDescriptionObserverImpl
       // Process the addition of remote receivers/tracks.
       for (auto& receiver_state : states.receiver_states) {
         if (ReceiverWasAdded(receiver_state)) {
+          auto y = receiver_state.track_ref->web_track();
           handler_->OnAddRemoteTrack(receiver_state.receiver,
                                      std::move(receiver_state.track_ref),
                                      std::move(receiver_state.stream_refs));
