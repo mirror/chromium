@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38317dea_b5309777",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Label could be scope or name, not sure we want scope as payment app name to be stored, then we may display duplicate information at the next time?",
+      "parentUuid": "ef9f5079_5a187681",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8e85693_aea7b1e1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364f5d88_09e2ecbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e85693_aea7b1e1",
+      "range": {
+        "startLine": 152,
+        "startChar": 41,
+        "endLine": 152,
+        "endChar": 65
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa3aee11_35f19c6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b52fe355_89d02257",
+      "range": {
+        "startLine": 154,
+        "startChar": 25,
+        "endLine": 154,
+        "endChar": 45
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c10e8cd_b4964401",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7edf59_f9c32339",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c10e8cd_b4964401",
+      "range": {
+        "startLine": 166,
+        "startChar": 58,
+        "endLine": 166,
+        "endChar": 74
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fbe63bc2_0cc0f99f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6270ac_59ba2191",
+      "range": {
+        "startLine": 167,
+        "startChar": 49,
+        "endLine": 167,
+        "endChar": 65
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27c1c923_b516f4a1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4813cca4_55d4d4f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27c1c923_b516f4a1",
+      "range": {
+        "startLine": 170,
+        "startChar": 33,
+        "endLine": 170,
+        "endChar": 54
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "20e22bd3_639630df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done. Used the same logic as installed payment app. \nWas thinking should we rank this payment app higher than local cards or distinguish it from installed apps? We could improve this later.",
+      "parentUuid": "c614a9e0_ebf08b7d",
+      "range": {
+        "startLine": 171,
+        "startChar": 24,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7defdce2_1dee0ed7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b6bed0_78573a9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7defdce2_1dee0ed7",
+      "range": {
+        "startLine": 322,
+        "startChar": 42,
+        "endLine": 322,
+        "endChar": 69
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "431a3d74_668dd0fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087dd317_2a5c1e93",
+      "range": {
+        "startLine": 204,
+        "startChar": 62,
+        "endLine": 204,
+        "endChar": 70
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88d0c2a7_dc974084",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9632f7_cf811332",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88d0c2a7_dc974084",
+      "range": {
+        "startLine": 205,
+        "startChar": 31,
+        "endLine": 205,
+        "endChar": 42
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "3be97d2f_acca2295",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "933760df_b618936e",
+      "range": {
+        "startLine": 208,
+        "startChar": 23,
+        "endLine": 208,
+        "endChar": 50
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "944e0108_5689638d",
         "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
         "patchSetId": 6
@@ -266,6 +530,30 @@
       "writtenOn": "2018-02-01T21:00:43Z",
       "side": 1,
       "message": "TODO to add the icon?",
+      "range": {
+        "startLine": 110,
+        "startChar": 46,
+        "endLine": 110,
+        "endChar": 64
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325c2729_96e10d6f",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "I\u0027ve added the TODO in web_app_manifest.h",
+      "parentUuid": "944e0108_5689638d",
       "range": {
         "startLine": 110,
         "startChar": 46,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "d787cf3c_6aec8a87",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03a5e269_e36f472f",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a98f26_4bd271db",
         "filename": "components/payments/content/installable_payment_app_crawler.cc",
         "patchSetId": 6
@@ -312,6 +624,30 @@
       "writtenOn": "2018-02-01T21:00:43Z",
       "side": 1,
       "message": "If |cache| is not used yet, let\u0027s not pass it into the constructor. Does that sounds OK for you?",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc48ea4_e4461973",
+        "filename": "components/payments/content/installable_payment_app_crawler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "It helps on explaining TODO here? Otherwise might move the TODO to service worker factory. Looks a little better to leave it here though.",
+      "parentUuid": "d4a98f26_4bd271db",
       "range": {
         "startLine": 9,
         "startChar": 3,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "a926e7af_186a3df6",
+        "filename": "components/payments/content/installable_payment_app_crawler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f881642_c8b440bc",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f3671a4_6ba515a6",
         "filename": "components/payments/content/installable_payment_app_crawler.cc",
         "patchSetId": 6
@@ -367,6 +727,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c439331b_25902f35",
+        "filename": "components/payments/content/installable_payment_app_crawler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f3671a4_6ba515a6",
+      "range": {
+        "startLine": 131,
+        "startChar": 65,
+        "endLine": 131,
+        "endChar": 67
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "c55c93b7_ba515e5d",
+        "filename": "components/payments/content/installable_payment_app_crawler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8e1300_1686b0eb",
+      "range": {
+        "startLine": 141,
+        "startChar": 70,
+        "endLine": 141,
+        "endChar": 73
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c432a3_f7a223fc",
         "filename": "components/payments/content/installable_payment_app_crawler.h",
         "patchSetId": 6
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "86648f66_df95c249",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c432a3_f7a223fc",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f00920c3_57ef0af8",
         "filename": "components/payments/content/installable_payment_app_crawler.h",
         "patchSetId": 6
@@ -436,6 +868,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fe5a9d_06b2122d",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f00920c3_57ef0af8",
+      "range": {
+        "startLine": 24,
+        "startChar": 41,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -485,6 +941,54 @@
     },
     {
       "key": {
+        "uuid": "4a1905f3_20608fe3",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9722a7f4_7ec12304",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ee9a200_ade4e251",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2dbcb48_383a8747",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41490bb9_dc3b0d2d",
         "filename": "components/payments/content/installable_payment_app_crawler.h",
         "patchSetId": 6
@@ -505,6 +1009,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ae495c_da0286a7",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41490bb9_dc3b0d2d",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 67
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -531,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "7cafb405_808d74ac",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c42e960a_048f0e7f",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da3e3853_f44f8f53",
         "filename": "components/payments/content/installable_payment_app_crawler.h",
         "patchSetId": 6
@@ -551,6 +1103,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b369ac_93980029",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3e3853_f44f8f53",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -577,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "e3ea206a_78afa864",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa5a724_bb2791f1",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "addcbac4_c9a127f7",
         "filename": "components/payments/content/installable_payment_app_crawler.h",
         "patchSetId": 6
@@ -597,6 +1197,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04f353c_bb1d9924",
+        "filename": "components/payments/content/installable_payment_app_crawler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "addcbac4_c9a127f7",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 6
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -623,6 +1247,30 @@
     },
     {
       "key": {
+        "uuid": "adb366c6_1b4a2bf4",
+        "filename": "components/payments/content/manifest_verifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "466b1715_c628042b",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3eb80e0_b125e011",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 6
@@ -646,6 +1294,30 @@
     },
     {
       "key": {
+        "uuid": "251f6aa7_567fb838",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3eb80e0_b125e011",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 45
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76eb8c5f_572b6d55",
         "filename": "components/payments/content/service_worker_payment_app_factory.h",
         "patchSetId": 6
@@ -660,6 +1332,24 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6dbd76_0cbc2c72",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76eb8c5f_572b6d55",
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -686,6 +1376,30 @@
     },
     {
       "key": {
+        "uuid": "608d27d4_662a1c61",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59868e08_8b7210c4",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca431896_781d19ce",
         "filename": "components/payments/content/service_worker_payment_app_factory.h",
         "patchSetId": 6
@@ -706,6 +1420,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b035077_1ff69e6b",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca431896_781d19ce",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -755,6 +1493,54 @@
     },
     {
       "key": {
+        "uuid": "53c56f00_520ea7f8",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50f5f71f_be901233",
+      "range": {
+        "startLine": 453,
+        "startChar": 19,
+        "endLine": 453,
+        "endChar": 33
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f4fdad2_daea485a",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e632b5_988db9a9",
+      "range": {
+        "startLine": 453,
+        "startChar": 41,
+        "endLine": 453,
+        "endChar": 48
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "459ba814_f84a5745",
         "filename": "components/payments/content/utility/payment_manifest_parser.h",
         "patchSetId": 6
@@ -775,6 +1561,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadb4078_8e30e454",
+        "filename": "components/payments/content/utility/payment_manifest_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459ba814_f84a5745",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 68,
+        "endChar": 8
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -801,6 +1611,30 @@
     },
     {
       "key": {
+        "uuid": "b43eb37b_95cae2d0",
+        "filename": "components/payments/content/utility/payment_manifest_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9d6641_88eaf782",
+      "range": {
+        "startLine": 70,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2898a74f_e4079962",
         "filename": "components/payments/content/utility/payment_manifest_parser.h",
         "patchSetId": 6
@@ -824,6 +1658,30 @@
     },
     {
       "key": {
+        "uuid": "e489e614_65591908",
+        "filename": "components/payments/content/utility/payment_manifest_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2898a74f_e4079962",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 72
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "965420fa_23128243",
         "filename": "components/payments/core/payment_manifest_downloader.h",
         "patchSetId": 6
@@ -835,6 +1693,30 @@
       "writtenOn": "2018-02-01T21:00:43Z",
       "side": 1,
       "message": "If I remember correctly, I intentionally had to separate DownloadPaymentMethodManifest() into its own interface (PaymentMethodManifestDownloaderInterface), while keeping DownloadWebAppManifest() in PaymentManifestDownloader. I don\u0027t recall now why exactly that had to be done.\n\nIf you feel that\u0027s no longer necessary, please remove the interface and use PaymentManifestDownloader directly.\n\nIf that\u0027s not possible, then please avoid adding DownloadWebAppManifest() into PaymentMethodManifestDownloaderInterface.\n\nAs a third option, please explain why you need to have an interface here that\u0027s implemented directly below.  Thank you!",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb381ef9_002919de",
+        "filename": "components/payments/core/payment_manifest_downloader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "I removed the interface, didn\u0027t see any problem for now.",
+      "parentUuid": "965420fa_23128243",
       "range": {
         "startLine": 72,
         "startChar": 0,
@@ -870,6 +1752,30 @@
     },
     {
       "key": {
+        "uuid": "4237cd09_4f931360",
+        "filename": "content/browser/payments/payment_app_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e94e23f_16db295d",
+      "range": {
+        "startLine": 28,
+        "startChar": 20,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "128e1805_4279f675",
         "filename": "content/browser/payments/payment_app_installer.cc",
         "patchSetId": 6
@@ -890,6 +1796,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e1e701_0a224260",
+        "filename": "content/browser/payments/payment_app_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128e1805_4279f675",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -916,6 +1846,30 @@
     },
     {
       "key": {
+        "uuid": "767a1e22_550508b6",
+        "filename": "content/browser/payments/payment_app_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f861614_21585c77",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a315486_6a5a95f2",
         "filename": "content/browser/payments/payment_app_installer.cc",
         "patchSetId": 6
@@ -936,6 +1890,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e0167a_ccd1d801",
+        "filename": "content/browser/payments/payment_app_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a315486_6a5a95f2",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -962,6 +1940,30 @@
     },
     {
       "key": {
+        "uuid": "fd5f79d8_e799efa3",
+        "filename": "content/browser/payments/payment_app_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76bce6b3_539b5457",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3639e23c_7fcc3dab",
         "filename": "content/browser/payments/payment_app_installer.cc",
         "patchSetId": 6
@@ -985,6 +1987,30 @@
     },
     {
       "key": {
+        "uuid": "897de290_706ba50c",
+        "filename": "content/browser/payments/payment_app_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3639e23c_7fcc3dab",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e253a3_8454f42d",
         "filename": "content/browser/payments/payment_app_installer.h",
         "patchSetId": 6
@@ -999,6 +2025,24 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e476aba_3898dcf6",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e253a3_8454f42d",
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1025,6 +2069,30 @@
     },
     {
       "key": {
+        "uuid": "b0848815_ee11f4e9",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1cf25b_ae9cf178",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4708ec2c_d2662254",
         "filename": "content/browser/payments/payment_app_installer.h",
         "patchSetId": 6
@@ -1045,6 +2113,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884fa46a_653854e1",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4708ec2c_d2662254",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1071,6 +2163,30 @@
     },
     {
       "key": {
+        "uuid": "aa22ae2b_7548c9a5",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae759bc3_ae2a4a79",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 38
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71c55820_c3438cba",
         "filename": "content/browser/payments/payment_app_installer.h",
         "patchSetId": 6
@@ -1091,6 +2207,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b153f63f_c35e0d0e",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71c55820_c3438cba",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1117,6 +2257,30 @@
     },
     {
       "key": {
+        "uuid": "1c088f90_f885f52d",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42283083_b91314c3",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cdbf85_88d6a742",
         "filename": "content/browser/payments/payment_app_installer.h",
         "patchSetId": 6
@@ -1137,6 +2301,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c1a5de_c77f3464",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0cdbf85_88d6a742",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1163,6 +2351,30 @@
     },
     {
       "key": {
+        "uuid": "cf5ed9d8_438daeae",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0ebf0c6_d4500ba8",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330c3944_4fbb1053",
         "filename": "content/browser/payments/payment_app_installer.h",
         "patchSetId": 6
@@ -1183,6 +2395,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0e5cee_5291126f",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330c3944_4fbb1053",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1209,6 +2445,30 @@
     },
     {
       "key": {
+        "uuid": "886c2189_0fdb5ba5",
+        "filename": "content/browser/payments/payment_app_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492a0a00_422d1006",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aebf07c3_72161b52",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 6
@@ -1232,6 +2492,30 @@
     },
     {
       "key": {
+        "uuid": "4743c8bb_eb00a50a",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aebf07c3_72161b52",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 406,
+        "endChar": 45
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd6cbae_37de2156",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 6
@@ -1243,6 +2527,30 @@
       "writtenOn": "2018-02-01T21:00:43Z",
       "side": 1,
       "message": "Please check for valid UTF8 of the strings first, because GURL() constructor can crash on invalid UTF8.",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 30
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f12d1f_5312e499",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "They have been checked in crawler, may no need to check it again here.",
+      "parentUuid": "fdd6cbae_37de2156",
       "range": {
         "startLine": 410,
         "startChar": 0,
@@ -1275,6 +2583,30 @@
       "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1638981c_04c63a3a",
+        "filename": "content/public/browser/payment_app_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-02T14:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b68ab126_9304b7d2",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "1c49e2b0c34fea470f2c3ceda4d9c1f5ae2c6503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
