@@ -16,6 +16,24 @@
       "revId": "39087c9548744dc690c30b2b0633a1536072a772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b0fa4b_cc091770",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2018-02-02T18:01:54Z",
+      "side": 1,
+      "message": "Seems like I forgot to delete this line - sorry! Thanks for catching this. Deleted in latest patchset.",
+      "parentUuid": "bb30b3f6_0fa9d685",
+      "revId": "39087c9548744dc690c30b2b0633a1536072a772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
