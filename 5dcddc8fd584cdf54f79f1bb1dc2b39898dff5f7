@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4860aea2_08bf82d0",
+        "filename": "chrome/browser/task_manager/sampling/task_group_sampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:16:58Z",
+      "side": 1,
+      "message": "Nit: The sentence \"previous calculations were ...\" only makes sense in the context of this CL (I assume you\u0027re referring to the macos-specific code that you removed, correct?).\n\nCan you please add a more general comment?",
+      "range": {
+        "startLine": 141,
+        "startChar": 58,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "5dcddc8fd584cdf54f79f1bb1dc2b39898dff5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b381d9_1ebb5f7c",
+        "filename": "chrome/browser/task_manager/sampling/task_group_sampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-02T23:16:58Z",
+      "side": 1,
+      "message": "If I\u0027m reading the mac code correctly, it seems that the ProcessMetrics::GetWorkingSetKBytes() implementation uses task_basic_info_64::resident_size instead.\n\nTaskVMInfo doesn\u0027t have a member called resident_size: https://cs.chromium.org/chromium/src/base/process/process_metrics.h?type\u003dcs\u0026q\u003d%22TaskVMInfo%22\u0026l\u003d172",
+      "range": {
+        "startLine": 142,
+        "startChar": 43,
+        "endLine": 142,
+        "endChar": 73
+      },
+      "revId": "5dcddc8fd584cdf54f79f1bb1dc2b39898dff5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
