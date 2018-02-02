@@ -29,6 +29,7 @@
         if="[[prefs.cros.flags.per_user_timezone_enabled.value]]">
         <settings-dropdown-menu id="userTimeZoneSelector"
             class="per-user-time-zone"
+            policy-indicator-end="true"
             pref="{{prefs.settings.timezone}}"
             label="$i18n{timeZone}"
             menu-options="[[timeZoneList_]]"
@@ -37,6 +38,7 @@
         </settings-dropdown-menu>
         <settings-dropdown-menu id="systemTimezoneSelector"
             class="per-user-time-zone"
+            policy-indicator-end="true"
             pref="{{prefs.cros.system.timezone}}"
             label="$i18n{timeZone}"
             menu-options="[[timeZoneList_]]"
