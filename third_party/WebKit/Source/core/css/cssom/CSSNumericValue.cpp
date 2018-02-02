@@ -424,8 +424,18 @@ CSSNumericValue* CSSNumericValue::div(
     const HeapVector<CSSNumberish>& numberishes,
     ExceptionState& exception_state) {
   auto values = CSSNumberishesToNumericValues(numberishes);
-  std::transform(values.begin(), values.end(), values.begin(),
-                 [](CSSNumericValue* v) { return v->Invert(); });
+  for (auto& v : values) {
+    auto invert_value = v->Invert(exception_state);
+    // when can't invert some values, don't need to run next steps.
+    if (!invert_value)
+      break;
+    v = invert_value;
+  }
+
+  if (exception_state.HadException()) {
+    return nullptr;
+  }
+
   PrependValueForArithmetic<kProductType>(values, this);
 
   if (CSSUnitValue* unit_value = MaybeMultiplyAsUnitValue(values))
@@ -469,7 +479,7 @@ CSSNumericValue* CSSNumericValue::Negate() {
   return CSSMathNegate::Create(this);
 }
 
-CSSNumericValue* CSSNumericValue::Invert() {
+CSSNumericValue* CSSNumericValue::Invert(ExceptionState&) {
   return CSSMathInvert::Create(this);
 }
 
