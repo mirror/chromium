@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b18e895b_b1670361",
+        "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroup.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-02-02T18:42:25Z",
+      "side": 1,
+      "message": "As you lay out more and more content, the actual number of columns will increase naturally. When you\u0027re adding content at a column boundary, and it needs to be pushed to the next column, we will do so. Clamping to the current number of columns would get us nowhere. :)\n\nSo the clamping we\u0027re introducing here is purely for painting and other tree read traversals. Layout will ignore the clamping, and still add pagination struts and happily pretend to fragment the content, when past the clamped number of columns. I think we can live with that. We *could* kind of disable fragmentation in layout when we run out of columns, but I\u0027m just not sure if anyone cares. Maybe for a follow-up CL. Or wait until LayoutNG, where such a thing will actually be easy to do.",
+      "parentUuid": "410e6749_94f42853",
+      "revId": "bc9d0888becc49428b2d8a3347de480718bdf896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "891b97af_8154039e",
         "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroupTest.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bc9d0888becc49428b2d8a3347de480718bdf896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7e4427_db6b140b",
+        "filename": "third_party/WebKit/Source/core/layout/MultiColumnFragmentainerGroupTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-02-02T18:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "891b97af_8154039e",
+      "revId": "bc9d0888becc49428b2d8a3347de480718bdf896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
