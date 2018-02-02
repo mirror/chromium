@@ -382,7 +382,7 @@ void DeviceInfoSyncBridge::OnReadAllMetadata(
     base::Optional<ModelError> error,
     std::unique_ptr<MetadataBatch> metadata_batch) {
   if (error) {
-    change_processor()->ReportError(error.value());
+    change_processor()->ReportModelError(error.value());
     return;
   }
 
