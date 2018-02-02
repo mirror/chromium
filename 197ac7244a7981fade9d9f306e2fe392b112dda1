@@ -46,6 +46,30 @@
       "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c2b1fd_731ef998",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-02-02T06:08:10Z",
+      "side": 1,
+      "message": "Thank you for clarifying. I added some logging around the aforementioned code and see any modifier key events are not sent by IME extension.\nI guess it\u0027s intentional, but not sure why.\n\nYingbing, is this change OK?",
+      "parentUuid": "81a45b07_566cbdff",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
