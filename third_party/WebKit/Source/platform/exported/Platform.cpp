@@ -41,7 +41,6 @@
 #include "platform/MemoryCoordinator.h"
 #include "platform/PartitionAllocMemoryDumpProvider.h"
 #include "platform/WebTaskRunner.h"
-#include "platform/exported/WebClipboardImpl.h"
 #include "platform/font_family_names.h"
 #include "platform/fonts/FontCacheMemoryDumpProvider.h"
 #include "platform/heap/BlinkGCMemoryDumpProvider.h"
@@ -67,6 +66,8 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/Source/platform/exported/WebClipboardImpl.h"
 #include "third_party/WebKit/common/origin_trials/trial_policy.h"
 
 namespace blink {
@@ -219,7 +220,8 @@ std::unique_ptr<WebStorageNamespace> Platform::CreateSessionStorageNamespace(
 }
 
 std::unique_ptr<WebServiceWorkerCacheStorage> Platform::CreateCacheStorage(
-    const WebSecurityOrigin&) {
+    const WebSecurityOrigin&,
+    service_manager::InterfaceProvider* mojo_provider) {
   return nullptr;
 }
 
