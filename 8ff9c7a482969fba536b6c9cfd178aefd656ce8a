@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aea4557_49af57c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "close.",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7af073d_d3fdcc12",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "We should all agree on calling it a single thing! If \"MD2\" is the right term for this new design, then we should also change the flag and the mode name.",
+      "range": {
+        "startLine": 172,
+        "startChar": 47,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1796095e_c7e855bf",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "We already have this info from GetMode(). Maybe we can do something similar to what we have in ash_layout_constants.cc. I suggest the following.\n\nconst int mode \u003d ui::MaterialDesignController::GetMode();\n...\n...\ncase TAB:\n  constexpr int kTabHorizontalInsetPerMode[] \u003d {16, 18, 24};\n  return gfx::Insets(1, kTabHorizontalInsetPerMode[mode]);",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 64
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb48bfd_e8dc8c08",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "Nit: This is vague. Can you please clarify which overlap?",
+      "range": {
+        "startLine": 53,
+        "startChar": 38,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b692115_5a97343f",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "kPreTitleSpacing?\n\nCan you also move this declaration right before where it\u0027s used? (i.e. line 620).",
+      "range": {
+        "startLine": 567,
+        "startChar": 13,
+        "endLine": 567,
+        "endChar": 14
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817fe6de_44ffecbd",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "This too, to line 602.",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 570,
+        "endChar": 64
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d70532_42b2c57b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "This ternary started to get a bit unreadable. How about?\n\nconst bool is_touch_optimized \u003d ...;\nconst int close_button_left_inset \u003d  \n    is_touch_optimized ? 0 \n                       : close_button_-\u003eGetInsets().left();\nconst int right \u003d \n    showing_close_button_ \n        ? close_button_-\u003ex() + close_button_left_inset \n        : lb.right();",
+      "range": {
+        "startLine": 602,
+        "startChar": 1,
+        "endLine": 606,
+        "endChar": 25
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd21dd56_5905512d",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "Nit: please be consistent; either (`width_used` and `width_available`) or (`used_width` and `available_width`).",
+      "range": {
+        "startLine": 1036,
+        "startChar": 6,
+        "endLine": 1036,
+        "endChar": 35
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fda17b_9e72c60f",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "Isn\u0027t this case the same as the one in line 1035 (although the widths are reversed with the condition)?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1044,
+        "endChar": 64
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545363e7_f8b73d6f",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "Question: (I might not be seeing the reason behind this approach, but) Is there a better way to do this? Why not calculate the total used_width once and then use that to calculate the number of visible_icons (instead of the successive ++s and --s)?",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641d14b0_d4a8ae8d",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "Nit: \n\n/* for_active_state */ true, ...",
+      "range": {
+        "startLine": 1137,
+        "startChar": 39,
+        "endLine": 1137,
+        "endChar": 43
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0319e2c6_5c19b3ea",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-03T01:35:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1142,
+        "startChar": 39,
+        "endLine": 1142,
+        "endChar": 44
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
