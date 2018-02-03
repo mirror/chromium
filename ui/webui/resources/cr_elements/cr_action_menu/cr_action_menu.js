@@ -4,8 +4,8 @@
 
 /**
  * @typedef {{
- *   top: number,
- *   left: number,
+ *   top: (number|undefined),
+ *   left: (number|undefined),
  *   width: (number|undefined),
  *   height: (number|undefined),
  *   anchorAlignmentX: (number|undefined),
@@ -305,6 +305,9 @@ Polymer({
    * @param {!ShowConfig} config
    */
   showAtPosition: function(config) {
+    assert(config.top);
+    assert(config.left);
+
     // Save the scroll position of the viewport.
     var doc = document.scrollingElement;
     var scrollLeft = doc.scrollLeft;
