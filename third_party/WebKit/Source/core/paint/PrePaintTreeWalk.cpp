@@ -13,6 +13,7 @@
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPropertyTreePrinter.h"
 #include "core/paint/compositing/CompositingLayerPropertyUpdater.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
 namespace blink {
@@ -265,6 +266,11 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
       Walk(*local_frame_view, context);
     }
     // TODO(pdr): Investigate RemoteFrameView (crbug.com/579281).
+  }
+
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() && object.IsLayoutNGMixin()) {
+    if (NGPaintFragment* fragment = ToLayoutBlockFlow(object).PaintFragment())
+      fragment->UpdateVisualRectForNonLayoutObjectChildren();
   }
 
   object.GetMutableForPainting().ClearPaintFlags();
