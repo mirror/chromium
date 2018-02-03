@@ -86,6 +86,8 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   void SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                               const std::string& debug_label);
 
+  std::string GetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id);
+
   // Creates a connection for a display root to viz. Provides the same
   // interfaces as CreateCompositorFramesink() plus the priviledged
   // DisplayPrivate and (if requested) ExternalBeginFrameController interfaces.
