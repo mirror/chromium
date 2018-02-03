@@ -413,6 +413,8 @@ bool SearchSuggestionParser::ParseSuggestResults(
   const base::ListValue* root_list = nullptr;
   const base::ListValue* results_list = nullptr;
 
+  LOG(INFO) << root_val;
+
   if (!root_val.GetAsList(&root_list) || !root_list->GetString(0, &query) ||
       query != input.text() || !root_list->GetList(1, &results_list))
     return false;
