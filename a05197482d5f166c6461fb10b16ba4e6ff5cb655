@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "455ad5cc_bbb4bdb4",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-03T21:08:35Z",
+      "side": 1,
+      "message": "I think supplying a const (i.e., kGuidLengthFull) or static_cast\u003cint\u003e(path.size()) works probably functionally \"equally\" well here. :-) \n\nI searched the usage of \"StringFromGUID2\" in our codebase. When |path| is declared base::string16, a const is always supplied. When |path| is declared wchat_t[], a const or arraysize() is supplied. \n\nSince we declare |path| to be base::string16 here, I am thinking we\u0027d use kGuidLengthFull here for consistency in our codebase?",
+      "parentUuid": "663c3081_9799b367",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a21d7d3_3440e992",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
