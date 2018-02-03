@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3a43e17f_349fdd86",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-03T01:03:57Z",
+      "side": 1,
+      "message": "The current implementation is probably fine for now.",
+      "parentUuid": "97ab5b54_beed9e43",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "020badd5_e19bfa4c",
         "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
         "patchSetId": 1
