@@ -10,6 +10,7 @@
 #include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
+#include "chrome/browser/media/router/providers/cast/cast_media_route_provider.h"
 #include "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
@@ -42,8 +43,7 @@ void MediaRouterDesktop::OnUserGesture() {
   // media source.
   UpdateMediaSinks(MediaSourceForDesktop().id());
 
-  if (media_sink_service_)
-    media_sink_service_->OnUserGesture();
+  media_sink_service_->OnUserGesture();
 
 #if defined(OS_WIN)
   EnsureMdnsDiscoveryEnabled();
@@ -65,7 +65,7 @@ MediaRouterDesktop::GetProviderIdForPresentation(
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context)
     : MediaRouterMojoImpl(context),
-      media_sink_service_(nullptr),
+      media_sink_service_(DualMediaSinkService::GetInstance()),
       weak_factory_(this) {
   InitializeMediaRouteProviders();
 #if defined(OS_WIN)
@@ -148,9 +148,6 @@ void MediaRouterDesktop::BindToMojoRequest(
 void MediaRouterDesktop::ProvideSinksToExtension() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG(1) << "ProvideSinksToExtension";
-  if (!media_sink_service_)
-    media_sink_service_ = DualMediaSinkService::GetInstance();
-
   // If calling |ProvideSinksToExtension| for the first time, add a callback to
   // be notified of sink updates.
   if (!media_sink_service_subscription_) {
@@ -178,6 +175,8 @@ void MediaRouterDesktop::InitializeMediaRouteProviders() {
   InitializeExtensionMediaRouteProviderProxy();
   if (base::FeatureList::IsEnabled(features::kLocalScreenCasting))
     InitializeWiredDisplayMediaRouteProvider();
+  // XXX: add feature flag.
+  InitializeCastMediaRouteProvider();
 }
 
 void MediaRouterDesktop::InitializeExtensionMediaRouteProviderProxy() {
@@ -203,11 +202,23 @@ void MediaRouterDesktop::InitializeWiredDisplayMediaRouteProvider() {
                         mojom::MediaRouteProviderConfigPtr config) {}));
 }
 
+void MediaRouterDesktop::InitializeCastMediaRouteProvider() {
+  mojom::MediaRouterPtr media_router_ptr;
+  MediaRouterMojoImpl::BindToMojoRequest(mojo::MakeRequest(&media_router_ptr));
+  mojom::MediaRouteProviderPtr cast_provider_ptr;
+  cast_provider_ = std::make_unique<CastMediaRouteProvider>(
+      mojo::MakeRequest(&cast_provider_ptr), std::move(media_router_ptr),
+      media_sink_service_->cast_app_discovery_service());
+  RegisterMediaRouteProvider(
+      MediaRouteProviderId::CAST, std::move(cast_provider_ptr),
+      base::BindOnce([](const std::string& instance_id,
+                        mojom::MediaRouteProviderConfigPtr config) {}));
+}
+
 #if defined(OS_WIN)
 void MediaRouterDesktop::EnsureMdnsDiscoveryEnabled() {
   if (media_router::CastDiscoveryEnabled()) {
-    if (media_sink_service_)
-      media_sink_service_->StartMdnsDiscovery();
+    media_sink_service_->StartMdnsDiscovery();
   } else {
     media_route_providers_[MediaRouteProviderId::EXTENSION]
         ->EnableMdnsDiscovery();
