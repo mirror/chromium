@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b845f18_c5a34b34",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-03T01:34:25Z",
+      "side": 1,
+      "message": "nit: I think this comment can be omitted. The code is already pretty clear.",
+      "revId": "1a5509052780cc4f71649cd32c56192181d8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2fb60f_7ae4f566",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-03T01:34:25Z",
+      "side": 1,
+      "message": "This is a blink-internal method, so I\u0027d rather not introduce V8 ExceptionState in here. You could return a nullptr instead when dividing by zero.",
+      "revId": "1a5509052780cc4f71649cd32c56192181d8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
