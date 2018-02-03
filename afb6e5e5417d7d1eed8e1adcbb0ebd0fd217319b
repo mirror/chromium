@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade810e0_056596e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-03T01:40:47Z",
+      "side": 1,
+      "message": "nit: we don\u0027t -\u003e an implementation doesn\u0027t?\n\n(thinking of this CL from the WPT perspective, as it is now a WPT-only change)",
+      "revId": "afb6e5e5417d7d1eed8e1adcbb0ebd0fd217319b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c3ddda_bb83aa52",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query-order.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-03T01:40:47Z",
+      "side": 1,
+      "message": "is the Object.assign() necessary? It seems to me that it does a copy of \"options\", and it seems to me that it\u0027s impossible for the options to be changed between the function start and the navigator.locks.acquire() call. (yay single-threading!)",
+      "revId": "afb6e5e5417d7d1eed8e1adcbb0ebd0fd217319b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bed269a_53087dd6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query-order.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-03T01:40:47Z",
+      "side": 1,
+      "message": "nit: relevant_pending_names?\n\nSimilar feedback below.",
+      "revId": "afb6e5e5417d7d1eed8e1adcbb0ebd0fd217319b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
