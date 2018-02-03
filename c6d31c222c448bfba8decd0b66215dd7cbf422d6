@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e24b1c97_7ba4b7d6",
+        "filename": "chromecast/media/cma/pipeline/audio_pipeline_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-03T07:05:10Z",
+      "side": 1,
+      "message": "Don\u0027t want to turn on this for all the streams in this patch. Also, we should turn on this for platforms supports multi-room, the logic will be changed later. I\u0027ll add a TODO here.\n\nToday, we can\u0027t support encrypted OPUS/FLAC stream because key is managed by OEM but decode is managed by cast_shell. So it\u0027s safe to turn this on for software decoder first.",
+      "parentUuid": "bbe40ca5_a02e335b",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d35117c_26cf7985",
         "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
         "patchSetId": 4
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "3bf270ba_9d70de7e",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-03T07:05:10Z",
+      "side": 1,
+      "message": "Backend may need more than one buffer to return decrypted buffer. For the first few buffers, we don\u0027t get any clear buffers back after push and we must keep pushing buffers. For the last few buffers, we will get clear buffers back without any push (once EOS is pushed, backend should return all the decrypted buffers).\n\nThe other reason for this is that we can fallback to the original behavior where one buffer push yields one clear buffer.\n\nIf look at the 5 steps in commit message, the old flow is 1 -\u003e 2 -\u003e 3 -\u003e 4 -\u003e 5 -\u003e 1, the new flow maybe 1 -\u003e 2 -\u003e 3 -\u003e 1 -\u003e 2 -\u003e 3 -\u003e 4 -\u003e 5 -\u003e 4 -\u003e 5 -\u003e 1.",
+      "parentUuid": "423c7b5b_307b88d4",
+      "range": {
+        "startLine": 22,
+        "startChar": 55,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efae237c_0a8c5f1f",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
@@ -174,6 +222,24 @@
       "writtenOn": "2018-02-03T05:07:22Z",
       "side": 1,
       "message": "How can we know what the size of the decrypted data is? We can\u0027t assume it is the same as the encrypted size.",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e05ed3b_b4338d56",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-03T07:05:10Z",
+      "side": 1,
+      "message": "For AES decryption, the decrypted buffer (output) size is the same as encrypted buffer (input).",
+      "parentUuid": "76d553cf_464eda53",
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -272,6 +338,54 @@
     },
     {
       "key": {
+        "uuid": "b7c8d1fd_6f042e4c",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-03T07:05:10Z",
+      "side": 1,
+      "message": "The size should be the same for AES.",
+      "parentUuid": "4d0ec771_28e18815",
+      "range": {
+        "startLine": 230,
+        "startChar": 64,
+        "endLine": 230,
+        "endChar": 75
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a60496_a8398097",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-03T07:05:10Z",
+      "side": 1,
+      "message": "I think the current logic supports this use case, however the concrete implementation won\u0027t do this, because the decrypt happens in another thread.",
+      "parentUuid": "8071cbdc_1dbcc12f",
+      "range": {
+        "startLine": 230,
+        "startChar": 13,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "703bdf2b_43168667",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 4
@@ -283,6 +397,30 @@
       "writtenOn": "2018-02-03T05:07:22Z",
       "side": 1,
       "message": "what does this mean?",
+      "range": {
+        "startLine": 287,
+        "startChar": 22,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab9cd42_b2bfab98",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-03T07:05:10Z",
+      "side": 1,
+      "message": "typo. This will be \"called\" multiple times.\n\nThanks!",
+      "parentUuid": "703bdf2b_43168667",
       "range": {
         "startLine": 287,
         "startChar": 22,
