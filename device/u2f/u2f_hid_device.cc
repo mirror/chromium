@@ -8,8 +8,8 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/apdu/apdu_command.h"
 #include "crypto/random.h"
-#include "device/u2f/u2f_apdu_command.h"
 #include "device/u2f/u2f_command_type.h"
 #include "device/u2f/u2f_message.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -35,12 +35,12 @@ U2fHidDevice::U2fHidDevice(device::mojom::HidDeviceInfoPtr device_info,
 
 U2fHidDevice::~U2fHidDevice() = default;
 
-void U2fHidDevice::DeviceTransact(std::unique_ptr<U2fApduCommand> command,
+void U2fHidDevice::DeviceTransact(std::unique_ptr<apdu::APDUCommand> command,
                                   DeviceCallback callback) {
   Transition(std::move(command), std::move(callback));
 }
 
-void U2fHidDevice::Transition(std::unique_ptr<U2fApduCommand> command,
+void U2fHidDevice::Transition(std::unique_ptr<apdu::APDUCommand> command,
                               DeviceCallback callback) {
   // This adapter is needed to support the calls to ArmTimeout(). However, it is
   // still guaranteed that |callback| will only be invoked once.
@@ -97,7 +97,7 @@ void U2fHidDevice::Connect(ConnectCallback callback) {
   hid_manager_->Connect(device_info_->guid, std::move(callback));
 }
 
-void U2fHidDevice::OnConnect(std::unique_ptr<U2fApduCommand> command,
+void U2fHidDevice::OnConnect(std::unique_ptr<apdu::APDUCommand> command,
                              DeviceCallback callback,
                              device::mojom::HidConnectionPtr connection) {
   if (state_ == State::DEVICE_ERROR)
@@ -113,7 +113,7 @@ void U2fHidDevice::OnConnect(std::unique_ptr<U2fApduCommand> command,
   Transition(std::move(command), std::move(callback));
 }
 
-void U2fHidDevice::AllocateChannel(std::unique_ptr<U2fApduCommand> command,
+void U2fHidDevice::AllocateChannel(std::unique_ptr<apdu::APDUCommand> command,
                                    DeviceCallback callback) {
   // Send random nonce to device to verify received message
   std::vector<uint8_t> nonce(8);
@@ -128,7 +128,7 @@ void U2fHidDevice::AllocateChannel(std::unique_ptr<U2fApduCommand> command,
 }
 
 void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
-                                     std::unique_ptr<U2fApduCommand> command,
+                                     std::unique_ptr<apdu::APDUCommand> command,
                                      DeviceCallback callback,
                                      bool success,
                                      std::unique_ptr<U2fMessage> message) {
@@ -291,9 +291,10 @@ void U2fHidDevice::MessageReceived(DeviceCallback callback,
     return;
   }
 
-  std::unique_ptr<U2fApduResponse> response = nullptr;
+  std::unique_ptr<apdu::APDUResponse> response = nullptr;
   if (message)
-    response = U2fApduResponse::CreateFromMessage(message->GetMessagePayload());
+    response =
+        apdu::APDUResponse::CreateFromMessage(message->GetMessagePayload());
   state_ = State::IDLE;
   base::WeakPtr<U2fHidDevice> self = weak_factory_.GetWeakPtr();
   std::move(callback).Run(success, std::move(response));
@@ -301,7 +302,7 @@ void U2fHidDevice::MessageReceived(DeviceCallback callback,
   // Executing |callback| may have freed |this|. Check |self| first.
   if (self && !pending_transactions_.empty()) {
     // If any transactions were queued, process the first one
-    std::unique_ptr<U2fApduCommand> pending_cmd =
+    std::unique_ptr<apdu::APDUCommand> pending_cmd =
         std::move(pending_transactions_.front().first);
     DeviceCallback pending_cb = std::move(pending_transactions_.front().second);
     pending_transactions_.pop();

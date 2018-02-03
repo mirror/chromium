@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "device/u2f/u2f_apdu_command.h"
+#include "components/apdu/apdu_command.h"
 
 namespace device {
 
@@ -20,7 +20,7 @@ U2FRegisterParam::U2FRegisterParam(std::vector<uint8_t> app_id_digest,
 U2FRegisterParam::~U2FRegisterParam() = default;
 
 base::Optional<std::vector<uint8_t>> U2FRegisterParam::Encode() const {
-  auto register_cmd = U2fApduCommand::CreateRegister(
+  auto register_cmd = apdu::APDUCommand::CreateU2FRegister(
       app_id_digest_, challenge_digest_, is_individual_attestation_);
   if (!register_cmd) {
     return base::nullopt;
