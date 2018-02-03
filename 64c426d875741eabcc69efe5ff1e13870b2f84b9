@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a7e809_376873b2",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-03T07:43:02Z",
+      "side": 1,
+      "message": "looks like this function is called on multiple thread, is this safe?",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50c06f6_937252bd",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-03T07:43:02Z",
+      "side": 1,
+      "message": "nit:{} not needed for the 1-line if-else statement",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085b1c09_b017d400",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-03T07:43:02Z",
+      "side": 1,
+      "message": "here you get the downloadItem from DownloadManager, and then pass the downloadItem back to DownloadManager, why not just simply define a method DOwnloadManager::CloseDownload(string guid) so you don\u0027t need to get the DownloadItem in the first place.",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12e70e2_090c722a",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-03T07:43:02Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34d517d_6635b3fa",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-03T07:43:02Z",
+      "side": 1,
+      "message": "you need {} here as the if statement spans multiple lines.",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
