@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5f4a6121_7702458d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-03T00:26:01Z",
+      "side": 1,
+      "message": "But this is the only place where you pass in the page number to the PdfMetafileSkia constructor. I have a strong suspicion this is mostly-dead code and I should be removing it. I apologize for not doing that sooner, as I think it\u0027s causing confusion. But I may be wrong. In which case, please point out what I\u0027m missing.",
+      "parentUuid": "3076c4c8_ac2c1a60",
+      "revId": "46976c071490c82366d133f60675c1ef424bc097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6111f7f8_cd3ca94f",
         "filename": "components/printing/test/mock_printer.cc",
         "patchSetId": 5
