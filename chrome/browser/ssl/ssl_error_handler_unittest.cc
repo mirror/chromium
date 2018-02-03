@@ -286,19 +286,30 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
 
 }  // namespace
 
-// A class to test name mismatch errors. Creates an error handler with a name
-// mismatch error.
-class SSLErrorHandlerNameMismatchTest : public ChromeRenderViewHostTestHarness {
+class SSLErrorTestBase : public ChromeRenderViewHostTestHarness {
  public:
-  SSLErrorHandlerNameMismatchTest() {}
-  ~SSLErrorHandlerNameMismatchTest() override {}
+  SSLErrorTestBase(net::CertStatus cert_status) : cert_status_(cert_status) {}
+  ~SSLErrorTestBase() override {}
 
+  TestSSLErrorHandler* error_handler() { return error_handler_.get(); }
+  TestSSLErrorHandlerDelegate* delegate() { return delegate_; }
+
+  const net::SSLInfo& ssl_info() { return ssl_info_; }
+
+ protected:
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     SSLErrorHandler::ResetConfigForTesting();
     SSLErrorHandler::SetInterstitialDelayForTesting(base::TimeDelta());
-    ssl_info_.cert = GetCertificate();
-    ssl_info_.cert_status = net::CERT_STATUS_COMMON_NAME_INVALID;
+
+    ResetErrorHandler(GetCertificate(), cert_status_);
+  }
+
+  void ResetErrorHandler(scoped_refptr<net::X509Certificate> cert,
+                         net::CertStatus cert_status) {
+    ssl_info_.Reset();
+    ssl_info_.cert = cert;
+    ssl_info_.cert_status = cert_status;
     ssl_info_.public_key_hashes.push_back(
         net::HashValue(kCertPublicKeyHashValue));
 
@@ -319,12 +330,6 @@ class SSLErrorHandlerNameMismatchTest : public ChromeRenderViewHostTestHarness {
     ChromeRenderViewHostTestHarness::TearDown();
   }
 
-  TestSSLErrorHandler* error_handler() { return error_handler_.get(); }
-  TestSSLErrorHandlerDelegate* delegate() { return delegate_; }
-
-  const net::SSLInfo& ssl_info() { return ssl_info_; }
-
- private:
   // Returns a certificate for the test. Virtual to allow derived fixtures to
   // use a certificate with different characteristics.
   virtual scoped_refptr<net::X509Certificate> GetCertificate() {
@@ -332,10 +337,23 @@ class SSLErrorHandlerNameMismatchTest : public ChromeRenderViewHostTestHarness {
                                    "subjectAltName_www_example_com.pem");
   }
 
+ private:
+  net::CertStatus cert_status_;
   net::SSLInfo ssl_info_;
   std::unique_ptr<TestSSLErrorHandler> error_handler_;
   TestSSLErrorHandlerDelegate* delegate_;
 
+  DISALLOW_COPY_AND_ASSIGN(SSLErrorTestBase);
+};
+
+// A class to test name mismatch errors. Creates an error handler with a name
+// mismatch error.
+class SSLErrorHandlerNameMismatchTest : public SSLErrorTestBase {
+ public:
+  SSLErrorHandlerNameMismatchTest()
+      : SSLErrorTestBase(net::CERT_STATUS_COMMON_NAME_INVALID) {}
+
+ private:
   DISALLOW_COPY_AND_ASSIGN(SSLErrorHandlerNameMismatchTest);
 };
 
@@ -355,9 +373,10 @@ class SSLErrorHandlerNameMismatchNoSANTest
   DISALLOW_COPY_AND_ASSIGN(SSLErrorHandlerNameMismatchNoSANTest);
 };
 
-// A class to test the captive portal certificate list feature. Creates an error
-// handler with a name mismatch error by default. The error handler can be
-// recreated by calling ResetErrorHandler() with an appropriate cert status.
+// A class to test captive portal certificate list and MITM software features.
+// Creates an error handler with a name mismatch error by default. The error
+// handler can be recreated by calling ResetErrorHandler() with an appropriate
+// cert status.
 class SSLErrorAssistantProtoTest : public ChromeRenderViewHostTestHarness {
  public:
   void SetUp() override {
@@ -880,6 +899,38 @@ TEST_F(SSLErrorHandlerNameMismatchTest, OSReportsCaptivePortal) {
                                SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 1);
 }
 
+// Test that a captive portal interstitial is not shown if the OS reports a
+// portal but there are errors other than a name mismatch.
+TEST_F(SSLErrorHandlerNameMismatchTest, OSReportsCaptivePortal_MultipleErrors) {
+  base::HistogramTester histograms;
+  ResetErrorHandler(GetCertificate(), net::CERT_STATUS_COMMON_NAME_INVALID |
+                                          net::CERT_STATUS_AUTHORITY_INVALID);
+  delegate()->set_os_reports_captive_portal();
+  EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+
+  error_handler()->StartHandlingError();
+  EXPECT_TRUE(error_handler()->IsTimerRunningForTesting());
+  EXPECT_TRUE(delegate()->captive_portal_checked());
+  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->captive_portal_interstitial_shown());
+
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+  EXPECT_TRUE(delegate()->captive_portal_checked());
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->captive_portal_interstitial_shown());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 3);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 1);
+}
+
 // Test that a captive portal interstitial isn't shown if the OS reports a
 // portal but CaptivePortalInterstitial feature is disabled.
 TEST_F(SSLErrorHandlerNameMismatchTest,
@@ -898,14 +949,15 @@ TEST_F(SSLErrorHandlerNameMismatchTest,
   EXPECT_TRUE(delegate()->ssl_interstitial_shown());
   EXPECT_FALSE(delegate()->captive_portal_interstitial_shown());
 
-  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  // OS_REPORTS_CAPTIVE_PORTAL is recorded even if the interstitial is disabled.
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 3);
   histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
                                SSLErrorHandler::HANDLE_ALL, 1);
   histograms.ExpectBucketCount(
       SSLErrorHandler::GetHistogramNameForTesting(),
       SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
   histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
-                               SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 0);
+                               SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 1);
 }
 
 TEST_F(SSLErrorHandlerNameMismatchTest,
