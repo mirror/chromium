@@ -1021,6 +1021,24 @@
     },
     {
       "key": {
+        "uuid": "43bab6fa_b3862399",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-03T01:31:32Z",
+      "side": 1,
+      "message": "Done. Now the test doesn\u0027t require Chrome being installed.",
+      "parentUuid": "5006ef12_3b93d03c",
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e034bc_fb21600c",
         "filename": "notification_helper/notification_helper_process_unittest.cc",
         "patchSetId": 66
