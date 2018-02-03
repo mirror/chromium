@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "9fd49eb6_90c34ddf",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-03T03:49:26Z",
+      "side": 1,
+      "message": "So line 1354 will still be kept, right? In that case, the overall approach of this CL still applies, right? I can do a follow-up to remove page_number once this part is removed.",
+      "parentUuid": "4ea40712_59d79d43",
+      "revId": "46976c071490c82366d133f60675c1ef424bc097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6111f7f8_cd3ca94f",
         "filename": "components/printing/test/mock_printer.cc",
         "patchSetId": 5
