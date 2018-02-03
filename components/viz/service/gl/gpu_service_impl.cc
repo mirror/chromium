@@ -57,6 +57,8 @@
 #include "components/arc/video_accelerator/gpu_arc_video_encode_accelerator.h"
 #include "components/arc/video_accelerator/protected_buffer_manager.h"
 #include "components/arc/video_accelerator/protected_buffer_manager_proxy.h"
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
@@ -215,6 +217,13 @@ void GpuServiceImpl::InitializeWithHost(
       new media::MediaGpuChannelManager(gpu_channel_manager_.get()));
   if (watchdog_thread())
     watchdog_thread()->AddPowerObserver();
+#if defined(USE_OZONE)
+  auto* surface_factory =
+      ui::OzonePlatform::GetInstance()->GetSurfaceFactoryOzone();
+  surface_factory->SetGetProtectedNativePixmapDelegate(
+      base::Bind(&arc::ProtectedBufferManager::GetProtectedNativePixmapFor,
+                 base::Unretained(protected_buffer_manager_.get())));
+#endif
 }
 
 void GpuServiceImpl::Bind(mojom::GpuServiceRequest request) {
