@@ -424,8 +424,19 @@ CSSNumericValue* CSSNumericValue::div(
     const HeapVector<CSSNumberish>& numberishes,
     ExceptionState& exception_state) {
   auto values = CSSNumberishesToNumericValues(numberishes);
-  std::transform(values.begin(), values.end(), values.begin(),
-                 [](CSSNumericValue* v) { return v->Invert(); });
+  for (auto& v : values) {
+    auto invert_value = v->Invert();
+    if (!invert_value) {
+      exception_state.ThrowRangeError("Can't divide-by-zero");
+      break;
+    }
+    v = invert_value;
+  }
+
+  if (exception_state.HadException()) {
+    return nullptr;
+  }
+
   PrependValueForArithmetic<kProductType>(values, this);
 
   if (CSSUnitValue* unit_value = MaybeMultiplyAsUnitValue(values))
