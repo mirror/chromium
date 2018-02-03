@@ -317,6 +317,12 @@ extern const char kEnableWaylandServer[];
 #if defined(OS_WIN) || defined(OS_LINUX)
 extern const char kDisableInputImeAPI[];
 extern const char kEnableInputImeAPI[];
+extern const char kRecognizableTabFavicon[];
+extern const char kRecognizableTabFaviconClip[];
+extern const char kRecognizableTabFaviconClipWithPadding[];
+extern const char kRecognizableTabFaviconFadingWeak[];
+extern const char kRecognizableTabFaviconFadingStrong[];
+extern const char kRecognizableTabFaviconScale[];
 #endif
 
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
