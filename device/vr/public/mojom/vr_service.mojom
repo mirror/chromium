@@ -193,8 +193,7 @@ interface VRPresentationProvider {
               mojo.common.mojom.TimeDelta time_waited);
 
   // VRDisplayFrameTransportMethod SUBMIT_AS_TEXTURE_HANDLE
-  // TODO(https://crbug.com/676224): Support preprocessing of mojom files, since
-  // this is Windows only.
+  [EnableIf=SUBMIT_WITH_TEXTURE_HANDLE]
   SubmitFrameWithTextureHandle(int16 frameId, handle texture);
 };
 

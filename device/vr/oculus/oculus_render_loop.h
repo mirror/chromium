@@ -35,8 +35,10 @@ class OculusRenderLoop : public base::Thread, mojom::VRPresentationProvider {
   void SubmitFrame(int16_t frame_index,
                    const gpu::MailboxHolder& mailbox,
                    base::TimeDelta time_waited) override;
+#if defined(OS_WIN)
   void SubmitFrameWithTextureHandle(int16_t frame_index,
                                     mojo::ScopedHandle texture_handle) override;
+#endif
   void UpdateLayerBounds(int16_t frame_id,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,
