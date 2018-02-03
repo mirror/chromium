@@ -18,4 +18,9 @@ mojom_component("mojom") {
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo:mojo",
   ]
+
+  enabled_features = []
+  if (is_win) {
+    enabled_features += [ "SUBMIT_WITH_TEXTURE_HANDLE" ]
+  }
 }

@@ -33,13 +33,13 @@ void OculusRenderLoop::SubmitFrame(int16_t frame_index,
   NOTREACHED();
 }
 
+#if defined(OS_WIN)
 void OculusRenderLoop::SubmitFrameWithTextureHandle(
     int16_t frame_index,
     mojo::ScopedHandle texture_handle) {
   TRACE_EVENT1("gpu", "SubmitFrameWithTextureHandle", "frameIndex",
                frame_index);
 
-#if defined(OS_WIN)
   MojoPlatformHandle platform_handle;
   platform_handle.struct_size = sizeof(platform_handle);
   MojoResult result = MojoUnwrapPlatformHandle(texture_handle.release().value(),
@@ -124,8 +124,8 @@ void OculusRenderLoop::SubmitFrameWithTextureHandle(
   // Tell WebVR that we are done with the texture.
   submit_client_->OnSubmitFrameTransferred(copy_succeeded);
   submit_client_->OnSubmitFrameRendered();
-#endif
 }
+#endif
 
 void OculusRenderLoop::UpdateLayerBounds(int16_t frame_id,
                                          const gfx::RectF& left_bounds,

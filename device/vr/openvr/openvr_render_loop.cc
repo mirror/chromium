@@ -30,11 +30,13 @@ void OpenVRRenderLoop::SubmitFrame(int16_t frame_index,
   NOTREACHED();
 }
 
+#if defined(OS_WIN)
 void OpenVRRenderLoop::SubmitFrameWithTextureHandle(
     int16_t frame_index,
     mojo::ScopedHandle texture_handle) {
   TRACE_EVENT1("gpu", "SubmitFrameWithTextureHandle", "frameIndex",
                frame_index);
+#endif
 
 #if defined(OS_WIN)
   MojoPlatformHandle platform_handle;
