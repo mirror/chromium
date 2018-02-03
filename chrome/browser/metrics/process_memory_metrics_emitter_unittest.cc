@@ -82,7 +82,10 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
 OSMemDumpPtr GetFakeOSMemDump(uint32_t resident_set_kb,
                               uint32_t private_footprint_kb,
                               uint32_t shared_footprint_kb,
-                              uint32_t private_swap_footprint_kb) {
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+                              uint32_t private_swap_footprint_kb
+#endif
+                              ) {
   using memory_instrumentation::mojom::VmRegion;
 
   std::vector<memory_instrumentation::mojom::VmRegionPtr> vm_regions;
@@ -100,7 +103,11 @@ OSMemDumpPtr GetFakeOSMemDump(uint32_t resident_set_kb,
                     200));  // byte_stats_proportional_resident
   return memory_instrumentation::mojom::OSMemDump::New(
       resident_set_kb, private_footprint_kb, shared_footprint_kb,
-      std::move(vm_regions), private_swap_footprint_kb);
+      std::move(vm_regions),
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+      private_swap_footprint_kb
+#endif
+      );
 }
 
 void PopulateBrowserMetrics(GlobalMemoryDumpPtr& global_dump,
@@ -121,8 +128,6 @@ void PopulateBrowserMetrics(GlobalMemoryDumpPtr& global_dump,
                        // modify metrics_mb to create the value, which leads to
                        // expectation failures.
                        metrics_mb["PrivateSwapFootprint"] * 1024
-#else
-                       0
 #endif
                        );
   pmd->os_dump = std::move(os_dump);
@@ -169,8 +174,6 @@ void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
                        // modify metrics_mb to create the value, which leads to
                        // expectation failures.
                        metrics_mb["PrivateSwapFootprint"] * 1024
-#else
-                       0
 #endif
                        );
   pmd->os_dump = std::move(os_dump);
@@ -222,8 +225,6 @@ void PopulateGpuMetrics(GlobalMemoryDumpPtr& global_dump,
                        // modify metrics_mb to create the value, which leads to
                        // expectation failures.
                        metrics_mb["PrivateSwapFootprint"] * 1024
-#else
-                       0
 #endif
                        );
   pmd->os_dump = std::move(os_dump);
