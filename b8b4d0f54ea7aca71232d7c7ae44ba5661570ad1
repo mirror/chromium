@@ -22,6 +22,30 @@
       "revId": "b8b4d0f54ea7aca71232d7c7ae44ba5661570ad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9574b1_7f106309",
+        "filename": "media/capture/video/video_capture_device_descriptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-03T00:36:04Z",
+      "side": 1,
+      "message": "I agree with mcasas@ that we need this to be covered by automated tests.\n\nIn order to test this without requiring actual camera hardware or OS emulators, one possibility I see would be to mock out all of the V4L2 API calls and then configure the mock to behave like we expect V4L2 to behave on real hardware. \nmcasas@: Would you see this as an acceptable option?\n\nIf we need coverage on real hardware, we could check if there is a way to add a webrtc bot running on a device using one of these Qualcomm chips.\nzonque@: Could you share more details on particular devices that could be used for such tests?",
+      "parentUuid": "4c5595dc_02c61273",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "b8b4d0f54ea7aca71232d7c7ae44ba5661570ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
