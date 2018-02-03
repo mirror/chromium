@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b74d14b_7479df1f",
+        "filename": "base/base_paths_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-03T01:27:01Z",
+      "side": 1,
+      "message": "Reworded this comment completely, to make it clear that the value overridden in tests.",
+      "parentUuid": "49d42994_513bea16",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "030d047c_82cc3ba1",
         "filename": "base/path_service_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2da7e85_a76de7fe",
+        "filename": "base/path_service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-03T01:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "030d047c_82cc3ba1",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ab939b48_5d2bdc11",
+        "filename": "base/test/test_support_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-03T01:27:01Z",
+      "side": 1,
+      "message": "Code that loads resources on android usually tries to load them from the APK first, and if that fails (particularly if the app is not packaged) then it tries again to load them from DIR_ANDROID_APP_DATA. The latter usually makes sense only in tests. Corresponding code for ICU data: https://codesearch.chromium.org/chromium/src/base/i18n/icu_util.cc?type\u003dcs\u0026q\u003dicu_util\u0026l\u003d87\nfor content_shell.pak: https://codesearch.chromium.org/chromium/src/content/shell/app/shell_main_delegate.cc?q\u003dcontent_shell.pak+file:%5Esrc/+package:%5Echromium$\u0026dr\u003dC\u0026l\u003d347\n\nbase::PathService allows overriding a path even if it\u0027s undefined (i.e. not provided by a PathProvider), see https://codesearch.chromium.org/chromium/src/base/path_service.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d195\n\nThis change doesn\u0027t affect how resources are loaded in packaged Chrome on Android. DIR_ASSETS shouldn\u0027t be called in this case. Overriding DIR_ASSETS here will allow to use it instead of DIR_ANDROID_APP_DATA in tests. I plan removing DIR_ANDROID_APP_DATA from here after updating all other places where it\u0027s used on Android to load resources in tests.",
+      "parentUuid": "01fcd77c_6857bd04",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "400a5f45_f2cd00c9",
         "filename": "content/shell/app/shell_main_delegate.cc",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-02T23:54:27Z",
       "side": 1,
       "message": "Wouldn\u0027t this DCHECK on android?",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f417d23_490449b3",
+        "filename": "content/shell/app/shell_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-03T01:27:01Z",
+      "side": 1,
+      "message": "This code is not compiled on Android, see ifdefs above.",
+      "parentUuid": "400a5f45_f2cd00c9",
       "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
