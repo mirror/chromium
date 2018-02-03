@@ -22,6 +22,30 @@
       "revId": "2bb1820c61190da864e523a3c5b0134940a7f051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f4bc0e_fbaab725",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-03T01:39:08Z",
+      "side": 1,
+      "message": "There\u0027s no good way to get the compositor thread from here, unless we pass the task-runner from where this task is posted in the first place, which is probably not all that useful.",
+      "parentUuid": "e0b507fc_0e6b5834",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 28
+      },
+      "revId": "2bb1820c61190da864e523a3c5b0134940a7f051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
