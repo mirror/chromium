@@ -17,6 +17,7 @@
 #include <sys/types.h>
 
 #include "base/logging.h"
+#include "base/no_destructor.h"
 #include "base/threading/thread_local_storage.h"
 
 namespace crashpad {
@@ -35,8 +36,8 @@ class ThreadLogMessagesMaster {
  public:
   void SetThreadMessageList(std::vector<std::string>* message_list) {
     DCHECK_EQ(logging::GetLogMessageHandler(), &LogMessageHandler);
-    DCHECK_NE(tls_.Get() != nullptr, message_list != nullptr);
-    tls_.Set(message_list);
+    DCHECK_NE(MessageListTLS().Get() != nullptr, message_list != nullptr);
+    MessageListTLS().Set(message_list);
   }
 
   static ThreadLogMessagesMaster* GetInstance() {
@@ -46,10 +47,6 @@ class ThreadLogMessagesMaster {
 
  private:
   ThreadLogMessagesMaster() {
-    DCHECK(!tls_.initialized());
-    tls_.Initialize(nullptr);
-    DCHECK(tls_.initialized());
-
     DCHECK(!logging::GetLogMessageHandler());
     logging::SetLogMessageHandler(LogMessageHandler);
   }
@@ -62,7 +59,7 @@ class ThreadLogMessagesMaster {
                                 size_t message_start,
                                 const std::string& string) {
     std::vector<std::string>* log_messages =
-        reinterpret_cast<std::vector<std::string>*>(tls_.Get());
+        reinterpret_cast<std::vector<std::string>*>(MessageListTLS().Get());
     if (log_messages) {
       log_messages->push_back(string);
     }
@@ -72,14 +69,13 @@ class ThreadLogMessagesMaster {
     return false;
   }
 
-  static base::ThreadLocalStorage::StaticSlot tls_;
+  static base::ThreadLocalStorage::Slot& MessageListTLS() {
+    static base::NoDestructor<base::ThreadLocalStorage::Slot> message_list_tls;
+    return *message_list_tls;
+  }
 
   DISALLOW_COPY_AND_ASSIGN(ThreadLogMessagesMaster);
 };
-
-// static
-base::ThreadLocalStorage::StaticSlot ThreadLogMessagesMaster::tls_
-    = TLS_INITIALIZER;
 
 }  // namespace
 
