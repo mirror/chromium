@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f75f1d62_69db81a8",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T03:22:45Z",
+      "side": 1,
+      "message": "Could you ask some GN experts if there\u0027s another better way to handle this?",
+      "revId": "56cc0e712a9281731feba218944277dfc19560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e394c2_96233d06",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T03:22:45Z",
+      "side": 1,
+      "message": "I think you meant to take this out.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "56cc0e712a9281731feba218944277dfc19560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f94370d_72675c4a",
+        "filename": "ui/gl/gl_image_io_surface_egl.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T03:22:45Z",
+      "side": 1,
+      "message": "every -\u003e ever",
+      "range": {
+        "startLine": 77,
+        "startChar": 38,
+        "endLine": 77,
+        "endChar": 43
+      },
+      "revId": "56cc0e712a9281731feba218944277dfc19560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e303ab_ece24fa1",
+        "filename": "ui/gl/gl_image_io_surface_egl.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T03:22:45Z",
+      "side": 1,
+      "message": "Can this signal some error (return false maybe) on that code path just so we know to fix it later? I\u0027m hoping that most stuff should work except for code which calls BlitFramebuffer on alpha:false WebGL textures.",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 40
+      },
+      "revId": "56cc0e712a9281731feba218944277dfc19560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f438cd29_99294a63",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T03:22:45Z",
+      "side": 1,
+      "message": "Are you sure this isn\u0027t used on Windows? It would be best to do #if defined(OS_MAC) NOTIMPLEMENTED() #else...",
+      "revId": "56cc0e712a9281731feba218944277dfc19560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
