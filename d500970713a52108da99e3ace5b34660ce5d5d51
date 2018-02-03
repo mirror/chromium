@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55365937_1b2a0570",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-03T00:14:11Z",
+      "side": 1,
+      "message": "it\u0027s possible this can be simplified to just \n params.parent \u003d delegate_-\u003econtainer_view();\n\n(i.e. maybe container_view() just returns parent_widget-\u003eGetNativeView()? )",
+      "revId": "d500970713a52108da99e3ace5b34660ce5d5d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
