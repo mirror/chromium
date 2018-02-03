@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ea06b5_76852573",
+        "filename": "chrome/test/data/extensions/api_test/bookmarks/test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-03T02:30:23Z",
+      "side": 1,
+      "message": "Hmm... I think this is functionally equivalent to the following, and I think that would be a bit more readable.  WDYT?\n\nfunction removeTree(id) {\n  return new Promise((resolve) \u003d\u003e {\n    chrome.bookmarks.removeTree(id, resolve);\n  });\n}\n\nfunction removeAllChildTrees(id) {\n  return new Promise(function(resolve) {\n    chrome.bookmarks.getChildren(id, function(children) {\n      Promise.all(children.map((child) \u003d\u003e removeTree(child.id))).then(resolve);\n    });\n  }));\n}\n\nPromise.all([removeAllChildren(\u00271\u0027), removeAllChildren(\u00272\u0027)]).then(\n    pass(afterRemove));",
+      "revId": "1b5ebc3bf1154b471d823d3da630262a484e0470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
