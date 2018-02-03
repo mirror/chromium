@@ -5799,12 +5799,52 @@ IN_PROC_BROWSER_TEST_P(SSLUICaptivePortalListTest, Enabled_FromProto) {
                                SSLErrorHandler::CAPTIVE_PORTAL_CERT_FOUND, 1);
 }
 
+class SSLUICaptivePortalTest : public CertVerifierBrowserTest,
+                               public testing::WithParamInterface<bool> {
+ public:
+  SSLUICaptivePortalTest()
+      : CertVerifierBrowserTest(),
+        https_server_mismatched_(net::EmbeddedTestServer::TYPE_HTTPS) {
+    https_server_mismatched_.ServeFilesFromSourceDirectory(
+        base::FilePath(kDocRoot));
+  }
+
+  void SetUpCertVerifier(net::CertStatus cert_status, int net_result) {
+    scoped_refptr<net::X509Certificate> cert(
+        https_server_mismatched_.GetCertificate());
+    net::CertVerifyResult verify_result;
+    verify_result.is_issued_by_known_root =
+        (net_result != net::ERR_CERT_AUTHORITY_INVALID);
+    verify_result.verified_cert = cert;
+    verify_result.cert_status = cert_status;
+    mock_cert_verifier()->AddResultForCert(cert, verify_result, net_result);
+  }
+
+ private:
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    SSLErrorHandler::ResetConfigForTesting();
+  }
+
+  void TearDownMainThread() override {
+    SSLErrorHandler::ResetConfigForTesting();
+  }
+
+  net::EmbeddedTestServer https_server_mismatched_;
+};
+
+INSTANTIATE_TEST_CASE_P(,
+                        SSLUICaptivePortalTest,
+                        ::testing::Values(false, true));
+
 // Tests the scenario where the OS reports a captive portal. A captive portal
 // interstitial should be displayed.
-IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal) {
+IN_PROC_BROWSER_TEST_P(SSLUICaptivePortalTest, OSReportsCaptivePortal) {
   ASSERT_TRUE(https_server_mismatched_.Start());
   base::HistogramTester histograms;
 
+  SetUpCertVerifier(net::CERT_STATUS_COMMON_NAME_INVALID,
+                    net::ERR_CERT_COMMON_NAME_INVALID);
   SSLErrorHandler::SetOSReportsCaptivePortalForTesting(true);
 
   // Navigate to an unsafe page on the server.
@@ -5828,13 +5868,55 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal) {
                                SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 1);
 }
 
+// Tests the scenario where the OS reports a captive portal. A captive portal
+// interstitial should be displayed.
+IN_PROC_BROWSER_TEST_P(SSLUICaptivePortalTest,
+                       OSReportsCaptivePortal_MultipleErrors) {
+  ASSERT_TRUE(https_server_mismatched_.Start());
+  base::HistogramTester histograms;
+
+  SetUpCertVerifier(
+      net::CERT_STATUS_COMMON_NAME_INVALID | net::CERT_STATUS_AUTHORITY_INVALID,
+      net::ERR_CERT_AUTHORITY_INVALID);
+  SSLErrorHandler::SetOSReportsCaptivePortalForTesting(true);
+
+  // Navigate to an unsafe page on the server.
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+  ui_test_utils::NavigateToURL(
+      browser(), https_server_mismatched_.GetURL("/ssl/blank_page.html"));
+  WaitForInterstitial(tab);
+
+  // An SSL interstitial should be displayed and a captive portal ping should
+  // be made which starts the timer. This is because despite the OS reported a
+  // captive portal, name mismatch was not the only error, so the usual captive
+  // portal checks are made instead.
+  ASSERT_NO_FATAL_FAILURE(ExpectSSLInterstitial(tab));
+  EXPECT_TRUE(interstitial_timer_observer.timer_started());
+
+  // Check that the histograms were recorded for an SSL interstitial and the OS
+  // reporting a captive portal.
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 3);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 1);
+}
+
 // Tests the scenario where the OS reports a captive portal but captive portal
 // interstitial feature is disabled. A captive portal interstitial should not be
 // displayed.
-IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
+IN_PROC_BROWSER_TEST_P(SSLUICaptivePortalTest,
+                       OSReportsCaptivePortal_FeatureDisabled) {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitWithFeatures(
       {} /* enabled */, {kCaptivePortalInterstitial} /* disabled */);
+
+  SetUpCertVerifier(net::CERT_STATUS_COMMON_NAME_INVALID,
+                    net::ERR_CERT_COMMON_NAME_INVALID);
 
   ASSERT_TRUE(https_server_mismatched_.Start());
   base::HistogramTester histograms;
@@ -5852,7 +5934,9 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
   EXPECT_FALSE(interstitial_timer_observer.timer_started());
 
   // Check that the histogram for the SSL interstitial was recorded.
-  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  // OS_REPORTS_CAPTIVE_PORTAL will still be recorded even though captive portal
+  // interstitial is disabled.
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 3);
   histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
                                SSLErrorHandler::HANDLE_ALL, 1);
   histograms.ExpectBucketCount(
@@ -5862,7 +5946,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
       SSLErrorHandler::GetHistogramNameForTesting(),
       SSLErrorHandler::SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE, 0);
   histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
-                               SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 0);
+                               SSLErrorHandler::OS_REPORTS_CAPTIVE_PORTAL, 1);
 }
 
 // Tests that the committed interstitial flag triggers the code path to show an
