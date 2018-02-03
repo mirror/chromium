@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "35545a45_69a4bb6c",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T02:41:30Z",
+      "side": 1,
+      "message": "In the GPU version of this script I deliberately turned on the trigger script for a few bots on the waterfall and CQ even though they only had a single dimension, to make sure that the script doesn\u0027t rot. So I\u0027d recommend having the separate flag.",
+      "parentUuid": "6731206c_5d1fadf9",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada2934e_e3fddb53",
         "filename": "testing/buildbot/generate_buildbot_json.py",
         "patchSetId": 1
