@@ -22,6 +22,29 @@
       "revId": "9031b4a21f12349577d51b817d22113aed02501a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236c8647_9ef3d733",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-03T04:19:17Z",
+      "side": 1,
+      "message": "Let\u0027s remove the \u0027app\u0027 and \u0027panel\u0027 references here and below?",
+      "range": {
+        "startLine": 120,
+        "startChar": 240,
+        "endLine": 120,
+        "endChar": 273
+      },
+      "revId": "9031b4a21f12349577d51b817d22113aed02501a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
