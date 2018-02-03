@@ -94,10 +94,12 @@ class ASH_EXPORT StatusAreaWidget : public views::Widget,
   // ShelfBackgroundAnimatorObserver:
   void UpdateShelfItemBackground(SkColor color) override;
 
+  FlagWarningTray* flag_warning_tray_for_testing() {
+    return flag_warning_tray_;
+  }
   LogoutButtonTray* logout_button_tray_for_testing() {
     return logout_button_tray_;
   }
-
   VirtualKeyboardTray* virtual_keyboard_tray_for_testing() {
     return virtual_keyboard_tray_;
   }
@@ -110,17 +112,21 @@ class ASH_EXPORT StatusAreaWidget : public views::Widget,
   void AddVirtualKeyboardTray();
   void AddImeMenuTray();
   void AddOverviewButtonTray();
+  void AddFlagWarningTray();
 
-  // Weak pointers to View classes that are parented to StatusAreaWidget:
   StatusAreaWidgetDelegate* status_area_widget_delegate_;
-  OverviewButtonTray* overview_button_tray_;
-  SystemTray* system_tray_;
-  WebNotificationTray* web_notification_tray_;
-  LogoutButtonTray* logout_button_tray_;
-  PaletteTray* palette_tray_;
-  VirtualKeyboardTray* virtual_keyboard_tray_;
-  ImeMenuTray* ime_menu_tray_;
-  LoginStatus login_status_;
+
+  // Child views owned by the views hierarchy.
+  OverviewButtonTray* overview_button_tray_ = nullptr;
+  SystemTray* system_tray_ = nullptr;
+  WebNotificationTray* web_notification_tray_ = nullptr;
+  LogoutButtonTray* logout_button_tray_ = nullptr;
+  PaletteTray* palette_tray_ = nullptr;
+  VirtualKeyboardTray* virtual_keyboard_tray_ = nullptr;
+  ImeMenuTray* ime_menu_tray_ = nullptr;
+  FlagWarningTray* flag_warning_tray_ = nullptr;
+
+  LoginStatus login_status_ = LoginStatus::NOT_LOGGED_IN;
 
   Shelf* shelf_;
 

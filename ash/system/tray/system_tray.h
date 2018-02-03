@@ -123,6 +123,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   // Determines if it's ok to switch away from the currently active user. Screen
   // casting may block this (or at least throw up a confirmation dialog). Calls
   // |callback| with the result.
+  // TODO(jamescook): Move this into //ash/session.
   void CanSwitchAwayFromActiveUser(base::OnceCallback<void(bool)> callback);
 
   // TrayBackgroundView:

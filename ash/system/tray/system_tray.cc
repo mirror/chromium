@@ -91,6 +91,8 @@ namespace {
 
 // Dialog that confirms the user wants to stop screen share/cast. Calls a
 // callback with the result.
+// TODO(jamescook): Move this into its own file or into one of the screen share
+// files.
 class CancelCastingDialog : public views::DialogDelegateView {
  public:
   explicit CancelCastingDialog(base::OnceCallback<void(bool)> callback)

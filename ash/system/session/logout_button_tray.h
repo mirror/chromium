@@ -25,7 +25,7 @@ namespace ash {
 class Shelf;
 class TrayContainer;
 
-// Adds a logout button to the launcher's status area if enabled by the
+// Adds a logout button to the status area if enabled by the enterprise policy
 // kShowLogoutButtonInTray pref.
 class ASH_EXPORT LogoutButtonTray : public views::View,
                                     public views::ButtonListener,

@@ -25,14 +25,6 @@ namespace ash {
 
 StatusAreaWidget::StatusAreaWidget(aura::Window* status_container, Shelf* shelf)
     : status_area_widget_delegate_(new StatusAreaWidgetDelegate(shelf)),
-      overview_button_tray_(nullptr),
-      system_tray_(nullptr),
-      web_notification_tray_(nullptr),
-      logout_button_tray_(nullptr),
-      palette_tray_(nullptr),
-      virtual_keyboard_tray_(nullptr),
-      ime_menu_tray_(nullptr),
-      login_status_(LoginStatus::NOT_LOGGED_IN),
       shelf_(shelf) {
   DCHECK(status_container);
   DCHECK(shelf);
@@ -57,12 +49,12 @@ void StatusAreaWidget::CreateTrayViews() {
   AddVirtualKeyboardTray();
   AddImeMenuTray();
   AddLogoutButtonTray();
+  AddFlagWarningTray();
 
   // Initialize after all trays have been created.
   system_tray_->InitializeTrayItems(web_notification_tray_);
   web_notification_tray_->Initialize();
-  if (palette_tray_)
-    palette_tray_->Initialize();
+  palette_tray_->Initialize();
   virtual_keyboard_tray_->Initialize();
   ime_menu_tray_->Initialize();
   overview_button_tray_->Initialize();
@@ -95,6 +87,8 @@ void StatusAreaWidget::Shutdown() {
   logout_button_tray_ = nullptr;
   delete overview_button_tray_;
   overview_button_tray_ = nullptr;
+  delete flag_warning_tray_;
+  flag_warning_tray_ = nullptr;
   // All child tray views have been removed.
   DCHECK_EQ(0, GetContentsView()->child_count());
 }
@@ -114,6 +108,7 @@ void StatusAreaWidget::UpdateAfterShelfAlignmentChange() {
     palette_tray_->UpdateAfterShelfAlignmentChange();
   if (overview_button_tray_)
     overview_button_tray_->UpdateAfterShelfAlignmentChange();
+  flag_warning_tray_->UpdateAfterShelfAlignmentChange();
   status_area_widget_delegate_->UpdateLayout();
 }
 
@@ -174,9 +169,9 @@ void StatusAreaWidget::SchedulePaint() {
   virtual_keyboard_tray_->SchedulePaint();
   logout_button_tray_->SchedulePaint();
   ime_menu_tray_->SchedulePaint();
-  if (palette_tray_)
-    palette_tray_->SchedulePaint();
+  palette_tray_->SchedulePaint();
   overview_button_tray_->SchedulePaint();
+  flag_warning_tray_->SchedulePaint();
 }
 
 const ui::NativeTheme* StatusAreaWidget::GetNativeTheme() const {
@@ -234,6 +229,11 @@ void StatusAreaWidget::AddImeMenuTray() {
 void StatusAreaWidget::AddOverviewButtonTray() {
   overview_button_tray_ = new OverviewButtonTray(shelf_);
   status_area_widget_delegate_->AddTray(overview_button_tray_);
+}
+
+void StatusAreaWidget::AddFlagWarningTray() {
+  flag_warning_tray_ = new FlagWarningTray(shelf_);
+  status_area_widget_delegate_->AddTray(flag_warning_tray_);
 }
 
 }  // namespace ash
