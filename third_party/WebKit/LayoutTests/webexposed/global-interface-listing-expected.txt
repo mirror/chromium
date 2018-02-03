@@ -8969,6 +8969,7 @@ interface XRSession : EventTarget
     getter onend
     getter onfocus
     getter onresetpose
+    getter outputContext
     method cancelAnimationFrame
     method constructor
     method end
