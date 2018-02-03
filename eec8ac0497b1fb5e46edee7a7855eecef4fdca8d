@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abf2cc0e_e918f28a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "will change.",
+      "parentUuid": "9c7323eb_befd469f",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60728479_1f6c0ca3",
         "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb28073_7eef0cd9",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60728479_1f6c0ca3",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5673811b_6121f311",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Renamed to OverviewWindowAnimaitonObserver",
+      "parentUuid": "cef74ab6_71673aac",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c58c39af_aafd1871",
         "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb20681c_37041d80",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c58c39af_aafd1871",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e5a043f7_9db3857b",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "986d428c_76a05032",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75831904_945546ce",
         "filename": "ash/wm/overview/overview_utils.h",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c938221_e1193fd7",
+        "filename": "ash/wm/overview/overview_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "How about a name CanCoverFullscreen()? \nIn split view mode, we need to check if the |window| can be snapped. If yes,\nthe window will cover all the rest of the windows, which is considered as a\nfullscreen/maximized window.\nUpdated the comments.",
+      "parentUuid": "75831904_945546ce",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "10f1fab2_eb923343",
+        "filename": "ash/wm/overview/overview_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3cf5f91_88e3da25",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675c370d_19593cf8",
         "filename": "ash/wm/overview/scoped_transform_overview_window.h",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a82e37b_525c43aa",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "No this change anymore.",
+      "parentUuid": "675c370d_19593cf8",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "14fd5682_9bb55d4f",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Thanks for the great suggestions. As discussed offline, it will be much easier to save the animation states internally in scoped_transform_overview_window. Then we do not need to pass the parameter around.\nWe update the animation states when enter and exit overview mode.",
+      "parentUuid": "25dc0b66_198027b7",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d7ed5c8_ac769953",
         "filename": "ash/wm/overview/window_grid.cc",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2fec2a_20cb9bbb",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7ed5c8_ac769953",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "065f4197_77a80829",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Simplified as suggested.",
+      "parentUuid": "b894375b_a15e7dc9",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64078065_83d7169c",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 1
@@ -203,6 +401,24 @@
       "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cbf17f_3cd7744f",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-03T07:26:36Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "64078065_83d7169c",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
