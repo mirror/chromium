@@ -22,6 +22,30 @@
       "revId": "a24ea4eb3d884b996888d412a7eaebdbb48dc8ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c1aa93_60cff181",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T03:25:59Z",
+      "side": 1,
+      "message": "FYI, we don\u0027t have a Linux Intel dEQP bot on chromium.gpu.fyi yet. One could easily be set up. The capacity is there in the Swarming pool.",
+      "parentUuid": "49ed6ca2_ff273d93",
+      "range": {
+        "startLine": 1294,
+        "startChar": 10,
+        "endLine": 1294,
+        "endChar": 36
+      },
+      "revId": "a24ea4eb3d884b996888d412a7eaebdbb48dc8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
