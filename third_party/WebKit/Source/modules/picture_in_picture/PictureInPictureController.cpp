@@ -89,6 +89,13 @@ HTMLVideoElement* PictureInPictureController::PictureInPictureElement() const {
   return picture_in_picture_element_;
 }
 
+HTMLVideoElement* PictureInPictureController::PictureInPictureElement(
+    TreeScope& scope) const {
+  // Element* element = ToElement(picture_in_picture_element_);
+  // return scope.AdjustedElement(&element);
+  return picture_in_picture_element_;
+}
+
 void PictureInPictureController::Trace(blink::Visitor* visitor) {
   visitor->Trace(picture_in_picture_element_);
   Supplement<Document>::Trace(visitor);
