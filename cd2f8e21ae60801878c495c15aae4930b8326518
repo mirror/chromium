@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e4bd2a4_c6de65f3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-03T00:21:53Z",
+      "side": 1,
+      "message": "This is just to make failure fast, so I can just remove setTimeout if you prefer that way. (This will be same as other wait operation)",
+      "parentUuid": "87e14ecd_017a7221",
+      "revId": "cd2f8e21ae60801878c495c15aae4930b8326518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcbbf8b3_2dfa2b4d",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T23:20:21Z",
       "side": 1,
       "message": "Sanity check: This used to be called from RenderViewImpl::OnDeviceScaleFactorChanged() whether or not there\u0027s a compositor, but we\u0027ll now skip the call if compositor_ is null (line 1958 above).  I assume it\u0027s still equivalent?",
+      "revId": "cd2f8e21ae60801878c495c15aae4930b8326518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7532ba_9fdaa1fa",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-03T00:21:53Z",
+      "side": 1,
+      "message": "This will be called (again) from InitializeLayerTreeView() when compsitor_ is initialized, so this should be fine.",
+      "parentUuid": "fcbbf8b3_2dfa2b4d",
       "revId": "cd2f8e21ae60801878c495c15aae4930b8326518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
