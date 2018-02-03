@@ -14,7 +14,23 @@
         "id": "WindowType",
         "type": "string",
         "description": "The type of browser window this is. Under some circumstances a Window may not be assigned type property, for example when querying closed windows from the $(ref:sessions) API.",
-        "enum": ["normal", "popup", "panel", "app", "devtools"]
+        "enum": [{
+          "name": "normal",
+          "description": "A normal browser window."
+        }, {
+          "name": "popup",
+          "description": "A browser popup window."
+        }, {
+          "name": "panel",
+          "description": "An extension panel window."
+        }, {
+          "name": "app",
+          "deprecated": true,
+          "description": "Deprecated. A Chrome App window. Extensions can only see their own windows."
+        }, {
+          "name": "devtools",
+          "description": "A devtools window."
+        }]
       },
       {
         "id": "WindowState",
