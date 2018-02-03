@@ -27,7 +27,8 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
                           bool use_distance_field_text,
                           int gpu_rasterization_msaa_sample_count,
                           viz::ResourceFormat preferred_tile_format,
-                          bool enable_oop_rasterization);
+                          bool enable_oop_rasterization,
+                          bool use_unpremultiply_and_dither_copy);
   ~GpuRasterBufferProvider() override;
 
   // Overridden from RasterBufferProvider:
@@ -39,6 +40,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
   void Flush() override;
   viz::ResourceFormat GetResourceFormat(bool must_support_alpha) const override;
   bool IsResourceSwizzleRequired(bool must_support_alpha) const override;
+  bool IsResourcePremultiplied(bool must_support_alpha) const override;
   bool CanPartialRasterIntoProvidedResource() const override;
   bool IsResourceReadyToDraw(
       const ResourcePool::InUsePoolResource& resource) const override;
@@ -91,6 +93,8 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
     DISALLOW_COPY_AND_ASSIGN(RasterBufferImpl);
   };
 
+  bool ShouldUnpremultiplyAndDitherResource(viz::ResourceFormat format) const;
+
   viz::ContextProvider* const compositor_context_provider_;
   viz::RasterContextProvider* const worker_context_provider_;
   LayerTreeResourceProvider* const resource_provider_;
@@ -98,6 +102,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
   const int msaa_sample_count_;
   const viz::ResourceFormat preferred_tile_format_;
   const bool enable_oop_rasterization_;
+  const bool use_unpremultiply_and_dither_copy_;
 
   std::set<RasterBufferImpl*> pending_raster_buffers_;
 

@@ -2620,20 +2620,27 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
         settings_.disallow_non_exact_resource_reuse);
 
     int msaa_sample_count = use_msaa_ ? RequestedMSAASampleCount() : 0;
-
-    // The worker context must support oop raster to enable oop rasterization.
     bool oop_raster_enabled = settings_.enable_oop_rasterization;
-    if (oop_raster_enabled) {
+    bool use_unpremultiply_and_dither_copy = false;
+
+    {
       viz::RasterContextProvider::ScopedRasterContextLock hold(
           worker_context_provider);
+
+      // The worker context must support oop raster to enable oop rasterization.
       oop_raster_enabled &=
           worker_context_provider->ContextCapabilities().supports_oop_raster;
+
+      use_unpremultiply_and_dither_copy =
+          worker_context_provider->ContextCapabilities()
+              .unpremultiply_and_dither_copy;
     }
 
     *raster_buffer_provider = std::make_unique<GpuRasterBufferProvider>(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
-        msaa_sample_count, settings_.preferred_tile_format, oop_raster_enabled);
+        msaa_sample_count, settings_.preferred_tile_format, oop_raster_enabled,
+        use_unpremultiply_and_dither_copy);
     return;
   }
 
