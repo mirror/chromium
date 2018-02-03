@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dac3cdc_acf091f6",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-03T01:03:19Z",
+      "side": 1,
+      "message": "Done. Resolved since this number is moved to a setting.",
+      "parentUuid": "90a4d3f0_9b575736",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44959ffa_f603f604",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e315a61f_52f5036a",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-03T01:03:19Z",
+      "side": 1,
+      "message": "Done. The idea here was to avoid the theoretical possibility of overflow, but if that\u0027s impossible enough I agree!",
+      "parentUuid": "44959ffa_f603f604",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7cf59c32_6512c80f",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-03T01:03:19Z",
+      "side": 1,
+      "message": "Done. Also updated the comment to reflect this check + UpdateDrawProps is covered by CanDraw.",
+      "parentUuid": "e937433e_82026100",
+      "range": {
+        "startLine": 2185,
+        "startChar": 6,
+        "endLine": 2185,
+        "endChar": 63
+      },
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b9029e_36adc1a3",
         "filename": "cc/trees/layer_tree_host_impl.h",
         "patchSetId": 20
@@ -73,6 +133,24 @@
       "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57b1022_e3462742",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-03T01:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3b9029e_36adc1a3",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3db0e1e0_d4a11cda",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-03T01:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b0a5533_ca2e92c9",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0437298_4fb2d31f",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 20
@@ -107,6 +203,24 @@
       "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2caeac_ea77c34a",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-03T01:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0437298_4fb2d31f",
+      "revId": "eec2d9a9156f438da48208e4341df3daf4fa78c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
