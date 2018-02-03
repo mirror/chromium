@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71b3513d_4f0b2773",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-03T02:34:59Z",
+      "side": 1,
+      "message": "I think you can return nullptr here instead, which would allow you to remove L436 - L438.",
+      "revId": "9e8b563389f534280a645b1f02077e073ffce779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a185d0_467d7c8c",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValue.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-03T02:34:59Z",
+      "side": 1,
+      "message": "style nit: Not need for braces if the if body is one line.",
+      "revId": "9e8b563389f534280a645b1f02077e073ffce779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
