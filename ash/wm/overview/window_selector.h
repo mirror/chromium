@@ -34,6 +34,7 @@ class Widget;
 }
 
 namespace ash {
+
 class OverviewWindowDragController;
 class SplitViewOverviewOverlay;
 class WindowGrid;
@@ -260,6 +261,10 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   int text_filter_bottom_;
 
   bool is_shut_down_ = false;
+
+  // The selected item when exiting overview mode. nullptr if no window
+  // selected.
+  WindowSelectorItem* selected_item_ = nullptr;
 
   // The drag controller for a window in the overview mode.
   std::unique_ptr<OverviewWindowDragController> window_drag_controller_;

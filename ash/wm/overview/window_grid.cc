@@ -22,11 +22,13 @@
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "ash/wm/overview/cleanup_animation_observer.h"
 #include "ash/wm/overview/overview_utils.h"
+#include "ash/wm/overview/overview_window_animation_observer.h"
 #include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "ash/wm/overview/window_selector_item.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/i18n/string_search.h"
 #include "base/strings/string_number_conversions.h"
@@ -335,6 +337,14 @@ WindowGrid::WindowGrid(aura::Window* root_window,
   }
 
   for (auto* window : windows_in_root) {
+    // Stop ongoing animations before entering overview mode. Because we are
+    // deferring SetTransform of the windows beneath the fullscreen/maximized
+    // window, we need to set the correct transforms of these windows before
+    // entering overview mode again in the OnImplicitAnimationsCompleted() of
+    // the observer of the fullscreen/maximized window animation.
+    auto* animator = window->layer()->GetAnimator();
+    if (animator->is_animating())
+      window->layer()->GetAnimator()->StopAnimating();
     window_observer_.Add(window);
     window_state_observer_.Add(wm::GetWindowState(window));
     window_list_.push_back(
@@ -519,6 +529,7 @@ void WindowGrid::PositionWindows(bool animate,
       --j;
       continue;
     }
+
     window_list_[i]->SetBounds(
         rects[j] + offset,
         animate
@@ -763,6 +774,38 @@ void WindowGrid::OnPostWindowStateTypeChange(wm::WindowState* window_state,
 
 bool WindowGrid::IsNoItemsIndicatorLabelVisibleForTesting() {
   return shield_view_ && shield_view_->IsLabelVisible();
+}
+
+void WindowGrid::UpdateWindowListAnimationStates(
+    WindowSelectorItem* selected_item) {
+  bool has_fullscreen_coverred = false;
+  UpdateWindowSelectorItemAnimationState(
+      selected_item, &has_fullscreen_coverred, true /* selected */);
+  for (size_t i = 0; i < window_list_.size(); ++i) {
+    WindowSelectorItem* item = window_list_[i].get();
+    if (selected_item == item)
+      continue;
+    UpdateWindowSelectorItemAnimationState(item, &has_fullscreen_coverred,
+                                           false /* selected */);
+  }
+}
+
+void WindowGrid::UpdateWindowSelectorItemAnimationState(
+    WindowSelectorItem* item,
+    bool* has_fullscreen_coverred,
+    bool selected) {
+  if (!item)
+    return;
+
+  bool is_fullscreen = CanCoverFullscreen(item->GetWindow());
+  item->set_may_animate(selected || !*has_fullscreen_coverred);
+  if (!*has_fullscreen_coverred && is_fullscreen) {
+    if (window_selector()->is_shut_down()) {
+      item->set_should_be_observed(true);
+      set_window_animation_observer(new OverviewWindowAnimaitonObserver());
+    }
+    *has_fullscreen_coverred = true;
+  }
 }
 
 void WindowGrid::InitShieldWidget() {

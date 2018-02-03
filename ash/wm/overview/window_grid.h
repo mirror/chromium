@@ -28,6 +28,7 @@ class Shadow;
 
 namespace ash {
 
+class OverviewWindowAnimaitonObserver;
 class WindowSelectorItem;
 
 // Represents a grid of windows in the Overview Mode in a particular root
@@ -153,6 +154,27 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
 
   bool IsNoItemsIndicatorLabelVisibleForTesting();
 
+  WindowSelector* window_selector() { return window_selector_; }
+
+  void set_window_animation_observer(
+      OverviewWindowAnimaitonObserver* observer) {
+    window_animation_observer_ = observer;
+  }
+  OverviewWindowAnimaitonObserver* window_animation_observer() {
+    return window_animation_observer_;
+  }
+
+  // Updates |may_animate| of the selector items of the windows upto the first
+  // MRU window, which covers the fullscreen. Also sets the |should_be_observed|
+  // of the first fullscreen or maximized MRU window.
+  void UpdateWindowListAnimationStates(
+      WindowSelectorItem* selected_item = nullptr);
+  // Updates |item|'s |may_animate| and |should_be_observed|. |selected| is true
+  // when |item| is the selected item when exiting overview mode.
+  void UpdateWindowSelectorItemAnimationState(WindowSelectorItem* item,
+                                              bool* has_fullscreen_coverred,
+                                              bool selected);
+
  private:
   class ShieldView;
   friend class WindowSelectorTest;
@@ -223,6 +245,10 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
 
   // This WindowGrid's total bounds in screen coordinates.
   gfx::Rect bounds_;
+
+  // Observes the exit animation of the first MRU window which covers the
+  // fullscreen. It will be deleted when the animation is complete.
+  OverviewWindowAnimaitonObserver* window_animation_observer_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(WindowGrid);
 };

@@ -295,6 +295,8 @@ void WindowSelector::Init(const WindowList& windows,
     // as we don't want to cause any window updates until all windows in
     // overview are observed. See http://crbug.com/384495.
     for (std::unique_ptr<WindowGrid>& window_grid : grid_list_) {
+      if (IsNewOverviewAnimations())
+        window_grid->UpdateWindowListAnimationStates();
       window_grid->PrepareForOverview();
       window_grid->PositionWindows(/*animate=*/true);
     }
@@ -334,10 +336,14 @@ void WindowSelector::Shutdown() {
   // Stop observing split view state changes before restoring window focus.
   // Otherwise the activation of the window triggers OnSplitViewStateChanged()
   // that will call into this function again.
-  Shell::Get()->split_view_controller()->RemoveObserver(this);
+  SplitViewController* split_view_controller =
+      Shell::Get()->split_view_controller();
+  split_view_controller->RemoveObserver(this);
 
   size_t remaining_items = 0;
   for (std::unique_ptr<WindowGrid>& window_grid : grid_list_) {
+    if (IsNewOverviewAnimations())
+      window_grid->UpdateWindowListAnimationStates(selected_item_);
     for (const auto& window_selector_item : window_grid->window_list())
       window_selector_item->RestoreWindow();
     remaining_items += window_grid->size();
@@ -431,6 +437,7 @@ bool WindowSelector::AcceptSelection() {
 
 void WindowSelector::SelectWindow(WindowSelectorItem* item) {
   aura::Window* window = item->GetWindow();
+  selected_item_ = item;
   aura::Window::Windows window_list =
       Shell::Get()->mru_window_tracker()->BuildMruWindowList();
   if (!window_list.empty()) {
