@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea48eca9_5e782be2",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-03T01:20:46Z",
+      "side": 1,
+      "message": "may be add a comment why this returns 0 here. It\u0027s not clear to me.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "50885cebba3d2e05ecbb95dad2756f0f68029169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d853ac83_6a984c17",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-03T01:20:46Z",
+      "side": 1,
+      "message": "may be add a comment why this returns 0 here. It\u0027s not clear to me.",
+      "range": {
+        "startLine": 223,
+        "startChar": 6,
+        "endLine": 223,
+        "endChar": 9
+      },
+      "revId": "50885cebba3d2e05ecbb95dad2756f0f68029169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233d68d0_a86664da",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-03T01:20:46Z",
+      "side": 1,
+      "message": "this seems like an error...did you mean:\nreturn std::min\u003cint64_t\u003e....",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 21
+      },
+      "revId": "50885cebba3d2e05ecbb95dad2756f0f68029169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09a3dee_08c44404",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-03T01:20:46Z",
+      "side": 1,
+      "message": "stale comment",
+      "range": {
+        "startLine": 113,
+        "startChar": 68,
+        "endLine": 113,
+        "endChar": 76
+      },
+      "revId": "50885cebba3d2e05ecbb95dad2756f0f68029169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
