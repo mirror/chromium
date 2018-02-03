@@ -101,9 +101,10 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   void GetPagesByClientIds(
       const std::vector<ClientId>& client_ids,
       const MultipleOfflinePageItemCallback& callback) override;
-  void GetPagesByURL(const GURL& url,
-                     URLSearchMode url_search_mode,
-                     const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesByUrlInNamespaces(
+      const GURL& url,
+      const std::vector<std::string>& namespaces,
+      const MultipleOfflinePageItemCallback& callback) override;
   void GetPagesByNamespace(
       const std::string& name_space,
       const MultipleOfflinePageItemCallback& callback) override;

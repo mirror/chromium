@@ -492,8 +492,7 @@ void GetPagesToServeURL(
   }
 
   OfflinePageUtils::SelectPagesForURL(
-      web_contents->GetBrowserContext(), url, URLSearchMode::SEARCH_BY_ALL_URLS,
-      tab_id,
+      web_contents->GetBrowserContext(), url, tab_id,
       base::Bind(&SelectPagesForURLDone, url, offline_header, network_state,
                  job, web_contents_getter));
 }

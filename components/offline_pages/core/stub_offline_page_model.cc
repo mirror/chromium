@@ -41,9 +41,9 @@ void StubOfflinePageModel::GetOfflineIdsForClientId(
 void StubOfflinePageModel::GetPageByOfflineId(
     int64_t offline_id,
     const SingleOfflinePageItemCallback& callback) {}
-void StubOfflinePageModel::GetPagesByURL(
+void StubOfflinePageModel::GetPagesByUrlInNamespaces(
     const GURL& url,
-    URLSearchMode url_search_mode,
+    const std::vector<std::string>& namespaces,
     const MultipleOfflinePageItemCallback& callback) {}
 void StubOfflinePageModel::GetPagesByRequestOrigin(
     const std::string& origin,

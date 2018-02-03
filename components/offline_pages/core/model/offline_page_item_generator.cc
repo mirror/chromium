@@ -30,6 +30,8 @@ OfflinePageItem OfflinePageItemGenerator::CreateItem() {
   item.file_size = file_size_;
   item.last_access_time = last_access_time_;
   item.access_count = access_count_;
+  if (use_real_creation_time_)
+    item.creation_time = base::Time::Now();
   return item;
 }
 
@@ -83,6 +85,11 @@ void OfflinePageItemGenerator::SetAccessCount(int access_count) {
 void OfflinePageItemGenerator::SetArchiveDirectory(
     const base::FilePath& archive_dir) {
   archive_dir_ = archive_dir;
+}
+
+void OfflinePageItemGenerator::SetUseRealCreationTime(
+    bool use_real_creation_time) {
+  use_real_creation_time_ = use_real_creation_time;
 }
 
 }  // namespace offline_pages

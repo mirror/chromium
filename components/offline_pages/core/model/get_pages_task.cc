@@ -184,7 +184,10 @@ ReadResult ReadPagesByRequestOriginSync(const std::string& request_origin,
 // Above approach produces false positives, because '_' replacing '%' in
 // original URL, but we deal with that by doing exact URL match inside of the
 // while loop.
-ReadResult ReadPagesByUrlSync(const GURL& url, sql::Connection* db) {
+ReadResult ReadPagesByUrlInNamespacesSync(
+    const GURL& url,
+    const std::vector<std::string>& namespaces,
+    sql::Connection* db) {
   ReadResult result;
   if (!db) {
     result.success = false;
@@ -199,18 +202,28 @@ ReadResult ReadPagesByUrlSync(const GURL& url, sql::Connection* db) {
   string_to_match = string_to_match.append(1UL, '%');
   static const char kSql[] = "SELECT " OFFLINE_PAGE_PROJECTION
                              " FROM offlinepages_v1"
-                             " WHERE online_url LIKE ? OR original_url like ?";
-  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
-  statement.BindString(0, string_to_match);
-  statement.BindString(1, string_to_match);
-  while (statement.Step()) {
-    OfflinePageItem temp_item = MakeOfflinePageItem(&statement);
-    if (temp_item.url.ReplaceComponents(remove_fragment) == url_to_match ||
-        temp_item.original_url.ReplaceComponents(remove_fragment) ==
-            url_to_match) {
-      result.pages.push_back(temp_item);
+                             " WHERE (online_url LIKE ? OR original_url like ?)"
+                             " AND client_namespace = ?";
+  for (auto name_space : namespaces) {
+    sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+    statement.BindString(0, string_to_match);
+    statement.BindString(1, string_to_match);
+    statement.BindString(2, name_space);
+    while (statement.Step()) {
+      OfflinePageItem temp_item = MakeOfflinePageItem(&statement);
+      if (temp_item.url.ReplaceComponents(remove_fragment) == url_to_match ||
+          temp_item.original_url.ReplaceComponents(remove_fragment) ==
+              url_to_match) {
+        result.pages.push_back(temp_item);
+      }
     }
   }
+
+  // Sort the pages from latest to oldest.
+  std::sort(result.pages.begin(), result.pages.end(),
+            [](const OfflinePageItem& a, const OfflinePageItem& b) {
+              return a.creation_time > b.creation_time;
+            });
 
   result.success = true;
   return result;
@@ -339,12 +352,14 @@ std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingRequestOrigin(
 }
 
 // static
-std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingUrl(
+std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingUrlInNamespaces(
     OfflinePageMetadataStoreSQL* store,
     const MultipleOfflinePageItemCallback& callback,
-    const GURL& url) {
+    const GURL& url,
+    const std::vector<std::string>& namespaces) {
   return std::unique_ptr<GetPagesTask>(new GetPagesTask(
-      store, base::BindOnce(&ReadPagesByUrlSync, url), callback));
+      store, base::BindOnce(&ReadPagesByUrlInNamespacesSync, url, namespaces),
+      callback));
 }
 
 // static

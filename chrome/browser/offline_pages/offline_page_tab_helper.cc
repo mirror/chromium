@@ -254,8 +254,7 @@ void OfflinePageTabHelper::TryLoadingOfflinePageOnNetError(
   }
 
   OfflinePageUtils::SelectPagesForURL(
-      web_contents()->GetBrowserContext(), navigation_handle->GetURL(),
-      URLSearchMode::SEARCH_BY_ALL_URLS, tab_id,
+      web_contents()->GetBrowserContext(), navigation_handle->GetURL(), tab_id,
       base::Bind(&OfflinePageTabHelper::SelectPagesForURLDone,
                  weak_ptr_factory_.GetWeakPtr()));
 }

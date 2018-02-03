@@ -208,11 +208,14 @@ TEST_F(GetPagesTaskTest, GetPagesByRequestOrigin) {
   EXPECT_EQ(1UL, result_set.count(item_2));
 }
 
-TEST_F(GetPagesTaskTest, GetPagesByUrl) {
+TEST_F(GetPagesTaskTest, GetPagesByUrlAndIdForOriginalTab) {
+  ClientPolicyController policy_controller;
   static const GURL kUrl1("http://cs.chromium.org");
   static const GURL kUrl1Frag("http://cs.chromium.org#frag1");
   static const GURL kUrl2("http://chrome.google.com");
   generator()->SetNamespace(kTestNamespace);
+  generator()->SetUseRealCreationTime(true);
+
   generator()->SetUrl(kUrl1);
   OfflinePageItem item_1 = generator()->CreateItem();
   store_util()->InsertItem(item_1);
@@ -236,16 +239,28 @@ TEST_F(GetPagesTaskTest, GetPagesByUrl) {
   OfflinePageItem item_5 = generator()->CreateItem();
   store_util()->InsertItem(item_5);
 
-  runner()->RunTask(GetPagesTask::CreateTaskMatchingUrl(
-      store(), get_pages_callback(), kUrl1));
+  generator()->SetNamespace(kLastNNamespace);
 
-  std::set<OfflinePageItem> result_set;
-  result_set.insert(read_result().begin(), read_result().end());
-  EXPECT_EQ(4UL, result_set.size());
-  EXPECT_EQ(1UL, result_set.count(item_1));
-  EXPECT_EQ(1UL, result_set.count(item_2));
-  EXPECT_EQ(1UL, result_set.count(item_3));
-  EXPECT_EQ(1UL, result_set.count(item_4));
+  generator()->SetUrl(kUrl1);
+  generator()->SetOriginalUrl(kUrl1);
+  OfflinePageItem item_6 = generator()->CreateItem();
+  store_util()->InsertItem(item_6);
+
+  generator()->SetUrl(kUrl2);
+  generator()->SetOriginalUrl(kUrl2);
+  OfflinePageItem item_7 = generator()->CreateItem();
+  store_util()->InsertItem(item_7);
+
+  runner()->RunTask(GetPagesTask::CreateTaskMatchingUrlInNamespaces(
+      store(), get_pages_callback(), kUrl1, {kTestNamespace, kLastNNamespace}));
+
+  // The results should be sorted from latest to oldest.
+  ASSERT_EQ(5UL, read_result().size());
+  EXPECT_EQ(item_6, read_result()[0]);
+  EXPECT_EQ(item_4, read_result()[1]);
+  EXPECT_EQ(item_3, read_result()[2]);
+  EXPECT_EQ(item_2, read_result()[3]);
+  EXPECT_EQ(item_1, read_result()[4]);
 }
 
 TEST_F(GetPagesTaskTest, GetPageByOfflineId) {

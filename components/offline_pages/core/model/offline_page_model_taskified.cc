@@ -259,11 +259,12 @@ void OfflinePageModelTaskified::GetPagesByClientIds(
   task_queue_.AddTask(std::move(task));
 }
 
-void OfflinePageModelTaskified::GetPagesByURL(
+void OfflinePageModelTaskified::GetPagesByUrlInNamespaces(
     const GURL& url,
-    URLSearchMode url_search_mode,
+    const std::vector<std::string>& namespaces,
     const MultipleOfflinePageItemCallback& callback) {
-  auto task = GetPagesTask::CreateTaskMatchingUrl(store_.get(), callback, url);
+  auto task = GetPagesTask::CreateTaskMatchingUrlInNamespaces(
+      store_.get(), callback, url, namespaces);
   task_queue_.AddTask(std::move(task));
 }
 

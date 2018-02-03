@@ -164,11 +164,11 @@ class OfflinePageModel : public base::SupportsUserData, public KeyedService {
       const std::vector<ClientId>& client_ids,
       const MultipleOfflinePageItemCallback& callback) = 0;
 
-  // Returns the offline pages that are related to |url|. |url_search_mode|
-  // controls how the url match is done. See URLSearchMode for more details.
-  virtual void GetPagesByURL(
+  // Returns the offline pages in |namespaces| that match |url|, the returning
+  // pages will be sorted from newest to oldest.
+  virtual void GetPagesByUrlInNamespaces(
       const GURL& url,
-      URLSearchMode url_search_mode,
+      const std::vector<std::string>& namespaces,
       const MultipleOfflinePageItemCallback& callback) = 0;
 
   // Returns the offline pages that belong in |name_space|.

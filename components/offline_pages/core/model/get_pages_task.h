@@ -76,14 +76,17 @@ class GetPagesTask : public Task {
       const MultipleOfflinePageItemCallback& callback,
       const std::string& request_origin);
 
-  // Creates |GetPagesTask| reading pages matching provided |url| from DB.
+  // Creates |GetPagesTask| reading pages that belong to |namespaces| and match
+  // |url|. The return value will be sorted based on creation time, from newest
+  // to oldest.
   // The url will be matched against original URL and final URL. Fragments will
   // be removed from all URLs prior to matching. Only a match on a single field
   // is necessary.
-  static std::unique_ptr<GetPagesTask> CreateTaskMatchingUrl(
+  static std::unique_ptr<GetPagesTask> CreateTaskMatchingUrlInNamespaces(
       OfflinePageMetadataStoreSQL* store,
       const MultipleOfflinePageItemCallback& callback,
-      const GURL& url);
+      const GURL& url,
+      const std::vector<std::string>& namespaces);
 
   // Creates |GetPagesTask| reading a single page matching provided |offline_id|
   // from DB.

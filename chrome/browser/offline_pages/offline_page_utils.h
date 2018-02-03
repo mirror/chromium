@@ -66,10 +66,8 @@ class OfflinePageUtils {
   static void SelectPagesForURL(
       content::BrowserContext* browser_context,
       const GURL& url,
-      URLSearchMode url_search_mode,
       int tab_id,
-      const base::Callback<void(const std::vector<OfflinePageItem>&)>&
-          callback);
+      const MultipleOfflinePageItemCallback& callback);
 
   // Gets the offline page corresponding to the given web contents.  The
   // returned pointer is owned by the web_contents and may be deleted by user

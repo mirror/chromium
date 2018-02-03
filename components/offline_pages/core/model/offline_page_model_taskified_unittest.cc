@@ -63,6 +63,7 @@ const base::string16 kTestTitle = base::UTF8ToUTF16("a title");
 const std::string kTestRequestOrigin("abc.xyz");
 const std::string kEmptyRequestOrigin("");
 const std::string kTestDigest("test digest");
+const std::string kRandomId("randomId");
 
 }  // namespace
 
@@ -873,7 +874,8 @@ TEST_F(OfflinePageModelTaskifiedTest, GetPageByOfflineId) {
   PumpLoop();
 }
 
-TEST_F(OfflinePageModelTaskifiedTest, GetPagesByUrl_FinalUrl) {
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByUrlInNamespaces) {
+  page_generator()->SetNamespace(kLastNNamespace);
   page_generator()->SetUrl(kTestUrl);
   OfflinePageItem page1 = page_generator()->CreateItem();
   InsertPageIntoStore(page1);
@@ -884,27 +886,28 @@ TEST_F(OfflinePageModelTaskifiedTest, GetPagesByUrl_FinalUrl) {
   // Search by kTestUrl.
   base::MockCallback<MultipleOfflinePageItemCallback> callback;
   EXPECT_CALL(callback, Run(ElementsAre(page1)));
-  model()->GetPagesByURL(kTestUrl, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
-                         callback.Get());
+  model()->GetPagesByUrlInNamespaces(kTestUrl, {kLastNNamespace},
+                                     callback.Get());
   EXPECT_TRUE(task_queue()->HasRunningTask());
   PumpLoop();
 
   // Search by kTestUrl2.
   EXPECT_CALL(callback, Run(ElementsAre(page2)));
-  model()->GetPagesByURL(kTestUrl2, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
-                         callback.Get());
+  model()->GetPagesByUrlInNamespaces(kTestUrl2, {kLastNNamespace},
+                                     callback.Get());
   PumpLoop();
 
   // Search by random url, which should return no pages.
   EXPECT_CALL(callback, Run(IsEmpty()));
-  model()->GetPagesByURL(kOtherUrl, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
-                         callback.Get());
+  model()->GetPagesByUrlInNamespaces(kOtherUrl, {kLastNNamespace},
+                                     callback.Get());
   EXPECT_TRUE(task_queue()->HasRunningTask());
   PumpLoop();
 }
 
 TEST_F(OfflinePageModelTaskifiedTest,
-       GetPagesByUrl_FinalUrlWithFragmentStripped) {
+       GetPagesByUrlInNamespaces_WithFragmentStripped) {
+  page_generator()->SetNamespace(kLastNNamespace);
   page_generator()->SetUrl(kTestUrl);
   OfflinePageItem page1 = page_generator()->CreateItem();
   InsertPageIntoStore(page1);
@@ -915,42 +918,23 @@ TEST_F(OfflinePageModelTaskifiedTest,
   // Search by kTestUrlWithFragment.
   base::MockCallback<MultipleOfflinePageItemCallback> callback;
   EXPECT_CALL(callback, Run(ElementsAre(page1)));
-  model()->GetPagesByURL(kTestUrlWithFragment,
-                         URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
-                         callback.Get());
+  model()->GetPagesByUrlInNamespaces(kTestUrlWithFragment, {kLastNNamespace},
+                                     callback.Get());
   EXPECT_TRUE(task_queue()->HasRunningTask());
   PumpLoop();
 
   // Search by kTestUrl2.
   EXPECT_CALL(callback, Run(ElementsAre(page2)));
-  model()->GetPagesByURL(kTestUrl2, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
-                         callback.Get());
+  model()->GetPagesByUrlInNamespaces(kTestUrl2, {kLastNNamespace},
+                                     callback.Get());
   EXPECT_TRUE(task_queue()->HasRunningTask());
   PumpLoop();
 
   // Search by kTestUrl2WithFragment.
   EXPECT_CALL(callback, Run(ElementsAre(page2)));
-  model()->GetPagesByURL(kTestUrl2WithFragment,
-                         URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
-                         callback.Get());
+  model()->GetPagesByUrlInNamespaces(kTestUrl2WithFragment, {kLastNNamespace},
+                                     callback.Get());
   EXPECT_TRUE(task_queue()->HasRunningTask());
-  PumpLoop();
-}
-
-TEST_F(OfflinePageModelTaskifiedTest, GetPagesByUrl_AllUrls) {
-  page_generator()->SetUrl(kTestUrl);
-  page_generator()->SetOriginalUrl(kTestUrl2);
-  OfflinePageItem page1 = page_generator()->CreateItem();
-  InsertPageIntoStore(page1);
-  page_generator()->SetUrl(kTestUrl2);
-  page_generator()->SetOriginalUrl(GURL());
-  OfflinePageItem page2 = page_generator()->CreateItem();
-  InsertPageIntoStore(page2);
-
-  base::MockCallback<MultipleOfflinePageItemCallback> callback;
-  EXPECT_CALL(callback, Run(UnorderedElementsAre(page1, page2)));
-  model()->GetPagesByURL(kTestUrl2, URLSearchMode::SEARCH_BY_ALL_URLS,
-                         callback.Get());
   PumpLoop();
 }
 

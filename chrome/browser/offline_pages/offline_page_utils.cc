@@ -37,20 +37,10 @@
 namespace offline_pages {
 namespace {
 
-class OfflinePageComparer {
- public:
-  OfflinePageComparer() = default;
-
-  bool operator()(const OfflinePageItem& a, const OfflinePageItem& b) {
-    return a.creation_time > b.creation_time;
-  }
-};
-
-void OnGetPagesByURLDone(
-    const GURL& url,
+void OnGetPagesByUrlInNamespacesDone(
     int tab_id,
     const std::vector<std::string>& namespaces_to_show_in_original_tab,
-    const base::Callback<void(const std::vector<OfflinePageItem>&)>& callback,
+    const MultipleOfflinePageItemCallback& callback,
     const MultipleOfflinePageItemResult& pages) {
   std::vector<OfflinePageItem> selected_pages;
   std::string tab_id_str = base::IntToString(tab_id);
@@ -64,10 +54,6 @@ void OnGetPagesByURLDone(
     }
     selected_pages.push_back(page);
   }
-
-  // Sort based on creation date.
-  std::sort(selected_pages.begin(), selected_pages.end(),
-            OfflinePageComparer());
 
   callback.Run(selected_pages);
 }
@@ -149,9 +135,8 @@ const base::FilePath::CharType OfflinePageUtils::kMHTMLExtension[] =
 void OfflinePageUtils::SelectPagesForURL(
     content::BrowserContext* browser_context,
     const GURL& url,
-    URLSearchMode url_search_mode,
     int tab_id,
-    const base::Callback<void(const std::vector<OfflinePageItem>&)>& callback) {
+    const MultipleOfflinePageItemCallback& callback) {
   OfflinePageModel* offline_page_model =
       OfflinePageModelFactory::GetForBrowserContext(browser_context);
   if (!offline_page_model) {
@@ -160,13 +145,12 @@ void OfflinePageUtils::SelectPagesForURL(
     return;
   }
 
-  offline_page_model->GetPagesByURL(
-      url,
-      url_search_mode,
-      base::Bind(&OnGetPagesByURLDone, url, tab_id,
-                 offline_page_model->GetPolicyController()
-                     ->GetNamespacesRestrictedToOriginalTab(),
-                 callback));
+  offline_page_model->GetPagesByUrlInNamespaces(
+      url, offline_page_model->GetPolicyController()->GetAllNamespaces(),
+      base::BindRepeating(&OnGetPagesByUrlInNamespacesDone, tab_id,
+                          offline_page_model->GetPolicyController()
+                              ->GetNamespacesRestrictedToOriginalTab(),
+                          callback));
 }
 
 const OfflinePageItem* OfflinePageUtils::GetOfflinePageFromWebContents(
@@ -256,18 +240,11 @@ void OfflinePageUtils::CheckDuplicateDownloads(
                          const GURL& url,
                          const DuplicateCheckCallback& callback,
                          const std::vector<OfflinePageItem>& pages) {
-    base::Time latest_saved_time;
-    for (const auto& offline_page_item : pages) {
-      if (IsSupportedByDownload(browser_context,
-                                offline_page_item.client_id.name_space) &&
-          latest_saved_time < offline_page_item.creation_time) {
-        latest_saved_time = offline_page_item.creation_time;
-      }
-    }
-    if (latest_saved_time.is_null()) {
+    if (pages.empty()) {
       // Then check for ongoing downloads, that is, requests.
       CheckDuplicateOngoingDownloads(browser_context, url, callback);
     } else {
+      base::Time latest_saved_time = pages.front().creation_time;
       // Using CUSTOM_COUNTS instead of time-oriented histogram to record
       // samples in seconds rather than milliseconds.
       UMA_HISTOGRAM_CUSTOM_COUNTS(
@@ -280,8 +257,10 @@ void OfflinePageUtils::CheckDuplicateDownloads(
     }
   };
 
-  offline_page_model->GetPagesByURL(
-      url, URLSearchMode::SEARCH_BY_ALL_URLS,
+  offline_page_model->GetPagesByUrlInNamespaces(
+      url,
+      offline_page_model->GetPolicyController()
+          ->GetNamespacesSupportedByDownload(),
       base::Bind(continuation, browser_context, url, callback));
 }
 
