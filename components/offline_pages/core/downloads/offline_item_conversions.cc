@@ -12,6 +12,7 @@ using OfflineItemFilter = offline_items_collection::OfflineItemFilter;
 using OfflineItemState = offline_items_collection::OfflineItemState;
 using OfflineItemProgressUnit =
     offline_items_collection::OfflineItemProgressUnit;
+using PendingState = offline_items_collection::PendingState;
 
 namespace offline_pages {
 
@@ -52,6 +53,13 @@ OfflineItem OfflineItemConversions::CreateOfflineItem(
   switch (request.request_state()) {
     case SavePageRequest::RequestState::AVAILABLE:
       item.state = OfflineItemState::PENDING;
+      if (request.available_state() ==
+          SavePageRequest::AvailableState::WAITING_NETWORK)
+        item.pendingState = PendingState::PENDING_NETWORK;
+      else if (request.available_state() ==
+               SavePageRequest::AvailableState::
+                   WAITING_ANOTHER_DOWNLOAD_COMPLETION)
+        item.pendingState = PendingState::PENDING_ANOTHER_DOWNLOAD;
       break;
     case SavePageRequest::RequestState::OFFLINING:
       item.state = OfflineItemState::IN_PROGRESS;

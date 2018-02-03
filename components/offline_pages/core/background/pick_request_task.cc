@@ -74,6 +74,9 @@ void PickRequestTask::Choose(
     return;
   }
 
+  // All available requests
+  std::vector<SavePageRequest> available_requests;
+
   // Pick the most deserving request for our conditions.
   const SavePageRequest* picked_request = nullptr;
 
@@ -117,6 +120,9 @@ void PickRequestTask::Choose(
       non_user_requested_tasks_remaining = true;
     if (request->request_state() == SavePageRequest::RequestState::AVAILABLE) {
       available_request_count++;
+      request->set_available_state(
+          SavePageRequest::AvailableState::WAITING_ANOTHER_DOWNLOAD_COMPLETION);
+      available_requests.push_back(*request.get());
     }
     if (!RequestConditionsSatisfied(request.get()))
       continue;
@@ -160,7 +166,16 @@ void PickRequestTask::Choose(
   // If we have a best request to try next, get the request coodinator to
   // start it.  Otherwise return that we have no candidates.
   if (picked_request != nullptr) {
-    picked_callback_.Run(*picked_request, cleanup_needed);
+    // Remove picked request from the vector of available requests.
+    for (std::vector<SavePageRequest>::iterator iter =
+             available_requests.begin();
+         iter != available_requests.end(); iter++) {
+      if (*iter == *picked_request) {
+        available_requests.erase(iter);
+        break;
+      }
+    }
+    picked_callback_.Run(*picked_request, available_requests, cleanup_needed);
   } else {
     not_picked_callback_.Run(non_user_requested_tasks_remaining,
                              cleanup_needed);
