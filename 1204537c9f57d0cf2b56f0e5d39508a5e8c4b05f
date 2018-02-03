@@ -16,6 +16,24 @@
       "revId": "1204537c9f57d0cf2b56f0e5d39508a5e8c4b05f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3efee3_e7b02e7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-02-03T22:08:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "052aed2c_af2f802b",
+      "revId": "1204537c9f57d0cf2b56f0e5d39508a5e8c4b05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
