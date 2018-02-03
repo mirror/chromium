@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9711d0cc_dd83028e",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2018-02-03T00:13:59Z",
+      "side": 1,
+      "message": "milo-dev only has access to buildbucket-dev, so I don\u0027t think this will do anything.",
+      "revId": "65de907502a9bfbec237e8a7b9ed0be7aaefd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
