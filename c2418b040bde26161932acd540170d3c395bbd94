@@ -22,6 +22,30 @@
       "revId": "c2418b040bde26161932acd540170d3c395bbd94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3209cb3_5d9ee67e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/interfaces/css-typed-om.tentative.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-03T02:09:17Z",
+      "side": 1,
+      "message": "Ah oops, I misunderstood .tentative slightly. This shouldn\u0027t have the tentative extension.",
+      "parentUuid": "c599eb3a_a712d0a2",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "c2418b040bde26161932acd540170d3c395bbd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
