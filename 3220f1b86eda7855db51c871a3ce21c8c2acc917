@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc3f8826_ec62566c",
+        "filename": "media/capture/mojo/image_capture_types.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-03T18:13:14Z",
+      "side": 1,
+      "message": "I also had a feeling this may have something to do with namespaces, but didn\u0027t get to the bottom of it. In particular, I wondered why media::mojo as opposed to media::mojom. Would media::mojom have worked? Did you find out why mojo:: works but media::mojo does not?",
+      "revId": "3220f1b86eda7855db51c871a3ce21c8c2acc917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
