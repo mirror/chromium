@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4075b7c7_57b97c32",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-02-03T00:25:52Z",
+      "side": 1,
+      "message": "Actually, the comment is correct: on iPhone NTP the toolbar doesn\u0027t show an omnibox, there\u0027s only fakebox in the middle of the screen (although there\u0027s an invisible button in the toolbar that \"taps\" fakebox for users\u0027 muscle memory).",
+      "parentUuid": "047441fc_12ed28e2",
+      "revId": "9b8b9d3a541e4e7712aa9be71687b62f81d049c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc9fe71_631e392e",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "9b8b9d3a541e4e7712aa9be71687b62f81d049c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4679fc4c_02d444e0",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-02-03T00:25:52Z",
+      "side": 1,
+      "message": "Great idea, thanks.",
+      "parentUuid": "a2ea3e54_063a8e5d",
+      "revId": "9b8b9d3a541e4e7712aa9be71687b62f81d049c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
