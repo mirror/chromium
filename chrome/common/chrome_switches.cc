@@ -988,6 +988,12 @@ const char kEnableWaylandServer[] = "enable-wayland-server";
 #if defined(OS_WIN) || defined(OS_LINUX)
 const char kDisableInputImeAPI[] = "disable-input-ime-api";
 const char kEnableInputImeAPI[] = "enable-input-ime-api";
+const char kRecognisibleTabFavicon[] = "recognisible-tab-favicon";
+const char kRecognisibleTabFaviconClip[] = "clip";
+const char kRecognisibleTabFaviconClipWithPadding[] = "clip-with-padding";
+const char kRecognisibleTabFaviconFadingWeak[] = "fading-weak";
+const char kRecognisibleTabFaviconFadingStrong[] = "fading-strong";
+const char kRecognisibleTabFaviconScale[] = "scale";
 #endif
 
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)

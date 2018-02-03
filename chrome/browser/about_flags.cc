@@ -1175,6 +1175,24 @@ const FeatureEntry::FeatureVariation kWebXrRenderPathVariations[] = {
      nullptr}};
 #endif  // defined(OS_ANDROID) && BUILDFLAG(ENABLE_VR)
 
+#if defined(OS_WIN) || defined(OS_LINUX)
+const FeatureEntry::Choice kRecognisibleTabFaviconChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kRecognisibleTabFaviconClipWithPadding,
+     switches::kRecognisibleTabFavicon,
+     switches::kRecognisibleTabFaviconClipWithPadding},
+    {flag_descriptions::kRecognisibleTabFaviconFadingWeak,
+     switches::kRecognisibleTabFavicon,
+     switches::kRecognisibleTabFaviconFadingWeak},
+    {flag_descriptions::kRecognisibleTabFaviconFadingStrong,
+     switches::kRecognisibleTabFavicon,
+     switches::kRecognisibleTabFaviconFadingStrong},
+    {flag_descriptions::kRecognisibleTabFaviconScale,
+     switches::kRecognisibleTabFavicon,
+     switches::kRecognisibleTabFaviconScale},
+};
+#endif
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -2408,6 +2426,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableInputImeApiDescription, kOsWin | kOsLinux,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableInputImeAPI,
                                switches::kDisableInputImeAPI)},
+    {"recognisible-tab-favicon",
+     flag_descriptions::kRecognisibleTabFaviconName,
+     flag_descriptions::kRecognisibleTabFaviconDescription,
+     kOsWin | kOsLinux | kOsCrOS,
+     MULTI_VALUE_TYPE(kRecognisibleTabFaviconChoices)},
 #endif  // OS_WIN || OS_LINUX
     {"enable-origin-trials", flag_descriptions::kOriginTrialsName,
      flag_descriptions::kOriginTrialsDescription, kOsAll,
