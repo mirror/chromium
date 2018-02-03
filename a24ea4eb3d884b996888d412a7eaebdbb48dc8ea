@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ed6ca2_ff273d93",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2018-02-03T01:11:54Z",
+      "side": 1,
+      "message": "this should include Linux Intel\n\nhttps://chromium-swarm.appspot.com/task?id\u003d3b71df6e7206ba10\u0026refresh\u003d10\u0026show_raw\u003d1",
+      "range": {
+        "startLine": 1294,
+        "startChar": 10,
+        "endLine": 1294,
+        "endChar": 36
+      },
+      "revId": "a24ea4eb3d884b996888d412a7eaebdbb48dc8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
