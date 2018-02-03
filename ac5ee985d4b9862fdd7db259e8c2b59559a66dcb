@@ -16,6 +16,24 @@
       "revId": "ac5ee985d4b9862fdd7db259e8c2b59559a66dcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2215e0ff_bcca0cc1",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-03T01:05:01Z",
+      "side": 1,
+      "message": "Yes, just did. When we just print preview a subset of pages, some extra draft pages will have this as false.",
+      "parentUuid": "ecb9757b_c3158d3e",
+      "revId": "ac5ee985d4b9862fdd7db259e8c2b59559a66dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
