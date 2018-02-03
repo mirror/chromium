@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32905725_5ed67492",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Try to prefer more specific names; e.g. something like \u0027changed_cb\u0027, \u0027change_completed_cb\u0027, etc.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3962aa7_7a98ba21",
+        "filename": "media/base/media_url_demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Use consistent naming whatever you end up choosing.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f9c49a_512c05a2",
+        "filename": "media/base/mock_filters.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "No \u0026 for onceclosure? I\u0027d just drop the cb from the mock signature entirely, or bind it into a normal callback. At the very least some notes are needed here about why this is being done.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f75ce6_191e56d8",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "No extra ()",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc4ec0a_80221444",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090d286d_d370e8cb",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Instead of storing this you can bind it into the RendererWrapper::OnEnabledAudioTracksChange call, i.e. maybe with BindToCurrentLoop(callback) so that you don\u0027t need an extra trampoline function. You\u0027d then add it to the signature for RendererWrapper::DemuxerCompletedAudioTrackChange() too and you\u0027d have something like the following below:\n\n  shared_state_.renderer-\u003eOnSelectedAudioTracksChanged(\n      tracks, audio_tracks_change_callback));\n\nThat will avoid some extra hops.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66464d6f_447a911c",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "You\u0027ll still need to fire the given callback if you reach this point I think.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3a96c0_fad91235",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32c340b_ab217629",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "We don\u0027t typically do comments like this.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262662a0_ced9863e",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Same comment as the audio side of things; avoid the member variable by passing through.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469b8184_5def26d9",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3d2a36_f123e077",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "TODO(xxx):",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7414a970_f81bde74",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64bce26_c0d34533",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Elaborate on why you want to do this before a seek operation.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fa828b_43829d9f",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "ThreadChecker?",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd38ae3b_a90ad478",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "Ditto?",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f375c8e1_f8e8e826",
+        "filename": "media/filters/pipeline_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "No such variable, presumably you mean pending_audio/pending_video.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f82601_b19d4783",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-03T00:59:18Z",
+      "side": 1,
+      "message": "For these and others we might need to make sure the callback is returned at least. There\u0027s no code currently preventing track changes from coming to these renderers I think. I.e. they may not get called now because we only disable video tracks on non-remote renderers, but via Blink these calls pass straight through I think.",
+      "revId": "3a576ce8ff28d4074c26895410f78fe7c436baba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
