@@ -22,6 +22,30 @@
       "revId": "b9a3bccd306283e3434bea9d8a975c878d6fef11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55124f9_75edc9e6",
+        "filename": "chrome/installer/linux/debian/additional_deps",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2018-02-03T00:42:50Z",
+      "side": 1,
+      "message": "Done\n\nBlank lines were not supported, so I updated the parser.",
+      "parentUuid": "d14246e4_f72f4882",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 59
+      },
+      "revId": "b9a3bccd306283e3434bea9d8a975c878d6fef11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
