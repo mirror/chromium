@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de2f5c3_f1e22cbc",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-03T02:02:16Z",
+      "side": 1,
+      "message": "No need to add an attribute on cr-policy-pref-indicator itself. Instead,\n\n:host([policy-indicator-end]) cr-policy-pref-indicator {\n  order: 1;\n}",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3291c48c_e1e6fb2f",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-03T02:02:16Z",
+      "side": 1,
+      "message": "Not necessary per previous comment.",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 56
+      },
+      "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4df9caa_1b91c628",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-03T02:02:16Z",
+      "side": 1,
+      "message": "This Polymer property definition is not correct. Can\u0027t give it a value in a single line, please see https://www.polymer-project.org/1.0/docs/devguide/properties.\n\nThe correct definition would be as follows:\n\npolicyIndicatorEnd: {\n  type: Boolean,\n  value: false,\n  reflectToAttribute: true,\n},\n\nBut this is also not needed, as you don\u0027t need to use |policyIndicatorEnd| in a binding anymore, per the comments on the other file.",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
