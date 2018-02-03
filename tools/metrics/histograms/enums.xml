@@ -17751,6 +17751,7 @@ Called by update_net_error_codes.py.-->
   <int value="2356" label="CSSPaintFunction"/>
   <int value="2357" label="WebkitCrossFade"/>
   <int value="2358" label="DisablePictureInPictureAttribute"/>
+  <int value="2359" label="CertificateTransparencyNonCompliantResource"/>
 </enum>
 
 <enum name="FeedbackSource">
