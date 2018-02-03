@@ -39,6 +39,7 @@ class Insets;
 namespace ui  {
 class AXSystemCaretWin;
 class InputMethod;
+class PlatformHook;
 class TextInputClient;
 class ViewProp;
 namespace win {
@@ -190,6 +191,10 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   void SetCapture();
   void ReleaseCapture();
   bool HasCapture() const;
+
+  // TODO(joedow): Allow reservation of specific keys.
+  void ReserveKeys();
+  void ClearReservedKeys();
 
   FullscreenHandler* fullscreen_handler() { return fullscreen_handler_.get(); }
 
@@ -606,6 +611,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   void DestroyAXSystemCaret();
 
   HWNDMessageHandlerDelegate* delegate_;
+
+  // Used to capture key events when KeyboardLock is active.
+  std::unique_ptr<ui::PlatformHook> platform_hook_;
 
   std::unique_ptr<FullscreenHandler> fullscreen_handler_;
 

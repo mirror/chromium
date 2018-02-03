@@ -29,6 +29,7 @@
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_client.h"
 #include "ui/base/ime/text_input_type.h"
+#include "ui/base/platform_hook/platform_hook.h"
 #include "ui/base/ui_base_features.h"
 #include "ui/base/view_prop.h"
 #include "ui/base/win/direct_manipulation.h"
@@ -345,6 +346,9 @@ long HWNDMessageHandler::last_touch_or_pen_message_time_ = 0;
 HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate)
     : msg_handled_(FALSE),
       delegate_(delegate),
+      platform_hook_(ui::PlatformHook::Create(
+          base::BindRepeating(&HWNDMessageHandlerDelegate::HandleKeyEvent,
+                              base::Unretained(delegate_)))),
       fullscreen_handler_(new FullscreenHandler),
       waiting_for_close_now_(false),
       use_system_default_icon_(false),
@@ -377,6 +381,7 @@ HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate)
 HWNDMessageHandler::~HWNDMessageHandler() {
   DCHECK(delegate_->GetHWNDMessageDelegateInputMethod());
   delegate_->GetHWNDMessageDelegateInputMethod()->RemoveObserver(this);
+  platform_hook_.reset();
   delegate_ = NULL;
   // Prevent calls back into this class via WNDPROC now that we've been
   // destroyed.
@@ -798,6 +803,14 @@ void HWNDMessageHandler::ReleaseCapture() {
 
 bool HWNDMessageHandler::HasCapture() const {
   return ::GetCapture() == hwnd();
+}
+
+void HWNDMessageHandler::ReserveKeys() {
+  platform_hook_->Register();
+}
+
+void HWNDMessageHandler::ClearReservedKeys() {
+  platform_hook_->Unregister();
 }
 
 void HWNDMessageHandler::SetVisibilityChangedAnimationsEnabled(bool enabled) {
