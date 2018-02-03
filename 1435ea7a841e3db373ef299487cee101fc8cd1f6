@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "357a04a8_01072b06",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-03T15:01:49Z",
+      "side": 1,
+      "message": "It looks like app_list_demo isn\u0027t built on any bots and doesn\u0027t compile (at least in my local build, with target_os\u003d\"chromeos\"). Should we just delete it?",
+      "revId": "1435ea7a841e3db373ef299487cee101fc8cd1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
