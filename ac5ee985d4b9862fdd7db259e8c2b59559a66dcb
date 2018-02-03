@@ -34,6 +34,24 @@
       "revId": "ac5ee985d4b9862fdd7db259e8c2b59559a66dcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ae14cac_498e8fab",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-03T02:24:25Z",
+      "side": 1,
+      "message": "Thanks. That\u0027s what I was missing. This is a bad situation as the generate draft feature did not get fully disabled. So it\u0027s doing a lot of work to generate draft pages here. The browser stores it all, but will never actually use it. :(",
+      "parentUuid": "2215e0ff_bcca0cc1",
+      "revId": "ac5ee985d4b9862fdd7db259e8c2b59559a66dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
