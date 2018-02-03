@@ -22,6 +22,30 @@
       "revId": "d49d93fc1818e8bbe44e4a8b8d497a60619995b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9d7a36_48ec4fcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-03T02:43:12Z",
+      "side": 1,
+      "message": "Yeah, I think this needs to be non-binary also. I\u0027d s/This excludes binary/This change excludes non-binary/",
+      "parentUuid": "26e53441_f01d338d",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "d49d93fc1818e8bbe44e4a8b8d497a60619995b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
