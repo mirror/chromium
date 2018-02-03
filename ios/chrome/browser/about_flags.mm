@@ -240,6 +240,9 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kContextMenuElementPostMessageDescription,
      flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(web::features::kContextMenuElementPostMessage)},
+    {"feedback-kit-v2", flag_descriptions::kFeedbackKitV2Name,
+     flag_descriptions::kFeedbackKitV2Description, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(web::features::kContextMenuElementPostMessage)},
 };
 
 // Add all switches from experimental flags to |command_line|.
