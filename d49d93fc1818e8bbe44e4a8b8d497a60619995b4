@@ -46,6 +46,30 @@
       "revId": "d49d93fc1818e8bbe44e4a8b8d497a60619995b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483501f7_558a1c1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-03T02:44:03Z",
+      "side": 1,
+      "message": "Changed in PS2.",
+      "parentUuid": "5f9d7a36_48ec4fcf",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "d49d93fc1818e8bbe44e4a8b8d497a60619995b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
