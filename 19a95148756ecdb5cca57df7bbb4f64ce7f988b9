@@ -85,6 +85,23 @@
       "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780430cb_61400efd",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-03T01:49:03Z",
+      "side": 1,
+      "message": "https://wicg.github.io/construct-stylesheets/#dom-cssstylesheet-cssstylesheet",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
