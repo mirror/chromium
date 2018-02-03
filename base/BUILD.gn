@@ -1040,6 +1040,9 @@ jumbo_component("base") {
     "value_iterators.h",
     "values.cc",
     "values.h",
+    "variant.cc",
+    "variant.h",
+    "variant_type_ops.h",
     "version.cc",
     "version.h",
     "vlog.cc",
@@ -1131,7 +1134,19 @@ jumbo_component("base") {
       "base_paths_posix.h",
       "base_paths_win.cc",
       "base_paths_win.h",
+
+      # Promises trigger an internal compiler error in clang with nacl.
+      # TODO(alexclarke): Figure out why and file a bug.
       "posix/unix_domain_socket.cc",
+      "promise/abstract_promise.cc",
+      "promise/abstract_promise.h",
+      "promise/all_promise_executor.cc",
+      "promise/all_promise_executor.h",
+      "promise/promise.h",
+      "promise/promise_executors.cc",
+      "promise/promise_executors.h",
+      "promise/race_promise_executor.cc",
+      "promise/race_promise_executor.h",
     ]
 
     if (is_linux) {
@@ -2230,6 +2245,7 @@ test("base_unittests") {
     "process/process_unittest.cc",
     "process/process_util_unittest.cc",
     "profiler/stack_sampling_profiler_unittest.cc",
+    "promise/promise_unittest.cc",
     "rand_util_unittest.cc",
     "run_loop_unittest.cc",
     "safe_numerics_unittest.cc",
@@ -2351,6 +2367,7 @@ test("base_unittests") {
     "unguessable_token_unittest.cc",
     "value_iterators_unittest.cc",
     "values_unittest.cc",
+    "variant_unittest.cc",
     "version_unittest.cc",
     "vlog_unittest.cc",
     "win/com_init_check_hook_unittest.cc",
