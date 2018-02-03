@@ -17,12 +17,10 @@ SDK.TargetManager = class extends Common.Object {
     /** @type {!Map<function(new:SDK.SDKModel, !SDK.Target), !Array<!SDK.SDKModelObserver>>} */
     this._modelObservers = new Map();
     this._isSuspended = false;
+    /** @type {?function(!SDK.Target):?SDK.ChildTargetManagerBase} */
+    this._childTargetManagerFactory = null;
     /** @type {!Map<!SDK.Target, !SDK.ChildTargetManagerBase>} */
     this._childTargetManagers = new Map();
-    /** @type {!Protocol.InspectorBackend.Connection} */
-    this._mainConnection;
-    /** @type {function()} */
-    this._webSocketConnectionLostCallback;
   }
 
   /**
@@ -207,6 +205,13 @@ SDK.TargetManager = class extends Common.Object {
   }
 
   /**
+   * @param {function(!SDK.Target):?SDK.ChildTargetManagerBase} factory
+   */
+  setChildTargetManagerFactory(factory) {
+    this._childTargetManagerFactory = factory;
+  }
+
+  /**
    * @param {string} id
    * @param {string} name
    * @param {number} capabilitiesMask
@@ -218,10 +223,9 @@ SDK.TargetManager = class extends Common.Object {
     var target = new SDK.Target(this, id, name, capabilitiesMask, connectionFactory, parentTarget, this._isSuspended);
     target.createModels(new Set(this._modelObservers.keys()));
     if (target.hasTargetCapability()) {
-      if (Runtime.queryParam('nodeFrontend'))
-        this._childTargetManagers.set(target, new SDK.NodeChildTargetManager(this, target));
-      else
-        this._childTargetManagers.set(target, new SDK.BrowserChildTargetManager(this, target));
+      var factory = this._childTargetManagerFactory ? this._childTargetManagerFactory(target) : null;
+      if (factory)
+        this._childTargetManagers.set(target, factory);
     }
     this._targets.push(target);
 
@@ -315,82 +319,6 @@ SDK.TargetManager = class extends Common.Object {
   mainTarget() {
     return this._targets[0] || null;
   }
-
-  /**
-   * @param {function()} webSocketConnectionLostCallback
-   */
-  connectToMainTarget(webSocketConnectionLostCallback) {
-    this._webSocketConnectionLostCallback = webSocketConnectionLostCallback;
-    this._connectAndCreateMainTarget();
-  }
-
-  _connectAndCreateMainTarget() {
-    if (Runtime.queryParam('nodeFrontend'))
-      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSFromFrontend);
-    else if (Runtime.queryParam('v8only'))
-      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSDirectly);
-
-    var target = this.createTarget(
-        'main', Common.UIString('Main'), this._capabilitiesForMainTarget(), this._createMainConnection.bind(this),
-        null);
-
-    if (Runtime.queryParam('nodeFrontend'))
-      target.setInspectedURL('Node.js');
-    else if (target.hasTargetCapability())
-      target.targetAgent().setRemoteLocations([{host: 'localhost', port: 9229}]);
-
-    if (target.hasJSCapability())
-      target.runtimeAgent().runIfWaitingForDebugger();
-  }
-
-  /**
-   * @return {number}
-   */
-  _capabilitiesForMainTarget() {
-    if (Runtime.queryParam('nodeFrontend'))
-      return SDK.Target.Capability.Target;
-
-    if (Runtime.queryParam('isSharedWorker')) {
-      return SDK.Target.Capability.Browser | SDK.Target.Capability.Inspector | SDK.Target.Capability.Log |
-          SDK.Target.Capability.Network | SDK.Target.Capability.Target;
-    }
-
-    if (Runtime.queryParam('v8only'))
-      return SDK.Target.Capability.JS;
-
-    return SDK.Target.Capability.Browser | SDK.Target.Capability.DOM | SDK.Target.Capability.DeviceEmulation |
-        SDK.Target.Capability.Emulation | SDK.Target.Capability.Input | SDK.Target.Capability.Inspector |
-        SDK.Target.Capability.JS | SDK.Target.Capability.Log | SDK.Target.Capability.Network |
-        SDK.Target.Capability.ScreenCapture | SDK.Target.Capability.Security | SDK.Target.Capability.Target |
-        SDK.Target.Capability.Tracing;
-  }
-
-  /**
-   * @param {!Protocol.InspectorBackend.Connection.Params} params
-   * @return {!Protocol.InspectorBackend.Connection}
-   */
-  _createMainConnection(params) {
-    var wsParam = Runtime.queryParam('ws');
-    var wssParam = Runtime.queryParam('wss');
-    if (wsParam || wssParam) {
-      var ws = wsParam ? `ws://${wsParam}` : `wss://${wssParam}`;
-      this._mainConnection = new SDK.WebSocketConnection(ws, this._webSocketConnectionLostCallback, params);
-    } else if (InspectorFrontendHost.isHostedMode()) {
-      this._mainConnection = new SDK.StubConnection(params);
-    } else {
-      this._mainConnection = new SDK.MainConnection(params);
-    }
-    return this._mainConnection;
-  }
-
-  /**
-   * @param {function(string)} onMessage
-   * @return {!Promise<!Protocol.InspectorBackend.Connection>}
-   */
-  interceptMainConnection(onMessage) {
-    var params = {onMessage: onMessage, onDisconnect: this._connectAndCreateMainTarget.bind(this)};
-    return this._mainConnection.disconnect().then(this._createMainConnection.bind(this, params));
-  }
 };
 
 /**
@@ -398,12 +326,11 @@ SDK.TargetManager = class extends Common.Object {
  */
 SDK.ChildTargetManagerBase = class {
   /**
-   * @param {!SDK.TargetManager} targetManager
    * @param {!SDK.Target} parentTarget
    */
-  constructor(targetManager, parentTarget) {
-    this._targetManager = targetManager;
+  constructor(parentTarget) {
     this._parentTarget = parentTarget;
+    this._targetManager = parentTarget.targetManager();
     this._targetAgent = parentTarget.targetAgent();
     /** @type {!Map<string, !Protocol.Target.TargetInfo>} */
     this._targetInfos = new Map();
@@ -541,166 +468,6 @@ SDK.ChildTargetManagerBase = class {
     var connection = new SDK.ChildConnection(agent, sessionId, params);
     this._childConnections.set(sessionId, connection);
     return connection;
-  }
-};
-
-/**
- * @implements {Protocol.TargetDispatcher}
- */
-SDK.BrowserChildTargetManager = class extends SDK.ChildTargetManagerBase {
-  /**
-   * @param {!SDK.TargetManager} targetManager
-   * @param {!SDK.Target} parentTarget
-   */
-  constructor(targetManager, parentTarget) {
-    super(targetManager, parentTarget);
-    this.targetAgent().invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
-  }
-
-  /**
-   * @override
-   * @return {!Promise}
-   */
-  suspend() {
-    return this.targetAgent().invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
-  }
-
-  /**
-   * @override
-   * @return {!Promise}
-   */
-  resume() {
-    return this.targetAgent().invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
-  }
-
-  /**
-   * @override
-   * @param {!Protocol.Target.TargetInfo} targetInfo
-   * @return {string}
-   */
-  targetName(targetInfo) {
-    if (targetInfo.type !== 'iframe') {
-      var parsedURL = targetInfo.url.asParsedURL();
-      return parsedURL ? parsedURL.lastPathComponentWithFragment() :
-                         '#' + (++SDK.BrowserChildTargetManager._lastAnonymousTargetId);
-    }
-    return super.targetName(targetInfo);
-  }
-
-  /**
-   * @override
-   * @param {!Protocol.Target.TargetInfo} targetInfo
-   * @return {number}
-   */
-  targetCapabilities(targetInfo) {
-    if (targetInfo.type === 'worker')
-      return SDK.Target.Capability.JS | SDK.Target.Capability.Log | SDK.Target.Capability.Network;
-
-
-    if (targetInfo.type === 'service_worker')
-      return SDK.Target.Capability.Log | SDK.Target.Capability.Network | SDK.Target.Capability.Target;
-
-
-    if (targetInfo.type === 'iframe') {
-      return SDK.Target.Capability.Browser | SDK.Target.Capability.DOM | SDK.Target.Capability.JS |
-          SDK.Target.Capability.Log | SDK.Target.Capability.Network | SDK.Target.Capability.Target |
-          SDK.Target.Capability.Tracing | SDK.Target.Capability.Emulation | SDK.Target.Capability.Input;
-    }
-    return 0;
-  }
-
-  /**
-   * @override
-   * @param {!SDK.Target} target
-   * @param {boolean} waitingForDebugger
-   */
-  didAttachToTarget(target, waitingForDebugger) {
-    // Only pause the new worker if debugging SW - we are going through the pause on start checkbox.
-    if (!target.parentTarget().parentTarget() && Runtime.queryParam('isSharedWorker') && waitingForDebugger) {
-      var debuggerModel = target.model(SDK.DebuggerModel);
-      if (debuggerModel)
-        debuggerModel.pause();
-    }
-    target.runtimeAgent().runIfWaitingForDebugger();
-  }
-};
-
-SDK.BrowserChildTargetManager._lastAnonymousTargetId = 0;
-
-/**
- * @implements {Protocol.TargetDispatcher}
- */
-SDK.NodeChildTargetManager = class extends SDK.ChildTargetManagerBase {
-  /**
-   * @param {!SDK.TargetManager} targetManager
-   * @param {!SDK.Target} parentTarget
-   */
-  constructor(targetManager, parentTarget) {
-    super(targetManager, parentTarget);
-    InspectorFrontendHost.setDevicesUpdatesEnabled(true);
-    InspectorFrontendHost.events.addEventListener(
-        InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
-  }
-
-  /**
-   * @param {!Common.Event} event
-   */
-  _devicesDiscoveryConfigChanged(event) {
-    var config = /** @type {!Adb.Config} */ (event.data);
-    var locations = [];
-    for (var address of config.networkDiscoveryConfig) {
-      var parts = address.split(':');
-      var port = parseInt(parts[1], 10);
-      if (parts[0] && port)
-        locations.push({host: parts[0], port: port});
-    }
-    this.targetAgent().setRemoteLocations(locations);
-  }
-
-  /**
-   * @override
-   */
-  dispose() {
-    InspectorFrontendHost.events.removeEventListener(
-        InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
-    super.dispose();
-  }
-
-  /**
-   * @override
-   * @param {!Protocol.Target.TargetInfo} targetInfo
-   */
-  targetCreated(targetInfo) {
-    super.targetCreated(targetInfo);
-    if (targetInfo.type === 'node' && !targetInfo.attached)
-      this.targetAgent().attachToTarget(targetInfo.targetId);
-  }
-
-  /**
-   * @override
-   * @param {!Protocol.Target.TargetInfo} targetInfo
-   * @return {string}
-   */
-  targetName(targetInfo) {
-    return Common.UIString('Node.js: %s', targetInfo.url);
-  }
-
-  /**
-   * @override
-   * @param {!Protocol.Target.TargetInfo} targetInfo
-   * @return {number}
-   */
-  targetCapabilities(targetInfo) {
-    return SDK.Target.Capability.JS;
-  }
-
-  /**
-   * @override
-   * @param {!SDK.Target} target
-   * @param {boolean} waitingForDebugger
-   */
-  didAttachToTarget(target, waitingForDebugger) {
-    target.runtimeAgent().runIfWaitingForDebugger();
   }
 };
 
