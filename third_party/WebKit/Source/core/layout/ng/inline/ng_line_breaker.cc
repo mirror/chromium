@@ -7,6 +7,7 @@
 #include "core/layout/ng/inline/ng_bidi_paragraph.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_text_fragment_builder.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
@@ -81,6 +82,22 @@ inline NGInlineItemResult* NGLineBreaker::AddItem(
     const NGInlineItem& item,
     NGInlineItemResults* item_results) {
   return AddItem(item, item.EndOffset(), item_results);
+}
+
+void NGLineBreaker::SetLineEndFragment(
+    scoped_refptr<NGPhysicalTextFragment> fragment,
+    NGLineInfo* line_info) {
+  bool is_horizontal =
+      IsHorizontalWritingMode(constraint_space_.GetWritingMode());
+  if (line_info->LineEndFragment()) {
+    const NGPhysicalSize& size = line_info->LineEndFragment()->Size();
+    line_.position -= is_horizontal ? size.width : size.height;
+  }
+  if (fragment) {
+    const NGPhysicalSize& size = fragment->Size();
+    line_.position += is_horizontal ? size.width : size.height;
+  }
+  line_info->SetLineEndFragment(std::move(fragment));
 }
 
 inline void NGLineBreaker::ComputeCanBreakAfter(
@@ -378,7 +395,7 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
       breaker.ShapeLine(item_result->start_offset, available_width, &result);
   DCHECK_GT(shape_result->NumCharacters(), 0u);
   if (result.is_hyphenated) {
-    AppendHyphen(*item.Style(), line_info);
+    AppendHyphen(item, line_info);
     // TODO(kojii): Implement when adding a hyphen caused overflow.
     // crbug.com/714962: Should be removed when switched to NGPaint.
     item_result->text_end_effect = NGTextEndEffect::kHyphen;
@@ -454,16 +471,20 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleTrailingSpaces(
   return LineBreakState::kTrailing;
 }
 
-void NGLineBreaker::AppendHyphen(const ComputedStyle& style,
+void NGLineBreaker::AppendHyphen(const NGInlineItem& item,
                                  NGLineInfo* line_info) {
+  DCHECK(item.Style());
+  const ComputedStyle& style = *item.Style();
   TextDirection direction = style.Direction();
   String hyphen_string = style.HyphenString();
   hyphen_string.Ensure16Bit();
   HarfBuzzShaper shaper(hyphen_string.Characters16(), hyphen_string.length());
   scoped_refptr<ShapeResult> hyphen_result =
       shaper.Shape(&style.GetFont(), direction);
-  line_.position += hyphen_result->SnappedWidth();
-  line_info->SetLineEndShapeResult(std::move(hyphen_result), &style);
+  NGTextFragmentBuilder builder(node_, constraint_space_.GetWritingMode());
+  builder.SetText(item.GetLayoutObject(), hyphen_string, &style,
+                  std::move(hyphen_result));
+  SetLineEndFragment(builder.ToTextFragment(), line_info);
 }
 
 // Measure control items; new lines and tab, that are similar to text, affect
@@ -830,10 +851,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleOverflow(
           // If this is the last item, adjust states to accomodate the change.
           line_.position =
               available_width + next_width_to_rewind + item_result->inline_size;
-          if (line_info->LineEndShapeResult()) {
-            line_.position -= line_info->LineEndShapeResult()->SnappedWidth();
-            line_info->SetLineEndShapeResult(nullptr, nullptr);
-          }
+          if (line_info->LineEndFragment())
+            SetLineEndFragment(nullptr, line_info);
 #if DCHECK_IS_ON()
           LayoutUnit position_fast = line_.position;
           UpdatePosition(line_info->Results());
@@ -892,7 +911,7 @@ void NGLineBreaker::Rewind(NGLineInfo* line_info, unsigned new_end) {
   // re-layout atomic inlines.
   item_results->Shrink(new_end);
 
-  line_info->SetLineEndShapeResult(nullptr, nullptr);
+  SetLineEndFragment(nullptr, line_info);
   UpdatePosition(line_info->Results());
 }
 
@@ -919,6 +938,20 @@ void NGLineBreaker::TruncateOverflowingText(NGLineInfo* line_info) {
   HandleOverflow(line_info,
                  line_.AvailableWidth() - shape_result->SnappedWidth());
 
+  // Find the LayoutObject this ellpsis is tied to. This is needed to find
+  // fragments for a DOM node or a LayoutObject. Invalidation, hit testing, and
+  // more operatins rely on ellipsis having the correct LayoutObject.
+  const Vector<NGInlineItem>& items =
+      node_.Items(line_info->UseFirstLineStyle());
+  DCHECK_LE(item_index_, items.size());
+  if (item_index_ == items.size()) {
+    // Give up when nothing can fit.
+    // TODO(kojii): This is likely not correct.
+    return;
+  }
+  LayoutObject* layout_object = items[item_index_].GetLayoutObject();
+  DCHECK(layout_object);
+
   // Restore item_index/offset to before HandleOverflow().
   item_index_ = saved_item_index;
   offset_ = saved_offset;
@@ -937,8 +970,9 @@ void NGLineBreaker::TruncateOverflowingText(NGLineInfo* line_info) {
   // The ellipsis should appear at the logical end of the line.
   // This is stored seprately from other results so that it can be appended
   // after bidi reorder.
-  line_.position += shape_result->SnappedWidth();
-  line_info->SetLineEndShapeResult(std::move(shape_result), style);
+  NGTextFragmentBuilder builder(node_, constraint_space_.GetWritingMode());
+  builder.SetText(layout_object, ellipsis, style, std::move(shape_result));
+  SetLineEndFragment(builder.ToTextFragment(), line_info);
 }
 
 void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
