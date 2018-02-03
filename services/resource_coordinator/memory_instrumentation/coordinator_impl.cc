@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -97,17 +98,6 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
     MemoryDumpLevelOfDetail level_of_detail,
     const std::vector<std::string>& allocator_dump_names,
     const RequestGlobalMemoryDumpCallback& callback) {
-  // Don't allow arbitary processes to obtain VM regions. Only the heap profiler
-  // is allowed to obtain them using the special method on the different
-  // interface.
-  if (level_of_detail ==
-      MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER) {
-    bindings_.ReportBadMessage(
-        "Requested global memory dump using level of detail reserved for the "
-        "heap profiler.");
-    return;
-  }
-
   // This merely strips out the |dump_guid| argument.
   auto adapter = [](const RequestGlobalMemoryDumpCallback& callback,
                     bool success, uint64_t,
@@ -149,17 +139,6 @@ void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
     MemoryDumpType dump_type,
     MemoryDumpLevelOfDetail level_of_detail,
     const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback) {
-  // Don't allow arbitary processes to obtain VM regions. Only the heap profiler
-  // is allowed to obtain them using the special method on its own dedicated
-  // interface (HeapProfilingHelper).
-  if (level_of_detail ==
-      MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER) {
-    bindings_.ReportBadMessage(
-        "Requested global memory dump using level of detail reserved for the "
-        "heap profiler.");
-    return;
-  }
-
   // This merely strips out the |dump_ptr| argument.
   auto adapter =
       [](const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback,
@@ -172,19 +151,27 @@ void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
 }
 
 void CoordinatorImpl::GetVmRegionsForHeapProfiler(
+    const std::vector<base::ProcessId>& pids,
     const GetVmRegionsForHeapProfilerCallback& callback) {
-  // This merely strips out the |dump_guid| argument.
-  auto adapter = [](const RequestGlobalMemoryDumpCallback& callback,
-                    bool success, uint64_t dump_guid,
-                    mojom::GlobalMemoryDumpPtr global_memory_dump) {
-    callback.Run(success, std::move(global_memory_dump));
-  };
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  in_progress_vm_region_requests_.emplace_back(++next_dump_id_, callback);
 
-  QueuedRequest::Args args(
-      MemoryDumpType::EXPLICITLY_TRIGGERED,
-      MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER, {},
-      false /* add_to_trace */, base::kNullProcessId);
-  RequestGlobalMemoryDumpInternal(args, base::BindRepeating(adapter, callback));
+  std::vector<QueuedRequestDispatcher::ClientInfo> clients;
+  for (const auto& kv : clients_) {
+    auto client_identity = kv.second->identity;
+    const base::ProcessId pid = GetProcessIdForClientIdentity(client_identity);
+    if (std::find(pids.begin(), pids.end(), pid) != pids.end()) {
+      clients.emplace_back(kv.second->client.get(), pid,
+                           kv.second->process_type);
+    }
+  }
+
+  QueuedVmRegionRequest* request = &in_progress_vm_region_requests_.back();
+  auto os_callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpForVMRegions,
+                                base::Unretained(this), request->dump_guid);
+  QueuedRequestDispatcher::SetUpAndDispatch(request, clients, os_callback);
+  FinalizeVmRegionDumpIfAllManagersReplied(
+      --in_progress_vm_region_requests_.end());
 }
 
 void CoordinatorImpl::RegisterClientProcess(
@@ -222,6 +209,17 @@ void CoordinatorImpl::UnregisterClientProcess(
     }
     FinalizeGlobalMemoryDumpIfAllManagersReplied();
   }
+
+  for (QueuedVmRegionRequest& request : in_progress_vm_region_requests_) {
+    auto it = request.pending_responses.begin();
+    while (it != request.pending_responses.end()) {
+      auto current = it++;
+      if (*it == client_process) {
+        request.pending_responses.erase(current);
+      }
+    }
+  }
+
   size_t num_deleted = clients_.erase(client_process);
   DCHECK(num_deleted == 1);
 }
@@ -382,6 +380,43 @@ void CoordinatorImpl::OnOSMemoryDumpResponse(uint64_t dump_guid,
   }
 
   FinalizeGlobalMemoryDumpIfAllManagersReplied();
+}
+
+void CoordinatorImpl::OnOSMemoryDumpForVMRegions(uint64_t dump_guid,
+                                                 mojom::ClientProcess* client,
+                                                 bool success,
+                                                 OSMemDumpMap os_dumps) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  auto request_it = GetQueuedVmRegionRequestForDumpGuid(dump_guid);
+  DCHECK(request_it != in_progress_vm_region_requests_.end());
+
+  auto it = request_it->pending_responses.find(client);
+  DCHECK(it != request_it->pending_responses.end());
+  request_it->pending_responses.erase(it);
+  request_it->responses[client].os_dumps = std::move(os_dumps);
+
+  FinalizeVmRegionDumpIfAllManagersReplied(request_it);
+}
+
+std::list<QueuedVmRegionRequest>::iterator
+CoordinatorImpl::GetQueuedVmRegionRequestForDumpGuid(uint64_t dump_guid) {
+  return std::find_if(in_progress_vm_region_requests_.begin(),
+                      in_progress_vm_region_requests_.end(),
+                      [dump_guid](const QueuedVmRegionRequest& request) {
+                        return request.dump_guid == dump_guid;
+                      });
+}
+
+void CoordinatorImpl::FinalizeVmRegionDumpIfAllManagersReplied(
+    std::list<QueuedVmRegionRequest>::iterator request_it) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  if (request_it->pending_responses.empty()) {
+    QueuedRequestDispatcher::VmRegions results =
+        QueuedRequestDispatcher::Finalize(&*request_it);
+    request_it->callback.Run(std::move(results));
+    in_progress_vm_region_requests_.erase(request_it);
+  }
 }
 
 void CoordinatorImpl::RemovePendingResponse(
