@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef291296_58ad24c6",
+        "filename": "content/common/p2p_socket_type.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-02-03T13:58:02Z",
+      "side": 1,
+      "message": "Before relanding and presumably updating the dependencies, can you check with the webrtc team (e.g. webrtc-eng@) if this dependency is OK?\n\nThe reason I\u0027m asking is that this header is a base header in webrtc, and not considered a part of the api.",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "065f3687ccddb36d0a8ddc5367526488dd348bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
