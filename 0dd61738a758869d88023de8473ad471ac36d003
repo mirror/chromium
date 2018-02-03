@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "19480f0d_3a93634d",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-03T06:56:15Z",
+      "side": 1,
+      "message": "Ah sorry. Usually I would say that it should be documented in the header—but of course it\u0027s already there. My apologies.",
+      "parentUuid": "5de4cda2_76645846",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1c4d8f_71657944",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 14
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I\u0027m not sure how to elaborate this. SubmitSingleFrame gets called when we received a frame and we are not yet rendering, which means we are trying to submit the cover image to a video usually (PaintSingleFrame). I\u0027m not sure what more can be said.",
       "parentUuid": "4d1c4d8f_71657944",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b154e5_8a3268a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-03T06:56:15Z",
+      "side": 1,
+      "message": "What you just said would make an excellent comment for adding to DidReceiveFrame. \u003d)",
+      "parentUuid": "63c361c1_89dd4d30",
       "revId": "0dd61738a758869d88023de8473ad471ac36d003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Done. Let me know if there is more things I should add. I will go back in a future CL and update according to your recommendations. Let me know if I am also missing the mark on your inquiries.",
       "parentUuid": "726e5cbd_36d7e338",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3981b113_ee06d6a0",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-03T06:56:15Z",
+      "side": 1,
+      "message": "Thanks! This helps a lot already.",
+      "parentUuid": "70cfc6d4_23975375",
       "revId": "0dd61738a758869d88023de8473ad471ac36d003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
