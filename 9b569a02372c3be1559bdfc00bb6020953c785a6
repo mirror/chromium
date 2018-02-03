@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "45931499_ad509258",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-03T00:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c028c1_7b940fe5",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 74
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a0cb63_5a109385",
         "filename": "device/ctap/ctap_hid_message.h",
         "patchSetId": 4
@@ -517,6 +541,30 @@
       "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb71833_4a4f5dc6",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-03T00:40:53Z",
+      "side": 1,
+      "message": "Used base::circular_deque has type for packets_ and deleted begin() / end() functions. I don\u0027t think implicit type conversion from base::queue to base::circular_deque is allowed . Please let me know if I\u0027m missing anything!",
+      "parentUuid": "b672f7dc_4d4e2a2d",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1143,6 +1191,30 @@
       "side": 1,
       "message": "Ack, this makes sense. Create methods make sense if the operation can fail, e.g. here if invalid serialized data is specified. In the case where you don\u0027t have to do any parsing and simply set internal fields a constructor is the best choice.",
       "parentUuid": "7540d536_27b371af",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cf20d7a_e6077ef9",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-03T00:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4068c64a_2b5f1ddb",
       "range": {
         "startLine": 61,
         "startChar": 44,
