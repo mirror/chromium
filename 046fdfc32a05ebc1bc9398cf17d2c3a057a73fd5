@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "025e453a_c795e02e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-03T00:59:10Z",
+      "side": 1,
+      "message": "Yes, verified on device. Because later |OnReadyToSetWallpaper| will request the first wallpaper (either ShowUserWallpaper or ShowSigninWallpaper, both will make sure device policy wallpaper is correctly set.)\n\n(I prefer to replace SetDeviceWallpaperPolicyEnforced because it will directly set the wallpaper from here, before |OnReadyToSetWallpaper| is reached from |OnLocalStatePrefServiceInitialized|. Although this is OK because device policy wallpaper doesn\u0027t need local state, I think it\u0027s better to make the behavior consistent.)",
+      "parentUuid": "b04bf4ff_268888fc",
+      "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc87acb9_2c84c6c7",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-03T00:43:15Z",
       "side": 1,
       "message": "Can it move to WallpaperPolicyHandler?",
+      "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3474a05_8ca7e1ff",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-03T00:59:10Z",
+      "side": 1,
+      "message": "Yes.. but not sure if we want that, since this is not a policy? Besides since it will trigger a private function (ShowRegisteredDeviceWallpaper), we have to make it public to WallpaperPolicyHandler..unless we create another public wrapper for it.",
+      "parentUuid": "bc87acb9_2c84c6c7",
       "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
