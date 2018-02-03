@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "6731206c_5d1fadf9",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-03T02:37:48Z",
+      "side": 1,
+      "message": "Could you determine that you needed this from just the presence of the alternate_swarming_dimensions key, and not also need the use_multi_dimension_trigger_script flag?",
+      "parentUuid": "f94d59b5_17af2bf2",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada2934e_e3fddb53",
         "filename": "testing/buildbot/generate_buildbot_json.py",
         "patchSetId": 1
