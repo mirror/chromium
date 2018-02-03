@@ -28,6 +28,16 @@ bool WeakReference::Flag::IsValid() const {
   return is_valid_;
 }
 
+void WeakReference::Flag::DetachFromSequence() {
+  // For compatibility with certain tests, it is important to ignore this call
+  // if it is made from the same thread as we are bound to.
+  if (HasOneRef())
+    sequence_checker_.DetachFromSequence();
+  else
+    DCHECK(sequence_checker_.CalledOnValidSequence())
+        << "Cannot detach from Sequence while WeakPtrs exist.";
+}
+
 WeakReference::Flag::~Flag() = default;
 
 WeakReference::WeakReference() = default;
@@ -63,6 +73,11 @@ void WeakReferenceOwner::Invalidate() {
     flag_->Invalidate();
     flag_ = nullptr;
   }
+}
+
+void WeakReferenceOwner::DetachFromSequence() {
+  if (flag_)
+    flag_->DetachFromSequence();
 }
 
 WeakPtrBase::WeakPtrBase() : ptr_(0) {}
