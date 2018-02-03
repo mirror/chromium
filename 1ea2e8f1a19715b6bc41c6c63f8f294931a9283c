@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "93cd072f_7b9d1134",
+        "filename": "components/variations/service/safe_seed_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-03T02:29:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ddd014e_9e54a944",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "1ea2e8f1a19715b6bc41c6c63f8f294931a9283c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cb9f3e3_d6fb735d",
         "filename": "components/variations/service/safe_seed_manager.cc",
         "patchSetId": 1
@@ -120,6 +144,24 @@
       "side": 1,
       "message": "Maybe we can leave this part off initially and start a conversation with the networking team on their thoughts on this? Do you want to reach out?",
       "parentUuid": "4e9541ed_25f6af9d",
+      "revId": "1ea2e8f1a19715b6bc41c6c63f8f294931a9283c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a21feb_735127d8",
+        "filename": "components/variations/service/safe_seed_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-03T02:29:06Z",
+      "side": 1,
+      "message": "I\u0027ve set this to a high threshold for now (to give a bit of coverage, plus to make this simple to update in the future); and I sent an email to net-dev@chromium.org to ask for people\u0027s thoughts on establishing a more robust metric.  LMK if the temporary high threshold LGTY \u003d)",
+      "parentUuid": "c09f02f4_5f5595c1",
       "revId": "1ea2e8f1a19715b6bc41c6c63f8f294931a9283c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
