@@ -24,9 +24,14 @@ class PublicKeyCredentialRPEntity {
   PublicKeyCredentialRPEntity& operator=(PublicKeyCredentialRPEntity&& other);
   ~PublicKeyCredentialRPEntity();
 
+  cbor::CBORValue ConvertToCBOR() const;
+
   PublicKeyCredentialRPEntity& SetRPName(std::string rp_name);
   PublicKeyCredentialRPEntity& SetRPIconUrl(GURL icon_url);
-  cbor::CBORValue ConvertToCBOR() const;
+
+  const std::string& rp_id() const { return rp_id_; }
+  const base::Optional<std::string>& rp_name() const { return rp_name_; }
+  const base::Optional<GURL>& rp_icon_url() const { return rp_icon_url_; }
 
  private:
   std::string rp_id_;

@@ -6,6 +6,7 @@
 #define DEVICE_CTAP_CTAP_MAKE_CREDENTIAL_REQUEST_PARAM_H_
 
 #include <stdint.h>
+
 #include <string>
 #include <vector>
 
@@ -34,6 +35,12 @@ class CTAPMakeCredentialRequestParam : public CTAPRequestParam {
   ~CTAPMakeCredentialRequestParam() override;
 
   base::Optional<std::vector<uint8_t>> Encode() const override;
+  bool CheckU2fInteropCriteria() const override;
+  std::vector<uint8_t> GetU2FApplicationParameter() const override;
+  std::vector<std::vector<uint8_t>> GetU2FRegisteredKeysParameter()
+      const override;
+  std::vector<uint8_t> GetU2FChallengeParameter() const override;
+
   CTAPMakeCredentialRequestParam& SetUserVerificationRequired(
       bool user_verfication_required);
   CTAPMakeCredentialRequestParam& SetResidentKey(bool resident_key);
