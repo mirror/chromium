@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e9cd2a21_9c937614",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-03T01:23:58Z",
+      "side": 1,
+      "message": "Agreed. Sorry for the incorrect suggestion.",
+      "parentUuid": "287c317c_fdb62db0",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a82207_80f1d688",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 4
@@ -384,6 +402,24 @@
       "revId": "23306c859614368763550ccde2338f5104d0c5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36fd2de_18e9a2c5",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-03T01:23:58Z",
+      "side": 1,
+      "message": "The current resolution works for me. Thank you!",
+      "parentUuid": "4b05ace0_98577e91",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
