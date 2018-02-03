@@ -109,6 +109,15 @@ class AX_EXPORT AXEventGenerator : public AXTreeDelegate {
   void AddEvent(ui::AXNode* node, Event event);
 
  protected:
+  // Callbacks on a relation source when a target changes.
+  virtual void OnRelationTargetChanged(AXTree* tree,
+                                       ax::mojom::IntAttribute relation_attr,
+                                       AXNode* source_node) {}
+  virtual void OnRelationTargetChanged(
+      AXTree* tree,
+      ax::mojom::IntListAttribute relation_attr,
+      AXNode* source_node) {}
+
   // AXTreeDelegate overrides.
   void OnNodeDataWillChange(AXTree* tree,
                             const AXNodeData& old_node_data,
@@ -169,6 +178,7 @@ class AX_EXPORT AXEventGenerator : public AXTreeDelegate {
  private:
   void FireLiveRegionEvents(AXNode* node);
   void FireActiveDescendantEvents();
+  void FireRelationSourceEvents(AXTree* tree, AXNode* target_node);
 
   AXTree* tree_ = nullptr;  // Not owned.
   std::map<AXNode*, std::set<Event>> tree_events_;
