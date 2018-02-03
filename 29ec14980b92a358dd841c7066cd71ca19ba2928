@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38d663f0_cd3fa8c7",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-03T00:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "380b7424_d893995a",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc9b387d_0192e450",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "599f06e7_38a88061",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-03T00:33:49Z",
+      "side": 1,
+      "message": "Right, deleted.",
+      "parentUuid": "dc9b387d_0192e450",
+      "range": {
+        "startLine": 28,
+        "startChar": 67,
+        "endLine": 28,
+        "endChar": 76
+      },
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b2c981_e3ef15f9",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d9b368_5ade6f2b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-03T00:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70b2c981_e3ef15f9",
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "c8aa11de_fd1d64fb",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-03T00:33:49Z",
+      "side": 1,
+      "message": "This should be okay? Different hit-test region list (that we use in SubmitCompositorFrame()) still have different FSID. We can have several hit-test regions inside the list for the same FSID?",
+      "parentUuid": "0ce5c94c_c7aaf830",
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7e0eba8_e83c7d6b",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2018-02-02T22:53:58Z",
       "side": 1,
       "message": "These tests would be more realistic if only one of the CFSS, the one with FrameSinkId(kDisplayClientId, 0) had is_root\u003dtrue. The rest shouldn\u0027t be roots, which reflects reality. Also FrameSinkId(kDisplayClientId, 0) should always be the starting point for aggregation.",
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a40784_5cbfbd92",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-03T00:33:49Z",
+      "side": 1,
+      "message": "Done, only support() is root CFSS. Updated ExceedLimits so now FrameSinkId(kDisplayClientId, 0) is where we start for aggregation for all tests.",
+      "parentUuid": "b7e0eba8_e83c7d6b",
       "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
