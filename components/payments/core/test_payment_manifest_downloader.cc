@@ -14,7 +14,7 @@ namespace payments {
 
 TestDownloader::TestDownloader(
     const scoped_refptr<net::URLRequestContextGetter>& context)
-    : impl_(context) {}
+    : PaymentManifestDownloader(context) {}
 
 TestDownloader::~TestDownloader() {}
 
@@ -41,7 +41,15 @@ void TestDownloader::DownloadPaymentMethodManifest(
     }
   }
 
-  impl_.DownloadPaymentMethodManifest(actual_url, std::move(callback));
+  PaymentManifestDownloader::DownloadPaymentMethodManifest(actual_url,
+                                                           std::move(callback));
+}
+
+void TestDownloader::DownloadWebAppManifest(
+    const GURL& url,
+    PaymentManifestDownloadCallback callback) {
+  // Returns empty string to indicate failed to download the web app manifest.
+  std::move(callback).Run(std::string());
 }
 
 }  // namespace payments
