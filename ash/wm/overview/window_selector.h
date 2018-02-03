@@ -96,9 +96,7 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
 
   // Called to show or hide the split view overview overlay. This will do
   // nothing if split view is not enabled. |event_location| is used to reparent
-  // |split_view_overview_overlays_|'s widget, if necessary. Optional
-  // |phantom_bounds| should be passed if the indicator's state is supposed to
-  // display a phantom window.
+  // |split_view_overview_overlays_|'s widget, if necessary.
   void SetSplitViewOverviewOverlayIndicatorState(
       IndicatorState indicator_state,
       const gfx::Point& event_location,

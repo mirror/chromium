@@ -173,7 +173,8 @@ void OverviewWindowDragController::UpdateOverlayAndWindowGrid(
   }
 
   // Show the cannot snap ui on the split view overview overlay if the window
-  // cannot be snapped, otherwise show the drag ui.
+  // cannot be snapped, otherwise show the drag ui only while the phantom
+  // window is hidden.
   if (snap_position_ == SplitViewController::NONE ||
       snap_position_ != last_snap_position) {
     if (snap_position_ == SplitViewController::NONE) {
@@ -208,15 +209,15 @@ bool OverviewWindowDragController::ShouldUpdateOverlayOrSnap(
   if (snap_position == SplitViewController::NONE) {
     // If the event started in a snap region, but has since moved out set
     // |initial_event_location_| to |event_location| which is guarenteed to not
-    // be in a snap region so that the overlay is shown correctly and the snap
-    // mechanism works normally for the rest of the drag.
+    // be in a snap region so that the phantom window or snap mechanism works
+    // normally for the rest of the drag.
     initial_event_location_ = base::nullopt;
     return true;
   }
 
-  // The overlay can update or the item can snap even if the drag events
-  // are in the snap region, if the event has travelled past the threshold in
-  // the direction of the attempted snap region.
+  // The phantom window can update or the item can snap even if the drag events
+  // are in the snap region, if the event has traveled past the threshold in the
+  // direction of the attempted snap region.
   const gfx::Vector2d distance = event_location - *initial_event_location_;
   // Check the x-axis distance for landscape, y-axis distance for portrait.
   int distance_scalar =
