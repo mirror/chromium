@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35fc86ef_a47543a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Please flesh out the commit message with more details describing what\u0027s going on in this CL. The new methods, new delegate, etc.",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49621745_1d8f0e77",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Should we add a default NOTIMPLEMENTED option here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072f679c_9e905724",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Is this a transfer of ownership?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e4b574_337fc787",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "This is non-owning, is that right? Close() destroys the Widget?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2525357b_505b4d58",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Is this destroyed? Should we set dialog_widget_ to nullptr?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f6f079_331bd9df",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Maybe this is easier to read?\nif (size_ \u003d\u003d gfx::Size(width, height))\n  return;",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef6322e_18a452b0",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Early return might be preferable here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c12c997_d55f129d",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "nit const. Also please add a comment.",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03d3593_b3359999",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Please add a bug and/or name",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8844f0d3_63886d5e",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Is comment necessary?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b47a3e_8a95d9d3",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Why const?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4933dec_ddce5d01",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "nit: Early return seems preferable?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629b8678_ccd0d932",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "How does ownership work here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2816cd40_95a1835e",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Is GaiaDialogDelegate destroyed here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7709b08a_2de73f6b",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Is null check not necessary here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8b60d7_f4ea84e3",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47f68bf_3a9a8edc",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Add name and/or bug",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1967f4e5_2af745fc",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-03T02:14:56Z",
+      "side": 1,
+      "message": "Can you change this to jdufault or yourself?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
