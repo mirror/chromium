@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04bf4ff_268888fc",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:43:15Z",
+      "side": 1,
+      "message": "What if there is an old existing device wallpaper, but no new device wallpaper change? Do we get the correct wallpaper?",
+      "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc87acb9_2c84c6c7",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:43:15Z",
+      "side": 1,
+      "message": "Can it move to WallpaperPolicyHandler?",
+      "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
