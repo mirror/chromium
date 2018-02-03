@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b1612e_955eb36b",
+        "filename": "net/base/upload_data_stream.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-02-03T19:51:26Z",
+      "side": 1,
+      "message": "Optional: I would keep using ResetAndReturn() here.  The general convention is that std::move leaves the argument in a valid valid but unspecified state.  I understand that OnceCallback happens to be reset when moved from, but according to convention, std::move() does not express it, you need to be familiar with the implementation to know it.  On the other hand, ResetAndReturn() explicitly tells the reader that |callback_| will in fact be reset.",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 13
+      },
+      "revId": "eb9d7aadeb834a131d9abc3cdc0f9e66cc702a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
