@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9902ad_f08c6402",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "Just curious, what makes them cross-site?  I would have guessed that they\u0027re both https://127.0.0.1 with different ports, which seems like it would be same-site.",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9444dbe2_82a73bd3",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "nit: Drop \"a\"",
+      "range": {
+        "startLine": 397,
+        "startChar": 39,
+        "endLine": 397,
+        "endChar": 40
+      },
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25410e2_00a10afb",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "nit: Move comment above the test declaration (line 406).",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05072629_457bc522",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "Any cross-origin URL, or any cross-origin URL ending with data_from_service_worker?",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc8bb80_1360a7ad",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "Is this related to the ServiceWorker case?  Or just an independent fix to the UMA metrics?",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71e99e9_08bce866",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "Sanity check: Would a compromised renderer have any ability to lie about this value to make us allow actual responses from the network through, or is it tracked accurately in the browser process?\n\n(We don\u0027t currently have a full story for compromised renderers, but we\u0027d want a TODO if the renderer can trick us here.  Might be worth having a comment on either way.)",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eddca9_b541d324",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "falken@: I seem to remember there was talk of changes to ServiceWorker so that the responses it generates wouldn\u0027t need to go through the network stack but could be delivered directly.  Would that eliminate the need for this check in the future?  If so, can we put a TODO with a bug number?  (Sorry if I\u0027m misunderstanding how this works.)",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e9fd69_3b19248b",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-03T00:01:12Z",
+      "side": 1,
+      "message": "Is this actually for the second request?  I see it\u0027s checking for whether previousResponse is defined.",
+      "range": {
+        "startLine": 31,
+        "startChar": 34,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
