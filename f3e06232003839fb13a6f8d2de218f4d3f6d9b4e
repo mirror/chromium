@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "9b7ee018_1079e385",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 74
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-03T14:26:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d212989_7ccd52e3",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f716f4e_57a751e2",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 74
@@ -455,6 +479,24 @@
       "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "075b4dc8_0479dacb",
+        "filename": "notification_helper/trace_util.h",
+        "patchSetId": 74
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-03T14:26:53Z",
+      "side": 1,
+      "message": "please define Trace() as a noop for NDEBUG builds so that each callsite doesn\u0027t need \"#if !defined(NDEBUG)\".",
+      "parentUuid": "e3a5cdc2_634ad749",
+      "revId": "f3e06232003839fb13a6f8d2de218f4d3f6d9b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

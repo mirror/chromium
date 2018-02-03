@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e48f0533_4c971b41",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 79
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-03T14:26:53Z",
+      "side": 1,
+      "message": "not needed -- remove",
+      "revId": "df602f1997215595089c5b08f0349b83df88705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85b0bdb_941ccc29",
+        "filename": "notification_helper/notification_activator.cc",
+        "patchSetId": 79
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-03T14:26:53Z",
+      "side": 1,
+      "message": "remove :-)",
+      "revId": "df602f1997215595089c5b08f0349b83df88705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc62bb47_46406986",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 79
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-03T14:26:53Z",
+      "side": 1,
+      "message": "nit: construct this member with the result of the fn in an initializer list:\n  NotifcationHelperTest()\n      : toast_activator_reg_path_(ConstructToastActivatorRegPath()) {}\n\nand then you can make the member const",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "df602f1997215595089c5b08f0349b83df88705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
