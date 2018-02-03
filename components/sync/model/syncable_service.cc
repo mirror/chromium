@@ -6,7 +6,11 @@
 
 namespace syncer {
 
-SyncableService::~SyncableService() {}
+SyncableService::~SyncableService() {
+  // TODO(https://crbug.com/729716): Fix tests to tear-down the instance on the
+  // correct thread, then remove this.
+  DetachFromSequence();
+}
 
 std::unique_ptr<AttachmentStoreForSync>
 SyncableService::GetAttachmentStoreForSync() {

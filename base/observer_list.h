@@ -219,6 +219,11 @@ class ObserverList
   explicit ObserverList(ObserverListPolicy policy) : policy_(policy) {}
 
   ~ObserverList() {
+    // TODO(https://crbug.com/729716): Work-around for some ObserverList callers
+    // which rely on being able to tear-down on a different thread from the one
+    // on which they iterate/notify |observers_|.
+    this->DetachFromSequence();
+
     if (check_empty) {
       Compact();
       DCHECK(observers_.empty());
