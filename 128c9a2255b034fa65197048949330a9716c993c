@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "1dfca989_9188dc02",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-02-03T03:41:19Z",
+      "side": 1,
+      "message": "Do we need this? The GN target doesn\u0027t currently depend on PSB/PSBImpl, so I don\u0027t understand why it does in this CL.\n\nnit: If we do need this chunk, then let\u0027s declare this directly in the \u0027java_files\u0027 array above, instead of \"+\u003d\" syntax.",
+      "range": {
+        "startLine": 890,
+        "startChar": 0,
+        "endLine": 896,
+        "endChar": 65
+      },
+      "revId": "128c9a2255b034fa65197048949330a9716c993c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fab3533_ff6fcc66",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-02-03T03:41:19Z",
+      "side": 1,
+      "message": "Could we add a comment like the one you added above? Also, mention that we only compile the file because other files in the target depend on it.",
+      "revId": "128c9a2255b034fa65197048949330a9716c993c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3f7bc7_1d6accf2",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-02-03T03:41:19Z",
+      "side": 1,
+      "message": "As I understand, this target\u0027s role is to add the implementation for PSBImpl(upstream) into AOSP WebView. The other target\u0027s role is to compile the PSB abstract class (building PSBImpl is an intermediate step). This isn\u0027t clear from the target names.\n\nCould we rename this target to something like \"platform_service_bridge_upstream_implementation_java\" and add comments explaining the purpose of each target?",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 971,
+        "endChar": 3
+      },
+      "revId": "128c9a2255b034fa65197048949330a9716c993c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13a5f799_87f72c6d",
         "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
         "patchSetId": 3
