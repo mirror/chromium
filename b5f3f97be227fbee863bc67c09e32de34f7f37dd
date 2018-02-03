@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f671e644_d990cfa2",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-03T01:17:22Z",
+      "side": 1,
+      "message": "I\u0027m actually not quite happy how this interface looks, but I\u0027ll look at possibly adding a dedicated method for that if we agree this is the right approach overall.",
+      "revId": "b5f3f97be227fbee863bc67c09e32de34f7f37dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
