@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c78c47e_c7628ab6",
+        "filename": "third_party/WebKit/Source/core/dom/AbortSignal.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-03T00:55:34Z",
+      "side": 1,
+      "message": "Can you make this:\n\nclass CORE_EXPORT AbortSignal ...\n\n(I\u0027ll need that to reference it from Source/modules.)",
+      "revId": "2654439d5d415f785a30e17f050f07adcc1c3e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
