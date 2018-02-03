@@ -328,6 +328,8 @@ void AXEventGenerator::OnAtomicUpdateFinished(
         FireLiveRegionEvents(change.node);
       }
     }
+
+    FireRelationSourceEvents(tree, change.node);
   }
 
   FireActiveDescendantEvents();
@@ -369,6 +371,32 @@ void AXEventGenerator::FireActiveDescendantEvents() {
     }
   }
   active_descendant_changed_.clear();
+}
+
+void AXEventGenerator::FireRelationSourceEvents(AXTree* tree,
+                                                AXNode* target_node) {
+  int32_t target_id = target_node->id();
+  auto callback = [&](const auto entry) {
+    auto attr = entry.first;
+    const auto target_to_sources = entry.second;
+    auto sources_it = target_to_sources.find(target_id);
+    if (sources_it == target_to_sources.end())
+      return;
+
+    auto sources = sources_it->second;
+    std::for_each(sources.begin(), sources.end(), [&](int32_t source_id) {
+      AXNode* source_node = tree->GetFromId(source_id);
+      if (!source_node)
+        return;
+
+      OnTargetRelationChanged(tree, attr, source_node);
+    });
+  };
+
+  std::for_each(tree->int_reverse_relations().begin(),
+                tree->int_reverse_relations().end(), callback);
+  std::for_each(tree->intlist_reverse_relations().begin(),
+                tree->intlist_reverse_relations().end(), callback);
 }
 
 }  // namespace ui
