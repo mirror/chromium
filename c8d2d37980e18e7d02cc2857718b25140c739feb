@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "021e02f4_2dea962f",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Much better comments.  Thank you.  +fuschia, good.  I pinged those developers about this issue, rather than just ignore them in this build as your previous code did, and they responded quickly:\n\n  https://fuchsia-review.googlesource.com/c/zircon/+/115943\n\nwhich is nice: \"If ya don\u0027t ask, ya don\u0027t get.\" One question then (see below) ...",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2cb5ccf_b0083ba9",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "ChromeOS wrapper scripts?  Do you have details about which scripts?  Could you file a bug and add the details there please, and then refer to that bug number xxxxxx here as \"TODO(xxxxxx): figure out ...\"",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89eb7f39_d8c90a72",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "defines \u003d [ ... ]\n\nThe if (android) block below (lines 69-73) should be inside this if block.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecea3165_3c86daf4",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "use deps \u003d [ ... ]",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bee6505_e06cbdb5",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "use sources \u003d [ ... ]",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec9c0b1_3fe9a979",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "104-105: remove these two lines.\n\nYou are not playing fast and loose with the C type system: you\u0027ve mentioned that you\u0027re using the right types in your code, e.g., bool, right? \n\nThe default \"//build/config/compiler:chromium_code\" rule checks for that, so I think we use it to keep the code free of such errors.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5846f2c8_0fcdbe6c",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Why does inflate chunk require arm crc32?",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70442c52_eef5c6cf",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Nah, it tends to confuse the situation more.  Having separate deps +\u003d [] might not be ideal, sure.  But it does tell what each of these contrib/feature needs or does.  When we smush things together, we loose that.\n\ne.g. lines 280-285 below, the feature needs include_dirs, or the feature that subtracts inflate.c, is not really clear to me anymore.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef7cff8_24c06492",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Unrelated change, remove.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f4896b_580a5361",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "An authors line in the middle of the Chromium copyright notice.  If you want to add an authors line, can we please do it outside of the Chromium copyright notice?",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c13e56_e2beb61f",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "nit: space before this line.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b3ca61_76687220",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "android_getCpuFeatures() returns uint64_t IIRC.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7971d0_fa40158f",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "getauxval() returns unsigned long IIRC.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f454e9_89e6567e",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "nit: from the previous review, What is a SoC?",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc02135_e32997b4",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "\"A bit nasty as this are \u0027public\u0027, but\" ...\n\nThe new symbols you defined in this patch should be added to zlib/names.h to avoid that. Please update names.h.\n\nWith that you could move this comment into the change description, and explain why using function calls turned out to be a really bad idea.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2161b7db_5db181b6",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Again: authors line in the middle of the Chromium copyright notice. Also, this code was copied out of a chromium bug entry, right?  The __crc32d idea came from mtklein@ and doubled performance according to the code we created to measure it.  That code was copied into here.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e7d538_5db80208",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "16-18. The was if (buff \u003d\u003d Z_NULL) before.  You noticed that you didn\u0027t need to do that anymore, which was a good observation (because the caller takes care of that now).  This if test caused part of the PNG regression reported earlier in this code review, so bringing it back as if (!len) is not so great.\n\nRemove lines 16-18.  If someone did send len \u003d 0 here, say in a test, the code returns the correct result.  TIP: zlib never sends a len 0 here, so let\u0027s not \"optimize\" for that case, ok?",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848f577a_5fe5a5da",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Move this down to where used, declare and assign it at line 28.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94c1de2_e327b787",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Space before this special line:  I always have to squint here to check it for the infamous off-by-one error: while(--len).",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd233ad_99a8f142",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "return ~c; ?",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a7e661_f2a0758e",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "#include \"contrib/optimizations/arm/arm_features.h\"",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d47170a_9e67d4ad",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "#include \"contrib/optimizations/arm/armv8_crc32.h\"",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6da511_d76c421f",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 25
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:00:44Z",
+      "side": 1,
+      "message": "Comments should be attached to the code they refer to [1]. Please write\n\n  if (!len) /* Assume user is calling crc32(0, NULL, 0); */\n\n[1] If comments get unhinged from what the were referring to, then over time as the code develops, I find that no one understands what the comments are about, anymore, and they become never-read, useless noise in the code base.\n\nIf you are looking to add a comment introducing this code, then maybe something like the following:\n\n    /*\n     * Computes the crc32 using NEON on little endian armv8. Since\n     * this routine can be freely used, check CPU features here.\n     */\n\nI think the new NEON crc32 code in armv8_crc32.c only works on little endian CPU, am I correct?  Wasn\u0027t clear to me when reading the initial patches in the code review, and the change description does not mention it all, sadly.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
