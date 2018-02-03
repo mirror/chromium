@@ -46,6 +46,30 @@
       "revId": "c5beb2b4073c1e7856e43f4f8057b3ef708b38f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9302db_1a743e86",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 10782,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-03T01:15:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6978bd3_807d8752",
+      "range": {
+        "startLine": 10782,
+        "startChar": 50,
+        "endLine": 10782,
+        "endChar": 71
+      },
+      "revId": "c5beb2b4073c1e7856e43f4f8057b3ef708b38f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
