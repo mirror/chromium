@@ -4,11 +4,18 @@
 
 #include "components/download/public/background_service/test/mock_client.h"
 
+#include "storage/browser/blob/blob_data_handle.h"
+
 namespace download {
 namespace test {
 
 MockClient::MockClient() = default;
 MockClient::~MockClient() = default;
+
+void MockClient::GetUploadData(const std::string& guid,
+                               GetUploadDataCallback callback) {
+  std::move(callback).Run(nullptr);
+}
 
 }  // namespace test
 }  // namespace download

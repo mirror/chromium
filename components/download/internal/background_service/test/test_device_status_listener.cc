@@ -25,6 +25,7 @@ TestDeviceStatusListener::TestDeviceStatusListener()
     : DeviceStatusListener(base::TimeDelta(), /* startup_delay */
                            base::TimeDelta(), /* online_delay */
                            std::make_unique<FakeBatteryStatusListener>()),
+      delay_counter_(0),
       weak_ptr_factory_(this) {}
 
 TestDeviceStatusListener::~TestDeviceStatusListener() {
@@ -48,13 +49,22 @@ void TestDeviceStatusListener::Start(DeviceStatusListener::Observer* observer) {
   listening_ = true;
   observer_ = observer;
 
-  // Simulates the delay after start up.
+  // Simulates the delay after start up, we have to post the task twice.
+  delay_counter_ = 2;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&TestDeviceStatusListener::StartAfterDelay,
-                            weak_ptr_factory_.GetWeakPtr()));
+      FROM_HERE, base::BindOnce(&TestDeviceStatusListener::StartAfterDelay,
+                                weak_ptr_factory_.GetWeakPtr()));
 }
 
 void TestDeviceStatusListener::StartAfterDelay() {
+  delay_counter_--;
+  if (delay_counter_ > 0) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&TestDeviceStatusListener::StartAfterDelay,
+                                  weak_ptr_factory_.GetWeakPtr()));
+    return;
+  }
+
   is_valid_state_ = true;
   NotifyObserver(status_);
 }

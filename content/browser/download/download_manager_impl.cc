@@ -140,6 +140,8 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginDownload(
     base::WeakPtr<DownloadManagerImpl> download_manager) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  params->set_blob_storage_context_getter(
+      base::BindOnce(&BlobStorageContextGetter, resource_context));
   std::unique_ptr<net::URLRequest> url_request =
       DownloadRequestCore::CreateRequestOnIOThread(download_id, params.get());
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle =

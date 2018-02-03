@@ -119,6 +119,8 @@ std::string CompletionTypeToHistogramSuffix(CompletionType type) {
       return "OutOfRetries";
     case CompletionType::OUT_OF_RESUMPTIONS:
       return "OutOfResumptions";
+    case CompletionType::UPLOAD_TIMEOUT:
+      return "UploadTimeout";
     case CompletionType::COUNT:
       NOTREACHED();
   }
@@ -373,6 +375,14 @@ void LogEntryResumptionCount(uint32_t resume_count) {
 
 void LogEntryRetryCount(uint32_t retry_count) {
   UMA_HISTOGRAM_COUNTS_100("Download.Service.Entry.RetryCount", retry_count);
+}
+
+void LogUploadSuspended(UploadSuspendReason reason) {
+  // TODO(shaktisahu): Log.
+}
+
+void LogUploadData(const std::string& method, uint64_t blob_size) {
+  // TODO(shaktisahu): Log.
 }
 
 }  // namespace stats

@@ -4,6 +4,8 @@
 
 #include "components/download/public/background_service/test/empty_client.h"
 
+#include "storage/browser/blob/blob_data_handle.h"
+
 namespace download {
 namespace test {
 
@@ -31,6 +33,11 @@ void EmptyClient::OnDownloadSucceeded(const std::string& guid,
 bool EmptyClient::CanServiceRemoveDownloadedFile(const std::string& guid,
                                                  bool force_delete) {
   return true;
+}
+
+void EmptyClient::GetUploadData(const std::string& guid,
+                                GetUploadDataCallback callback) {
+  NOTREACHED();
 }
 
 }  // namespace test

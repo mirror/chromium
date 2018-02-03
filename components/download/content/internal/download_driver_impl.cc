@@ -16,6 +16,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace download {
 
@@ -139,6 +140,7 @@ void DownloadDriverImpl::Start(
     const RequestParams& request_params,
     const std::string& guid,
     const base::FilePath& file_path,
+    std::unique_ptr<storage::BlobDataHandle> blob_handle,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
@@ -169,6 +171,13 @@ void DownloadDriverImpl::Start(
     download_url_params->set_fetch_error_body(true);
   download_url_params->set_download_source(
       content::DownloadSource::INTERNAL_API);
+  if (blob_handle.get()) {
+    scoped_refptr<network::ResourceRequestBody> request_body =
+        new network::ResourceRequestBody;
+    request_body->AppendBlob(blob_handle->uuid());
+    download_url_params->set_post_body(request_body);
+    upload_blob_handles_[guid] = std::move(blob_handle);
+  }
 
   download_manager_->DownloadUrl(std::move(download_url_params));
 }
@@ -268,6 +277,8 @@ void DownloadDriverImpl::OnDownloadRemoved(content::DownloadManager* manager,
                                            content::DownloadItem* download) {
   guid_to_remove_.erase(download->GetGuid());
   // |download| is about to be deleted.
+
+  upload_blob_handles_.erase(download->GetGuid());
 }
 
 void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,

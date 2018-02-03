@@ -8,14 +8,22 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/files/file_path.h"
 #include "net/http/http_response_headers.h"
 #include "url/gurl.h"
+
+namespace storage {
+class BlobDataHandle;
+}  // namespace storage
 
 namespace download {
 
 struct CompletionInfo;
 struct DownloadMetaData;
+
+using GetUploadDataCallback =
+    base::OnceCallback<void(std::unique_ptr<storage::BlobDataHandle>)>;
 
 // The Client interface required by any feature that wants to start a download
 // through the DownloadService.  Should be registered immediately at startup
@@ -116,6 +124,11 @@ class Client {
   // the outcome of this function.
   virtual bool CanServiceRemoveDownloadedFile(const std::string& guid,
                                               bool force_delete) = 0;
+
+  // Called by the service to ask the client to provide the upload data.
+  // This will be called only if the download params has |has_upload_data| true.
+  virtual void GetUploadData(const std::string& guid,
+                             GetUploadDataCallback callback) = 0;
 };
 
 }  // namespace download

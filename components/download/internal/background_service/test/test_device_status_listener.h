@@ -30,6 +30,7 @@ class TestDeviceStatusListener : public DeviceStatusListener {
   void Stop() override;
 
  private:
+  int delay_counter_;
   void StartAfterDelay();
 
   base::WeakPtrFactory<TestDeviceStatusListener> weak_ptr_factory_;

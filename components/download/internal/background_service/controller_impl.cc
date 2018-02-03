@@ -29,6 +29,7 @@
 #include "components/download/public/background_service/download_metadata.h"
 #include "components/download/public/background_service/navigation_monitor.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace download {
 namespace {
@@ -895,6 +896,9 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
   bool active = driver_entry.has_value() &&
                 driver_entry->state == DriverEntry::State::IN_PROGRESS;
   bool want_active = entry->state == Entry::State::ACTIVE;
+  bool pending_upload =
+      entry->has_upload_data &&
+      pending_uploads_.find(entry->guid) != pending_uploads_.end();
 
   bool blocked_by_criteria =
       !device_status_listener_->CurrentDeviceStatus()
@@ -919,12 +923,13 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
 
     if (driver_entry.has_value())
       driver_->Pause(entry->guid);
-  } else {
+  } else if (!pending_upload) {
     if (!active) {
       // If we aren't active, resuming is going to cost something.  Track
       // against throttle limits.
 
-      if (driver_entry.has_value() && driver_entry->can_resume) {
+      if (driver_entry.has_value() && driver_entry->can_resume &&
+          !entry->has_upload_data) {
         // This is, as far as we can tell, a free resumption.
         entry->resumption_count++;
         model_->Update(*entry);
@@ -952,17 +957,93 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
       }
     }
 
-    if (driver_entry.has_value()) {
+    if (driver_entry.has_value() && !entry->has_upload_data) {
       driver_->Resume(entry->guid);
     } else {
       stats::LogEntryEvent(stats::DownloadEvent::START);
-      driver_->Start(
-          entry->request_params, entry->guid, entry->target_file_path,
-          net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
+      PrepareToStartDownload(entry);
     }
   }
 
   log_sink_->OnServiceDownloadChanged(entry->guid);
+}
+
+void ControllerImpl::PrepareToStartDownload(Entry* entry) {
+  if (!entry->has_upload_data) {
+    driver_->Start(entry->request_params, entry->guid, entry->target_file_path,
+                   nullptr,
+                   net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
+    return;
+  }
+
+  // This is an upload, check if we already have recevied data from the client.
+  auto iter = upload_blob_handles_.find(entry->guid);
+  if (iter != upload_blob_handles_.end()) {
+    RunOnDownloadReadyToStart(entry->guid, std::move(iter->second));
+    upload_blob_handles_.erase(iter);
+    return;
+  }
+
+  pending_uploads_.insert(entry->guid);
+  auto* client = clients_->GetClient(entry->client);
+  DCHECK(client);
+  client->GetUploadData(
+      entry->guid, base::BindOnce(&ControllerImpl::RunOnDownloadReadyToStart,
+                                  weak_ptr_factory_.GetWeakPtr(), entry->guid));
+
+  cancel_uploads_callback_.Reset(base::BindRepeating(
+      &ControllerImpl::KillTimedOutUploads, weak_ptr_factory_.GetWeakPtr()));
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, cancel_uploads_callback_.callback(),
+      config_->pending_upload_timeout_delay);
+}
+
+void ControllerImpl::RunOnDownloadReadyToStart(
+    const std::string& guid,
+    std::unique_ptr<storage::BlobDataHandle> handle) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&ControllerImpl::OnDownloadReadyToStart,
+                     weak_ptr_factory_.GetWeakPtr(), guid, std::move(handle)));
+}
+
+void ControllerImpl::OnDownloadReadyToStart(
+    const std::string& guid,
+    std::unique_ptr<storage::BlobDataHandle> handle) {
+  pending_uploads_.erase(guid);
+
+  auto* entry = model_->Get(guid);
+  if (!entry) {
+    stats::LogUploadSuspended(stats::UploadSuspendReason::ENTRY_NOT_EXIST);
+    return;
+  }
+
+  bool is_paused = entry->state == Entry::State::PAUSED;
+  bool blocked_by_criteria =
+      !device_status_listener_->CurrentDeviceStatus()
+           .MeetsCondition(entry->scheduling_params,
+                           config_->download_battery_percentage)
+           .MeetsRequirements();
+
+  if (is_paused || blocked_by_criteria) {
+    stats::LogUploadSuspended(blocked_by_criteria
+                                  ? stats::UploadSuspendReason::CRITERIA_NOT_MET
+                                  : stats::UploadSuspendReason::ENTRY_PAUSED);
+    upload_blob_handles_[guid] = std::move(handle);
+    return;
+  }
+
+  if (handle)
+    stats::LogUploadData(entry->request_params.method, handle->size());
+
+  driver_->Start(entry->request_params, entry->guid, entry->target_file_path,
+                 std::move(handle),
+                 net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
+}
+
+void ControllerImpl::KillTimedOutUploads() {
+  for (const std::string& guid : std::move(pending_uploads_))
+    HandleCompleteDownload(CompletionType::UPLOAD_TIMEOUT, guid);
 }
 
 void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {

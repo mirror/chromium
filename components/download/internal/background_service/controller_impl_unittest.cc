@@ -31,6 +31,7 @@
 #include "components/download/public/background_service/test/empty_client.h"
 #include "components/download/public/background_service/test/mock_client.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "storage/browser/blob/blob_data_handle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -1129,7 +1130,7 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   EXPECT_CALL(*client_,
               OnDownloadFailed(entry2.guid, Client::FailureReason::ABORTED))
       .Times(1);
-  driver_->Start(RequestParams(), entry2.guid, entry2.target_file_path,
+  driver_->Start(RequestParams(), entry2.guid, entry2.target_file_path, nullptr,
                  TRAFFIC_ANNOTATION_FOR_TESTS);
 
   // Test FailureReason::NETWORK.
@@ -1139,6 +1140,100 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   driver_->NotifyDownloadFailed(dentry3, FailureType::NOT_RECOVERABLE);
 
   task_runner_->RunUntilIdle();
+}
+
+TEST_F(DownloadServiceControllerImplTest, UploadSuccessFailureCancelTest) {
+  // entry1 - successful, entry2 - cancel, entry3 - network failure
+  Entry entry1 = test::BuildBasicEntry(Entry::State::ACTIVE);
+  Entry entry2 = test::BuildBasicEntry(Entry::State::ACTIVE);
+  Entry entry3 = test::BuildBasicEntry(Entry::State::ACTIVE);
+  entry1.has_upload_data = true;
+  entry2.has_upload_data = true;
+  entry3.has_upload_data = true;
+  std::vector<Entry> entries = {entry1, entry2, entry3};
+
+  DriverEntry dentry3 =
+      BuildDriverEntry(entry3, DriverEntry::State::IN_PROGRESS);
+  driver_->AddTestData(std::vector<DriverEntry>{dentry3});
+
+  EXPECT_CALL(*client_, OnServiceInitialized(false, _)).Times(1);
+
+  // Set up the Controller.
+  device_status_listener_->SetDeviceStatus(
+      DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
+
+  InitializeController();
+  store_->TriggerInit(true, std::make_unique<std::vector<Entry>>(entries));
+  file_monitor_->TriggerInit(true);
+  driver_->MakeReady();
+  task_runner_->RunUntilIdle();
+
+  // Test successful upload.
+  EXPECT_CALL(*client_, OnDownloadSucceeded(entry1.guid, _)).Times(1);
+  DriverEntry dentry1 = BuildDriverEntry(entry1, DriverEntry::State::COMPLETE);
+  driver_->NotifyDownloadSucceeded(dentry1);
+
+  // Test CancelDownload.
+  EXPECT_CALL(*client_,
+              OnDownloadFailed(entry2.guid, Client::FailureReason::CANCELLED))
+      .Times(1);
+  controller_->CancelDownload(entry2.guid);
+
+  // Test network failure.
+  EXPECT_CALL(*client_,
+              OnDownloadFailed(entry3.guid, Client::FailureReason::NETWORK))
+      .Times(1);
+  driver_->NotifyDownloadFailed(dentry3, FailureType::NOT_RECOVERABLE);
+
+  task_runner_->RunUntilIdle();
+
+  EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry1.guid)->state);
+  EXPECT_EQ(nullptr, model_->Get(entry2.guid));
+  EXPECT_EQ(nullptr, model_->Get(entry3.guid));
+}
+
+TEST_F(DownloadServiceControllerImplTest, UploadPauseResume) {
+  Entry entry = test::BuildBasicEntry(Entry::State::ACTIVE);
+  entry.has_upload_data = true;
+  std::vector<Entry> entries = {entry};
+
+  EXPECT_CALL(*client_, OnServiceInitialized(false, _)).Times(1);
+
+  // Set up the Controller.
+  device_status_listener_->SetDeviceStatus(
+      DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
+
+  InitializeController();
+  store_->TriggerInit(true, std::make_unique<std::vector<Entry>>(entries));
+  file_monitor_->TriggerInit(true);
+  driver_->MakeReady();
+  task_runner_->RunUntilIdle();
+
+  EXPECT_EQ(DriverEntry::State::IN_PROGRESS, driver_->Find(entry.guid)->state);
+  EXPECT_FALSE(driver_->Find(entry.guid)->paused);
+  EXPECT_EQ(Entry::State::ACTIVE, model_->Get(entry.guid)->state);
+
+  controller_->PauseDownload(entry.guid);
+  task_runner_->RunUntilIdle();
+  EXPECT_TRUE(driver_->Find(entry.guid)->paused);
+  EXPECT_EQ(DriverEntry::State::IN_PROGRESS, driver_->Find(entry.guid)->state);
+  EXPECT_EQ(Entry::State::PAUSED, model_->Get(entry.guid)->state);
+
+  controller_->ResumeDownload(entry.guid);
+  task_runner_->RunUntilIdle();
+  EXPECT_FALSE(driver_->Find(entry.guid)->paused);
+  EXPECT_EQ(DriverEntry::State::IN_PROGRESS, driver_->Find(entry.guid)->state);
+  EXPECT_EQ(Entry::State::ACTIVE, model_->Get(entry.guid)->state);
+
+  // Run it till completion.
+  EXPECT_CALL(*client_, OnDownloadSucceeded(entry.guid, _)).Times(1);
+  DriverEntry dentry = BuildDriverEntry(entry, DriverEntry::State::COMPLETE);
+  driver_->NotifyDownloadSucceeded(dentry);
+  task_runner_->RunUntilIdle();
+
+  EXPECT_FALSE(driver_->Find(entry.guid)->paused);
+  EXPECT_EQ(DriverEntry::State::COMPLETE, driver_->Find(entry.guid)->state);
+  EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry.guid)->state);
 }
 
 TEST_F(DownloadServiceControllerImplTest, StartupRecovery) {
@@ -1346,6 +1441,7 @@ TEST_F(DownloadServiceControllerImplTest, ExistingExternalDownload) {
 
   // Simulate a successful external download.
   driver_->NotifyDownloadSucceeded(dentry2);
+  task_runner_->RunUntilIdle();
 
   EXPECT_TRUE(driver_->Find(entry1.guid).has_value());
   EXPECT_FALSE(driver_->Find(entry1.guid).value().paused);
@@ -1391,7 +1487,7 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
 
   // Simulate a newly created external download.
   driver_->Start(RequestParams(), dentry2.guid, dentry2.current_file_path,
-                 TRAFFIC_ANNOTATION_FOR_TESTS);
+                 nullptr, TRAFFIC_ANNOTATION_FOR_TESTS);
 
   EXPECT_TRUE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
@@ -1420,7 +1516,7 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
   // Rebuild the download so we can simulate more.
   dentry2.state = DriverEntry::State::IN_PROGRESS;
   driver_->Start(RequestParams(), dentry2.guid, dentry2.current_file_path,
-                 TRAFFIC_ANNOTATION_FOR_TESTS);
+                 nullptr, TRAFFIC_ANNOTATION_FOR_TESTS);
 
   EXPECT_TRUE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
