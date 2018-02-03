@@ -34,7 +34,9 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/InspectedFrames.h"
 #include "platform/InstanceCounters.h"
-#include "platform/memory_profiler/SamplingNativeHeapProfiler.h"
+#include "platform/SamplingHeapProfiler.h"
+
+using blink::SamplingHeapProfiler;
 
 namespace blink {
 
@@ -50,7 +52,11 @@ using PrepareForLeakDetectionCallback =
 using protocol::Response;
 
 InspectorMemoryAgent::InspectorMemoryAgent(InspectedFrames* inspected_frames)
-    : detector_(nullptr), callback_(nullptr), frames_(inspected_frames) {}
+    : detector_(nullptr),
+      callback_(nullptr),
+
+      profiler_(new SamplingHeapProfiler),
+      frames_(inspected_frames) {}
 
 InspectorMemoryAgent::~InspectorMemoryAgent() = default;
 
@@ -101,11 +107,11 @@ Response InspectorMemoryAgent::startSampling(
       in_sampling_interval.fromMaybe(kDefaultNativeMemorySamplingInterval);
   if (interval <= 0)
     return Response::Error("Invalid sampling rate.");
-  SamplingNativeHeapProfiler::GetInstance()->SetSamplingInterval(interval);
+  profiler_->SetSamplingInterval(interval);
   state_->setInteger(MemoryAgentState::samplingProfileInterval, interval);
   if (in_suppressRandomness.fromMaybe(false))
-    SamplingNativeHeapProfiler::GetInstance()->SuppressRandomnessForTest();
-  profile_id_ = SamplingNativeHeapProfiler::GetInstance()->Start();
+    profiler_->SuppressRandomnessForTest();
+  profile_id_ = profiler_->Start();
   return Response::OK();
 }
 
@@ -115,7 +121,7 @@ Response InspectorMemoryAgent::stopSampling() {
                      &sampling_interval);
   if (!sampling_interval)
     return Response::Error("Sampling profiler is not started.");
-  SamplingNativeHeapProfiler::GetInstance()->Stop();
+  profiler_->Stop();
   state_->setInteger(MemoryAgentState::samplingProfileInterval, 0);
   return Response::OK();
 }
@@ -137,8 +143,8 @@ InspectorMemoryAgent::GetSamplingProfileById(uint32_t id) {
   std::unique_ptr<protocol::Array<protocol::Memory::SamplingProfileNode>>
       samples =
           protocol::Array<protocol::Memory::SamplingProfileNode>::create();
-  std::vector<SamplingNativeHeapProfiler::Sample> raw_samples =
-      SamplingNativeHeapProfiler::GetInstance()->GetSamples(id);
+  std::vector<SamplingHeapProfiler::Sample> raw_samples =
+      profiler_->GetSamples(id);
 
   for (auto& it : raw_samples) {
     std::unique_ptr<protocol::Array<protocol::String>> stack =

@@ -41,6 +41,7 @@
 namespace blink {
 
 class InspectedFrames;
+class SamplingHeapProfiler;
 
 class CORE_EXPORT InspectorMemoryAgent final
     : public InspectorBaseAgent<protocol::Memory::Metainfo>,
@@ -82,6 +83,7 @@ class CORE_EXPORT InspectorMemoryAgent final
 
   std::unique_ptr<BlinkLeakDetector> detector_;
   std::unique_ptr<PrepareForLeakDetectionCallback> callback_;
+  std::unique_ptr<SamplingHeapProfiler> profiler_;
   Member<InspectedFrames> frames_;
   uint32_t profile_id_ = 0;
   HashMap<void*, std::string> symbols_cache_;

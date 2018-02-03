@@ -8,6 +8,7 @@ include_rules = [
     "+base/feature_list.h",
     "+base/files",
     "+base/guid.h",
+    "+base/heap_profiler",
     "+base/json",
     "+base/location.h",
     "+base/logging.h",
