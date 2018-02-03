@@ -54,15 +54,11 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   void BidiReorder();
 
-  void PlaceText(scoped_refptr<const ShapeResult>,
-                 scoped_refptr<const ComputedStyle>,
+  void PlaceText(scoped_refptr<NGPhysicalFragment>,
                  UBiDiLevel bidi_level,
-                 NGInlineBoxState*,
-                 NGTextFragmentBuilder*);
-  void PlaceGeneratedContent(scoped_refptr<const ShapeResult>,
-                             scoped_refptr<const ComputedStyle>,
-                             NGInlineBoxState*,
-                             NGTextFragmentBuilder*);
+                 NGInlineBoxState*);
+  void PlaceGeneratedContent(scoped_refptr<NGPhysicalFragment>,
+                             NGInlineBoxState*);
   NGInlineBoxState* PlaceAtomicInline(const NGInlineItem&,
                                       NGInlineItemResult*,
                                       const NGLineInfo&);
