@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "018bf745_5cb6b3d5",
+        "filename": "base/test/test_support_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-03T02:11:04Z",
+      "side": 1,
+      "message": "This looks like the same problem that we have for Mac - in general resources packaged with Chrome using platform-specific resource systems aren\u0027t just files in a particular directory.\nUnder Mac we have base::PathForFrameworkBundleResource(name), which takes a resource name and asks the OS for the path to that resource.\n\nUnder Android it looks like we want a similar API, albeit one that just returns a handle to some shared-memory.\n\nShould we be building an abstraction for named-asset loading across platforms, instead? :-/",
+      "parentUuid": "ab939b48_5d2bdc11",
+      "revId": "e09b0bf5a30ef36f96c2792d45b0018133ef57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "400a5f45_f2cd00c9",
         "filename": "content/shell/app/shell_main_delegate.cc",
         "patchSetId": 11
