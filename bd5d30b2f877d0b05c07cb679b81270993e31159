@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae126a67_bb2de9b1",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-03T04:20:26Z",
+      "side": 1,
+      "message": "Done.\n\n(I tried this approach previously, but likely I made some mistake and it did not work.)",
+      "parentUuid": "9de2f5c3_f1e22cbc",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3291c48c_e1e6fb2f",
         "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b4a58a86_aca2db54",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-03T04:20:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3291c48c_e1e6fb2f",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 56
+      },
+      "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4df9caa_1b91c628",
         "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.js",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36aec816_6ebdd792",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-03T04:20:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4df9caa_1b91c628",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "bd5d30b2f877d0b05c07cb679b81270993e31159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
