@@ -26,11 +26,6 @@ public final class DownloadUpdate {
 
         // Download is pending because another download is currently being downloaded.
         PENDING_ANOTHER_DOWNLOAD,
-
-        // Download is pending due to an unspecified reason.
-        // TODO(cmsy): Remove once implementation for descriptive pending status text for offline
-        // pages is complete.
-        PENDING_REASON_UNKNOWN,
     }
 
     private final ContentId mContentId;

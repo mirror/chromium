@@ -29,7 +29,6 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.BackendProvider.DownloadDelegate;
 import org.chromium.chrome.browser.download.ui.DownloadFilter;
@@ -54,6 +53,7 @@ import org.chromium.components.offline_items_collection.OfflineItem;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.components.offline_items_collection.OfflineItemProgressUnit;
 import org.chromium.components.offline_items_collection.OfflineItemState;
+import org.chromium.components.offline_items_collection.PendingState;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content_public.browser.DownloadState;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -645,7 +645,7 @@ public class DownloadUtils {
             case OfflineItemState.COMPLETE:
                 return context.getString(R.string.download_notification_completed);
             case OfflineItemState.PENDING:
-                return context.getString(R.string.download_notification_pending);
+                return getPendingStatusString(getDownloadUpdatePendingState(item.pendingState));
             case OfflineItemState.PAUSED:
                 return context.getString(R.string.download_notification_paused);
             case OfflineItemState.IN_PROGRESS: // intentional fall through
@@ -664,6 +664,26 @@ public class DownloadUtils {
         }
 
         return DownloadUtils.getStringForDownloadedBytes(context, bytesReceived);
+    }
+
+    /**
+     * Convert from offline_items_collection.PendingState, which is used by OfflineItem, to
+     * DownloadUpdate.PendingState.
+     *
+     * @param pendingState Reason download is pending represented by an int.
+     * @return DownloadUpdate.PendingState Reason download is pending.
+     */
+    public static DownloadUpdate.PendingState getDownloadUpdatePendingState(
+            @PendingState int pendingState) {
+        switch (pendingState) {
+            case PendingState.PENDING_NETWORK:
+                return DownloadUpdate.PendingState.PENDING_NETWORK;
+            case PendingState.PENDING_ANOTHER_DOWNLOAD:
+                return DownloadUpdate.PendingState.PENDING_ANOTHER_DOWNLOAD;
+            case PendingState.NOT_PENDING: // Intentional fallthrough.
+            default:
+                return DownloadUpdate.PendingState.NOT_PENDING;
+        }
     }
 
     /**
@@ -691,7 +711,7 @@ public class DownloadUtils {
             // All pending, non-offline page downloads are by default waiting for network.
             // The other pending reason (i.e. waiting for another download to complete) applies
             // only to offline page requests because offline pages download one at a time.
-            return getPendingStatusString(PendingState.PENDING_NETWORK);
+            return getPendingStatusString(DownloadUpdate.PendingState.PENDING_NETWORK);
         } else if (isDownloadPaused(item)) {
             return context.getString(R.string.download_notification_paused);
         }
@@ -716,7 +736,7 @@ public class DownloadUtils {
      * @param pendingState Reason download is pending.
      * @return String representing the current download status.
      */
-    public static String getPendingStatusString(PendingState pendingState) {
+    public static String getPendingStatusString(DownloadUpdate.PendingState pendingState) {
         Context context = ContextUtils.getApplicationContext();
         // When foreground service restarts and there is no connection to native, use the default
         // pending status. The status will be replaced when connected to native.
@@ -730,7 +750,6 @@ public class DownloadUtils {
                 case PENDING_ANOTHER_DOWNLOAD:
                     return context.getString(
                             R.string.download_notification_pending_another_download);
-                case PENDING_REASON_UNKNOWN: // Intentional fallthrough.
                 default:
                     return context.getString(R.string.download_notification_pending);
             }

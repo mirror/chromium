@@ -20,6 +20,20 @@ import org.chromium.content_public.browser.DownloadState;
  * Class representing the state of a single download.
  */
 public final class DownloadInfo {
+    /**
+     * Used to indicate reason download is pending, if any.
+     */
+    public enum PendingState {
+        // Download is not pending.
+        NOT_PENDING,
+
+        // Download is pending due to no network connection.
+        PENDING_NETWORK,
+
+        // Download is pending because another download is currently being downloaded.
+        PENDING_ANOTHER_DOWNLOAD,
+    }
+
     private final String mUrl;
     private final String mUserAgent;
     private final String mMimeType;
@@ -48,6 +62,7 @@ public final class DownloadInfo {
     private final boolean mIsOpenable;
     private final boolean mIsTransient;
     private final Bitmap mIcon;
+    private final PendingState mPendingState;
 
     private DownloadInfo(Builder builder) {
         mUrl = builder.mUrl;
@@ -81,6 +96,7 @@ public final class DownloadInfo {
         mIsOpenable = builder.mIsOpenable;
         mIsTransient = builder.mIsTransient;
         mIcon = builder.mIcon;
+        mPendingState = builder.mPendingState;
     }
 
     public String getUrl() {
@@ -190,6 +206,10 @@ public final class DownloadInfo {
         return mIcon;
     }
 
+    public PendingState getPendingState() {
+        return mPendingState;
+    }
+
     /**
      * Helper method to build a {@link DownloadInfo} from an {@link OfflineItem}.
      * @param item The {@link OfflineItem} to mimic.
@@ -235,6 +255,7 @@ public final class DownloadInfo {
                 .setProgress(item.progress)
                 .setTimeRemainingInMillis(item.timeRemainingMs)
                 .setIcon(visuals == null ? null : visuals.icon)
+                .setPendingState(PendingState.values()[item.pendingState])
                 .build();
     }
 
@@ -268,6 +289,7 @@ public final class DownloadInfo {
         private boolean mIsOpenable = true;
         private boolean mIsTransient;
         private Bitmap mIcon;
+        private PendingState mPendingState;
 
         public Builder setUrl(String url) {
             mUrl = url;
@@ -399,6 +421,11 @@ public final class DownloadInfo {
             return this;
         }
 
+        public Builder setPendingState(PendingState pendingState) {
+            mPendingState = pendingState;
+            return this;
+        }
+
         public DownloadInfo build() {
             return new DownloadInfo(this);
         }
@@ -432,7 +459,8 @@ public final class DownloadInfo {
                     .setIsOfflinePage(downloadInfo.isOfflinePage())
                     .setState(downloadInfo.state())
                     .setLastAccessTime(downloadInfo.getLastAccessTime())
-                    .setIcon(downloadInfo.getIcon());
+                    .setIcon(downloadInfo.getIcon())
+                    .setPendingState(downloadInfo.getPendingState());
             return builder;
         }
     }
