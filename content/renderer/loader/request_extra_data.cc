@@ -45,6 +45,8 @@ void RequestExtraData::CopyToResourceRequest(
 
   request->initiated_in_secure_context = initiated_in_secure_context_;
 
+  request->attach_same_site_cookies = attach_same_site_cookies_;
+
   /*
   TODO(jam): if have agreement that alternate solution of having a dummy sink
              in the renderer so that notifications are still received, then undo
