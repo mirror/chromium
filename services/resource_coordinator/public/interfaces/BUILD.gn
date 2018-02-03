@@ -26,6 +26,11 @@ mojom_component("interfaces") {
     "//services/metrics/public/interfaces",
   ]
 
+  enabled_features = []
+  if (is_linux || is_android) {
+    enabled_features += [ "REPORT_PRIVATE_SWAPPED_MEM" ]
+  }
+
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
 }
