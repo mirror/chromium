@@ -14,7 +14,6 @@
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
-#include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/content_constants.h"
 #include "content/renderer/service_worker/service_worker_provider_context.h"
@@ -53,20 +52,6 @@ ServiceWorkerDispatcher::~ServiceWorkerDispatcher() {
     return;
   }
   g_dispatcher_tls.Pointer()->Set(kDeletedServiceWorkerDispatcherMarker);
-}
-
-void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
-  bool handled = true;
-
-  // When you add a new message handler, you should consider adding a similar
-  // handler in ServiceWorkerMessageFilter to release references passed from
-  // the browser process in case we fail to post task to the thread.
-  IPC_BEGIN_MESSAGE_MAP(ServiceWorkerDispatcher, msg)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerStateChanged,
-                        OnServiceWorkerStateChanged)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  DCHECK(handled) << "Unhandled message:" << msg.type();
 }
 
 ServiceWorkerDispatcher*
@@ -112,9 +97,12 @@ ServiceWorkerDispatcher::GetOrCreateServiceWorker(
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId, info->handle_id);
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerVersionId, info->version_id);
 
+  DCHECK(info->request.is_pending());
   WorkerObjectMap::iterator found = service_workers_.find(info->handle_id);
-  if (found != service_workers_.end())
+  if (found != service_workers_.end()) {
+    found->second->BindRequest(std::move(info->request));
     return found->second;
+  }
 
   // WebServiceWorkerImpl constructor calls AddServiceWorker.
   if (WorkerThread::GetCurrentId()) {
@@ -129,19 +117,6 @@ ServiceWorkerDispatcher::GetOrCreateServiceWorker(
 void ServiceWorkerDispatcher::SetIOThreadTaskRunner(
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner) {
   io_thread_task_runner_ = std::move(io_thread_task_runner);
-}
-
-void ServiceWorkerDispatcher::OnServiceWorkerStateChanged(
-    int thread_id,
-    int handle_id,
-    blink::mojom::ServiceWorkerState state) {
-  TRACE_EVENT2("ServiceWorker",
-               "ServiceWorkerDispatcher::OnServiceWorkerStateChanged",
-               "Thread ID", thread_id,
-               "State", static_cast<int>(state));
-  WorkerObjectMap::iterator worker = service_workers_.find(handle_id);
-  if (worker != service_workers_.end())
-    worker->second->OnStateChanged(state);
 }
 
 void ServiceWorkerDispatcher::AddServiceWorker(

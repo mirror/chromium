@@ -8,10 +8,13 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/common/service_worker/service_worker_messages.h"
+#include "content/public/renderer/worker_thread.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -38,6 +41,44 @@ class ServiceWorkerHandleImpl : public blink::WebServiceWorker::Handle {
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerHandleImpl);
 };
 
+// This lives on the IO thread with a strong binding on a Mojo connection of
+// blink::mojom::ServiceWorkerObject, and forwards all received Mojo calls to
+// the real impl WebServiceWorkerImpl living on a worker thread.
+class WebServiceWorkerImplAdapter : public blink::mojom::ServiceWorkerObject {
+ public:
+  WebServiceWorkerImplAdapter(
+      base::WeakPtr<WebServiceWorkerImpl> worker,
+      scoped_refptr<base::SingleThreadTaskRunner> worker_task_runner)
+      : worker_(worker), worker_task_runner_(std::move(worker_task_runner)) {}
+  ~WebServiceWorkerImplAdapter() override = default;
+
+ private:
+  // Implements blink::mojom::ServiceWorkerObject.
+  void StateChanged(blink::mojom::ServiceWorkerState state) override {
+    worker_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&WebServiceWorkerImpl::StateChanged, worker_, state));
+  }
+
+  base::WeakPtr<WebServiceWorkerImpl> worker_;
+  scoped_refptr<base::SingleThreadTaskRunner> worker_task_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(WebServiceWorkerImplAdapter);
+};
+
+void BindRequestOnIO(
+    base::WeakPtr<WebServiceWorkerImpl> worker,
+    scoped_refptr<base::SingleThreadTaskRunner> worker_task_runner,
+    blink::mojom::ServiceWorkerObjectAssociatedRequest request) {
+  // The Mojo connection of |request| may have been closed.
+  if (!request.is_pending())
+    return;
+  mojo::MakeStrongAssociatedBinding(
+      std::make_unique<WebServiceWorkerImplAdapter>(
+          worker, std::move(worker_task_runner)),
+      std::move(request));
+}
+
 }  // namespace
 
 // static
@@ -46,11 +87,14 @@ WebServiceWorkerImpl::CreateForServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerObjectInfoPtr info,
     ThreadSafeSender* thread_safe_sender,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
+  DCHECK(WorkerThread::GetCurrentId());
   scoped_refptr<WebServiceWorkerImpl> impl =
       new WebServiceWorkerImpl(std::move(info), thread_safe_sender);
   impl->host_for_global_scope_ =
       blink::mojom::ThreadSafeServiceWorkerObjectHostAssociatedPtr::Create(
           std::move(impl->info_->host_ptr_info), io_task_runner);
+  impl->io_task_runner_ = std::move(io_task_runner);
+  impl->BindRequest(std::move(impl->info_->request));
   return impl;
 }
 
@@ -62,12 +106,34 @@ WebServiceWorkerImpl::CreateForServiceWorkerClient(
   scoped_refptr<WebServiceWorkerImpl> impl =
       new WebServiceWorkerImpl(std::move(info), thread_safe_sender);
   impl->host_for_client_.Bind(std::move(impl->info_->host_ptr_info));
+  impl->BindRequest(std::move(impl->info_->request));
   return impl;
 }
 
-void WebServiceWorkerImpl::OnStateChanged(
-    blink::mojom::ServiceWorkerState new_state) {
-  state_ = new_state;
+void WebServiceWorkerImpl::BindRequest(
+    blink::mojom::ServiceWorkerObjectAssociatedRequest request) {
+  // We're in a service worker execution context.
+  if (WorkerThread::GetCurrentId()) {
+    // Because we're trying to establish the Mojo connection for a
+    // Channel-associated interface, we must bind |request| on the main or IO
+    // thread.
+    DCHECK(io_task_runner_);
+    DCHECK(host_for_global_scope_);
+    DCHECK(request.is_pending());
+    io_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&BindRequestOnIO, weak_ptr_factory_.GetWeakPtr(),
+                       creation_task_runner_, std::move(request)));
+    return;
+  }
+  // We're in a service worker client context.
+  binding_.Close();
+  binding_.Bind(std::move(request));
+}
+
+void WebServiceWorkerImpl::StateChanged(
+    blink::mojom::ServiceWorkerState state) {
+  state_ = state;
 
   // TODO(nhiroki): This is a quick fix for http://crbug.com/507110
   DCHECK(proxy_);
@@ -117,10 +183,13 @@ WebServiceWorkerImpl::CreateHandle(scoped_refptr<WebServiceWorkerImpl> worker) {
 WebServiceWorkerImpl::WebServiceWorkerImpl(
     blink::mojom::ServiceWorkerObjectInfoPtr info,
     ThreadSafeSender* thread_safe_sender)
-    : info_(std::move(info)),
+    : binding_(this),
+      creation_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      info_(std::move(info)),
       state_(info_->state),
       thread_safe_sender_(thread_safe_sender),
-      proxy_(nullptr) {
+      proxy_(nullptr),
+      weak_ptr_factory_(this) {
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId, info_->handle_id);
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();

@@ -11,8 +11,10 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorker.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
@@ -38,7 +40,8 @@ class ThreadSafeSender;
 // the corresponding ServiceWorkerHandle doesn't go away in the browser process
 // while the ServiceWorker object is alive.
 class CONTENT_EXPORT WebServiceWorkerImpl
-    : public blink::WebServiceWorker,
+    : public blink::mojom::ServiceWorkerObject,
+      public blink::WebServiceWorker,
       public base::RefCounted<WebServiceWorkerImpl> {
  public:
   // |io_task_runner| is used to bind |host_for_global_scope_| for service
@@ -52,7 +55,10 @@ class CONTENT_EXPORT WebServiceWorkerImpl
       blink::mojom::ServiceWorkerObjectInfoPtr info,
       ThreadSafeSender* thread_safe_sender);
 
-  void OnStateChanged(blink::mojom::ServiceWorkerState new_state);
+  void BindRequest(blink::mojom::ServiceWorkerObjectAssociatedRequest request);
+
+  // Implements blink::mojom::ServiceWorkerObject.
+  void StateChanged(blink::mojom::ServiceWorkerState state) override;
 
   // blink::WebServiceWorker overrides.
   void SetProxy(blink::WebServiceWorkerProxy* proxy) override;
@@ -95,10 +101,29 @@ class CONTENT_EXPORT WebServiceWorkerImpl
   // It is bound and used on the main thread.
   blink::mojom::ServiceWorkerObjectHostAssociatedPtr host_for_client_;
 
+  // |binding_| keeps the Mojo binding to serve its other Mojo endpoint (i.e.
+  // the caller end) held by the content::ServiceWorkerHandle in
+  // the browser process.
+  // This is used only for service worker clients (document, shared worker), is
+  // bound on the main thread. For service worker execution contexts, please see
+  // |BindRequest()| for details.
+  //
+  // TODO(leonhsl): Once we can detach this interface out from the legacy IPC
+  // channel-associated interfaces world, for service worker execution contexts
+  // we should also use this |binding| on the worker thread on which |this|
+  // lives.
+  mojo::AssociatedBinding<blink::mojom::ServiceWorkerObject> binding_;
+  scoped_refptr<base::SingleThreadTaskRunner> creation_task_runner_;
+  // This is valid only for service worker execution contexts, please see
+  // |BindRequest()| for details.
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+
   blink::mojom::ServiceWorkerObjectInfoPtr info_;
   blink::mojom::ServiceWorkerState state_;
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   blink::WebServiceWorkerProxy* proxy_;
+
+  base::WeakPtrFactory<WebServiceWorkerImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(WebServiceWorkerImpl);
 };
