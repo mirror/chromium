@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74da080d_1fd97e73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-03T00:15:55Z",
+      "side": 1,
+      "message": "update? I guess it\u0027s still sorta accurate though..",
+      "revId": "ce79be12a6b5db86c1466170cef0dad5b5d68464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
