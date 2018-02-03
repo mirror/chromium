@@ -118,6 +118,23 @@
     },
     {
       "key": {
+        "uuid": "7273b646_5ee6f72a",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1264032
+      },
+      "writtenOn": "2018-02-03T18:38:17Z",
+      "side": 1,
+      "message": "I still think it is preferable to have an object within the class to store all the callbacks permanently.\n\nYes you will have an extra call \"SetDelegate\" or \"SetClient\" but the advantages are:\n\n1. simply the logic. No need to do std::move. It\u0027s set once and don\u0027t change it.\n2. be consistent with similar classes, like the AudioDecoder and VideoDecoder after the interface converted to V2. In fact I see lots of classes within the folder chromecast/media/cma/pipeline use this methods. The newly added classes |..._decryptor| are noticeably different from the others.\n3. Important: you can add as many callbacks into the \"Delegate\". But this methods, passing the callback via PushBuffer, quickly becomes unmanageable when you have more than one callback functions.\n\nPlease look at the MediaPipelinebackend::AudioDecoder, the conversion from V1 to V2, and see why V1 has 2 places for callback (complete_cb and client), and in V2 complete_cb is merged into |delegate| (|delegate| is what |clent| is, but is renamed under v2)\n\nSo, if we are NOT absolutely certain that we will never need to add any more callback into those classes, the |setDelegate| style is far superior.",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
