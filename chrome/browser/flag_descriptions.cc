@@ -2564,11 +2564,6 @@ const char kEnableBackgroundBlurName[] = "Enable background blur.";
 const char kEnableBackgroundBlurDescription[] =
     "Enables background blur for the Peeking Launcher and Tab Switcher.";
 
-const char kEnableAndroidWallpapersAppName[] = "Android Wallpapers App";
-const char kEnableAndroidWallpapersAppDescription[] =
-    "Enables the Android Wallpapers App as the default Wallpaper App on Chrome "
-    "OS.";
-
 const char kEnableChromevoxArcSupportName[] = "ChromeVox ARC support";
 const char kEnableChromevoxArcSupportDescription[] =
     "Enable ChromeVox screen reader features in ARC";
