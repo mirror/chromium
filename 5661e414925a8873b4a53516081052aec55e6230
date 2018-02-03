@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77777636_060f3e1e",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-03T00:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d765df_c534310d",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "896e3d38_479a043f",
         "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5661e414925a8873b4a53516081052aec55e6230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ab5b54_beed9e43",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-03T00:56:12Z",
+      "side": 1,
+      "message": "For the moment I\u0027m outputting the set of options that the test was run with as well as the error. Produces reasonable output, but we can extend it with named iterations if you\u0027d like.",
+      "parentUuid": "896e3d38_479a043f",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "42265bd9_1c543d36",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-test-utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-03T00:56:12Z",
+      "side": 1,
+      "message": "Because in a scenario where we\u0027re running multiple tests back-to-back the previous session still being active could block the new one (for example, if they were both variants of exclusive sessions). It\u0027s not necessary in cases where there\u0027s only one test, which is why it was omitted from the else statement. (That\u0027s moot now with the new code changes.)\n\nAs for the catch, if you end a session twice it throws an exception, so the catch is there just in case the test explicitly ended the session (there\u0027s a few that need to do that).",
+      "parentUuid": "020badd5_e19bfa4c",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e956ae_65cc7b67",
         "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4fc436d1_6e501231",
+        "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-03T00:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e956ae_65cc7b67",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe11c2ff_36b7b1fc",
         "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2018-02-02T00:39:28Z",
       "side": 1,
       "message": "Can an XRSession be created without a frame? If not, could we cache dpr at creation time or something so we don\u0027t have to worry about this presumably edge case?",
+      "range": {
+        "startLine": 193,
+        "startChar": 25,
+        "endLine": 193,
+        "endChar": 50
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6dd8e1_80c6d292",
+        "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-03T00:56:12Z",
+      "side": 1,
+      "message": "Doesn\u0027t DPR possibly change in realtime on some devices? (Samsung devices with the resolution scalar?)",
+      "parentUuid": "fe11c2ff_36b7b1fc",
       "range": {
         "startLine": 193,
         "startChar": 25,
@@ -137,6 +257,30 @@
       "revId": "5661e414925a8873b4a53516081052aec55e6230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49730bcb_6abc384f",
+        "filename": "third_party/WebKit/Source/modules/xr/XRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-02-03T00:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4f6ae33_da55fc65",
+      "range": {
+        "startLine": 257,
+        "startChar": 16,
+        "endLine": 257,
+        "endChar": 38
+      },
+      "revId": "5661e414925a8873b4a53516081052aec55e6230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
