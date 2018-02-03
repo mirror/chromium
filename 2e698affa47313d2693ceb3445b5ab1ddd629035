@@ -516,6 +516,24 @@
     },
     {
       "key": {
+        "uuid": "555bb6e7_b91f6693",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-03T03:50:54Z",
+      "side": 1,
+      "message": "\u003e Zlib seems to use this format for public headers (e.g. zlib.h, zutil.h) but not for internal ones (e.g. inftrees.h, inffast.h).\n\u003e \n\u003e This CPU feature detection is, at least initially, for internal use *only*. Therefore I don\u0027t see the need to make such a change.\n\nOne day you might be a maintainer, and you\u0027ll quickly tire of reviewing code where everyone is an individual and does as they want.  You will long for consistency.\n\n\u003e Plus, this code is located in the \u0027contrib\u0027 folder. To quote Mark Adler on the subject: \n\u003e \"Something like that I would consider to be a third-party contribution, which would go in the contrib directory of the zlib distribution.\"\n\u003e \n\u003e And: \"Any method of coding is fine, so long as you document how to compile/assemble it, and with what.\".\n\nDoes he mean everyone can just go nuts and do what they want?  I don\u0027t read his comments that way.  Good maintainers enforce style, and experienced programmers follow the prevailing style.\n\nIndividuals who try go their own way, should do so somewhere else (refer to Blink, refer to WebKit), because it saves reviewers wasting their valuable time, and it helps weed out inexperience contributors.",
+      "parentUuid": "ad1f6d56_414a8d57",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f49e0685_a58234f5",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 13
