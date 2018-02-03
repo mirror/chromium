@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ccc4ad_5d672a63",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-03T00:27:17Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need an updated RTree and other metadata in DisplayItemList? And does this happen each time you update the scroll offset for a squashed layer?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 60
+      },
+      "revId": "fef3260a395770b341f77228485621568d8eabd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
