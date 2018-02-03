@@ -6,23 +6,11 @@
 
 #include <IOKit/serial/IOSerialKeys.h>
 #include <IOKit/usb/IOUSBLib.h>
-#include <stdint.h>
 
-#include <algorithm>
-#include <memory>
-#include <unordered_set>
-#include <utility>
 
 #include "base/files/file_enumerator.h"
-#include "base/files/file_path.h"
-#include "base/files/file_util.h"
-#include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_ioobject.h"
 #include "base/metrics/histogram_functions.h"
-#include "base/strings/pattern.h"
-#include "base/strings/string_util.h"
-#include "base/strings/sys_string_conversions.h"
-#include "base/threading/thread_restrictions.h"
 
 namespace device {
 

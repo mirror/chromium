@@ -17,7 +17,6 @@
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/dbus/dbus_thread_manager.h"
-#include "chromeos/dbus/permission_broker_client.h"
 #endif  // defined(OS_CHROMEOS)
 
 namespace device {

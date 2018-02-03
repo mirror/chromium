@@ -33,7 +33,6 @@ struct termios2 {
 #endif  // defined(OS_LINUX)
 
 #if defined(OS_MACOSX)
-#include <IOKit/serial/ioss.h>
 #endif
 
 namespace {

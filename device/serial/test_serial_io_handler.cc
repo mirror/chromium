@@ -10,7 +10,6 @@
 #include <algorithm>
 
 #include "base/bind.h"
-#include "services/device/public/interfaces/serial.mojom.h"
 
 namespace device {
 

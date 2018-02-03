@@ -15,7 +15,6 @@
 #include "base/sequence_checker.h"
 #include "device/base/device_info_query_win.h"
 #include "device/base/device_monitor_win.h"
-#include "third_party/re2/src/re2/re2.h"
 
 namespace device {
 

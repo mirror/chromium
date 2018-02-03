@@ -20,7 +20,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/win/registry.h"
-#include "third_party/re2/src/re2/re2.h"
 
 namespace device {
 

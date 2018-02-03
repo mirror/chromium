@@ -4,7 +4,6 @@
 
 #include "base/macros.h"
 #include "device/serial/serial_io_handler_posix.h"
-#include "testing/gtest/include/gtest/gtest.h"
 
 namespace device {
 
