@@ -99,6 +99,8 @@ class BASE_EXPORT WeakReference {
     void Invalidate();
     bool IsValid() const;
 
+    void DetachFromSequence();
+
    private:
     friend class base::RefCountedThreadSafe<Flag>;
 
@@ -133,6 +135,8 @@ class BASE_EXPORT WeakReferenceOwner {
   bool HasRefs() const { return flag_ && !flag_->HasOneRef(); }
 
   void Invalidate();
+
+  void DetachFromSequence();
 
  private:
   mutable scoped_refptr<WeakReference::Flag> flag_;
@@ -344,6 +348,9 @@ class SupportsWeakPtr : public internal::SupportsWeakPtrBase {
 
  protected:
   ~SupportsWeakPtr() = default;
+
+  // Asserts that no issued WeakPtrs exist, and detaches the sequence binding.
+  void DetachFromSequence() { weak_reference_owner_.DetachFromSequence(); }
 
  private:
   internal::WeakReferenceOwner weak_reference_owner_;
