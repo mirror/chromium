@@ -20,7 +20,7 @@ namespace base {
 // const std::string& GetLineSeparator() {
 //  // Forwards to std::string(size_t, char, const Allocator&) constructor.
 //   static const base::NoDestructor<std::string> s(5, '-');
-//   return s;
+//   return *s;
 // }
 //
 // More complex initialization with a lambda:
