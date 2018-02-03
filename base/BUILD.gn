@@ -390,6 +390,8 @@ jumbo_component("base") {
     "guid.h",
     "hash.cc",
     "hash.h",
+    "heap_profiler/sampling_heap_profiler.cc",
+    "heap_profiler/sampling_heap_profiler.h",
     "ios/block_types.h",
     "ios/callback_counter.h",
     "ios/callback_counter.mm",
