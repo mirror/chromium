@@ -4,9 +4,12 @@
 
 #include "chrome/browser/ui/views/tabs/tab_icon.h"
 
+#include "base/command_line.h"
 #include "cc/paint/paint_flags.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/tabs/tab.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/webui_url_constants.h"
 #include "components/grit/components_scaled_resources.h"
 #include "content/public/common/url_constants.h"
@@ -32,6 +35,26 @@ bool ShouldThemifyFaviconForUrl(const GURL& url) {
          url.host_piece() != chrome::kChromeUIHelpHost &&
          url.host_piece() != chrome::kChromeUIUberHost &&
          url.host_piece() != chrome::kChromeUIAppLauncherPageHost;
+}
+
+sk_sp<cc::PaintShader> CreateFadeShader(int offset,
+                                        const gfx::Rect& icon_bounds,
+                                        bool tail,
+                                        bool weak) {
+  offset = std::min(icon_bounds.width() / 2, offset);
+  SkColor grad_colors[2] = {SK_ColorTRANSPARENT, SK_ColorBLACK};
+  SkPoint grad_points[2];
+  const int fading_width = weak ? GetLayoutInsets(TAB).width() / 2
+                                : GetLayoutInsets(TAB).width() / 4;
+  const int start_x = tail ? icon_bounds.right() - offset + fading_width
+                           : icon_bounds.x() + offset - fading_width;
+  const int start_y = icon_bounds.bottom();
+  grad_points[0].iset(start_x, start_y);
+  const float dy =  fading_width * Tab::GetInverseDiagonalSlope();
+  grad_points[1].iset(tail ? start_x - fading_width : start_x + fading_width,
+                      start_y + dy);
+  return cc::PaintShader::MakeLinearGradient(grad_points, grad_colors, nullptr,
+                                             2, SkShader::kClamp_TileMode);
 }
 
 }  // namespace
@@ -64,6 +87,22 @@ class TabIcon::CrashAnimation : public gfx::LinearAnimation,
   DISALLOW_COPY_AND_ASSIGN(CrashAnimation);
 };
 
+// static
+TabIcon::FaviconEffect TabIcon::GetFaviconEffect() {
+  const std::string switch_value =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kRecognisibleTabFavicon);
+  if (switch_value == switches::kRecognisibleTabFaviconClipWithPadding)
+    return TabIcon::FaviconEffect::kClipWithPadding;
+  if (switch_value == switches::kRecognisibleTabFaviconFadingWeak)
+    return TabIcon::FaviconEffect::kFadingWeak;
+  if (switch_value == switches::kRecognisibleTabFaviconFadingStrong)
+    return TabIcon::FaviconEffect::kFadingStrong;
+  if (switch_value == switches::kRecognisibleTabFaviconScale)
+    return TabIcon::FaviconEffect::kScale;
+  return TabIcon::FaviconEffect::kClip;
+}
+
 TabIcon::TabIcon() {
   set_can_process_events_within_subtree(false);
 
@@ -89,6 +128,11 @@ void TabIcon::SetIcon(const GURL& url, const gfx::ImageSkia& icon) {
     themed_favicon_ = gfx::ImageSkia();
   }
   SchedulePaint();
+}
+
+void TabIcon::SetFadeOffset(int offset) {
+  DCHECK_GE(offset, 0);
+  fade_offset_ = offset;
 }
 
 void TabIcon::SetNetworkState(TabNetworkState network_state,
@@ -204,13 +248,55 @@ void TabIcon::OnPaint(gfx::Canvas* canvas) {
       icon_to_paint = &themed_favicon_;
   }
 
+  TabIcon::FaviconEffect effect = GetFaviconEffect();
+  bool should_fade = effect == TabIcon::FaviconEffect::kFadingWeak ||
+                     effect == TabIcon::FaviconEffect::kFadingStrong;
+  bool should_save_canvas =
+      should_fade || effect == TabIcon::FaviconEffect::kScale;
+  if (should_save_canvas && fade_offset_) {
+    canvas->SaveLayerAlpha(0xff);
+    if (effect == TabIcon::FaviconEffect::kScale) {
+      const float scale = (icon_bounds.width() - fade_offset_) /
+                           static_cast<float>(icon_bounds.width());
+      gfx::Transform transform;
+      transform.Translate(icon_bounds.width() * (1 - scale) / 2,
+                          icon_bounds.height() * (1 - scale) / 2);
+      transform.Scale(scale, scale);
+      canvas->Transform(transform);
+    }
+  }
+
+  bool painted_icon = false;
   if (attention_types_ != 0 && !should_display_crashed_favicon_) {
     PaintAttentionIndicatorAndIcon(canvas, *icon_to_paint, icon_bounds);
+    painted_icon = true;
   } else if (!icon_to_paint->isNull()) {
     canvas->DrawImageInt(*icon_to_paint, 0, 0, icon_bounds.width(),
                          icon_bounds.height(), icon_bounds.x(), icon_bounds.y(),
                          icon_bounds.width(), icon_bounds.height(), false);
+    painted_icon = true;
   }
+
+  if (should_fade && painted_icon && fade_offset_) {
+    const bool weak = effect == TabIcon::FaviconEffect::kFadingWeak;
+    cc::PaintFlags fade_flags;
+    fade_flags.setBlendMode(SkBlendMode::kDstIn);
+    // Fade head
+    fade_flags.setShader(
+        CreateFadeShader(fade_offset_, icon_bounds, false, weak));
+    gfx::Rect fade_rect(icon_bounds);
+    fade_rect.set_width(fade_rect.width() / 2);
+    canvas->DrawRect(fade_rect, fade_flags);
+
+    // Fade tail
+    fade_flags.setShader(
+        CreateFadeShader(fade_offset_, icon_bounds, true, weak));
+    fade_rect.set_x(fade_rect.x() + fade_rect.width());
+    canvas->DrawRect(fade_rect, fade_flags);
+  }
+
+  if (should_save_canvas && fade_offset_)
+    canvas->Restore();
 }
 
 void TabIcon::OnThemeChanged() {

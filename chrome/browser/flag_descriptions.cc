@@ -1167,6 +1167,14 @@ const char kPushApiBackgroundModeDescription[] =
 const char kQuicName[] = "Experimental QUIC protocol";
 const char kQuicDescription[] = "Enable experimental QUIC protocol support.";
 
+const char kRecognisibleTabFaviconName[] = "More recognisible tab";
+const char kRecognisibleTabFaviconDescription[] =
+    "Show favicon when tab is narrow.";
+const char kRecognisibleTabFaviconClipWithPadding[] = "Clip with padding";
+const char kRecognisibleTabFaviconFadingWeak[] = "Fading - weak";
+const char kRecognisibleTabFaviconFadingStrong[] = "Fading - strong";
+extern const char kRecognisibleTabFaviconScale[] = "Scale";
+
 const char kReducedReferrerGranularityName[] =
     "Reduce default 'referer' header granularity.";
 const char kReducedReferrerGranularityDescription[] =

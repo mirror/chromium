@@ -727,6 +727,13 @@ extern const char kPushApiBackgroundModeDescription[];
 extern const char kQuicName[];
 extern const char kQuicDescription[];
 
+extern const char kRecognisibleTabFaviconName[];
+extern const char kRecognisibleTabFaviconDescription[];
+extern const char kRecognisibleTabFaviconClipWithPadding[];
+extern const char kRecognisibleTabFaviconFadingWeak[];
+extern const char kRecognisibleTabFaviconFadingStrong[];
+extern const char kRecognisibleTabFaviconScale[];
+
 extern const char kReducedReferrerGranularityName[];
 extern const char kReducedReferrerGranularityDescription[];
 
