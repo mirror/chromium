@@ -43,6 +43,7 @@ source_set("ctap") {
 
   deps = [
     "//base",
+    "//components/apdu",
     "//components/cbor",
     "//crypto",
     "//device/u2f",
