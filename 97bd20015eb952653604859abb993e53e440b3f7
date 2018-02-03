@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93928bbe_e89563d5",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-03T09:41:56Z",
+      "side": 1,
+      "message": "can we instead avoid calling this function if we shouldn\u0027t capture the cursor? e.g. in the OnCommitSurface case, this check shouldn\u0027t be needed.",
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364eeeff_ccde1e8c",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-03T09:41:56Z",
+      "side": 1,
+      "message": "is focus_surface_-\u003econtents_size() more appropriate?",
+      "range": {
+        "startLine": 401,
+        "startChar": 6,
+        "endLine": 401,
+        "endChar": 29
+      },
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
