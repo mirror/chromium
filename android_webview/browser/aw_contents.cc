@@ -1313,6 +1313,15 @@ void AwContents::ResumeLoadingCreatedPopupWebContents(
   web_contents_->ResumeLoadingCreatedWebContents();
 }
 
+ScopedJavaLocalRef<jstring> AwContents::CanonicalizeUrl(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    const JavaParamRef<jstring>& url) {
+  web_contents_->ResumeLoadingCreatedWebContents();
+  std::string canonicalized = GURL(ConvertJavaStringToUTF8(env, url)).spec();
+  return ConvertUTF8ToJavaString(env, canonicalized);
+}
+
 jlong AwContents::GetAutofillProvider(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj) {

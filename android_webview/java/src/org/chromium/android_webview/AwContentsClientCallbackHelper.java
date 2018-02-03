@@ -4,15 +4,19 @@
 
 package org.chromium.android_webview;
 
+import android.content.Context;
 import android.graphics.Picture;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 
 import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 
+import java.util.ArrayDeque;
 import java.util.concurrent.Callable;
 
 /**
@@ -143,11 +147,15 @@ public class AwContentsClientCallbackHelper {
     // True when a onNewPicture callback is currenly in flight.
     private boolean mHasPendingOnNewPicture;
 
+    private ArrayDeque<String> mUrlQueue;
+
     private final AwContentsClient mContentsClient;
 
     private final Handler mHandler;
 
     private CancelCallbackPoller mCancelCallbackPoller;
+
+    private final boolean mShouldWorkaroundSamsungOemMail;
 
     private class MyHandler extends Handler {
         private MyHandler(Looper looper) {
@@ -259,6 +267,19 @@ public class AwContentsClientCallbackHelper {
     public AwContentsClientCallbackHelper(Looper looper, AwContentsClient contentsClient) {
         mHandler = new MyHandler(looper);
         mContentsClient = contentsClient;
+        mUrlQueue = new ArrayDeque<String>();
+
+        final Context ctx = ContextUtils.getApplicationContext();
+        String appName = ctx.getPackageName();
+        final String samsungEmailAppName = "com.android.email";
+        mShouldWorkaroundSamsungOemMail = samsungEmailAppName.equals(appName)
+                && ctx.getApplicationInfo().targetSdkVersion <= Build.VERSION_CODES.O_MR1;
+    }
+
+    // Assumes the URL is in the canonicalized format returned by GURL.
+    public void addCanonicalizedUrlToQueue(String url) {
+        if (!mShouldWorkaroundSamsungOemMail) return;
+        mUrlQueue.add(url);
     }
 
     // Public for tests.
@@ -270,7 +291,31 @@ public class AwContentsClientCallbackHelper {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_ON_LOAD_RESOURCE, url));
     }
 
+    private void samsungOemMailWorkaround(String url) {
+        while (!url.equals(mUrlQueue.peek())) {
+            String skippedUrl = mUrlQueue.poll();
+            if (skippedUrl == null) break;
+
+            // WebView used to emit onPageStarted and onPageFinished for each URL we attempted to
+            // load, even if the load was canceled. To workaround https://crbug/781535, we assume
+            // we've canceled the load for |skippedUrl|, and manually emit the callbacks now. This
+            // hack assumes that onPageStarted is fired for each URL in the same order as their
+            // loadUrl calls--this is not true in general, but appears to be sufficient as a
+            // workaround.
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_ON_PAGE_STARTED, skippedUrl));
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_ON_PAGE_FINISHED, skippedUrl));
+        }
+
+        // At this point, the URL at the front of our queue should be the one we originally wanted
+        // to call onPageStarted started for. Remove this URL from the queue so we don't re-post
+        // onPageStarted/onPageFinished when we get onPageStarted for the next URL.
+        mUrlQueue.poll();
+    }
+
     public void postOnPageStarted(String url) {
+        if (mShouldWorkaroundSamsungOemMail) {
+            samsungOemMailWorkaround(url);
+        }
         mHandler.sendMessage(mHandler.obtainMessage(MSG_ON_PAGE_STARTED, url));
     }
 
