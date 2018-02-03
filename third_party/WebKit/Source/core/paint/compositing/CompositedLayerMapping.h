@@ -223,7 +223,6 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
                      GraphicsContext&,
                      GraphicsLayerPaintingPhase,
                      const IntRect& interest_rect) const override;
-
   bool IsTrackingRasterInvalidations() const override;
 
 #if DCHECK_IS_ON()

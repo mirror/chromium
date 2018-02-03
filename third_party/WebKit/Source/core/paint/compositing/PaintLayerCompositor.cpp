@@ -1011,6 +1011,10 @@ GraphicsLayer* PaintLayerCompositor::FixedRootBackgroundLayer() const {
   return nullptr;
 }
 
+bool PaintLayerCompositor::ShouldThrottleRendering() const {
+  return layout_view_.GetFrameView()->ShouldThrottleRendering();
+}
+
 static void UpdateTrackingRasterInvalidationsRecursive(
     GraphicsLayer* graphics_layer) {
   if (!graphics_layer)
