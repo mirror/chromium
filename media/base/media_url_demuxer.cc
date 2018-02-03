@@ -75,9 +75,16 @@ int64_t MediaUrlDemuxer::GetMemoryUsage() const {
 
 void MediaUrlDemuxer::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& track_ids,
-    base::TimeDelta curr_time) {}
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
+  NOTREACHED();
+}
+
 void MediaUrlDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> selected_track_id,
-    base::TimeDelta curr_time) {}
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
+  NOTREACHED();
+}
 
 }  // namespace media

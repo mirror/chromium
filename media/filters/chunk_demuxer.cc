@@ -769,7 +769,8 @@ base::TimeDelta ChunkDemuxer::GetHighestPresentationTimestamp(
 
 void ChunkDemuxer::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& track_ids,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   base::AutoLock auto_lock(lock_);
   std::set<ChunkDemuxerStream*> enabled_streams;
   for (const auto& id : track_ids) {
@@ -800,11 +801,14 @@ void ChunkDemuxer::OnEnabledAudioTracksChanged(
     DVLOG(1) << __func__ << ": enabling stream " << stream;
     stream->SetEnabled(true, curr_time);
   }
+
+  std::move(callback).Run();
 }
 
 void ChunkDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> track_id,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   base::AutoLock auto_lock(lock_);
   ChunkDemuxerStream* selected_stream = nullptr;
   if (track_id) {
@@ -829,6 +833,7 @@ void ChunkDemuxer::OnSelectedVideoTrackChanged(
     DVLOG(1) << __func__ << ": enabling stream " << selected_stream;
     selected_stream->SetEnabled(true, curr_time);
   }
+  std::move(callback).Run();
 }
 
 void ChunkDemuxer::OnMemoryPressure(

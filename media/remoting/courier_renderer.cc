@@ -898,5 +898,19 @@ bool CourierRenderer::IsWaitingForDataFromDemuxers() const {
            !audio_demuxer_stream_adapter_->is_data_pending()));
 }
 
+void CourierRenderer::OnSelectedVideoTrackChanged(
+    base::Optional<MediaTrack::Id> selected_track_id,
+    base::OnceClosure callback) {
+  // TODO(tmathmeyer) potentially support track changes for this renderer.
+  NOTREACHED();
+}
+
+void CourierRenderer::OnSelectedAudioTracksChanged(
+    std::vector<MediaTrack::Id> enabled_tracks_ids,
+    base::OnceClosure callback) {
+  // TODO(tmathmeyer) potentially support track changes for this renderer.
+  NOTREACHED();
+}
+
 }  // namespace remoting
 }  // namespace media
