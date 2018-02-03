@@ -16,6 +16,24 @@
       "revId": "d266a60ccbf966806c679e4ec94c607167f07b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee93dab_18f1e3da",
+        "filename": "third_party/WebKit/Source/modules/xr/XRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-02-03T01:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b650c58_12cc2950",
+      "revId": "d266a60ccbf966806c679e4ec94c607167f07b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
