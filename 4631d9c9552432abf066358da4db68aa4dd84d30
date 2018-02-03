@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df60f25_2a31a104",
+        "filename": "chrome/browser/chromeos/crostini/crostini_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-03T01:04:30Z",
+      "side": 1,
+      "message": "nit: maybe IsCrostiniAllowedByPolicy to make the meaning of this a bit clearer for people looking at the calling code?",
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
