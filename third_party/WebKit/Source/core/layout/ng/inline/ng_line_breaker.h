@@ -92,6 +92,7 @@ class CORE_EXPORT NGLineBreaker {
                               unsigned end_offset,
                               NGInlineItemResults*);
   NGInlineItemResult* AddItem(const NGInlineItem&, NGInlineItemResults*);
+  void SetLineEndFragment(scoped_refptr<NGPhysicalTextFragment>, NGLineInfo*);
   void ComputeCanBreakAfter(NGInlineItemResult*) const;
 
   void BreakLine(NGLineInfo*);
@@ -120,7 +121,7 @@ class CORE_EXPORT NGLineBreaker {
                  LayoutUnit available_width,
                  NGLineInfo*);
   LineBreakState HandleTrailingSpaces(const NGInlineItem&, NGLineInfo*);
-  void AppendHyphen(const ComputedStyle&, NGLineInfo*);
+  void AppendHyphen(const NGInlineItem& item, NGLineInfo*);
 
   LineBreakState HandleControlItem(const NGInlineItem&,
                                    LineBreakState,

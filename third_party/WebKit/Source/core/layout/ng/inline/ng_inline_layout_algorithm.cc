@@ -118,11 +118,8 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
   // Place items from line-left to line-right along with the baseline.
   // Items are already bidi-reordered to the visual order.
 
-  if (IsRtl(line_info->BaseDirection()) && line_info->LineEndShapeResult()) {
-    PlaceGeneratedContent(std::move(line_info->LineEndShapeResult()),
-                          std::move(line_info->LineEndStyle()), box,
-                          &text_builder);
-  }
+  if (IsRtl(line_info->BaseDirection()) && line_info->LineEndFragment())
+    PlaceGeneratedContent(std::move(line_info->LineEndFragment()), box);
 
   for (auto& item_result : *line_items) {
     DCHECK(item_result.item);
@@ -150,11 +147,7 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
       }
 
       text_builder.SetItem(&item_result, box->text_height);
-      scoped_refptr<NGPhysicalTextFragment> text_fragment =
-          text_builder.ToTextFragment(item_result.item_index,
-                                      item_result.start_offset,
-                                      item_result.end_offset);
-      line_box_.AddChild(std::move(text_fragment), box->text_top,
+      line_box_.AddChild(text_builder.ToTextFragment(), box->text_top,
                          item_result.inline_size, item.BidiLevel());
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       box = box_states_->OnOpenTag(item, item_result, line_box_);
@@ -191,11 +184,8 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
     }
   }
 
-  if (line_info->LineEndShapeResult()) {
-    PlaceGeneratedContent(std::move(line_info->LineEndShapeResult()),
-                          std::move(line_info->LineEndStyle()), box,
-                          &text_builder);
-  }
+  if (line_info->LineEndFragment())
+    PlaceGeneratedContent(std::move(line_info->LineEndFragment()), box);
 
   if (line_box_.IsEmpty()) {
     return;  // The line was empty.
@@ -262,41 +252,32 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
 // Place a generated content that does not exist in DOM nor in LayoutObject
 // tree.
 void NGInlineLayoutAlgorithm::PlaceGeneratedContent(
-    scoped_refptr<const ShapeResult> shape_result,
-    scoped_refptr<const ComputedStyle> style,
-    NGInlineBoxState* box,
-    NGTextFragmentBuilder* text_builder) {
-  if (box->CanAddTextOfStyle(*style)) {
+    scoped_refptr<NGPhysicalFragment> fragment,
+    NGInlineBoxState* box) {
+  const ComputedStyle& style = fragment->Style();
+  if (box->CanAddTextOfStyle(style)) {
     if (quirks_mode_)
-      box->EnsureTextMetrics(*style, baseline_type_);
-    PlaceText(std::move(shape_result), std::move(style), 0, box, text_builder);
+      box->EnsureTextMetrics(style, baseline_type_);
+    PlaceText(std::move(fragment), 0, box);
   } else {
     scoped_refptr<ComputedStyle> text_style =
-        ComputedStyle::CreateAnonymousStyleWithDisplay(*style,
+        ComputedStyle::CreateAnonymousStyleWithDisplay(style,
                                                        EDisplay::kInline);
     NGInlineBoxState* box = box_states_->OnOpenTag(*text_style, line_box_);
     box->ComputeTextMetrics(*text_style, baseline_type_);
-    PlaceText(std::move(shape_result), std::move(style), 0, box, text_builder);
+    PlaceText(std::move(fragment), 0, box);
     box_states_->OnCloseTag(&line_box_, box, baseline_type_);
   }
 }
 
 void NGInlineLayoutAlgorithm::PlaceText(
-    scoped_refptr<const ShapeResult> shape_result,
-    scoped_refptr<const ComputedStyle> style,
+    scoped_refptr<NGPhysicalFragment> fragment,
     UBiDiLevel bidi_level,
-    NGInlineBoxState* box,
-    NGTextFragmentBuilder* text_builder) {
-  unsigned start_offset = shape_result->StartIndexForResult();
-  unsigned end_offset = shape_result->EndIndexForResult();
-  LayoutUnit inline_size = shape_result->SnappedWidth();
+    NGInlineBoxState* box) {
+  LayoutUnit inline_size = IsHorizontalWritingMode() ? fragment->Size().width
+                                                     : fragment->Size().height;
   DCHECK(!box->text_metrics.IsEmpty());
-  text_builder->SetText(std::move(style), std::move(shape_result),
-                        {inline_size, box->text_height});
-  scoped_refptr<NGPhysicalTextFragment> text_fragment =
-      text_builder->ToTextFragment(std::numeric_limits<unsigned>::max(),
-                                   start_offset, end_offset);
-  line_box_.AddChild(std::move(text_fragment), box->text_top, inline_size,
+  line_box_.AddChild(std::move(fragment), box->text_top, inline_size,
                      bidi_level);
 }
 
@@ -326,7 +307,6 @@ void NGInlineLayoutAlgorithm::PlaceLayoutResult(NGInlineItemResult* item_result,
   DCHECK(item_result->item);
   const NGInlineItem& item = *item_result->item;
   DCHECK(item.Style());
-  const ComputedStyle& style = *item.Style();
   NGBoxFragment fragment(
       ConstraintSpace().GetWritingMode(),
       ToNGPhysicalBoxFragment(*item_result->layout_result->PhysicalFragment()));
@@ -342,13 +322,9 @@ void NGInlineLayoutAlgorithm::PlaceLayoutResult(NGInlineItemResult* item_result,
     // atomic inline, and its item_index. Add a text fragment as a marker.
     NGTextFragmentBuilder text_builder(Node(),
                                        ConstraintSpace().GetWritingMode());
-    text_builder.SetAtomicInline(&style,
+    text_builder.SetAtomicInline(item_result,
                                  {fragment.InlineSize(), metrics.LineHeight()});
-    scoped_refptr<NGPhysicalTextFragment> text_fragment =
-        text_builder.ToTextFragment(item_result->item_index,
-                                    item_result->start_offset,
-                                    item_result->end_offset);
-    line_box_.AddChild(std::move(text_fragment), line_top, LayoutUnit(),
+    line_box_.AddChild(text_builder.ToTextFragment(), line_top, LayoutUnit(),
                        item.BidiLevel());
     // We need the box fragment as well to compute VisualRect() correctly.
   }
