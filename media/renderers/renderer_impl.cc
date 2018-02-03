@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -95,6 +96,8 @@ RendererImpl::RendererImpl(
       video_buffering_state_(BUFFERING_HAVE_NOTHING),
       audio_ended_(false),
       video_ended_(false),
+      video_flushed_(false),
+      audio_flushed_(false),
       cdm_context_(nullptr),
       underflow_disabled_for_testing_(false),
       clockless_video_playback_enabled_for_testing_(false),
@@ -234,10 +237,14 @@ void RendererImpl::StartPlayingFrom(base::TimeDelta time) {
   time_source_->SetMediaTime(time);
 
   state_ = STATE_PLAYING;
-  if (audio_renderer_)
+  if (audio_renderer_) {
+    audio_flushed_ = false;
     audio_renderer_->StartPlaying();
-  if (video_renderer_)
+  }
+  if (video_renderer_) {
+    video_flushed_ = false;
     video_renderer_->StartPlayingFrom(time);
+  }
 }
 
 void RendererImpl::SetPlaybackRate(double playback_rate) {
@@ -444,9 +451,6 @@ void RendererImpl::OnVideoRendererInitializeDone(PipelineStatus status) {
     return;
   }
 
-  media_resource_->SetStreamStatusChangeCB(
-      base::Bind(&RendererImpl::OnStreamStatusChanged, weak_this_));
-
   if (audio_renderer_) {
     time_source_ = audio_renderer_->GetTimeSource();
   } else if (!time_source_) {
@@ -484,8 +488,12 @@ void RendererImpl::FlushAudioRenderer() {
     return;
   }
 
-  audio_renderer_->Flush(
-      base::Bind(&RendererImpl::OnAudioRendererFlushDone, weak_this_));
+  if (audio_flushed_) {
+    OnAudioRendererFlushDone();
+  } else {
+    audio_renderer_->Flush(base::BindRepeating(
+        &RendererImpl::OnAudioRendererFlushDone, weak_this_));
+  }
 }
 
 void RendererImpl::OnAudioRendererFlushDone() {
@@ -506,6 +514,8 @@ void RendererImpl::OnAudioRendererFlushDone() {
 
   DCHECK_EQ(audio_buffering_state_, BUFFERING_HAVE_NOTHING);
   audio_ended_ = false;
+
+  SetAudioFlushedAfterFlushing(base::BindOnce(&base::DoNothing));
   FlushVideoRenderer();
 }
 
@@ -520,8 +530,12 @@ void RendererImpl::FlushVideoRenderer() {
     return;
   }
 
-  video_renderer_->Flush(
-      base::Bind(&RendererImpl::OnVideoRendererFlushDone, weak_this_));
+  if (video_flushed_) {
+    OnVideoRendererFlushDone();
+  } else {
+    video_renderer_->Flush(base::BindRepeating(
+        &RendererImpl::OnVideoRendererFlushDone, weak_this_));
+  }
 }
 
 void RendererImpl::OnVideoRendererFlushDone() {
@@ -538,6 +552,7 @@ void RendererImpl::OnVideoRendererFlushDone() {
 
   DCHECK_EQ(video_buffering_state_, BUFFERING_HAVE_NOTHING);
   video_ended_ = false;
+  SetVideoFlushedAfterFlushing(base::BindOnce(&base::DoNothing));
   state_ = STATE_FLUSHED;
   base::ResetAndReturn(&flush_cb_).Run();
 
@@ -545,72 +560,6 @@ void RendererImpl::OnVideoRendererFlushDone() {
     base::Closure closure = pending_actions_.front();
     pending_actions_.pop_front();
     closure.Run();
-  }
-}
-
-void RendererImpl::OnStreamStatusChanged(DemuxerStream* stream,
-                                         bool enabled,
-                                         base::TimeDelta time) {
-  DCHECK(task_runner_->BelongsToCurrentThread());
-  DCHECK(stream);
-  bool video = (stream->type() == DemuxerStream::VIDEO);
-  DVLOG(1) << __func__ << (video ? " video" : " audio") << " stream=" << stream
-           << " enabled=" << enabled << " time=" << time.InSecondsF();
-
-  if ((state_ != STATE_PLAYING && state_ != STATE_FLUSHING &&
-       state_ != STATE_FLUSHED) ||
-      (audio_ended_ && video_ended_))
-    return;
-
-  if (restarting_audio_ || restarting_video_ || state_ == STATE_FLUSHING) {
-    DVLOG(3) << __func__ << ": postponed stream " << stream
-             << " status change handling.";
-    pending_actions_.push_back(base::Bind(&RendererImpl::OnStreamStatusChanged,
-                                          weak_this_, stream, enabled, time));
-    return;
-  }
-
-  DCHECK(state_ == STATE_PLAYING || state_ == STATE_FLUSHED);
-  if (stream->type() == DemuxerStream::VIDEO) {
-    DCHECK(video_renderer_);
-    restarting_video_ = true;
-    base::Closure handle_track_status_cb =
-        base::Bind(stream == current_video_stream_
-                       ? &RendererImpl::RestartVideoRenderer
-                       : &RendererImpl::ReinitializeVideoRenderer,
-                   weak_this_, stream, time);
-    if (state_ == STATE_FLUSHED) {
-      handle_track_status_cb.Run();
-    } else {
-      pending_flush_for_stream_change_ = true;
-      video_renderer_->Flush(handle_track_status_cb);
-    }
-  } else if (stream->type() == DemuxerStream::AUDIO) {
-    DCHECK(audio_renderer_);
-    DCHECK(time_source_);
-    {
-      base::AutoLock lock(restarting_audio_lock_);
-      restarting_audio_time_ = time;
-      restarting_audio_ = true;
-    }
-    base::Closure handle_track_status_cb =
-        base::Bind(stream == current_audio_stream_
-                       ? &RendererImpl::RestartAudioRenderer
-                       : &RendererImpl::ReinitializeAudioRenderer,
-                   weak_this_, stream, time);
-    if (state_ == STATE_FLUSHED) {
-      handle_track_status_cb.Run();
-      return;
-    }
-    // Stop ticking (transition into paused state) in audio renderer before
-    // calling Flush, since after Flush we are going to restart playback by
-    // calling audio renderer StartPlaying which would fail in playing state.
-    if (time_ticking_) {
-      time_ticking_ = false;
-      time_source_->StopTicking();
-    }
-    pending_flush_for_stream_change_ = true;
-    audio_renderer_->Flush(handle_track_status_cb);
   }
 }
 
@@ -1029,6 +978,96 @@ void RendererImpl::OnVideoNaturalSizeChange(const gfx::Size& size) {
 void RendererImpl::OnVideoOpacityChange(bool opaque) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   client_->OnVideoOpacityChange(opaque);
+}
+
+void RendererImpl::SeekVideoAfterFlushing(base::TimeDelta timestamp,
+                                          base::OnceClosure callback) {
+  video_renderer_->StartPlayingFrom(timestamp);
+  video_flushed_ = false;
+  std::move(callback).Run();
+}
+
+void RendererImpl::SeekAudioAfterFlushing(base::OnceClosure callback) {
+  audio_renderer_->StartPlaying();
+  audio_flushed_ = false;
+  std::move(callback).Run();
+}
+
+void RendererImpl::SetVideoFlushedAfterFlushing(base::OnceClosure cb) {
+  video_flushed_ = true;
+  std::move(cb).Run();
+}
+
+void RendererImpl::SetAudioFlushedAfterFlushing(base::OnceClosure cb) {
+  audio_flushed_ = true;
+  std::move(cb).Run();
+}
+
+// TODO(tmathmeyer) refactor Video track changes to support multiple tracks,
+//                  which will allow combining of video and audio track switch
+//                  functions.
+void RendererImpl::OnSelectedVideoTrackChanged(
+    base::Optional<MediaTrack::Id> selected_track_id,
+    base::OnceClosure callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+
+  // Probably shouldn't happen, but just in case.
+  if (video_flushed_ && !selected_track_id) {
+    std::move(callback).Run();
+    return;
+  }
+
+  // Turning off the video tracks when there is still something playing.
+  if (!video_flushed_ && !selected_track_id) {
+    video_renderer_->Flush(BindToCurrentLoop(
+        base::BindRepeating(&RendererImpl::SetVideoFlushedAfterFlushing,
+                            weak_this_, base::Passed(&callback))));
+    return;
+  }
+
+  // We can't flush here, since double flush = dcheck.
+  if (video_flushed_ && selected_track_id) {
+    SeekVideoAfterFlushing(GetMediaTime(), std::move(callback));
+    return;
+  }
+
+  // Flush first, then seek.
+  if (!video_flushed_ && selected_track_id) {
+    video_renderer_->Flush(BindToCurrentLoop(base::BindRepeating(
+        &RendererImpl::SetVideoFlushedAfterFlushing, weak_this_,
+        base::BindRepeating(&RendererImpl::SeekVideoAfterFlushing, weak_this_,
+                            GetMediaTime(), base::Passed(&callback)))));
+    return;
+  }
+}
+
+void RendererImpl::OnSelectedAudioTracksChanged(
+    std::vector<MediaTrack::Id> enabled_track_ids,
+    base::OnceClosure callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+
+  if (audio_flushed_ && enabled_track_ids.empty()) {
+    std::move(callback).Run();
+    return;
+  }
+
+  if (enabled_track_ids.empty()) {
+    audio_renderer_->Flush(BindToCurrentLoop(
+        base::BindRepeating(&RendererImpl::SetAudioFlushedAfterFlushing,
+                            weak_this_, base::Passed(&callback))));
+  }
+
+  if (audio_flushed_) {
+    SeekAudioAfterFlushing(std::move(callback));
+    return;
+  }
+
+  if (!enabled_track_ids.empty()) {
+    video_renderer_->Flush(BindToCurrentLoop(base::BindRepeating(
+        &RendererImpl::SetAudioFlushedAfterFlushing, weak_this_,
+        base::BindRepeating(&RendererImpl::SeekAudioAfterFlushing, weak_this_,
+                            base::Passed(&callback)))));
+  }
 }
 
 }  // namespace media

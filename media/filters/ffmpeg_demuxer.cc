@@ -1704,7 +1704,8 @@ void FFmpegDemuxer::OnSeekFrameDone(int result) {
 
 void FFmpegDemuxer::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& track_ids,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   std::set<FFmpegDemuxerStream*> enabled_streams;
@@ -1736,11 +1737,15 @@ void FFmpegDemuxer::OnEnabledAudioTracksChanged(
     DVLOG(1) << __func__ << ": enabling stream " << stream;
     stream->SetEnabled(true, curr_time);
   }
+
+  // TODO(tmathmeyer) make this async.
+  std::move(callback).Run();
 }
 
 void FFmpegDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> track_id,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   FFmpegDemuxerStream* selected_stream = nullptr;
@@ -1763,6 +1768,9 @@ void FFmpegDemuxer::OnSelectedVideoTrackChanged(
     DVLOG(1) << __func__ << ": enabling stream " << selected_stream;
     selected_stream->SetEnabled(true, curr_time);
   }
+
+  // TODO(tmathmeyer) make this async.
+  std::move(callback).Run();
 }
 
 void FFmpegDemuxer::ReadFrameIfNeeded() {
