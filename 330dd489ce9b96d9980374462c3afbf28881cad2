@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4e963e8_1f2c1d22",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42952ffe_63a8ae61",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bf2d3ef_9fd30056",
         "filename": "ash/wm/overview/overview_window_drag_controller.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4bac38_71a4120e",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bf2d3ef_9fd30056",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fdc3fd98_c6d9015c",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebfdf16d_f064f617",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1cf056f_006918d3",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481b1599_0813acad",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1cf056f_006918d3",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "14302d6d_bf27afd9",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "Adding ForTesting() in inlines classes causes a warning. \"You might be calling functions intended only for testing from production code.\n\nIt says its OK to ignore, but i think it is fine to just leave it out. What do you think?",
+      "parentUuid": "9ef519d0_c1866077",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50cc92c9_0737f85d",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-03T00:18:31Z",
       "side": 1,
       "message": "The comment is not correct? Should be the left or top window?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea0a9ef_d9735233",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "Updated. I think it was correct but a unclear.",
+      "parentUuid": "50cc92c9_0737f85d",
       "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "ee562225_e0ec743e",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "This GetSnappedWindowBoundsInScreen() [1] ?\n\nThere will be some plumbing up to get window. Or we can use pass that as an argument but it would be the same as passing phantom_bounds_, i think.\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/splitview/split_view_controller.h?rcl\u003d1a37f6b6246e6ea38cea88fee9f28b6e92e548e7\u0026l\u003d101",
+      "parentUuid": "97abba01_e0f40415",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d798ad1e_d613a89a",
         "filename": "ash/wm/splitview/split_view_overview_overlay.h",
         "patchSetId": 4
@@ -149,6 +275,24 @@
       "writtenOn": "2018-02-03T00:18:31Z",
       "side": 1,
       "message": "q: Is this new style: the enum class entry should start with \"k\"?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5259ba_586aef3a",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-03T01:26:54Z",
+      "side": 1,
+      "message": "yes, according to the style guide. It is not needed to change but since i added one below and touch all files that use this, might as well.",
+      "parentUuid": "d798ad1e_d613a89a",
       "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
