@@ -16,6 +16,24 @@
       "revId": "68df8b390930cb1fb196d0c53e900f33889bbe26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eaef236_18aec746",
+        "filename": "chrome/app/google_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-03T00:33:55Z",
+      "side": 1,
+      "message": "Done. I added an extra sentence to each to explain why the string is OS-dependent.",
+      "parentUuid": "22025516_c1431b33",
+      "revId": "68df8b390930cb1fb196d0c53e900f33889bbe26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
