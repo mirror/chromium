@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5de4cda2_76645846",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-02-03T01:23:26Z",
+      "side": 1,
+      "message": "It is already explained on line 2354. Unretained() is used many places in this file for |compositor_|. What would be the best way to convey the information on line 2354 in a centralized way?",
+      "parentUuid": "1d95161b_9784bf62",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1c4d8f_71657944",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T08:17:38Z",
       "side": 1,
       "message": "Similarly, this class could some clarification on how the different bits here are expected to interact, as there\u0027s three distinct interfaces implemented here. For example, the comments in the class that DidReceiveFrame is called before rendering started don\u0027t help me understand why it\u0027s important to call SubmitSingleFrame() there.",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c361c1_89dd4d30",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-02-03T01:23:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to elaborate this. SubmitSingleFrame gets called when we received a frame and we are not yet rendering, which means we are trying to submit the cover image to a video usually (PaintSingleFrame). I\u0027m not sure what more can be said.",
+      "parentUuid": "4d1c4d8f_71657944",
       "revId": "0dd61738a758869d88023de8473ad471ac36d003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "af1bcc4b_cafffdf2",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-02-03T01:23:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d5cc9f1_b0f2d1d9",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "726e5cbd_36d7e338",
         "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "0dd61738a758869d88023de8473ad471ac36d003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cfc6d4_23975375",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-02-03T01:23:26Z",
+      "side": 1,
+      "message": "Done. Let me know if there is more things I should add. I will go back in a future CL and update according to your recommendations. Let me know if I am also missing the mark on your inquiries.",
+      "parentUuid": "726e5cbd_36d7e338",
+      "revId": "0dd61738a758869d88023de8473ad471ac36d003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
