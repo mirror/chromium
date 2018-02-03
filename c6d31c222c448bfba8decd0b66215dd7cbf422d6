@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbe40ca5_a02e335b",
+        "filename": "chromecast/media/cma/pipeline/audio_pipeline_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "I don\u0027t understand this logic. Why should it matter whether or not we need to use the software decoder?",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d35117c_26cf7985",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94579a78_179e2b0d",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "delete \u0027because\u0027",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1931743_ccf572cd",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 78,
+        "startChar": 44,
+        "endLine": 78,
+        "endChar": 68
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423c7b5b_307b88d4",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "why not return the decrypted buffer in this callback too? No need for GetNextReadyBuffer.",
+      "range": {
+        "startLine": 22,
+        "startChar": 55,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efae237c_0a8c5f1f",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed1c9bc_6899a15d",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "Comment about thread safety for this class",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d553cf_464eda53",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "How can we know what the size of the decrypted data is? We can\u0027t assume it is the same as the encrypted size.",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d864dc_c64bbb01",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "must not",
+      "range": {
+        "startLine": 229,
+        "startChar": 57,
+        "endLine": 229,
+        "endChar": 62
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0ec771_28e18815",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "How can the caller know what size to make |output|? Just assume that decrypted size \u003c\u003d encrypted size?",
+      "range": {
+        "startLine": 230,
+        "startChar": 64,
+        "endLine": 230,
+        "endChar": 75
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e76e401_bac88775",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "must be",
+      "range": {
+        "startLine": 230,
+        "startChar": 61,
+        "endLine": 230,
+        "endChar": 63
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8071cbdc_1dbcc12f",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "can this be called synchronously from within PushBufferForDecrypt() call?",
+      "range": {
+        "startLine": 230,
+        "startChar": 13,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703bdf2b_43168667",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "what does this mean?",
+      "range": {
+        "startLine": 287,
+        "startChar": 22,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03deb61b_dca0dbb7",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-03T05:07:22Z",
+      "side": 1,
+      "message": "This",
+      "range": {
+        "startLine": 289,
+        "startChar": 5,
+        "endLine": 289,
+        "endChar": 8
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
