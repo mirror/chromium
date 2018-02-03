@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "916ec951_96aaf99b",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2018-02-03T02:10:02Z",
+      "side": 1,
+      "message": "Thanks for the instructions!\n\nI added 2 tests for the multi dimension tests in generate_buildbot_json_unittest.py (will upload in the next patch). And run with generate_buildbot_json_coveragetest.py (don\u0027t know that before!). It didn\u0027t output any failure, which supposed to be passed?",
+      "parentUuid": "d6373f8c_3139dc5f",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada2934e_e3fddb53",
         "filename": "testing/buildbot/generate_buildbot_json.py",
         "patchSetId": 1
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "22b2b559_805ba936",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2018-02-03T02:10:02Z",
+      "side": 1,
+      "message": "You are right, thanks for the explanation with link! Since the \u0027scripts\u0027 tests are not running on swarming, will remove the step for script tests.",
+      "parentUuid": "95460e8e_b704ce6c",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9498b4b7_e9fdc096",
         "filename": "testing/buildbot/waterfalls.pyl",
         "patchSetId": 1
@@ -104,6 +140,24 @@
       "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58daa464_6c9c4c57",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2018-02-03T02:10:02Z",
+      "side": 1,
+      "message": "Checked the bot list, seems like both the 10.9 and 10.13 bots have cpu verison \u0027x86-64\u0027. Not sure if adding it is necessary, but it won\u0027t be harmful to have it. Will change that in next patch.\n\nJust noticed that \"Mac-10.9\" bots all have \"gpu\" as \"none\", but \"Mac-10.13\" bots \"gpu\" should be \"8086:0a2e\". Will correct it, sorry about the mistake.",
+      "parentUuid": "9498b4b7_e9fdc096",
+      "revId": "d73275bd2db9c6320855caebdf3c38e4073bd23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
