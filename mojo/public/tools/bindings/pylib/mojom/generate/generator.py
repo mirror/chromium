@@ -158,7 +158,8 @@ class Generator(object):
                js_bindings_mode="new", export_attribute=None,
                export_header=None, generate_non_variant_code=False,
                support_lazy_serialization=False, disallow_native_types=False,
-               disallow_interfaces=False):
+               disallow_interfaces=False, no_generate_message_ids=False,
+               generate_message_ids_only=False):
     self.module = module
     self.output_dir = output_dir
     self.typemap = typemap or {}
@@ -173,6 +174,8 @@ class Generator(object):
     self.support_lazy_serialization = support_lazy_serialization
     self.disallow_native_types = disallow_native_types
     self.disallow_interfaces = disallow_interfaces
+    self.no_generate_message_ids = no_generate_message_ids
+    self.generate_message_ids_only = generate_message_ids_only
 
   def Write(self, contents, filename):
     if self.output_dir is None:
