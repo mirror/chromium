@@ -58,6 +58,9 @@ Polymer({
       readOnly: true,
     },
 
+    /** Whether policy indicator should be displayed after the dropdown. */
+    policyIndicatorEnd: false,
+
     /** Label for a11y purposes */
     label: String,
   },
