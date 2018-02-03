@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7867c75_4a65197e",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b68287c_5deb6015",
+      "range": {
+        "startLine": 93,
+        "startChar": 26,
+        "endLine": 93,
+        "endChar": 43
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c80ad33b_41dac34a",
         "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "04efeac2_017f55d6",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c80ad33b_41dac34a",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd67986_6f273cf1",
         "filename": "components/download/content/internal/download_driver_impl.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-01T17:28:17Z",
       "side": 1,
       "message": "Is there a reason the download item can\u0027t store/manage the blob handle?  I\u0027m not quite sure on the lifecycle of blob handle vs. request bodies.  I\u0027m surprised we can give the request body a blob and then have to hold onto it externally to maintain it.",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 24
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e744561a_c9e83227",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "I didn\u0027t explore if we have to move this handle to somewhere in content/downloads. The ResourceRequestBody::AppendBlob takes a UUID only. It supports reading a variety of things like bytes, files, file range, blob range etc, it doesn\u0027t manage the lifecycle. It seems like someone (either client or download service or download manager) has to keep it alive. May be we should just take the UUID from the client and let client handle the lifecycle.",
+      "parentUuid": "5fd67986_6f273cf1",
       "range": {
         "startLine": 179,
         "startChar": 4,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b7949a96_4ac174be",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Removed this block. In the new code, we don\u0027t remove the driver entry.",
+      "parentUuid": "8574281a_8ca8573f",
+      "range": {
+        "startLine": 923,
+        "startChar": 6,
+        "endLine": 924,
+        "endChar": 37
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7995f199_917d5191",
         "filename": "components/download/internal/background_service/controller_impl.cc",
         "patchSetId": 8
@@ -128,6 +224,30 @@
       "writtenOn": "2018-02-01T17:28:17Z",
       "side": 1,
       "message": "We will still hit this case if resuming after a restart.  I don\u0027t know if the above check on removing if we have upload data will work/be enough.",
+      "range": {
+        "startLine": 960,
+        "startChar": 6,
+        "endLine": 960,
+        "endChar": 35
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867c35c1_adffe244",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Added extra check !has_upload_data to this, so that uploads will always hit PrepareToStartDownload no matter whether it is new or resumption.",
+      "parentUuid": "7995f199_917d5191",
       "range": {
         "startLine": 960,
         "startChar": 6,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "554e87bb_b52bda0b",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed207fad_8faeaac6",
+      "range": {
+        "startLine": 977,
+        "startChar": 10,
+        "endLine": 977,
+        "endChar": 23
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edebbf11_e97a633a",
         "filename": "components/download/internal/background_service/controller_impl.cc",
         "patchSetId": 8
@@ -183,6 +327,30 @@
       "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cd3083_52fbc80f",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done. We will cache the upload data if not ready.",
+      "parentUuid": "edebbf11_e97a633a",
+      "range": {
+        "startLine": 989,
+        "startChar": 21,
+        "endLine": 989,
+        "endChar": 43
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "f351841e_b35112e5",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad618c71_9384192f",
+      "range": {
+        "startLine": 993,
+        "startChar": 2,
+        "endLine": 993,
+        "endChar": 33
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7e659c_74f6f89d",
         "filename": "components/download/internal/background_service/controller_impl.cc",
         "patchSetId": 8
@@ -229,6 +421,30 @@
       "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f43cc0_898bd1c7",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7e659c_74f6f89d",
+      "range": {
+        "startLine": 996,
+        "startChar": 12,
+        "endLine": 996,
+        "endChar": 52
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "f6711191_f2c74564",
+        "filename": "components/download/internal/background_service/debugging_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "As you suggested, I am posting the callback internally now inside the controller.",
+      "parentUuid": "ed6916b3_4c95ff11",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89652076_f424ade5",
         "filename": "components/download/internal/background_service/entry.h",
         "patchSetId": 8
@@ -266,6 +506,30 @@
       "writtenOn": "2018-02-01T17:28:17Z",
       "side": 1,
       "message": "Since this flag is a little weird, should we add some more comments about the behavior of it, when it\u0027s set, and how it\u0027s used?",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 67
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab759344_96d905f3",
+        "filename": "components/download/internal/background_service/entry.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "May be this belongs inside the RequestParams alongside request headers and method?",
+      "parentUuid": "89652076_f424ade5",
       "range": {
         "startLine": 99,
         "startChar": 2,
@@ -324,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "9db8609c_343c2bf4",
+        "filename": "components/download/internal/background_service/stats.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2f314be_82a4e799",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 30
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f8a35be_9211ddbe",
         "filename": "components/download/public/background_service/client.h",
         "patchSetId": 8
@@ -335,6 +623,30 @@
       "writtenOn": "2018-02-01T17:28:17Z",
       "side": 1,
       "message": "why not null?  Can we mention they need to post to avoid reentrancy?",
+      "range": {
+        "startLine": 129,
+        "startChar": 48,
+        "endLine": 129,
+        "endChar": 60
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc40ba34_b6b23796",
+        "filename": "components/download/public/background_service/client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Modified the description and behavior. This callback would be called only if |has_upload_data| is true. Otherwise NOTREACHED.",
+      "parentUuid": "0f8a35be_9211ddbe",
       "range": {
         "startLine": 129,
         "startChar": 48,
@@ -370,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "430ff85a_dc2cfef8",
+        "filename": "components/download/public/background_service/download_params.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Good idea. The clients will have NOTREACHED() in the code paths.",
+      "parentUuid": "42995806_a8707891",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80d8dd31_e3bc5063",
         "filename": "components/download/public/background_service/test/mock_client.h",
         "patchSetId": 8
@@ -381,6 +717,30 @@
       "writtenOn": "2018-02-01T17:28:17Z",
       "side": 1,
       "message": "I think we can\u0027t :(, but I don\u0027t remember.  Yeah take a look and see I\u0027m curious!",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "7374579cb842bf7edba81ed29ba173348959f26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd2936f_129c8a8e",
+        "filename": "components/download/public/background_service/test/mock_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 1,
+      "message": "Yea, doesn\u0027t work. Removed TODO.",
+      "parentUuid": "80d8dd31_e3bc5063",
       "range": {
         "startLine": 35,
         "startChar": 2,

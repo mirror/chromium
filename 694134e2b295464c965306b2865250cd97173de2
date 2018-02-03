@@ -22,6 +22,30 @@
       "revId": "694134e2b295464c965306b2865250cd97173de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72973550_841e334f",
+        "filename": "components/download/internal/background_service/controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-03T00:07:49Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1264e423_84ca67bc",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "694134e2b295464c965306b2865250cd97173de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
