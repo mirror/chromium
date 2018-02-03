@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3151aa30_47c061cb",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-03T02:10:48Z",
+      "side": 1,
+      "message": "Please file a bug about this, block it on this one, and use TODO(crbug.com/NNNNNN) to refer to it. Thanks.",
+      "range": {
+        "startLine": 736,
+        "startChar": 5,
+        "endLine": 736,
+        "endChar": 9
+      },
+      "revId": "91f09d1b6d147bf098805c37403ae533b9d7ac14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
