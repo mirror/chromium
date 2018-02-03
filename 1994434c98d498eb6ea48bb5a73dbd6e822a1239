@@ -22,6 +22,30 @@
       "revId": "1994434c98d498eb6ea48bb5a73dbd6e822a1239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253747ca_794aeb3a",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-03T01:04:44Z",
+      "side": 1,
+      "message": "\u003e nit: under_scores for these variables?\n\nwhoops - of course! Done.",
+      "parentUuid": "b5436ed4_b8c37f2e",
+      "range": {
+        "startLine": 646,
+        "startChar": 47,
+        "endLine": 646,
+        "endChar": 60
+      },
+      "revId": "1994434c98d498eb6ea48bb5a73dbd6e822a1239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
