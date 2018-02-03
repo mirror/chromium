@@ -20,6 +20,7 @@
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views_content_client/views_content_client.h"
 
+#if 0
 namespace {
 
 class AppListDemoService;
@@ -57,7 +58,7 @@ app_list::AppListView* DemoAppListViewDelegate::InitView(
   app_list::AppListView::InitParams params;
   params.parent = container;
   view_->Initialize(params);
-  view_->MaybeSetAnchorPoint(gfx::Point(300, 300));
+  //view_->MaybeSetAnchorPoint(gfx::Point(300, 300));
 
   // Populate some apps.
   GetTestModel()->PopulateApps(kInitialItems);
@@ -91,9 +92,10 @@ void ShowAppList(gfx::NativeWindow window_context) {
 
 }  // namespace
 
+#endif
 int main(int argc, const char** argv) {
-  ui::ViewsContentClient views_content_client(argc, argv);
+  //ui::ViewsContentClient views_content_client(argc, argv);
 
-  views_content_client.set_task(base::Bind(&ShowAppList));
-  return views_content_client.RunMain();
+  //views_content_client.set_task(base::Bind(&ShowAppList));
+  //return views_content_client.RunMain();
 }
