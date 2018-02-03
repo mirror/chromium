@@ -20,13 +20,19 @@
         margin: 0 var(--settings-controlled-by-spacing);
       }
 
+      cr-policy-pref-indicator[policy-indicator-end] {
+        order: 1;
+      }
+
       /* Hide "Custom" value when unselectable. */
       option:disabled {
         display: none;
       }
     </style>
     <template is="dom-if" if="[[pref.controlledBy]]" restamp>
-      <cr-policy-pref-indicator pref="[[pref]]"></cr-policy-pref-indicator>
+      <cr-policy-pref-indicator pref="[[pref]]"
+          policy-indicator-end$="[[policyIndicatorEnd]]">
+      </cr-policy-pref-indicator>
     </template>
     <div class="md-select-wrapper">
       <select class="md-select" id="dropdownMenu" on-change="onChange_"
