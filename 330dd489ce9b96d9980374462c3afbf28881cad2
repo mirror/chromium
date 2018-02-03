@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "42952ffe_63a8ae61",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "nit: Since there is no more \"phantom window\" concept any more in this file, could you add some description about what \"phantom window\" stands for or change all the referring places?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf2d3ef_9fd30056",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "Also update the comment?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfdf16d_f064f617",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "update the comment?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cf056f_006918d3",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "simpler if do the following?\nreturn (indicator_type \u003d\u003d IndicatorState::kPhantomLeft \u0026\u0026\n        SplitViewController::IsLeftWindowOnTopOrLeftOfScreen(current_orientation)) ||\n       (indicator_type \u003d\u003d IndicatorState::kPhantomRight \u0026\u0026\n        !SplitViewController::IsLeftWindowOnTopOrLeftOfScreen(current_orientation));",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef519d0_c1866077",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "Rename it to GetViewForIndicatorTypeForTesting() as it\u0027s only used for testing?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cc92c9_0737f85d",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "The comment is not correct? Should be the left or top window?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "babe309c_6704201f",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -13,6 +115,40 @@
       "writtenOn": "2018-02-02T02:13:20Z",
       "side": 1,
       "message": "This is kinda long. I tried something like\nauto primary \u003d landscape ? width() : height();\nauto primaryPhantom \u003d landscape ? phatom_bounds.width() : phantom_bounds.height();\n....\n\nand then\ngfx::Vector scale \u003d (primaryPhantom/primary, 1.0);\nFlipVector(\u0026scale);\ntransform.ApplyScale(scale);\n\nbecause all the transforms are inversed using height instead of width but i found that even more confusing to read",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97abba01_e0f40415",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "Is this variable necessary? I think you should be able get |phantom_bounds_| from SplitViewController::GetSnappedWindowBoundsInScreen() and |indicator_type|?",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d798ad1e_d613a89a",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-03T00:18:31Z",
+      "side": 1,
+      "message": "q: Is this new style: the enum class entry should start with \"k\"?",
       "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
