@@ -473,17 +473,29 @@ chrome.test.runTests([
   },
 
   function getRecentSetup() {
-    // Clean up tree
-    ["1", "2"].forEach(function(id) {
-      chrome.bookmarks.getChildren(id, pass(function(children) {
-        children.forEach(function(child, i) {
-          chrome.bookmarks.removeTree(child.id, pass(function() {}));
-          // When we have removed the last child we can continue.
-          if (id == "2" && i == children.length - 1)
-            afterRemove();
+    function getChildrenPromise(ids) {
+      return new Promise(pass(function(resolve) {
+        var childrenOut = [];
+        var numGetChildrenResponses = 0;
+        ids.forEach(function(id) {
+          chrome.bookmarks.getChildren(id, pass(function(children) {
+            childrenOut = children.concat(childrenOut);
+            if (++numGetChildrenResponses == 2) {
+              resolve(childrenOut);
+            }
+          }));
         });
       }));
-    });
+    }
+
+    // Clean up tree
+    getChildrenPromise(['1', '2']).then(pass(function(children) {
+      Promise.all(children.map(function(child) {
+        return new Promise(pass(function(resolve) {
+          chrome.bookmarks.removeTree(child.id, resolve);
+        }));
+      })).then(pass(afterRemove));
+    }));
 
     function afterRemove() {
       // Once done add 3 nodes
