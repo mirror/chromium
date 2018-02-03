@@ -20,6 +20,13 @@
         margin: 0 var(--settings-controlled-by-spacing);
       }
 
+      /* policy-indicator-end attribute will display policy indicator after
+       * the dropdown.
+       */
+      :host([policy-indicator-end]) cr-policy-pref-indicator {
+        order: 1;
+      }
+
       /* Hide "Custom" value when unselectable. */
       option:disabled {
         display: none;
