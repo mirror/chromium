@@ -16,13 +16,13 @@
 #include "base/optional.h"
 #include "base/strings/string_piece.h"
 #include "base/timer/timer.h"
+#include "components/apdu/apdu_command.h"
 #include "device/u2f/u2f_ble_connection.h"
 #include "device/u2f/u2f_ble_transaction.h"
 #include "device/u2f/u2f_device.h"
 
 namespace device {
 
-class U2fApduCommand;
 class U2fBleFrame;
 
 class U2fBleDevice : public U2fDevice {
@@ -46,7 +46,7 @@ class U2fBleDevice : public U2fDevice {
 
  protected:
   // U2fDevice:
-  void DeviceTransact(std::unique_ptr<U2fApduCommand> command,
+  void DeviceTransact(std::unique_ptr<apdu::APDUCommand> command,
                       DeviceCallback callback) override;
   base::WeakPtr<U2fDevice> GetWeakPtr() override;
 
