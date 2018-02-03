@@ -150,6 +150,16 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   void ActivateDraggedWindow();
   void ResetDraggedWindowGesture();
 
+  void set_may_animate(bool may_animate) { may_animate_ = may_animate; }
+  bool may_animate() const { return may_animate_; }
+
+  void set_should_be_observed(bool should_be_observed) {
+    should_be_observed_ = should_be_observed;
+  }
+  bool should_be_observed() const { return should_be_observed_; }
+
+  WindowGrid* window_grid() { return window_grid_; }
+
  private:
   class CaptionContainerView;
   class RoundedContainerView;
@@ -264,6 +274,13 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   // Pointer to the WindowGrid that contains |this|. Guaranteed to be non-null
   // for the lifetime of |this|.
   WindowGrid* window_grid_;
+
+  // True if the contained window may animate.
+  bool may_animate_ = true;
+
+  // True if the contained window is the first MRU window, which covers the
+  // fullscreen.
+  bool should_be_observed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WindowSelectorItem);
 };
