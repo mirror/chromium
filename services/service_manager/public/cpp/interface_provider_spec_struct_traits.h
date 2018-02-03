@@ -12,7 +12,7 @@
 namespace mojo {
 
 template <>
-struct SERVICE_MANAGER_MOJOM_EXPORT
+struct COMPONENT_EXPORT(SERVICE_MANAGER_MOJOM)
     StructTraits<service_manager::mojom::InterfaceProviderSpec::DataView,
                  service_manager::InterfaceProviderSpec> {
   static const std::map<service_manager::Capability,
@@ -32,7 +32,7 @@ struct SERVICE_MANAGER_MOJOM_EXPORT
 };
 
 template <>
-struct SERVICE_MANAGER_MOJOM_EXPORT
+struct COMPONENT_EXPORT(SERVICE_MANAGER_MOJOM)
     StructTraits<service_manager::mojom::InterfaceSet::DataView,
                  service_manager::InterfaceSet> {
   static std::vector<std::string> interfaces(
@@ -57,7 +57,7 @@ struct SERVICE_MANAGER_MOJOM_EXPORT
 };
 
 template <>
-struct SERVICE_MANAGER_MOJOM_EXPORT
+struct COMPONENT_EXPORT(SERVICE_MANAGER_MOJOM)
     StructTraits<service_manager::mojom::CapabilitySet::DataView,
                  service_manager::CapabilitySet> {
   static std::vector<std::string> capabilities(

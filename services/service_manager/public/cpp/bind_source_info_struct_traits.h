@@ -12,7 +12,7 @@
 namespace mojo {
 
 template <>
-struct SERVICE_MANAGER_MOJOM_EXPORT
+struct COMPONENT_EXPORT(SERVICE_MANAGER_MOJOM)
     StructTraits<service_manager::mojom::BindSourceInfo::DataView,
                  service_manager::BindSourceInfo> {
   static const service_manager::Identity& identity(
