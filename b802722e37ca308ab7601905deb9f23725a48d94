@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70cadb50_f996b678",
+        "filename": "infra/config/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-02-03T00:38:14Z",
+      "side": 1,
+      "message": "maybe add dpranke@ ?",
+      "revId": "b802722e37ca308ab7601905deb9f23725a48d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bb36c4_80d14bb6",
+        "filename": "infra/config/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-02-03T00:38:14Z",
+      "side": 1,
+      "message": "plz remove",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 20
+      },
+      "revId": "b802722e37ca308ab7601905deb9f23725a48d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
