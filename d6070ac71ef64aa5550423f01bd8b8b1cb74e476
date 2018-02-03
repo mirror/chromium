@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a19e9d42_af2205eb",
+        "filename": "ui/chromeos/touch_exploration_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-03T21:49:53Z",
+      "side": 1,
+      "message": "lisayin, you added this code in https://codereview.chromium.org/410783002/\n\nIs it intentional that this falls through to GESTURE_IN_PROGRESS if the if() is false, or should this be a break instead?",
+      "revId": "d6070ac71ef64aa5550423f01bd8b8b1cb74e476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
