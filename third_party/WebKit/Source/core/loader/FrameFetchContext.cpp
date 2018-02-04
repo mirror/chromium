@@ -522,8 +522,6 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   MaybeRecordCTPolicyComplianceUseCounter(GetFrame(), resource->GetType(),
                                           response.GetCTPolicyCompliance());
 
-  ParseAndPersistClientHints(response);
-
   if (response_type == ResourceResponseType::kFromMemoryCache) {
     // Note: probe::willSendRequest needs to precede before this probe method.
     probe::markResourceAsCached(GetFrame(), MasterDocumentLoader(), identifier);
@@ -546,6 +544,10 @@ void FrameFetchContext::DispatchDidReceiveResponse(
         .UpdateFromAcceptClientHintsHeader(
             response.HttpHeaderField(HTTPNames::Accept_CH), response.Url(),
             &hints_context);
+
+    // Client hints preferences should be persisted only for document-level
+    // origins.
+    ParseAndPersistClientHints(response);
 
     // When response is received with a provisional docloader, the resource
     // haven't committed yet, and we cannot load resources, only preconnect.
