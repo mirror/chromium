@@ -1053,6 +1053,16 @@ class CONTENT_EXPORT ContentBrowserClient {
       content::BrowserContext* browser_context,
       const std::string& rp_id);
 
+  // Returns true if the given Webauthn RP ID (see references above) is
+  // permitted to receive attestation certificates from a device. Since these
+  // certificates can be quite identifing, this may involve a permissions
+  // prompt. This may hairpin |callback|.
+  virtual void ShouldReturnAttestationForWebauthnRPID(
+      content::RenderFrameHost* rfh,
+      const std::string& rp_id,
+      const GURL& origin,
+      base::OnceCallback<void(bool)> callback);
+
   // Get platform ClientCertStore. May return nullptr.
   virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
       ResourceContext* resource_context);

@@ -31,6 +31,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/after_startup_task_utils.h"
+#include "chrome/browser/attestation_permission_request.h"
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
@@ -64,6 +65,7 @@
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/payments/payment_request_display_manager_factory.h"
 #include "chrome/browser/permissions/permission_context_base.h"
+#include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 #include "chrome/browser/prerender/prerender_final_status.h"
@@ -805,6 +807,25 @@ chrome::mojom::PrerenderCanceler* GetPrerenderCanceller(
     return nullptr;
 
   return prerender::PrerenderContents::FromWebContents(web_contents);
+}
+
+// Returns true iff |rp_id| is listed in the SecurityKeyPermitAttestation
+// policy.
+bool IsWebauthnRPIDListedInEnterprisePolicy(
+    content::BrowserContext* browser_context,
+    const std::string& rp_id) {
+#if defined(OS_ANDROID)
+  return false;
+#else
+  const Profile* profile = Profile::FromBrowserContext(browser_context);
+  const PrefService* prefs = profile->GetPrefs();
+  const base::ListValue* permit_attestation =
+      prefs->GetList(prefs::kSecurityKeyPermitAttestation);
+
+  return std::any_of(
+      permit_attestation->begin(), permit_attestation->end(),
+      [&rp_id](const base::Value& v) { return v.GetString() == rp_id; });
+#endif
 }
 
 }  // namespace
@@ -3886,18 +3907,40 @@ bool ChromeContentBrowserClient::
     ShouldPermitIndividualAttestationForWebauthnRPID(
         content::BrowserContext* browser_context,
         const std::string& rp_id) {
-#if defined(OS_ANDROID)
-  return false;
-#else
-  const Profile* profile = Profile::FromBrowserContext(browser_context);
-  const PrefService* prefs = profile->GetPrefs();
-  const base::ListValue* permit_attestation =
-      prefs->GetList(prefs::kSecurityKeyPermitAttestation);
+  // If the RP ID is listed in the policy, signal that individual attestation is
+  // permitted.
+  return IsWebauthnRPIDListedInEnterprisePolicy(browser_context, rp_id);
+}
 
-  // If the RP ID is listed in the policy, enable individual attestation.
-  return std::any_of(
-      permit_attestation->begin(), permit_attestation->end(),
-      [&rp_id](const base::Value& v) { return v.GetString() == rp_id; });
+void ChromeContentBrowserClient::ShouldReturnAttestationForWebauthnRPID(
+    content::RenderFrameHost* rfh,
+    const std::string& rp_id,
+    const GURL& origin,
+    base::OnceCallback<void(bool)> callback) {
+#if defined(OS_ANDROID)
+  std::move(callback).Run(true);
+#else
+  WebContents* web_contents = WebContents::FromRenderFrameHost(rfh);
+  content::BrowserContext* browser_context = web_contents->GetBrowserContext();
+
+  if (IsWebauthnRPIDListedInEnterprisePolicy(browser_context, rp_id)) {
+    std::move(callback).Run(true);
+    return;
+  }
+
+  // This does not use content::PermissionManager because that only works with
+  // content settings, while this permission is a non-persisted, per-attested-
+  // registration consent.
+  PermissionRequestManager* permission_request_manager =
+      PermissionRequestManager::FromWebContents(web_contents);
+  if (!permission_request_manager) {
+    std::move(callback).Run(false);
+    return;
+  }
+
+  // The created AttestationPermissionRequest deletes itself once complete.
+  permission_request_manager->AddRequest(
+      NewAttestationPermissionRequest(origin, std::move(callback)));
 #endif
 }
 

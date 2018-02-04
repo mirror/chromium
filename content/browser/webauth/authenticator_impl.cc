@@ -247,6 +247,7 @@ void AuthenticatorImpl::MakeCredential(
               options->relying_party->id);
 
   attestation_preference_ = options->attestation;
+  rpid_ = options->relying_party->id;
 
   // TODO(kpaulhamus): Mock U2fRegister for unit tests.
   // http://crbug.com/785955.
@@ -334,18 +335,52 @@ void AuthenticatorImpl::OnRegisterResponse(
       std::move(make_credential_response_callback_)
           .Run(webauth::mojom::AuthenticatorStatus::UNKNOWN_ERROR, nullptr);
       break;
-    case device::U2fReturnCode::SUCCESS:
+    case device::U2fReturnCode::SUCCESS: {
       DCHECK(response_data.has_value());
+
+      auto callback = base::BindOnce(
+          &AuthenticatorImpl::OnRegisterResponseAttestationDecided,
+          weak_factory_.GetWeakPtr(), std::move(*response_data));
+
       if (attestation_preference_ ==
           webauth::mojom::AttestationConveyancePreference::NONE) {
-        response_data->EraseAttestationStatement();
+        std::move(callback).Run(false);
+      } else {
+        // Potentially show a permission prompt before returning the
+        // attestation data.
+        GetContentClient()->browser()->ShouldReturnAttestationForWebauthnRPID(
+            render_frame_host_, rpid_,
+            render_frame_host_->GetLastCommittedURL(), std::move(callback));
       }
-      std::move(make_credential_response_callback_)
-          .Run(webauth::mojom::AuthenticatorStatus::SUCCESS,
-               CreateMakeCredentialResponse(std::move(client_data_),
-                                            std::move(*response_data)));
-      break;
+      return;
+    }
   }
+  Cleanup();
+}
+
+void AuthenticatorImpl::OnRegisterResponseAttestationDecided(
+    device::RegisterResponseData response_data,
+    bool attestation_permitted) {
+  const bool attestation_requested =
+      (attestation_preference_ ==
+           webauth::mojom::AttestationConveyancePreference::DIRECT ||
+       attestation_preference_ ==
+           webauth::mojom::AttestationConveyancePreference::INDIRECT);
+
+  if (attestation_requested && !attestation_permitted) {
+    std::move(make_credential_response_callback_)
+        .Run(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);
+  } else {
+    if (!attestation_requested) {
+      response_data.EraseAttestationStatement();
+    }
+
+    std::move(make_credential_response_callback_)
+        .Run(webauth::mojom::AuthenticatorStatus::SUCCESS,
+             CreateMakeCredentialResponse(std::move(client_data_),
+                                          std::move(response_data)));
+  }
+
   Cleanup();
 }
 

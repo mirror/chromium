@@ -652,6 +652,14 @@ bool ContentBrowserClient::ShouldPermitIndividualAttestationForWebauthnRPID(
   return false;
 }
 
+void ContentBrowserClient::ShouldReturnAttestationForWebauthnRPID(
+    content::RenderFrameHost* rfh,
+    const std::string& rp_id,
+    const GURL& origin,
+    base::OnceCallback<void(bool)> callback) {
+  std::move(callback).Run(true);
+}
+
 std::unique_ptr<net::ClientCertStore>
 ContentBrowserClient::CreateClientCertStore(ResourceContext* resource_context) {
   return nullptr;
