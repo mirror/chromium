@@ -217,6 +217,7 @@ class CONTENT_EXPORT ServiceWorkerContextCore
   void UpdateServiceWorker(ServiceWorkerRegistration* registration,
                            bool force_bypass_cache,
                            bool skip_script_comparison,
+                           bool delay_update,
                            const UpdateCallback& callback);
 
   // Used in DevTools to update the service worker registrations without

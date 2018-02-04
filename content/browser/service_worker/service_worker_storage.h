@@ -158,6 +158,10 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // registration->last_update_check().
   void UpdateLastUpdateCheckTime(ServiceWorkerRegistration* registration);
 
+  // Updates the stored delay to match the value of
+  // registration->delay_self_update().
+  void UpdateSelfUpdateDelay(ServiceWorkerRegistration* registration);
+
   // Updates the specified registration's navigation preload state in storage.
   // The caller is responsible for mutating the live registration's state.
   void UpdateNavigationPreloadEnabled(int64_t registration_id,

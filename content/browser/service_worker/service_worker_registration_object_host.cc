@@ -98,9 +98,16 @@ void ServiceWorkerRegistrationObjectHost::Update(UpdateCallback callback) {
     return;
   }
 
+  bool delay_update = false;
+  if (provider_host_->provider_type() ==
+          blink::mojom::ServiceWorkerProviderType::kForServiceWorker) {
+    delay_update = true;
+  }
+
   context_->UpdateServiceWorker(
       registration_.get(), false /* force_bypass_cache */,
       false /* skip_script_comparison */,
+      delay_update,
       base::AdaptCallbackForRepeating(
           base::BindOnce(&ServiceWorkerRegistrationObjectHost::UpdateComplete,
                          weak_ptr_factory_.GetWeakPtr(), std::move(callback))));
