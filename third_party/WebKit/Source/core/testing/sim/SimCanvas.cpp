@@ -4,12 +4,28 @@
 
 #include "core/testing/sim/SimCanvas.h"
 
+#include "platform/graphics/Color.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkRRect.h"
 #include "third_party/skia/include/core/SkRect.h"
 
 namespace blink {
+
+size_t SimCanvas::Commands::DrawCount(CommandType type,
+                                      const String& color_string) const {
+  Color color;
+  if (!color_string.IsNull())
+    CHECK(color.SetFromString(color_string));
+
+  size_t count = 0;
+  for (auto& command : commands_) {
+    if (command.type == type &&
+        (color_string.IsNull() || command.color == color.Rgb()))
+      count++;
+  }
+  return count;
+}
 
 static int g_depth = 0;
 
@@ -19,13 +35,14 @@ class DrawScope {
   ~DrawScope() { --g_depth; }
 };
 
-SimCanvas::SimCanvas(int width, int height) : SkCanvas(width, height) {}
+SimCanvas::SimCanvas()
+    // cc::DisplayItemList::Raster() requires the canvas to have bounds.
+    : SkCanvas(100000, 100000) {}
 
 void SimCanvas::AddCommand(CommandType type, RGBA32 color) {
   if (g_depth > 1)
     return;
-  Command command = {type, color};
-  commands_.push_back(command);
+  commands_.commands_.push_back(Commands::Command{type, color});
 }
 
 void SimCanvas::onDrawRect(const SkRect& rect, const SkPaint& paint) {
