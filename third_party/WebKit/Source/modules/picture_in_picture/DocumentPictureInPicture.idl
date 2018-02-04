@@ -11,6 +11,4 @@ partial interface Document {
     readonly attribute boolean pictureInPictureEnabled;
 
     [CallWith=ScriptState] Promise<void> exitPictureInPicture();
-
-    readonly attribute HTMLVideoElement? pictureInPictureElement;
 };

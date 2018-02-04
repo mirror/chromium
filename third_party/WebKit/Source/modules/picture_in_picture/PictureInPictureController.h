@@ -44,7 +44,7 @@ class MODULES_EXPORT PictureInPictureController
 
   void UnsetPictureInPictureElement();
 
-  HTMLVideoElement* PictureInPictureElement() const;
+  HTMLVideoElement* PictureInPictureElement(TreeScope&) const;
 
   void Trace(blink::Visitor*) override;
 
