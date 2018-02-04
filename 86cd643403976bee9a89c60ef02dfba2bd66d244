@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e81b20_28732ef3",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/script-tests/remove-nested-inline-styles.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-04T22:04:21Z",
+      "side": 0,
+      "message": "Can we keep this? The bug reference may be useful.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 175
+      },
+      "revId": "86cd643403976bee9a89c60ef02dfba2bd66d244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
