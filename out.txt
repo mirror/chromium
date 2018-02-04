@@ -1,0 +1,1333 @@
+IMPORTANT DEBUGGING NOTE: each test is run inside its own process.
+For debugging a test inside a debugger, use the
+--gtest_filter=<your_test_name> flag along with either
+--single_process (to run the test in one launcher/browser process) or
+--single-process (to do the above, and also run Chrome in single-process mode).
+Using sharding settings from environment. This is shard 0/1
+Using 1 parallel jobs.
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_AllowCreatingNewWindows
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_AllowCreatingNewWindows
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_AllowCreatingNewWindows (2367 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2367 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2367 ms total)
+[  PASSED  ] 1 test.
+[1/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_AllowCreatingNewWindows (3146 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.DrivenByEnterprisePolicy
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.DrivenByEnterprisePolicy
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.DrivenByEnterprisePolicy (2665 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2666 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2666 ms total)
+[  PASSED  ] 1 test.
+[2/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.DrivenByEnterprisePolicy (3408 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages (2457 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2457 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2457 ms total)
+[  PASSED  ] 1 test.
+[3/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages (3146 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.NoList_AllowCreatingNewWindows
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoList_AllowCreatingNewWindows
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoList_AllowCreatingNewWindows (2258 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2258 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2259 ms total)
+[  PASSED  ] 1 test.
+[4/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoList_AllowCreatingNewWindows (3146 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.NoAbusive_AllowCreatingNewWindows
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoAbusive_AllowCreatingNewWindows
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoAbusive_AllowCreatingNewWindows (2220 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2220 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2220 ms total)
+[  PASSED  ] 1 test.
+[5/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.NoAbusive_AllowCreatingNewWindows (2884 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows (2317 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2317 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2317 ms total)
+[  PASSED  ] 1 test.
+[6/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows (3146 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows_LogsToConsole
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows_LogsToConsole
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows_LogsToConsole (2099 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2099 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2099 ms total)
+[  PASSED  ] 1 test.
+[7/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockCreatingNewWindows_LogsToConsole (2884 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.AllowCreatingNewWindows_NoLogToConsole
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.AllowCreatingNewWindows_NoLogToConsole
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.AllowCreatingNewWindows_NoLogToConsole (2188 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2188 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2189 ms total)
+[  PASSED  ] 1 test.
+[8/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.AllowCreatingNewWindows_NoLogToConsole (2884 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTab
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTab
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTab (2589 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2589 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2589 ms total)
+[  PASSED  ] 1 test.
+[9/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTab (3408 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTabInIframe
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTabInIframe
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTabInIframe (2153 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2153 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2153 ms total)
+[  PASSED  ] 1 test.
+[10/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.BlockOpenURLFromTabInIframe (2884 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.MultipleNavigations
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.MultipleNavigations
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.MultipleNavigations (2589 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2590 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2590 ms total)
+[  PASSED  ] 1 test.
+[11/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.MultipleNavigations (3408 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningDoNotBlockCreatingNewWindows_LogsToConsole
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningDoNotBlockCreatingNewWindows_LogsToConsole
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningDoNotBlockCreatingNewWindows_LogsToConsole (2218 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2219 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2219 ms total)
+[  PASSED  ] 1 test.
+[12/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningDoNotBlockCreatingNewWindows_LogsToConsole (2884 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningAllowCreatingNewWindows_LogsToConsole
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningAllowCreatingNewWindows_LogsToConsole
+[       OK ] SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningAllowCreatingNewWindows_LogsToConsole (2224 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerBrowserTest (2224 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2224 ms total)
+[  PASSED  ] 1 test.
+[13/224] SafeBrowsingTriggeredPopupBlockerBrowserTest.WarningAllowCreatingNewWindows_LogsToConsole (2884 ms)
+Note: Google Test filter = SafeBrowsingTriggeredInterceptingBrowserTest.AbusiveMetadata
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredInterceptingBrowserTest, where TypeParam = 
+[ RUN      ] SafeBrowsingTriggeredInterceptingBrowserTest.AbusiveMetadata
+[       OK ] SafeBrowsingTriggeredInterceptingBrowserTest.AbusiveMetadata (2615 ms)
+[----------] 1 test from SafeBrowsingTriggeredInterceptingBrowserTest (2615 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2615 ms total)
+[  PASSED  ] 1 test.
+[14/224] SafeBrowsingTriggeredInterceptingBrowserTest.AbusiveMetadata (3408 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.UnwantedImgIgnored
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.UnwantedImgIgnored
+[       OK ] SafeBrowsingServiceTest.UnwantedImgIgnored (2202 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2202 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2202 ms total)
+[  PASSED  ] 1 test.
+[15/224] SafeBrowsingServiceTest.UnwantedImgIgnored (2884 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.MalwareWithWhitelist
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.MalwareWithWhitelist
+[       OK ] SafeBrowsingServiceTest.MalwareWithWhitelist (2179 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2179 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2179 ms total)
+[  PASSED  ] 1 test.
+[16/224] SafeBrowsingServiceTest.MalwareWithWhitelist (2884 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.Prefetch
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.Prefetch
+[       OK ] SafeBrowsingServiceTest.Prefetch (2262 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2262 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2263 ms total)
+[  PASSED  ] 1 test.
+[17/224] SafeBrowsingServiceTest.Prefetch (2884 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.MainFrameHitWithReferrer
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.MainFrameHitWithReferrer
+[       OK ] SafeBrowsingServiceTest.MainFrameHitWithReferrer (2279 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2279 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2279 ms total)
+[  PASSED  ] 1 test.
+[18/224] SafeBrowsingServiceTest.MainFrameHitWithReferrer (3146 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.SubResourceHitWithMainFrameReferrer
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.SubResourceHitWithMainFrameReferrer
+[       OK ] SafeBrowsingServiceTest.SubResourceHitWithMainFrameReferrer (2308 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2308 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2308 ms total)
+[  PASSED  ] 1 test.
+[19/224] SafeBrowsingServiceTest.SubResourceHitWithMainFrameReferrer (3146 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.SubResourceHitWithMainFrameRendererInitiatedSlowLoad
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.SubResourceHitWithMainFrameRendererInitiatedSlowLoad
+[       OK ] SafeBrowsingServiceTest.SubResourceHitWithMainFrameRendererInitiatedSlowLoad (2331 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2331 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2331 ms total)
+[  PASSED  ] 1 test.
+[20/224] SafeBrowsingServiceTest.SubResourceHitWithMainFrameRendererInitiatedSlowLoad (3146 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.SubResourceHitWithMainFrameBrowserInitiatedSlowLoad
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.SubResourceHitWithMainFrameBrowserInitiatedSlowLoad
+[       OK ] SafeBrowsingServiceTest.SubResourceHitWithMainFrameBrowserInitiatedSlowLoad (2396 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2396 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2396 ms total)
+[  PASSED  ] 1 test.
+[21/224] SafeBrowsingServiceTest.SubResourceHitWithMainFrameBrowserInitiatedSlowLoad (3146 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.SubResourceHitOnFreshTab
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.SubResourceHitOnFreshTab
+[       OK ] SafeBrowsingServiceTest.SubResourceHitOnFreshTab (2240 ms)
+[----------] 1 test from SafeBrowsingServiceTest (2240 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2240 ms total)
+[  PASSED  ] 1 test.
+[22/224] SafeBrowsingServiceTest.SubResourceHitOnFreshTab (2884 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.CheckDownloadUrl
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.CheckDownloadUrl
+[       OK ] SafeBrowsingServiceTest.CheckDownloadUrl (1433 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1434 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1434 ms total)
+[  PASSED  ] 1 test.
+[23/224] SafeBrowsingServiceTest.CheckDownloadUrl (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.CheckUnwantedSoftwareUrl
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.CheckUnwantedSoftwareUrl
+[       OK ] SafeBrowsingServiceTest.CheckUnwantedSoftwareUrl (1424 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1424 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1424 ms total)
+[  PASSED  ] 1 test.
+[24/224] SafeBrowsingServiceTest.CheckUnwantedSoftwareUrl (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.CheckBrowseUrl
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.CheckBrowseUrl
+[       OK ] SafeBrowsingServiceTest.CheckBrowseUrl (1314 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1314 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1314 ms total)
+[  PASSED  ] 1 test.
+[25/224] SafeBrowsingServiceTest.CheckBrowseUrl (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.CheckDownloadUrlRedirects
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.CheckDownloadUrlRedirects
+[       OK ] SafeBrowsingServiceTest.CheckDownloadUrlRedirects (1439 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1439 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1440 ms total)
+[  PASSED  ] 1 test.
+[26/224] SafeBrowsingServiceTest.CheckDownloadUrlRedirects (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.CheckResourceUrl
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.CheckResourceUrl
+[       OK ] SafeBrowsingServiceTest.CheckResourceUrl (1434 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1434 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1434 ms total)
+[  PASSED  ] 1 test.
+[27/224] SafeBrowsingServiceTest.CheckResourceUrl (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.CheckDownloadUrlTimedOut
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.CheckDownloadUrlTimedOut
+[       OK ] SafeBrowsingServiceTest.CheckDownloadUrlTimedOut (1418 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1418 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1418 ms total)
+[  PASSED  ] 1 test.
+[28/224] SafeBrowsingServiceTest.CheckDownloadUrlTimedOut (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceTest.StartAndStop
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceTest.StartAndStop
+[       OK ] SafeBrowsingServiceTest.StartAndStop (1461 ms)
+[----------] 1 test from SafeBrowsingServiceTest (1461 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1461 ms total)
+[  PASSED  ] 1 test.
+[29/224] SafeBrowsingServiceTest.StartAndStop (2097 ms)
+Note: Google Test filter = SafeBrowsingServiceShutdownTest.DontStartAfterShutdown
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingServiceShutdownTest, where TypeParam = 
+[ RUN      ] SafeBrowsingServiceShutdownTest.DontStartAfterShutdown
+[       OK ] SafeBrowsingServiceShutdownTest.DontStartAfterShutdown (1487 ms)
+[----------] 1 test from SafeBrowsingServiceShutdownTest (1487 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1487 ms total)
+[  PASSED  ] 1 test.
+[30/224] SafeBrowsingServiceShutdownTest.DontStartAfterShutdown (2359 ms)
+Note: Google Test filter = SafeBrowsingDatabaseManagerCookieTest.TestSBUpdateCookies
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingDatabaseManagerCookieTest, where TypeParam = 
+[ RUN      ] SafeBrowsingDatabaseManagerCookieTest.TestSBUpdateCookies
+[       OK ] SafeBrowsingDatabaseManagerCookieTest.TestSBUpdateCookies (1439 ms)
+[----------] 1 test from SafeBrowsingDatabaseManagerCookieTest (1439 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1439 ms total)
+[  PASSED  ] 1 test.
+[31/224] SafeBrowsingDatabaseManagerCookieTest.TestSBUpdateCookies (2097 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerParamBrowserTest
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/0
+[       OK ] SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/0 (2384 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerParamBrowserTest (2384 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2384 ms total)
+[  PASSED  ] 1 test.
+[32/224] SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerParamBrowserTest
+[ RUN      ] SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/1
+[       OK ] SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/1 (2415 ms)
+[----------] 1 test from SafeBrowsingTriggeredPopupBlockerParamBrowserTest (2415 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2415 ms total)
+[  PASSED  ] 1 test.
+[33/224] SafeBrowsingTriggeredPopupBlockerParamBrowserTest.IgnoreSublist/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingRedirectTracking/WebstoreInlineInstallerRedirectTest.IncludesRedirectData/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingRedirectTracking/WebstoreInlineInstallerRedirectTest
+[ RUN      ] SafeBrowsingRedirectTracking/WebstoreInlineInstallerRedirectTest.IncludesRedirectData/0
+[       OK ] SafeBrowsingRedirectTracking/WebstoreInlineInstallerRedirectTest.IncludesRedirectData/0 (2207 ms)
+[----------] 1 test from SafeBrowsingRedirectTracking/WebstoreInlineInstallerRedirectTest (2208 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2208 ms total)
+[  PASSED  ] 1 test.
+[34/224] SafeBrowsingRedirectTracking/WebstoreInlineInstallerRedirectTest.IncludesRedirectData/0 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/0 (2429 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2429 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2430 ms total)
+[  PASSED  ] 1 test.
+[35/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/1 (2421 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2421 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2421 ms total)
+[  PASSED  ] 1 test.
+[36/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/2 (2406 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2406 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2406 ms total)
+[  PASSED  ] 1 test.
+[37/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/3 (2448 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2448 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2448 ms total)
+[  PASSED  ] 1 test.
+[38/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/3 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/4 (2431 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2431 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2431 ms total)
+[  PASSED  ] 1 test.
+[39/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/4 (3145 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/5 (2431 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2431 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2431 ms total)
+[  PASSED  ] 1 test.
+[40/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.RedirectCanceled/5 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/0 (2813 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2813 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2813 ms total)
+[  PASSED  ] 1 test.
+[41/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/0 (3671 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/1 (2704 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2705 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2706 ms total)
+[  PASSED  ] 1 test.
+[42/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/1 (3408 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/2 (2855 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2855 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2855 ms total)
+[  PASSED  ] 1 test.
+[43/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/2 (3670 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/3 (2771 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2771 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2771 ms total)
+[  PASSED  ] 1 test.
+[44/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/3 (3671 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/4 (2796 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2796 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2796 ms total)
+[  PASSED  ] 1 test.
+[45/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/4 (3670 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/5 (2825 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2825 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2825 ms total)
+[  PASSED  ] 1 test.
+[46/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.HardcodedUrls/5 (3671 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/0 (2259 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2259 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2259 ms total)
+[  PASSED  ] 1 test.
+[47/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/1 (2238 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2238 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2238 ms total)
+[  PASSED  ] 1 test.
+[48/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/1 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/2 (2193 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2193 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2193 ms total)
+[  PASSED  ] 1 test.
+[49/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/2 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/3 (2250 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2250 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2250 ms total)
+[  PASSED  ] 1 test.
+[50/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/3 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/4 (2184 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2184 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2184 ms total)
+[  PASSED  ] 1 test.
+[51/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/4 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/5 (2231 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2231 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2231 ms total)
+[  PASSED  ] 1 test.
+[52/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.DontProceed/5 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/0 (2459 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2460 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2460 ms total)
+[  PASSED  ] 1 test.
+[53/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/1 (2458 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2458 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2458 ms total)
+[  PASSED  ] 1 test.
+[54/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/2 (2508 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2508 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2508 ms total)
+[  PASSED  ] 1 test.
+[55/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/3 (2415 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2415 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2415 ms total)
+[  PASSED  ] 1 test.
+[56/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/3 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/4 (2466 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2466 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2466 ms total)
+[  PASSED  ] 1 test.
+[57/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/5 (2474 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2474 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2474 ms total)
+[  PASSED  ] 1 test.
+[58/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.VisitWhitePaper/5 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/0 (2280 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2280 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2280 ms total)
+[  PASSED  ] 1 test.
+[59/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/1 (2199 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2204 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2204 ms total)
+[  PASSED  ] 1 test.
+[60/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/1 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/2 (2261 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2262 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2262 ms total)
+[  PASSED  ] 1 test.
+[61/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/3 (2205 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2206 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2206 ms total)
+[  PASSED  ] 1 test.
+[62/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/3 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/4 (2290 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2291 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2291 ms total)
+[  PASSED  ] 1 test.
+[63/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/5 (2236 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2236 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2236 ms total)
+[  PASSED  ] 1 test.
+[64/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.Proceed/5 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/0 (2379 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2380 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2380 ms total)
+[  PASSED  ] 1 test.
+[65/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/1 (2409 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2409 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2409 ms total)
+[  PASSED  ] 1 test.
+[66/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/2 (2362 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2362 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2362 ms total)
+[  PASSED  ] 1 test.
+[67/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/3 (2375 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2375 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2375 ms total)
+[  PASSED  ] 1 test.
+[68/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/3 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/4 (2267 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2268 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2268 ms total)
+[  PASSED  ] 1 test.
+[69/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/5 (2414 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2414 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2414 ms total)
+[  PASSED  ] 1 test.
+[70/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeDontProceed/5 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/0 (2283 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2283 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2283 ms total)
+[  PASSED  ] 1 test.
+[71/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/1 (2350 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2350 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2350 ms total)
+[  PASSED  ] 1 test.
+[72/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/2 (2407 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2407 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2407 ms total)
+[  PASSED  ] 1 test.
+[73/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/3 (2250 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2250 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2250 ms total)
+[  PASSED  ] 1 test.
+[74/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/3 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/4 (2353 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2353 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2353 ms total)
+[  PASSED  ] 1 test.
+[75/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/5 (2314 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2314 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2314 ms total)
+[  PASSED  ] 1 test.
+[76/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeProceed/5 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:698: Failure
+Expected equality of these values:
+  expected_child_size
+    Which is: 1
+  actual_resource.child_ids_size()
+    Which is: 0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:699: Failure
+Expected equality of these values:
+  expected_tag_name
+    Which is: "IFRAME"
+  actual_resource.tag_name()
+    Which is: ""
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:994: Failure
+Expected equality of these values:
+  2
+  report.dom_size()
+    Which is: 0
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/0, where GetParam() = (3, false) (2400 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2400 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2400 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/0, where GetParam() = (3, false)
+
+ 1 FAILED TEST
+[77/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/1
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:698: Failure
+Expected equality of these values:
+  expected_child_size
+    Which is: 1
+  actual_resource.child_ids_size()
+    Which is: 0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:699: Failure
+Expected equality of these values:
+  expected_tag_name
+    Which is: "IFRAME"
+  actual_resource.tag_name()
+    Which is: ""
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:994: Failure
+Expected equality of these values:
+  2
+  report.dom_size()
+    Which is: 0
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/1, where GetParam() = (3, true) (2411 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2411 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2411 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/1, where GetParam() = (3, true)
+
+ 1 FAILED TEST
+[78/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/2
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:698: Failure
+Expected equality of these values:
+  expected_child_size
+    Which is: 1
+  actual_resource.child_ids_size()
+    Which is: 0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:699: Failure
+Expected equality of these values:
+  expected_tag_name
+    Which is: "IFRAME"
+  actual_resource.tag_name()
+    Which is: ""
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:994: Failure
+Expected equality of these values:
+  2
+  report.dom_size()
+    Which is: 0
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/2, where GetParam() = (2, false) (2446 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2447 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2447 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/2, where GetParam() = (2, false)
+
+ 1 FAILED TEST
+[79/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/3
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:698: Failure
+Expected equality of these values:
+  expected_child_size
+    Which is: 1
+  actual_resource.child_ids_size()
+    Which is: 0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:699: Failure
+Expected equality of these values:
+  expected_tag_name
+    Which is: "IFRAME"
+  actual_resource.tag_name()
+    Which is: ""
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:994: Failure
+Expected equality of these values:
+  2
+  report.dom_size()
+    Which is: 0
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/3, where GetParam() = (2, true) (2409 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2409 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2409 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/3, where GetParam() = (2, true)
+
+ 1 FAILED TEST
+[80/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/3 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/4
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:698: Failure
+Expected equality of these values:
+  expected_child_size
+    Which is: 1
+  actual_resource.child_ids_size()
+    Which is: 0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:699: Failure
+Expected equality of these values:
+  expected_tag_name
+    Which is: "IFRAME"
+  actual_resource.tag_name()
+    Which is: ""
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:994: Failure
+Expected equality of these values:
+  2
+  report.dom_size()
+    Which is: 0
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/4, where GetParam() = (4, false) (2327 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2327 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2328 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/4, where GetParam() = (4, false)
+
+ 1 FAILED TEST
+[81/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/5
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:698: Failure
+Expected equality of these values:
+  expected_child_size
+    Which is: 1
+  actual_resource.child_ids_size()
+    Which is: 0
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:699: Failure
+Expected equality of these values:
+  expected_tag_name
+    Which is: "IFRAME"
+  actual_resource.tag_name()
+    Which is: ""
+../../chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc:994: Failure
+Expected equality of these values:
+  2
+  report.dom_size()
+    Which is: 0
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/5, where GetParam() = (4, true) (2449 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2449 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2449 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/5, where GetParam() = (4, true)
+
+ 1 FAILED TEST
+[82/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.IframeOptInAndReportThreatDetails/5 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/0 (2388 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2388 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2388 ms total)
+[  PASSED  ] 1 test.
+[83/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/0 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/1 (2462 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2462 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2462 ms total)
+[  PASSED  ] 1 test.
+[84/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/1 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/2 (2321 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2321 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2321 ms total)
+[  PASSED  ] 1 test.
+[85/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/3 (2275 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2275 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2275 ms total)
+[  PASSED  ] 1 test.
+[86/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/3 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/4 (2376 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2376 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2376 ms total)
+[  PASSED  ] 1 test.
+[87/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/5 (2395 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2396 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2396 ms total)
+[  PASSED  ] 1 test.
+[88/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenDontProceed/5 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/0 (2514 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2514 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2515 ms total)
+[  PASSED  ] 1 test.
+[89/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/0 (3411 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/1 (2533 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2533 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2533 ms total)
+[  PASSED  ] 1 test.
+[90/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/1 (3407 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/2 (2428 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2428 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2428 ms total)
+[  PASSED  ] 1 test.
+[91/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/2 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/3 (2493 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2493 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2493 ms total)
+[  PASSED  ] 1 test.
+[92/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/3 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/4 (2447 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2447 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2447 ms total)
+[  PASSED  ] 1 test.
+[93/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/4 (3146 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/5 (2559 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2560 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2560 ms total)
+[  PASSED  ] 1 test.
+[94/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.MainFrameBlockedShouldHaveNoDOMDetailsWhenProceeding/5 (3408 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/0
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/0
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/0 (2249 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2249 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2249 ms total)
+[  PASSED  ] 1 test.
+[95/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/0 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/1
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/1
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/1 (2138 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2138 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2138 ms total)
+[  PASSED  ] 1 test.
+[96/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/1 (2883 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/2
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/2
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/2 (2140 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2140 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2140 ms total)
+[  PASSED  ] 1 test.
+[97/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/2 (2883 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/3
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/3
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/3 (2218 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2218 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2218 ms total)
+[  PASSED  ] 1 test.
+[98/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/3 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/4
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/4
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/4 (2193 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2193 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2193 ms total)
+[  PASSED  ] 1 test.
+[99/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/4 (2884 ms)
+Note: Google Test filter = SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/5
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest
+[ RUN      ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/5
+[       OK ] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/5 (2230 ms)
+[----------] 1 test from SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest (2230 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (2230 ms total)
+[  PASSED  ] 1 test.
+[100/224] SafeBrowsingBlockingPageBrowserTestWithThreatTypeAndIsolationSetting/SafeBrowsingBlockingPageBrowserTest.ProceedDisabled/5 (2884 ms)

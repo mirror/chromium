@@ -61,6 +61,7 @@
           "metrics::mojom::SingleSampleMetricsProvider",
           "network::mojom::URLLoaderFactory",
           "resource_coordinator::mojom::ProcessCoordinationUnit",
+          "safe_browsing::mojom::ThreatReport",
           "ui::mojom::Gpu",
           "viz::mojom::SharedBitmapAllocationNotifier",
           "viz::mojom::CompositingModeReporter"
@@ -74,7 +75,7 @@
         "cdm": [ "media:cdm" ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
-        "content_renderer": [ "browser" ],
+        "content_renderer": [ "browser", "safe_browsing::mojom::ThreatReport" ],
         "content_utility": [ "browser" ],
         "data_decoder": [ "image_decoder", "json_parser", "xml_parser" ],
         "device": [

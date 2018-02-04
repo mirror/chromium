@@ -198,22 +198,27 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     int number_of_navigations,
     WindowOpenDisposition disposition,
     int browser_test_flags) {
+  LOG(ERROR) << "Marker 2 d i";
   TabStripModel* tab_strip = browser->tab_strip_model();
   if (disposition == WindowOpenDisposition::CURRENT_TAB &&
       tab_strip->GetActiveWebContents())
     content::WaitForLoadStop(tab_strip->GetActiveWebContents());
+  LOG(ERROR) << "Marker 2 d ii";
   content::TestNavigationObserver same_tab_observer(
       tab_strip->GetActiveWebContents(), number_of_navigations,
       content::MessageLoopRunner::QuitMode::DEFERRED);
 
+  LOG(ERROR) << "Marker 2 d iii";
   std::set<Browser*> initial_browsers;
   for (auto* browser : *BrowserList::GetInstance())
     initial_browsers.insert(browser);
 
+  LOG(ERROR) << "Marker 2 d iv";
   content::WindowedNotificationObserver tab_added_observer(
       chrome::NOTIFICATION_TAB_ADDED,
       content::NotificationService::AllSources());
 
+  LOG(ERROR) << "Marker 2 d v";
   browser->OpenURL(OpenURLParams(
       url, Referrer(), disposition, ui::PAGE_TRANSITION_TYPED, false));
   if (browser_test_flags & BROWSER_TEST_WAIT_FOR_BROWSER)
@@ -224,6 +229,7 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     // Some other flag caused the wait prior to this.
     return;
   }
+  LOG(ERROR) << "Marker 2 d vi";
   WebContents* web_contents = NULL;
   if (disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
     // We've opened up a new tab, but not selected it.
@@ -240,16 +246,20 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     // The currently selected tab is the right one.
     web_contents = browser->tab_strip_model()->GetActiveWebContents();
   }
+  LOG(ERROR) << "Marker 2 d vii";
   if (disposition == WindowOpenDisposition::CURRENT_TAB) {
+    LOG(ERROR) << "Marker 2 d viii";
     same_tab_observer.Wait();
     return;
   } else if (web_contents) {
+    LOG(ERROR) << "Marker 2 d ix";
     content::TestNavigationObserver observer(
         web_contents, number_of_navigations,
         content::MessageLoopRunner::QuitMode::DEFERRED);
     observer.Wait();
     return;
   }
+  LOG(ERROR) << "Marker 2 d x";
   EXPECT_TRUE(NULL != web_contents) << " Unable to wait for navigation to \""
                                     << url.spec() << "\""
                                     << " because we can't get the tab contents";
