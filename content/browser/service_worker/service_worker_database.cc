@@ -670,6 +670,31 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::UpdateLastCheckTime(
   return WriteBatch(&batch);
 }
 
+ServiceWorkerDatabase::Status ServiceWorkerDatabase::UpdateDelaySelfUpdate(
+    int64_t registration_id,
+    const GURL& origin,
+    const base::TimeDelta& delay) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  Status status = LazyOpen(false);
+  if (IsNewOrNonexistentDatabase(status))
+    return STATUS_ERROR_NOT_FOUND;
+  if (status != STATUS_OK)
+    return status;
+  if (!origin.is_valid())
+    return STATUS_ERROR_FAILED;
+
+  RegistrationData registration;
+  status = ReadRegistrationData(registration_id, origin, &registration);
+  if (status != STATUS_OK)
+    return status;
+
+  registration.delay_self_update = delay;
+
+  leveldb::WriteBatch batch;
+  WriteRegistrationDataInBatch(registration, &batch);
+  return WriteBatch(&batch);
+}
+
 ServiceWorkerDatabase::Status
 ServiceWorkerDatabase::UpdateNavigationPreloadEnabled(int64_t registration_id,
                                                       const GURL& origin,
@@ -1423,6 +1448,11 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::ParseRegistrationData(
         static_cast<blink::mojom::ServiceWorkerUpdateViaCache>(value);
   }
 
+  if (data.has_delay_self_update()) {
+    out->delay_self_update =
+        base::TimeDelta::FromMilliseconds(data.delay_self_update());
+  }
+
   return ServiceWorkerDatabase::STATUS_OK;
 }
 
@@ -1472,6 +1502,8 @@ void ServiceWorkerDatabase::WriteRegistrationDataInBatch(
             ServiceWorkerRegistrationData_ServiceWorkerUpdateViaCacheType>(
             registration.update_via_cache));
   }
+
+  data.set_delay_self_update(registration.delay_self_update.InMilliseconds());
 
   std::string value;
   bool success = data.SerializeToString(&value);

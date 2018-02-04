@@ -265,7 +265,17 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
     StatusCallback callback) {
   switch (sender_provider_host->provider_type()) {
     case blink::mojom::ServiceWorkerProviderType::kForWindow:
-    case blink::mojom::ServiceWorkerProviderType::kForSharedWorker:
+    case blink::mojom::ServiceWorkerProviderType::kForSharedWorker: {
+      // Only reset |registration->delay_self_update| if postMessage isn't
+      // coming from service worker, to prevent workers from portMessage to
+      // another version to reset the delay.
+      ServiceWorkerContextCore* context = GetContext();
+      DCHECK(context);
+      ServiceWorkerRegistration* registration =
+          context->GetLiveRegistration(worker->registration_id());
+      DCHECK(registration);
+      registration->set_delay_self_update(base::TimeDelta());
+
       service_worker_client_utils::GetClient(
           sender_provider_host,
           base::BindOnce(&ServiceWorkerDispatcherHost::
@@ -275,6 +285,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
                          sent_message_ports, base::nullopt,
                          std::move(callback)));
       break;
+    }
     case blink::mojom::ServiceWorkerProviderType::kForServiceWorker: {
       // Clamp timeout to the sending worker's remaining timeout, to prevent
       // postMessage from keeping workers alive forever.

@@ -63,6 +63,9 @@ message ServiceWorkerRegistrationData {
 
   optional ServiceWorkerUpdateViaCacheType update_via_cache = 14
       [default = IMPORTS];
+
+  // Serialized by TimeDelta::InMilliseconds().
+  optional int64 delay_self_update = 15;
 }
 
 message ServiceWorkerResourceRecord {

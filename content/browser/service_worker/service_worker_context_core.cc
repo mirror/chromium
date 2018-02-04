@@ -5,6 +5,7 @@
 #include "content/browser/service_worker/service_worker_context_core.h"
 
 #include <limits>
+#include <memory>
 #include <set>
 #include <utility>
 
@@ -45,6 +46,10 @@
 
 namespace content {
 namespace {
+
+constexpr base::TimeDelta kSelfUpdateDelay = base::TimeDelta::FromSeconds(30);
+
+const char kUpdateTimeoutErrorMesage[] = "";
 
 void CheckFetchHandlerOfInstalledServiceWorker(
     ServiceWorkerContext::CheckHasServiceWorkerCallback callback,
@@ -194,6 +199,30 @@ class RegistrationDeletionListener
   scoped_refptr<ServiceWorkerRegistration> registration_;
   base::OnceClosure callback_;
 };
+
+void DelayedUpdate(ServiceWorkerContextCore* context,
+                   int64_t registration_id,
+                   bool force_bypass_cache,
+                   bool skip_script_comparison,
+                   const ServiceWorkerContextCore::UpdateCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!context) {
+    return;
+  }
+
+  ServiceWorkerRegistration* registration =
+      context->GetLiveRegistration(registration_id);
+  if (!registration) {
+    std::move(callback).Run(SERVICE_WORKER_ERROR_TIMEOUT,
+                            kUpdateTimeoutErrorMesage, registration_id);
+    return;
+  }
+
+  context->UpdateServiceWorker(
+      registration, force_bypass_cache, skip_script_comparison,
+      false /* Don't delay the update a second time. */, callback);
+}
+
 }  // namespace
 
 const base::FilePath::CharType
@@ -481,8 +510,24 @@ void ServiceWorkerContextCore::UpdateServiceWorker(
     ServiceWorkerRegistration* registration,
     bool force_bypass_cache,
     bool skip_script_comparison,
+    bool delay_update,
     const UpdateCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (delay_update) {
+    base::TimeDelta delay = registration->delay_self_update();
+    registration->set_delay_self_update(delay + kSelfUpdateDelay);
+
+    // If the delay is very small, don't even bother enforcing it.
+    if (delay > base::TimeDelta::Min()) {
+      BrowserThread::PostDelayedTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&DelayedUpdate, this, registration->id(),
+                         force_bypass_cache, skip_script_comparison, callback),
+          delay);
+      return;
+    }
+  }
+
   job_coordinator_->Update(registration, force_bypass_cache,
                            skip_script_comparison,
                            base::Bind(&ServiceWorkerContextCore::UpdateComplete,

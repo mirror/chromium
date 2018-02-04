@@ -81,6 +81,7 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
         origin_trial_tokens;
     blink::mojom::NavigationPreloadState navigation_preload_state;
     std::set<uint32_t> used_features;
+    base::TimeDelta delay_self_update;
 
     // Not populated until ServiceWorkerStorage::StoreRegistration is called.
     int64_t resources_total_size_bytes;
@@ -166,6 +167,12 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
   Status UpdateLastCheckTime(int64_t registration_id,
                              const GURL& origin,
                              const base::Time& time);
+
+  // Updates delay for self-update of a registration for |registration_id| by
+  // |delay|. Returns OK if it's successfully updated, or an error if it failed.
+  Status UpdateDelaySelfUpdate(int64_t registration_id,
+                               const GURL& origin,
+                               const base::TimeDelta& delay);
 
   // Updates the navigation preload state for the specified registration.
   // Returns OK if it's successfully updated. Otherwise, returns an error.

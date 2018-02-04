@@ -531,6 +531,12 @@ class ServiceWorkerStorageTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
+  void UpdateSelfUpdateDelay(
+      scoped_refptr<ServiceWorkerRegistration> registration) {
+    storage()->UpdateSelfUpdateDelay(registration.get());
+    base::RunLoop().RunUntilIdle();
+  }
+
   ServiceWorkerStatusCode FindRegistrationForDocument(
       const GURL& document_url,
       scoped_refptr<ServiceWorkerRegistration>* registration) {
@@ -697,6 +703,8 @@ TEST_F(ServiceWorkerStorageTest, StoreFindUpdateDeleteRegistration) {
   const int64_t kVersionId = 0;
   const base::Time kToday = base::Time::Now();
   const base::Time kYesterday = kToday - base::TimeDelta::FromDays(1);
+  const base::TimeDelta kSmallSelfUpdateDelay = base::TimeDelta::FromMinutes(1);
+  const base::TimeDelta kDelaySelfUpdate = base::TimeDelta::FromMinutes(10);
   std::set<uint32_t> used_features = {124, 901, 1019};
 
   scoped_refptr<ServiceWorkerRegistration> found_registration;
@@ -734,6 +742,7 @@ TEST_F(ServiceWorkerStorageTest, StoreFindUpdateDeleteRegistration) {
   live_version->set_used_features(used_features);
   live_registration->SetWaitingVersion(live_version);
   live_registration->set_last_update_check(kYesterday);
+  live_registration->set_delay_self_update(kSmallSelfUpdateDelay);
   EXPECT_EQ(SERVICE_WORKER_OK,
             StoreRegistration(live_registration, live_version));
 
@@ -821,6 +830,7 @@ TEST_F(ServiceWorkerStorageTest, StoreFindUpdateDeleteRegistration) {
   EXPECT_FALSE(found_registration->active_version());
   ASSERT_TRUE(found_registration->waiting_version());
   EXPECT_EQ(kYesterday, found_registration->last_update_check());
+  EXPECT_EQ(kSmallSelfUpdateDelay, found_registration->delay_self_update());
   EXPECT_EQ(ServiceWorkerVersion::INSTALLED,
             found_registration->waiting_version()->status());
 
@@ -856,6 +866,19 @@ TEST_F(ServiceWorkerStorageTest, StoreFindUpdateDeleteRegistration) {
   EXPECT_EQ(ServiceWorkerVersion::ACTIVATED,
             found_registration->active_version()->status());
   EXPECT_EQ(kToday, found_registration->last_update_check());
+
+  // Update the self update delay.
+  found_registration->set_delay_self_update(kDelaySelfUpdate);
+  UpdateSelfUpdateDelay(found_registration.get());
+  found_registration = nullptr;
+
+  // The Find methods should return a registration
+  // with the expected self update delay.
+  EXPECT_EQ(SERVICE_WORKER_OK,
+            FindRegistrationForDocument(kDocumentUrl, &found_registration));
+  ASSERT_TRUE(found_registration.get());
+  EXPECT_EQ(kRegistrationId, found_registration->id());
+  EXPECT_EQ(kDelaySelfUpdate, found_registration->delay_self_update());
 
   // Delete from storage but with a instance still live.
   EXPECT_TRUE(context()->GetLiveVersion(kRegistrationId));
