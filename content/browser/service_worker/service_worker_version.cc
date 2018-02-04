@@ -635,6 +635,17 @@ int ServiceWorkerVersion::StartRequestWithCustomTimeout(
       << "Event of type " << static_cast<int>(event_type)
       << " can only be dispatched to an active worker: " << status();
 
+  if (event_type != ServiceWorkerMetrics::EventType::INSTALL &&
+      event_type != ServiceWorkerMetrics::EventType::ACTIVATE &&
+      event_type != ServiceWorkerMetrics::EventType::MESSAGE) {
+    // Don't reset |registration->delay_self_update| on |install|, |activate|
+    // or |message| events to prevent update from keeping workers alive forever.
+    ServiceWorkerRegistration* registration =
+        context_->GetLiveRegistration(registration_id_);
+    DCHECK(registration);
+    registration->set_delay_self_update(base::TimeDelta());
+  }
+
   auto request = std::make_unique<InflightRequest>(
       std::move(error_callback), clock_->Now(), tick_clock_->NowTicks(),
       event_type);

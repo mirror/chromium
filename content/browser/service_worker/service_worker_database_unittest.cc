@@ -80,6 +80,7 @@ void VerifyRegistrationData(const RegistrationData& expected,
             actual.resources_total_size_bytes);
   EXPECT_EQ(expected.used_features, actual.used_features);
   EXPECT_EQ(expected.update_via_cache, actual.update_via_cache);
+  EXPECT_EQ(expected.delay_self_update, actual.delay_self_update);
 }
 
 void VerifyResourceRecords(const std::vector<Resource>& expected,
@@ -1721,6 +1722,69 @@ TEST(ServiceWorkerDatabaseTest, UpdateLastCheckTime) {
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
             database->UpdateLastCheckTime(
                 data.registration_id, origin, base::Time::Now()));
+}
+
+TEST(ServiceWorkerDatabaseTest, UpdateDelaySelfUpdate) {
+  std::unique_ptr<ServiceWorkerDatabase> database(CreateDatabaseInMemory());
+  GURL origin("http://example.com");
+  ServiceWorkerDatabase::RegistrationData deleted_version;
+  std::vector<int64_t> newly_purgeable_resources;
+
+  // Should be false because a registration does not exist.
+  EXPECT_EQ(ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
+            database->UpdateDelaySelfUpdate(0, origin, base::TimeDelta()));
+
+  // Add a registration.
+  RegistrationData data;
+  data.registration_id = 100;
+  data.scope = URL(origin, "/foo");
+  data.script = URL(origin, "/script.js");
+  data.version_id = 200;
+  data.last_update_check = base::Time::Now();
+  data.resources_total_size_bytes = 100;
+  std::vector<Resource> resources;
+  resources.push_back(CreateResource(1, data.script, 100));
+  EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
+            database->WriteRegistration(data, resources, &deleted_version,
+                                        &newly_purgeable_resources));
+
+  // Make sure that the registration is stored.
+  RegistrationData data_out;
+  std::vector<Resource> resources_out;
+  EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
+            database->ReadRegistration(data.registration_id, origin, &data_out,
+                                       &resources_out));
+  VerifyRegistrationData(data, data_out);
+  EXPECT_EQ(1u, resources_out.size());
+
+  // Update the last check time.
+  base::TimeDelta delay = base::TimeDelta::FromMilliseconds(10);
+  EXPECT_EQ(
+      ServiceWorkerDatabase::STATUS_OK,
+      database->UpdateDelaySelfUpdate(data.registration_id, origin, delay));
+
+  // Make sure that the registration is updated.
+  resources_out.clear();
+  EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
+            database->ReadRegistration(data.registration_id, origin, &data_out,
+                                       &resources_out));
+  RegistrationData expected_data = data;
+  expected_data.delay_self_update = delay;
+  VerifyRegistrationData(expected_data, data_out);
+  EXPECT_EQ(1u, resources_out.size());
+
+  // Delete the registration.
+  EXPECT_EQ(ServiceWorkerDatabase::STATUS_OK,
+            database->DeleteRegistration(data.registration_id, origin,
+                                         &deleted_version,
+                                         &newly_purgeable_resources));
+  EXPECT_EQ(data.registration_id, deleted_version.registration_id);
+
+  // Should be false because the registration is gone.
+  EXPECT_EQ(
+      ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
+      database->UpdateDelaySelfUpdate(data.registration_id, origin,
+                                      base::TimeDelta::FromMilliseconds(0)));
 }
 
 TEST(ServiceWorkerDatabaseTest, UncommittedAndPurgeableResourceIds) {

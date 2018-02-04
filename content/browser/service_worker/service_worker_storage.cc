@@ -432,6 +432,7 @@ void ServiceWorkerStorage::StoreRegistration(
     data.origin_trial_tokens = *version->origin_trial_tokens();
   data.navigation_preload_state = registration->navigation_preload_state();
   data.used_features = version->used_features();
+  data.delay_self_update = registration->delay_self_update();
 
   ResourceList resources;
   version->script_cache_map()->GetResources(&resources);
@@ -497,6 +498,22 @@ void ServiceWorkerStorage::UpdateLastUpdateCheckTime(
           base::Unretained(database_.get()), registration->id(),
           registration->pattern().GetOrigin(),
           registration->last_update_check()));
+}
+
+void ServiceWorkerStorage::UpdateSelfUpdateDelay(
+    ServiceWorkerRegistration* registration) {
+  DCHECK(registration);
+  DCHECK(state_ == INITIALIZED || state_ == DISABLED) << state_;
+  if (IsDisabled())
+    return;
+
+  database_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          base::IgnoreResult(&ServiceWorkerDatabase::UpdateDelaySelfUpdate),
+          base::Unretained(database_.get()), registration->id(),
+          registration->pattern().GetOrigin(),
+          registration->delay_self_update()));
 }
 
 void ServiceWorkerStorage::UpdateNavigationPreloadEnabled(
@@ -1514,6 +1531,7 @@ ServiceWorkerStorage::GetOrCreateRegistration(
       new ServiceWorkerRegistration(options, data.registration_id, context_);
   registration->set_resources_total_size_bytes(data.resources_total_size_bytes);
   registration->set_last_update_check(data.last_update_check);
+  registration->set_delay_self_update(data.delay_self_update);
   if (pending_deletions_.find(data.registration_id) !=
       pending_deletions_.end()) {
     registration->set_is_deleted(true);

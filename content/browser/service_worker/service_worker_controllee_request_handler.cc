@@ -349,7 +349,7 @@ void ServiceWorkerControlleeRequestHandler::
     force_update_started_ = true;
     context_->UpdateServiceWorker(
         registration.get(), true /* force_bypass_cache */,
-        true /* skip_script_comparison */,
+        true /* skip_script_comparison */, false /* delay_update */,
         base::Bind(&self::DidUpdateRegistration, weak_factory_.GetWeakPtr(),
                    registration));
     return;
