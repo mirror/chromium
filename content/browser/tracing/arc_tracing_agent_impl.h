@@ -14,7 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "cc/base/ring_buffer.h"
+#include "base/ring_buffer.h"
 #include "content/public/browser/arc_tracing_agent.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
@@ -58,7 +58,7 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
    private:
     base::ScopedFD read_fd_;
     std::unique_ptr<base::FileDescriptorWatcher::Controller> fd_watcher_;
-    cc::RingBuffer<std::string, kTraceEventBufferSize> ring_buffer_;
+    base::RingBuffer<std::string, kTraceEventBufferSize> ring_buffer_;
     // NOTE: Weak pointers must be invalidated before all other member variables
     // so it must be the last member.
     base::WeakPtrFactory<ArcTracingReader> weak_ptr_factory_;
