@@ -63,7 +63,7 @@ class BattOrConnectionImpl
   // IO handler capable of reading and writing from the serial connection.
   scoped_refptr<device::SerialIoHandler> io_handler_;
 
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
  private:
   void OnOpened(bool success);

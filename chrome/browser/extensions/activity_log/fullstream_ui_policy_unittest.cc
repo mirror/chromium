@@ -230,17 +230,15 @@ class FullStreamUIPolicyTest : public testing::Test {
           checker) {
     // Use a mock clock to ensure that events are not recorded on the wrong day
     // when the test is run close to local midnight.
-    base::SimpleTestClock* mock_clock = new base::SimpleTestClock();
-    mock_clock->SetNow(base::Time::Now().LocalMidnight() +
-                       base::TimeDelta::FromHours(12));
-    policy->SetClockForTesting(std::unique_ptr<base::Clock>(mock_clock));
+    base::SimpleTestClock mock_clock;
+    mock_clock.SetNow(base::Time::Now().LocalMidnight() +
+                      base::TimeDelta::FromHours(12));
+    policy->SetClockForTesting(&mock_clock);
 
     // Record some actions
-    scoped_refptr<Action> action =
-        new Action("punky1",
-                   mock_clock->Now() - base::TimeDelta::FromMinutes(40),
-                   Action::ACTION_DOM_ACCESS,
-                   "lets1");
+    scoped_refptr<Action> action = new Action(
+        "punky1", mock_clock.Now() - base::TimeDelta::FromMinutes(40),
+        Action::ACTION_DOM_ACCESS, "lets1");
     action->mutable_args()->AppendString("vamoose1");
     action->set_page_url(GURL("http://www.google1.com"));
     action->set_page_title("Google1");
@@ -251,9 +249,8 @@ class FullStreamUIPolicyTest : public testing::Test {
     policy->ProcessAction(action);
 
     action = new Action("punky2",
-                        mock_clock->Now() - base::TimeDelta::FromMinutes(30),
-                        Action::ACTION_API_CALL,
-                        "lets2");
+                        mock_clock.Now() - base::TimeDelta::FromMinutes(30),
+                        Action::ACTION_API_CALL, "lets2");
     action->mutable_args()->AppendString("vamoose2");
     action->set_page_url(GURL("http://www.google2.com"));
     action->set_page_title("Google2");
@@ -272,6 +269,7 @@ class FullStreamUIPolicyTest : public testing::Test {
 
     // Clean database.
     policy->DeleteDatabase();
+    policy->SetClockForTesting(nullptr);
   }
 
   static void AllActionsDeleted(std::unique_ptr<Action::ActionVector> actions) {
@@ -536,32 +534,30 @@ TEST_F(FullStreamUIPolicyTest, GetTodaysActions) {
   // to the policy, but we still keep a pointer locally.  The policy will take
   // care of destruction; this is safe since the policy outlives all our
   // accesses to the mock clock.
-  base::SimpleTestClock* mock_clock = new base::SimpleTestClock();
-  mock_clock->SetNow(base::Time::Now().LocalMidnight() +
-                     base::TimeDelta::FromHours(12));
-  policy->SetClockForTesting(std::unique_ptr<base::Clock>(mock_clock));
+  base::SimpleTestClock mock_clock;
+  mock_clock.SetNow(base::Time::Now().LocalMidnight() +
+                    base::TimeDelta::FromHours(12));
+  policy->SetClockForTesting(&mock_clock);
 
   // Record some actions
   scoped_refptr<Action> action =
-      new Action("punky",
-                 mock_clock->Now() - base::TimeDelta::FromMinutes(40),
-                 Action::ACTION_API_CALL,
-                 "brewster");
+      new Action("punky", mock_clock.Now() - base::TimeDelta::FromMinutes(40),
+                 Action::ACTION_API_CALL, "brewster");
   action->mutable_args()->AppendString("woof");
   action->set_arg_url(GURL("http://www.arg-url.com"));
   action->set_page_title("Page Title");
   policy->ProcessAction(action);
 
   action =
-      new Action("punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_arg_url(GURL("http://www.arg-url.com"));
   action->set_page_title("Page Title");
   policy->ProcessAction(action);
 
-  action = new Action(
-      "scoobydoo", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
+  action = new Action("scoobydoo", mock_clock.Now(), Action::ACTION_DOM_ACCESS,
+                      "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_arg_url(GURL("http://www.arg-url.com"));
@@ -582,41 +578,34 @@ TEST_F(FullStreamUIPolicyTest, GetOlderActions) {
 
   // Use a mock clock to ensure that events are not recorded on the wrong day
   // when the test is run close to local midnight.
-  base::SimpleTestClock* mock_clock = new base::SimpleTestClock();
-  mock_clock->SetNow(base::Time::Now().LocalMidnight() +
-                     base::TimeDelta::FromHours(12));
-  policy->SetClockForTesting(std::unique_ptr<base::Clock>(mock_clock));
+  base::SimpleTestClock mock_clock;
+  mock_clock.SetNow(base::Time::Now().LocalMidnight() +
+                    base::TimeDelta::FromHours(12));
+  policy->SetClockForTesting(&mock_clock);
 
   // Record some actions
   scoped_refptr<Action> action =
       new Action("punky",
-                 mock_clock->Now() - base::TimeDelta::FromDays(3) -
+                 mock_clock.Now() - base::TimeDelta::FromDays(3) -
                      base::TimeDelta::FromMinutes(40),
-                 Action::ACTION_API_CALL,
-                 "brewster");
+                 Action::ACTION_API_CALL, "brewster");
   action->mutable_args()->AppendString("woof");
   policy->ProcessAction(action);
 
-  action = new Action("punky",
-                      mock_clock->Now() - base::TimeDelta::FromDays(3),
-                      Action::ACTION_DOM_ACCESS,
-                      "lets");
+  action = new Action("punky", mock_clock.Now() - base::TimeDelta::FromDays(3),
+                      Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
 
-  action = new Action("punky",
-                      mock_clock->Now(),
-                      Action::ACTION_DOM_ACCESS,
-                      "lets");
+  action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("too new");
   action->set_page_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
 
-  action = new Action("punky",
-                      mock_clock->Now() - base::TimeDelta::FromDays(7),
-                      Action::ACTION_DOM_ACCESS,
-                      "lets");
+  action = new Action("punky", mock_clock.Now() - base::TimeDelta::FromDays(7),
+                      Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("too old");
   action->set_page_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
@@ -635,24 +624,23 @@ TEST_F(FullStreamUIPolicyTest, RemoveAllURLs) {
 
   // Use a mock clock to ensure that events are not recorded on the wrong day
   // when the test is run close to local midnight.
-  base::SimpleTestClock* mock_clock = new base::SimpleTestClock();
-  mock_clock->SetNow(base::Time::Now().LocalMidnight() +
-                     base::TimeDelta::FromHours(12));
-  policy->SetClockForTesting(std::unique_ptr<base::Clock>(mock_clock));
+  base::SimpleTestClock mock_clock;
+  mock_clock.SetNow(base::Time::Now().LocalMidnight() +
+                    base::TimeDelta::FromHours(12));
+  policy->SetClockForTesting(&mock_clock);
 
   // Record some actions
   scoped_refptr<Action> action =
-      new Action("punky", mock_clock->Now(),
-                 Action::ACTION_DOM_ACCESS, "lets");
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
 
-  mock_clock->Advance(base::TimeDelta::FromSeconds(1));
-  action = new Action(
-      "punky", mock_clock->Now(), Action::ACTION_API_CALL, "lets");
+  mock_clock.Advance(base::TimeDelta::FromSeconds(1));
+  action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_API_CALL, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google2.com"));
   action->set_page_title("Google");
@@ -678,15 +666,15 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
 
   // Use a mock clock to ensure that events are not recorded on the wrong day
   // when the test is run close to local midnight.
-  base::SimpleTestClock* mock_clock = new base::SimpleTestClock();
-  mock_clock->SetNow(base::Time::Now().LocalMidnight() +
-                     base::TimeDelta::FromHours(12));
-  policy->SetClockForTesting(std::unique_ptr<base::Clock>(mock_clock));
+  base::SimpleTestClock mock_clock;
+  mock_clock.SetNow(base::Time::Now().LocalMidnight() +
+                    base::TimeDelta::FromHours(12));
+  policy->SetClockForTesting(&mock_clock);
 
   // Record some actions
   // This should have the page url and args url cleared.
-  scoped_refptr<Action> action = new Action("punky", mock_clock->Now(),
-                                            Action::ACTION_DOM_ACCESS, "lets");
+  scoped_refptr<Action> action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google1.com"));
   action->set_page_title("Google");
@@ -694,9 +682,9 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   policy->ProcessAction(action);
 
   // This should have the page url cleared but not args url.
-  mock_clock->Advance(base::TimeDelta::FromSeconds(1));
-  action = new Action(
-      "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
+  mock_clock.Advance(base::TimeDelta::FromSeconds(1));
+  action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google1.com"));
   action->set_page_title("Google");
@@ -705,18 +693,18 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
 
   // This should have the page url cleared. The args url is deliberately not set
   // to make sure this doesn't cause any issues.
-  mock_clock->Advance(base::TimeDelta::FromSeconds(1));
-  action = new Action(
-      "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
+  mock_clock.Advance(base::TimeDelta::FromSeconds(1));
+  action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google2.com"));
   action->set_page_title("Google");
   policy->ProcessAction(action);
 
   // This should have the args url cleared but not the page url or page title.
-  mock_clock->Advance(base::TimeDelta::FromSeconds(1));
-  action = new Action(
-      "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
+  mock_clock.Advance(base::TimeDelta::FromSeconds(1));
+  action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_page_title("Google");
@@ -724,9 +712,9 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   policy->ProcessAction(action);
 
   // This should have neither cleared.
-  mock_clock->Advance(base::TimeDelta::FromSeconds(1));
-  action = new Action(
-      "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
+  mock_clock.Advance(base::TimeDelta::FromSeconds(1));
+  action =
+      new Action("punky", mock_clock.Now(), Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_page_title("Google");
@@ -754,16 +742,15 @@ TEST_F(FullStreamUIPolicyTest, RemoveExtensionData) {
 
   // Use a mock clock to ensure that events are not recorded on the wrong day
   // when the test is run close to local midnight.
-  base::SimpleTestClock* mock_clock = new base::SimpleTestClock();
-  mock_clock->SetNow(base::Time::Now().LocalMidnight() +
-                     base::TimeDelta::FromHours(12));
-  policy->SetClockForTesting(std::unique_ptr<base::Clock>(mock_clock));
+  base::SimpleTestClock mock_clock;
+  mock_clock.SetNow(base::Time::Now().LocalMidnight() +
+                    base::TimeDelta::FromHours(12));
+  policy->SetClockForTesting(&mock_clock);
 
   // Record some actions
-  scoped_refptr<Action> action = new Action("deleteextensiondata",
-                                            mock_clock->Now(),
-                                            Action::ACTION_DOM_ACCESS,
-                                            "lets");
+  scoped_refptr<Action> action =
+      new Action("deleteextensiondata", mock_clock.Now(),
+                 Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
@@ -771,10 +758,8 @@ TEST_F(FullStreamUIPolicyTest, RemoveExtensionData) {
   policy->ProcessAction(action);
   policy->ProcessAction(action);
 
-  scoped_refptr<Action> action2 = new Action("dontdelete",
-                                             mock_clock->Now(),
-                                             Action::ACTION_DOM_ACCESS,
-                                             "lets");
+  scoped_refptr<Action> action2 = new Action("dontdelete", mock_clock.Now(),
+                                             Action::ACTION_DOM_ACCESS, "lets");
   action->mutable_args()->AppendString("vamoose");
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
