@@ -104,6 +104,9 @@ class CanvasRenderingContext2DTest : public ::testing::Test {
   DummyPageHolder& Page() const { return *dummy_page_holder_; }
   Document& GetDocument() const { return *document_; }
   HTMLCanvasElement& CanvasElement() const { return *canvas_element_; }
+  bool IsCanvasResourceHostSet(Canvas2DLayerBridge* bridge) {
+    return !!bridge->resource_host_;
+  }
   CanvasRenderingContext2D* Context2d() const {
     return static_cast<CanvasRenderingContext2D*>(
         CanvasElement().RenderingContext());
