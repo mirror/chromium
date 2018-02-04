@@ -13,7 +13,6 @@ import org.junit.runners.model.Statement;
 
 import org.chromium.base.Log;
 import org.chromium.net.CronetTestCommon.CronetTestCommonCallback;
-import org.chromium.net.impl.CronetEngineBase;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -48,12 +47,10 @@ public class CronetTestRule implements CronetTestCommonCallback, TestRule {
      * Creates and holds pointer to CronetEngine.
      */
     public static class CronetTestFramework {
-        public CronetEngineBase mCronetEngine;
+        public ExperimentalCronetEngine mCronetEngine;
 
         public CronetTestFramework(Context context) {
-            mCronetEngine = (CronetEngineBase) new ExperimentalCronetEngine.Builder(context)
-                                    .enableQuic(true)
-                                    .build();
+            mCronetEngine = new ExperimentalCronetEngine.Builder(context).enableQuic(true).build();
             // Start collecting metrics.
             mCronetEngine.getGlobalMetricsDeltas();
         }
