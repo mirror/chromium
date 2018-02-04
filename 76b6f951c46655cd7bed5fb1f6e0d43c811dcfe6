@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1248427_7155e63c",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSSkew.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-04T21:22:41Z",
+      "side": 1,
+      "message": "I think you can omit the ay_-\u003eIsUnitValue() check here, since the only way that the second condition is checked is if ay_-\u003eIsUnitValue() is true.",
+      "revId": "76b6f951c46655cd7bed5fb1f6e0d43c811dcfe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
