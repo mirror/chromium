@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb9402cb_b56e13b9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-02-04T18:50:42Z",
+      "side": 0,
+      "message": "Out of curiosity: Are failures retried when --smoke is passed now? Either way I don\u0027t think it\u0027s very important, except that retrying failures makes the android test runs (which are --smoke test runs) greener.",
+      "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

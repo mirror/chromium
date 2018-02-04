@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4058ee73_85977f3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-02-04T18:50:42Z",
+      "side": 1,
+      "message": "Spelling nit",
+      "range": {
+        "startLine": 17,
+        "startChar": 52,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "492c0c5d93d87bc9ba4a98c34c2cf268430a046c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e4bc72_8a218473",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-02-04T18:50:42Z",
+      "side": 1,
+      "message": "Perhaps this comment could be moved down one line since it is related to line 146.\n\nUnrelated side discussion: I think that the whole point of retrying failures is to cover up the flakiness problem: to keep the bots to remain mostly green even though there are some tests that often fail on the first try. If that\u0027s the way it is, then we would ideally retry only when we must, for practical reasons.",
+      "revId": "492c0c5d93d87bc9ba4a98c34c2cf268430a046c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09868eea_646f67d0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-02-04T18:50:42Z",
+      "side": 1,
+      "message": "Thanks for moving these assertions into their own test method :-)",
+      "revId": "492c0c5d93d87bc9ba4a98c34c2cf268430a046c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
