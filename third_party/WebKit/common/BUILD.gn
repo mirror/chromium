@@ -35,6 +35,8 @@ jumbo_component("blink_common") {
     "feature_policy/feature_policy.h",
     "frame_policy.cc",
     "frame_policy.h",
+    "heap_profiler/sampling_heap_profiler.cc",
+    "heap_profiler/sampling_heap_profiler.h",
     "message_port/cloneable_message.cc",
     "message_port/cloneable_message.h",
     "message_port/cloneable_message_struct_traits.cc",
