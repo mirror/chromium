@@ -220,10 +220,9 @@ struct DrawRenderPassDrawQuadParams {
 
   bool use_aa = false;
 
-  // Some filters affect pixels outside the original contents bounds. This
-  // requires translation of the source when texturing, as well as a change in
-  // the bounds of the destination.
-  gfx::Point src_offset;
+  // Real drawn rect.
+  // Some filters affect pixels outside the original contents bounds, so we can
+  // change this destination rect.
   gfx::RectF dst_rect;
 
   // A Skia image that should be sampled from instead of the original
@@ -238,19 +237,6 @@ struct DrawRenderPassDrawQuadParams {
   std::unique_ptr<cc::DisplayResourceProvider::ScopedSamplerGL>
       mask_resource_lock;
 
-  // Original background texture.
-  uint32_t background_texture = 0;
-
-  // Backdrop bounding box.
-  gfx::Rect background_rect;
-
-  // Filtered background texture.
-  sk_sp<SkImage> background_image;
-  GLuint background_image_id = 0;
-
-  // Whether the original background texture is needed for the mask.
-  bool mask_for_background = false;
-
   // Whether a color matrix needs to be applied by the shaders when drawing
   // the RPDQ.
   bool use_color_matrix = false;
@@ -264,6 +250,20 @@ struct DrawRenderPassDrawQuadParams {
   // The color space of the texture bound for sampling (from filter_image or
   // bypass_quad_resource_lock, depending on the path taken).
   gfx::ColorSpace contents_and_bypass_color_space;
+
+  // Background filters block.
+  // Original background texture.
+  uint32_t background_texture = 0;
+
+  // Backdrop bounding box.
+  gfx::Rect background_rect;
+
+  // Filtered background texture.
+  sk_sp<SkImage> background_image;
+  GLuint background_image_id = 0;
+
+  // Whether the original background texture is needed for the mask.
+  bool mask_for_background = false;
 };
 
 static GLint GetActiveTextureUnit(GLES2Interface* gl) {
@@ -675,23 +675,16 @@ static sk_sp<SkImage> WrapTexture(uint32_t texture_id,
 }
 
 static sk_sp<SkImage> ApplyImageFilter(
-    std::unique_ptr<GLRenderer::ScopedUseGrContext> use_gr_context,
     const gfx::RectF& src_rect,
     const gfx::RectF& dst_rect,
     const gfx::Vector2dF& scale,
     sk_sp<SkImageFilter> filter,
-    GLuint texture_id,
-    GLenum target,
-    const gfx::Size& size,
+    sk_sp<SkImage> src_image,
     SkIPoint* offset,
     SkIRect* subset,
-    bool flip_texture,
     const gfx::PointF& origin) {
-  if (!filter || !use_gr_context)
+  if (!filter)
     return nullptr;
-
-  sk_sp<SkImage> src_image = WrapTexture(
-      texture_id, target, size, use_gr_context->context(), flip_texture);
 
   if (!src_image) {
     TRACE_EVENT_INSTANT0("cc",
@@ -1321,37 +1314,50 @@ bool GLRenderer::UpdateRPDQWithSkiaFilters(
         SkIPoint offset;
         SkIRect subset;
         gfx::RectF src_rect(quad->rect);
+
+        auto use_gr_context = ScopedUseGrContext::Create(this);
+        if (!use_gr_context)
+          return false;
+
+        sk_sp<SkImage> src_image;
+
         if (params->contents_texture) {
           params->contents_and_bypass_color_space =
               params->contents_texture->color_space();
-          params->filter_image = ApplyImageFilter(
-              ScopedUseGrContext::Create(this), src_rect, params->dst_rect,
-              quad->filters_scale, std::move(filter),
+
+          src_image = WrapTexture(
               params->contents_texture->id(), GL_TEXTURE_2D,
-              params->contents_texture->size(), &offset, &subset,
-              params->flip_texture, quad->filters_origin);
+              params->contents_texture->size(), use_gr_context->context(),
+              params->flip_texture);
         } else {
           cc::DisplayResourceProvider::ScopedReadLockGL
               prefilter_bypass_quad_texture_lock(
                   resource_provider_, params->bypass_quad_texture.resource_id);
           params->contents_and_bypass_color_space =
               prefilter_bypass_quad_texture_lock.color_space();
-          params->filter_image = ApplyImageFilter(
-              ScopedUseGrContext::Create(this), src_rect, params->dst_rect,
-              quad->filters_scale, std::move(filter),
-              prefilter_bypass_quad_texture_lock.texture_id(),
-              prefilter_bypass_quad_texture_lock.target(),
-              prefilter_bypass_quad_texture_lock.size(), &offset, &subset,
-              params->flip_texture, quad->filters_origin);
+
+          src_image = WrapTexture(
+            prefilter_bypass_quad_texture_lock.texture_id(),
+            prefilter_bypass_quad_texture_lock.target(),
+            prefilter_bypass_quad_texture_lock.size(),
+            use_gr_context->context(), params->flip_texture);
         }
+
+        if (!src_image)
+          return false;
+
+        params->filter_image = ApplyImageFilter(
+            src_rect, params->dst_rect,
+            quad->filters_scale, std::move(filter),
+            std::move(src_image), &offset, &subset,
+            quad->filters_origin);
 
         if (!params->filter_image)
           return false;
         params->dst_rect =
             gfx::RectF(src_rect.x() + offset.fX, src_rect.y() + offset.fY,
                        subset.width(), subset.height());
-        params->src_offset.SetPoint(subset.x(), subset.y());
-        gfx::RectF tex_rect = gfx::RectF(gfx::PointF(params->src_offset),
+        gfx::RectF tex_rect = gfx::RectF(gfx::PointF(subset.x(), subset.y()),
                                          params->dst_rect.size());
         params->tex_coord_rect = tex_rect;
       }
@@ -1544,8 +1550,8 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
 
     gl_->Uniform4f(current_program_->backdrop_rect_location(),
                    params->background_rect.x(), params->background_rect.y(),
-                   params->background_rect.width(),
-                   params->background_rect.height());
+                   1.0f / params->background_rect.width(),
+                   1.0f / params->background_rect.height());
 
     // Either |background_image_id| or |background_texture| will be the
     // |backdrop_location| in the shader.
