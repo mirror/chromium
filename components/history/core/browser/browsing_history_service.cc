@@ -169,7 +169,7 @@ BrowsingHistoryService::BrowsingHistoryService(
       driver_(driver),
       local_history_(local_history),
       sync_service_(sync_service),
-      clock_(new base::DefaultClock()),
+      clock_(base::DefaultClock::GetInstance()),
       weak_factory_(this) {
   DCHECK(driver_);
 

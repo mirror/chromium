@@ -93,10 +93,7 @@ class PermissionDecisionAutoBlockerUnitTest
                                     features::kPermissionsBlacklist},
                                    {});
     last_embargoed_status_ = false;
-    std::unique_ptr<base::SimpleTestClock> clock =
-        std::make_unique<base::SimpleTestClock>();
-    clock_ = clock.get();
-    autoblocker_->SetClockForTesting(std::move(clock));
+    autoblocker_->SetClockForTesting(&clock_);
     callback_was_run_ = false;
   }
 
@@ -142,12 +139,12 @@ class PermissionDecisionAutoBlockerUnitTest
 
   bool callback_was_run() { return callback_was_run_; }
 
-  base::SimpleTestClock* clock() { return clock_; }
+  base::SimpleTestClock* clock() { return &clock_; }
 
  private:
   PermissionDecisionAutoBlocker* autoblocker_;
   base::test::ScopedFeatureList feature_list_;
-  base::SimpleTestClock* clock_;
+  base::SimpleTestClock clock_;
   bool last_embargoed_status_;
   bool callback_was_run_;
 };

@@ -282,12 +282,12 @@ class FrameSinkVideoCapturerTest : public testing::Test {
         base::Time::Now(), base::TimeTicks() + base::TimeDelta::FromSeconds(1),
         base::TestMockTimeTaskRunner::Type::kStandalone);
     start_time_ = task_runner_->NowTicks();
-    clock_ = task_runner_->GetMockTickClock();
-    capturer_.clock_ = clock_.get();
+    base::TickClock* clock = task_runner_->GetMockTickClock();
+    capturer_.clock_ = clock;
 
     // Replace the retry timer with one that uses this test's fake clock and
     // task runner.
-    capturer_.refresh_frame_retry_timer_.emplace(clock_.get());
+    capturer_.refresh_frame_retry_timer_.emplace(clock);
     capturer_.refresh_frame_retry_timer_->SetTaskRunner(task_runner_);
 
     // Before setting the format, ensure the defaults are in-place. Then, for
@@ -372,7 +372,6 @@ class FrameSinkVideoCapturerTest : public testing::Test {
  protected:
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   base::TimeTicks start_time_;
-  std::unique_ptr<base::TickClock> clock_;
   MockFrameSinkManager frame_sink_manager_;
   FakeCapturableFrameSink frame_sink_;
   FrameSinkVideoCapturerImpl capturer_;

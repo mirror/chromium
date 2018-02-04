@@ -38,10 +38,10 @@ PowerButtonController::PowerButtonController(
     BacklightsForcedOffSetter* backlights_forced_off_setter)
     : backlights_forced_off_setter_(backlights_forced_off_setter),
       lock_state_controller_(Shell::Get()->lock_state_controller()),
-      tick_clock_(new base::DefaultTickClock) {
+      tick_clock_(base::DefaultTickClock::GetInstance()) {
   ProcessCommandLine();
   display_controller_ = std::make_unique<PowerButtonDisplayController>(
-      backlights_forced_off_setter_, tick_clock_.get());
+      backlights_forced_off_setter_, tick_clock_);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
@@ -223,23 +223,22 @@ void PowerButtonController::OnAccelerometerUpdated(
   if (!force_clamshell_power_button_ && !tablet_controller_) {
     tablet_controller_ = std::make_unique<TabletPowerButtonController>(
         display_controller_.get(), backlights_forced_off_setter_,
-        show_power_button_menu_, tick_clock_.get());
+        show_power_button_menu_, tick_clock_);
   }
 
   if (!screenshot_controller_) {
     screenshot_controller_ = std::make_unique<PowerButtonScreenshotController>(
-        tablet_controller_.get(), tick_clock_.get(),
-        force_clamshell_power_button_);
+        tablet_controller_.get(), tick_clock_, force_clamshell_power_button_);
   }
 }
 
 void PowerButtonController::SetTickClockForTesting(
-    std::unique_ptr<base::TickClock> tick_clock) {
+    base::TickClock* tick_clock) {
   DCHECK(tick_clock);
-  tick_clock_ = std::move(tick_clock);
+  tick_clock_ = tick_clock;
 
   display_controller_ = std::make_unique<PowerButtonDisplayController>(
-      backlights_forced_off_setter_, tick_clock_.get());
+      backlights_forced_off_setter_, tick_clock_);
 }
 
 bool PowerButtonController::TriggerDisplayOffTimerForTesting() {

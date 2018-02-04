@@ -293,8 +293,7 @@ class RemoteSuggestionsFetcherImplTestBase : public testing::Test {
         GetFetchEndpoint(version_info::Channel::STABLE), api_key,
         user_classifier_.get());
 
-    clock_ = mock_task_runner_->GetMockClock();
-    fetcher_->SetClockForTesting(clock_.get());
+    fetcher_->SetClockForTesting(mock_task_runner_->GetMockClock());
   }
 
   void SignIn() {
@@ -355,10 +354,6 @@ class RemoteSuggestionsFetcherImplTestBase : public testing::Test {
   identity::IdentityTestEnvironment identity_test_env_;
 
  private:
-  // TODO(tzik): Remove |clock_| after updating GetMockTickClock to own the
-  // instance. http://crbug.com/789079
-  std::unique_ptr<base::Clock> clock_;
-
   test::RemoteSuggestionsTestUtils utils_;
   variations::testing::VariationParamsManager params_manager_;
   scoped_refptr<base::TestMockTimeTaskRunner> mock_task_runner_;
