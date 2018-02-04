@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "974392fb_9162433f",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-04T05:17:36Z",
+      "side": 1,
+      "message": "Thanks for the analysis. I agree with your assessment of the current usage.\n\nHowever, I don\u0027t think the keyboard granularity is necessarily transient and the two uses are that different. The only distinction I can draw is a collapsed selection vs a non-collapsed selection. Both have some kind of granularity; the latter granularity is reflected in the selection itself (e.g. a word is selected), while the other reflects user intent (e.g. a caret moved to the next word, so the selection is at the start of a word). Mixing mouse and keyboard should reset the selection and the mouse related logic should account for collapsed selection with granularity.\n\nNonetheless, I don\u0027t want to introduce something like this if generally unneeded. I\u0027ll explore some other way of passing the information along and ping this thread.",
+      "parentUuid": "0c257bae_58b9978b",
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b0886f_7574bbdb",
         "filename": "third_party/WebKit/public/web/WebAXEnums.h",
         "patchSetId": 3
