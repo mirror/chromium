@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
@@ -21,15 +22,50 @@
 
 namespace network {
 
-RestrictedCookieManager::RestrictedCookieManager(net::CookieStore* cookie_store,
-                                                 int render_process_id,
-                                                 int render_frame_id)
+class RestrictedCookieManager::NexusListenerReferenceNode
+    : public base::LinkNode<NexusListenerReferenceNode> {
+ public:
+  NexusListenerReferenceNode() = default;
+  void SetReference(RestrictedCookieChangeNexus::ListenerReference reference) {
+    reference_ = std::move(reference);
+  }
+
+  // No copying.
+  NexusListenerReferenceNode(const NexusListenerReferenceNode&) = delete;
+  NexusListenerReferenceNode& operator=(const NexusListenerReferenceNode&) =
+      delete;
+
+ private:
+  RestrictedCookieChangeNexus::ListenerReference reference_;
+};
+
+RestrictedCookieManager::RestrictedCookieManager(
+    net::CookieStore* cookie_store,
+    RestrictedCookieChangeNexus* cookie_change_nexus,
+    int render_process_id,
+    int render_frame_id)
     : cookie_store_(cookie_store),
       render_process_id_(render_process_id),
       render_frame_id_(render_frame_id),
-      weak_ptr_factory_(this) {}
+      cookie_change_nexus_(cookie_change_nexus),
+      weak_ptr_factory_(this) {
+  DCHECK(cookie_store);
+  DCHECK(cookie_change_nexus);
+#if DCHECK_IS_ON()
+  DCHECK_EQ(cookie_store, cookie_change_nexus->cookie_store());
+#endif  // DCHECK_IS_ON()
+}
 
-RestrictedCookieManager::~RestrictedCookieManager() = default;
+RestrictedCookieManager::~RestrictedCookieManager() {
+  base::LinkNode<NexusListenerReferenceNode>* node = listeners_.head();
+  while (node != listeners_.end()) {
+    NexusListenerReferenceNode* listener_reference = node->value();
+    node = node->next();
+    // Removing the node from the list is not necessary, because the entire list
+    // is going away.
+    delete listener_reference;
+  }
+}
 
 void RestrictedCookieManager::GetAllForUrl(
     const GURL& url,
@@ -126,6 +162,61 @@ void RestrictedCookieManager::SetCanonicalCookie(
   cookie_store_->SetCanonicalCookieAsync(std::move(sanitized_cookie),
                                          secure_source, modify_http_only,
                                          std::move(callback));
+}
+
+void RestrictedCookieManager::AddChangeListener(
+    const GURL& url,
+    const GURL& site_for_cookies,
+    network::mojom::RestrictedCookieChangeListenerPtr listener) {
+  // TODO(pwnall): Replicate the call to
+  //               ChildProcessSecurityPolicy::CanAccessDataForOrigin() in
+  //               RenderFrameMessageFilter::GetCookies.
+
+  net::CookieOptions net_options;
+  if (net::registry_controlled_domains::SameDomainOrHost(
+          url, site_for_cookies,
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+    // TODO(mkwst): This check ought to further distinguish between frames
+    // initiated in a strict or lax same-site context.
+    net_options.set_same_site_cookie_mode(
+        net::CookieOptions::SameSiteCookieMode::INCLUDE_STRICT_AND_LAX);
+  } else {
+    net_options.set_same_site_cookie_mode(
+        net::CookieOptions::SameSiteCookieMode::DO_NOT_INCLUDE);
+  }
+
+  NexusListenerReferenceNode* listener_node = new NexusListenerReferenceNode();
+
+  listener.set_connection_error_handler(
+      base::BindOnce(&RestrictedCookieManager::RemoveChangeListener,
+                     weak_ptr_factory_.GetWeakPtr(), listener_node));
+
+  RestrictedCookieChangeNexus::ListenerReference nexus_listener_reference =
+      cookie_change_nexus_->AddListener(
+          url, net_options,
+          base::BindRepeating(&RestrictedCookieManager::OnCookieChange,
+                              weak_ptr_factory_.GetWeakPtr(),
+                              std::move(listener)));
+
+  listener_node->SetReference(std::move(nexus_listener_reference));
+  listeners_.Append(listener_node);
+}
+
+void RestrictedCookieManager::RemoveChangeListener(
+    base::LinkNode<NexusListenerReferenceNode>* listener_node) {
+  NexusListenerReferenceNode* listener_reference = listener_node->value();
+  listener_node->RemoveFromList();
+  delete listener_reference;
+}
+
+void RestrictedCookieManager::OnCookieChange(
+    const network::mojom::RestrictedCookieChangeListenerPtr& listener,
+    const net::CanonicalCookie& cookie,
+    net::CookieStore::ChangeCause change_cause) {
+  std::vector<net::CanonicalCookie> cookies;
+  LOG(ERROR) << __func__ << " cookie: " << cookie.Name();
+  cookies.emplace_back(cookie);
+  listener->OnCookiesChanged(std::move(cookies));
 }
 
 }  // namespace network

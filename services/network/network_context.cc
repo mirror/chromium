@@ -177,8 +177,11 @@ void NetworkContext::GetRestrictedCookieManager(
   // TODO(crbug.com/729800): RestrictedCookieManager should own its bindings
   //     and NetworkContext should own the RestrictedCookieManager
   //     instances.
+  net::CookieStore* cookie_store = GetURLRequestContext()->cookie_store();
+  RestrictedCookieChangeNexus* cookie_change_nexus =
+      RestrictedCookieChangeNexus::Instance(cookie_store);
   mojo::MakeStrongBinding(std::make_unique<RestrictedCookieManager>(
-                              GetURLRequestContext()->cookie_store(),
+                              cookie_store, cookie_change_nexus,
                               render_process_id, render_frame_id),
                           std::move(request));
 }
