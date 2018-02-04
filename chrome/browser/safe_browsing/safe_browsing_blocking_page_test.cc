@@ -462,11 +462,16 @@ class SafeBrowsingBlockingPageBrowserTest
   // navigates to a page with an iframe containing the threat site, and returns
   // the url of the parent page.
   GURL SetupThreatIframeWarningAndNavigate() {
+    LOG(ERROR) << "Marker 2 a";
     GURL url = embedded_test_server()->GetURL(kCrossSiteMaliciousPage);
+    LOG(ERROR) << "Marker 2 b";
     GURL iframe_url = embedded_test_server()->GetURL(kMaliciousIframe);
+    LOG(ERROR) << "Marker 2 c";
     SetURLThreatType(iframe_url, testing::get<0>(GetParam()));
 
+    LOG(ERROR) << "Marker 2 d";
     ui_test_utils::NavigateToURL(browser(), url);
+    LOG(ERROR) << "Marker 2 e";
     EXPECT_TRUE(WaitForReady(browser()));
     return url;
   }
@@ -685,6 +690,9 @@ class SafeBrowsingBlockingPageBrowserTest
       const std::string& expected_parent,
       int expected_child_size,
       const std::string& expected_tag_name) {
+    LOG(ERROR) << actual_resource.url();
+    LOG(ERROR) << actual_resource.parent_id();
+    LOG(ERROR) << actual_resource.tag_name();
     EXPECT_EQ(expected_url, actual_resource.url());
     // Finds the parent url by comparing resource ids.
     for (auto resource : report.resources()) {
@@ -938,15 +946,16 @@ IN_PROC_BROWSER_TEST_P(SafeBrowsingBlockingPageBrowserTest,
   const bool expect_threat_details =
       SafeBrowsingBlockingPage::ShouldReportThreatDetails(
           testing::get<0>(GetParam()));
-
+  LOG(ERROR) << "MARKER 1";
   scoped_refptr<content::MessageLoopRunner> threat_report_sent_runner(
       new content::MessageLoopRunner);
   if (expect_threat_details)
     SetReportSentCallback(threat_report_sent_runner->QuitClosure());
-
+  LOG(ERROR) << "MARKER 2";
   // Set up testing url containing iframe and cross site iframe.
   GURL url = SetupThreatIframeWarningAndNavigate();
 
+  LOG(ERROR) << "MARKER 2.5";
   ThreatDetails* threat_details = details_factory_.get_details();
   EXPECT_EQ(expect_threat_details, threat_details != nullptr);
   EXPECT_EQ(VISIBLE, GetVisibility("extended-reporting-opt-in"));
@@ -954,12 +963,15 @@ IN_PROC_BROWSER_TEST_P(SafeBrowsingBlockingPageBrowserTest,
   EXPECT_TRUE(ClickAndWaitForDetach("proceed-link"));
   AssertNoInterstitial(true);  // Assert the interstitial is gone
 
+  LOG(ERROR) << "MARKER 3";
   EXPECT_TRUE(IsExtendedReportingEnabled(*browser()->profile()->GetPrefs()));
   EXPECT_EQ(url,
             browser()->tab_strip_model()->GetActiveWebContents()->GetURL());
+  LOG(ERROR) << "JSDAKJDKLSAJDLKSAJDLKASJDLKSAJDLSKDJLKASDJL";
 
   if (expect_threat_details) {
     threat_report_sent_runner->Run();
+    LOG(ERROR) << "MARKER 4";
     std::string serialized = GetReportSent();
     ClientSafeBrowsingReportRequest report;
     ASSERT_TRUE(report.ParseFromString(serialized));
@@ -980,15 +992,16 @@ IN_PROC_BROWSER_TEST_P(SafeBrowsingBlockingPageBrowserTest,
                 return a.url() < b.url();
               });
     ASSERT_EQ(2U, resources.size());
+    LOG(ERROR) << "This is the problem isn't it >:(";
     VerifyResource(
         report, resources[0],
         embedded_test_server()->GetURL(kCrossSiteMaliciousPage).spec(),
         embedded_test_server()->GetURL(kCrossSiteMaliciousPage).spec(), 1, "");
+    LOG(ERROR) << "ANGRY";
     VerifyResource(report, resources[1],
                    embedded_test_server()->GetURL(kMaliciousIframe).spec(),
                    url.spec(),  // kCrossSiteMaliciousPage
                    0, "IFRAME");
-
     ASSERT_EQ(2, report.dom_size());
     // Because the order of elements is not deterministic, we basically need to
     // verify the relationship. Namely that there is an IFRAME element and that
@@ -1007,6 +1020,7 @@ IN_PROC_BROWSER_TEST_P(SafeBrowsingBlockingPageBrowserTest,
     // Find the parent DIV that is the parent of the iframe.
     for (const HTMLElement& elem : report.dom()) {
       if (elem.id() != iframe_node_id) {
+        LOG(ERROR) << "In here 2";
         // Not the IIFRAME, so this is the parent DIV
         VerifyElement(report, elem, "DIV", /*child_size=*/1,
                       {std::make_pair("foo", "1")});
