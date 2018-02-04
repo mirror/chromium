@@ -94,6 +94,23 @@
     },
     {
       "key": {
+        "uuid": "4817c11f_54d5623f",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-04T23:13:00Z",
+      "side": 1,
+      "message": "Why do we need TAB_TOUCH_WIDTH and TAB_STANDARD_WIDTH? shouldn\u0027t all non-pinned tabs in a browser process have equivalent widths?",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b692115_5a97343f",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -266,6 +283,57 @@
         "endLine": 1142,
         "endChar": 44
       },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea27e996_299bbe1e",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-04T23:13:00Z",
+      "side": 1,
+      "message": "non-primitive statics are not allowed (this will add a call to its destructor after main() exits). But there\u0027s already a VectorIconCache in paint_vector_icon.cc -- gfx::IconDescription already includes color -- I don\u0027t think you need this.",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1101a068_1de79009",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-04T23:13:00Z",
+      "side": 1,
+      "message": "might be more robust for this to take two StateColorInfo arguments rather than calling it twice",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1b55df_136695c1",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-04T23:13:00Z",
+      "side": 1,
+      "message": "these need initializers. (\u003d {0}; ?)",
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
