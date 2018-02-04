@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de1e2f2a_0d3bfb3d",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: To me the plural of \"contents\" is \"contents\" rather than \"contentses\".  I realize this is a bikeshed :)",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47da12d_4e2f9897",
+        "filename": "chrome/browser/ui/browser_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: This calls AllTabContentses().end() on every loop iteration, which constructs a couple of (currently small) objects; this seems a bit risky. \n I\u0027d factor to a temp.  The obvious way is to store AllTabContentses(), but if you don\u0027t want your temp above the loop, you could also do:\n\n  for (auto it \u003d AllTabContentses().begin(), end \u003d AllTabContentses().end();\n       it !\u003d end; ++it) {\n\nThough here we could probably use std::find() just as easily (if not more easily):\n\n  auto tab_contents \u003d AllTabContentses();\n  auto it \u003d std::find(tab_contents.begin(), tab_contents.end(), web_contents);\n  return (it \u003d\u003d tab_contents.end()) ? nullptr : it.browser();",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bd1f48_b7d28285",
+        "filename": "chrome/browser/ui/hung_renderer/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: Here\u0027s an implementation of this function using std algorithms.  It\u0027s basically the same length and seems maybe better to me, but see what you think.\n\n  // Copy all hung items to |result|.\n  std::vector\u003ccontent::WebContents*\u003e result;\n  auto tab_contents \u003d AllTabContents();\n  auto hung \u003d [hung_process](content::WebContents* web_contents) {\n      return IsWebContentsHung(web_contents, hung_process) \u0026\u0026\n             !web_contents-\u003eIsCrashed();\n  };\n  std::copy_if(tab_contents.begin(), tab_contents.end(),\n               std::back_inserter(result), hung);\n\n  // Move |hung_web_contents| to the front.\n  auto first \u003d std::find(result.begin(), result.end(), hung_web_contents);\n  std::rotate(result.begin, first, std::next(first));\n  return result;",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27f5ed1_340be841",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t give people an example that repeats the call on every iteration this way :)",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511fd2d9_79dbcca4",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: Negated condition followed by handling the other arm feels a little double-negativey to me.\n\nI might just use a ternary.",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc847cfa_482da481",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: Same comment re: using a temporary for the call (everywhere in this file)",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26195e71_7b376c9f",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T06:07:11Z",
+      "side": 1,
+      "message": "Nit: Same comment",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
