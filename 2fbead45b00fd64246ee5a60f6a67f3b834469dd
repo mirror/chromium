@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e06edbc4_965382e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-04T03:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1751e0ac_1857ea5f",
+      "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c9db9fc_ab0c5e48",
         "filename": "chrome/browser/chromeos/DEPS",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T23:16:15Z",
       "side": 1,
       "message": "chrome/browser/chromeos should not depend on cc, see comment in https://cs.chromium.org/chromium/src/chrome/browser/DEPS?type\u003dcs\u0026q\u003df:src/chrome/.*DEPS+cc/base\u0026sq\u003dpackage:chromium\u0026l\u003d89",
+      "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735ad57b_c1c29fed",
+        "filename": "chrome/browser/chromeos/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-04T03:56:17Z",
+      "side": 1,
+      "message": "Done: moving RingBuffer from //cc/base to //base in crrev/c/899858.",
+      "parentUuid": "9c9db9fc_ab0c5e48",
       "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74961755_022cc47d",
+        "filename": "services/resource_coordinator/public/cpp/tracing/base_agent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-04T03:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57bd7ba8_01c098ad",
+      "revId": "2fbead45b00fd64246ee5a60f6a67f3b834469dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
