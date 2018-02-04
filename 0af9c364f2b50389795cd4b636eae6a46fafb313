@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b12d36a2_77b9c010",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-04T19:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2738a0d8_6e80d217",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "0af9c364f2b50389795cd4b636eae6a46fafb313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36a18c1a_74b0c0de",
         "filename": "ui/aura/local/window_port_local.cc",
         "patchSetId": 38
@@ -45,6 +69,53 @@
       "revId": "0af9c364f2b50389795cd4b636eae6a46fafb313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd51aef0_4efb56ea",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-04T19:27:22Z",
+      "side": 1,
+      "message": "Whoops, you\u0027re right.\nFor example, if this incoming child-generated LocalSurfaceId doesn\u0027t use the latest parent sequence / nonce. Fixed.",
+      "parentUuid": "36a18c1a_74b0c0de",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 168,
+        "endChar": 36
+      },
+      "revId": "0af9c364f2b50389795cd4b636eae6a46fafb313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89688fc8_d1ff48f1",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-04T19:27:22Z",
+      "side": 1,
+      "message": "I updated here as well.",
+      "range": {
+        "startLine": 415,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 38
+      },
+      "revId": "0af9c364f2b50389795cd4b636eae6a46fafb313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
