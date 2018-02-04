@@ -22,6 +22,30 @@
       "revId": "66cae2b274e261cde5ec7f64957ff7cb197fc7b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45697cc5_02bcb181",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-04T21:18:13Z",
+      "side": 1,
+      "message": "The only user of the API that I\u0027m aware of is mentioned in the bug linked below. I don\u0027t know where the bot/waterfall is that runs it but this makes the crash stack that would occur if we tried to flip the switch more self-documenting. For the reasons mentioned on the bug, I\u0027d rather get rid of this API than to bend over backwards to accommodate it, but I don\u0027t yet know what we\u0027ll do with it.",
+      "parentUuid": "f588b6c1_2581061c",
+      "range": {
+        "startLine": 400,
+        "startChar": 66,
+        "endLine": 400,
+        "endChar": 72
+      },
+      "revId": "66cae2b274e261cde5ec7f64957ff7cb197fc7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
