@@ -96,7 +96,8 @@ const CSSFunctionValue* CSSSkew::ToCSSValue() const {
 
   CSSFunctionValue* result = CSSFunctionValue::Create(CSSValueSkew);
   result->Append(*ax);
-  result->Append(*ay);
+  if (ay_->to(CSSPrimitiveValue::UnitType::kRadians)->value() != 0)
+    result->Append(*ay);
   return result;
 }
 
