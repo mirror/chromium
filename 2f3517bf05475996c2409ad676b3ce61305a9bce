@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "00606fb9_b83b13b3",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T05:36:47Z",
+      "side": 1,
+      "message": "I don\u0027t know, I\u0027d have to trawl through revision history.\n\nI don\u0027t think I\u0027m a good owner.",
+      "parentUuid": "419eab46_a5444d1c",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4612592d_c867121c",
         "filename": "chrome/browser/ui/hung_renderer_core.cc",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "This looks even worse :(\n\n  auto all_frames \u003d web_contents-\u003eGetAllFrames();\n  auto frame_iter \u003d\n      std::find_if(std::begin(all_frames), std::end(all_frames),\n                   [hung_process](content::RenderFrameHost* frame) {\n                     return frame-\u003eGetProcess() \u003d\u003d hung_process;\n                   });\n  if (frame_iter !\u003d std::end(all_frames))\n    return (*frame_iter)-\u003eGetLastCommittedURL();\n  NOTREACHED();\n  return GURL();",
       "parentUuid": "02f7a295_810b214e",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ff2b391_1047a5be",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T05:36:47Z",
+      "side": 1,
+      "message": "Well, in fairness, the main win of this is that you remove the final conditional and do it unconditionally, removing the NOTREACHED/return at the end (since it can\u0027t happen).",
+      "parentUuid": "07e06d66_55eb60d3",
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -416,6 +452,24 @@
       "side": 1,
       "message": "I\u0027ll directly call TabDestroyed(). In any case, though, I don\u0027t get a lot of this code\u0027s nuances. Why watch every tab, specifically maintain the observer list, and yet have the delegate\u0027s TabDestroyed always just rip the whole thing down?\n\nI\u0027m trying to oopifize this without completely rewriting this, but at some point, the latter option is tempting.",
       "parentUuid": "37b05e1d_0064c76c",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ca6b134_087973b2",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-04T05:36:47Z",
+      "side": 1,
+      "message": "Don\u0027t ask me... much of Harmony involved our whole team asking \"why does this code jump through hoops to do easy things?\"  Some of the time the people implementing it didn\u0027t know what they were doing, other times it got refactored over time to add and remove complexity piecemeal and left it nonsensical.",
+      "parentUuid": "02608546_ba3c4f65",
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
