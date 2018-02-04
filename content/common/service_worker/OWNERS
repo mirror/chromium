@@ -15,5 +15,8 @@ per-file *_type_converter*.*=file://ipc/SECURITY_OWNERS
 per-file *.typemap=set noparent
 per-file *.typemap=file://ipc/SECURITY_OWNERS
 
+per-file *_mojom_traits*.*=set noparent
+per-file *_mojom_traits*.*=file://ipc/SECURITY_OWNERS
+
 # TEAM: worker-dev@chromium.org
 # COMPONENT: Blink>ServiceWorker
