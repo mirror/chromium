@@ -16,6 +16,24 @@
       "revId": "bc672a4852658b0d651295f29559742715c0af89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413eaf70_eadf0763",
+        "filename": "content/public/app/mojo/snapshot_blob_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-02-04T23:39:03Z",
+      "side": 1,
+      "message": "Yes, but let me do it in another CL.",
+      "parentUuid": "4ab63217_27746278",
+      "revId": "bc672a4852658b0d651295f29559742715c0af89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
