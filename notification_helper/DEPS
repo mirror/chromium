@@ -1,0 +1,5 @@
+include_rules = [
+  "+base",
+  "+chrome/install_static",
+  "+chrome/installer/util",
+]

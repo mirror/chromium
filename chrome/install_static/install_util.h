@@ -82,6 +82,10 @@ const wchar_t* GetAppGuid();
 // the Windows OS.
 const CLSID& GetToastActivatorClsid();
 
+// Returns the toast activator registry path if found, or an empty string in
+// case of error.
+std::wstring GetToastActivatorRegistryPath();
+
 // Returns the unsuffixed application name of this program. This is the base of
 // the name registered with Default Programs. IMPORTANT: This must only be
 // called by the installer.
