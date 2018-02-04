@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cfff485_97698091",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5381,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55da244_eaedd236",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c362f443_6e44a97e",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419eab46_a5444d1c",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Who else can I put in that file? Do you know who worked on this back in the day?\n\nDo you mind if I add you?",
+      "parentUuid": "c362f443_6e44a97e",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a3b9b896_522374be",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "I\u0027m on the fence about readability; compare the current implementation with:\n\n  auto all_frames \u003d web_contents-\u003eGetAllFrames();\n  return std::any_of(std::begin(all_frames), std::end(all_frames),\n                     [hung_process](content::RenderFrameHost* frame) {\n                       return frame-\u003eGetProcess() \u003d\u003d hung_process;\n                     });\n\nEven with ranges and generic lambdas (which we don\u0027t have) this looks less readable.",
+      "parentUuid": "4612592d_c867121c",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f7a295_810b214e",
         "filename": "chrome/browser/ui/hung_renderer_core.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e06d66_55eb60d3",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "This looks even worse :(\n\n  auto all_frames \u003d web_contents-\u003eGetAllFrames();\n  auto frame_iter \u003d\n      std::find_if(std::begin(all_frames), std::end(all_frames),\n                   [hung_process](content::RenderFrameHost* frame) {\n                     return frame-\u003eGetProcess() \u003d\u003d hung_process;\n                   });\n  if (frame_iter !\u003d std::end(all_frames))\n    return (*frame_iter)-\u003eGetLastCommittedURL();\n  NOTREACHED();\n  return GURL();",
+      "parentUuid": "02f7a295_810b214e",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "68ae6069_416c7a44",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529d03bd_58fab349",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d31f7d2f_df2733ff",
         "filename": "chrome/browser/ui/hung_renderer_core.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f448897a_85b0dfeb",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "https://crbug.com/808831 coming soon to you.",
+      "parentUuid": "d31f7d2f_df2733ff",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "23d16d9d_146dc23f",
+        "filename": "chrome/browser/ui/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd6d473_76ac7127",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "310943fa_ac06f20b",
         "filename": "chrome/browser/ui/hung_renderer_core.h",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2291a4_682fab02",
+        "filename": "chrome/browser/ui/hung_renderer_core.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Re namespaces: done.\n\nRe \"affected\": done.\n\nRe refactoring: given the effort in MacViews, I don\u0027t know what the future is for Cocoa, and don\u0027t want to invest a ton of time working out an architecture for code whose future is uncertain.",
+      "parentUuid": "310943fa_ac06f20b",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1c3ce92a_3c8e9a29",
+        "filename": "chrome/browser/ui/hung_renderer_core.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "This isn\u0027t intended as an overhaul, just a plumbing of OOPIF-awareness. In any case, I\u0027m not sure what a reasonable order is. What does \"tab order\" mean in the case of n browser windows with m tabs?\n\nIf I were to be reworking TabContentsIterator to be sane (as per the other comment, that\u0027s out of scope) perhaps it would be worth adding iteration over browser windows in different ways, but given that Chrome\u0027s direction is protection with multiple processes, and that processes with many pages are something we\u0027re trying to avoid anyway, this seems not to be a thing that makes sense for me to do.",
+      "parentUuid": "f9793c99_219aeda0",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f7cf8fd_7c5f1a63",
         "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced19481_19e64656",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Why do I not know about this? :\\",
+      "parentUuid": "0f7cf8fd_7c5f1a63",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ac8c29e5_286f8434",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7c3060_4a77dc46",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b05e1d_0064c76c",
         "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02608546_ba3c4f65",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-04T00:34:41Z",
+      "side": 1,
+      "message": "I\u0027ll directly call TabDestroyed(). In any case, though, I don\u0027t get a lot of this code\u0027s nuances. Why watch every tab, specifically maintain the observer list, and yet have the delegate\u0027s TabDestroyed always just rip the whole thing down?\n\nI\u0027m trying to oopifize this without completely rewriting this, but at some point, the latter option is tempting.",
+      "parentUuid": "37b05e1d_0064c76c",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
