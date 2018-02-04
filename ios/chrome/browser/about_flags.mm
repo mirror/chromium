@@ -49,6 +49,7 @@
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_private_base_feature.h"
 #include "ios/chrome/browser/ui/ui_feature_flags.h"
+#include "ios/chrome/browser/ui/user_feedback_features.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "ios/web/public/features.h"
@@ -240,6 +241,9 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kContextMenuElementPostMessageDescription,
      flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(web::features::kContextMenuElementPostMessage)},
+    {"feedback-kit-v2", flag_descriptions::kFeedbackKitV2Name,
+     flag_descriptions::kFeedbackKitV2Description, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(kFeedbackKitV2)},
 };
 
 // Add all switches from experimental flags to |command_line|.
