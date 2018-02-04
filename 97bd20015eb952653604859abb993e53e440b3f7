@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a139a5e7_ad312362",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2018-02-04T22:02:39Z",
+      "side": 1,
+      "message": "The client could commit an empty surface, so the check is needed for both callers.",
+      "parentUuid": "93928bbe_e89563d5",
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "364eeeff_ccde1e8c",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-03T09:41:56Z",
       "side": 1,
       "message": "is focus_surface_-\u003econtents_size() more appropriate?",
+      "range": {
+        "startLine": 401,
+        "startChar": 6,
+        "endLine": 401,
+        "endChar": 29
+      },
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8048595e_dbd0db27",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2018-02-04T22:02:39Z",
+      "side": 1,
+      "message": "root_surface()-\u003esurface_hierarchy_content_bounds() would be equivalent, but this is consistent with ShellSurfaceBase and NotificationSurface.",
+      "parentUuid": "364eeeff_ccde1e8c",
       "range": {
         "startLine": 401,
         "startChar": 6,
