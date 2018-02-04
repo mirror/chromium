@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab63217_27746278",
+        "filename": "content/public/app/mojo/snapshot_blob_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1261977
+      },
+      "writtenOn": "2018-02-04T12:55:46Z",
+      "side": 1,
+      "message": "Maybe move the android-specific assets/snapshot_blob_32.bin and assets/snapshot_blob_64.bin bits from content_utility_manifest.json and content_renderer_manifest.json here too, so it\u0027s all in one place?",
+      "revId": "bc672a4852658b0d651295f29559742715c0af89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
