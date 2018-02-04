@@ -40,7 +40,7 @@ class GcdStateUpdaterTest : public testing::Test {
                                        nullptr,
                                        &token_getter_)),
         signal_strategy_(SignalingAddress("local_jid")) {
-    rest_client_->SetClockForTest(base::WrapUnique(new base::SimpleTestClock));
+    rest_client_->SetClockForTest(clock_.get());
   }
 
   void OnSuccess() { on_success_count_++; }
