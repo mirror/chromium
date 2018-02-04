@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_BASE_RING_BUFFER_H_
-#define CC_BASE_RING_BUFFER_H_
+#ifndef BASE_RING_BUFFER_H_
+#define BASE_RING_BUFFER_H_
 
 #include <stddef.h>
 
 #include "base/logging.h"
 #include "base/macros.h"
 
-namespace cc {
+namespace base {
 
 template <typename T, size_t kSize>
 class RingBuffer {
@@ -105,6 +105,6 @@ class RingBuffer {
   DISALLOW_COPY_AND_ASSIGN(RingBuffer);
 };
 
-}  // namespace cc
+}  // namespace base
 
-#endif  // CC_BASE_RING_BUFFER_H_
+#endif  // BASE_RING_BUFFER_H_
