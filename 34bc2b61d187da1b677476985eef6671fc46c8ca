@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11877baf_db474e93",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-02-04T05:50:02Z",
+      "side": 1,
+      "message": "s/kFragmentBox/kAtomicInline ?",
+      "revId": "34bc2b61d187da1b677476985eef6671fc46c8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
