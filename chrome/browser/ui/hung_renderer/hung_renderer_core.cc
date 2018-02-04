@@ -58,10 +58,12 @@ std::vector<content::WebContents*> GetHungWebContentsList(
   DCHECK(IsWebContentsHung(hung_web_contents, hung_process));
   result.push_back(hung_web_contents);
 
-  for (TabContentsIterator it; !it.done(); it.Next()) {
-    if (*it != hung_web_contents && IsWebContentsHung(*it, hung_process) &&
-        !it->IsCrashed())
-      result.push_back(*it);
+  for (auto* web_contents : AllTabContentses()) {
+    if (web_contents != hung_web_contents &&
+        IsWebContentsHung(web_contents, hung_process) &&
+        !web_contents->IsCrashed()) {
+      result.push_back(web_contents);
+    }
   }
 
   return result;
