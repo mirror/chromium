@@ -544,8 +544,8 @@ std::string CreateServerRedirect(const std::string& dest_url) {
 // Profiles.
 int NumLoadingTabs() {
   int num_loading_tabs = 0;
-  for (TabContentsIterator it; !it.done(); it.Next()) {
-    if (it->IsLoading())
+  for (auto* web_contents : AllTabContentses()) {
+    if (web_contents->IsLoading())
       ++num_loading_tabs;
   }
   return num_loading_tabs;
@@ -695,9 +695,9 @@ FailLoadsAfterLoginObserver::FailLoadsAfterLoginObserver()
     : waiting_for_navigation_(false) {
   registrar_.Add(this, content::NOTIFICATION_LOAD_STOP,
                  content::NotificationService::AllSources());
-  for (TabContentsIterator it; !it.done(); it.Next()) {
-    if (it->IsLoading())
-      tabs_needing_navigation_.insert(*it);
+  for (auto* web_contents : AllTabContentses()) {
+    if (web_contents->IsLoading())
+      tabs_needing_navigation_.insert(web_contents);
   }
 }
 
@@ -1239,8 +1239,8 @@ CaptivePortalBrowserTest::GetStateOfTabReloaderAt(Browser* browser,
 int CaptivePortalBrowserTest::NumTabsWithState(
     CaptivePortalTabReloader::State state) const {
   int num_tabs = 0;
-  for (TabContentsIterator it; !it.done(); it.Next()) {
-    if (GetStateOfTabReloader(*it) == state)
+  for (auto* web_contents : AllTabContentses()) {
+    if (GetStateOfTabReloader(web_contents) == state)
       ++num_tabs;
   }
   return num_tabs;

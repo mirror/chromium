@@ -132,8 +132,8 @@ bool ChromeDevToolsManagerDelegate::HandleCommand(
 
 std::string ChromeDevToolsManagerDelegate::GetTargetType(
     content::WebContents* web_contents) {
-  for (TabContentsIterator it; !it.done(); it.Next()) {
-    if (*it == web_contents)
+  for (auto* tab_contents : AllTabContentses()) {
+    if (tab_contents == web_contents)
       return DevToolsAgentHost::kTypePage;
   }
 

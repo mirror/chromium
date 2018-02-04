@@ -34,8 +34,9 @@ namespace {
 // Helper function to iterate and count all the tabs.
 size_t CountAllTabs() {
   size_t count = 0;
-  for (TabContentsIterator iterator; !iterator.done(); iterator.Next())
-    ++count;
+  for (auto iterator = AllTabContentses().begin();
+       iterator != AllTabContentses().end(); ++iterator, ++count) {
+  }
   return count;
 }
 
@@ -51,8 +52,8 @@ TEST_F(BrowserListTest, TabContentsIteratorVerifyCount) {
   Browser::CreateParams native_params(profile(), true);
   std::unique_ptr<Browser> browser2(
       CreateBrowserWithTestWindowForParams(&native_params));
-  // Create browser 3 and 4 on the Ash desktop (the TabContentsIterator
-  // shouldn't see the difference).
+  // Create browser 3 and 4 on the Ash desktop (the iterator shouldn't see the
+  // difference).
   Browser::CreateParams ash_params(profile(), true);
   std::unique_ptr<Browser> browser3(
       CreateBrowserWithTestWindowForParams(&ash_params));
@@ -97,8 +98,8 @@ TEST_F(BrowserListTest, TabContentsIteratorVerifyBrowser) {
   Browser::CreateParams native_params(profile(), true);
   std::unique_ptr<Browser> browser2(
       CreateBrowserWithTestWindowForParams(&native_params));
-  // Create browser 3 on the Ash desktop (the TabContentsIterator shouldn't see
-  // the difference).
+  // Create browser 3 on the Ash desktop (the iterator shouldn't see the
+  // difference).
   Browser::CreateParams ash_params(profile(), true);
   std::unique_ptr<Browser> browser3(
       CreateBrowserWithTestWindowForParams(&ash_params));
@@ -118,8 +119,8 @@ TEST_F(BrowserListTest, TabContentsIteratorVerifyBrowser) {
     chrome::NewTab(browser3.get());
 
   size_t count = 0;
-  for (TabContentsIterator iterator; !iterator.done(); iterator.Next(),
-                                                       ++count) {
+  for (auto iterator = AllTabContentses().begin();
+       iterator != AllTabContentses().end(); ++iterator, ++count) {
     if (count < 3)
       EXPECT_EQ(browser2.get(), iterator.browser());
     else if (count < 5)
@@ -133,8 +134,8 @@ TEST_F(BrowserListTest, TabContentsIteratorVerifyBrowser) {
   browser3->tab_strip_model()->CloseWebContentsAt(1, TabStripModel::CLOSE_NONE);
 
   count = 0;
-  for (TabContentsIterator iterator; !iterator.done(); iterator.Next(),
-                                                       ++count) {
+  for (auto iterator = AllTabContentses().begin();
+       iterator != AllTabContentses().end(); ++iterator, ++count) {
     if (count == 0)
       EXPECT_EQ(browser3.get(), iterator.browser());
     else
@@ -146,8 +147,8 @@ TEST_F(BrowserListTest, TabContentsIteratorVerifyBrowser) {
   chrome::NewTab(browser2.get());
 
   count = 0;
-  for (TabContentsIterator iterator; !iterator.done(); iterator.Next(),
-                                                       ++count) {
+  for (auto iterator = AllTabContentses().begin();
+       iterator != AllTabContentses().end(); ++iterator, ++count) {
     if (count == 0)
       EXPECT_EQ(browser(), iterator.browser());
     else if (count == 1)

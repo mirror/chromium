@@ -207,7 +207,8 @@ Browser* FindBrowserWithActiveWindow() {
 
 Browser* FindBrowserWithWebContents(const WebContents* web_contents) {
   DCHECK(web_contents);
-  for (TabContentsIterator it; !it.done(); it.Next()) {
+  for (auto it = AllTabContentses().begin(); it != AllTabContentses().end();
+       ++it) {
     if (*it == web_contents)
       return it.browser();
   }
