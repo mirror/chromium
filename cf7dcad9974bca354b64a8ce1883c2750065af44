@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6606bce3_20308832",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-04T23:52:42Z",
+      "side": 1,
+      "message": "the comment on this method says \" Currently, |parent| may\n// be null for MODAL_TYPE_WINDOW, but that\u0027s a bug and callers shouldn\u0027t rely on\n// that working. See http://crbug.com/657293.\"\n\nThis call should be replaced with\n\n  views::Widget* dialog_widget \u003d\n      views::DialogDelegate::CreateDialogWidget(dialog, nullptr, nullptr);\n\nor, better,\n\n\n  views::Widget* dialog_widget \u003d new views::Widget;\n  views::Widget::InitParams params \u003d\n      views::DialogDelegate::GetDialogWidgetInitParams(\n          dialog, nullptr, nullptr, app_info_bounds);\n  widget-\u003eInit(params);\n  widget-\u003eShow();\n\n\ni.e. pass the bounds on Widget::InitParams so it\u0027s not centered in screen, then moved and resized later on.",
+      "revId": "cf7dcad9974bca354b64a8ce1883c2750065af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e17fd3_3a407557",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-04T23:52:42Z",
+      "side": 1,
+      "message": "was there a reason for swapping these lines? (comment?) But hopefully this SetBounds call is not needed -- it should be passed on InitParams",
+      "revId": "cf7dcad9974bca354b64a8ce1883c2750065af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
