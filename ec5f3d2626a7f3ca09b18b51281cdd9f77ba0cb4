@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bb7abab_e6795aaf",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "I discussed this with Balazs today, and we decided that we probably should avoid all the acronyms we are using. 8 captical letters in a row are not very readable and potentially could clash with macro names. Could you rename this to GetCtapHidDeviceCommandList() and do similar renames across all the code you touch in this CL? There are some more spots we need to clean up for consistency, but that can be done in a follow-up CL.",
+      "range": {
+        "startLine": 97,
+        "startChar": 49,
+        "endLine": 97,
+        "endChar": 57
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182cb165_bb9d6572",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: could you move this up to be right after the enum definition? maybe also add a comment why this is needed.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 1
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4827494_35e55807",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: could we inline this?",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d5a4f1_b5de9734",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: same here, inline this",
+      "range": {
+        "startLine": 122,
+        "startChar": 3,
+        "endLine": 123,
+        "endChar": 62
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ba68e3_b0552def",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: remove this newline",
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cc0a34_87b8226f",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: inline",
+      "range": {
+        "startLine": 320,
+        "startChar": 2,
+        "endLine": 320,
+        "endChar": 22
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c332f7_a01e76d9",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "same here, this should be U2fHidMessage for consistency",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a041e3_5a2e8eb8",
+        "filename": "device/u2f/u2f_hid_message.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: I think a\n\n  switch (type)\n\nis clearer here",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563a079d_994ad13f",
+        "filename": "device/u2f/u2f_hid_message.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: I suppose std::make_unique does not work here due to the private constructor, right? Could you make this\n\nreturn base::WrapUnique(new ....) instead?",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a1d23d_eceb577d",
+        "filename": "device/u2f/u2f_hid_message.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c7dee9_f90101cc",
+        "filename": "device/u2f/u2f_hid_message.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: base::WrapUnique(...)",
+      "range": {
+        "startLine": 59,
+        "startChar": 14,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbd2dfc_270473e7",
+        "filename": "device/u2f/u2f_hid_message.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "I think all of this can be a bit simplified using the methods base::span provides. How about the following:\n\nauto init_data \u003d data.first(std::min(kHidInitPacketDataSize, data.size()));\npackets_.push_back(std::make_unique\u003cU2FHidInitPacket\u003e(\n    channel_id,\n    type,\n    std::vector\u003cuint8_t\u003e(init_data.begin(), init_data.end()),\n    data.size()));\ndata \u003d data.subspan(init_data.size());\n\nwhile (!data.empty()) {\n  auto cont_data \u003d\n      data.first(std::min(kHidContinuationPacketDataSize, data.size()));\n  packets_.push_back(std::make_unique\u003cU2FHidContinuationPacket\u003e(\n      channel_id, sequence++,\n      std::vector\u003cuint8_t\u003e(cont_data.begin(), cont_data.end())));\n  data \u003d data.subspan(cont_data.size());\n}",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 3
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736be912_8dfcb122",
+        "filename": "device/u2f/u2f_hid_message.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: static cast can be removed",
+      "range": {
+        "startLine": 153,
+        "startChar": 9,
+        "endLine": 153,
+        "endChar": 42
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa00c61_cc926abe",
+        "filename": "device/u2f/u2f_hid_message_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit:\n\n  constexpr size_t kPacketSize \u003d 64;",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5dead91_3dff7a9d",
+        "filename": "device/u2f/u2f_hid_message_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "I think we can simplify this too:\n\nauto span \u003d base::make_span(data, size);\n\nauto packet \u003d span.first(std::min(kPacketSize, span.size()));\nauto msg \u003d device::U2FHidMessage::CreateFromSerializedData(\n    std::vector\u003cuint8_t\u003e(packet.begin(), packet.end()));\nif (!msg)\n  return 0;\n\nspan \u003d span.subspan(packet.size());\nwhile (!span.empty()) {\n  packet \u003d span.first(std::min(kPacketSize, span.size()));\n  msg-\u003eAddContinuationPacket(\n      std::vector\u003cuint8_t\u003e(packet.begin(), packet.end()));\n  span \u003d span.subspan(packet.size());\n}",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 3
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cba6943_0d6ac67e",
+        "filename": "device/u2f/u2f_hid_packet.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15231fe1_b78a84d6",
+        "filename": "device/u2f/u2f_hid_packet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-05T17:42:47Z",
+      "side": 1,
+      "message": "nit: add newline",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 1
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
