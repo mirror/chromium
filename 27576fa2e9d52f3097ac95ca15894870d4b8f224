@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd59a1fd_883ba2f2",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T19:38:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this one. There used to be a break here which you deleted in https://codereview.chromium.org/2826123004/diff/80001/components/tracing/common/process_metrics_memory_dump_provider.cc?context\u003d10\u0026column_width\u003d80\u0026tab_spaces\u003d8\n\nWas that intentional? Should this be a FALLTHROUGH instead? If so, why? If not, what are the repercussions of not having the break -- does this fix a real bug, or is the effect not observable for some reason?",
+      "revId": "27576fa2e9d52f3097ac95ca15894870d4b8f224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
