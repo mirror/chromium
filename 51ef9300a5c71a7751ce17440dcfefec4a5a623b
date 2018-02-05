@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "058b0135_40309fe4",
+        "filename": "services/identity/public/cpp/account_state_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T16:37:37Z",
+      "side": 1,
+      "message": "Wanna rename these files to *_mojom_traits.h too since you have to touch them in this CL anyway?",
+      "revId": "51ef9300a5c71a7751ce17440dcfefec4a5a623b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
