@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "51a65c6f_09e8ea56",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-02-05T22:35:28Z",
+      "side": 1,
+      "message": "\u003e assign the new one (see line 81 below)\n\nOh, that\u0027s the bit I missed. Thanks!",
+      "parentUuid": "e1a04309_b9670558",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "ad26efa4f8b0500af236b266ade98a925692f8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9760bb2d_b4362844",
         "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
         "patchSetId": 5
