@@ -9,7 +9,6 @@
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
-#include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/service_worker_modes.h"
@@ -37,12 +36,11 @@ ServiceWorkerHandle::ServiceWorkerHandle(
     ServiceWorkerVersion* version)
     : dispatcher_host_(dispatcher_host),
       context_(context),
-      provider_host_(provider_host),
       provider_id_(provider_host->provider_id()),
       handle_id_(context->GetNewServiceWorkerHandleId()),
       version_(version),
       weak_ptr_factory_(this) {
-  DCHECK(context_ && provider_host_ && version_);
+  DCHECK(context_ && version_);
   DCHECK(context_->GetLiveRegistration(version_->registration_id()));
   version_->AddListener(this);
   bindings_.set_connection_error_handler(base::BindRepeating(
@@ -57,10 +55,8 @@ ServiceWorkerHandle::~ServiceWorkerHandle() {
 
 void ServiceWorkerHandle::OnVersionStateChanged(ServiceWorkerVersion* version) {
   DCHECK(version);
-  if (!provider_host_)
-    return;
-  provider_host_->SendServiceWorkerStateChangedMessage(
-      handle_id_,
+  DCHECK(remote_object_);
+  remote_object_->StateChanged(
       mojo::ConvertTo<blink::mojom::ServiceWorkerState>(version->status()));
 }
 
@@ -73,6 +69,10 @@ ServiceWorkerHandle::CreateObjectInfo() {
       mojo::ConvertTo<blink::mojom::ServiceWorkerState>(version_->status());
   info->version_id = version_->version_id();
   bindings_.AddBinding(this, mojo::MakeRequest(&info->host_ptr_info));
+  // Refreshes the Mojo connection for |remote_object_|. In the renderer process
+  // this may refresh the other endpoint for one existing or newly created impl
+  // instance.
+  info->request = mojo::MakeRequest(&remote_object_);
   return info;
 }
 

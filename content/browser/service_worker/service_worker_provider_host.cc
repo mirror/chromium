@@ -396,7 +396,6 @@ void ServiceWorkerProviderHost::AssociateRegistration(
 
 void ServiceWorkerProviderHost::DisassociateRegistration() {
   DCHECK(IsProviderForClient());
-  queued_events_.clear();
   if (!associated_registration_.get())
     return;
   associated_registration_ = nullptr;
@@ -690,33 +689,6 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   return provider_info;
 }
 
-void ServiceWorkerProviderHost::SendServiceWorkerStateChangedMessage(
-    int worker_handle_id,
-    blink::mojom::ServiceWorkerState state) {
-  if (!dispatcher_host_)
-    return;
-
-  if (!IsReadyToSendMessages()) {
-    queued_events_.push_back(base::Bind(
-        &ServiceWorkerProviderHost::SendServiceWorkerStateChangedMessage,
-        AsWeakPtr(), worker_handle_id, state));
-    return;
-  }
-
-  Send(new ServiceWorkerMsg_ServiceWorkerStateChanged(render_thread_id_,
-                                                      worker_handle_id, state));
-}
-
-void ServiceWorkerProviderHost::SetReadyToSendMessagesToWorker(
-    int render_thread_id) {
-  DCHECK(!IsReadyToSendMessages());
-  render_thread_id_ = render_thread_id;
-
-  for (const auto& event : queued_events_)
-    event.Run();
-  queued_events_.clear();
-}
-
 void ServiceWorkerProviderHost::SyncMatchingRegistrations() {
   DCHECK(context_);
   RemoveAllMatchingRegistrations();
@@ -758,18 +730,8 @@ void ServiceWorkerProviderHost::ReturnRegistrationForReadyIfNeeded() {
           scoped_refptr<ServiceWorkerRegistration>(registration)));
 }
 
-bool ServiceWorkerProviderHost::IsReadyToSendMessages() const {
-  return render_thread_id_ != kInvalidEmbeddedWorkerThreadId;
-}
-
 bool ServiceWorkerProviderHost::IsContextAlive() {
   return context_ != nullptr;
-}
-
-void ServiceWorkerProviderHost::Send(IPC::Message* message) const {
-  DCHECK(dispatcher_host_);
-  DCHECK(IsReadyToSendMessages());
-  dispatcher_host_->Send(message);
 }
 
 void ServiceWorkerProviderHost::SendSetControllerServiceWorker(

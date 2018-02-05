@@ -32,9 +32,6 @@
 IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerErrorType,
                           blink::mojom::ServiceWorkerErrorType::kLast)
 
-IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerState,
-                          blink::mojom::ServiceWorkerState::kLast)
-
 IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerResponseError,
                           blink::mojom::ServiceWorkerResponseError::kLast)
 
@@ -131,17 +128,6 @@ IPC_MESSAGE_ROUTED3(ServiceWorkerHostMsg_NavigateClient,
 //---------------------------------------------------------------------------
 // Messages sent from the browser to the child process.
 //
-// NOTE: All ServiceWorkerMsg messages not sent via EmbeddedWorker must have
-// a thread_id as their first field so that ServiceWorkerMessageFilter can
-// extract it and dispatch the message to the correct ServiceWorkerDispatcher
-// on the correct thread.
-
-// Informs the child process that the ServiceWorker's state has changed.
-IPC_MESSAGE_CONTROL3(ServiceWorkerMsg_ServiceWorkerStateChanged,
-                     int /* thread_id */,
-                     int /* handle_id */,
-                     blink::mojom::ServiceWorkerState)
-
 // Sent via EmbeddedWorker as a response of FocusClient.
 IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_FocusClientResponse,
                      int /* request_id */,
