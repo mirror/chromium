@@ -7,6 +7,7 @@
 #include "components/exo/notification_surface_manager.h"
 #include "components/exo/surface.h"
 #include "ui/aura/window.h"
+#include "ui/base/cursor/cursor.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace exo {
@@ -31,6 +32,16 @@ NotificationSurface::~NotificationSurface() {
 
 const gfx::Size& NotificationSurface::GetContentSize() const {
   return root_surface()->content_size();
+}
+
+gfx::NativeCursor NotificationSurface::GetCursor() const {
+  // TODO(oshima): Due to https://crbug.com/351469, WindowDelegate::GetCursor is
+  // called twice in notifications: on the view hosting the NotificationSurface,
+  // and on the aura::Window for the focused surface. Return the same cursor in
+  // both cases.
+  return root_surface()
+             ? root_surface()->GetCursor(true /* include_sub_surfaces */)
+             : ui::CursorType::kNull;
 }
 
 void NotificationSurface::OnSurfaceCommit() {

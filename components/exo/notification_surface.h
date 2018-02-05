@@ -28,6 +28,9 @@ class NotificationSurface : public SurfaceTreeHost, public SurfaceObserver {
   // Get the content size of the |root_surface()|.
   const gfx::Size& GetContentSize() const;
 
+  // Returns the cursor for the focused surface.
+  gfx::NativeCursor GetCursor() const;
+
   const std::string& notification_key() const { return notification_key_; }
 
   // Overridden from SurfaceDelegate:

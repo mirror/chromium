@@ -203,9 +203,10 @@ class Surface final : public ui::PropertyHandler {
   void RegisterCursorProvider(CursorProvider* provider);
   void UnregisterCursorProvider(CursorProvider* provider);
 
-  // Returns the cursor for the surface. If no cursor provider is registered
-  // then CursorType::kNull is returned.
-  gfx::NativeCursor GetCursor();
+  // Returns the cursor for the surface. If no cursor provider is registered for
+  // this surface (nor any sub-surfaces if |include_sub_surfaces| is true), then
+  // CursorType::kNull is returned.
+  gfx::NativeCursor GetCursor(bool include_sub_surfaces) const;
 
   // Set the surface delegate.
   void SetSurfaceDelegate(SurfaceDelegate* delegate);

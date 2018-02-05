@@ -115,7 +115,7 @@ class CustomWindowDelegate : public aura::WindowDelegate {
   void OnBoundsChanged(const gfx::Rect& old_bounds,
                        const gfx::Rect& new_bounds) override {}
   gfx::NativeCursor GetCursor(const gfx::Point& point) override {
-    return surface_->GetCursor();
+    return surface_->GetCursor(false /* include_sub_surfaces */);
   }
   int GetNonClientComponent(const gfx::Point& point) const override {
     return HTNOWHERE;
@@ -663,7 +663,7 @@ void Surface::UnregisterCursorProvider(Pointer* provider) {
   cursor_providers_.erase(provider);
 }
 
-gfx::NativeCursor Surface::GetCursor() {
+gfx::NativeCursor Surface::GetCursor(bool include_sub_surfaces) const {
   // What cursor we display when we have multiple cursor providers is not
   // important. Return the first non-null cursor.
   for (auto* cursor_provider : cursor_providers_) {
@@ -671,6 +671,15 @@ gfx::NativeCursor Surface::GetCursor() {
     if (cursor != ui::CursorType::kNull)
       return cursor;
   }
+
+  if (include_sub_surfaces) {
+    for (const auto& sub_surface : sub_surfaces_) {
+      gfx::NativeCursor cursor = sub_surface.first->GetCursor(true);
+      if (cursor != ui::CursorType::kNull)
+        return cursor;
+    }
+  }
+
   return ui::CursorType::kNull;
 }
 

@@ -21,7 +21,6 @@
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
-#include "ui/base/cursor/cursor.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/dip_util.h"
@@ -150,10 +149,6 @@ bool SurfaceTreeHost::HasHitTestRegion() const {
 void SurfaceTreeHost::GetHitTestMask(gfx::Path* mask) const {
   if (root_surface_)
     root_surface_->GetHitTestMask(mask);
-}
-
-gfx::NativeCursor SurfaceTreeHost::GetCursor(const gfx::Point& point) const {
-  return root_surface_ ? root_surface_->GetCursor() : ui::CursorType::kNull;
 }
 
 void SurfaceTreeHost::DidReceiveCompositorFrameAck() {

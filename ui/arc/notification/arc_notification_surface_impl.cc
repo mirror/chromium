@@ -30,7 +30,7 @@ class CustomWindowDelegate : public aura::WindowDelegate {
   void OnBoundsChanged(const gfx::Rect& old_bounds,
                        const gfx::Rect& new_bounds) override {}
   gfx::NativeCursor GetCursor(const gfx::Point& point) override {
-    return notification_surface_->GetCursor(point);
+    return notification_surface_->GetCursor();
   }
   int GetNonClientComponent(const gfx::Point& point) const override {
     return HTNOWHERE;
