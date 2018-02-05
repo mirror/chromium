@@ -1543,6 +1543,13 @@ be describing additional metrics about the same event.
       for a detailed explanation. In ms.
     </summary>
   </metric>
+  <metric name="InteractiveTiming.FirstInputTimestamp">
+    <summary>
+      The hardware timestamp of the first meaningful input per navigation. See
+      https://docs.google.com/document/d/1Tnobrn4I8ObzreIztfah_BYnDkbx3_ZfJV5gj2nrYnY/edit#
+      for a detailed explanation. In ms.
+    </summary>
+  </metric>
   <metric name="Navigation.PageTransition">
     <summary>
       The |ui::PageTransition| for the main frame navigation of this page load.
