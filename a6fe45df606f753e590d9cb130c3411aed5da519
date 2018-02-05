@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03565265_88569f9e",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-05T20:13:11Z",
+      "side": 1,
+      "message": "Does this need to have a default value?\n\nThere are too many input params. We should move them into an InitParams struct.",
+      "revId": "a6fe45df606f753e590d9cb130c3411aed5da519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
