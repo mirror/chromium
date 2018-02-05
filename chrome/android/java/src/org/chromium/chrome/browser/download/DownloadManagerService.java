@@ -4,6 +4,9 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS;
+
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -399,6 +402,7 @@ public class DownloadManagerService
      * @param type Type of the information.
      * @param downloadInfo Information to be saved.
      */
+    @SuppressLint({"ApplySharedPref", "CommitPrefEdits"})
     static void storeDownloadInfo(
             SharedPreferences sharedPrefs, String type, Set<String> downloadInfo) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
@@ -407,7 +411,16 @@ public class DownloadManagerService
         } else {
             editor.putStringSet(type, downloadInfo);
         }
-        editor.apply();
+
+        if (type.equals(KEY_PENDING_DOWNLOAD_NOTIFICATIONS)) {
+            // Write synchronously because it might be used on restart and needs to stay up-to-date.
+            if (!editor.commit()) {
+                Log.e("joy", "failed to commit DownloadInfo");
+                Log.e(TAG, "Failed to write DownloadInfo " + type);
+            }
+        } else {
+            editor.apply();
+        }
     }
 
     /**

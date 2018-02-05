@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.download;
 import android.content.SharedPreferences;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.components.offline_items_collection.ContentId;
@@ -32,6 +33,8 @@ public class DownloadSharedPreferenceHelper {
     private final List<DownloadSharedPreferenceEntry> mDownloadSharedPreferenceEntries =
             new ArrayList<DownloadSharedPreferenceEntry>();
     private final ObserverList<Observer> mObservers = new ObserverList<>();
+
+    private boolean mIsChangesCommitted;
 
     private SharedPreferences mSharedPrefs;
 
@@ -68,6 +71,7 @@ public class DownloadSharedPreferenceHelper {
      * @param pendingEntry A DownloadSharedPreferenceEntry to be added.
      */
     public void addOrReplaceSharedPreferenceEntry(DownloadSharedPreferenceEntry pendingEntry) {
+        Log.e("joy", "addOrReplaceSharedPreferenceEntry");
         Iterator<DownloadSharedPreferenceEntry> iterator =
                 mDownloadSharedPreferenceEntries.iterator();
         while (iterator.hasNext()) {
@@ -91,6 +95,7 @@ public class DownloadSharedPreferenceHelper {
      * @param id The {@link ContentId} to query for.
      */
     public void removeSharedPreferenceEntry(ContentId id) {
+        Log.e("joy", "removeSharedPreferenceEntry");
         Iterator<DownloadSharedPreferenceEntry> iterator =
                 mDownloadSharedPreferenceEntries.iterator();
         boolean found = false;
@@ -166,6 +171,7 @@ public class DownloadSharedPreferenceHelper {
      * Helper method to store all the SharedPreferences entries.
      */
     private void storeDownloadSharedPreferenceEntries() {
+        Log.e("joy", "storeDownloadSharedPreferenceEntries");
         Set<String> entries = new HashSet<String>();
         for (int i = 0; i < mDownloadSharedPreferenceEntries.size(); ++i) {
             entries.add(mDownloadSharedPreferenceEntries.get(i).getSharedPreferenceString());

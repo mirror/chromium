@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ServiceCompat;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.AppHooks;
 
@@ -73,16 +74,23 @@ public class DownloadForegroundService extends Service {
      */
     public void startOrUpdateForegroundService(int newNotificationId, Notification newNotification,
             int oldNotificationId, Notification oldNotification) {
+        Log.e("joy",
+                "startOrUpdateForegroundService newNotificationId: " + newNotificationId
+                        + " oldNotificationId: " + oldNotificationId);
+
         // Handle notifications and start foreground.
         if (oldNotificationId == INVALID_NOTIFICATION_ID && oldNotification == null) {
+            Log.e("joy", "no old notification");
             // If there is no old notification or old notification id, just start foreground.
             startForegroundInternal(newNotificationId, newNotification);
         } else {
             if (getCurrentSdk() >= 24) {
+                Log.e("joy", "sdk >= 24");
                 // If possible, detach notification so it doesn't get cancelled by accident.
                 stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_DETACH);
                 startForegroundInternal(newNotificationId, newNotification);
             } else {
+                Log.e("joy", "sdk < 24");
                 // Otherwise start the foreground and relaunch the originally pinned notification.
                 startForegroundInternal(newNotificationId, newNotification);
                 relaunchOldNotification(oldNotificationId, oldNotification);
@@ -120,6 +128,10 @@ public class DownloadForegroundService extends Service {
     public boolean stopDownloadForegroundService(
             @StopForegroundNotification int stopForegroundNotification, int pinnedNotificationId,
             Notification pinnedNotification) {
+        Log.e("joy",
+                "stopDownloadForegroundService stopForegroundNotification: "
+                        + stopForegroundNotification
+                        + ", pinnedNotificationId: " + pinnedNotificationId);
         // Record when stopping foreground.
         DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
                 DownloadNotificationUmaHelper.ForegroundLifecycle.STOP);
@@ -129,16 +141,19 @@ public class DownloadForegroundService extends Service {
         // Handle notifications and stop foreground.
         boolean notificationHandledProperly = true;
         if (stopForegroundNotification == StopForegroundNotification.KILL) {
+            Log.e("joy", "KILL");
             // Regardless of the SDK level, stop foreground and kill if so indicated.
             stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_REMOVE);
 
         } else {
             if (getCurrentSdk() >= 24) {
+                Log.e("joy", "sdk >= 24");
                 // Android N+ has the option to detach notifications from the service, so detach or
                 // kill the notification as needed when stopping service.
                 stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_DETACH);
 
             } else if (getCurrentSdk() >= 23) {
+                Log.e("joy", "sdk >= 23");
                 // Android M+ can't detach the notification but doesn't have other caveats. Kill the
                 // notification and relaunch if detach was desired.
                 if (stopForegroundNotification == StopForegroundNotification.DETACH_OR_ADJUST) {
@@ -150,10 +165,15 @@ public class DownloadForegroundService extends Service {
                 }
 
             } else if (getCurrentSdk() >= 21) {
+                Log.e("joy", "sdk >= 21");
                 // In phones that are Lollipop and older (API < 23), the service gets killed with
                 // the task, which might result in the notification being unable to be relaunched
                 // where it needs to be. Relaunch the old notification before stopping the service.
                 if (stopForegroundNotification == StopForegroundNotification.DETACH_OR_ADJUST) {
+                    // Handle clearing pinned notification id and observers in case the service
+                    // stops before we can do this properly.
+                    onNotificationHandledProperly();
+
                     relaunchOldNotification(
                             getNewNotificationIdFor(pinnedNotificationId), pinnedNotification);
                     stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_REMOVE);
@@ -163,6 +183,11 @@ public class DownloadForegroundService extends Service {
                 }
 
             } else {
+                Log.e("joy", "sdk < 21");
+                // Handle clearing pinned notification id and observers in case the service stops
+                // before we can do this properly.
+                onNotificationHandledProperly();
+
                 // For pre-Lollipop phones (API < 21), we need to kill all notifications because
                 // otherwise the notification gets stuck in the ongoing state.
                 relaunchOldNotification(
@@ -174,15 +199,21 @@ public class DownloadForegroundService extends Service {
         // If the notification was handled properly (ie. killed or detached), clear observer and
         // stored pinned ID. Otherwise, continue persisting this information in case it is needed.
         if (notificationHandledProperly) {
-            removeObserver();
-            clearPinnedNotificationId();
+            onNotificationHandledProperly();
         }
 
+        Log.e("joy", "notificationHandledProperly");
         return notificationHandledProperly;
+    }
+
+    private void onNotificationHandledProperly() {
+        clearPinnedNotificationId();
+        removeObserver();
     }
 
     @VisibleForTesting
     void relaunchOldNotification(int notificationId, Notification notification) {
+        Log.e("joy", "relaunchOldNotification notificationId: " + notificationId);
         if (notificationId != INVALID_NOTIFICATION_ID && notification != null) {
             mNotificationManager.notify(notificationId, notification);
         }
@@ -190,6 +221,7 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("joy", "onStartCommand intent: " + intent);
         // In the case the service was restarted when the intent is null.
         if (intent == null) {
             DownloadNotificationUmaHelper.recordServiceStoppedHistogram(
@@ -202,6 +234,7 @@ public class DownloadForegroundService extends Service {
                     getPinnedNotificationId());
 
             // Allow observers to restart service on their own, if needed.
+            Log.e("joy", "stopSelf");
             stopSelf();
         }
 
@@ -211,6 +244,7 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.e("joy", "onDestroy");
         DownloadNotificationUmaHelper.recordServiceStoppedHistogram(
                 DownloadNotificationUmaHelper.ServiceStopped.DESTROYED, true /* withForeground */);
         DownloadForegroundServiceObservers.alertObserversServiceDestroyed();
@@ -255,7 +289,10 @@ public class DownloadForegroundService extends Service {
     @VisibleForTesting
     static int getPinnedNotificationId() {
         SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
-        return sharedPrefs.getInt(KEY_PINNED_NOTIFICATION_ID, INVALID_NOTIFICATION_ID);
+        int pinnedNotificationId =
+                sharedPrefs.getInt(KEY_PINNED_NOTIFICATION_ID, INVALID_NOTIFICATION_ID);
+        Log.e("joy", "getPinnedNotificationId " + pinnedNotificationId);
+        return pinnedNotificationId;
     }
 
     /**
@@ -264,6 +301,7 @@ public class DownloadForegroundService extends Service {
      * @param pinnedNotificationId Id of the notification pinned to the service.
      */
     private static void updatePinnedNotificationId(int pinnedNotificationId) {
+        Log.e("joy", "updatePinnedNotificationId " + pinnedNotificationId);
         ContextUtils.getAppSharedPreferences()
                 .edit()
                 .putInt(KEY_PINNED_NOTIFICATION_ID, pinnedNotificationId)
@@ -275,6 +313,7 @@ public class DownloadForegroundService extends Service {
      */
     @VisibleForTesting
     static void clearPinnedNotificationId() {
+        Log.e("joy", "clearPinnedNotificationId");
         ContextUtils.getAppSharedPreferences().edit().remove(KEY_PINNED_NOTIFICATION_ID).apply();
     }
 
