@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cdb0e2f_1c23c98c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T14:45:28Z",
+      "side": 1,
+      "message": "Nit: You might want to use a Set if you\u0027re going to use this for membership checks anyway.",
+      "range": {
+        "startLine": 128,
+        "startChar": 17,
+        "endLine": 128,
+        "endChar": 21
+      },
+      "revId": "3f32de7243668d9c506dc09698d54b4e18e550e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5ad25b_3278d2b7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T14:45:28Z",
+      "side": 1,
+      "message": "Maybe we should make this Assume.assumeTrue() to make it a bit clearer that we\u0027re skipping the test (and it also allows providing a message).",
+      "range": {
+        "startLine": 536,
+        "startChar": 8,
+        "endLine": 536,
+        "endChar": 65
+      },
+      "revId": "3f32de7243668d9c506dc09698d54b4e18e550e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
