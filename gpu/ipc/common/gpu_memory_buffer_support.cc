@@ -12,13 +12,28 @@
 #include "ui/gfx/client_native_pixmap_factory.h"
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
+#endif
+
 #if defined(OS_ANDROID)
 #include "base/android/android_hardware_buffer_compat.h"
 #endif
 
 namespace gpu {
 
-gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
+GpuMemoryBufferSupport::GpuMemoryBufferSupport() {
+#if defined(USE_OZONE)
+  pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
+#elif defined(OS_LINUX)
+  pixmap_factory_ = gfx::CreateClientNativePixmapFactoryDmabuf();
+#endif
+}
+
+GpuMemoryBufferSupport::~GpuMemoryBufferSupport() {}
+
+gfx::GpuMemoryBufferType
+GpuMemoryBufferSupport::GetNativeGpuMemoryBufferType() {
 #if defined(OS_MACOSX)
   return gfx::IO_SURFACE_BUFFER;
 #elif defined(OS_ANDROID)
@@ -32,8 +47,9 @@ gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 #endif
 }
 
-bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
-                                                   gfx::BufferUsage usage) {
+bool GpuMemoryBufferSupport::IsNativeGpuMemoryBufferConfigurationSupported(
+    gfx::BufferFormat format,
+    gfx::BufferUsage usage) {
   DCHECK_NE(gfx::SHARED_MEMORY_BUFFER, GetNativeGpuMemoryBufferType());
 
 #if defined(OS_MACOSX)
@@ -76,12 +92,7 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
   NOTREACHED();
   return false;
 #elif defined(OS_LINUX)
-  if (!gfx::ClientNativePixmapFactory::GetInstance()) {
-    // unittests don't have to set ClientNativePixmapFactory.
-    return false;
-  }
-  return gfx::ClientNativePixmapFactory::GetInstance()
-      ->IsConfigurationSupported(format, usage);
+  return pixmap_factory_->IsConfigurationSupported(format, usage);
 #elif defined(OS_WIN)
   switch (usage) {
     case gfx::BufferUsage::GPU_READ:

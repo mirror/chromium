@@ -26,6 +26,7 @@ class MediaStreamUI;
 
 namespace gfx {
 class GpuMemoryBuffer;
+class ClientNativePixmapFactory;
 class Size;
 }  // namespace gfx
 
@@ -102,6 +103,7 @@ class ArcScreenCaptureSession : public mojom::ScreenCaptureSession,
   std::unique_ptr<viz::GLHelper> gl_helper_;
   std::unique_ptr<viz::GLHelper::ScalerInterface> scaler_;
   std::unique_ptr<content::MediaStreamUI> notification_ui_;
+  std::unique_ptr<gfx::ClientNativePixmapFactory> pixmap_factory_;
 
   base::WeakPtrFactory<ArcScreenCaptureSession> weak_ptr_factory_;
 
