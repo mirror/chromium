@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa71885_339096f9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:28:50Z",
+      "side": 1,
+      "message": "Can we make this call first instead and avoid having to grab |resgitry_ptr|? (and if not: document why the order matters)",
+      "revId": "8fd732acc23c985e424c2a081901a8f6afaf65ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ccb100_ab866d9d",
+        "filename": "components/prefs/pref_service_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:28:50Z",
+      "side": 1,
+      "message": "optional: ideally this would be base::RepeatingCallback (and use base::BindRepeating on the caller end) -- base::Callback is deprecated in favor of explicit types",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "8fd732acc23c985e424c2a081901a8f6afaf65ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
