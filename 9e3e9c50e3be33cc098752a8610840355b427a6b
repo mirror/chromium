@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8e8d19_470506b4",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-05T18:06:31Z",
+      "side": 1,
+      "message": "nit: is :host actually needed here? I thought #id had the highest specificity other than style attribute selectors?",
+      "revId": "9e3e9c50e3be33cc098752a8610840355b427a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
