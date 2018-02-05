@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1deb572e_dc6e1287",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-05T22:01:37Z",
+      "side": 1,
+      "message": "InteractiveTiming",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 27
+      },
+      "revId": "ed921210cf618a1aec3db9a2022ef9f27f4c17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "407706b2_eed3c296",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-05T22:01:37Z",
+      "side": 1,
+      "message": "an interactive",
+      "range": {
+        "startLine": 330,
+        "startChar": 42,
+        "endLine": 330,
+        "endChar": 47
+      },
+      "revId": "ed921210cf618a1aec3db9a2022ef9f27f4c17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d774819_cf494441",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-05T22:01:37Z",
+      "side": 1,
+      "message": "Should we be doing this twice?",
+      "range": {
+        "startLine": 520,
+        "startChar": 2,
+        "endLine": 520,
+        "endChar": 28
+      },
+      "revId": "ed921210cf618a1aec3db9a2022ef9f27f4c17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ef6ee30_d44f8edb",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-05T22:01:37Z",
+      "side": 1,
+      "message": "Fix whitespace.",
+      "range": {
+        "startLine": 80,
+        "startChar": 9,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "ed921210cf618a1aec3db9a2022ef9f27f4c17c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

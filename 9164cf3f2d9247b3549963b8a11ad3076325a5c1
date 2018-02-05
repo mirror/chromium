@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf965a02_a419584c",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-05T22:01:37Z",
+      "side": 0,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "9164cf3f2d9247b3549963b8a11ad3076325a5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
