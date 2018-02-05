@@ -143,6 +143,13 @@ constexpr float kExpandArrowShowEndFraction = 1.0f;
 constexpr base::TimeDelta kIgnoreScrollEventsDurationMs =
     base::TimeDelta::FromMilliseconds(500);
 
+// The index offset of an AppLitItemView as a child in the AppsGridView. This is
+// used to correct the focus movement after an item is dragged. Suggestions
+// container, all apps indicator and expand arrow view are added before app
+// list item view in the root grid view. (Update the number below when a new
+// view is added.)
+constexpr int kAppListItemViewIndexOffsetInRootGridView = 3;
+
 // Returns the size of a tile view excluding its padding.
 gfx::Size GetTileViewSize() {
   return gfx::Size(kGridTileWidth, kGridTileHeight);
@@ -1589,6 +1596,10 @@ void AppsGridView::UpdateColsAndRowsForFolder() {
   rows_per_page_ = (items_in_one_page - 1) / cols_ + 1;
 }
 
+size_t AppsGridView::GetAppListItemViewIndexOffset() {
+  return folder_delegate_ ? 0 : kAppListItemViewIndexOffsetInRootGridView;
+}
+
 void AppsGridView::DispatchDragEventForReparent(Pointer pointer,
                                                 const gfx::Point& drag_point) {
   folder_delegate_->DispatchDragEventForReparent(pointer, drag_point);
@@ -1904,6 +1915,11 @@ void AppsGridView::MoveItemInModel(AppListItemView* item_view,
   DCHECK_GE(current_model_index, 0);
 
   int target_model_index = GetModelIndexFromIndex(target);
+
+  // Reorder the app list item views in accordance with |view_model_|.
+  ReorderChildView(item_view,
+                   GetAppListItemViewIndexOffset() + target_model_index);
+
   if (target_model_index == current_model_index)
     return;
 
@@ -1950,7 +1966,8 @@ void AppsGridView::MoveItemToFolder(AppListItemView* item_view,
           CreateViewForItemAtIndex(folder_item_index);
       target_folder_view->SetBoundsRect(target_view_bounds);
       view_model_.Add(target_folder_view, target_view_index);
-      AddChildView(target_folder_view);
+      AddChildViewAt(target_folder_view,
+                     GetAppListItemViewIndexOffset() + target_view_index);
     } else {
       LOG(ERROR) << "Folder no longer in item_list: " << folder_item_id;
     }
@@ -2001,6 +2018,8 @@ void AppsGridView::ReparentItemForReorder(AppListItemView* item_view,
     target_position = item_list_->item_at(target_model_index)->position();
   model_->MoveItemToFolderAt(reparent_item, "", target_position);
   view_model_.Move(current_model_index, target_model_index);
+  ReorderChildView(item_view,
+                   GetAppListItemViewIndexOffset() + target_model_index);
 
   RemoveLastItemFromReparentItemFolderIfNecessary(source_folder_id);
 
@@ -2062,7 +2081,8 @@ bool AppsGridView::ReparentItemToAnotherFolder(AppListItemView* item_view,
       AppListItemView* new_folder_view =
           CreateViewForItemAtIndex(new_folder_index);
       view_model_.Add(new_folder_view, target_view_index);
-      AddChildView(new_folder_view);
+      AddChildViewAt(new_folder_view,
+                     GetAppListItemViewIndexOffset() + target_view_index);
     } else {
       LOG(ERROR) << "Folder no longer in item_list: " << new_folder_id;
     }
@@ -2113,7 +2133,8 @@ void AppsGridView::RemoveLastItemFromReparentItemFolderIfNecessary(
   }
   AppListItemView* last_item_view = CreateViewForItemAtIndex(last_item_index);
   view_model_.Add(last_item_view, last_item_index);
-  AddChildView(last_item_view);
+  AddChildViewAt(last_item_view,
+                 GetAppListItemViewIndexOffset() + last_item_index);
 }
 
 void AppsGridView::CancelFolderItemReparent(AppListItemView* drag_item_view) {
@@ -2196,7 +2217,7 @@ void AppsGridView::OnListItemAdded(size_t index, AppListItem* item) {
 
   AppListItemView* view = CreateViewForItemAtIndex(index);
   view_model_.Add(view, index);
-  AddChildView(view);
+  AddChildViewAt(view, GetAppListItemViewIndexOffset() + index);
 
   // Ensure that AppListItems that are added to the AppListItemList are not
   // shown while in PEEKING. The visibility of the app icons will be updated
@@ -2227,6 +2248,8 @@ void AppsGridView::OnListItemMoved(size_t from_index,
                                    AppListItem* item) {
   EndDrag(true);
   view_model_.Move(from_index, to_index);
+  ReorderChildView(view_model_.view_at(to_index),
+                   GetAppListItemViewIndexOffset() + to_index);
 
   UpdateColsAndRowsForFolder();
   UpdatePaging();
