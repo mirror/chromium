@@ -12,9 +12,12 @@
 #include "platform/wtf/BitVector.h"
 
 namespace blink {
+namespace mojom {
+enum class FeaturePolicyFeature;
+}  // namespace mojom
+using FeaturePolicyFeature = mojom::FeaturePolicyFeature;
 
 class LocalFrame;
-enum class FeaturePolicyFeature;
 
 class CORE_EXPORT Deprecation {
   DISALLOW_NEW();
