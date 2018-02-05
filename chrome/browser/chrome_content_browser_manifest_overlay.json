@@ -30,6 +30,10 @@
         // Only used in classic ash case.
         "ash_pref_connector": [ "pref_connector" ],
         // Only used in classic ash case.
+        "assistant_connector": [ "assistant_connector" ],
+        // Only used in classic ash case.
+        "i_dont_know": [ "what am I" ],
+        // Only used in classic ash case.
         "chrome": [ "input_device_controller" ],
         "chrome_printing": [ "converter" ],
         "content_browser": [ "profiling_client" ],

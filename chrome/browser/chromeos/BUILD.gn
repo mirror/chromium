@@ -151,6 +151,7 @@ source_set("chromeos") {
     "//gpu",
     "//gpu/ipc/host",
     "//gpu/ipc/service",
+    "//libassistant/contrib/internal/chromeos:cros_opa_static",
     "//mash/public/interfaces",
     "//media",
     "//media/mojo/interfaces",
@@ -449,6 +450,8 @@ source_set("chromeos") {
     "arc/wallpaper/arc_wallpaper_service.h",
     "ash_config.cc",
     "ash_config.h",
+    "assistant/assistant_browser_service.cc",
+    "assistant/assistant_browser_service.h",
     "attestation/attestation_ca_client.cc",
     "attestation/attestation_ca_client.h",
     "attestation/attestation_policy_observer.cc",
@@ -2113,6 +2116,11 @@ proto_library("backdrop_wallpaper_proto") {
 service_manifest("ash_pref_connector_manifest") {
   name = "ash_pref_connector"
   source = "prefs/ash_pref_connector_manifest.json"
+}
+
+service_manifest("assistant_connector") {
+  name = "assistant_connector"
+  source = "assistant/manifest.json"
 }
 
 device_policy_remover_path = "$target_gen_dir/device_policy_remover.cc"

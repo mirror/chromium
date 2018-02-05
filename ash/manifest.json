@@ -47,6 +47,7 @@
       },
       "requires": {
         "*": [ "accessibility", "app" ],
+        "assistant_connector": ["assistant_connector"],
         "accessibility_autoclick": [ "mash:launchable" ],
         "ash_pref_connector": [ "pref_connector" ],
         "catalog": [ "directory" ],

@@ -18,6 +18,7 @@
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_popup_utils.h"
+#include "ash/voice_interaction/ui/query_box.h"
 #include "ash/voice_interaction/voice_interaction_controller.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
@@ -126,16 +127,21 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
       ImageButton::OnGestureEvent(event);
       return;
     case ui::ET_GESTURE_LONG_PRESS:
-      if (UseVoiceInteractionStyle()) {
-        base::RecordAction(base::UserMetricsAction(
-            "VoiceInteraction.Started.AppListButtonLongPress"));
-        Shell::Get()->app_list()->StartVoiceInteractionSession();
-        assistant_overlay_->BurstAnimation();
-        event->SetHandled();
-      } else {
-        ImageButton::OnGestureEvent(event);
-      }
+      QueryBox::Show();
+      event->SetHandled();
       return;
+    /*
+    if (UseVoiceInteractionStyle()) {
+      base::RecordAction(base::UserMetricsAction(
+          "VoiceInteraction.Started.AppListButtonLongPress"));
+      Shell::Get()->app_list()->StartVoiceInteractionSession();
+      assistant_overlay_->BurstAnimation();
+      event->SetHandled();
+    } else {
+      ImageButton::OnGestureEvent(event);
+    }
+    return;
+    */
     case ui::ET_GESTURE_LONG_TAP:
       if (UseVoiceInteractionStyle()) {
         // Also consume the long tap event. This happens after the user long
@@ -154,8 +160,13 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 bool AppListButton::OnMousePressed(const ui::MouseEvent& event) {
-  ImageButton::OnMousePressed(event);
-  shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
+  QueryBox::Show();
+  // Shell::Get()
+  //    ->voice_interaction_controller()
+  //    ->ShowCard();
+
+  // ImageButton::OnMousePressed(event);
+  // shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
   return true;
 }
 

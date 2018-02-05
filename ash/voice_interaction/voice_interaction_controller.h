@@ -6,18 +6,24 @@
 #define ASH_VOICE_INTERACTION_VOICE_INTERACTION_CONTROLLER_H_
 
 #include <memory>
+#include <string>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/assistant_connector.mojom.h"
 #include "ash/public/interfaces/voice_interaction_controller.mojom.h"
 #include "ash/voice_interaction/voice_interaction_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
+
+namespace service_manager {
+class Connector;
+}  // namespace service_manager
 
 namespace ash {
 
 class ASH_EXPORT VoiceInteractionController
     : public mojom::VoiceInteractionController {
  public:
-  VoiceInteractionController();
+  VoiceInteractionController(service_manager::Connector* connector);
   ~VoiceInteractionController() override;
 
   void BindRequest(mojom::VoiceInteractionControllerRequest request);
@@ -31,6 +37,9 @@ class ASH_EXPORT VoiceInteractionController
   void NotifyContextEnabled(bool enabled) override;
   void NotifySetupCompleted(bool completed) override;
   void NotifyFeatureAllowed(mojom::AssistantAllowedState state) override;
+
+  void ShowCard();
+  void SendTextQuery(const std::string& query);
 
   mojom::VoiceInteractionState voice_interaction_state() const {
     return voice_interaction_state_;
@@ -61,6 +70,8 @@ class ASH_EXPORT VoiceInteractionController
   base::ObserverList<VoiceInteractionObserver> observers_;
 
   mojo::Binding<mojom::VoiceInteractionController> binding_;
+
+  ash::mojom::AssistantConnectorPtr assistant_connector_;
 
   DISALLOW_COPY_AND_ASSIGN(VoiceInteractionController);
 };

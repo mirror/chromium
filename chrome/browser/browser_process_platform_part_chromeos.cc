@@ -11,6 +11,7 @@
 #include "base/time/tick_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/ash_config.h"
+#include "chrome/browser/chromeos/assistant/assistant_browser_service.h"
 #include "chrome/browser/chromeos/chrome_service_name.h"
 #include "chrome/browser/chromeos/login/session/chrome_session_manager.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h"
@@ -81,8 +82,7 @@ void BrowserProcessPlatformPart::InitializeDeviceDisablingManager() {
   device_disabling_manager_delegate_.reset(
       new chromeos::system::DeviceDisablingManagerDefaultDelegate);
   device_disabling_manager_.reset(new chromeos::system::DeviceDisablingManager(
-      device_disabling_manager_delegate_.get(),
-      chromeos::CrosSettings::Get(),
+      device_disabling_manager_delegate_.get(), chromeos::CrosSettings::Get(),
       user_manager::UserManager::Get()));
   device_disabling_manager_->Init();
 }
@@ -186,6 +186,17 @@ void BrowserProcessPlatformPart::RegisterInProcessServices(
     info.task_runner = base::ThreadTaskRunnerHandle::Get();
     services->insert(
         std::make_pair(ash::mojom::kPrefConnectorServiceName, info));
+  }
+
+  {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::Bind([] {
+      return std::unique_ptr<service_manager::Service>(
+          base::MakeUnique<chromeos::assistant::AssistantBrowserService>());
+    });
+    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+    services->insert(
+        std::make_pair(ash::mojom::kAssistantConnectorServiceName, info));
   }
 
   if (!ash_util::IsRunningInMash()) {

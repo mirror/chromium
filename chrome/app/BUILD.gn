@@ -412,8 +412,10 @@ if (enable_extensions) {
 }
 
 if (is_chromeos) {
-  chrome_packaged_services +=
-      [ "//chrome/browser/chromeos:ash_pref_connector_manifest" ]
+  chrome_packaged_services += [
+    "//chrome/browser/chromeos:ash_pref_connector_manifest",
+    "//chrome/browser/chromeos:assistant_connector",
+  ]
 }
 
 if (is_win) {

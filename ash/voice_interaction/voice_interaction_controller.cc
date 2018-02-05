@@ -6,9 +6,16 @@
 
 #include <utility>
 
+#include "services/service_manager/public/cpp/connector.h"
+
 namespace ash {
 
-VoiceInteractionController::VoiceInteractionController() : binding_(this) {}
+VoiceInteractionController::VoiceInteractionController(
+    service_manager::Connector* connector)
+    : binding_(this) {
+  connector->BindInterface(mojom::kAssistantConnectorServiceName,
+                           &assistant_connector_);
+}
 
 VoiceInteractionController::~VoiceInteractionController() = default;
 
@@ -56,6 +63,14 @@ void VoiceInteractionController::NotifyFeatureAllowed(
   allowed_state_ = state;
   for (auto& observer : observers_)
     observer.OnAssistantFeatureAllowedChanged(state);
+}
+
+void VoiceInteractionController::ShowCard() {
+  assistant_connector_->ShowAssistantCard();
+}
+
+void VoiceInteractionController::SendTextQuery(const std::string& query) {
+  assistant_connector_->SendTextQuery(query);
 }
 
 }  // namespace ash

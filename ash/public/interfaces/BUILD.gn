@@ -17,6 +17,7 @@ mojom("interfaces_internal") {
     "app_list.mojom",
     "ash_display_controller.mojom",
     "ash_message_center_controller.mojom",
+    "assistant_connector.mojom",
     "cast_config.mojom",
     "constants.mojom",
     "event_properties.mojom",

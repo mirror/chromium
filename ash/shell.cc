@@ -1041,8 +1041,8 @@ void Shell::Init(ui::ContextFactory* context_factory,
   laser_pointer_controller_.reset(new LaserPointerController());
   partial_magnification_controller_.reset(new PartialMagnificationController());
   highlighter_controller_.reset(new HighlighterController());
-  voice_interaction_controller_ =
-      std::make_unique<VoiceInteractionController>();
+  voice_interaction_controller_ = std::make_unique<VoiceInteractionController>(
+      shell_delegate_->GetShellConnector());
 
   magnification_controller_.reset(MagnificationController::CreateInstance());
   mru_window_tracker_ = std::make_unique<MruWindowTracker>();

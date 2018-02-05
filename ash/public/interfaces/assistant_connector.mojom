@@ -1,0 +1,8 @@
+module ash.mojom;
+
+const string kAssistantConnectorServiceName = "assistant_connector";
+
+interface AssistantConnector {
+  ShowAssistantCard();
+  SendTextQuery(string query);
+};

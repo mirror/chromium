@@ -763,6 +763,8 @@ component("ash") {
     "virtual_keyboard_container_layout_manager.h",
     "virtual_keyboard_controller.cc",
     "virtual_keyboard_controller.h",
+    "voice_interaction/ui/query_box.cc",
+    "voice_interaction/ui/query_box.h",
     "voice_interaction/voice_interaction_controller.cc",
     "voice_interaction/voice_interaction_controller.h",
     "voice_interaction/voice_interaction_observer.h",
@@ -1140,6 +1142,8 @@ component("ash") {
 component("ash_with_content") {
   sources = [
     "content/ash_with_content_export.h",
+    "content/card_view.cc",
+    "content/card_view.h",
     "content/keyboard_overlay/keyboard_overlay_delegate.cc",
     "content/keyboard_overlay/keyboard_overlay_delegate.h",
     "content/keyboard_overlay/keyboard_overlay_view.cc",
