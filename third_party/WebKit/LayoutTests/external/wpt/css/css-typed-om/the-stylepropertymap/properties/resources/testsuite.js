@@ -43,6 +43,7 @@ function runPropertyTests(propertyName, testCases) {
         new CSSUnitValue(0, 'px'),
         new CSSUnitValue(-3.14, 'em'),
         new CSSUnitValue(3.14, 'cm'),
+        new CSSMathSum(new CSSUnitValue(0, 'px'), new CSSUnitValue(0, 'em')),
       ], 'a length CSSUnitValue');
     } else if (testCase.specified == '<percentage>') {
       testGetSet(propertyName, [
