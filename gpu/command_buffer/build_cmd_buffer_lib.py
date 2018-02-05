@@ -1623,7 +1623,7 @@ class GENnHandler(TypeHandler):
     else:
       alloc_code = ("""\
       GetIdHandler(SharedIdNamespaces::k%(resource_types)s)->
-      MakeIds(this, 0, %(args)s);""" % args)
+      MakeIds(helper_, &share_group_context_data_, 0, %(args)s);""" % args)
     args['alloc_code'] = alloc_code
 
     code = """\
@@ -1936,7 +1936,8 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs%(arg_index)d_%(value_index)d) {
     else:
       f.write(
           "  GetIdHandler(SharedIdNamespaces::kProgramsAndShaders)->\n")
-    f.write("      MakeIds(this, 0, 1, &client_id);\n")
+    f.write("      MakeIds(helper_, &share_group_context_data_, "
+            "              0, 1, &client_id);\n")
     f.write("  helper_->%s(%s);\n" %
                (func.name, func.MakeCmdArgString("")))
     f.write('  GPU_CLIENT_LOG("returned " << client_id);\n')
