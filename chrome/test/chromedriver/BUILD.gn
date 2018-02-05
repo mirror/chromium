@@ -332,6 +332,9 @@ group("chromedriver_py_tests") {
     ":chromedriver",
     "//chrome:chrome",
   ]
+  if (is_component_build && is_mac) {
+    deps += [ "//chrome:chrome_framework" ]
+  }
 
   _py_files = read_file("test/run_py_tests.pydeps", "list lines")
 
