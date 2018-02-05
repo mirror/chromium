@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ad2c429_b6cb7ef4",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T01:38:59Z",
+      "side": 1,
+      "message": "Yeah it was clang formatted - I think it looks funny too :(",
+      "parentUuid": "e783bb26_ef05d116",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 64
+      },
+      "revId": "4cde3365b89a9b06e22b25d23889ca53a64f7196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "063c2638_b3bcd0f7",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 4
