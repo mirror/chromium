@@ -33,6 +33,7 @@
 #include "content/browser/push_messaging/push_messaging_router.h"
 #include "content/browser/service_manager/common_browser_interfaces.h"
 #include "content/browser/storage_partition_impl_map.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/public/browser/blob_handle.h"
 #include "content/public/browser/browser_thread.h"
@@ -445,6 +446,7 @@ void BrowserContext::SetDownloadManagerForTesting(
 void BrowserContext::Initialize(
     BrowserContext* browser_context,
     const base::FilePath& path) {
+  LOG(ERROR) << "ELAD!!! BrowserContext::Initialize(" << ((void*)browser_context) << ", " << path.value() << ").";
 
   std::string new_id;
   if (GetContentClient() && GetContentClient()->browser()) {
@@ -511,6 +513,13 @@ void BrowserContext::Initialize(
     RegisterCommonBrowserInterfaces(connection);
     connection->Start();
   }
+
+  if (!browser_context->IsOffTheRecord()) {
+    auto* webrtc_event_log_manager = WebRtcEventLogManager::GetInstance();
+    if (webrtc_event_log_manager) {
+      webrtc_event_log_manager->EnableForBrowserContext(browser_context);
+    }
+  }
 }
 
 // static
@@ -551,9 +560,12 @@ ServiceManagerConnection* BrowserContext::GetServiceManagerConnectionFor(
 }
 
 BrowserContext::BrowserContext()
-    : media_device_id_salt_(CreateRandomMediaDeviceIDSalt()) {}
+    : media_device_id_salt_(CreateRandomMediaDeviceIDSalt()) {
+  LOG(ERROR) << "ELAD!!! BrowserContext::BrowserContext() " << ((void*)this);
+}
 
 BrowserContext::~BrowserContext() {
+  LOG(ERROR) << "ELAD!!! BrowserContext::~BrowserContext() " << ((void*)this);
   CHECK(GetUserData(kMojoWasInitialized))
       << "Attempting to destroy a BrowserContext that never called "
       << "Initialize()";
