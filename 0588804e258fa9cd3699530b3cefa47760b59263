@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1947da75_d6939bc2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:09:52Z",
+      "side": 1,
+      "message": "Did you mean to use @no_focus here?",
+      "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d907080_1a37d1bf",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:09:52Z",
+      "side": 1,
+      "message": "Nit: Capitalize the first letter for consistency.",
+      "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af53af86_38ac3fba",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2805,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:09:52Z",
+      "side": 1,
+      "message": "You accidentally copied the table hint here",
+      "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
