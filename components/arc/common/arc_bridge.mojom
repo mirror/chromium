@@ -31,6 +31,7 @@ import "policy.mojom";
 import "power.mojom";
 import "print.mojom";
 import "process.mojom";
+import "protected_buffer.mojom";
 import "rotation_lock.mojom";
 import "screen_capture.mojom";
 import "storage_manager.mojom";
@@ -44,9 +45,9 @@ import "voice_interaction_framework.mojom";
 import "volume_mounter.mojom";
 import "wallpaper.mojom";
 
-// Next MinVersion: 37
+// Next MinVersion: 38
 // Deprecated method IDs: 101, 105
-// Next method ID: 142
+// Next method ID: 143
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
@@ -140,6 +141,10 @@ interface ArcBridgeHost {
 
   // Notifies Chrome that the ProcessInstance interface is ready.
   OnProcessInstanceReady@104(ProcessInstance instance_ptr);
+
+  // Notifies Chrome that the ProtectedBufferInstance interface is ready.
+  [MinVersion=37]
+  OnProtectedBufferInstanceReady@142(ProtectedBufferInstance instance_ptr);
 
   // Notifies Chrome that the RotationLockInstance interface is ready.
   [MinVersion=32] OnRotationLockInstanceReady@137(RotationLockInstance instance_ptr);

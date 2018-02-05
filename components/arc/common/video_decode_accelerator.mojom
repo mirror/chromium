@@ -75,7 +75,7 @@ struct VideoDecodeAcceleratorConfig {
 // this will tell the server to import and use the protected buffer instead of
 // the dummy buffer.
 //
-// Next MinVersion: 1
+// Next MinVersion: 2
 // Next method ID: 9
 interface VideoDecodeAccelerator {
   [Extensible]
@@ -96,11 +96,14 @@ interface VideoDecodeAccelerator {
   Initialize@0(VideoDecodeAcceleratorConfig config,
                VideoDecodeClient client) => (Result result);
 
+  // TODO(hiroh): Remove.
   // Allocate protected input buffer with |handle_fd| and aligned |size|.
   // This function can be called only in secure mode.
   // If this is succeeded, this returns true. Otherwise, returns false.
   AllocateProtectedBuffer@7(handle handle_fd,
                             uint64 size) => (bool success);
+
+  [MinVersion=1]
 
   // Decodes the content in the shared memory of the bitstream buffer. The
   // callee needs to map the the shared memory to read the content and is

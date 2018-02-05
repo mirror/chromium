@@ -64,6 +64,8 @@ class PowerInstance;
 class PrintHost;
 class PrintInstance;
 class ProcessInstance;
+class ProtectedBufferHost;
+class ProtectedBufferInstance;
 class RotationLockInstance;
 class ScreenCaptureHost;
 class ScreenCaptureInstance;
@@ -182,6 +184,10 @@ class ArcBridgeService {
     return &print_;
   }
   ConnectionHolder<mojom::ProcessInstance>* process() { return &process_; }
+  ConnectionHolder<mojom::ProtectedBufferInstance, mojom::ProtectedBufferHost>*
+  protected_buffer() {
+    return &protected_buffer_;
+  }
   ConnectionHolder<mojom::RotationLockInstance>* rotation_lock() {
     return &rotation_lock_;
   }
@@ -259,6 +265,8 @@ class ArcBridgeService {
   ConnectionHolder<mojom::PowerInstance, mojom::PowerHost> power_;
   ConnectionHolder<mojom::PrintInstance, mojom::PrintHost> print_;
   ConnectionHolder<mojom::ProcessInstance> process_;
+  ConnectionHolder<mojom::ProtectedBufferInstance, mojom::ProtectedBufferHost>
+      protected_buffer_;
   ConnectionHolder<mojom::RotationLockInstance> rotation_lock_;
   ConnectionHolder<mojom::ScreenCaptureInstance, mojom::ScreenCaptureHost>
       screen_capture_;

@@ -13,12 +13,14 @@
 #include "content/public/gpu/content_gpu_client.h"
 
 #if defined(OS_CHROMEOS)
+#include "components/arc/common/protected_buffer_allocator.mojom.h"
 #include "components/arc/common/protected_buffer_manager.mojom.h"
 #include "components/arc/common/video_decode_accelerator.mojom.h"
 #include "components/arc/common/video_encode_accelerator.mojom.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 
 namespace arc {
+class ProtectedBufferAllocator;
 class ProtectedBufferManager;
 }  // namespace arc
 #endif
@@ -40,6 +42,10 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
       const std::string& cdm_guid) override;
 #endif
 
+#if defined(OS_CHROMEOS)
+  void ResetActivePBAFlag();
+#endif
+
  private:
 #if defined(OS_CHROMEOS)
   void CreateArcVideoDecodeAccelerator(
@@ -50,6 +56,11 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
 
   void CreateProtectedBufferManager(
       ::arc::mojom::ProtectedBufferManagerRequest request);
+
+  void CreateProtectedBufferAllocator(
+      ::arc::mojom::ProtectedBufferAllocatorRequest request);
+
+  bool no_active_pba_ = true;
 #endif
 
   // Used to profile process startup.

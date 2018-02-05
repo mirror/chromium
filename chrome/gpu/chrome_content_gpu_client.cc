@@ -27,6 +27,7 @@
 #if defined(OS_CHROMEOS)
 #include "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h"
 #include "components/arc/video_accelerator/gpu_arc_video_encode_accelerator.h"
+#include "components/arc/video_accelerator/protected_buffer_allocator.h"
 #include "components/arc/video_accelerator/protected_buffer_manager.h"
 #include "components/arc/video_accelerator/protected_buffer_manager_proxy.h"
 #include "content/public/common/service_manager_connection.h"
@@ -104,6 +105,10 @@ void ChromeContentGpuClient::InitializeRegistry(
       base::Bind(&ChromeContentGpuClient::CreateProtectedBufferManager,
                  base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(
+      base::Bind(&ChromeContentGpuClient::CreateProtectedBufferAllocator,
+                 base::Unretained(this)),
+      base::ThreadTaskRunnerHandle::Get());
 #endif
 }
 
@@ -163,5 +168,27 @@ void ChromeContentGpuClient::CreateProtectedBufferManager(
       std::make_unique<arc::GpuArcProtectedBufferManagerProxy>(
           protected_buffer_manager_.get()),
       std::move(request));
+}
+
+void ChromeContentGpuClient::ResetActivePBAFlag() {
+  DCHECK(!no_active_pba_);
+  no_active_pba_ = true;
+}
+
+void ChromeContentGpuClient::CreateProtectedBufferAllocator(
+    ::arc::mojom::ProtectedBufferAllocatorRequest request) {
+  static std::mutex mutex;
+  std::lock_guard<std::mutex> lock(mutex);
+  if (no_active_pba_) {
+    // Unretained is safe here, because ChromeContentGpuClient is created by
+    // using LazyInstance. So it is valid unless chrome exits.
+    mojo::MakeStrongBinding(
+        std::make_unique<arc::ProtectedBufferAllocator>(
+            protected_buffer_manager_.get(),
+            base::BindOnce(&ChromeContentGpuClient::ResetActivePBAFlag,
+                           base::Unretained(this))),
+        std::move(request));
+    no_active_pba_ = false;
+  }
 }
 #endif

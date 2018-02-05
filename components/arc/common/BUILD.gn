@@ -69,6 +69,8 @@ if (is_chromeos) {
 mojom("media") {
   sources = [
     "gfx.mojom",
+    "protected_buffer.mojom",
+    "protected_buffer_allocator.mojom",
     "protected_buffer_manager.mojom",
     "video.mojom",
     "video_common.mojom",

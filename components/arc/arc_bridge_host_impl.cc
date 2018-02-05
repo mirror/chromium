@@ -227,6 +227,12 @@ void ArcBridgeHostImpl::OnProcessInstanceReady(
   OnInstanceReady(arc_bridge_service_->process(), std::move(process_ptr));
 }
 
+void ArcBridgeHostImpl::OnProtectedBufferInstanceReady(
+    mojom::ProtectedBufferInstancePtr protected_buffer_ptr) {
+  OnInstanceReady(arc_bridge_service_->protected_buffer(),
+                  std::move(protected_buffer_ptr));
+}
+
 void ArcBridgeHostImpl::OnRotationLockInstanceReady(
     mojom::RotationLockInstancePtr rotation_lock_ptr) {
   OnInstanceReady(arc_bridge_service_->rotation_lock(),
