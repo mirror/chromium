@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d800ad_c1f0a729",
+        "filename": "ui/message_center/public/cpp/notification.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-05T18:15:05Z",
+      "side": 1,
+      "message": "Please drop the OS-specific references, this won\u0027t be limited to Chrome OS (and Windows) anymore.",
+      "revId": "9d7dcaa87e30532b41f73df54840dbe7d20808b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
