@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5f0f32d4_a7a4c4e3",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-05T22:44:16Z",
+      "side": 1,
+      "message": "Done. I re-visited the int/intlist relations and at least from my reading, most of them are useful except for labelled by and described by. Over the course of time, I\u0027m expecting we\u0027ll add more granular sematnic events like related error message changed, but for now, I\u0027ve only added related node",
+      "parentUuid": "09f9ac3b_9414bfd4",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2084dd3a_357ce7f7",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "5923a9d0_363405bb",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-05T22:44:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2084dd3a_357ce7f7",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b41082a_130614b8",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 8
@@ -67,6 +103,24 @@
       "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca42600d_b9c96fbe",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-05T22:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b41082a_130614b8",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
