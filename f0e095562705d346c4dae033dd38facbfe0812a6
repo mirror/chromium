@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d06db927_a46c56b6",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8400c92_324faa99",
+      "range": {
+        "startLine": 454,
+        "startChar": 27,
+        "endLine": 454,
+        "endChar": 42
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e990c29_18401338",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36cb136_fac01e46",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e990c29_18401338",
+      "range": {
+        "startLine": 455,
+        "startChar": 28,
+        "endLine": 455,
+        "endChar": 44
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f5664ba0_785cfdc0",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e83dde2_9c2dcfaf",
+      "range": {
+        "startLine": 572,
+        "startChar": 6,
+        "endLine": 572,
+        "endChar": 20
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df41dfb0_431589ef",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "44c715e1_7f0dd080",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df41dfb0_431589ef",
+      "range": {
+        "startLine": 583,
+        "startChar": 4,
+        "endLine": 583,
+        "endChar": 9
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a067bf_61c4f83f",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 3
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "cda28d68_86e0a7fb",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a067bf_61c4f83f",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7f2e63b_6afed2f8",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 3
@@ -122,6 +236,24 @@
       "writtenOn": "2018-02-05T06:40:00Z",
       "side": 1,
       "message": "Take |params| by value.",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57f6df5_a5429e72",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Not sure if I\u0027m doing something silly but when I try to take \"std::vector\u003cmojom::ThreatDOMDetailsNodePtr\u003e params\" as an arg instead (which I think would be passing by value) I get a compile error \"call to deleted constructor of mojo::StructPtr\u003csafe_browsing::mojom::ThreatDOMDetailsNode\u003e\"",
+      "parentUuid": "f7f2e63b_6afed2f8",
       "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "b729e13a_8cf75ab7",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec606283_56813635",
+      "range": {
+        "startLine": 647,
+        "startChar": 4,
+        "endLine": 647,
+        "endChar": 41
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b07ecf1_bd9144ab",
         "filename": "components/safe_browsing/browser/threat_details.h",
         "patchSetId": 3
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "462937f4_1e9d18a8",
+        "filename": "components/safe_browsing/browser/threat_details.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b07ecf1_bd9144ab",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25eb9c95_698996f3",
         "filename": "components/safe_browsing/renderer/DEPS",
         "patchSetId": 3
@@ -188,6 +368,24 @@
       "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d8bf0a_b1865100",
+        "filename": "components/safe_browsing/renderer/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25eb9c95_698996f3",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "7247c335_c509af84",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "decc52f5_05923893",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "628fcec3_fadd80be",
         "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
         "patchSetId": 3
@@ -222,6 +438,24 @@
       "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf817c1_385e13e0",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "628fcec3_fadd80be",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "fa90fb12_c67e7612",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a58806d0_16a0be53",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f60b83cd_de0a39be",
         "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
         "patchSetId": 3
@@ -268,6 +526,30 @@
       "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ac5267_21eb5119",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f60b83cd_de0a39be",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 35
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "ecb6ab87_82ed6b7a",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd6353e_2862205f",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a8225a_b0ab133d",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 3
@@ -311,6 +617,24 @@
     },
     {
       "key": {
+        "uuid": "afd99b14_bf55a0fe",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a8225a_b0ab133d",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fda0f01_cd697f3b",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 3
@@ -325,6 +649,24 @@
       "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63fe66c_f4411064",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T23:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fda0f01_cd697f3b",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
