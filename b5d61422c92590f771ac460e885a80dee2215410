@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd94c554_14197ce0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20445,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-02-05T20:38:16Z",
+      "side": 1,
+      "message": "nit: static_cast\u003cint\u003e instead of c-style cast, per style.",
+      "revId": "b5d61422c92590f771ac460e885a80dee2215410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
