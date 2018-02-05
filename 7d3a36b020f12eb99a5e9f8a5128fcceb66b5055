@@ -22,6 +22,30 @@
       "revId": "7d3a36b020f12eb99a5e9f8a5128fcceb66b5055",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40bb7c4_122f7d43",
+        "filename": "remoting/host/security_key/security_key_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-05T17:31:49Z",
+      "side": 1,
+      "message": "Yes, we will can have a local annotation for this.\nI just added this temporary annotation to do the refactoring, and I will create a next CL to replace it with one with appropriate data.",
+      "parentUuid": "03ee163f_d7e35f7d",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "7d3a36b020f12eb99a5e9f8a5128fcceb66b5055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
