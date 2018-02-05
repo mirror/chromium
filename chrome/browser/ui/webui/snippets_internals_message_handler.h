@@ -57,6 +57,8 @@ class SnippetsInternalsMessageHandler
       ntp_snippets::CategoryStatus new_status) override;
   void OnSuggestionInvalidated(
       const ntp_snippets::ContentSuggestion::ID& suggestion_id) override;
+  void OnSuggestionDismissed(
+      const ntp_snippets::ContentSuggestion::ID& suggestion_id) override;
   void OnFullRefreshRequired() override;
   void ContentSuggestionsServiceShutdown() override;
 

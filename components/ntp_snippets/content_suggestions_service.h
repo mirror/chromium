@@ -78,6 +78,10 @@ class ContentSuggestionsService : public KeyedService,
     virtual void OnSuggestionInvalidated(
         const ContentSuggestion::ID& suggestion_id) = 0;
 
+    // Fired when a suggestion is dismissed by the user.
+    virtual void OnSuggestionDismissed(
+        const ContentSuggestion::ID& suggestion_id) = 0;
+
     // Fired when the previously sent data is not valid anymore and a refresh
     // of all the suggestions is required. Called for example when the sign in
     // state changes and personalised suggestions have to be shown or discarded.

@@ -369,6 +369,9 @@ void ContentSuggestionsService::DismissSuggestion(
   // localy e.g. if it was sent to UI through |Fetch| or it has been dismissed
   // from a different NTP.
   RemoveSuggestionByID(suggestion_id);
+  for (Observer& observer : observers_) {
+    observer.OnSuggestionDismissed(suggestion_id);
+  }
 }
 
 void ContentSuggestionsService::DismissCategory(Category category) {
