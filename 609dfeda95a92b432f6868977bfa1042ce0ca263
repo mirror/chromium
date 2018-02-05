@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "99241e9a_59253098",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T20:40:13Z",
+      "side": 1,
+      "message": "I agree with Domenic\u0027s statement.\n\nIt would be accurate to say that XSDB is a defense-in-depth against undiscovered XSSI attack vectors (the Array ctor business, long-fixed, being the first such known attack). However, XSDB also winds up needing to interact with and build upon the other defenses against XSSI -- the other defenses being parser-breaking prefixes (which is an ad-hoc collection convention for turning \u003cscript\u003e inclusion into error), and the nosniff header (which causes \u003cscript\u003e inclusion to fail when accompanied with a json mime type).\n\nIt is accurate to say that XSDB can provide a defense against XSSI vectors even when the site doesn\u0027t employ one of the other defenses. On the other hand, XSDB treats the presence of the other defenses as a signal that blocking is appropriate.",
+      "parentUuid": "df21304d_e6ebbff8",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3cfa0e_846852f2",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -47,6 +65,30 @@
       "writtenOn": "2018-02-05T17:04:48Z",
       "side": 1,
       "message": "This is likely too nitpicky, but from a web developer\u0027s point of view it\u0027s fairly difficult to think of JSON resources as \"documents\". In my mind a document maps more closely to how it\u0027s defined in the DOM spec https://www.w3.org/TR/html52/dom.html#documents and HTML (https://www.w3.org/TR/html52/infrastructure.html#infrastructure-terminology), i.e. it\u0027s renderable, has a DOM, etc., none of which is true for JSON.\n\nHowever, I\u0027m not sure how to resolve this and keep your document vs. resource narrative intact, so perhaps you should just ignore this and go with the terminology you already have.",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26788b3_ae781439",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T20:40:13Z",
+      "side": 1,
+      "message": "I think this is a really valuable point. Our team has been using \"document blocking\" with this meaning for a really long time, and so the outside perspective of how this comes across is helpful.\n\nThe universe of cross-origin resources that are blockable by an XSDB type filter, are precisely those which don\u0027t need to be allowed through by some potential opaque consumer in the renderer. By \u0027opaque\u0027 I mean a consumer that doesn\u0027t allow the bits of the response to become known to the page origin.\n\nSupporting out-of-process iframes is what allowed HTML to move into the set of blockable resource types. As a thought exercise -- if we implemented out-of-process \u003cimg\u003e tags, we could do the same thing for cross-origin images (this is not an insane performance architecture, but it has crazy implications for canvas).\n\nNon-empty JSON objects are in the set of blockable resource types because there\u0027s no HTML element that produces anything other than an error when pointed at a JSON object. Other JSON cases are similar, except that the \u003cscript\u003e tag will accept them, but ought to produce no observable side effects.\n\nThe blockability of XML is derived similarly to JSON, without the Javascript polyglot ambiguities.\n\n ---\n\nSo really, what we\u0027re trying to classify is whether a particular resource is \u0027potentially digestible by some context\u0027 or \u0027indigestible by all contexts\u0027.\n\nMaybe we rebrand this as \"Cross-site resource protection\"?",
+      "parentUuid": "2c3cfa0e_846852f2",
       "range": {
         "startLine": 35,
         "startChar": 40,
@@ -146,6 +188,23 @@
     },
     {
       "key": {
+        "uuid": "bab45118_6ad8575f",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T20:40:13Z",
+      "side": 1,
+      "message": "In an important sense, the same-origin policy is always in effect, so we should word this more carefully.\n\nThe thing with \u003cimg\u003e, \u003cscript\u003e, etc is that they support opaquely loading cross-origin resources in a way that isn\u0027t expected to reveal the resource body to the page\u0027s origin.",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4b361ad_eb0e23b7",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -180,6 +239,24 @@
     },
     {
       "key": {
+        "uuid": "b2354d66_303ad82e",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T20:40:13Z",
+      "side": 1,
+      "message": "Our list here may be somewhat archaic or arbitrary -- it\u0027s really just carried over from our prototype, which rapidly had the dust blown off of it over the past few months. It would not be a bad idea to unify with the spec\u0027s definition.",
+      "parentUuid": "4a6649b6_466386b4",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67fcb5ba_9aec7020",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -197,6 +274,23 @@
         "endLine": 163,
         "endChar": 21
       },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ba7115_5fa1c352",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T20:40:13Z",
+      "side": 1,
+      "message": "This description doesn\u0027t match the current implementation -- so is it a proposed tightening of enforcement?\n\nThere are two ways we could implement an the XSDB filter: either by trying to recognize all the patterns that need to be let through, or by trying to recognize patterns that are okay to block. Our implementation currently takes the second approach. Doing the first way seems like it might require a really big registry (e.g. every image format, awareness of video text tracks, etc etc ...)?",
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -237,6 +331,24 @@
       "writtenOn": "2018-02-05T19:25:22Z",
       "side": 1,
       "message": "They would be ignored in text/css resources, so this is an interesting observable breaking change to write tests for.",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689072e7_cd730ae3",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T20:40:13Z",
+      "side": 1,
+      "message": "Excellent point. The policy might actually need to think about text/css.",
+      "parentUuid": "7105b844_c600a5fd",
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
