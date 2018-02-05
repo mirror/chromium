@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfbf6cd7_4d6042d7",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T13:50:43Z",
+      "side": 1,
+      "message": "Not sure how these should be specified (chrome policy for URLBlacklist and whitelist have pretty generic description, while not many annotations don\u0027t have them), how did you end up with these two?",
+      "revId": "b85b851608290f5aaa24cc288cf57612b55995af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f52b50_c3b2fce4",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T13:50:43Z",
+      "side": 1,
+      "message": "I doubt we need to go through ThrottlingURLLoader for this one. This is browser-internal communication and we\u0027ll be going through the browser process\u0027s internal loader factory. Where do we plan to get these throttles?",
+      "revId": "b85b851608290f5aaa24cc288cf57612b55995af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a124c0_e83fdba8",
+        "filename": "content/public/common/resource_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T13:50:43Z",
+      "side": 1,
+      "message": "The resource type isn\u0027t really used in this path and is to be deprecated, I don\u0027t think we need to add one for this (the default value of 0 is probably fine, or did it break anything?).",
+      "revId": "b85b851608290f5aaa24cc288cf57612b55995af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
