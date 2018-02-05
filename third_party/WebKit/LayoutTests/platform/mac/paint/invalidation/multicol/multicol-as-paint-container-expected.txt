@@ -29,12 +29,12 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [325, -181, 300, 342],
+          "rect": [325, -181, 300, 341],
           "reason": "style change"
         },
         {
           "object": "LayoutText #text",
-          "rect": [0, -1, 300, 342],
+          "rect": [0, -1, 300, 341],
           "reason": "style change"
         }
       ]

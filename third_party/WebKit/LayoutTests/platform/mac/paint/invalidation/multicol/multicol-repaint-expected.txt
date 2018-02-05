@@ -28,17 +28,17 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [234, 14, 300, 52],
+          "rect": [234, 14, 300, 51],
           "reason": "appeared"
         },
         {
           "object": "LayoutText #text",
-          "rect": [9, 114, 300, 52],
+          "rect": [9, 114, 300, 51],
           "reason": "appeared"
         },
         {
           "object": "LayoutText #text",
-          "rect": [9, 14, 275, 152],
+          "rect": [9, 14, 275, 151],
           "reason": "disappeared"
         },
         {
