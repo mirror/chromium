@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e15b117_bc2cf882",
+        "filename": "chrome/browser/media_galleries/fileapi/device_media_async_file_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T15:53:26Z",
+      "side": 0,
+      "message": "The body of this method is so small it seems like the better option would be to inline it:\n\na) GetMTPDeviceAsyncDelegate() already has the DCHECK here in it.\nb) You can change the argument type to const FileSystemURL\u0026 and move the call to filesystem_id() into the method since all the callers do this.",
+      "revId": "8b447d73d8b40966c3c462a126536528a0ba88e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
