@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<title>Test rotation on a video element.</title>
+<script src="../resources/run-after-layout-and-paint.js"></script>
+<video></video>
+<script>
+testRunner.dumpAsTextWithPixelResults();
+testRunner.waitUntilDone();
+
+var video90 = document.querySelector('video');
+video90.onseeked = function() {
+    video90.onseeked = null;
+    runAfterLayoutAndPaint(function() {}, true);
+};
+
+video90.src = 'content/bear_rotate_90.mp4';
+video90.currentTime = 1;
+
+var video0 = document.querySelector('video');
+video0.onseeked = function() {
+    video0.onseeked = null;
+    runAfterLayoutAndPaint(function() {}, true);
+};
+
+video0.src = 'content/bear_rotate_0.mp4';
+video0.currentTime = 1;
+
+</script>
