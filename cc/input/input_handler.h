@@ -231,6 +231,10 @@ class CC_EXPORT InputHandler {
 
   virtual bool ScrollingShouldSwitchtoMainThread() = 0;
 
+  virtual bool CurrentNodeHasSnapData() = 0;
+  virtual gfx::Vector2dF GetSnapPosition(
+      const gfx::Vector2dF& displacement) = 0;
+
  protected:
   InputHandler() {}
   virtual ~InputHandler() {}
