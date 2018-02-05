@@ -885,6 +885,11 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
         return false;
       NOTREACHED();
     } break;
+    case CSSSelector::kPseudoIS: {
+      if (!RuntimeEnabledFeatures::CSSMatchesEnabled())
+        return false;
+      NOTREACHED();
+    } break;
     case CSSSelector::kPseudoAny: {
       SelectorCheckingContext sub_context(context);
       sub_context.is_sub_selector = true;
