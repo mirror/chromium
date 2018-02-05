@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0175c02f_04f59195",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-05T16:34:44Z",
+      "side": 1,
+      "message": "Please add a case here (or another test case) to check that |user-select: text| also overrides parent\u0027s |user-select: none|. (And similarly for the converse case below, check that |user-select: none| will override parent\u0027s |user-select: all|.)",
+      "range": {
+        "startLine": 389,
+        "startChar": 25,
+        "endLine": 389,
+        "endChar": 63
+      },
+      "revId": "7fe49e4838b592fcf6db489145971016afbf15dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
