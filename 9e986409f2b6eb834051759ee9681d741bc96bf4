@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47cc0a14_a2d805eb",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:04:01Z",
+      "side": 1,
+      "message": "Not sure about this one. I think that ignoring this call may break some assumptions on the caller side. Maybe David knows?",
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc47c18_00821e25",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:04:01Z",
+      "side": 1,
+      "message": "Instead of this flag, it\u0027s probably better to introduce something like DocumentLifecycle::PostponeTransitionScope (similar to [1]).\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/DocumentLifecycle.h?l\u003d122\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fthird_party%252FWebKit%252FSource%252Fcore%252Fdom%252FDocumentLifecycle.h%25235cPQrMWGGv2DzFzyn4azWuNKklQsptg4NgACMcmYN1M%25253D\u0026gsn\u003dDisallowTransitionScope\u0026ct\u003dxref_usages",
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd8f397_986813dd",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:04:01Z",
+      "side": 1,
+      "message": "Instead of passing it here (and changing v8), you can store context group id in the field on MainThreadDebugger. It\u0027s guaranteed there is only a single active pause at any moment.",
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
