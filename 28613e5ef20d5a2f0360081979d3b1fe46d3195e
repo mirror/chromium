@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "339349c6_e7006e61",
+        "filename": "components/offline_pages/core/background/pick_request_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "This is not really part of picking a request.  It might be better to move this to the request coordinator if we can.  (For instance, we might not be able to move it if we lose the notion of which task was picked, but I think we retain that in the callback).",
+      "range": {
+        "startLine": 123,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 80
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d25099_df37bcce",
+        "filename": "components/offline_pages/core/background/pick_request_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "Why do we do this?  To me it makes a bit more sense to pass back the entire vector of found requests.  If we need the picked reqeust removed, we can do that in the request_coordinator.  That way we pass a slightly cleaner concept across the class boundary, that of all available requests instead of non-picked requests.  When we use that in the request coordinator to update the notifications, we could then do this loop there and omit the picked request (which might also make a good time to update the available state).  Then if we need the available_request vector for anything else, we would have the whole vector to use.",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 5
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d180d9ad_635c8c2c",
+        "filename": "components/offline_pages/core/background/pick_request_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "How do we ensure this vector outlives the PickRequestTask?  We might need to make a copy or pass a pointer here (std::unique_ptr might be nice here)",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 32,
+        "endChar": 41
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e060db60_81cbce09",
+        "filename": "components/offline_pages/core/background/pick_request_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "If you change the vector as I suggested in pick_request_task, then these changes to the unit test will need to move to the request coordinator unit test.  It should be sufficient to only check in one place that the picked request is removed, no need to repeat that check on every single unit test.",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 65
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0d21b7_59f57b7a",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "Instead of a Get, might it make sense to use the vector of results passed back from the previous call to the PickRequestTask here?  It would be great if we could avoid an extra DB query (DB queries can be pretty slow).  It would mean an extra memeber variable for the available list, but it might be worth it from a perf standpoint.  It would also mean that we can call the function to set all the avaiable states synchronously, which simplifies the code flow a bit.",
+      "range": {
+        "startLine": 767,
+        "startChar": 4,
+        "endLine": 767,
+        "endChar": 18
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af217b6_5de5aac8",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "Did the requests actually change?  I wonder if most will go from WAITING_FOR_DOWNLOAD to WAITING_FOR_DOWNLOAD.  If that is so, it seems like maybe the request didn\u0027t really change, and we may be able to skip this call.",
+      "range": {
+        "startLine": 831,
+        "startChar": 4,
+        "endLine": 831,
+        "endChar": 50
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c1db03_eeb75a43",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "We\u0027re starting to have a reasonable amount of code directed to keeping the state up to date.  Would it make sense to have a new class for all this, and put calls in the RequestCoordinator to this new class? (especially if you end up moving the code from PickRequestTask as I suggested elsewhere).\n\nI\u0027m saying this because the RequestCoordinator is too big and does too much already, so in this particular case, there is more value in separating all this extra code off than normally.",
+      "range": {
+        "startLine": 1180,
+        "startChar": 25,
+        "endLine": 1180,
+        "endChar": 57
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378c404b_ee85d03e",
+        "filename": "components/offline_pages/core/background/request_coordinator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "Good, I\u0027m glad you resisted the temptation to check everything about the resume operation, and test just what this test is checking for.  Keep up the good work!",
+      "range": {
+        "startLine": 1645,
+        "startChar": 2,
+        "endLine": 1645,
+        "endChar": 47
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07993d00_614daf80",
+        "filename": "components/offline_pages/core/background/save_page_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "Might it make sense to combine Available State with RequestState?  They seem similar.  (I realize that it might not make sense, and just want to make sure you\u0027ve thought about it one way or the other)",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47758e64_6b183975",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T19:20:29Z",
+      "side": 1,
+      "message": "Why do we have both available state and pending state enums?  Could we get by with just a single enum?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
