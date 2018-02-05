@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bfcf81e_971201e5",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:35:01Z",
+      "side": 1,
+      "message": "It\u0027s somewhat unusual to have a role name like \"menu\" in an accessible\ntitle. Do we get adequate results by giving it a role like \"menu button\"?\nHow does this compare to the Chrome menu button in the toolbar?",
+      "revId": "dcbab89d80ede28489ea3b642ab9d18a38ed6def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3ca16e_8b8f8ad9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 5822,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:35:01Z",
+      "side": 1,
+      "message": "\"The only user\" isn\u0027t clear to me. How about something like \"The user that is currently active, when there are multiple user accounts\"?",
+      "revId": "dcbab89d80ede28489ea3b642ab9d18a38ed6def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2177d5a4_51b2cd75",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:35:01Z",
+      "side": 1,
+      "message": "How about CheckHasAccessibleNameOrLabel?\n\nI\u0027m flexible but it might be clearer to express it as a positive check",
+      "revId": "dcbab89d80ede28489ea3b642ab9d18a38ed6def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72d9488_b1b3ccd8",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:35:01Z",
+      "side": 1,
+      "message": "We should make a wrapper in ViewAccessibility to do this, rather than\nexpecting UI controls to set a low-level AXNodeData attribute",
+      "revId": "dcbab89d80ede28489ea3b642ab9d18a38ed6def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8350e7_85e5f0a3",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T20:35:01Z",
+      "side": 1,
+      "message": "It might be cleaner to break this up with comments and code for each case.\n\n// It has a name, we\u0027re done.\nif (!data.GetStringAttribute(ax::mojom::StringAttribute::kName).empty())\n  return true;\n\n// Text fields are allowed to have a placeholder instead.\nif (!data.GetStringAttribute(ax::mojom::StringAttribute::kPlaceholder).empty() \u0026\u0026\n    IsEditableTextRole(...))\n  return true;\n\n// \nreturn false;",
+      "revId": "dcbab89d80ede28489ea3b642ab9d18a38ed6def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
