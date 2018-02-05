@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72865525_cf7717ff",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-05T18:04:45Z",
+      "side": 1,
+      "message": "Nit: Please remove the trailing space.",
+      "revId": "9c4aba044401522bbd74a975ad3d2151c2088db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
