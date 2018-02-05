@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a006548_df2cca17",
+        "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-02-05T18:29:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t DidFinishNavigation be triggered with error? WKWebView triggers |didFailProvisionalNavigation| if |decidePolicyForNavigationResponse| returns false. Would that trigger our normal error handling code path?",
+      "range": {
+        "startLine": 1028,
+        "startChar": 43,
+        "endLine": 1028,
+        "endChar": 0
+      },
+      "revId": "6ea77d9a4ac1ee23cf756634ab41096feb6a503f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
