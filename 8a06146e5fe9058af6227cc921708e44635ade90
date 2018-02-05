@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c248169_2f532986",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:31:34Z",
+      "side": 1,
+      "message": "How do we know this is a service worker and not a shared worker?",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa683f9_4c6bf378",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:31:34Z",
+      "side": 1,
+      "message": "Q: Is it possible to have host_for_client_ for shared worker, and do we really bind it on the main thread? It seems kind of surprising that hosts for service workers needs a special thread consideration that hosts for shared workers don\u0027t. Is it possible we just don\u0027t support ServiceWorker objects in Dedicated and Shared Workers?",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e19ecb_ffa9cd02",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:31:34Z",
+      "side": 1,
+      "message": "Can we call it TerminateForTesting() instead?",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
