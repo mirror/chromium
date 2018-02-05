@@ -71,7 +71,14 @@ class MockFrameConnectorDelegate : public FrameConnectorDelegate {
     if (event.GetType() == blink::WebInputEvent::kGestureScrollUpdate)
       seen_bubbled_gsu_ = true;
   }
+  void ResizeDueToAutoResize(const gfx::Size& new_size,
+                             uint64_t sequence_number,
+                             const viz::LocalSurfaceId& surface_id) override {
+    if (surface_id.is_valid())
+      auto_resize_local_surface_id_ = surface_id;
+  }
 
+  base::Optional<viz::LocalSurfaceId> auto_resize_local_surface_id_;
   viz::SurfaceInfo last_surface_info_;
   bool seen_bubbled_gsu_ = false;
 };
@@ -389,6 +396,20 @@ TEST_F(RenderWidgetHostViewChildFrameTest, WasResizedOncePerChange) {
   EXPECT_EQ(physical_backing_size, std::get<0>(params).physical_backing_size);
   EXPECT_EQ(screen_space_rect.size(), std::get<0>(params).new_size);
   EXPECT_EQ(local_surface_id, std::get<0>(params).local_surface_id);
+}
+
+// Verify that SubmitCompositorFrame behavior is correct when a delegated
+// frame is received from a renderer process.
+TEST_F(RenderWidgetHostViewChildFrameTest, AutoresizeSurfaceId) {
+  gfx::Size view_size(100, 100);
+  viz::LocalSurfaceId local_surface_id(17, base::UnguessableToken::Create());
+  uint32_t sequence_number = 19;
+
+  EXPECT_NE(local_surface_id,
+            test_frame_connector_->auto_resize_local_surface_id_);
+  view_->ResizeDueToAutoResize(view_size, sequence_number, local_surface_id);
+  EXPECT_EQ(local_surface_id,
+            test_frame_connector_->auto_resize_local_surface_id_);
 }
 
 }  // namespace content

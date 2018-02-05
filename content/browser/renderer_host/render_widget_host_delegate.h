@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
 #include "content/common/content_export.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/public/common/drop_data.h"
@@ -76,7 +77,8 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // The contents auto-resized and the container should match it.
   virtual void ResizeDueToAutoResize(RenderWidgetHostImpl* render_widget_host,
                                      const gfx::Size& new_size,
-                                     uint64_t sequence_number) {}
+                                     uint64_t sequence_number,
+                                     const viz::LocalSurfaceId& surface_id) {}
 
   // The screen info has changed.
   virtual void ScreenInfoChanged() {}

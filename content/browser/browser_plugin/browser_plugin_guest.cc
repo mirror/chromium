@@ -188,11 +188,13 @@ int BrowserPluginGuest::LoadURLWithParams(
   return GetGuestProxyRoutingID();
 }
 
-void BrowserPluginGuest::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                               uint64_t sequence_number) {
+void BrowserPluginGuest::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
   SendMessageToEmbedder(
       std::make_unique<BrowserPluginMsg_ResizeDueToAutoResize>(
-          browser_plugin_instance_id_, sequence_number));
+          browser_plugin_instance_id_, sequence_number, surface_id));
 }
 
 void BrowserPluginGuest::SizeContents(const gfx::Size& new_size) {
