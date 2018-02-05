@@ -12,6 +12,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "net/base/interval.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/memory/mem_backend_impl.h"
@@ -527,36 +528,32 @@ int MemEntryImpl::InternalGetAvailableRange(int64_t offset,
   if (offset < 0 || len < 0 || !start)
     return net::ERR_INVALID_ARGUMENT;
 
-  MemEntryImpl* current_child = nullptr;
+  net::Interval<int64_t> requested(offset, offset + len);
 
-  // Find the first child and record the number of empty bytes.
-  int empty = FindNextChild(offset, len, &current_child);
-  if (current_child && empty < len) {
-    *start = offset + empty;
-    len -= empty;
-
-    // Counts the number of continuous bytes.
-    int continuous = 0;
-
-    // This loop scan for continuous bytes.
-    while (len && current_child) {
-      // Number of bytes available in this child.
-      int data_size = current_child->GetDataSize(kSparseData) -
-                      ToChildOffset(*start + continuous);
-      if (data_size > len)
-        data_size = len;
-
-      // We have found more continuous bytes so increment the count. Also
-      // decrement the length we should scan.
-      continuous += data_size;
-      len -= data_size;
-
-      // If the next child is discontinuous, break the loop.
-      if (FindNextChild(*start + continuous, len, &current_child))
+  // Find the first relevant child, if any --- may have to skip over
+  // one entry as it may be before the range.
+  EntryMap::const_iterator i = children_->lower_bound(ToChildIndex(offset));
+  if (i != children_->cend() && !ChildInterval(i).Intersects(requested))
+    ++i;
+  net::Interval<int64_t> found;
+  if (i != children_->cend() &&
+      requested.Intersects(ChildInterval(i), &found)) {
+    // Found something relevant; now just need to expand this out if next
+    // children are contiguous and relevant to the request.
+    while (true) {
+      ++i;
+      if (i == children_->cend())
         break;
+      net::Interval<int64_t> next_child = ChildInterval(i);
+      next_child.IntersectWith(requested);
+      if (next_child.min() != found.max())
+        break;
+      found.SpanningUnion(next_child);
     }
-    return continuous;
+    *start = found.min();
+    return found.Length();
   }
+
   *start = offset;
   return 0;
 }
@@ -589,36 +586,19 @@ MemEntryImpl* MemEntryImpl::GetChild(int64_t offset, bool create) {
   return nullptr;
 }
 
-int MemEntryImpl::FindNextChild(int64_t offset, int len, MemEntryImpl** child) {
-  DCHECK(child);
-  *child = nullptr;
-  int scanned_len = 0;
-
-  // This loop tries to find the first existing child.
-  while (scanned_len < len) {
-    // This points to the current offset in the child.
-    int current_child_offset = ToChildOffset(offset + scanned_len);
-    MemEntryImpl* current_child = GetChild(offset + scanned_len, false);
-    if (current_child) {
-      int child_first_pos = current_child->child_first_pos_;
-
-      // This points to the first byte that we should be reading from, we need
-      // to take care of the filled region and the current offset in the child.
-      int first_pos =  std::max(current_child_offset, child_first_pos);
-
-      // If the first byte position we should read from doesn't exceed the
-      // filled region, we have found the first child.
-      if (first_pos < current_child->GetDataSize(kSparseData)) {
-         *child = current_child;
-
-         // We need to advance the scanned length.
-         scanned_len += first_pos - current_child_offset;
-         break;
-      }
-    }
-    scanned_len += kMaxSparseEntrySize - current_child_offset;
-  }
-  return scanned_len;
+net::Interval<int64_t> MemEntryImpl::ChildInterval(
+    MemEntryImpl::EntryMap::const_iterator i) {
+  DCHECK(i != children_->cend());
+  const MemEntryImpl* child = i->second;
+  int64_t child_start_global =
+      (i->first) * kMaxSparseEntrySize + child->child_first_pos_;
+  // The end computation is a little weird because the child entry has
+  // non-sparse semantics, so the standard Entry API like DataSize make it look
+  // like it has the entire [0 ... DataSize) range, while child_first_pos_
+  // denotes that the [child_first_pos ... DataSize) portion is what's relevant.
+  return net::Interval<int64_t>(child_start_global,
+                                child_start_global - child->child_first_pos_ +
+                                    child->GetDataSize(kSparseData));
 }
 
 }  // namespace disk_cache
