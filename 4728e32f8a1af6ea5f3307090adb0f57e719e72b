@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db27b565_e2b7ded4",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2018-02-05T18:06:23Z",
+      "side": 1,
+      "message": "tiny thing but: Would it make sense to also add a DCHECK() for IsTracing() here?",
+      "revId": "4728e32f8a1af6ea5f3307090adb0f57e719e72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
