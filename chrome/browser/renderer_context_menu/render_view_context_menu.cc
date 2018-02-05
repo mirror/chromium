@@ -173,6 +173,15 @@
 #include "chrome/browser/chromeos/arc/intent_helper/open_with_menu.h"
 #endif
 
+#include "base/guid.h"
+#include "chrome/browser/download/download_service_factory.h"
+#include "components/download/public/background_service/clients.h"
+#include "components/download/public/background_service/download_params.h"
+#include "components/download/public/background_service/download_service.h"
+#include "components/download/public/background_service/features.h"
+#include "components/download/public/background_service/task_scheduler.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+
 using base::UserMetricsAction;
 using blink::WebContextMenuData;
 using blink::WebMediaPlayerAction;
@@ -2341,6 +2350,29 @@ void RenderViewContextMenu::ExecInspectBackgroundPage() {
   extensions::devtools_util::InspectBackgroundPage(platform_app, GetProfile());
 }
 
+void Download(content::BrowserContext* browser_context) {
+  // TESTING CODE(xingliu):
+  download::DownloadParams download_params;
+  download_params.guid = base::GenerateGUID();
+  download_params.client = download::DownloadClient::DEBUGGING;
+  download_params.request_params.method = "GET";
+  download_params.request_params.url =
+      GURL("http://ipv4.download.thinkbroadband.com/20MB.zip");
+  LOG(ERROR) << "@@@ Starts to fetch!";
+  // params.request_params.request_headers = headers;
+
+  download_params.scheduling_params.network_requirements =
+      download::SchedulingParams::NetworkRequirements::NONE;
+  download_params.scheduling_params.battery_requirements =
+      download::SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE;
+  download_params.traffic_annotation =
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS);
+
+  download::DownloadService* download_service =
+      DownloadServiceFactory::GetForBrowserContext(browser_context);
+  download_service->StartDownload(download_params);
+}
+
 void RenderViewContextMenu::ExecSaveLinkAs() {
   RenderFrameHost* render_frame_host = GetRenderFrameHost();
   if (!render_frame_host)
@@ -2385,8 +2417,12 @@ void RenderViewContextMenu::ExecSaveLinkAs() {
   dl_params->set_prompt(true);
   dl_params->set_download_source(download::DownloadSource::CONTEXT_MENU);
 
-  BrowserContext::GetDownloadManager(browser_context_)
-      ->DownloadUrl(std::move(dl_params));
+  /*
+    BrowserContext::GetDownloadManager(browser_context_)
+        ->DownloadUrl(std::move(dl_params));
+  */
+
+  Download(browser_context_);
 }
 
 void RenderViewContextMenu::ExecSaveAs() {
