@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "523e63c9_c06f5803",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-02-05T21:06:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c52a46b_63e8121e",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d650e3e7_c8092b98",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 13
@@ -280,6 +298,24 @@
       "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3839ec21_ccceae26",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-02-05T21:06:39Z",
+      "side": 1,
+      "message": "I see. Does this need to be \u0027localhost\u0027 then? Can we use a domain in the .test or .example space and achieve the same result?\n\nThat is, it seems like this code is trying to work around .localhost bypassing the resolver, and it seems like if we use one of the other IANA-reserved TLDs we can avoid that.",
+      "parentUuid": "e81c12d2_347f44e0",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
