@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5220579_fffb9879",
+        "filename": "base/ring_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-05T17:29:07Z",
+      "side": 1,
+      "message": "(drive-by) Maybe base/containers/ring_buffer.h?\n\nThere\u0027s also a circular deque there, which seems similar. Could you add a class comment here describing the uses and when one would select this instead of the circular deque?",
+      "revId": "3494b1b391f7b04d3f49c2b7daf2871cc58ea021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
