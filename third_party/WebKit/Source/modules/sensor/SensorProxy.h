@@ -70,8 +70,7 @@ class SensorProxy final : public GarbageCollectedFinalized<SensorProxy>,
   device::mojom::blink::SensorType type() const { return type_; }
 
   // Note: the returned value is reset after updateSensorReading() call.
-  const device::SensorReading& reading() const { return reading_; }
-
+  const device::SensorReading& GetReading(bool remapped = false) const;
   const device::mojom::blink::SensorConfiguration* DefaultConfig() const;
 
   const std::pair<double, double>& FrequencyLimits() const {
@@ -122,6 +121,7 @@ class SensorProxy final : public GarbageCollectedFinalized<SensorProxy>,
 
   void RemoveActiveFrequency(double frequency);
   void AddActiveFrequency(double frequency);
+  uint16_t GetScreenOrientationAngle() const;
 
   device::mojom::blink::SensorType type_;
   device::mojom::blink::ReportingMode mode_;
@@ -141,6 +141,7 @@ class SensorProxy final : public GarbageCollectedFinalized<SensorProxy>,
       shared_buffer_reader_;
   bool suspended_;
   device::SensorReading reading_;
+  mutable device::SensorReading remapped_reading_;
   std::pair<double, double> frequency_limits_;
 
   WTF::Vector<double> active_frequencies_;
