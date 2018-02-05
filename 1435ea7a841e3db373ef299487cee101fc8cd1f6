@@ -16,6 +16,24 @@
       "revId": "1435ea7a841e3db373ef299487cee101fc8cd1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4c9fd6_5eb3f467",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T23:14:55Z",
+      "side": 1,
+      "message": "Not sure if it should be deleted or not, I\u0027m fixing compile and adding it to gn_all in  https://chromium-review.googlesource.com/c/chromium/src/+/902742 to prevent further compile breaks from landing.",
+      "parentUuid": "357a04a8_01072b06",
+      "revId": "1435ea7a841e3db373ef299487cee101fc8cd1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
