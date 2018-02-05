@@ -45,6 +45,29 @@
       "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a75724_c22f1a3e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 32031,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-05T23:05:01Z",
+      "side": 1,
+      "message": "Using the \"Keyboard\" namespace is ok, but using the \"Blink\" namespace might be even better, given that this looks like it\u0027s a platform feature.  So, perhaps something like \"Blink.Keyboard.LockApi.MethodCalled\"?",
+      "range": {
+        "startLine": 32031,
+        "startChar": 17,
+        "endLine": 32031,
+        "endChar": 46
+      },
+      "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
