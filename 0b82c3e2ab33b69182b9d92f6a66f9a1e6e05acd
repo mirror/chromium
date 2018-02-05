@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817146a2_3e7d1976",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "Should you mention that it\u0027s \"system\" enabled?",
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51299e7c_a8b0f2d5",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "Returns whether the document associated with the controller is allowed to enter Picture-in-Picture.",
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93986b4a_d8d4c105",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "Similar phrasing. I guess, the method should mention that the video element has to be part of the same document as the controller?",
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1afb63_0104d315",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t add much. Would it be worth adding that this is meant to be called by DocumentPictureInPicture and DOM objects but not internally? Actually, we could make this class and DocumentPictureInPicture friends to make this relationship clearer but maybe not needed.",
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddc02ba_1d394f77",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9db44aa_9a9444df",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "Returns element currently in Picture-in-Picture if any. Null otherwise.",
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667626d3_b4246acb",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:40:17Z",
+      "side": 1,
+      "message": "for the associated document",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 41
+      },
+      "revId": "0b82c3e2ab33b69182b9d92f6a66f9a1e6e05acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
