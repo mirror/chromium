@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f31f600_e71f5330",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:10:42Z",
+      "side": 1,
+      "message": "Looks like this is only used in a single place - let\u0027s inline?",
+      "revId": "8cf1f6c133bdb9cdb778583540a46a4130534020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
