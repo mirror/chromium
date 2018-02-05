@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71205df7_b7d3ab93",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-05T21:50:20Z",
+      "side": 1,
+      "message": "minor nit: Missing space.  (Hopefully this line isn\u0027t needed; see below.)",
+      "range": {
+        "startLine": 496,
+        "startChar": 27,
+        "endLine": 496,
+        "endChar": 31
+      },
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e60d42_34fd73da",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-05T21:50:20Z",
+      "side": 1,
+      "message": "I missed this in Ananta\u0027s CL (https://codereview.chromium.org/2580753002/), but deleting this directly carries some risks (since we\u0027ve seen lots of places where people delete a pending entry while NavigateToPendingEntry is still on the stack).\n\nCan we call DiscardPendingEntry here instead, to let it take care of the details (including lines 499-500) and ensure that no one is calling this during NavigateToPendingEntry?",
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cae7cd3_b4e06972",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 5234,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-05T21:50:20Z",
+      "side": 1,
+      "message": "nit: Please add \"See https://crbug.com/809040.\"",
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
