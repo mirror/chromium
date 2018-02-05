@@ -94,6 +94,18 @@ enum class CTAPRequestCommand : uint8_t {
   kAuthenticatorReset = 0x07,
 };
 
+constexpr std::array<CTAPHIDDeviceCommand, 9> GetCTAPHIDDeviceCommandList() {
+  return {CTAPHIDDeviceCommand::kCtapHidMsg,
+          CTAPHIDDeviceCommand::kCtapHidCBOR,
+          CTAPHIDDeviceCommand::kCtapHidInit,
+          CTAPHIDDeviceCommand::kCtapHidPing,
+          CTAPHIDDeviceCommand::kCtapHidCancel,
+          CTAPHIDDeviceCommand::kCtapHidError,
+          CTAPHIDDeviceCommand::kCtapHidKeepAlive,
+          CTAPHIDDeviceCommand::kCtapHidWink,
+          CTAPHIDDeviceCommand::kCtapHidLock};
+}
+
 constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
   return {CTAPDeviceResponseCode::kSuccess,
           CTAPDeviceResponseCode::kCtap1ErrInvalidCommand,
@@ -148,9 +160,23 @@ constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
           CTAPDeviceResponseCode::kCtap2ErrVendorLast};
 }
 
+// String key values for CTAP request optional parameters and
+// AuthenticatorGetInfo response.
 extern const char kResidentKeyMapKey[];
 extern const char kUserVerificationMapKey[];
 extern const char kUserPresenceMapKey[];
+
+// HID transport specific constants.
+extern const size_t kHIDPacketSize;
+extern const uint32_t kHIDBroadcastChannel;
+extern const size_t kHIDInitPacketHeaderSize;
+extern const size_t kHIDContinuationPacketHeader;
+extern const size_t kMaxHidPacketSize;
+extern const size_t kHIDInitPacketDataSize;
+extern const size_t kHIDContinuationPacketDataSize;
+extern const uint8_t kMaxHIDLockSeconds;
+// Messages are limited to an init packet and 128 continuation packets.
+extern const size_t kHIDMaxMessageSize;
 
 }  // namespace device
 
