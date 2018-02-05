@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be18833d_d359a5bb",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-05T00:53:08Z",
+      "side": 1,
+      "message": "Trace now doesn\u0027t need to return a boolean value, right?",
+      "revId": "a8f9989e1aa489270835e6b1b47b8a2c26dcf833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

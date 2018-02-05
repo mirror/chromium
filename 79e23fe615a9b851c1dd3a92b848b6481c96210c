@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f96e4bda_2d30d7b8",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-05T00:53:08Z",
+      "side": 0,
+      "message": "Actually this FIXME is still valid... The point of this FIXME is not that we\u0027re calling Trace but that we\u0027re tracing object graphs and checking mark bits in a weak processing phase.",
+      "revId": "79e23fe615a9b851c1dd3a92b848b6481c96210c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
