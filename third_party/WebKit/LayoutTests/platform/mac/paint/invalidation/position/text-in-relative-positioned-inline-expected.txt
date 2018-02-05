@@ -23,7 +23,7 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [8, 7, 200, 102],
+          "rect": [8, 7, 200, 101],
           "reason": "disappeared"
         },
         {
