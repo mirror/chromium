@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "053ef807_36805771",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T20:04:45Z",
+      "side": 1,
+      "message": "When a service worker cooks-up a cross-origin response (without actually going to the network - either because it makes up the cross-origin response OR because it returns a cached response) today the response travels like so:\n\nservice worker -\u003e browser process (xsdb!) -\u003e requesting page\n\nAfter servicification, I assume that the response will travel directly: service worker -\u003e requesting page (and so XSDB won\u0027t be able to process the response corresponding to CrossSiteDocumentBlockingServiceWorkerTest.NoNetwork and to the 2nd fetch in CrossSiteDocumentBlockingServiceWorkerTest.NetworkAndOpaqueResponse).\n\n\nNote that even after servicification, the 1st fetch response from CrossSiteDocumentBlockingServiceWorkerTest.NetworkAndOpaqueResponse should still be subjected to XSDB:\n\nnetwork stack (in the browser process or in the network service process \u003d with xsdb) -\u003e service worker",
+      "parentUuid": "a58e0fd6_130b73b5",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37be0450_e505f6f1",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f405bc7_8de5e9c7",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T20:04:45Z",
+      "side": 1,
+      "message": "The response is blockable, because of the nosniff header added by the service worker:\n\n    function createHtmlNoSniffResponse() {\n      var headers \u003d new Headers();\n      headers.append(\u0027Content-Type\u0027, \u0027text/html\u0027);\n      headers.append(\u0027X-Content-Type-Options\u0027, \u0027nosniff\u0027); \u003c--- THIS MAKES XSDB BLOCK THE RESPONSE\n      return new Response(\u0027Response created by service worker\u0027,\n                          { status: 200, headers: headers });\n    }\n\nOne reason for testing this way, is that in the 2nd fetch in CrossSiteDocumentBlockingServiceWorkerTest.NetworkAndOpaqueResponse the body is empty (it has been stripped because of the \u0027no-cors\u0027 directive/mode) and therefore these is nothing to sniff (and so, to trigger blocking by XSDB the test relies on the nosniff header).",
+      "parentUuid": "37be0450_e505f6f1",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14128799_f9efbbe1",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T20:04:45Z",
+      "side": 1,
+      "message": "I think that XSDB is effectively disabled unless Site Isolation is enabled.  Site Isolation is enabled today (via trials) on the Canary channel (well, and on the Stable channel for users and enterprises who explicitly opt into Site Isolation).\n\nGiven above, do you think we should still merge to M65?",
+      "parentUuid": "eac6effb_57fd5c17",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07367f23_196678f2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-05T19:41:35Z",
       "side": 1,
       "message": "I\u0027m trying to reason about what this (kCORS) case means, since we know here that IsValidCorsHeaderSet is false. When we get a kCORS response from a serviceworker, what is the expected state of the access-control-allow-origin header -- and do the renderer-side CORS checks still apply?",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39be3824_af2d5138",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T20:04:45Z",
+      "side": 1,
+      "message": "falken@ - could you please double-check my responses below?  Did I mess anything up?\n\n\u003e I\u0027m trying to reason about what this (kCORS) case means, since we know here that IsValidCorsHeaderSet is false. When we get a kCORS response from a serviceworker, what is the expected state of the access-control-allow-origin header -- and\n\nI don\u0027t really know what kCORS means here.  I assume that it means that a service worker has cached a responses performed with CORS (if CORS allowed the response, then the service worker could have seen and could have cached a full response;  otherwise the service worker would have seen and cache an error maybe?).\n\nI am pretty confident that in this case the response doesn\u0027t come from the network, but from the service worker.\n\n\u003e do the renderer-side CORS checks still apply?\n\nI think they don\u0027t apply anymore - see ResourceLoader::DetermineCORSStatus which stops doing CORS checks and returns CORSStatus::kServiceWorkerSuccessful after determining that the response came not from the network, but from a service worker (with network::mojom::FetchResponseType::kCORS).\n\nI think this is okay.  Renderer\u0027s + XSDB\u0027s CORS checks will still apply to the initial network -\u003e service_worker response.",
+      "parentUuid": "07367f23_196678f2",
       "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
