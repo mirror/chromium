@@ -94,6 +94,30 @@
       "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af929d79_51e199dd",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-05T22:40:23Z",
+      "side": 1,
+      "message": "This issue exists without this CL, this seems to be a separate bug in syncing code, I filed a bug for it (crbug.com/809232). \n\nI uploaded a new patch with more efficient solution, and it works both after dragging and syncing. Please take a look, thanks.",
+      "parentUuid": "b289cc28_8a78fef1",
+      "range": {
+        "startLine": 681,
+        "startChar": 2,
+        "endLine": 681,
+        "endChar": 30
+      },
+      "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
