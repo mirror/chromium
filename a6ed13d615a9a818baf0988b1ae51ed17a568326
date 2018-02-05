@@ -22,6 +22,30 @@
       "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1743bd_8cfb7648",
+        "filename": "components/prefs/pref_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-02-05T23:32:03Z",
+      "side": 0,
+      "message": "I think this was put in place to help with the diagnosis of bug crbug.com/435208. This bug was fixed by r317298 in March 2015.",
+      "parentUuid": "a9d66439_c83d58f1",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 65
+      },
+      "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
