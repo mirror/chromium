@@ -34,6 +34,24 @@
       "revId": "b2669a6b611d98879288624ddf3d89019cd3ba6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481dd732_8b4b9515",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-02-05T17:01:01Z",
+      "side": 1,
+      "message": "Done. The way I approached this was to create a new property (foobar_hit_testable_) which defaulted to false and needed to be updated to be true. I then whacked moles until foobar_hit_testable_ and hit_testable_ were exactly the same, at which point I got rid of the silly name as well as all the now useless set_hit_testable(false) calls.\n\nThings look much nicer. Thank you very much for this suggestion, Chris!",
+      "parentUuid": "eeb161ce_b679871b",
+      "revId": "b2669a6b611d98879288624ddf3d89019cd3ba6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
