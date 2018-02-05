@@ -16,6 +16,52 @@
       "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3141068c_412dbcd6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11147,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-05T11:15:01Z",
+      "side": 1,
+      "message": "nit: will be allowed / are allowed",
+      "range": {
+        "startLine": 11147,
+        "startChar": 53,
+        "endLine": 11147,
+        "endChar": 60
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e0ac33_a776c8ca",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-05T11:15:01Z",
+      "side": 1,
+      "message": "BTW, what will happen on initial device enrollment?\nI.e., when the device is booted up on first boot (no device policy present), then enrolled into a domain which sets CrostiniAllowed \u003d false. Will the device respect that, or will it need a reboot to respect the policy?",
+      "range": {
+        "startLine": 11149,
+        "startChar": 6,
+        "endLine": 11149,
+        "endChar": 112
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
