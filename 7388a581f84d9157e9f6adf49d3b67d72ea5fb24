@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a53036d7_89b44a1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-05T18:51:32Z",
+      "side": 1,
+      "message": "\"|n+1| times async calls\" -\u003e \"|n+1| async calls\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c3bc21_a7d71b04",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-05T18:51:32Z",
+      "side": 1,
+      "message": "Suggestion - please use this opportunity to switch to range-based for-loops.\n\n// I think it needs to be auto* instead of auto\u0026 ??\nfor (const auto* storage_info : storage_info_list)\n  DoAttachStorage(storage_info);",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79eff863_416c981c",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-05T18:51:32Z",
+      "side": 1,
+      "message": "This is currently happening synchronously. Is it going to stay that way or will it become async later?",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c71633_d8ffd2d3",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-05T18:51:32Z",
+      "side": 1,
+      "message": "Are the pointers in the vector guaranteed to be non-NULL?",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d63b306_1a423324",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-05T18:51:32Z",
+      "side": 1,
+      "message": "Maybe instead of making this assumption about the caller, change the interface to allow only 1 observer at a time?",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
