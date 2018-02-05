@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5b16f64_8301aa55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-05T18:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71f596a8_7901c91f",
+      "range": {
+        "startLine": 2090,
+        "startChar": 8,
+        "endLine": 2091,
+        "endChar": 85
+      },
+      "revId": "62ec70a2ffea6e44df18f85c0ee7680c3d23a2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e75bd0a_397719fc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "62ec70a2ffea6e44df18f85c0ee7680c3d23a2f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849666fb_e7dc4de0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-05T18:41:26Z",
+      "side": 1,
+      "message": "The animation is fast enough that I don\u0027t think it particularly matters. However, we do have easy access to that state (mUrlFocusChangePercent) so I updated it.",
+      "parentUuid": "5e75bd0a_397719fc",
+      "range": {
+        "startLine": 2093,
+        "startChar": 8,
+        "endLine": 2093,
+        "endChar": 96
+      },
+      "revId": "62ec70a2ffea6e44df18f85c0ee7680c3d23a2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
