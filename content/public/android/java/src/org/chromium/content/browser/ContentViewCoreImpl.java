@@ -30,7 +30,6 @@ import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBri
 import org.chromium.content.browser.accessibility.captioning.TextTrackSettings;
 import org.chromium.content.browser.input.ImeAdapterImpl;
 import org.chromium.content.browser.input.InputMethodManagerWrapper;
-import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.SelectPopupDialog;
 import org.chromium.content.browser.input.SelectPopupDropdown;
 import org.chromium.content.browser.input.SelectPopupItem;
@@ -40,6 +39,7 @@ import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
+import org.chromium.content_public.browser.SelectPopup;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.device.gamepad.GamepadList;
