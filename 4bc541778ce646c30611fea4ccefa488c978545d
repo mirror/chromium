@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "dda01ee0_7e1323c7",
+        "filename": "cc/raster/raster_buffer_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T18:33:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dee232fe_148b4378",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 77
+      },
+      "revId": "4bc541778ce646c30611fea4ccefa488c978545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb94d02_81f13ce2",
         "filename": "cc/raster/raster_source.cc",
         "patchSetId": 5
@@ -53,6 +77,30 @@
       "writtenOn": "2018-02-03T01:32:48Z",
       "side": 1,
       "message": "Could you retain the comment for the content not being opaque in this case which requires a full clear?\n\nOh, and may be move this if else block to a different function so its clear this is used only for full raster.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "4bc541778ce646c30611fea4ccefa488c978545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc5db56_8b5a282f",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T18:33:15Z",
+      "side": 1,
+      "message": "Comment retained.  New function added.",
+      "parentUuid": "2cb94d02_81f13ce2",
       "range": {
         "startLine": 84,
         "startChar": 8,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "baf0b2ec_c7e22788",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T18:33:15Z",
+      "side": 1,
+      "message": "Fair enough! I\u0027ll just construct the playback_device_rect more succinctly.",
+      "parentUuid": "23a4e3d8_c541f81b",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 58
+      },
+      "revId": "4bc541778ce646c30611fea4ccefa488c978545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f98c0ee_cb2769b5",
         "filename": "cc/raster/raster_source.cc",
         "patchSetId": 5
@@ -99,6 +171,30 @@
       "writtenOn": "2018-02-03T01:32:48Z",
       "side": 1,
       "message": "I\u0027m trying to see if I\u0027m getting the math right on this one. For a layer with content size 100X100 and a tile rect, i.e, canvas_bitmap_rect [0,0, 20X20], we want to clear the top and left row of pixels.\n\nThe coverage device rect, which is basically a size, would be 99X99. Which makes device_column [99, 0, 2X99] and device_row [0, 99, 101X2]. That\u0027s the right and bottom edge, which does not look right? Or did I math it wrong?",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 77
+      },
+      "revId": "4bc541778ce646c30611fea4ccefa488c978545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7f569c_21fc605d",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T18:33:15Z",
+      "side": 1,
+      "message": "For an opaque layer with content size 100x100 and a tile rect 0,0 20x20, we want to clear the *bottom and right* edge of the content size, which are rows and columns 99-101, as you say.\n\nYour math is correct.  This is OopPixelTest.ClearingOpaqueInternal.  There is no need to clear the bottom and right edges of the 0,0 20x20 rect as the raster source fully covers all the pixels.  In your example, the playback_device_rect will not intersect the device_row or device_column, and no clears will happen.",
+      "parentUuid": "8f98c0ee_cb2769b5",
       "range": {
         "startLine": 103,
         "startChar": 6,
