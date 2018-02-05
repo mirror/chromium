@@ -321,8 +321,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
   }
 
   swap_latency_info.AddLatencyNumber(
-      ui::LatencyComponentType::INPUT_EVENT_LATENCY_RENDERER_MAIN_COMPONENT, 0,
-      0);
+      ui::LatencyComponentType::INPUT_EVENT_LATENCY_RENDERER_MAIN_COMPONENT, 0);
   if (widget_->compositor()) {
     latency_info_swap_promise_monitor =
         widget_->compositor()->CreateLatencyInfoSwapPromiseMonitor(
