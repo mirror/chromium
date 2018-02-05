@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec62749_e967f7f8",
+        "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-05T22:53:06Z",
+      "side": 0,
+      "message": "what\u0027s the reasoning behind removing these styles (including the rules removed below) from shared_style_css? this would impact other places (e.g. in settings/extensions) that are also using the .cancel-button/.action-button class.",
+      "revId": "7f85b9371bfe873faa12eb254032b373980f4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
