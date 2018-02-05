@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8d014b3e_900181a1",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T15:17:18Z",
+      "side": 1,
+      "message": "So the only case of system calls I see is in AudioManageWin: CoreAudioUtil::IsSupported().\nBut it should not be needed, since, as Max pointed out, dynamic initialization of function-scope static variables is now threadsafe [1]. Should we drop the call in the constructor?\n\nAnother place I\u0027m slightly worried about is Fuchsia\u0027s fuchsia_audio_manager_create() [2], but from what I\u0027ve read it does not do anything intense. Could you confirm this Dale, or should we ask sergeyu@?\n\nWhat ContentBrowserClients should we check to see what system calls are happening during AM creation there?\n\n[1] https://www.chromium.org/developers/coding-style/cpp-dos-and-donts\n[2] https://cs.chromium.org/chromium/src/media/audio/fuchsia/audio_manager_fuchsia.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d19",
+      "parentUuid": "4e887a69_350d4f77",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6751234d_a2da6b87",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
@@ -314,6 +332,24 @@
       "side": 1,
       "message": "Right you are, me and Olga were just chatting about it. I think a solution with a subclass of base::Thread that creates a message loop in its constructor is possible though. I\u0027m not saying it\u0027s necessarily a good idea. :)",
       "parentUuid": "074f0e49_84638fdd",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad447809_9f785943",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T15:17:18Z",
+      "side": 1,
+      "message": "The problem with the patch is AudioManager constructor which is moved up now and does some system calls on some platforms \u003d\u003e will delay browser startup per Dale\u0027s comment. Otherwise, the future switch to callback to get a task runner should be good.",
+      "parentUuid": "6e05e984_5dc40901",
       "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
