@@ -582,6 +582,24 @@
     },
     {
       "key": {
+        "uuid": "752d5657_9a20c751",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T23:20:08Z",
+      "side": 1,
+      "message": "Artur helped me find an example (thanks!):\n    ```css\n    )]}\u0027\n    {}\n    h1 { color: red; }\n    ```\n\nI\u0027ve added the text/css exception to the explainer.\n\n\nOTOH, I am not sure if an exception for `text/css` is sufficient / if it is okay to sniff for JSON parser breaker in other cases.  For example, Nick points out that while the spec is very strict about the expected content type, the implementation in Blink also allows an empty/missing content type [2].  Maybe requiring the Content-Type to be non-empty, non-css is the kind of requirement XSDB should check before sniffing for JSON parser breakers?\n\n[1] https://html.spec.whatwg.org/#link-type-stylesheet says \"Once a resource has been obtained, if its Content-Type metadata is text/css, then run these steps [...]\".  Implicitly, if the content type is anything else, do nothing.\n\n[2] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/StyleElement.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d156",
+      "parentUuid": "5b2b305d_e666a368",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a069c2c3_3b2a7d9b",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
