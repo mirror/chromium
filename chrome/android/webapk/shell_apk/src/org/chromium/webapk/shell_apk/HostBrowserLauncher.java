@@ -29,6 +29,7 @@ import java.util.List;
 class HostBrowserLauncher {
     private static final String LAST_RESORT_HOST_BROWSER = "com.android.chrome";
     private static final String LAST_RESORT_HOST_BROWSER_APPLICATION_NAME = "Google Chrome";
+    private static final String EXTRA_SESSION = "android.support.customtabs.extra.SESSION";
     private static final String TAG = "cr_HostBrowserLauncher";
 
     // Action for launching {@link WebappLauncherActivity}.
@@ -59,6 +60,9 @@ class HostBrowserLauncher {
     /** Whether the WebAPK should be navigated to {@link mStartUrl} if it is already running. */
     private boolean mForceNavigation;
 
+    /** The metadata of the associated WebAPK. */
+    private Bundle mMetadata;
+
     public HostBrowserLauncher(Activity parentActivity, Intent intent, String startUrl, int source,
             boolean forceNavigation) {
         mParentActivity = parentActivity;
@@ -86,8 +90,8 @@ class HostBrowserLauncher {
      * browser.
      */
     public void selectHostBrowserAndLaunch(Runnable finishCallback) {
-        Bundle metadata = WebApkUtils.readMetaData(mContext);
-        if (metadata == null) {
+        mMetadata = WebApkUtils.readMetaData(mContext);
+        if (mMetadata == null) {
             finishCallback.run();
             return;
         }
@@ -115,7 +119,7 @@ class HostBrowserLauncher {
         if (hasBrowserSupportingWebApks(infos)) {
             showChooseHostBrowserDialog(infos, finishCallback);
         } else {
-            showInstallHostBrowserDialog(metadata, finishCallback);
+            showInstallHostBrowserDialog(finishCallback);
         }
     }
 
@@ -137,6 +141,11 @@ class HostBrowserLauncher {
     }
 
     private void launchInHostBrowser(String runtimeHost) {
+        if (mMetadata.getBoolean(WebApkMetaDataKeys.DISABLE_FULL_SCREEN_MODE)) {
+            launchInCCT(runtimeHost);
+            return;
+        }
+
         PackageInfo info;
         try {
             info = mContext.getPackageManager().getPackageInfo(runtimeHost, 0);
@@ -166,6 +175,20 @@ class HostBrowserLauncher {
             mParentActivity.startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Log.w(TAG, "Unable to launch browser in WebAPK mode.");
+            e.printStackTrace();
+        }
+    }
+
+    /** Launches a WebAPK in a Chrome Custom Tab. */
+    private void launchInCCT(String runtimeHost) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(mStartUrl));
+        intent.setPackage(runtimeHost);
+        intent.putExtra(EXTRA_SESSION, "");
+        try {
+            mParentActivity.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w(TAG, "Unable to launch the WebAPK in a Chrome Custom Tab.");
             e.printStackTrace();
         }
     }
@@ -223,11 +246,11 @@ class HostBrowserLauncher {
     }
 
     /** Shows a dialog to install the host browser. */
-    private void showInstallHostBrowserDialog(Bundle metadata, Runnable finishCallback) {
+    private void showInstallHostBrowserDialog(Runnable finishCallback) {
         String lastResortHostBrowserPackageName =
-                metadata.getString(WebApkMetaDataKeys.RUNTIME_HOST);
+                mMetadata.getString(WebApkMetaDataKeys.RUNTIME_HOST);
         String lastResortHostBrowserApplicationName =
-                metadata.getString(WebApkMetaDataKeys.RUNTIME_HOST_APPLICATION_NAME);
+                mMetadata.getString(WebApkMetaDataKeys.RUNTIME_HOST_APPLICATION_NAME);
 
         if (TextUtils.isEmpty(lastResortHostBrowserPackageName)) {
             // WebAPKs without runtime host specified in the AndroidManifest.xml always install
