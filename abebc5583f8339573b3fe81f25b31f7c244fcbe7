@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "11d4312e_7f0c53f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageNotificationBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-02-05T18:57:00Z",
+      "side": 1,
+      "message": "@ is an annotation. In injection frameworks, annotations help tell the injection module which value to insert. I believe here it\u0027s used more as a way to tell the jni translator as well as future people how to interpret this value. The annotation itself is generated from the c++ side of the enum",
+      "parentUuid": "f8079b76_a27548ce",
+      "range": {
+        "startLine": 117,
+        "startChar": 45,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "034d2781_58c3e1ea",
         "filename": "components/offline_items_collection/core/offline_item.h",
         "patchSetId": 1
