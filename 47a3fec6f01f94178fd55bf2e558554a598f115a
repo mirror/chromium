@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "80c32846_16308e9a",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T22:46:01Z",
+      "side": 1,
+      "message": "I\u0027m ok with resetting, as long you document it.",
+      "parentUuid": "d129bb4c_1059a096",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33ef2137_aaee92f0",
         "filename": "ui/views/controls/webview/webview_unittest.cc",
         "patchSetId": 15
