@@ -89,12 +89,15 @@ void ScriptResource::DestroyDecodedDataForFailedRevalidation() {
 }
 
 AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {
-  if (GetCORSStatus() == CORSStatus::kServiceWorkerOpaque)
+  if (GetCORSStatus() == CORSStatus::kServiceWorkerOpaque) {
+    CHECK(false);
     return kOpaqueResource;
+  }
 
   if (IsSameOriginOrCORSSuccessful())
     return kSharableCrossOrigin;
 
+  CHECK(false);
   return kNotSharableCrossOrigin;
 }
 
