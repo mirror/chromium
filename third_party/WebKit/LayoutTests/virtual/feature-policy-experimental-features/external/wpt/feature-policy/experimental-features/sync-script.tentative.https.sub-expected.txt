@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test behavior of sync-script feature policy for different script types
+Harness: the test ran to completion.
+
