@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76af6407_9d2a6b91",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-05T16:53:11Z",
+      "side": 1,
+      "message": "Why two words instead of just one? Increase odds of being unique?",
+      "revId": "898b38dfb4e06894f2965888378cb23b6258cb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e8534a_f8155cf3",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-05T16:53:11Z",
+      "side": 1,
+      "message": "It\u0027s an error for these symbols to not exist anyways, so might as well just call symbols.index().",
+      "revId": "898b38dfb4e06894f2965888378cb23b6258cb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
