@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee177b7c_7a32ed34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:27:54Z",
+      "side": 1,
+      "message": "Do we expect this to be called frequently w/ the same color?  Looks like setColorFilter unconditionally forces an invalidate of the drawable w/o first checking that the generated color filter .equals.  So if we do call this frequently w/ the same value as the previous call, we should consider caching the value and only calling this if it changes.",
+      "range": {
+        "startLine": 435,
+        "startChar": 31,
+        "endLine": 435,
+        "endChar": 45
+      },
+      "revId": "8592ce29470aea0e1d277c64a30ce7ff68f265e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
