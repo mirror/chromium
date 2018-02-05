@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49b3cbd1_1e98e648",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T04:00:09Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed bccause it\u0027s the empty string for navigations.",
+      "revId": "2451cd435e09f6d1a7c1811fe29437b262f032ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf754cc5_58a1e843",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T04:00:09Z",
+      "side": 1,
+      "message": "Would call this FetchEventInfo instead... \"fetch request\" could look like the Fetch API Request interface.",
+      "revId": "2451cd435e09f6d1a7c1811fe29437b262f032ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242d8206_bfd8559f",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T04:00:09Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t need to change this interface, since clientId is the empty string for navigations (this might change later according to the spec discussion but it\u0027s not needed yet: https://github.com/w3c/ServiceWorker/issues/1267)",
+      "revId": "2451cd435e09f6d1a7c1811fe29437b262f032ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
