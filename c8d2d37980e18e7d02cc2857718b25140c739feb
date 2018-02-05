@@ -293,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "7055447b_7b9ada0e",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-05T23:00:14Z",
+      "side": 1,
+      "message": "I will look at this part later (no time at the moment).  But to answer your last question: yes, change description \u003d\u003d CL message \u003d change log :)",
+      "parentUuid": "440400d4_fc72a6fb",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2161b7db_5db181b6",
         "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
         "patchSetId": 25
