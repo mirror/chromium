@@ -145,7 +145,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   void WasHidden();
   void WasShown(const ui::LatencyInfo& latency_info);
   void WasResized(const cc::DeadlinePolicy& deadline_policy);
-  bool HasSavedFrame();
+  bool HasSavedFrame() const;
   gfx::Size GetRequestedRendererSize() const;
   void SetCompositor(ui::Compositor* compositor);
   void ResetCompositor();
@@ -215,6 +215,8 @@ class CONTENT_EXPORT DelegatedFrameHost
   }
 
   void DidNavigate();
+
+  bool IsPrimarySurfaceEvicted() const;
 
  private:
   friend class DelegatedFrameHostClient;
@@ -349,6 +351,8 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   uint32_t first_parent_sequence_number_after_navigation_ = 0;
   bool received_frame_after_navigation_ = false;
+
+  bool is_primary_surface_evicted_ = false;
 
   base::WeakPtrFactory<DelegatedFrameHost> weak_ptr_factory_;
 };

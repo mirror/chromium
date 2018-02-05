@@ -100,7 +100,7 @@ void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
   WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
 }
 
-bool DelegatedFrameHost::HasSavedFrame() {
+bool DelegatedFrameHost::HasSavedFrame() const {
   return frame_evictor_->HasFrame();
 }
 
@@ -301,6 +301,7 @@ void DelegatedFrameHost::WasResized(const cc::DeadlinePolicy& deadline_policy) {
                                   client_->GetLocalSurfaceId())) {
     current_frame_size_in_dip_ = new_size_in_dip;
 
+    is_primary_surface_evicted_ = false;
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_id, current_frame_size_in_dip_, GetGutterColor(),
@@ -633,6 +634,10 @@ void DelegatedFrameHost::EvictDelegatedFrame() {
     return;
 
   if (enable_surface_synchronization_) {
+    if (*client_->DelegatedFrameHostGetLayer()->GetFallbackSurfaceId() ==
+        *client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId()) {
+      is_primary_surface_evicted_ = true;
+    }
     client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
         viz::SurfaceId());
   } else {
@@ -977,6 +982,10 @@ void DelegatedFrameHost::DidNavigate() {
   first_parent_sequence_number_after_navigation_ =
       client_->GetLocalSurfaceId().parent_sequence_number();
   received_frame_after_navigation_ = false;
+}
+
+bool DelegatedFrameHost::IsPrimarySurfaceEvicted() const {
+  return local_surface_id_ == client_->GetLocalSurfaceId() && !HasSavedFrame();
 }
 
 }  // namespace content
