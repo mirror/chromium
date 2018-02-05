@@ -133,6 +133,13 @@ bool MediaValues::CalculateThreeDEnabled(LocalFrame* frame) {
   return three_d_enabled;
 }
 
+bool MediaValues::CalculateInImmersiveMode(LocalFrame* frame) {
+  DCHECK(frame);
+  DCHECK(frame->ContentLayoutObject());
+  DCHECK(frame->ContentLayoutObject()->Compositor());
+  return frame->GetDocument()->GetSettings()->GetImmersiveModeEnabled();
+}
+
 PointerType MediaValues::CalculatePrimaryPointerType(LocalFrame* frame) {
   DCHECK(frame);
   DCHECK(frame->GetSettings());
