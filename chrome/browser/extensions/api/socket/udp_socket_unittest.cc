@@ -15,17 +15,20 @@
 #include "base/single_thread_task_runner.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/extensions/extension_service_test_base.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "extensions/browser/api/socket/udp_socket.h"
 #include "net/base/io_buffer.h"
 #include "net/base/ip_address.h"
+#include "net/base/test_completion_callback.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {
 
-// UDPSocketUnitTest exists solely to make it easier to pass a specific
-// gtest_filter argument during development.
-class UDPSocketUnitTest : public BrowserWithTestWindowTest {
+class UDPSocketUnitTest : public extensions::ExtensionServiceTestBase {
+ protected:
+  // extensions::ExtensionServiceTestBase:
+  void SetUp() override { InitializeEmptyExtensionService(); }
 };
 
 static void OnConnected(int result) {
@@ -40,8 +43,8 @@ static void OnCompleted(int bytes_read,
   // Do nothing; don't care.
 }
 
-static const char test_message[] = "$$TESTMESSAGETESTMESSAGETESTMESSAGETEST$$";
-static const int test_message_length = arraysize(test_message);
+static const char kTestMessage[] = "$$TESTMESSAGETESTMESSAGETESTMESSAGETEST$$";
+static const int kTestMessageLength = arraysize(kTestMessage);
 
 net::AddressList CreateAddressList(const char* address_string, int port) {
   net::IPAddress ip;
@@ -50,50 +53,67 @@ net::AddressList CreateAddressList(const char* address_string, int port) {
 }
 
 static void OnSendCompleted(int result) {
-  EXPECT_EQ(test_message_length, result);
+  EXPECT_EQ(kTestMessageLength, result);
 }
 
-TEST(UDPSocketUnitTest, TestUDPSocketRecvFrom) {
-  base::MessageLoopForIO io_loop;  // For RecvFrom to do its threaded work.
-  UDPSocket socket("abcdefghijklmnopqrst");
+TEST_F(UDPSocketUnitTest, TestUDPSocketRecvFrom) {
+  UDPSocket socket(profile(), "abcdefghijklmnopqrst");
 
   // Confirm that we can call two RecvFroms in quick succession without
   // triggering crbug.com/146606.
   socket.Connect(CreateAddressList("127.0.0.1", 40000),
-                 base::Bind(&OnConnected));
-  socket.RecvFrom(4096, base::Bind(&OnCompleted));
-  socket.RecvFrom(4096, base::Bind(&OnCompleted));
+                 base::BindRepeating(&OnConnected));
+  socket.RecvFrom(4096, base::BindRepeating(&OnCompleted));
+  socket.RecvFrom(4096, base::BindRepeating(&OnCompleted));
 }
 
-TEST(UDPSocketUnitTest, TestUDPMulticastJoinGroup) {
+TEST_F(UDPSocketUnitTest, TestUDPMulticastJoinGroup) {
   const char kGroup[] = "237.132.100.17";
-  UDPSocket src("abcdefghijklmnopqrst");
-  UDPSocket dest("abcdefghijklmnopqrst");
+  UDPSocket src(profile(), "abcdefghijklmnopqrst");
+  UDPSocket dest(profile(), "abcdefghijklmnopqrst");
 
-  EXPECT_EQ(0, dest.Bind("0.0.0.0", 13333));
-  EXPECT_EQ(0, dest.JoinGroup(kGroup));
+  {
+    net::TestCompletionCallback callback;
+    dest.Bind("0.0.0.0", 13333, callback.callback());
+    EXPECT_EQ(net::OK, callback.WaitForResult());
+  }
+  {
+    net::TestCompletionCallback callback;
+    dest.JoinGroup(kGroup, callback.callback());
+    EXPECT_EQ(net::OK, callback.WaitForResult());
+  }
   std::vector<std::string> groups = dest.GetJoinedGroups();
   EXPECT_EQ(static_cast<size_t>(1), groups.size());
   EXPECT_EQ(kGroup, *groups.begin());
-  EXPECT_NE(0, dest.LeaveGroup("237.132.100.13"));
-  EXPECT_EQ(0, dest.LeaveGroup(kGroup));
+  {
+    net::TestCompletionCallback callback;
+    dest.LeaveGroup("237.132.100.13", callback.callback());
+    EXPECT_NE(net::OK, callback.WaitForResult());
+  }
+  {
+    net::TestCompletionCallback callback;
+    dest.LeaveGroup(kGroup, callback.callback());
+    EXPECT_EQ(net::OK, callback.WaitForResult());
+  }
   groups = dest.GetJoinedGroups();
   EXPECT_EQ(static_cast<size_t>(0), groups.size());
 }
 
-TEST(UDPSocketUnitTest, TestUDPMulticastTimeToLive) {
+TEST_F(UDPSocketUnitTest, TestUDPMulticastTimeToLive) {
   const char kGroup[] = "237.132.100.17";
-  UDPSocket socket("abcdefghijklmnopqrst");
+  UDPSocket socket(profile(), "abcdefghijklmnopqrst");
   EXPECT_NE(0, socket.SetMulticastTimeToLive(-1));  // Negative TTL shall fail.
   EXPECT_EQ(0, socket.SetMulticastTimeToLive(3));
-  socket.Connect(CreateAddressList(kGroup, 13333), base::Bind(&OnConnected));
+  socket.Connect(CreateAddressList(kGroup, 13333),
+                 base::BindRepeating(&OnConnected));
 }
 
-TEST(UDPSocketUnitTest, TestUDPMulticastLoopbackMode) {
+TEST_F(UDPSocketUnitTest, TestUDPMulticastLoopbackMode) {
   const char kGroup[] = "237.132.100.17";
-  UDPSocket socket("abcdefghijklmnopqrst");
+  UDPSocket socket(profile(), "abcdefghijklmnopqrst");
   EXPECT_EQ(0, socket.SetMulticastLoopbackMode(false));
-  socket.Connect(CreateAddressList(kGroup, 13333), base::Bind(&OnConnected));
+  socket.Connect(CreateAddressList(kGroup, 13333),
+                 base::BindRepeating(&OnConnected));
 }
 
 // Send a test multicast packet every second.
@@ -102,8 +122,8 @@ static void SendMulticastPacket(const base::Closure& quit_run_loop,
                                 UDPSocket* src,
                                 int result) {
   if (result == 0) {
-    scoped_refptr<net::IOBuffer> data = new net::WrappedIOBuffer(test_message);
-    src->Write(data, test_message_length, base::Bind(&OnSendCompleted));
+    scoped_refptr<net::IOBuffer> data = new net::WrappedIOBuffer(kTestMessage);
+    src->Write(data, kTestMessageLength, base::BindRepeating(&OnSendCompleted));
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&SendMulticastPacket, quit_run_loop, src, result),
@@ -119,36 +139,44 @@ static void OnMulticastReadCompleted(const base::Closure& quit_run_loop,
                                      int count,
                                      scoped_refptr<net::IOBuffer> io_buffer,
                                      bool socket_destroying) {
-  EXPECT_EQ(test_message_length, count);
-  EXPECT_EQ(0, strncmp(io_buffer->data(), test_message, test_message_length));
+  EXPECT_EQ(kTestMessageLength, count);
+  EXPECT_EQ(0, strncmp(io_buffer->data(), kTestMessage, kTestMessageLength));
   *packet_received = true;
   quit_run_loop.Run();
 }
 
-TEST(UDPSocketUnitTest, TestUDPMulticastRecv) {
+TEST_F(UDPSocketUnitTest, TestUDPMulticastRecv) {
   const int kPort = 9999;
   const char kGroup[] = "237.132.100.17";
   bool packet_received = false;
-  base::MessageLoopForIO io_loop;  // For Read to do its threaded work.
-  UDPSocket dest("abcdefghijklmnopqrst");
-  UDPSocket src("abcdefghijklmnopqrst");
-
-  base::RunLoop run_loop;
+  UDPSocket dest(profile(), "abcdefghijklmnopqrst");
+  UDPSocket src(profile(), "abcdefghijklmnopqrst");
 
   // Receiver
-  EXPECT_EQ(0, dest.Bind("0.0.0.0", kPort));
-  EXPECT_EQ(0, dest.JoinGroup(kGroup));
-  dest.Read(1024, base::Bind(&OnMulticastReadCompleted, run_loop.QuitClosure(),
-                             &packet_received));
+  {
+    net::TestCompletionCallback callback;
+    dest.Bind("0.0.0.0", kPort, callback.callback());
+    EXPECT_EQ(net::OK, callback.WaitForResult());
+  }
+  {
+    net::TestCompletionCallback callback;
+    dest.JoinGroup(kGroup, callback.callback());
+    EXPECT_EQ(net::OK, callback.WaitForResult());
+  }
+  base::RunLoop run_loop;
+  dest.Read(1024,
+            base::BindRepeating(&OnMulticastReadCompleted,
+                                run_loop.QuitClosure(), &packet_received));
 
   // Sender
   EXPECT_EQ(0, src.SetMulticastTimeToLive(0));
-  src.Connect(CreateAddressList(kGroup, kPort),
-              base::Bind(&SendMulticastPacket, run_loop.QuitClosure(), &src));
+  src.Connect(
+      CreateAddressList(kGroup, kPort),
+      base::BindRepeating(&SendMulticastPacket, run_loop.QuitClosure(), &src));
 
   // If not received within the test action timeout, quit the message loop.
-  io_loop.task_runner()->PostDelayedTask(FROM_HERE, run_loop.QuitClosure(),
-                                         TestTimeouts::action_timeout());
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, run_loop.QuitClosure(), TestTimeouts::action_timeout());
 
   run_loop.Run();
 
