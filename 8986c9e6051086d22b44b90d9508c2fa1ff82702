@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53088009_1e3ed1be",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T10:18:56Z",
+      "side": 1,
+      "message": "Can it be just\n\nAudioOutputController::Play() {\n if (!message_loop_-\u003eBelongsToCurrentThread()) {\n  message_loop_-\u003ePostTask(FROM_HERE,\n                          base::BindOnce(\u0026AudioOutputController::Play, this));\n  return;\n }\n DoPlay(); // Just put its implementation here\n}\n?\n\nIt does not look like AOC thread affinity is super-important?",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e008e129_f3f583e9",
+        "filename": "media/audio/audio_output_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T10:18:56Z",
+      "side": 1,
+      "message": "|task_runner_| seems to be a more common name for this?",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f729a3_e7c67ff5",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T10:18:56Z",
+      "side": 1,
+      "message": "Could you add comments for what\u0027s going on here?",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc998879_bca7c2cd",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T10:18:56Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e1fe52_1f2a39d2",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T10:18:56Z",
+      "side": 1,
+      "message": "Ditto. There are a lot of expectations, explaining them would be helpful.",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
