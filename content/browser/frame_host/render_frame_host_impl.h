@@ -68,6 +68,7 @@
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
+#include "third_party/WebKit/public/web/commit_result.mojom.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
@@ -1077,6 +1078,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // for this frame. May be overridden by friend subclasses for e.g. tests which
   // wish to intercept outgoing navigation control messages.
   virtual mojom::FrameNavigationControl* GetNavigationControl();
+
+  // Called by the renderer process when it is done processing a same-document
+  // commit request.
+  void OnSameDocumentCommitProcessed(int64_t navigation_id,
+                                     bool should_replace_current_entry,
+                                     blink::mojom::CommitResult result);
 
   // For now, RenderFrameHosts indirectly keep RenderViewHosts alive via a
   // refcount that calls Shutdown when it reaches zero.  This allows each
