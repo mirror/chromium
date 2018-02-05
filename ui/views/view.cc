@@ -118,6 +118,7 @@ class ScopedChildrenLock {
 
 // static
 const char View::kViewClassName[] = "View";
+bool View::isConstructorStackTrackingOn = false;
 
 ////////////////////////////////////////////////////////////////////////////////
 // View, public:
