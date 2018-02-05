@@ -70,6 +70,30 @@
       "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cc9a2b_6c33896b",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:28:34Z",
+      "side": 1,
+      "message": "enabled_features is currently populated entirely by hand. In the initial version, we decided not to automatically prepopulate enabled_features with is_android, is_chromeos, and other is_* labels to correspond to the platform being built.\n\nWe explicitly chose this to make it consistent for both simple (e.g. something that only depends on one boolean, i.e. a ChromeOS only feature) and complex conditionals (e.g. something that depends on being built on a Posix platform that\u0027s not iOS): we thought that complex conditionals would already need to be expressed in GN, so we thought it\u0027d be simpler if all conditions were expressed in GN.\n\nThis means that we need to write boilerplate for the simple conditional case though: i.e. in this case we need to write:\n\nenabled_features \u003d []\nif (is_android) {\n  enabled_features +\u003d [ \"OS_ANDROID\" ]\n}\n\nbefore we can write:\n\n[EnabledIf\u003dOS_ANDROID]\n\nin the mojom file.\n\nIf we had default enabled features, then we wouldn\u0027t need the GN boilerplate.\n\n(FWIW I don\u0027t feel strongly about this)",
+      "parentUuid": "93c31e24_c4e8536d",
+      "range": {
+        "startLine": 703,
+        "startChar": 27,
+        "endLine": 703,
+        "endChar": 55
+      },
+      "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
