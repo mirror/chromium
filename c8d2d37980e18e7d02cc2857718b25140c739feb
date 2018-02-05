@@ -240,6 +240,24 @@
     },
     {
       "key": {
+        "uuid": "c3f8076f_86245cad",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-05T22:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f454e9_89e6567e",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bc02135_e32997b4",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 25
@@ -251,6 +269,24 @@
       "writtenOn": "2018-02-03T03:00:44Z",
       "side": 1,
       "message": "\"A bit nasty as this are \u0027public\u0027, but\" ...\n\nThe new symbols you defined in this patch should be added to zlib/names.h to avoid that. Please update names.h.\n\nWith that you could move this comment into the change description, and explain why using function calls turned out to be a really bad idea.",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440400d4_fc72a6fb",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-05T22:48:49Z",
+      "side": 1,
+      "message": "I\u0027ve added the symbols in names.h (even though they are marked internal which would, in theory, avoid symbol collision as in: https://gcc.gnu.org/wiki/Visibility).\n\nThe names.h seems to follow the format:\n/* Symbols added by $PATCH */\n#define a_name Cr_z_name\n\nwith no comments on what/why the symbol does.\n\nMaybe just leave this comment here close to the code or simply remove it? \n\nIt is unclear what you mean by \u0027comment in the change description\u0027. Or is it this CL message?",
+      "parentUuid": "6bc02135_e32997b4",
       "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
