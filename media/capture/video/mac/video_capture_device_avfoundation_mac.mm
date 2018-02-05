@@ -443,19 +443,21 @@ void ExtractBaseAddressAndLength(char** base_address,
   char* baseAddress = 0;
   size_t frameSize = 0;
   CVImageBufferRef videoFrame = nil;
-  if (fourcc == kCMVideoCodecType_JPEG_OpenDML) {
-    ExtractBaseAddressAndLength(&baseAddress, &frameSize, sampleBuffer);
-  } else {
+  if (fourcc != kCMVideoCodecType_JPEG_OpenDML) {
     videoFrame = CMSampleBufferGetImageBuffer(sampleBuffer);
     // Lock the frame and calculate frame size.
-    if (CVPixelBufferLockBaseAddress(videoFrame, kCVPixelBufferLock_ReadOnly) ==
-        kCVReturnSuccess) {
+    if (videoFrame &&
+        CVPixelBufferLockBaseAddress(videoFrame, kCVPixelBufferLock_ReadOnly) ==
+            kCVReturnSuccess) {
       baseAddress = static_cast<char*>(CVPixelBufferGetBaseAddress(videoFrame));
       frameSize = CVPixelBufferGetHeight(videoFrame) *
                   CVPixelBufferGetBytesPerRow(videoFrame);
     } else {
       videoFrame = nil;
     }
+  }
+  if (!videoFrame) {
+    ExtractBaseAddressAndLength(&baseAddress, &frameSize, sampleBuffer);
   }
 
   {
