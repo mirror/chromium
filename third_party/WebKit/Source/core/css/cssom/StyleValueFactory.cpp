@@ -124,6 +124,18 @@ CSSStyleValueVector StyleValueFactory::FromString(
   return style_value_vector;
 }
 
+CSSStyleValue* StyleValueFactory::CssValueToStyleValue(
+    CSSPropertyID property_id,
+    const CSSValue& css_value) {
+  DCHECK(!CSSProperty::Get(property_id).IsRepeated());
+  CSSStyleValue* style_value =
+      CreateStyleValueWithProperty(property_id, css_value);
+  LOG(ERROR) << " FAILED " << property_id << (void*)style_value;
+  if (!style_value)
+    return CSSUnsupportedStyleValue::Create(property_id, css_value);
+  return style_value;
+}
+
 CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
     CSSPropertyID property_id,
     const CSSValue& css_value) {
