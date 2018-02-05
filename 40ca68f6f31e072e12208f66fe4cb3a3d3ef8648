@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a16a2ec_1f32d8cf",
+        "filename": "third_party/metrics_proto/cast_logs.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1112731
+      },
+      "writtenOn": "2018-02-05T19:08:29Z",
+      "side": 1,
+      "message": "Usually we use 0 index for unspecified value.\nhttps://engdoc.corp.google.com/eng/doc/devguide/proto/index.md?cl\u003dhead#do-include-a-unspecified-value-in-an-enum\n\nWhy not add IP_UNKNOWN \u003d 0; and shift rest of enum?",
+      "revId": "40ca68f6f31e072e12208f66fe4cb3a3d3ef8648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915e1d69_11d74d5f",
+        "filename": "third_party/metrics_proto/cast_logs.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1112731
+      },
+      "writtenOn": "2018-02-05T19:08:29Z",
+      "side": 1,
+      "message": "For consistency, IPV4 or IP_V4, same for IPv6",
+      "range": {
+        "startLine": 220,
+        "startChar": 15,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "40ca68f6f31e072e12208f66fe4cb3a3d3ef8648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c157b76_de4d87b2",
+        "filename": "third_party/metrics_proto/cast_logs.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1112731
+      },
+      "writtenOn": "2018-02-05T19:08:29Z",
+      "side": 1,
+      "message": "Could you clarifying what platform means? Is that the cast platform?\nIf then, is this value related with flag? In that case I would suggest use experiment/flag system. Cast logs already have ability of detect flag (weather cast supports dual stack or not support it).\n\nOtherwise, if platform means different (like wifi router the cast device is connecting) please specify more detail on the comment. And I would use \"platform_support_dual_stack\" to make meaning clear.",
+      "range": {
+        "startLine": 227,
+        "startChar": 42,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "40ca68f6f31e072e12208f66fe4cb3a3d3ef8648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
