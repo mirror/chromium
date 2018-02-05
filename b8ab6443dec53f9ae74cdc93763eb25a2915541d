@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e145771_b0d90c6b",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T18:48:05Z",
+      "side": 1,
+      "message": "The notion of \"eventually read-only\" doesn\u0027t read very well IMHO, and I suspect the API might be less confusing overall if this were just called WritableSharedMemoryRegion.\n\nWhat you call WritableSharedMemoryRegion now -- which I think should be used quite a bit less frequently than this type -- can be called  something like CloneableWritableSharedMemoryRegion (assuming a rename from Duplicate() to Clone() for slightly condensed wording).\n\nWDYT?",
+      "revId": "b8ab6443dec53f9ae74cdc93763eb25a2915541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee9bb63_b58ed7fa",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T18:48:05Z",
+      "side": 1,
+      "message": "Maybe this naming should be more explicit. Something like TakeHandlesForSerialization()?",
+      "revId": "b8ab6443dec53f9ae74cdc93763eb25a2915541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b54bab_5e34a050",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T18:48:05Z",
+      "side": 1,
+      "message": "nit: can this just be a non-static r-value method? i.e.\n\n  ReadOnlySharedMemoryRegion ConvertToReadOnly() \u0026\u0026;\n\nso callers can\n\n  std::move(eventually_ro).ConvertToReadOnly()",
+      "revId": "b8ab6443dec53f9ae74cdc93763eb25a2915541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693e34f6_26948766",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T18:48:05Z",
+      "side": 1,
+      "message": "nit: Maybe private, with a public static Deserialize() method to use it? This would mirror e.g. base::UnguessableToken\u0027s API for de/serialization details.",
+      "revId": "b8ab6443dec53f9ae74cdc93763eb25a2915541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06c6ef3_cf4ec098",
+        "filename": "base/memory/shared_memory_mapping.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T18:48:05Z",
+      "side": 1,
+      "message": "nit: modeling",
+      "revId": "b8ab6443dec53f9ae74cdc93763eb25a2915541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
