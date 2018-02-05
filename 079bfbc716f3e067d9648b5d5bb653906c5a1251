@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "1845cfd5_2099d8dc",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-05T21:02:34Z",
+      "side": 1,
+      "message": "Ownership is not transferred. WebDialogView is tricky. It is a both a ClientView and WidgetDelegate. The lifetime can be managed either via view hierarchy or as a WidgetDeletate (i.e. released when WidgetDelegate::DeleteDelegate is called). The current impl chooses the view hierarchy. So it would be released when the widget\u0027s view hierarchy is gone. As long as we build and show the widget, we should not leak it.",
+      "parentUuid": "072f679c_9e905724",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e4b574_337fc787",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
         "patchSetId": 9
@@ -64,6 +82,24 @@
       "writtenOn": "2018-02-03T02:14:56Z",
       "side": 1,
       "message": "This is non-owning, is that right? Close() destroys the Widget?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e146c03_0671f944",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-05T21:02:34Z",
+      "side": 1,
+      "message": "The default ownership of views::Widget is NATIVE_WIDGET_OWNS_WIDGET. That is, the widget is released when the underlying native widget (aka aura::Window) goes away.",
+      "parentUuid": "27e4b574_337fc787",
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
