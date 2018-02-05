@@ -69,6 +69,24 @@
       "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6fe33f_ef900b3a",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T19:13:29Z",
+      "side": 1,
+      "message": "I think it\u0027s a device policy? https://cs.chromium.org/chromium/src/components/policy/proto/chrome_device_policy.proto?rcl\u003de4b8412d95293f3fefd380ef4f4754d4b48cb240\u0026l\u003d49",
+      "parentUuid": "f3474a05_8ca7e1ff",
+      "revId": "046fdfc32a05ebc1bc9398cf17d2c3a057a73fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
