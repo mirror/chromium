@@ -93,6 +93,30 @@
       "revId": "bafd33450ae21736b4691870c6257e136fa4fd9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c03eb7_3af263ec",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T22:28:42Z",
+      "side": 1,
+      "message": "Byte perfect?  I was thinking more about file system size - I don\u0027t know if we use sparse files or not, but 1 byte file (sparse or not) takes up a lot more than 1 byte of disk space (File name, space in the FAT, space in the directory, etc).",
+      "parentUuid": "b48ceed1_3445373d",
+      "range": {
+        "startLine": 597,
+        "startChar": 34,
+        "endLine": 597,
+        "endChar": 43
+      },
+      "revId": "bafd33450ae21736b4691870c6257e136fa4fd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
