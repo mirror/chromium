@@ -2675,7 +2675,8 @@ TEST_F(SplitViewWindowSelectorTest,
   // the location since there is no need to reparent the widget. Pass a random
   // rectangle for the phantom states otherwise a DCHECK will fail.
   // Verify that nothing is shown in the none state.
-  overlay->SetIndicatorState(IndicatorState::kNone, gfx::Point());
+  overlay->SetIndicatorState(IndicatorState::kNone, gfx::Point(),
+                             base::nullopt);
   check_helper(overlay.get(), 0);
 
   const int all = to_int(IndicatorType::kLeftHighlight) |
@@ -2683,15 +2684,19 @@ TEST_F(SplitViewWindowSelectorTest,
                   to_int(IndicatorType::kRightHighlight) |
                   to_int(IndicatorType::kRightText);
   // Verify that everything is visible in the dragging and cannot snap states.
-  overlay->SetIndicatorState(IndicatorState::kDragArea, gfx::Point());
+  overlay->SetIndicatorState(IndicatorState::kDragArea, gfx::Point(),
+                             base::nullopt);
   check_helper(overlay.get(), all);
-  overlay->SetIndicatorState(IndicatorState::kCannotSnap, gfx::Point());
+  overlay->SetIndicatorState(IndicatorState::kCannotSnap, gfx::Point(),
+                             base::nullopt);
   check_helper(overlay.get(), all);
 
   // Verify that only one highlight shows up for the phantom states.
-  overlay->SetIndicatorState(IndicatorState::kPhantomLeft, gfx::Point());
+  overlay->SetIndicatorState(IndicatorState::kPhantomLeft, gfx::Point(),
+                             base::make_optional(gfx::Rect(0, 0, 100, 100)));
   check_helper(overlay.get(), to_int(IndicatorType::kLeftHighlight));
-  overlay->SetIndicatorState(IndicatorState::kPhantomRight, gfx::Point());
+  overlay->SetIndicatorState(IndicatorState::kPhantomRight, gfx::Point(),
+                             base::make_optional(gfx::Rect(0, 0, 100, 100)));
   check_helper(overlay.get(), to_int(IndicatorType::kRightHighlight));
 }
 

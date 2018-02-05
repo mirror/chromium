@@ -495,7 +495,10 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
   ShieldButton* listener_button() { return listener_button_; }
 
   void SetCannotSnapLabelVisibility(bool visible) {
-    AnimateSplitviewLabelOpacity(cannot_snap_container_->layer(), visible);
+    DoSplitviewOpacityAnimation(
+        cannot_snap_container_->layer(),
+        visible ? SPLITVIEW_ANIMATION_SELECTOR_ITEM_FADE_IN
+                : SPLITVIEW_ANIMATION_SELECTOR_ITEM_FADE_OUT);
   }
 
  protected:

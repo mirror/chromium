@@ -10,6 +10,7 @@
 #include "ash/ash_export.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -50,7 +51,8 @@ class ASH_EXPORT SplitViewOverviewOverlay {
   // split view controllers state. If |event_location| is located on a different
   // root window than |widget_|, |widget_| will reparent.
   void SetIndicatorState(IndicatorState indicator_state,
-                         const gfx::Point& event_location);
+                         const gfx::Point& event_location,
+                         base::Optional<gfx::Rect> phantom_bounds);
   IndicatorState current_indicator_state() const {
     return current_indicator_state_;
   }

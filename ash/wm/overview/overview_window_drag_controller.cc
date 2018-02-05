@@ -57,7 +57,7 @@ void OverviewWindowDragController::InitiateDrag(
       split_view_controller_->CanSnap(item->GetWindow())
           ? IndicatorState::kDragArea
           : IndicatorState::kCannotSnap,
-      location_in_screen);
+      location_in_screen, base::nullopt);
 }
 
 void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
@@ -90,7 +90,7 @@ void OverviewWindowDragController::CompleteDrag(
   if (ShouldUpdateOverlayOrSnap(location_in_screen))
     UpdateOverlayAndWindowGrid(location_in_screen);
   window_selector_->SetSplitViewOverviewOverlayIndicatorState(
-      IndicatorState::kNone, gfx::Point());
+      IndicatorState::kNone, gfx::Point(), base::nullopt);
 
   if (!did_move_) {
     ActivateDraggedWindow();
@@ -131,7 +131,7 @@ void OverviewWindowDragController::ActivateDraggedWindow() {
 void OverviewWindowDragController::ResetGesture() {
   window_selector_->PositionWindows(/*animate=*/true);
   window_selector_->SetSplitViewOverviewOverlayIndicatorState(
-      IndicatorState::kNone, gfx::Point());
+      IndicatorState::kNone, gfx::Point(), base::nullopt);
 }
 
 void OverviewWindowDragController::ResetWindowSelector() {
@@ -159,7 +159,7 @@ void OverviewWindowDragController::UpdateOverlayAndWindowGrid(
        snapped_state == SplitViewController::RIGHT_SNAPPED)) {
     snap_position_ = SplitViewController::NONE;
     window_selector_->SetSplitViewOverviewOverlayIndicatorState(
-        IndicatorState::kNone, gfx::Point());
+        IndicatorState::kNone, gfx::Point(), base::nullopt);
     return;
   }
 
@@ -181,18 +181,22 @@ void OverviewWindowDragController::UpdateOverlayAndWindowGrid(
           split_view_controller_->CanSnap(item_->GetWindow())
               ? IndicatorState::kDragArea
               : IndicatorState::kCannotSnap,
-          gfx::Point());
+          gfx::Point(), base::nullopt);
       return;
     }
   }
 
-  // Display the phantom window on the split view overview overlay. The split
-  // view overview overlay will calculate the phantom window bounds.
+  aura::Window* target_window = item_->GetWindow();
+  gfx::Rect phantom_bounds_in_screen =
+      split_view_controller_->GetSnappedWindowBoundsInScreen(target_window,
+                                                             snap_position_);
+
+  // Display the phantom window on the split view overview overlay.
   window_selector_->SetSplitViewOverviewOverlayIndicatorState(
       snap_position_ == SplitViewController::LEFT
           ? IndicatorState::kPhantomLeft
           : IndicatorState::kPhantomRight,
-      gfx::Point());
+      gfx::Point(), base::make_optional(phantom_bounds_in_screen));
 }
 
 bool OverviewWindowDragController::ShouldUpdateOverlayOrSnap(
