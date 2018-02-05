@@ -124,6 +124,24 @@
       "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d683398c_427544ba",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:39:57Z",
+      "side": 1,
+      "message": "Would it make sense to use const char* or StringPiece to avoid instantiating a bunch of std::string temporaries?\n\n(I\u0027m not sure how widely called this method is and it may not matter, but this sort of thing has shown up on size profiles elsewhere)",
+      "parentUuid": "5e919a72_54b468de",
+      "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
