@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "958b9ab5_0ee0ef50",
+        "filename": "components/exo/display.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-02-05T23:34:39Z",
+      "side": 1,
+      "message": "I can\u0027t find where you set this. Is that a problem? Or am I misreading the code?",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b089610_34bf42ca",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-02-05T23:34:39Z",
+      "side": 1,
+      "message": "nit: Provides a common",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa1f9ae_8ff05374",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-02-05T23:34:39Z",
+      "side": 1,
+      "message": "these are closely related. There could be a refactoring in another CL. Someday.",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
