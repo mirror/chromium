@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This file provides defines needed by PaintVectorIcon and is implemented
-// by the generated file vector_icons.cc.
-
 #ifndef UI_GFX_VECTOR_ICON_TYPES_H_
 #define UI_GFX_VECTOR_ICON_TYPES_H_
 
@@ -86,8 +83,12 @@ struct VectorIcon {
 
   bool is_empty() const { return !path; }
 
-  const gfx::PathElement* path;
-  const gfx::PathElement* path_1x;
+  const gfx::PathElement* path = nullptr;
+  const size_t path_size = 0u;
+  const gfx::PathElement* path_1x = nullptr;
+  const size_t path_1x_size = 0u;
+
+  bool operator<(const VectorIcon& other) const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(VectorIcon);

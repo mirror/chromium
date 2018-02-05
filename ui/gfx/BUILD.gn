@@ -334,6 +334,7 @@ jumbo_component("gfx") {
     sources += [
       "paint_vector_icon.cc",
       "paint_vector_icon.h",
+      "vector_icon_types.cc",
       "vector_icon_types.h",
     ]
   }

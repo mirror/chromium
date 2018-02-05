@@ -30,12 +30,8 @@ namespace {
 
 struct CompareIconDescription {
   bool operator()(const IconDescription& a, const IconDescription& b) const {
-    const VectorIcon* a_icon = &a.icon;
-    const VectorIcon* b_icon = &b.icon;
-    const VectorIcon* a_badge = &a.badge_icon;
-    const VectorIcon* b_badge = &b.badge_icon;
-    return std::tie(a_icon, a.dip_size, a.color, a.elapsed_time, a_badge) <
-           std::tie(b_icon, b.dip_size, b.color, b.elapsed_time, b_badge);
+    return std::tie(a.icon, a.dip_size, a.color, a.elapsed_time, a.badge_icon) <
+           std::tie(b.icon, b.dip_size, b.color, b.elapsed_time, b.badge_icon);
   }
 };
 
