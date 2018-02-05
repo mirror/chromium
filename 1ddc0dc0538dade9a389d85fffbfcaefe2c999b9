@@ -93,6 +93,30 @@
       "revId": "1ddc0dc0538dade9a389d85fffbfcaefe2c999b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e80fbb_74a8ca1e",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T16:36:47Z",
+      "side": 1,
+      "message": "Ah I missed that.",
+      "parentUuid": "6bb5c1a2_a020ed85",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "1ddc0dc0538dade9a389d85fffbfcaefe2c999b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
