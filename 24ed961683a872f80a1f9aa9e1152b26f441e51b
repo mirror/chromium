@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb14aae5_a66def41",
+        "filename": "chrome/renderer/extensions/i18n_hooks_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T23:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deeb7c5d_301ade27",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a2f189_294fb4a7",
         "filename": "chrome/renderer/extensions/i18n_hooks_delegate_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4f0b39_90cde67c",
+        "filename": "chrome/renderer/extensions/i18n_hooks_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T23:47:32Z",
+      "side": 1,
+      "message": "Good catch!  Done.",
+      "parentUuid": "15a2f189_294fb4a7",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b6623743_58b1381f",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T23:47:32Z",
+      "side": 1,
+      "message": "Yep, this was all just copy-paste, but I suppose we can polish it up a bit. :) Lemme know if the new version lgty.",
+      "parentUuid": "e558380f_c1e838df",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4be7638_38f610c9",
         "filename": "extensions/renderer/i18n_hooks_util.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b2c6bf14_da0247d4",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T23:47:32Z",
+      "side": 1,
+      "message": "I think we\u0027re all good and optimized!  (Y\u0027know, minus the small piece about a sync IPC and all...)",
+      "parentUuid": "f4be7638_38f610c9",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d78e3dc4_0234ce18",
         "filename": "extensions/renderer/i18n_hooks_util.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97780752_e614bb27",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T23:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78e3dc4_0234ce18",
+      "revId": "24ed961683a872f80a1f9aa9e1152b26f441e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
