@@ -1099,6 +1099,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
       return false;
     case CSSSelector::kPseudoUnknown:
     case CSSSelector::kPseudoMatches:
+    case CSSSelector::kPseudoIS:
     default:
       NOTREACHED();
       break;

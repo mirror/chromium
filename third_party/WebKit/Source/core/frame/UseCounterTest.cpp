@@ -290,6 +290,17 @@ TEST_F(UseCounterTest, CSSSelectorPseudoMatches) {
   EXPECT_TRUE(UseCounter::IsCounted(document, feature));
 }
 
+TEST_F(UseCounterTest, CSSSelectorPseudoIS) {
+  std::unique_ptr<DummyPageHolder> dummy_page_holder =
+      DummyPageHolder::Create(IntSize(800, 600));
+  Document& document = dummy_page_holder->GetDocument();
+  WebFeature feature = WebFeature::kCSSSelectorPseudoIS;
+  EXPECT_FALSE(UseCounter::IsCounted(document, feature));
+  document.documentElement()->SetInnerHTMLFromString(
+      "<style>.a+:is(.b, .c+.d) { color: red; }</style>");
+  EXPECT_TRUE(UseCounter::IsCounted(document, feature));
+}
+
 TEST_F(UseCounterTest, InspectorDisablesMeasurement) {
   UseCounter use_counter;
 
