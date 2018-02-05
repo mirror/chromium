@@ -1904,6 +1904,9 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
     run_types |=
         views::MenuRunner::CONTEXT_MENU | views::MenuRunner::FIXED_ANCHOR;
 
+  // if istcme
+  run_types |= views::MenuRunner::USE_TOUCHABLE_LAYOUT;
+
   // Only selected shelf items with context menu opened can be dragged.
   const ShelfItem* item = ShelfItemForView(source);
   if (context_menu && item && ShelfButtonIsInDrag(item->type, source) &&

@@ -50,6 +50,9 @@ SubmenuView::SubmenuView(MenuItemView* parent)
       prefix_selector_(this, this) {
   DCHECK(parent);
   // We'll delete ourselves, otherwise the ScrollView would delete us on close.
+
+  // MenuItemView -> this -> host_
+
   set_owned_by_client();
 }
 
@@ -385,7 +388,8 @@ void SubmenuView::ShowAt(Widget* parent,
     // Force a layout since our preferred size may not have changed but our
     // content may have.
     InvalidateLayout();
-    host_->InitMenuHost(parent, bounds, scroll_view_container_, do_capture);
+    host_->InitMenuHost(parent, bounds, scroll_view_container_, do_capture,
+                        true /* use_touchable_layout*/);
   }
 
   GetScrollViewContainer()->NotifyAccessibilityEvent(

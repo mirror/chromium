@@ -308,6 +308,10 @@ class VIEWS_EXPORT MenuItemView : public View {
   }
   bool has_icons() const { return has_icons_; }
 
+  void set_use_touchable_layout(bool use_touchable_layout) {
+    use_touchable_layout_ = use_touchable_layout;
+  }
+
   // Returns the descendant with the specified command.
   MenuItemView* GetMenuItemByID(int id);
 
@@ -493,6 +497,8 @@ class VIEWS_EXPORT MenuItemView : public View {
 
   // Set if menu has icons or icon_views (applies to root menu item only).
   bool has_icons_;
+
+  bool use_touchable_layout_;
 
   // Pointer to a view with a menu icon.
   View* icon_view_;

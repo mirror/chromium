@@ -413,7 +413,8 @@ void MenuController::Run(Widget* parent,
                          const gfx::Rect& bounds,
                          MenuAnchorPosition position,
                          bool context_menu,
-                         bool is_nested_drag) {
+                         bool is_nested_drag,
+                         bool use_touchable_layout) {
   exit_type_ = EXIT_NONE;
   possible_drag_ = false;
   drag_in_progress_ = false;
@@ -421,6 +422,7 @@ void MenuController::Run(Widget* parent,
   closing_event_time_ = base::TimeTicks();
   menu_start_time_ = base::TimeTicks::Now();
   menu_start_mouse_press_loc_ = gfx::Point();
+  use_touchable_layout_ = use_touchable_layout;
 
   if (parent) {
     View* root_view = parent->GetRootView();
@@ -1834,8 +1836,14 @@ void MenuController::OpenMenuImpl(MenuItemView* item, bool show) {
   } else {
     item->GetSubmenu()->Reposition(bounds);
   }
-  showing_submenu_ = false;
+  showing_ = false;
 }
+
+// TODO(newcomer):
+
+// where is submenu created? Im working on propogating the bool to all relevant
+// parts.
+// xxx
 
 void MenuController::MenuChildrenChanged(MenuItemView* item) {
   DCHECK(item);
@@ -1918,6 +1926,10 @@ gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
 
   SubmenuView* submenu = item->GetSubmenu();
   DCHECK(submenu);
+
+  // is the bool initialized always? init at run... probably not good enough.
+  submenu->GetScrollViewContainer()->set_use_touchable_layout(
+      use_touchable_layout_);
 
   gfx::Size pref = submenu->GetScrollViewContainer()->GetPreferredSize();
 

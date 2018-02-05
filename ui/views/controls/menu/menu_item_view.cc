@@ -101,6 +101,7 @@ MenuItemView::MenuItemView(MenuDelegate* delegate)
       has_mnemonics_(false),
       show_mnemonics_(false),
       has_icons_(false),
+      use_touchable_layout_(false),
       icon_view_(NULL),
       top_margin_(-1),
       bottom_margin_(-1),
@@ -342,6 +343,8 @@ MenuItemView* MenuItemView::AppendMenuItemImpl(
 
 SubmenuView* MenuItemView::CreateSubmenu() {
   if (!submenu_) {
+    LOG(ERROR) << "Create Submenu. This may be a good time to see if we have "
+                  "our bool set.";
     submenu_ = new SubmenuView(this);
 
     // Initialize the submenu indicator icon (arrow).
@@ -623,6 +626,7 @@ MenuItemView::MenuItemView(MenuItemView* parent,
       has_mnemonics_(false),
       show_mnemonics_(false),
       has_icons_(false),
+      use_touchable_layout_(false),
       icon_view_(NULL),
       top_margin_(-1),
       bottom_margin_(-1),

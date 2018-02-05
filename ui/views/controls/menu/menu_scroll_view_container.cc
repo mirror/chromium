@@ -25,7 +25,8 @@ namespace views {
 
 namespace {
 
-static const int kBorderPaddingDueToRoundedCorners = 1;
+static constexpr int kTouchableLayoutCornerRadius = 20;
+static constexpr int kBorderPaddingDueToRoundedCorners = 1;
 
 // MenuScrollButton ------------------------------------------------------------
 
@@ -251,7 +252,9 @@ void MenuScrollViewContainer::OnPaintBackground(gfx::Canvas* canvas) {
   gfx::Rect bounds(0, 0, width(), height());
   NativeTheme::ExtraParams extra;
   const MenuConfig& menu_config = MenuConfig::instance();
-  extra.menu_background.corner_radius = menu_config.corner_radius;
+  extra.menu_background.corner_radius = use_touchable_layout_
+                                            ? kTouchableLayoutCornerRadius
+                                            : menu_config.corner_radius;
   GetNativeTheme()->Paint(canvas->sk_canvas(),
       NativeTheme::kMenuPopupBackground, NativeTheme::kNormal, bounds, extra);
 }
@@ -276,9 +279,11 @@ void MenuScrollViewContainer::CreateDefaultBorder() {
 
   const MenuConfig& menu_config = MenuConfig::instance();
 
-  int padding = menu_config.use_outer_border && menu_config.corner_radius > 0
-                    ? kBorderPaddingDueToRoundedCorners
-                    : 0;
+  int padding =
+      (menu_config.use_outer_border && menu_config.corner_radius > 0) ||
+              use_touchable_layout_
+          ? kBorderPaddingDueToRoundedCorners
+          : 0;
 
   const int vertical_inset = menu_config.menu_vertical_border_size + padding;
   const int horizontal_inset =
@@ -290,8 +295,9 @@ void MenuScrollViewContainer::CreateDefaultBorder() {
                               ui::NativeTheme::kColorId_MenuBorderColor)
                         : gfx::kPlaceholderColor;
     SetBorder(views::CreateBorderPainter(
-        std::make_unique<views::RoundRectPainter>(color,
-                                                  menu_config.corner_radius),
+        std::make_unique<views::RoundRectPainter>(
+            color, use_touchable_layout_ ? kTouchableLayoutCornerRadius
+                                         : menu_config.corner_radius),
         gfx::Insets(vertical_inset, horizontal_inset)));
   } else {
     SetBorder(CreateEmptyBorder(vertical_inset, horizontal_inset,

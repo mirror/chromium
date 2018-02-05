@@ -89,7 +89,8 @@ class VIEWS_EXPORT MenuController
            const gfx::Rect& bounds,
            MenuAnchorPosition position,
            bool context_menu,
-           bool is_nested_drag);
+           bool is_nested_drag,
+           bool use_touchable_layout);
 
   // Whether or not Run blocks.
   bool IsBlockingRun() const { return blocking_run_; }
@@ -573,6 +574,9 @@ class VIEWS_EXPORT MenuController
   // Whether we did a capture. We do a capture only if we're blocking and
   // the mouse was down when Run.
   bool did_capture_ = false;
+
+  // Whether the context menu should use the touchable layout.
+  bool use_touchable_layout_;
 
   // As the user drags the mouse around pending_state_ changes immediately.
   // When the user stops moving/dragging the mouse (or clicks the mouse)

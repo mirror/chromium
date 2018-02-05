@@ -13,7 +13,9 @@
 namespace views {
 
 MenuModelAdapter::MenuModelAdapter(ui::MenuModel* menu_model)
-    : MenuModelAdapter(menu_model, base::Closure() /*null callback*/) {}
+    : MenuModelAdapter(menu_model, base::Closure() /*null callback*/) {
+  LOG(ERROR) << "MenuModelAdapter -- constructing";
+}
 
 MenuModelAdapter::MenuModelAdapter(ui::MenuModel* menu_model,
                                    const base::Closure& on_menu_closed_callback)
@@ -22,6 +24,7 @@ MenuModelAdapter::MenuModelAdapter(ui::MenuModel* menu_model,
                                ui::EF_RIGHT_MOUSE_BUTTON),
       on_menu_closed_callback_(on_menu_closed_callback) {
   DCHECK(menu_model);
+  LOG(ERROR) << "MenuModelAdapter -- constructing";
 }
 
 MenuModelAdapter::~MenuModelAdapter() {
@@ -29,6 +32,8 @@ MenuModelAdapter::~MenuModelAdapter() {
 
 void MenuModelAdapter::BuildMenu(MenuItemView* menu) {
   DCHECK(menu);
+
+  LOG(ERROR) << "MenuModelAdapter -- Building Menu.";
 
   // Clear the menu.
   if (menu->HasSubmenu()) {
@@ -51,6 +56,11 @@ void MenuModelAdapter::BuildMenu(MenuItemView* menu) {
 
 MenuItemView* MenuModelAdapter::CreateMenu() {
   MenuItemView* item = new MenuItemView(this);
+  // if ()
+
+  // todo:
+  // Find a cleaner way to propogate the bool.
+
   BuildMenu(item);
   return item;
 }
