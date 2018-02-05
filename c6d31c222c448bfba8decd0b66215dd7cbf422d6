@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "946e076f_2db56cbc",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T18:29:19Z",
+      "side": 1,
+      "message": "I\u0027m not suggesting the different interface. I\u0027m just trying to explain why it\u0027s better to have the callback here as it\u0027s returns a \"valid return value\" to caller of PushBuffer. Currently the caller doesn\u0027t do anything but wait when backend returns pending.",
+      "parentUuid": "1300af28_4600cffd",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
