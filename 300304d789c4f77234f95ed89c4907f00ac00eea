@@ -46,6 +46,30 @@
       "revId": "300304d789c4f77234f95ed89c4907f00ac00eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525f7001_a80f0075",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-05T21:49:35Z",
+      "side": 1,
+      "message": "\u003e Reference updates being atomic are not sufficient for this to be threadsafe. Unless everyone calling getSingleton has acquired a lock that was previously released by the thread that called setSingleton there\u0027s no guarantee that all the writes to construct the object instance are observable before the reference is set.\n\nYou mean in case the compiler/vm reorders things?",
+      "parentUuid": "8282ee0b_51c56060",
+      "range": {
+        "startLine": 159,
+        "startChar": 32,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "300304d789c4f77234f95ed89c4907f00ac00eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
