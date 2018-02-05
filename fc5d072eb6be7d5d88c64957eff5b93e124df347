@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb1dcd32_4641fb0b",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T19:49:15Z",
+      "side": 1,
+      "message": "are you sure this isn\u0027t the reason for test failures.  Have you tried keeping --force-color-profile\u003dsrgb?",
+      "range": {
+        "startLine": 5,
+        "startChar": 29,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "fc5d072eb6be7d5d88c64957eff5b93e124df347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f7c4a1_bd27aab4",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T19:49:15Z",
+      "side": 1,
+      "message": "Why is it necessary to check the runtime flag? Isn\u0027t it impossible to have use_half_float_storage_ \u003d\u003d true without that flag?",
+      "range": {
+        "startLine": 1203,
+        "startChar": 6,
+        "endLine": 1203,
+        "endChar": 29
+      },
+      "revId": "fc5d072eb6be7d5d88c64957eff5b93e124df347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e51876_470cdf8f",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T19:49:15Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 30,
+        "endLine": 1210,
+        "endChar": 52
+      },
+      "revId": "fc5d072eb6be7d5d88c64957eff5b93e124df347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d60b06f_24eeedc2",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T19:49:15Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 1267,
+        "startChar": 6,
+        "endLine": 1267,
+        "endChar": 28
+      },
+      "revId": "fc5d072eb6be7d5d88c64957eff5b93e124df347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dada2d_c32e2a62",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T19:49:15Z",
+      "side": 1,
+      "message": "It is not clear to me what you intend to do with this flag. The context attributes for controlling colorspace and pixel format are currently controlled by the ExperimentalCanvasFeatures flag.  If that flag is enabled and WebGLColorSpace is disabled, it seems to me that the code will end up in a very buggy state where webgl contexts will support the color space feature, but same use case will be explicitly blocked.",
+      "range": {
+        "startLine": 1167,
+        "startChar": 13,
+        "endLine": 1167,
+        "endChar": 28
+      },
+      "revId": "fc5d072eb6be7d5d88c64957eff5b93e124df347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
