@@ -55,6 +55,7 @@ class SelectionEditor;
 class LayoutSelection;
 enum class SelectionModifyAlteration;
 enum class SelectionModifyDirection;
+enum class SelectionState;
 class TextIteratorBehavior;
 struct PaintInvalidatorContext;
 
@@ -63,6 +64,27 @@ enum RevealExtentOption { kRevealExtent, kDoNotRevealExtent };
 enum class CaretVisibility;
 
 enum class HandleVisibility { kNotVisible, kVisible };
+
+struct LayoutSelectionStatus {
+  STACK_ALLOCATED();
+
+  LayoutSelectionStatus(unsigned passed_start,
+                        unsigned passed_end,
+                        bool passed_is_forward_contiguous)
+      : start(passed_start),
+        end(passed_end),
+        is_forward_contiguous(passed_is_forward_contiguous) {
+    DCHECK_LE(start, end);
+  }
+  bool operator==(const LayoutSelectionStatus& other) const {
+    return start == other.start && end == other.end &&
+           is_forward_contiguous == other.is_forward_contiguous;
+  }
+
+  unsigned start;
+  unsigned end;
+  bool is_forward_contiguous;
+};
 
 class CORE_EXPORT FrameSelection final
     : public GarbageCollectedFinalized<FrameSelection>,
@@ -224,7 +246,7 @@ class CORE_EXPORT FrameSelection final
   WTF::Optional<unsigned> LayoutSelectionStart() const;
   WTF::Optional<unsigned> LayoutSelectionEnd() const;
   void ClearLayoutSelection();
-  std::pair<unsigned, unsigned> LayoutSelectionStartEndForNG(
+  LayoutSelectionStatus LayoutSelectionStartEndForNG(
       const NGPhysicalTextFragment&) const;
 
   void Trace(blink::Visitor*);

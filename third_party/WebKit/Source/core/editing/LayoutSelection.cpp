@@ -661,41 +661,49 @@ static unsigned ClampOffset(unsigned offset,
                   text_fragment.EndOffset());
 }
 
-std::pair<unsigned, unsigned> LayoutSelection::SelectionStartEndForNG(
+LayoutSelectionStatus LayoutSelection::SelectionStartEndForNG(
     const NGPhysicalTextFragment& text_fragment) const {
   // FrameSelection holds selection offsets in layout block flow at
   // LayoutSelection::Commit() if selection starts/ends within Text that
   // each LayoutObject::SelectionState indicates.
   // These offset can out of |text_fragment| because SelectionState is of each
   // LayoutText and not |text_fragment|.
+  bool is_forward_contiguous = false;
   switch (text_fragment.GetLayoutObject()->GetSelectionState()) {
     case SelectionState::kStart: {
       DCHECK(SelectionStart().has_value());
-      unsigned start_in_block = SelectionStart().value_or(0);
+      const unsigned start_in_block = SelectionStart().value_or(0);
+      is_forward_contiguous = true;
       return {ClampOffset(start_in_block, text_fragment),
-              text_fragment.EndOffset()};
+              text_fragment.EndOffset(), is_forward_contiguous};
     }
     case SelectionState::kEnd: {
       DCHECK(SelectionEnd().has_value());
-      unsigned end_in_block =
+      const unsigned end_in_block =
           SelectionEnd().value_or(text_fragment.EndOffset());
-      return {text_fragment.StartOffset(),
-              ClampOffset(end_in_block, text_fragment)};
+      const unsigned end_in_fragment = ClampOffset(end_in_block, text_fragment);
+      is_forward_contiguous = end_in_fragment < end_in_block;
+      return {text_fragment.StartOffset(), end_in_fragment,
+              is_forward_contiguous};
     }
     case SelectionState::kStartAndEnd: {
       DCHECK(SelectionStart().has_value());
       DCHECK(SelectionEnd().has_value());
-      unsigned start_in_block = SelectionStart().value_or(0);
-      unsigned end_in_block =
+      const unsigned start_in_block = SelectionStart().value_or(0);
+      const unsigned end_in_block =
           SelectionEnd().value_or(text_fragment.EndOffset());
-      return {ClampOffset(start_in_block, text_fragment),
-              ClampOffset(end_in_block, text_fragment)};
+      const unsigned end_in_fragment = ClampOffset(end_in_block, text_fragment);
+      is_forward_contiguous = end_in_fragment < end_in_block;
+      return {ClampOffset(start_in_block, text_fragment), end_in_fragment,
+              is_forward_contiguous};
     }
     case SelectionState::kInside:
-      return {text_fragment.StartOffset(), text_fragment.EndOffset()};
+      is_forward_contiguous = true;
+      return {text_fragment.StartOffset(), text_fragment.EndOffset(),
+              is_forward_contiguous};
     default:
       // This block is not included in selection.
-      return {0, 0};
+      return {0, 0, is_forward_contiguous};
   }
 }
 
