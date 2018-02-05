@@ -71,7 +71,17 @@
   self.clipping = YES;
   [self applyClipping];
   [self setNeedsLayout];
-  [self layoutIfNeeded];
+
+  // At startup time when restoring an open session where one of the tabs has a
+  // long URL, |startClipping| will be called before the view hierarchy of the
+  // app is fully built. This causes autolayout to add temporary constraints for
+  // the toolbar to have zero size, which causes a breakage in constraints. This
+  // doesn't cause any actual problems, but causes a broken constraint output at
+  // startup.
+  // To prevent this, only force a layout pass when in a window.
+  if (self.window) {
+    [self layoutIfNeeded];
+  }
 }
 
 - (void)applyClipping {
