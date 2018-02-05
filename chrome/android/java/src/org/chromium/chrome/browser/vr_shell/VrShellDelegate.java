@@ -333,7 +333,6 @@ public class VrShellDelegate
         // Daydream is not supported on pre-N devices.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
         if (isVrEnabled() && !sChromeStarted) {
-            nativeOnChromeStarted();
             sChromeStarted = true;
         }
         if (sInstance != null) return; // Will be handled in onResume.
@@ -1808,5 +1807,4 @@ public class VrShellDelegate
     private native boolean nativeIsClearActivatePending(long nativeVrShellDelegate);
     private native void nativeDestroy(long nativeVrShellDelegate);
     private static native void nativeRegisterVrAssetsComponent();
-    private static native void nativeOnChromeStarted();
 }
