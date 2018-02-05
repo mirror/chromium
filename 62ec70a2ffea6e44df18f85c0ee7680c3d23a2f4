@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f596a8_7901c91f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-05T18:01:43Z",
+      "side": 1,
+      "message": "Should we do an early return if themedLocationBarColor \u003d\u003d defaultLocationBarColor?",
+      "range": {
+        "startLine": 2090,
+        "startChar": 8,
+        "endLine": 2091,
+        "endChar": 85
+      },
+      "revId": "62ec70a2ffea6e44df18f85c0ee7680c3d23a2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e75bd0a_397719fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-05T18:01:43Z",
+      "side": 1,
+      "message": "If omnibox focus is cleared in the middle of the focusing animation should we pick up from the current value rather than jumping to 1?\n\ne.g. If i\u0027m at fraction 0.5 heading toward 1.0, and focus is cleared, should we run the animation from 0.5 -\u003e 0 instead of 1 -\u003e 0?",
+      "range": {
+        "startLine": 2093,
+        "startChar": 8,
+        "endLine": 2093,
+        "endChar": 96
+      },
+      "revId": "62ec70a2ffea6e44df18f85c0ee7680c3d23a2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
