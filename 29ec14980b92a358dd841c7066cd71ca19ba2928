@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "13e9f305_3cf3ba47",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:46:59Z",
+      "side": 1,
+      "message": "Uhhh, that I\u0027m not sure about. You wouldn\u0027t embed the same SurfaceId multiple times, but I guess depending on how HTRL is generated you could have something that overlaps a SurfaceLayer/SurfaceDrawQuad, effectively splitting it into pieces, and then generate multiple HTRs for it? Or would you only ever have one HTR per SurfaceDrawQuad?",
+      "parentUuid": "c8aa11de_fd1d64fb",
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7e0eba8_e83c7d6b",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 3

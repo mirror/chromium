@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58927dc1_0f27bf7b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:46:59Z",
+      "side": 1,
+      "message": "nit: This is kind of weird? Wouldn\u0027t it make more sense to start with id\u003d0 so it\u0027s kDisplayClientId + id. Alternatively, pass in |client_id| so you can just pass in kDisplayClient initially (and then increment it later).",
+      "range": {
+        "startLine": 178,
+        "startChar": 41,
+        "endLine": 178,
+        "endChar": 66
+      },
+      "revId": "1ddc0dc0538dade9a389d85fffbfcaefe2c999b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b9ba1a_fa1d5271",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:46:59Z",
+      "side": 1,
+      "message": "Is this right? |child_surface_id| is the same as the |surface_id|?",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "1ddc0dc0538dade9a389d85fffbfcaefe2c999b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
