@@ -88,9 +88,9 @@ class TaskManagerMacTest : public InProcessBrowserTest {
 
   // Looks up a tab based on its tab ID.
   content::WebContents* FindWebContentsByTabId(SessionID::id_type tab_id) {
-    for (TabContentsIterator it; !it.done(); it.Next()) {
-      if (SessionTabHelper::IdForTab(*it) == tab_id)
-        return *it;
+    for (auto* web_contents : AllTabContentses()) {
+      if (SessionTabHelper::IdForTab(web_contents) == tab_id)
+        return web_contents;
     }
     return nullptr;
   }
