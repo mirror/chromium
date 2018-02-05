@@ -2215,7 +2215,7 @@
 
   <!-- Reset Settings Page -->
   <message name="IDS_SETTINGS_RESET" desc="Name of the settings page where settings may be reset.">
-    Reset
+    Reset settings
   </message>
   <message name="IDS_SETTINGS_RESET_AUTOMATED_DIALOG_TITLE" desc="The title of the dialog informing the user that automated resetting of some settings occurred.">
     Some settings were reset
