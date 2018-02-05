@@ -804,9 +804,47 @@ CommandHandler.COMMANDS_['delete'] = (function() {
           strf('GALLERY_CONFIRM_DELETE_ONE', entries[0].name) :
           strf('GALLERY_CONFIRM_DELETE_SOME', entries.length);
 
+      // Check if any of the file(s) to be deleted is currently mounted.
+      var volumeInfoToUnmount = null;
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i];
+        for (var j = 0; j < fileManager.volumeManager.volumeInfoList.length;
+             j++) {
+          var mountedVolume = fileManager.volumeManager.volumeInfoList.item(j);
+          // Look for 'file' mounted volumes with the same filename from the
+          // same directory root.
+          // TODO(sashab): This will break for files with the same name from
+          // different directories.
+          if (mountedVolume.source == 'file' &&
+              mountedVolume.label == entry.name &&
+              util.isSameFileSystem(
+                  entry.filesystem.root, mountedVolume.fileSystem.root)) {
+            // This archive is currently mounted; unmount it before deleting.
+            volumeInfoToUnmount = mountedVolume;
+            break;
+          }
+        }
+      }
+
       fileManager.ui.deleteConfirmDialog.show(message, function() {
-        fileManager.fileOperationManager.deleteEntries(entries);
+        if (volumeInfoToUnmount != null) {
+          // Try to unmount first, but delete the file even on failure.
+          // TODO(sashab): Display a warning to the user if the file cannot be
+          // unmounted.
+          fileManager.volumeManager.unmount(
+              mountedVolume,
+              function() {
+                fileManager.fileOperationManager.deleteEntries(entries);
+              },
+              function() {
+                fileManager.fileOperationManager.deleteEntries(entries);
+              });
+        } else {
+          fileManager.fileOperationManager.deleteEntries(entries);
+        }
       }, null, null);
+
+
     },
 
     /**
