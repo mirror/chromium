@@ -16,6 +16,24 @@
       "revId": "dbcc20efb57f35344cf20943dcd71a5eaf598b78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb46c9bf_a017a153",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001913
+      },
+      "writtenOn": "2018-02-05T17:57:53Z",
+      "side": 1,
+      "message": "My bad. I have some unrelated issues that break presubmit on my machine, so I ran with --bypass-hooks, assuming the CQ presubmit would catch stuff like this. Should have proofread better though.",
+      "parentUuid": "2ecb73fa_2d1f1f22",
+      "revId": "dbcc20efb57f35344cf20943dcd71a5eaf598b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
