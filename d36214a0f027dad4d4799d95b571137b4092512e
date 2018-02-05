@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ba50d86_e40c84fe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T18:04:23Z",
+      "side": 1,
+      "message": "We don\u0027t need this anymore, do we?",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 12
+      },
+      "revId": "d36214a0f027dad4d4799d95b571137b4092512e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c55c0d2_e219412d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T18:04:23Z",
+      "side": 1,
+      "message": "Maybe not for this CL, but we should probably think about which of these filters/tags we can pull out so we only set them at initialization time.",
+      "revId": "d36214a0f027dad4d4799d95b571137b4092512e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
