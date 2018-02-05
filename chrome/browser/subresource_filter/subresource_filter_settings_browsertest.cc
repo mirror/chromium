@@ -244,9 +244,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterSettingsBrowserTest,
 
   ChromeSubresourceFilterClient* client =
       ChromeSubresourceFilterClient::FromWebContents(web_contents());
-  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-  base::SimpleTestClock* raw_clock = test_clock.get();
-  settings_manager()->set_clock_for_testing(std::move(test_clock));
+  base::SimpleTestClock test_clock;
+  settings_manager()->set_clock_for_testing(&test_clock);
 
   base::HistogramTester histogram_tester;
 
@@ -278,7 +277,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterSettingsBrowserTest,
   ConfigureAsPhishingURL(a_url);
 
   // Fast forward the clock, and a_url should trigger the UI again.
-  raw_clock->Advance(
+  test_clock.Advance(
       SubresourceFilterContentSettingsManager::kDelayBeforeShowingInfobarAgain);
   ui_test_utils::NavigateToURL(browser(), a_url);
   EXPECT_FALSE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));

@@ -47,7 +47,7 @@ HostScanSchedulerImpl::HostScanSchedulerImpl(
     : network_state_handler_(network_state_handler),
       host_scanner_(host_scanner),
       timer_(std::make_unique<base::OneShotTimer>()),
-      clock_(std::make_unique<base::DefaultClock>()),
+      clock_(base::DefaultClock::GetInstance()),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {
   network_state_handler_->AddObserver(this, FROM_HERE);
@@ -110,10 +110,10 @@ void HostScanSchedulerImpl::ScanFinished() {
 
 void HostScanSchedulerImpl::SetTestDoubles(
     std::unique_ptr<base::Timer> test_timer,
-    std::unique_ptr<base::Clock> test_clock,
+    base::Clock* test_clock,
     scoped_refptr<base::TaskRunner> test_task_runner) {
   timer_ = std::move(test_timer);
-  clock_ = std::move(test_clock);
+  clock_ = test_clock;
   task_runner_ = test_task_runner;
 }
 

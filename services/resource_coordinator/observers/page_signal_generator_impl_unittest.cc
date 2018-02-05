@@ -128,11 +128,9 @@ TEST_F(PageSignalGeneratorImplTest, PageDataCorrectlyManaged) {
 }
 
 TEST_F(PageSignalGeneratorImplTest, PageAlmostIdleTransitions) {
-  ResourceCoordinatorClock::SetClockForTesting(
-      std::make_unique<base::SimpleTestTickClock>());
-  auto* test_clock = static_cast<base::SimpleTestTickClock*>(
-      ResourceCoordinatorClock::GetClockForTesting());
-  test_clock->Advance(base::TimeDelta::FromSeconds(1));
+  base::SimpleTestTickClock test_clock;
+  ResourceCoordinatorClock::SetClockForTesting(&test_clock);
+  test_clock.Advance(base::TimeDelta::FromSeconds(1));
 
   MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
   auto* frame_cu = cu_graph.frame.get();
@@ -199,7 +197,7 @@ TEST_F(PageSignalGeneratorImplTest, PageAlmostIdleTransitions) {
   // TODO(chrisha): Expose the tick clock from the ScopedTaskEnvironment, and
   // use that clock in the ResourceCoordinatorClock. Beats having two separate
   // fake clocks that need to be manually kept in sync.
-  test_clock->Advance(PageSignalGeneratorImpl::kLoadedAndIdlingTimeout);
+  test_clock.Advance(PageSignalGeneratorImpl::kLoadedAndIdlingTimeout);
   task_env().FastForwardUntilNoTasksRemain();
   EXPECT_EQ(LIS::kLoadedAndIdle, page_data->load_idle_state);
   EXPECT_FALSE(page_data->idling_timer.IsRunning());

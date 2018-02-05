@@ -146,7 +146,7 @@ class ASH_EXPORT TabletModeController
 
   // Set the TickClock. This is only to be used by tests that need to
   // artificially and deterministically control the current time.
-  void SetTickClockForTest(std::unique_ptr<base::TickClock> tick_clock);
+  void SetTickClockForTest(base::TickClock* tick_clock);
 
   // Detect hinge rotation from base and lid accelerometers and automatically
   // start / stop tablet mode.
@@ -210,7 +210,7 @@ class ASH_EXPORT TabletModeController
   base::TimeTicks last_lid_open_time_;
 
   // Source for the current time in base::TimeTicks.
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   // Set when tablet mode switch is on. This is used to force tablet mode.
   bool tablet_mode_switch_is_on_;

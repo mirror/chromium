@@ -163,14 +163,14 @@ NotificationChannel::NotificationChannel(const NotificationChannel& other) =
 NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid()
     : NotificationChannelsProviderAndroid(
           std::make_unique<NotificationChannelsBridgeImpl>(),
-          std::make_unique<base::DefaultClock>()) {}
+          base::DefaultClock::GetInstance()) {}
 
 NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
     std::unique_ptr<NotificationChannelsBridge> bridge,
-    std::unique_ptr<base::Clock> clock)
+    base::Clock* clock)
     : bridge_(std::move(bridge)),
       platform_supports_channels_(bridge_->ShouldUseChannelSettings()),
-      clock_(std::move(clock)),
+      clock_(clock),
       initialized_cached_channels_(false),
       weak_factory_(this) {}
 

@@ -27,12 +27,11 @@ const int kMaxBucketSizeInSeconds = 60 * 60;
 
 TaskSwitchTimeTracker::TaskSwitchTimeTracker(const std::string& histogram_name)
     : histogram_name_(histogram_name),
-      tick_clock_(new base::DefaultTickClock()) {}
+      tick_clock_(base::DefaultTickClock::GetInstance()) {}
 
-TaskSwitchTimeTracker::TaskSwitchTimeTracker(
-    const std::string& histogram_name,
-    std::unique_ptr<base::TickClock> tick_clock)
-    : histogram_name_(histogram_name), tick_clock_(tick_clock.release()) {}
+TaskSwitchTimeTracker::TaskSwitchTimeTracker(const std::string& histogram_name,
+                                             base::TickClock* tick_clock)
+    : histogram_name_(histogram_name), tick_clock_(tick_clock) {}
 
 TaskSwitchTimeTracker::~TaskSwitchTimeTracker() = default;
 
