@@ -588,6 +588,27 @@ void UiSceneCreator::CreateScene() {
 }
 
 void UiSceneCreator::CreateHostedUi() {
+  base::RepeatingCallback<void()> click_handler = base::BindRepeating(
+      [](Model* model, UiBrowserInterface* browser) {
+        if (model->native_ui.hosted_ui_enabled) {
+          browser->CloseHostedDialog();
+        }
+      },
+      base::Unretained(model_), base::Unretained(browser_));
+  std::unique_ptr<DiscButton> close_button =
+      Create<DiscButton>(kCloseButton, kPhaseForeground, click_handler,
+                         vector_icons::kClose16Icon);
+  close_button->SetSize(kHostedDialogCloseButtonDiameter,
+                        kHostedDialogCloseButtonDiameter);
+  close_button->set_hover_offset(kHostedDialogCloseButtonZOffsetHoverDMM);
+  close_button->SetTranslate(-kHostedDialogCloseButtonDiameter / 2,
+                             -kHostedDialogCloseButtonDiameter / 2, 0);
+  close_button->set_y_anchoring(TOP);
+  close_button->set_x_anchoring(RIGHT);
+  VR_BIND_BUTTON_COLORS(model_, close_button.get(), &ColorScheme::button_colors,
+                        &DiscButton::SetButtonColors);
+  VR_BIND_VISIBILITY(close_button, model->native_ui.hosted_ui_enabled);
+
   auto backplane = std::make_unique<InvisibleHitTarget>();
   backplane->SetDrawPhase(kPhaseForeground);
   backplane->SetName(kHostedUiBackplane);
@@ -635,6 +656,7 @@ void UiSceneCreator::CreateHostedUi() {
                             kContentWidth * kHostedUiWidthRatio * value);
           },
           base::Unretained(hosted_ui.get()))));
+  hosted_ui->AddChild(std::move(close_button));
   backplane->AddChild(std::move(hosted_ui));
   scene_->AddUiElement(k2dBrowsingRoot, std::move(backplane));
 }
