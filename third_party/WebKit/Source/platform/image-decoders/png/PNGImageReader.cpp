@@ -97,6 +97,7 @@ PNGImageReader::PNGImageReader(PNGImageDecoder* decoder, size_t initial_offset)
   info_ = png_create_info_struct(png_);
   png_set_progressive_read_fn(png_, decoder_, nullptr, pngRowAvailable,
                               pngFrameComplete);
+  png_set_option(png_, PNG_MAXIMUM_INFLATE_WINDOW, PNG_OPTION_ON);
 }
 
 PNGImageReader::~PNGImageReader() {
