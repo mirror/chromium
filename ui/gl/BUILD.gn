@@ -16,7 +16,6 @@ declare_args() {
                        (target_cpu == "x86" || target_cpu == "x64")
 }
 
-use_egl = is_win || is_android || is_linux || is_fuchsia
 use_glx = use_x11 || ozone_platform_x11
 
 if (is_android) {
@@ -28,6 +27,7 @@ buildflag_header("gl_features") {
   header = "gl_features.h"
   flags = [
     "ENABLE_SWIFTSHADER=$enable_swiftshader",
+    "USE_EGL_ON_MAC=$use_egl_on_mac",
     "USE_STATIC_ANGLE=$use_static_angle",
   ]
 }
@@ -239,6 +239,7 @@ component("gl") {
 
     deps += [ "//ui/base/x" ]
 
+    assert(use_egl)
     data_deps += [
       "//third_party/angle:libEGL",
       "//third_party/angle:libGLESv2",
@@ -291,6 +292,7 @@ component("gl") {
     libs = [ "dwmapi.lib" ]
     ldflags = [ "/DELAYLOAD:dwmapi.dll" ]
 
+    assert(use_egl)
     data_deps += [
       "//third_party/angle:libEGL",
       "//third_party/angle:libGLESv2",
@@ -318,6 +320,18 @@ component("gl") {
       "OpenGL.framework",
       "Quartz.framework",
     ]
+
+    if (use_egl) {
+      sources += [
+        "gl_image_io_surface_egl.h",
+        "gl_image_io_surface_egl.mm",
+      ]
+
+      data_deps += [
+        "//third_party/angle:libEGL",
+        "//third_party/angle:libGLESv2",
+      ]
+    }
   }
   if (is_android) {
     sources += [
