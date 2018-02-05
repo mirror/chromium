@@ -52,6 +52,24 @@
       "revId": "c35fc78a57aaaabb79227bc6a06c51130b7001c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90101c88_495affb8",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T18:02:29Z",
+      "side": 1,
+      "message": "This item type is not yet used here; it exists to parallel a pre-existing menu item type enum.",
+      "parentUuid": "8e7329d7_e2c0cc1a",
+      "revId": "c35fc78a57aaaabb79227bc6a06c51130b7001c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
