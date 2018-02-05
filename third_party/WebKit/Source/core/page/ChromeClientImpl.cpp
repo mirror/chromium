@@ -548,7 +548,8 @@ ColorChooser* ChromeClientImpl::OpenColorChooser(
   NotifyPopupOpeningObservers();
   ColorChooserUIController* controller = nullptr;
 
-  if (frame->GetDocument()->GetSettings()->GetPagePopupsSuppressed())
+  // TODO(crbug.com/779126): add support for the chooser in immersive mode.
+  if (frame->GetDocument()->GetSettings()->GetImmersiveModeEnabled())
     return nullptr;
 
   if (RuntimeEnabledFeatures::PagePopupEnabled()) {
@@ -564,10 +565,11 @@ ColorChooser* ChromeClientImpl::OpenColorChooser(
 DateTimeChooser* ChromeClientImpl::OpenDateTimeChooser(
     DateTimeChooserClient* picker_client,
     const DateTimeChooserParameters& parameters) {
+  // TODO(crbug.com/779126): add support for the chooser in immersive mode.
   if (picker_client->OwnerElement()
           .GetDocument()
           .GetSettings()
-          ->GetPagePopupsSuppressed())
+          ->GetImmersiveModeEnabled())
     return nullptr;
 
   NotifyPopupOpeningObservers();
@@ -770,7 +772,8 @@ bool ChromeClientImpl::HasOpenedPopup() const {
 
 PopupMenu* ChromeClientImpl::OpenPopupMenu(LocalFrame& frame,
                                            HTMLSelectElement& select) {
-  if (frame.GetDocument()->GetSettings()->GetPagePopupsSuppressed())
+  // TODO(crbug.com/779126): add support for the menu in immersive mode.
+  if (frame.GetDocument()->GetSettings()->GetImmersiveModeEnabled())
     return nullptr;
 
   NotifyPopupOpeningObservers();

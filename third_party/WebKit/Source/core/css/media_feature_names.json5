@@ -22,6 +22,7 @@
     "device-height",
     "device-width",
     "display-mode",
+    "immersive",
     "max-color",
     "max-color-index",
     "max-aspect-ratio",
