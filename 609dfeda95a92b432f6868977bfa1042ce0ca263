@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cf292b76_cfc090bc",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "I\u0027ve added clarification that the array constructor attack vector has been mitigated (and added a link to slides outlining other potential attack vectors that Nick has shared with me).\n\nMore broadly - are there possibly other motivating factors for XSDB?  (other than XSSI and Spectre)",
+      "parentUuid": "99241e9a_59253098",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3cfa0e_846852f2",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -89,6 +107,30 @@
       "side": 1,
       "message": "I think this is a really valuable point. Our team has been using \"document blocking\" with this meaning for a really long time, and so the outside perspective of how this comes across is helpful.\n\nThe universe of cross-origin resources that are blockable by an XSDB type filter, are precisely those which don\u0027t need to be allowed through by some potential opaque consumer in the renderer. By \u0027opaque\u0027 I mean a consumer that doesn\u0027t allow the bits of the response to become known to the page origin.\n\nSupporting out-of-process iframes is what allowed HTML to move into the set of blockable resource types. As a thought exercise -- if we implemented out-of-process \u003cimg\u003e tags, we could do the same thing for cross-origin images (this is not an insane performance architecture, but it has crazy implications for canvas).\n\nNon-empty JSON objects are in the set of blockable resource types because there\u0027s no HTML element that produces anything other than an error when pointed at a JSON object. Other JSON cases are similar, except that the \u003cscript\u003e tag will accept them, but ought to produce no observable side effects.\n\nThe blockability of XML is derived similarly to JSON, without the Javascript polyglot ambiguities.\n\n ---\n\nSo really, what we\u0027re trying to classify is whether a particular resource is \u0027potentially digestible by some context\u0027 or \u0027indigestible by all contexts\u0027.\n\nMaybe we rebrand this as \"Cross-site resource protection\"?",
       "parentUuid": "2c3cfa0e_846852f2",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a06d5ce_11016161",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Let\u0027s talk about this more before proceeding (I\u0027d like to make this sweeping change only once :-).  Maybe s/document/XSDB-protected-response/ and s/resource/XSDB-ignored-response/ ?",
+      "parentUuid": "c26788b3_ae781439",
       "range": {
         "startLine": 35,
         "startChar": 40,
@@ -148,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a668e624_cc3eac7a",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b6726a_f6e94bba",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1893c3_903ed8c6",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -168,6 +234,30 @@
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541d744f_7a579508",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "\u003e Yes, this seems like a good idea, especially for resources that were already blocked by XSDB.\n\u003e \nAck.\n\n\u003e Without blocking headers, one risk is for endpoints which 302 redirect to (unauthenticated) capability URLs. For example, if example.org/myimage returns a 302 with Location: images.example.org/abc123...789xyz.png then the attacker could gain access to the secret URL and obtain the data.\n\nI think XSDB and the renderer only see the final HTTP response (e.g. after all the redirects have already been handled - in other words AFAIK the renderer doesn\u0027t see intermediate redirect hops).\n\n\u003e \n\u003e One question is if Fetch safelisting would prevent exposing \"Location\" but if my reading of https://fetch.spec.whatwg.org/#cors-safelisted-request-header is correct this should be the case by default (if there is no Access-Control-Expose-Headers).\n\nFirst - an appology - I should have linked to safelisted *response* headers (not *request* headers).\n\nAnd yes - Location is not safelisted and would be stripped if XSDB followed https://fetch.spec.whatwg.org/#cors-safelisted-response-header-name",
+      "parentUuid": "6c1893c3_903ed8c6",
+      "range": {
+        "startLine": 62,
+        "startChar": 25,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -205,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "dfe7b740_21eb0d77",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Done (changed to more closely match the wording used on https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy, in the \"Cross-origin network access\" section, in the second paragraph/list).",
+      "parentUuid": "bab45118_6ad8575f",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4b361ad_eb0e23b7",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -219,6 +327,24 @@
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccaab7ea_a14b798a",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b361ad_eb0e23b7",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "7b23a025_66aface7",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Done (replaced enumeration of mime types with a reference to the spec you\u0027ve pointed out).\n\nThe `application/json+*` and `text/json+*` come from https://crbug.com/799155, where I learned from xtof@, that some public Google APIs appear to use json+protobuf in responses:\n    Content-Type: application/json+protobuf; charset\u003dUTF-8\nFWIW, I\u0027ve also opened https://github.com/whatwg/html/issues/3454 to cover application/json+protobuf by https://html.spec.whatwg.org/#json-mime-type.\n\nI don\u0027t know what is the origin of other MIME types on the list (e.g. `test/x-json`)",
+      "parentUuid": "4a6649b6_466386b4",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fcb5ba_9aec7020",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -280,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "6198f8bb_cbfd5a3c",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fcb5ba_9aec7020",
+      "range": {
+        "startLine": 163,
+        "startChar": 17,
+        "endLine": 163,
+        "endChar": 21
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ba7115_5fa1c352",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -291,6 +459,24 @@
       "writtenOn": "2018-02-05T20:40:13Z",
       "side": 1,
       "message": "This description doesn\u0027t match the current implementation -- so is it a proposed tightening of enforcement?\n\nThere are two ways we could implement an the XSDB filter: either by trying to recognize all the patterns that need to be let through, or by trying to recognize patterns that are okay to block. Our implementation currently takes the second approach. Doing the first way seems like it might require a really big registry (e.g. every image format, awareness of video text tracks, etc etc ...)?",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7062e43f_35ea4940",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "\u003e This description doesn\u0027t match the current implementation -- so is it a proposed tightening of enforcement?\n\nYes - that\u0027s a proposal that we didn\u0027t commit to yet.  Let\u0027s talk about it tomorrow?\n\nI think that the list of documents requiring protection might grow in the future (e.g. when a new format for sharing data becomes popular) and we wouldn\u0027t want to be forced to update XSDB spec and implementation whenever this happens (e.g. when application/new-pdf or application/new-zip or application/new-json becomes popular).  OTOH, the list of MIME types of resources that don\u0027t need XSDB protection is indeed long, but I think it is unlikely that this list will grow (e.g. assuming that [for example] new video format will have `video/*` MIME type and not something like `application/x-my-new-video-format`).\n\u003e \n\u003e There are two ways we could implement an the XSDB filter: either by trying to recognize all the patterns that need to be let through, or by trying to recognize patterns that are okay to block. Our implementation currently takes the second approach. Doing the first way seems like it might require a really big registry\n\nIt\u0027s big, but I think it is still doable?\n\n\u003e (e.g. every image format\n\nimage/* should be sufficient?  https://mimesniff.spec.whatwg.org/#image-type seems to agree.\n\n\u003e awareness of video text tracks, etc etc ...)?\n\nGood point - I did list text/vtt in https://crbug.com/802836, but forgot to list it in the explainer.",
+      "parentUuid": "b4ba7115_5fa1c352",
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -317,6 +503,30 @@
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02849dc1_8e374d22",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Thanks for the feedback.\n\nI think it might be worthwhile to separate 1) what the initial XSDB implementation in Chrome should do (this might need to be conservative / risk-averse) and 2) what the right long-term thing is / what should the spec ask for (I think the spec should allow blocking of types like application/pdf and/or application/zip even if the initial XSDB implementation won\u0027t protect them).\n\nI\u0027ve tried to reword this in the explainer, but I am sure we\u0027ll continue discussing this (here or in https://crbug.com/802836).",
+      "parentUuid": "6e1ee2b9_23ee6759",
+      "range": {
+        "startLine": 168,
+        "startChar": 25,
+        "endLine": 168,
+        "endChar": 79
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -355,6 +565,23 @@
     },
     {
       "key": {
+        "uuid": "5b2b305d_e666a368",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Domenic - thanks for raising this point - the CSS parsing is indeed not very strict.  Could you please help identify an example CSS that parses fine despite presence of a JSON parser breaker at the beginning of the file?  FWIW, I\u0027ve tried the following:\n\n    while (1);\n    h1 { color: green; }\n\nand\n\n    )]}\u0027\n    h1 { color: green; }\n\nand\n\n    {}\u0026\u0026\n    h1 { color: green; }\n\nand none of them worked when included as follows from html:\n\n    \u003c!DOCTYPE html\u003e\n    \u003chtml\u003e\n      \u003chead\u003e\n        \u003clink rel\u003d\"stylesheet\" type\u003d\"text/css\" href\u003d\"theme.css\"\u003e\n      \u003c/head\u003e\n      \u003cbody\u003e\n        \u003ch1\u003eHeader example\u003c/h1\u003e\n        \u003cp\u003eParagraph body\u003c/p\u003e\n      \u003c/body\u003e\n    \u003c/html\u003e\n\nwhile the following stylesheet worked fine (the header turned green):\n\n    h1 { color: green; }\n\n\nIf we can identify an example of a text/css response that would be broken by XSDB, then we should open a bug to track this issue (not sure how to fix it though - limit JSON parser recognition to some MIME types only?  that would greatly reduce the utility of sniffing for JSON parser breaker though...).",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a069c2c3_3b2a7d9b",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -369,6 +596,24 @@
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bb4947_886a5923",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "\u003e Personally I find this section\u0027s approach of defining a criteria via a set of paragraphs somewhat hard to reason about. I\u0027d encourage defining it as an algorithm that determines whether something is potentially-XSDB-blockable (returns true or false).\n\nFair feedback.\n\u003e \n\u003e For an explainer though, it\u0027s fine.\n\nRight - trying to spec/capture exact algorithm will probably slow us down + bias us toward a particular algorithm.  Let\u0027s wait until the explainer settles down a bit and major known issues are addressed and *then* try to put things into spec-like wording (disclaimer: I\u0027ve never worked on a spec, so I will probably need help with putting together a description of the algorithm [using the right spec structure, spec words, etc.]).",
+      "parentUuid": "a069c2c3_3b2a7d9b",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -389,6 +634,24 @@
     },
     {
       "key": {
+        "uuid": "a3d5bd2b_b4288228",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d73d858a_b93ac6df",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be10b73c_03394cc2",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -403,6 +666,24 @@
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfe09fb_c8fad760",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "Great point.  Thanks for bringing this up.  I\u0027ve added a html/css example here.",
+      "parentUuid": "be10b73c_03394cc2",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -443,6 +724,24 @@
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa6cb7f_c936586a",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T22:34:46Z",
+      "side": 1,
+      "message": "These are meant to be RFC 2119 should/may.  Perhaps it is too early to go there (i.e. it seems that we are still discovering new issues / corner cases when discussing the explainer).",
+      "parentUuid": "e6c55756_b35c23d0",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
