@@ -16,6 +16,74 @@
       "revId": "6be5d335a8856ffeab1010e00df9c57995e6eee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ff0b6d_57117dd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-02-05T19:51:53Z",
+      "side": 1,
+      "message": "Wrap at 72 columns?",
+      "revId": "6be5d335a8856ffeab1010e00df9c57995e6eee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6eab6c_beb7d9f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-02-05T19:51:53Z",
+      "side": 1,
+      "message": "Nit: not necessary unless you want QA to manually verify something.",
+      "revId": "6be5d335a8856ffeab1010e00df9c57995e6eee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0842d8b_571af18a",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-02-05T19:51:53Z",
+      "side": 1,
+      "message": "Would be better if each test case checked for one specific thing.\n\nE.g.:\n\n1. string with nothing special: \"web+eg://custom/protocol/handler\"\n2. string with embedded percent encoding: \"web+eg://custom%25protocol\"\n3. string with embedded space (which currently has special handling): \"web+eg://custom protocol\"\n4. string with query parameters \"web+eg://custom?foo\u003dbar\u0026bar\u003dbaz\"\n5. string with non-ASCII characters\n6. string with c0 controls\n7. string that includes characters from fragment percent-encode set\n8. string that includes characters from path percent-encode set\n9. string that includes characters from userinfo percent-encode set\n\nThis way folks can eyeball how different classes of characters are handled in Chrome, and serves to document our current behavior.",
+      "revId": "6be5d335a8856ffeab1010e00df9c57995e6eee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7620fe_99c6ecd4",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-02-05T19:51:53Z",
+      "side": 1,
+      "message": "I have a slight preference for u8\"...k\\u00efwi..\" (don\u0027t forget the u8 prefix) here and below, mostly because it plays better with my lo-fi editor.",
+      "revId": "6be5d335a8856ffeab1010e00df9c57995e6eee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
