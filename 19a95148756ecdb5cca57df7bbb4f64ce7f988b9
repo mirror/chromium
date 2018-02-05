@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b98bf477_36af2458",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/interfaces/cssom.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-05T04:53:13Z",
+      "side": 1,
+      "message": "I see, deleted and edited the -expected file instead :)",
+      "parentUuid": "f937cb73_929918c4",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74fb3241_b380d801",
         "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53237a61_0e618489",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-05T04:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74fb3241_b380d801",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a6ce775b_da94cc58",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-05T04:53:13Z",
+      "side": 1,
+      "message": "Deleted the elements but kept the text after adding some more tests using them",
+      "parentUuid": "58ed9750_e7deb3ba",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5d95d8c_2fc2b147",
         "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
         "patchSetId": 2
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7ec79969_6d3d9508",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/CSSStyleSheet-constructable.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-05T04:53:13Z",
+      "side": 1,
+      "message": "after offline discussion, it seems that since \"alternate\" is not web-exposed and we haven\u0027t implemented applying the style to nodes yet, we can\u0027t test it from layout test yet. Added TODO to test alternate.",
+      "parentUuid": "d5d95d8c_2fc2b147",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "780430cb_61400efd",
         "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.cpp",
         "patchSetId": 2
@@ -102,6 +174,24 @@
       "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1ce55f_e09aca71",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-05T04:53:13Z",
+      "side": 1,
+      "message": "Thanks! Edited.",
+      "parentUuid": "780430cb_61400efd",
+      "revId": "19a95148756ecdb5cca57df7bbb4f64ce7f988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
