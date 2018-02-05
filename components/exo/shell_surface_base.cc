@@ -210,8 +210,10 @@ class CustomWindowTargeter : public aura::WindowTargeter {
       return false;
 
     int component = widget_->non_client_view()->NonClientHitTest(local_point);
-    if (component != HTNOWHERE && component != HTCLIENT)
+    if (component != HTNOWHERE && component != HTCLIENT &&
+        component != HTBORDER) {
       return true;
+    }
 
     aura::Window::ConvertPointToTarget(window, surface->window(), &local_point);
     return surface->HitTest(local_point);
@@ -567,6 +569,13 @@ void ShellSurfaceBase::SetCanMinimize(bool can_minimize) {
   can_minimize_ = can_minimize;
 }
 
+void ShellSurfaceBase::DisableMovement() {
+  movement_disabled_ = true;
+
+  if (widget_)
+    widget_->set_movement_disabled(true);
+}
+
 // static
 void ShellSurfaceBase::SetMainSurface(aura::Window* window, Surface* surface) {
   window->SetProperty(kMainSurfaceKey, surface);
@@ -774,6 +783,7 @@ void ShellSurfaceBase::OnSurfaceDestroying(Surface* surface) {
 bool ShellSurfaceBase::CanResize() const {
   if (movement_disabled_)
     return false;
+
   // The shell surface is resizable by default when min/max size is empty,
   // othersize it's resizable when min size != max size.
   return minimum_size_.IsEmpty() || minimum_size_ != maximum_size_;
