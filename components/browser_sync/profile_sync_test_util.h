@@ -23,11 +23,6 @@
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/sync_sessions/fake_sync_sessions_client.h"
 
-namespace base {
-class Time;
-class TimeDelta;
-}
-
 namespace history {
 class HistoryService;
 }
