@@ -51,6 +51,7 @@
 #include "core/script/ScriptRunner.h"
 #include "core/svg_names.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/loader/SubresourceIntegrity.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -321,6 +322,17 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   //      The script is not executed."
   if (BlockForNoModule(script_type_, element_->NomoduleAttributeValue()))
     return false;
+
+  if (IsSupportedInFeaturePolicy(FeaturePolicyFeature::kSyncScript) &&
+      !element_document.GetFeaturePolicy()->IsFeatureEnabled(
+          FeaturePolicyFeature::kSyncScript) &&
+      !element_->DeferAttributeValue() && parser_inserted_ &&
+      !element_->AsyncAttributeValue()) {
+    element_document.AddConsoleMessage(ConsoleMessage::Create(
+        kJSMessageSource, kErrorMessageLevel,
+        "Synchronous script execution is disabled by Feature Policy"));
+    return false;
+  }
 
   // 13.
   if (!IsScriptForEventSupported())

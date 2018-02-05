@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test behavior of sync-script feature policy for different script types assert_equals: inline parser blocking script should be blocked expected (boolean) true but got (undefined) undefined
+Harness: the test ran to completion.
+

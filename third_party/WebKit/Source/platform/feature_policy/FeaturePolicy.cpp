@@ -216,6 +216,7 @@ bool IsSupportedInFeaturePolicy(FeaturePolicyFeature feature) {
       return RuntimeEnabledFeatures::PictureInPictureAPIEnabled();
     case FeaturePolicyFeature::kSyncXHR:
       return true;
+    case FeaturePolicyFeature::kSyncScript:
     case FeaturePolicyFeature::kVibrate:
     case FeaturePolicyFeature::kUnsizedMedia:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
