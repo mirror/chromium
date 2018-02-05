@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b069e963_802513bb",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T23:03:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "798a4ea0_fd2e0778",
+      "revId": "2b624b8e25128653d16fd85165878360b6684935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381e6f16_0f3eaace",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator_unittest.cc",
         "patchSetId": 4
