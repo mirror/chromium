@@ -46,6 +46,30 @@
       "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add6dd97_003644f6",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-05T23:17:56Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "6b87e28c_86f681f0",
+      "range": {
+        "startLine": 190,
+        "startChar": 5,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
