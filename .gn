@@ -253,6 +253,7 @@ exec_script_whitelist =
       "//third_party/angle/src/vulkan_support/BUILD.gn",
       "//third_party/catapult/tracing/BUILD.gn",
       "//third_party/google_input_tools/inputview.gni",
+      "//third_party/angle/third_party/vulkan-validation-layers/BUILD.gn",
 
       "//tools/grit/grit_rule.gni",
 
