@@ -46,6 +46,30 @@
       "revId": "49225dcd177a41246f3375225a5b45c9c6f24a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf105ff_0aa54490",
+        "filename": "base/memory/eventually_read_only_shared_memory_region.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-02-05T22:52:31Z",
+      "side": 1,
+      "message": "Ken, what do you think about it? We could also leave SharedMemoryHandle class as is and apply incremental changes to it.",
+      "parentUuid": "08831e7a_9d61a060",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "49225dcd177a41246f3375225a5b45c9c6f24a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
