@@ -26,6 +26,7 @@
 #include "extensions/browser/updater/extension_downloader.h"
 #include "extensions/browser/updater/extension_downloader_delegate.h"
 #include "extensions/browser/updater/manifest_fetch_data.h"
+#include "extensions/browser/updater/update_service.h"
 #include "url/gurl.h"
 
 class ExtensionServiceInterface;
@@ -37,16 +38,18 @@ namespace extensions {
 class ExtensionCache;
 class ExtensionPrefs;
 class ExtensionSet;
+struct ExtensionUpdateCheckParams;
 class ExtensionUpdaterTest;
 
 // A class for doing auto-updates of installed Extensions. Used like this:
 //
-// ExtensionUpdater* updater = new ExtensionUpdater(my_extensions_service,
-//                                                  extension_prefs,
-//                                                  pref_service,
-//                                                  profile,
-//                                                  update_frequency_secs,
-//                                                  downloader_factory);
+// std::unique_ptr<ExtensionUpdater> updater =
+//    std::make_unique<ExtensionUpdater>(my_extensions_service,
+//                                       extension_prefs,
+//                                       pref_service,
+//                                       profile,
+//                                       update_frequency_secs,
+//                                       downloader_factory);
 // updater->Start();
 // ....
 // updater->Stop();
@@ -173,7 +176,8 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
   void AddToDownloader(const ExtensionSet* extensions,
                        const std::list<std::string>& pending_ids,
                        int request_id,
-                       ManifestFetchData::FetchPriority fetch_priority);
+                       ManifestFetchData::FetchPriority fetch_priority,
+                       ExtensionUpdateCheckParams* update_check_params);
 
   // BaseTimer::ReceiverMethod callback.
   void TimerFired();
@@ -231,6 +235,14 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
 
   // Fetches the crx files for the extensions that have an available update.
   std::unique_ptr<ExtensionDownloader> downloader_;
+
+  // Update service is responsible for updating Webstore extensions using
+  // Component update client.
+  // Note that |UpdateService| is a KeyedService class, which can only be
+  // created through a |KeyedServiceFactory| singleton, thus |update_service_|
+  // will be freed by the same factory singleton before the browser is
+  // shutdown.
+  UpdateService* update_service_;
 
   base::OneShotTimer timer_;
   int frequency_seconds_;

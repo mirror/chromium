@@ -11,6 +11,7 @@
 #include "base/callback_helpers.h"
 #include "base/macros.h"
 #include "base/strings/string_split.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/extensions/browsertest_util.h"
@@ -37,6 +38,7 @@
 #include "extensions/browser/updater/extension_downloader.h"
 #include "extensions/browser/updater/extension_downloader_test_delegate.h"
 #include "extensions/browser/updater/manifest_fetch_data.h"
+#include "extensions/common/extension_features.h"
 #include "extensions/common/extension_urls.h"
 
 namespace extensions {
@@ -340,6 +342,12 @@ class ContentVerifierTest : public ExtensionBrowserTest {
         switches::kExtensionContentVerificationEnforce);
   }
 
+  void SetUp() override {
+    scoped_feature_list_.InitAndDisableFeature(
+        features::kNewExtensionUpdaterService);
+    ExtensionBrowserTest::SetUp();
+  }
+
   bool ShouldEnableContentVerification() override { return true; }
 
   void TestContentScriptExtension(const std::string& crx_relpath,
@@ -389,6 +397,9 @@ class ContentVerifierTest : public ExtensionBrowserTest {
     EnableExtension(id);
     EXPECT_TRUE(job_observer.WaitForExpectedJobs());
   }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_F(ContentVerifierTest, DotSlashPaths) {

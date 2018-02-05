@@ -12,6 +12,7 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_management.h"
@@ -38,6 +39,7 @@
 #include "extensions/browser/notification_types.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/updater/extension_downloader.h"
+#include "extensions/common/extension_features.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "net/url_request/test_url_request_interceptor.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -66,6 +68,12 @@ class ExtensionManagementTest : public ExtensionBrowserTest {
         .WillRepeatedly(Return(true));
     policy::BrowserPolicyConnector::SetPolicyProviderForTesting(
         &policy_provider_);
+  }
+
+  void SetUp() override {
+    scoped_feature_list_.InitAndDisableFeature(
+        extensions::features::kNewExtensionUpdaterService);
+    ExtensionBrowserTest::SetUp();
   }
 
  protected:
@@ -111,6 +119,7 @@ class ExtensionManagementTest : public ExtensionBrowserTest {
  private:
   policy::MockConfigurationPolicyProvider policy_provider_;
   extensions::ScopedInstallVerifierBypassForTest install_verifier_bypass_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 #if defined(OS_LINUX) || defined(OS_WIN)

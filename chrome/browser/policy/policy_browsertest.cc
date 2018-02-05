@@ -176,6 +176,7 @@
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_features.h"
 #include "extensions/common/extension_set.h"
 #include "extensions/common/features/feature_channel.h"
 #include "extensions/common/manifest_handlers/shared_module_info.h"
@@ -1829,6 +1830,10 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallWhitelist) {
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallForcelist) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      extensions::features::kNewExtensionUpdaterService);
+
   // Verifies that extensions that are force-installed by policies are
   // installed and can't be uninstalled.
   ExtensionService* service = extension_service();

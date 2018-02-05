@@ -8,6 +8,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -35,6 +36,7 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_features.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "net/url_request/test_url_request_interceptor.h"
 
@@ -50,6 +52,12 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
     ExtensionBrowserTest::SetUpCommandLine(command_line);
     command_line->AppendSwitchASCII(switches::kAppsGalleryUpdateURL,
                                     "http://localhost/autoupdate/updates.xml");
+  }
+
+  void SetUp() override {
+    scoped_feature_list_.InitAndDisableFeature(
+        extensions::features::kNewExtensionUpdaterService);
+    ExtensionBrowserTest::SetUp();
   }
 
   void SetUpOnMainThread() override {
@@ -124,6 +132,7 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
   base::FilePath path_v1_;
   base::FilePath path_v2_;
   base::FilePath path_v3_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 // Tests the process of updating an extension to one that requires higher

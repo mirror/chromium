@@ -28,6 +28,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/version.h"
@@ -63,6 +64,7 @@
 #include "extensions/browser/updater/manifest_fetch_data.h"
 #include "extensions/browser/updater/request_queue_impl.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_features.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/manifest_constants.h"
 #include "google_apis/gaia/fake_identity_provider.h"
@@ -303,7 +305,7 @@ class MockService : public TestExtensionService {
  public:
   explicit MockService(TestExtensionPrefs* prefs)
       : prefs_(prefs),
-        pending_extension_manager_(&profile_),
+        pending_extension_manager_(prefs->profile()),
         downloader_delegate_override_(NULL) {}
 
   ~MockService() override {}
@@ -314,10 +316,10 @@ class MockService : public TestExtensionService {
     return &pending_extension_manager_;
   }
 
-  Profile* profile() { return &profile_; }
+  Profile* profile() { return prefs_->profile(); }
 
   net::URLRequestContextGetter* request_context() {
-    return profile_.GetRequestContext();
+    return profile()->GetRequestContext();
   }
 
   ExtensionPrefs* extension_prefs() { return prefs_->prefs(); }
@@ -367,7 +369,6 @@ class MockService : public TestExtensionService {
 
  protected:
   TestExtensionPrefs* const prefs_;
-  TestingProfile profile_;
   PendingExtensionManager pending_extension_manager_;
 
  private:
@@ -655,6 +656,8 @@ class ExtensionUpdaterTest : public testing::Test {
 
   void SetUp() override {
     prefs_.reset(new TestExtensionPrefs(base::ThreadTaskRunnerHandle::Get()));
+    scoped_feature_list_.InitAndDisableFeature(
+        features::kNewExtensionUpdaterService);
   }
 
   void TearDown() override {
@@ -2011,6 +2014,7 @@ class ExtensionUpdaterTest : public testing::Test {
   content::InProcessUtilityThreadHelper in_process_utility_thread_helper_;
   ScopedTestingLocalState testing_local_state_;
   data_decoder::TestDataDecoderService test_data_decoder_service_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
 #if defined OS_CHROMEOS
   chromeos::ScopedTestDeviceSettingsService test_device_settings_service_;

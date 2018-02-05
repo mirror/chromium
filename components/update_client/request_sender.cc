@@ -65,6 +65,8 @@ void RequestSender::Send(bool use_signing,
                          RequestSenderCallback request_sender_callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  VLOG(3) << "Sending request: " << request_body;
+
   use_signing_ = use_signing;
   request_body_ = request_body;
   urls_ = urls;
@@ -115,6 +117,8 @@ void RequestSender::SendInternalComplete(int error,
                                          const std::string& response_etag,
                                          int retry_after_sec) {
   if (!error) {
+    VLOG(3) << "Received response: " << response_body;
+
     if (!use_signing_) {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::BindOnce(std::move(request_sender_callback_), 0,
