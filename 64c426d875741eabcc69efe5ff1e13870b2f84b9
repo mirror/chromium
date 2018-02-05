@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54ddfa7d_44c38c84",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-05T05:26:29Z",
+      "side": 1,
+      "message": "Good point. It could give problems if the download is closed while retrieving it. \nI\u0027ve modified the code so it\u0027s only called within a download task runner.",
+      "parentUuid": "59a7e809_376873b2",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50c06f6_937252bd",
         "filename": "content/browser/devtools/devtools_io_context.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67318aec_6a2764b2",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-05T05:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50c06f6_937252bd",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6eea2ebe_8f647c8a",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-05T05:26:29Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "085b1c09_b017d400",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d12e70e2_090c722a",
         "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
         "patchSetId": 21
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0ddedfdf_2c1beea1",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-05T05:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d12e70e2_090c722a",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34d517d_6635b3fa",
         "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
         "patchSetId": 21
@@ -84,6 +156,24 @@
       "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faa9974_1129e423",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-02-05T05:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34d517d_6635b3fa",
+      "revId": "64c426d875741eabcc69efe5ff1e13870b2f84b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
