@@ -62,10 +62,8 @@ internal::PageLoadTimingStatus IsValidPageLoadTiming(
     return internal::INVALID_EMPTY_TIMING;
 
   // If we have a non-empty timing, it should always have a navigation start.
-  if (timing.navigation_start.is_null()) {
-    LOG(ERROR) << "Received null navigation_start.";
+  if (timing.navigation_start.is_null())
     return internal::INVALID_NULL_NAVIGATION_START;
-  }
 
   // Verify proper ordering between the various timings.
 
@@ -307,6 +305,65 @@ void PaintTimingMerger::Merge(base::TimeDelta navigation_start_offset,
   }
 }
 
+// InteractiveTimingMerger merges interactive timing values received from
+// different frames together.
+class InteractiveTimingMerger {
+ public:
+  explicit InteractiveTimingMerger(mojom::InteractiveTiming* target)
+      : target_(target) {}
+
+  // Merge interactive timing values from |new_interactive_timing| into the
+  // target InteractiveTiming.
+  void Merge(base::TimeDelta navigation_start_offset,
+             const mojom::InteractiveTiming& new_interactive_timing);
+
+  // Whether we merged a new value, for an interactive timing field we didn't
+  // previously have a value for in the target InteractiveTiming.
+  bool did_merge_new_timing_value() const {
+    return did_merge_new_timing_value_;
+  }
+
+ private:
+  // The target PaintTiming we are merging values into.
+  mojom::InteractiveTiming* const target_;
+
+  // Whether we merged a new value, for a paint timing field we didn't
+  // previously have a value for in |target_|.
+  bool did_merge_new_timing_value_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(InteractiveTimingMerger);
+};
+
+void InteractiveTimingMerger::Merge(
+    base::TimeDelta navigation_start_offset,
+    const mojom::InteractiveTiming& new_interactive_timing) {
+  // If we don't get a new value, there's nothing to do
+  if (!new_interactive_timing.first_input_delay)
+    return;
+
+  // Whenever we have an input delay, we should have an input timestamp.
+  DCHECK(new_interactive_timing.first_input_timestamp);
+
+  base::TimeDelta candidate_new_first_input_delay =
+      new_interactive_timing.first_input_delay.value();
+
+  // Put timestamp in the time domain of the main frame.
+  base::TimeDelta candidate_new_first_input_timestamp =
+      navigation_start_offset +
+      new_interactive_timing.first_input_timestamp.value();
+
+  // If this input event is after another input event, ignore it..
+  if (target_->first_input_timestamp &&
+      target_->first_input_timestamp.value() <=
+          candidate_new_first_input_timestamp) {
+    return;
+  }
+
+  target_->first_input_delay = candidate_new_first_input_delay;
+  target_->first_input_timestamp = candidate_new_first_input_timestamp;
+  did_merge_new_timing_value_ = true;
+}
+
 }  // namespace
 
 PageLoadMetricsUpdateDispatcher::PageLoadMetricsUpdateDispatcher(
@@ -370,6 +427,7 @@ void PageLoadMetricsUpdateDispatcher::DidFinishSubFrameNavigation(
   }
   base::TimeDelta navigation_delta =
       navigation_handle->NavigationStart() - navigation_start_;
+
   subframe_navigation_start_offset_.insert(std::make_pair(
       navigation_handle->GetFrameTreeNodeId(), navigation_delta));
 }
@@ -390,6 +448,11 @@ void PageLoadMetricsUpdateDispatcher::UpdateSubFrameTiming(
   PaintTimingMerger merger(pending_merged_page_timing_->paint_timing.get());
   merger.Merge(navigation_start_offset, *new_timing.paint_timing,
                false /* is_main_frame */);
+
+  InteractiveTimingMerger interactive_merger(
+      pending_merged_page_timing_->interactive_timing.get());
+  interactive_merger.Merge(navigation_start_offset,
+                           *new_timing.interactive_timing);
 
   MaybeDispatchTimingUpdates(merger.did_merge_new_timing_value());
 }
@@ -433,16 +496,28 @@ void PageLoadMetricsUpdateDispatcher::UpdateMainFrameTiming(
 
   mojom::PaintTimingPtr last_paint_timing =
       std::move(pending_merged_page_timing_->paint_timing);
+
+  mojom::InteractiveTimingPtr last_interactive_timing =
+      std::move(pending_merged_page_timing_->interactive_timing);
+
   // Update the pending_merged_page_timing_, making sure to merge the previously
   // observed |paint_timing|, which is tracked across all frames in the page.
   pending_merged_page_timing_ = new_timing.Clone();
   pending_merged_page_timing_->paint_timing = std::move(last_paint_timing);
+  pending_merged_page_timing_->interactive_timing =
+      std::move(last_interactive_timing);
 
   PaintTimingMerger merger(pending_merged_page_timing_->paint_timing.get());
   merger.Merge(base::TimeDelta(), *new_timing.paint_timing,
                true /* is_main_frame */);
 
   MaybeDispatchTimingUpdates(merger.did_merge_new_timing_value());
+
+  InteractiveTimingMerger interactive_merger(
+      pending_merged_page_timing_->interactive_timing.get());
+  interactive_merger.Merge(base::TimeDelta(), *new_timing.interactive_timing);
+
+  MaybeDispatchTimingUpdates(interactive_merger.did_merge_new_timing_value());
 }
 
 void PageLoadMetricsUpdateDispatcher::UpdateMainFrameMetadata(
