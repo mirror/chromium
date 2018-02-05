@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "98118c99_720bf310",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T19:05:11Z",
+      "side": 1,
+      "message": "What specific cases would you recommend to trace in terms of number of tabs/their content? Does that matter?",
+      "parentUuid": "2b911641_ac6c5429",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6751234d_a2da6b87",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
