@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "8d91f08d_cab8de51",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T19:11:19Z",
+      "side": 1,
+      "message": "Adding a test would be great, to prevent someone in the future from making a similar change and not realizing that there was a compatibility problem.\n\nBut it doesn\u0027t look like we have existing tests that would be easy to extend, and it might require refactoring, which is out of scope for this CL. I would be okay with a TODO(crbug.com/XXXX) to add a test for validating fields in the proto.\n\n(unless cmumford or pwnall see where we could easily test this now?)",
+      "parentUuid": "f6fec02e_e1509134",
+      "revId": "3a85d240a29fd1b8e6f59161de94927be5a134f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9547cb8f_54544b68",
         "filename": "content/browser/cache_storage/cache_storage_manager.h",
         "patchSetId": 1
