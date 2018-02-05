@@ -9,9 +9,20 @@
 namespace viz {
 
 std::string LocalSurfaceId::ToString() const {
+  std::string nonce = VLOG_IS_ON(1)
+                    ? nonce_.ToString()
+                    : ToShortString(nonce_.GetHighForSerialization(),
+                                    nonce_.GetLowForSerialization());
+
   return base::StringPrintf("LocalSurfaceId(%d, %d, %s" PRIu64 ")",
                             parent_sequence_number_, child_sequence_number_,
-                            nonce_.ToString().c_str());
+                            nonce.c_str());
+}
+
+std::string LocalSurfaceId::ToShortString(uint64_t high, uint64_t low) const {
+  return (high > UINT32_MAX && low > UINT32_MAX)
+             ? nonce_.ToString()
+             : base::StringPrintf("%04" PRIX64 "..%04" PRIX64, high, low);
 }
 
 std::ostream& operator<<(std::ostream& out,

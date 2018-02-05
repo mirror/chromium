@@ -85,6 +85,8 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
 
   friend bool operator<(const LocalSurfaceId& lhs, const LocalSurfaceId& rhs);
 
+  std::string ToShortString(uint64_t, uint64_t) const;
+
   uint32_t parent_sequence_number_;
   uint32_t child_sequence_number_;
   base::UnguessableToken nonce_;
