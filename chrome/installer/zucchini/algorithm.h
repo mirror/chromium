@@ -62,6 +62,15 @@ void SortAndUniquify(std::vector<T>* container) {
   container->shrink_to_fit();
 }
 
+// Copies bits at |pos| in |v| to all higher bits, and return the result as the
+// same int type as |v|.
+template <int pos, typename T>
+T SignExtend(T v) {
+  constexpr int kNumBits = sizeof(T) * 8;
+  constexpr int kShift = kNumBits - 1 - pos;
+  return static_cast<typename std::make_signed<T>::type>(v << kShift) >> kShift;
+}
+
 }  // namespace zucchini
 
 #endif  // CHROME_INSTALLER_ZUCCHINI_ALGORITHM_H_
