@@ -386,7 +386,25 @@ TEST_F(EventHandlerTest, ShadowChildCanOverrideUserSelectNone) {
                                                                          hit));
 }
 
-TEST_F(EventHandlerTest, ChildCanOverrideUserSelectText) {
+TEST_F(EventHandlerTest, UserSelectAllCanOverrideUserSelectNone) {
+  SetHtmlInnerHTML(
+      "<div style='user-select: none'>"
+      "<span style='user-select: all'>blabla</span>"
+      "</div>");
+  Node* const text =
+      GetDocument().body()->firstChild()->firstChild()->firstChild();
+  LayoutPoint location =
+      text->GetLayoutObject()->FirstFragment().VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_TRUE(text->CanStartSelection());
+  EXPECT_TRUE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, UserSelectNoneCanOverrideUserSelectText) {
   SetHtmlInnerHTML(
       "<div style='user-select: text'>"
       "<span style='user-select: none'>blabla</span>"
