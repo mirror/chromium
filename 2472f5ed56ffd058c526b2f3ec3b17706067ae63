@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5441a0ec_f384470f",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T21:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa73f1a_1f0690e4",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ec025eb_97bc7219",
         "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "dcf19015_3613848c",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T21:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "613f952e_7a89a596",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7de5b342_8e3d3d2f",
         "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
         "patchSetId": 2
@@ -91,6 +139,30 @@
       "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85105e93_84ec76fb",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T21:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de5b342_8e3d3d2f",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e39bf4eb_60810393",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T21:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d43c38_79e46925",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8089cc41_29438758",
         "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
         "patchSetId": 2
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "9071dece_5f3af909",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T21:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8089cc41_29438758",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "447d88a1_47380c34",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -151,6 +271,30 @@
       "writtenOn": "2018-02-02T23:02:26Z",
       "side": 1,
       "message": "Sorry for not noticing this sooner – it looks like you\u0027re adding a new top-level metric category, \"KeyboardLock\".  This is essentially going into a global namespace; and as such, it might not be the best level of granularity.  What sort of an API is this?  If it\u0027s an extensions API, then maybe \"Extensions.KeyboardLockApi.Calls\" would be a good name for this metric.",
+      "range": {
+        "startLine": 32009,
+        "startChar": 17,
+        "endLine": 32009,
+        "endChar": 29
+      },
+      "revId": "2472f5ed56ffd058c526b2f3ec3b17706067ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e89f1ef_97bf8a28",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32009,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T21:12:52Z",
+      "side": 1,
+      "message": "It isn\u0027t related to the Extensions API, but I could see putting it under Keyboard if you are OK with that.  I think that makes the most sense wrt the existing top level names.",
+      "parentUuid": "447d88a1_47380c34",
       "range": {
         "startLine": 32009,
         "startChar": 17,
