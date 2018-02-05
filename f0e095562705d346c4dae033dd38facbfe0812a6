@@ -1,0 +1,330 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8400c92_324faa99",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "std::move(attribute-\u003ename)",
+      "range": {
+        "startLine": 454,
+        "startChar": 27,
+        "endLine": 454,
+        "endChar": 42
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e990c29_18401338",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "std::move(attribute-\u003evalue)",
+      "range": {
+        "startLine": 455,
+        "startChar": 28,
+        "endLine": 455,
+        "endChar": 44
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e83dde2_9c2dcfaf",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "threat_reporter",
+      "range": {
+        "startLine": 572,
+        "startChar": 6,
+        "endLine": 572,
+        "endChar": 20
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df41dfb0_431589ef",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "No const.",
+      "range": {
+        "startLine": 583,
+        "startChar": 4,
+        "endLine": 583,
+        "endChar": 9
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a067bf_61c4f83f",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Without the const above, this copy should be unnecessary.",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f2e63b_6afed2f8",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Take |params| by value.",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec606283_56813635",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "mojom::ThreatDOMDetailsNode\u0026 node \u003d *params[i];",
+      "range": {
+        "startLine": 647,
+        "startChar": 4,
+        "endLine": 647,
+        "endChar": 41
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b07ecf1_bd9144ab",
+        "filename": "components/safe_browsing/browser/threat_details.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "No const for by-value parameters. See https://abseil.io/tips/109.\n\nIt should be private too.",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25eb9c95_698996f3",
+        "filename": "components/safe_browsing/renderer/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decc52f5_05923893",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Is this still necessary?",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628fcec3_fadd80be",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58806d0_16a0be53",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Can you return a mojom::ThreatDOMDetailsNode* instead?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60b83cd_de0a39be",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Take a mojom::ThreatDOMDetailsNode*",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 35
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd6353e_2862205f",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "A Binding isn\u0027t safe to use if the browser can connect multiple times. In those cases, prefer BindingSet.",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a8225a_b0ab133d",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be here. //content as a layer is below //components/safe_browsing.",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fda0f01_cd697f3b",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T06:40:00Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
