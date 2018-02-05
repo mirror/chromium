@@ -183,6 +183,7 @@ void MediaRouterMojoImpl::CreateRoute(
     base::TimeDelta timeout,
     bool incognito) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  VLOG(0) << "XXX: " << __func__;
   const MediaSink* sink = GetSinkById(sink_id);
   if (!sink) {
     std::unique_ptr<RouteRequestResult> result = RouteRequestResult::FromError(
@@ -195,6 +196,15 @@ void MediaRouterMojoImpl::CreateRoute(
 
   MediaRouterMetrics::RecordMediaSinkType(sink->icon_type());
   MediaRouteProviderId provider_id = sink->provider_id();
+  // This is a hack to ensure the extension handles the CreateRoute call until
+  // the CastMediaRouteProvider supports it.
+  // TODO(crbug.com/698940): Remove this hack when CastMediaRouteProvider
+  // supports route management.
+  if (provider_id == MediaRouteProviderId::CAST) {
+    VLOG(0) << "XXX: rewriting provider_id to EXTENSION";
+    provider_id = MediaRouteProviderId::EXTENSION;
+  }
+
   int tab_id = SessionTabHelper::IdForTab(web_contents);
   std::string presentation_id = MediaRouterBase::CreatePresentationId();
   auto callback = base::BindOnce(
@@ -917,6 +927,9 @@ base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForRoute(
 base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForSink(
     const MediaSink::Id& sink_id) {
   const MediaSink* sink = GetSinkById(sink_id);
+  if (!sink)
+    return base::nullopt;
+
   return sink ? base::make_optional<MediaRouteProviderId>(sink->provider_id())
               : base::nullopt;
 }

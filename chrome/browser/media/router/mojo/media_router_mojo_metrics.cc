@@ -84,6 +84,7 @@ void MediaRouterMojoMetrics::RecordCreateRouteResultCode(
                                 result_code, RouteRequestResult::TOTAL_COUNT);
       break;
     case MediaRouteProviderId::EXTENSION:
+    case MediaRouteProviderId::CAST:
     case MediaRouteProviderId::UNKNOWN:
       UMA_HISTOGRAM_ENUMERATION(kHistogramProviderCreateRouteResult,
                                 result_code, RouteRequestResult::TOTAL_COUNT);
@@ -102,6 +103,7 @@ void MediaRouterMojoMetrics::RecordJoinRouteResultCode(
                                 result_code, RouteRequestResult::TOTAL_COUNT);
       break;
     case MediaRouteProviderId::EXTENSION:
+    case MediaRouteProviderId::CAST:
     case MediaRouteProviderId::UNKNOWN:
       UMA_HISTOGRAM_ENUMERATION(kHistogramProviderJoinRouteResult, result_code,
                                 RouteRequestResult::TOTAL_COUNT);
@@ -121,6 +123,7 @@ void MediaRouterMojoMetrics::RecordMediaRouteProviderTerminateRoute(
           RouteRequestResult::TOTAL_COUNT);
       break;
     case MediaRouteProviderId::EXTENSION:
+    case MediaRouteProviderId::CAST:
     case MediaRouteProviderId::UNKNOWN:
       UMA_HISTOGRAM_ENUMERATION(kHistogramProviderTerminateRouteResult,
                                 result_code, RouteRequestResult::TOTAL_COUNT);

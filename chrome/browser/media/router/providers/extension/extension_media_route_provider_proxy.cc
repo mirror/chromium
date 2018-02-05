@@ -247,8 +247,8 @@ void ExtensionMediaRouteProviderProxy::DoCreateRoute(
     base::TimeDelta timeout,
     bool incognito,
     CreateRouteCallback callback) {
-  DVLOG(1) << "DoCreateRoute " << media_source << "=>" << sink_id
-           << ", presentation ID: " << original_presentation_id;
+  VLOG(0) << "DoCreateRoute " << media_source << "=>" << sink_id
+          << ", presentation ID: " << original_presentation_id;
   media_route_provider_->CreateRoute(media_source, sink_id,
                                      original_presentation_id, origin, tab_id,
                                      timeout, incognito, std::move(callback));
