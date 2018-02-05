@@ -3,18 +3,36 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import collections
+import os
+import sys
 import unittest
 
 import cyglog_to_orderfile
-import os
+import process_profiles
 import symbol_extractor
-import sys
+
+from test_utils import (SymbolInfo,
+                        TestSymbolOffsetProcessor)
+
 
 sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), os.pardir, os.pardir,
                     'third_party', 'android_platform', 'development',
                     'scripts'))
 import symbol
+
+SymbolWithSection = collections.namedtuple(
+    'SymbolWithSection',
+    ['name', 'offset', 'size', 'section'])
+
+
+class TestGenerator(cyglog_to_orderfile.OffsetOrderfileGenerator):
+  def __init__(self, symbol_infos, symbol_to_sections=None):
+    # Replace superclass initialization with our own.
+    self._offset_to_symbols = TestSymbolOffsetProcessor(
+        symbol_infos).OffsetToSymbolsMap()
+    self._symbol_to_sections = symbol_to_sections
 
 
 class TestCyglogToOrderfile(unittest.TestCase):
@@ -29,84 +47,64 @@ END""".split('\n')
     self.assertListEqual(
         offsets, [0x509e105c - 0x5086e000, 0x509e0eb4 - 0x5086e000])
 
-  def testFindSymbolInfosAtOffsetExactMatch(self):
-    offset_map = {0x10: [symbol_extractor.SymbolInfo(
-        name='Symbol', offset=0x10, size=0x13, section='.text')]}
-    functions = cyglog_to_orderfile._FindSymbolInfosAtOffset(offset_map, 0x10)
-    self.assertEquals(len(functions), 1)
-    self.assertEquals(functions[0], offset_map[0x10][0])
-
-  def testFindSymbolInfosAtOffsetInexactMatch(self):
-    offset_map = {0x10: [symbol_extractor.SymbolInfo(
-        name='Symbol', offset=0x10, size=0x13, section='.text')]}
-    functions = cyglog_to_orderfile._FindSymbolInfosAtOffset(offset_map, 0x11)
-    self.assertEquals(len(functions), 1)
-    self.assertEquals(functions[0], offset_map[0x10][0])
-
-  def testFindSymbolInfosAtOffsetNoMatch(self):
-    offset_map = {0x10: [symbol_extractor.SymbolInfo(
-        name='Symbol', offset=0x10, size=0x13, section='.text')]}
-    self.assertRaises(
-        cyglog_to_orderfile.SymbolNotFoundException,
-        cyglog_to_orderfile._FindSymbolInfosAtOffset, offset_map, 0x12)
-
   def testWarnAboutDuplicates(self):
     offsets = [0x1, 0x2, 0x3]
     self.assertTrue(cyglog_to_orderfile._WarnAboutDuplicates(offsets))
     offsets.append(0x1)
     self.assertFalse(cyglog_to_orderfile._WarnAboutDuplicates(offsets))
 
+  def testSymbolsAtOffsetExactMatch(self):
+    symbol_infos = [SymbolInfo('1', 0x10, 0x13)]
+    generator = TestGenerator(symbol_infos)
+    syms = generator._SymbolsAtOffset(0x10)
+    self.assertEquals(1, len(syms))
+    self.assertEquals(symbol_infos[0], syms[0])
+
+  def testSymbolsAtOffsetInexectMatch(self):
+    symbol_infos = [SymbolInfo('1', 0x10, 0x13)]
+    generator = TestGenerator(symbol_infos)
+    syms = generator._SymbolsAtOffset(0x11)
+    self.assertEquals(1, len(syms))
+    self.assertEquals(symbol_infos[0], syms[0])
+
   def testSameCtorOrDtorNames(self):
     if not os.path.exists(symbol.ToolPath('c++filt')):
       print 'Skipping test dependent on missing c++filt binary.'
       return
-    self.assertTrue(cyglog_to_orderfile._SameCtorOrDtorNames(
+    same_name = (cyglog_to_orderfile.OffsetOrderfileGenerator
+                 ._SameCtorOrDtorNames)
+    self.assertTrue(same_name(
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEEC1Ev',
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEEC2Ev'))
-    self.assertTrue(cyglog_to_orderfile._SameCtorOrDtorNames(
+    self.assertTrue(same_name(
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEED1Ev',
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEED2Ev'))
-    self.assertFalse(cyglog_to_orderfile._SameCtorOrDtorNames(
+    self.assertFalse(same_name(
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEEC1Ev',
         '_ZNSt3__119foo_iteratorIcNS_11char_traitsIcEEEC1Ev'))
-    self.assertFalse(cyglog_to_orderfile._SameCtorOrDtorNames(
+    self.assertFalse(same_name(
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEE',
         '_ZNSt3__119istreambuf_iteratorIcNS_11char_traitsIcEEE'))
 
   def testOutputOrderfile(self):
-    class FakeOutputFile(object):
-      def __init__(self):
-        self.writes = []
-
-      def write(self, data):
-        self.writes.append(data)
-
     # One symbol not matched, one with an odd address, one regularly matched
     # And two symbols aliased to the same address
-    offsets = [0x12, 0x17]
-    offset_to_symbol_infos = {
-        0x10: [symbol_extractor.SymbolInfo(
-            name='Symbol', offset=0x10, size=0x13, section='dummy')],
-        0x12: [symbol_extractor.SymbolInfo(
-            name='Symbol2', offset=0x12, size=0x13, section='dummy')],
-        0x16: [symbol_extractor.SymbolInfo(
-                   name='Symbol3', offset=0x16, size=0x13, section='dummy'),
-               symbol_extractor.SymbolInfo(
-                   name='Symbol32', offset=0x16, size=0x13, section='dummy'),]}
-    symbol_to_sections_map = {
+    symbols = [SymbolWithSection('Symbol', 0x10, 0x100, 'dummy'),
+               SymbolWithSection('Symbol2', 0x12, 0x100, 'dummy'),
+               SymbolWithSection('Symbol3', 0x16, 0x100, 'dummy'),
+               SymbolWithSection('Symbol3.2', 0x16, 0x0, 'dummy')]
+    generator = TestGenerator(symbols, {
         'Symbol': ['.text.Symbol'],
         'Symbol2': ['.text.Symbol2', '.text.hot.Symbol2'],
         'Symbol3': ['.text.Symbol3'],
-        'Symbol32': ['.text.Symbol32']}
-    fake_output = FakeOutputFile()
-    cyglog_to_orderfile._OutputOrderfile(
-        offsets, offset_to_symbol_infos, symbol_to_sections_map, fake_output)
-    expected = """.text.Symbol2
-.text.hot.Symbol2
-.text.Symbol3
-.text.Symbol32
-"""
-    self.assertEquals(expected, ''.join(fake_output.writes))
+        'Symbol3.2': ['.text.Symbol3.2']})
+    ordered_sections = generator.GetOrderedSections([0x12, 0x17])
+    self.assertListEqual(
+        ['.text.Symbol2',
+         '.text.hot.Symbol2',
+         '.text.Symbol3',
+         '.text.Symbol3.2'],
+        ordered_sections)
 
 
 if __name__ == '__main__':

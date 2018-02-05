@@ -9,24 +9,9 @@ import unittest
 
 import process_profiles
 
-
-SymbolInfo = collections.namedtuple('SymbolInfo', ['name', 'offset', 'size'])
-
-
-class TestSymbolOffsetProcessor(process_profiles.SymbolOffsetProcessor):
-  def __init__(self, symbol_infos):
-    super(TestSymbolOffsetProcessor, self).__init__(None)
-    self._symbol_infos = symbol_infos
-
-
-class TestProfileManager(process_profiles.ProfileManager):
-  def __init__(self, filecontents_mapping):
-    super(TestProfileManager, self).__init__(filecontents_mapping.keys())
-    self._filecontents_mapping = filecontents_mapping
-
-  def _ReadOffsets(self, filename):
-    return self._filecontents_mapping[filename]
-
+from test_utils import (SymbolInfo,
+                        TestSymbolOffsetProcessor,
+                        TestProfileManager)
 
 class ProcessProfilesTestCase(unittest.TestCase):
 
@@ -70,6 +55,15 @@ class ProcessProfilesTestCase(unittest.TestCase):
     processor = TestSymbolOffsetProcessor(symbol_infos)
     self.assertDictEqual({8: symbol_infos[0],
                           40: symbol_infos[2]}, processor.OffsetToPrimaryMap())
+
+  def testOffsetToSymbolsMap(self):
+    symbol_infos = [SymbolInfo('1', 8, 16),
+                    SymbolInfo('AnAlias', 8, 16),
+                    SymbolInfo('Another', 40, 16)]
+    processor = TestSymbolOffsetProcessor(symbol_infos)
+    self.assertDictEqual({8: [symbol_infos[0], symbol_infos[1]],
+                          40: [symbol_infos[2]]},
+                         processor.OffsetToSymbolsMap())
 
   def testPrimarySizeMismatch(self):
     symbol_infos = [SymbolInfo('1', 8, 16),
