@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bddf2328_5039e205",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-02-05T18:00:01Z",
+      "side": 1,
+      "message": "What was the reason for moving this block? I originally added it to solve very specific problem (NPE in onStart(), as comment explains), and in context of that problem it was appropriate to killProcess() if finish() fails. I\u0027m not sure if killing the process is appropriate in other cases though.",
+      "range": {
+        "startLine": 354,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 9
+      },
+      "revId": "18208c1eefee933402e7cad2ff33172f59e354bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
