@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e76fc0b_3f905c28",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-05T17:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "904a0f72_68520452",
+      "range": {
+        "startLine": 4320,
+        "startChar": 4,
+        "endLine": 4320,
+        "endChar": 110
+      },
+      "revId": "26c22070d80ebd8e9483274b2c0278992f354359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0e1d3ce_58de5d64",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e4ab5515_9b0cf058",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-05T17:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4720da3d_9e277ab6",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "26c22070d80ebd8e9483274b2c0278992f354359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c71cd8_d420b8d7",
         "filename": "chromeos/login/auth/authpolicy_login_helper.h",
         "patchSetId": 5
@@ -91,6 +139,30 @@
       "revId": "26c22070d80ebd8e9483274b2c0278992f354359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4994fb_7f7d284a",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-05T17:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c71cd8_d420b8d7",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "26c22070d80ebd8e9483274b2c0278992f354359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
