@@ -145,7 +145,7 @@ class UnitTest(unittest.TestCase):
 
   def list_contains_sublist(self, main_list, sub_list):
     return any(sub_list == main_list[offset:offset + len(sub_list)]
-               for offset in xrange(len(main_list) - len(sub_list)))
+               for offset in xrange(len(main_list) - (len(sub_list) - 1)))
 
   def shard_runs_on_os(self, triggerer, shard_index, os):
     return self.list_contains_sublist(triggerer._swarming_runs[shard_index],
