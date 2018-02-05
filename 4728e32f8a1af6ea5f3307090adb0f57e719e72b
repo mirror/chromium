@@ -16,6 +16,24 @@
       "revId": "4728e32f8a1af6ea5f3307090adb0f57e719e72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1dd1f2_8d02792b",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-05T18:18:12Z",
+      "side": 1,
+      "message": "Done. Note that IsTracing() is the same as trace_config_ !\u003d null, which we are explicitly conditioning on here, but I think having the DCHECK improves readability.",
+      "parentUuid": "db27b565_e2b7ded4",
+      "revId": "4728e32f8a1af6ea5f3307090adb0f57e719e72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
