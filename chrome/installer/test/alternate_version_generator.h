@@ -30,7 +30,8 @@ bool GenerateAlternateVersion(const base::FilePath& original_installer_path,
                               const base::FilePath& target_path,
                               Direction direction,
                               base::string16* original_version,
-                              base::string16* new_version);
+                              base::string16* new_version,
+                              bool fast);
 
 // Given a path to a PEImage in |original_file|, copy that file to
 // |target_file|, modifying the version of the copy according to |direction|.
