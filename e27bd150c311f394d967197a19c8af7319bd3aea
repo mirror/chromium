@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2051e626_373ead85",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T20:06:21Z",
+      "side": 1,
+      "message": "Question not so much for this CL, but potential cleanup: Could some (or all) of these booleans be replaced by a finite state machine?",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7c7de6_0a3aec7c",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T20:06:21Z",
+      "side": 1,
+      "message": "Is this TODO migrated from the old UI?",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 257,
+        "endChar": 72
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a89483_ecc075d8",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T20:06:21Z",
+      "side": 1,
+      "message": "The normal (non-extension, non-privet) ticket is created within app.js. Should we have both of these functions in the same file? Either in model.js or app.js?",
+      "range": {
+        "startLine": 258,
+        "startChar": 35,
+        "endLine": 258,
+        "endChar": 54
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eace1d0f_f36075a0",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T20:06:21Z",
+      "side": 1,
+      "message": "Maybe use assertNotReached(), https://cs.chromium.org/chromium/src/ui/webui/resources/js/assert.js?l\u003d55.",
+      "range": {
+        "startLine": 275,
+        "startChar": 4,
+        "endLine": 275,
+        "endChar": 18
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea7104d_abf16725",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T20:06:21Z",
+      "side": 1,
+      "message": "What does |cjt| stand for? Maybe explain in a comment, since it does not seem obvious.",
+      "range": {
+        "startLine": 449,
+        "startChar": 10,
+        "endLine": 449,
+        "endChar": 13
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
