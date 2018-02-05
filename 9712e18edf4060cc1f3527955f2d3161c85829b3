@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caa13c88_2b78484e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:38:13Z",
+      "side": 1,
+      "message": "If we dispatch an event from here instead, we can avoid hierarchy entirely.",
+      "revId": "9712e18edf4060cc1f3527955f2d3161c85829b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2be2c0a_299ffd45",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:38:13Z",
+      "side": 1,
+      "message": "Should we instead expose setAutoAttach on ChildTargetManager? This way we can easily switch to aggregation.",
+      "revId": "9712e18edf4060cc1f3527955f2d3161c85829b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

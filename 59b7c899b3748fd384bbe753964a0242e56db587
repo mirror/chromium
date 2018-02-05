@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d61d04_c838a02e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesPanel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:38:13Z",
+      "side": 0,
+      "message": "So we don\u0027t show threads anymore?",
+      "revId": "59b7c899b3748fd384bbe753964a0242e56db587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
