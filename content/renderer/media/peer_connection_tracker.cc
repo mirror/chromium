@@ -635,7 +635,7 @@ void PeerConnectionTracker::TrackStop(RTCPeerConnectionHandler* pc_handler) {
   int id = GetLocalIDForHandler(pc_handler);
   if (id == -1)
     return;
-  SendPeerConnectionUpdate(id, "stop", std::string());
+  SendTarget()->Send(new PeerConnectionTrackerHost_StopPeerConnection(id));
 }
 
 void PeerConnectionTracker::TrackSignalingStateChange(

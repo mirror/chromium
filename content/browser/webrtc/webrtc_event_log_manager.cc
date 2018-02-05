@@ -139,6 +139,13 @@ void WebRtcEventLogManager::PeerConnectionRemoved(
                      GetBrowserContext(render_process_id), std::move(reply)));
 }
 
+void WebRtcEventLogManager::PeerConnectionStopped(
+    int render_process_id,
+    int lid,
+    base::OnceCallback<void(bool)> reply) {
+  return PeerConnectionRemoved(render_process_id, lid, std::move(reply));
+}
+
 void WebRtcEventLogManager::EnableLocalLogging(
     const base::FilePath& base_path,
     size_t max_file_size_bytes,
