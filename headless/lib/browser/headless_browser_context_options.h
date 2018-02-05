@@ -46,6 +46,9 @@ class HeadlessBrowserContextOptions {
 
   bool allow_cookies() const;
 
+  // See HeadlessBrowser::Options::font_render_hinting.
+  gfx::FontRenderParams::Hinting font_render_hinting() const;
+
   // Custom network protocol handlers. These can be used to override URL
   // fetching for different network schemes.
   const ProtocolHandlerMap& protocol_handlers() const;
@@ -77,6 +80,8 @@ class HeadlessBrowserContextOptions {
       override_web_preferences_callback_;
 
   ProtocolHandlerMap protocol_handlers_;
+
+  base::Optional<gfx::FontRenderParams::Hinting> font_render_hinting_;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessBrowserContextOptions);
 };
