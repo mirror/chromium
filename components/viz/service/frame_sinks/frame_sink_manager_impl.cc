@@ -42,6 +42,7 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
     uint32_t number_of_frames_to_activation_deadline,
     DisplayProvider* display_provider)
     : display_provider_(display_provider),
+      tick_clock_(base::DefaultTickClock::GetInstance()),
       surface_manager_(number_of_frames_to_activation_deadline),
       hit_test_manager_(this),
       binding_(this) {
@@ -65,6 +66,14 @@ FrameSinkManagerImpl::~FrameSinkManagerImpl() {
 
   surface_manager_.RemoveObserver(this);
   surface_manager_.RemoveObserver(&hit_test_manager_);
+}
+
+void FrameSinkManagerImpl::SetTickClockForTesting(base::TickClock* tick_clock) {
+  tick_clock_ = tick_clock;
+}
+
+base::TickClock* FrameSinkManagerImpl::GetTickClock() {
+  return tick_clock_;
 }
 
 void FrameSinkManagerImpl::BindAndSetClient(

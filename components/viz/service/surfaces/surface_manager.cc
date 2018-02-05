@@ -91,6 +91,7 @@ Surface* SurfaceManager::CreateSurface(
     base::WeakPtr<SurfaceClient> surface_client,
     const SurfaceInfo& surface_info,
     BeginFrameSource* begin_frame_source,
+    base::TickClock* tick_clock,
     bool needs_sync_tokens) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(surface_info.is_valid());
@@ -100,9 +101,9 @@ Surface* SurfaceManager::CreateSurface(
   // and return.
   auto it = surface_map_.find(surface_info.id());
   if (it == surface_map_.end()) {
-    surface_map_[surface_info.id()] =
-        std::make_unique<Surface>(surface_info, this, surface_client,
-                                  begin_frame_source, needs_sync_tokens);
+    surface_map_[surface_info.id()] = std::make_unique<Surface>(
+        surface_info, this, surface_client, begin_frame_source, tick_clock,
+        needs_sync_tokens);
     // We can get into a situation where multiple CompositorFrames arrive for a
     // FrameSink before the client can add any references for the frame. When
     // the second frame with a new size arrives, the first will be destroyed in

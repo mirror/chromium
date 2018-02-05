@@ -49,6 +49,13 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
                        DisplayProvider* display_provider = nullptr);
   ~FrameSinkManagerImpl() override;
 
+  // Sets an alternative base::TickClock to pass into surfaces for surface
+  // synchronization deadlines. This allows unit tests to mock the wall clock.
+  void SetTickClockForTesting(base::TickClock* tick_clock);
+
+  // Returns the base::TickClock used to set surface synchronization deadlines.
+  base::TickClock* GetTickClock();
+
   // Binds |this| as a FrameSinkManagerImpl for |request| on |task_runner|. On
   // Mac |task_runner| will be the resize helper task runner. May only be called
   // once.
@@ -199,6 +206,9 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
 
   // Provides a Display for CreateRootCompositorFrameSink().
   DisplayProvider* const display_provider_;
+
+  // Used for setting deadlines for surface synchronization.
+  base::TickClock* tick_clock_;
 
   // Set of BeginFrameSource along with associated FrameSinkIds. Any child
   // that is implicitly using this frame sink must be reachable by the

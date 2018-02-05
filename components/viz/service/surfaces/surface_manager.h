@@ -63,6 +63,7 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   Surface* CreateSurface(base::WeakPtr<SurfaceClient> surface_client,
                          const SurfaceInfo& surface_info,
                          BeginFrameSource* begin_frame_source,
+                         base::TickClock* tick_clock,
                          bool needs_sync_tokens);
 
   // Destroy the Surface once a set of sequence numbers has been satisfied.
