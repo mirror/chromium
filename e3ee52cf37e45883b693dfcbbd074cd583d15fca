@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4a5fc32_92ad07cf",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T23:11:53Z",
+      "side": 1,
+      "message": "This last patch sequence also changes this clear here to transparent.  I was reading code and realized that requires_clear just means that the layer is transparent and background_color is just the best thing to clear it to if we needed an opaque color, but isn\u0027t actually the right color to clear to.  This matches what the previous RasterSource clear was doing, which I think is correct.",
+      "revId": "e3ee52cf37e45883b693dfcbbd074cd583d15fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
