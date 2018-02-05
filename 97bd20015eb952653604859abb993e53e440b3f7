@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eb2bd834_fbd5e9cb",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:22:37Z",
+      "side": 1,
+      "message": "Ok, maybe still better with a check by the caller as CaptureCursor not a capture might be confusing. Your call.",
+      "parentUuid": "a139a5e7_ad312362",
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "364eeeff_ccde1e8c",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 1
@@ -81,6 +99,30 @@
       "revId": "97bd20015eb952653604859abb993e53e440b3f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec99aad_71ab42da",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:22:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8048595e_dbd0db27",
+      "range": {
+        "startLine": 401,
+        "startChar": 6,
+        "endLine": 401,
+        "endChar": 29
+      },
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
