@@ -16,6 +16,24 @@
       "revId": "441927584c8fb77e341988e4538e33309317f66f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365fa34a_befb7e4e",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-05T20:56:55Z",
+      "side": 1,
+      "message": "Nah, I don\u0027t think so. It would be too vague for anyone to take action on, I think. (I usually use TODOs for specific bugs/improvements and I feel like this is more a \"think about a philosophical question\" task.)",
+      "parentUuid": "9a2c9ec3_3725d724",
+      "revId": "441927584c8fb77e341988e4538e33309317f66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
