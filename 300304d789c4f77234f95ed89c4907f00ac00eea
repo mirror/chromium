@@ -70,6 +70,30 @@
       "revId": "300304d789c4f77234f95ed89c4907f00ac00eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40e60ac_1774c47b",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-02-05T21:56:13Z",
+      "side": 1,
+      "message": "In case the CPU caches reorder things.\n\nIt\u0027s only safe to rely on reference updates being atomic if you mark the field volatile, because the VM inserts a full memory barrier in that case, or if you explicitly use AtomicReference and specify the barrier semantics you need.",
+      "parentUuid": "525f7001_a80f0075",
+      "range": {
+        "startLine": 159,
+        "startChar": 32,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "300304d789c4f77234f95ed89c4907f00ac00eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
