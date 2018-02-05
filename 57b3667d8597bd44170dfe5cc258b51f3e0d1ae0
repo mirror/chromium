@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6422fa9d_a2befd42",
+        "filename": "gpu/command_buffer/client/gles2_implementation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-02-05T21:58:08Z",
+      "side": 1,
+      "message": "Move this to \"public\" with rest of QueryTrackerClient implementation?",
+      "revId": "57b3667d8597bd44170dfe5cc258b51f3e0d1ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
