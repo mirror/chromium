@@ -890,9 +890,8 @@ VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::Translation& proto) {
 }
 
 VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::UserConsent& proto) {
-  VISIT(feature);
+  VISIT_ENUM(feature);
   VISIT_REP(consent_grd_ids);
-  VISIT_REP(placeholder_replacements);
   VISIT(locale);
   VISIT_ENUM(status);
 }
