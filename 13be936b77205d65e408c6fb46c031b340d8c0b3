@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d812e4_7ab910f2",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T22:44:38Z",
+      "side": 1,
+      "message": "There are 4 places where the \"Reset\" string is displayed in that context, see https://imgur.com/a/NklVz.\n\n1) Section header.\n2) Section primary text\n3) Reset dialog title\n4) Reset dialog action button\n\nWhich one is this CL modifying? Is it only 1? If so, is that sufficient? Are the other ones translated correctly? Already? If so couldn\u0027t we just update the translations to be the same as the correctly translated ones?",
+      "range": {
+        "startLine": 2218,
+        "startChar": 3,
+        "endLine": 2218,
+        "endChar": 18
+      },
+      "revId": "13be936b77205d65e408c6fb46c031b340d8c0b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
