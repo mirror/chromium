@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 #include "base/time/clock.h"
 
 namespace base {
@@ -14,13 +15,17 @@ namespace base {
 // DefaultClock is a Clock implementation that uses Time::Now().
 class BASE_EXPORT DefaultClock : public Clock {
  public:
-  ~DefaultClock() override;
-
   // Simply returns Time::Now().
   Time Now() override;
 
   // Returns a shared instance of DefaultClock. This is thread-safe.
   static DefaultClock* GetInstance();
+
+ private:
+  friend struct LazyInstanceTraitsBase<DefaultClock>;
+
+  DefaultClock();
+  ~DefaultClock() override;
 };
 
 }  // namespace base

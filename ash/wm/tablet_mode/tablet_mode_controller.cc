@@ -117,7 +117,7 @@ TabletModeController::TabletModeController()
     : have_seen_accelerometer_data_(false),
       can_detect_lid_angle_(false),
       tabletmode_usage_interval_start_time_(base::Time::Now()),
-      tick_clock_(new base::DefaultTickClock()),
+      tick_clock_(base::DefaultTickClock::GetInstance()),
       tablet_mode_switch_is_on_(false),
       lid_is_closed_(false),
       auto_hide_title_bars_(!base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -499,10 +499,9 @@ bool TabletModeController::WasLidOpenedRecently() const {
   return elapsed_time.InSeconds() <= kLidRecentlyOpenedDurationSeconds;
 }
 
-void TabletModeController::SetTickClockForTest(
-    std::unique_ptr<base::TickClock> tick_clock) {
+void TabletModeController::SetTickClockForTest(base::TickClock* tick_clock) {
   DCHECK(tick_clock_);
-  tick_clock_ = std::move(tick_clock);
+  tick_clock_ = tick_clock;
 }
 
 }  // namespace ash

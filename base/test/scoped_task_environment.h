@@ -111,7 +111,7 @@ class ScopedTaskEnvironment {
 
   // Returns a TickClock whose time is updated by
   // FastForward(By|UntilNoTasksRemain).
-  std::unique_ptr<TickClock> GetMockTickClock();
+  TickClock* GetMockTickClock();
 
  private:
   class TestTaskTracker;
