@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "1f16e053_feec9479",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18f91f0_798d1720",
+      "range": {
+        "startLine": 548,
+        "startChar": 17,
+        "endLine": 548,
+        "endChar": 30
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a9503f6_3214c1b8",
         "filename": "net/disk_cache/memory/mem_entry_impl.cc",
         "patchSetId": 1
@@ -188,6 +212,30 @@
       "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7edc64_7631e711",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:48:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56872742_9f64d280",
+      "range": {
+        "startLine": 550,
+        "startChar": 14,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -238,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "0c95da0f_5af0fdd2",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:48:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "952c7d54_b64966f5",
+      "range": {
+        "startLine": 551,
+        "startChar": 12,
+        "endLine": 551,
+        "endChar": 25
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38483c7f_eea7305a",
         "filename": "net/disk_cache/memory/mem_entry_impl.cc",
         "patchSetId": 1
@@ -249,6 +321,30 @@
       "writtenOn": "2018-02-05T20:23:54Z",
       "side": 1,
       "message": "optional:  Would the second value make more sense as (i-\u003efirst) * kMaxSparseEntrySize + child-\u003eGetDataSize(kSparseData)?\n\nYou can then replace child_start_global with child_offset or somesuch, and make it have the value of (i-\u003efirst) * kMaxSparseEntrySize.",
+      "range": {
+        "startLine": 601,
+        "startChar": 42,
+        "endLine": 601,
+        "endChar": 43
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47eb33a_ec277968",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:48:40Z",
+      "side": 1,
+      "message": "Done, as it\u0027s indeed easier to understand; and also rephrased comment in similar way to be hopefully less clumsy.",
+      "parentUuid": "38483c7f_eea7305a",
       "range": {
         "startLine": 601,
         "startChar": 42,
