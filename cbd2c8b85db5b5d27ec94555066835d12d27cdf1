@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833daac7_73a46ecb",
+        "filename": "ios/chrome/test/app/web_view_interaction_test_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2018-02-05T23:34:41Z",
+      "side": 1,
+      "message": "I ended up adding two public APIs to web_view_interaction_test_util that take error. One in ios/chrome/test/app, and one in ios/web/public/test. Both of these locations are called by many tests directly, so it\u0027s not as simple as just fixing one and having the other point to it.\n\nWe talked offline about cleaning it up, but I think it\u0027s outside the scope of this CL.",
+      "revId": "cbd2c8b85db5b5d27ec94555066835d12d27cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
