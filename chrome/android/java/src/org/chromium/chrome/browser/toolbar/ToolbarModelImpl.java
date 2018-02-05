@@ -36,13 +36,17 @@ import org.chromium.ui.base.DeviceFormFactor;
 /**
  * Contains the data and state for the toolbar.
  */
-class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, ToolbarModelDelegate {
+@VisibleForTesting
+public class ToolbarModelImpl
+        extends ToolbarModel implements ToolbarDataProvider, ToolbarModelDelegate {
     private final BottomSheet mBottomSheet;
     private Tab mTab;
     private boolean mIsIncognito;
     private int mPrimaryColor;
     private boolean mIsUsingBrandColor;
     private boolean mUseModernDesign;
+    private boolean mShouldShowQueryInOmnibox;
+    private boolean mQueryInOmniboxEnabled;
 
     /**
      * Default constructor for this class.
@@ -59,7 +63,9 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
      * Handle any initialization that must occur after native has been initialized.
      */
     public void initializeWithNative() {
+        android.util.Log.w("thildebr", "init with native");
         initialize(this);
+        mQueryInOmniboxEnabled = ChromeFeatureList.isEnabled(ChromeFeatureList.QUERY_IN_OMNIBOX);
     }
 
     /**
@@ -128,6 +134,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public String getText() {
+        mShouldShowQueryInOmnibox = false;
         if (clearUrlForBottomSheetOpen()) return "";
 
         String displayText = super.getText();
@@ -135,7 +142,17 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         if (!hasTab() || mTab.isFrozen()) return displayText;
 
         String url = getCurrentUrl();
-        if (DomDistillerUrlUtils.isDistilledPage(url)) {
+        android.util.Log.w("thildebr", "query in omnibox enabled = " + mQueryInOmniboxEnabled);
+        if (mQueryInOmniboxEnabled && !isOfflinePage()) {
+            // Show thesearch terms in the omnibox instead of the URL if this is a DSE search URL.
+            String searchTerms = TemplateUrlService.getInstance().extractSearchTermsFromUrl(url);
+            android.util.Log.w("thildebr", "search terms = " + searchTerms);
+            if (!searchTerms.isEmpty()) {
+                mShouldShowQueryInOmnibox = true;
+                displayText = searchTerms;
+            }
+        } else if (DomDistillerUrlUtils.isDistilledPage(url)) {
+            android.util.Log.w("thildebr", "distilled page");
             if (isStoredArticle(url)) {
                 DomDistillerService domDistillerService =
                         DomDistillerServiceFactory.getForProfile(getProfile());
@@ -154,6 +171,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
                   DomDistillerTabUtils.getFormattedUrlFromOriginalDistillerUrl(originalUrl));
         }
 
+        android.util.Log.w("thildebr", "returning " + displayText);
         return displayText;
     }
 
@@ -253,6 +271,8 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public boolean shouldShowVerboseStatus() {
+        if (mShouldShowQueryInOmnibox) return true;
+
         // Because is offline page is cleared a bit slower, we also ensure that connection security
         // level is NONE or HTTP_SHOW_WARNING (http://crbug.com/671453).
         int securityLevel = getSecurityLevel();
@@ -268,8 +288,10 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public int getSecurityIconResource() {
-        return getSecurityIconResource(
-                getSecurityLevel(), !DeviceFormFactor.isTablet(), isOfflinePage());
+        // Treat all devices as large devices to show the omnibox info icon when showing the query
+        // in the omnibox.
+        boolean isSmallDevice = !(mShouldShowQueryInOmnibox || DeviceFormFactor.isTablet());
+        return getSecurityIconResource(getSecurityLevel(), isSmallDevice, isOfflinePage());
     }
 
     @VisibleForTesting

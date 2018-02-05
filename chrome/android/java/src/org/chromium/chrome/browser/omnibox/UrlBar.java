@@ -39,6 +39,7 @@ import org.chromium.base.SysUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.WindowDelegate;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.ui.UiUtils;
@@ -126,6 +127,8 @@ public class UrlBar extends AutocompleteEditText {
 
     /** The location of this view on the last ACTION_DOWN event. */
     private float mDownEventViewTop;
+
+    private boolean mIsShowingDseSearchTerms;
 
     /**
      * Implement this to get updates when the direction of the text in the URL bar changes.
@@ -641,6 +644,7 @@ public class UrlBar extends AutocompleteEditText {
         setText(formattedUrl);
 
         boolean textChanged = !TextUtils.equals(previousText, getEditableText());
+        mIsShowingDseSearchTerms = isDseSearch(url);
         if (textChanged && !isFocused()) scrollToTLD();
         return textChanged;
     }
@@ -658,6 +662,7 @@ public class UrlBar extends AutocompleteEditText {
 
     private void scrollToTLDInternal() {
         if (mFocused) return;
+        if (mIsShowingDseSearchTerms) return;
 
         // Ensure any selection from the focus state is cleared.
         setSelection(0);
@@ -931,5 +936,27 @@ public class UrlBar extends AutocompleteEditText {
                 float x, int top, int y, int bottom, Paint paint) {
             canvas.drawText(ELLIPSIS, x, y, paint);
         }
+    }
+
+    /**
+     * Determines whether the URL provided is a SRP URL for the DSE.
+     *
+     * @param url The URL to check.
+     * @return Whether or not the URL is a SRP URL for the DSE.
+     */
+    static boolean isDseSearch(String url) {
+        if (url == null) return false;
+
+        TemplateUrlService templateUrlService = TemplateUrlService.getInstance();
+        if (!templateUrlService.isSearchResultsPageFromDefaultSearchProvider(url)) {
+            return false;
+        }
+
+        String searchTerms = templateUrlService.extractSearchTermsFromUrl(url);
+        return !searchTerms.isEmpty();
+    }
+
+    public boolean isShowingDseSearchTerms() {
+        return mIsShowingDseSearchTerms;
     }
 }
