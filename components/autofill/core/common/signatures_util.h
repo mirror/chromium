@@ -21,7 +21,8 @@ using FormSignature = uint64_t;
 using FieldSignature = uint32_t;
 
 // Calculates form signature based on |form_data|.
-FormSignature CalculateFormSignature(const FormData& form_data);
+FormSignature CalculateFormSignature(const FormData& form_data,
+                                     bool record = false);
 
 // Calculates field signature based on |field_name| and |field_type|.
 FieldSignature CalculateFieldSignatureByNameAndType(

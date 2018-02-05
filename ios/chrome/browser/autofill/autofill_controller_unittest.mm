@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/autofill/autofill_controller.h"
 
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -15,6 +16,7 @@
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
+#include "components/autofill/core/common/signatures_util.h"
 #import "components/autofill/ios/browser/autofill_agent.h"
 #include "components/autofill/ios/browser/autofill_driver_ios.h"
 #import "components/autofill/ios/browser/form_suggestion.h"
@@ -264,14 +266,14 @@ TEST_F(AutofillControllerTest, ReadForm) {
   EXPECT_TRUE(autofill_manager->GetFormStructures().empty())
       << "Forms are registered at beginning";
   LoadHtml(kProfileFormHtml);
-  const std::vector<std::unique_ptr<FormStructure>>& forms =
+  const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms =
       autofill_manager->GetFormStructures();
   ASSERT_EQ(1U, forms.size());
-  CheckField(*forms[0], NAME_FULL, "name_1");
-  CheckField(*forms[0], ADDRESS_HOME_LINE1, "address_1");
-  CheckField(*forms[0], ADDRESS_HOME_CITY, "city_1");
-  CheckField(*forms[0], ADDRESS_HOME_STATE, "state_1");
-  CheckField(*forms[0], ADDRESS_HOME_ZIP, "zip_1");
+  CheckField(*forms.begin()->second, NAME_FULL, "name_1");
+  CheckField(*forms.begin()->second, ADDRESS_HOME_LINE1, "address_1");
+  CheckField(*forms.begin()->second, ADDRESS_HOME_CITY, "city_1");
+  CheckField(*forms.begin()->second, ADDRESS_HOME_STATE, "state_1");
+  CheckField(*forms.begin()->second, ADDRESS_HOME_ZIP, "zip_1");
   ExpectMetric("Autofill.IsEnabled.PageLoad", 1);
   ExpectHappinessMetric(AutofillMetrics::FORMS_LOADED);
 };
@@ -283,10 +285,11 @@ TEST_F(AutofillControllerTest, ReadFormName) {
   AutofillManager* autofill_manager =
       AutofillDriverIOS::FromWebState(web_state())->autofill_manager();
   LoadHtml(kMinimalFormWithNameHtml);
-  const std::vector<std::unique_ptr<FormStructure>>& forms =
+  const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms =
       autofill_manager->GetFormStructures();
   ASSERT_EQ(1U, forms.size());
-  EXPECT_EQ(base::UTF8ToUTF16("form1"), forms[0]->ToFormData().name);
+  EXPECT_EQ(base::UTF8ToUTF16("form1"),
+            forms.begin()->second->ToFormData().name);
 };
 
 // Checks that an HTML page containing a profile-type form which is submitted

@@ -29,6 +29,7 @@
 #include "components/autofill/core/browser/form_structure.h"
 #include "components/autofill/core/common/autofill_features.h"
 #include "content/public/common/content_switches.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/http/http_status_code.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
@@ -90,10 +91,10 @@ std::vector<base::FilePath> GetTestFiles() {
 }
 
 std::string FormStructuresToString(
-    const std::vector<std::unique_ptr<FormStructure>>& forms) {
+    const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms) {
   std::string forms_string;
-  for (const auto& form : forms) {
-    for (const auto& field : *form) {
+  for (const auto& form_it : forms) {
+    for (const auto& field : *form_it.second.get()) {
       forms_string += field->Type().ToString();
       forms_string += " | " + base::UTF16ToUTF8(field->name);
       forms_string += " | " + base::UTF16ToUTF8(field->label);
@@ -130,6 +131,8 @@ class FormStructureBrowserTest
  private:
   std::unique_ptr<HttpResponse> HandleRequest(const HttpRequest& request);
 
+  std::unique_ptr<net::EmbeddedTestServer> https_server_;
+
   base::test::ScopedFeatureList feature_list_;
 
   // The response content to be returned by the embedded test server. Note that
@@ -164,9 +167,14 @@ void FormStructureBrowserTest::SetUpCommandLine(
 void FormStructureBrowserTest::SetUpOnMainThread() {
   InProcessBrowserTest::SetUpOnMainThread();
 
-  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+  // Setup the https server.
+  https_server_ = std::make_unique<net::EmbeddedTestServer>(
+      net::EmbeddedTestServer::TYPE_HTTPS);
+  host_resolver()->AddRule("*", "127.0.0.1");
+  https_server_->RegisterRequestHandler(base::BindRepeating(
       &FormStructureBrowserTest::HandleRequest, base::Unretained(this)));
-  ASSERT_TRUE(embedded_test_server()->Start());
+  ASSERT_TRUE(https_server_->InitializeAndListen());
+  https_server_->StartAcceptingConnections();
 }
 
 void FormStructureBrowserTest::GenerateResults(const std::string& input,
@@ -186,7 +194,7 @@ void FormStructureBrowserTest::GenerateResults(const std::string& input,
 
   // Navigate to the test html content.
   ASSERT_NO_FATAL_FAILURE(ui_test_utils::NavigateToURL(
-      browser(), embedded_test_server()->GetURL("/test.html")));
+      browser(), https_server_->GetURL("/test.html")));
 
   // Dump the form fields (and their inferred field types).
   content::WebContents* web_contents =
@@ -197,7 +205,7 @@ void FormStructureBrowserTest::GenerateResults(const std::string& input,
   ASSERT_NE(nullptr, autofill_driver);
   AutofillManager* autofill_manager = autofill_driver->autofill_manager();
   ASSERT_NE(nullptr, autofill_manager);
-  const std::vector<std::unique_ptr<FormStructure>>& forms =
+  const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms =
       autofill_manager->form_structures_;
   *output = FormStructuresToString(forms);
 }
