@@ -32,6 +32,8 @@ enum MediaFileValidationType {
   APPLY_MEDIA_FILE_VALIDATION,
 };
 
+class MTPDeviceAsyncDelegate;
+
 class DeviceMediaAsyncFileUtil : public storage::AsyncFileUtil {
  public:
   ~DeviceMediaAsyncFileUtil() override;
@@ -132,6 +134,9 @@ class DeviceMediaAsyncFileUtil : public storage::AsyncFileUtil {
   void RemoveWatcher(const storage::FileSystemURL& url,
                      const bool recursive,
                      const storage::WatcherManager::StatusCallback& callback);
+
+  static MTPDeviceAsyncDelegate* GetMTPDeviceDelegate(
+      const storage::FileSystemURL& url);
 
  private:
   class MediaPathFilterWrapper;
