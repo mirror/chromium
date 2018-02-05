@@ -229,7 +229,7 @@ TEST_F(NGInlineLayoutAlgorithmTest, MAYBE_VerticalAlignBottomReplaced) {
 
 // Verifies that text can flow correctly around floats that were positioned
 // before the inline block.
-TEST_F(NGInlineLayoutAlgorithmTest, TextFloatsAroundFloatsBefore) {
+TEST_F(NGInlineLayoutAlgorithmTest, DISABLED_TextFloatsAroundFloatsBefore) {
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>

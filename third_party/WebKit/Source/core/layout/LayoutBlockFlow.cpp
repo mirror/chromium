@@ -3067,22 +3067,8 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
   // children as blocks.
   // So, if our children are currently inline and a block child has to be
   // inserted, we move all our inline children into anonymous block boxes.
-  bool child_is_block_level;
-  bool layout_ng_enabled = RuntimeEnabledFeatures::LayoutNGEnabled();
-  if (layout_ng_enabled && !FirstChild() &&
-      (new_child->IsFloating() ||
-       (new_child->IsOutOfFlowPositioned() &&
-        !new_child->StyleRef().IsOriginalDisplayInlineType()))) {
-    // TODO(kojii): We once forced all floats and OOF to create a block
-    // container in LayoutNG, which turned out to be not a great way, but
-    // completely turning this off breaks too much. When an OOF is an inline
-    // type, we need to disable this so that we can compute the inline static
-    // position. crbug.com/734554
-    child_is_block_level = true;
-  } else {
-    child_is_block_level =
-        !new_child->IsInline() && !new_child->IsFloatingOrOutOfFlowPositioned();
-  }
+  bool child_is_block_level =
+      !new_child->IsInline() && !new_child->IsFloatingOrOutOfFlowPositioned();
 
   if (ChildrenInline()) {
     if (child_is_block_level) {
@@ -3117,8 +3103,7 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
       LayoutBlockFlow* new_block = ToLayoutBlockFlow(CreateAnonymousBlock());
       LayoutBox::AddChild(new_block, before_child);
       // Reparent adjacent floating or out-of-flow siblings to the new box.
-      if (!layout_ng_enabled)
-        new_block->ReparentPrecedingFloatingOrOutOfFlowSiblings();
+      new_block->ReparentPrecedingFloatingOrOutOfFlowSiblings();
       new_block->AddChild(new_child);
       new_block->ReparentSubsequentFloatingOrOutOfFlowSiblings();
       return;
