@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "513bd801_6f54f862",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Please take a look at the \"run\" method documentation: https://developer.apple.com/documentation/foundation/nsrunloop/1412430-run?language\u003dobjc\n\nSpecifically it says: \"Manually removing all known input sources and timers from the run loop is not a guarantee that the run loop will exit.\" \u0026 \"If you want the run loop to terminate, you shouldn\u0027t use this method.\"\n\nThe loop should stop running if the output stream is closed or some time has passed (e.g. 10 seconds).",
+      "parentUuid": "e3bc55a0_348a4613",
+      "range": {
+        "startLine": 499,
+        "startChar": 47,
+        "endLine": 499,
+        "endChar": 50
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d97cbab0_c4dfc949",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 9

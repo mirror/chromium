@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c233b76_cd013033",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Instead of using DISPATCH_TIME_FOREVER, please wait for some period of time and assert that the return value of dispatch_semaphore_wait() is equal to 0. Something like 10 seconds should be enough for the test to finish.\n\nHowever, if you are going to replace [NSRunLoop run] with a condition as recommended in the NSRunLoop docs (see the comment above), you could add a method \"streamClosed\" to StreamBodyRequestDelegate that returns \u0027true\u0027 when the output stream is closed. Instead of waiting for the semaphore you can simply assert that [StreamBodyRequestDelegate streamClosed] is equal to \"true\".",
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1db566_be21cdd0",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Could you please add a DCHECK that |pending_read_buffer_| is equal to nullptr?",
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8eb7e9b_f7f9e0b1",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Could you add CHECK that |buffer_length| \u003e\u003d |data_length_|?",
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82989eb9_e4ad2dfc",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Could you CHECK that the data fits into |data_|?",
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bdf639_cd1a9043",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Why don\u0027t use \"char data_[kDefaultIOBufferSize]\" instead? I would actually changed the file extension to \".mm\" and used NSData instead but that is up to you.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c0fa26_c904edf2",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "kTestData \u003d\u003e \"\"",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2023bddf_e1d12e92",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "if",
+      "range": {
+        "startLine": 131,
+        "startChar": 45,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990002ae_7642255d",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Remove \"case\"?",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 7
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ec6d5d_82ab532c",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Same. Use \"\".",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 39
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ee6f61_50a4fe44",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "If you like, you can also add some code here to check that the callback was called. That will prove that UploadDataStream::OnReadCompleted() was indeed called by the ChunkedDataStreamUploader.",
+      "range": {
+        "startLine": 161,
+        "startChar": 56,
+        "endLine": 161,
+        "endChar": 58
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a037af_3443a1cb",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Don\u0027t need it here.",
+      "range": {
+        "startLine": 164,
+        "startChar": 43,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba1554e_f0f8c863",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-05T20:59:18Z",
+      "side": 1,
+      "message": "Why don\u0027t use\n  EXPECT_FALSE(memcmp(test_data_long, buffer-\u003edata(), sizeof(test_data_long)));\nas in previous tests?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "da171451e20a59bc2b0974f0f1ebae420f6f181e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
