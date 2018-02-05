@@ -22,6 +22,8 @@ blink_modules_sources("sensor") {
     "OrientationSensor.h",
     "RelativeOrientationSensor.cpp",
     "RelativeOrientationSensor.h",
+    "RemapSensorReading.cpp",
+    "RemapSensorReading.h",
     "Sensor.cpp",
     "Sensor.h",
     "SensorErrorEvent.cpp",
