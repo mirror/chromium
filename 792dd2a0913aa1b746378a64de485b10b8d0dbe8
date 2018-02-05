@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd7722ba_8bb55d9a",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-05T23:01:43Z",
+      "side": 1,
+      "message": "nit: \"consolidated\" is a non-obvious name for this - can we pick something more description, or otherwise add a comment to explain the purpose?",
+      "range": {
+        "startLine": 190,
+        "startChar": 5,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
