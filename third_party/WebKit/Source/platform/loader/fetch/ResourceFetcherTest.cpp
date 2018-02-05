@@ -145,9 +145,15 @@ TEST_F(ResourceFetcherTest, UseExistingResource) {
 }
 
 TEST_F(ResourceFetcherTest, Vary) {
+  scoped_refptr<const SecurityOrigin> security_origin =
+      SecurityOrigin::CreateUnique();
+  Context()->SetSecurityOrigin(security_origin);
+
   KURL url("http://127.0.0.1:8000/foo.html");
   Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
+  resource->SetSourceOrigin(security_origin);
   GetMemoryCache()->Add(resource);
+
   ResourceResponse response(url);
   response.SetHTTPStatusCode(200);
   response.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=3600");
@@ -203,11 +209,17 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
 }
 
 TEST_F(ResourceFetcherTest, VaryOnBack) {
+  scoped_refptr<const SecurityOrigin> security_origin =
+      SecurityOrigin::CreateUnique();
+  Context()->SetSecurityOrigin(security_origin);
+
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url("http://127.0.0.1:8000/foo.html");
   Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
+  resource->SetSourceOrigin(security_origin);
   GetMemoryCache()->Add(resource);
+
   ResourceResponse response(url);
   response.SetHTTPStatusCode(200);
   response.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=3600");
@@ -284,12 +296,18 @@ class RequestSameResourceOnComplete
 };
 
 TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
+  scoped_refptr<const SecurityOrigin> security_origin =
+      SecurityOrigin::CreateUnique();
+  Context()->SetSecurityOrigin(security_origin);
+
   KURL url("http://127.0.0.1:8000/foo.png");
+
   ResourceResponse response(url);
   response.SetHTTPStatusCode(200);
   response.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=3600");
   response.SetHTTPHeaderField(HTTPNames::ETag, "1234567890");
   RegisterMockedURLLoadWithCustomResponse(url, response);
+
   ResourceFetcher* fetcher1 = ResourceFetcher::Create(Context());
   ResourceRequest request1(url);
   request1.SetHTTPHeaderField(HTTPNames::Cache_Control, "no-cache");
@@ -694,9 +712,15 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
 }
 
 TEST_F(ResourceFetcherTest, Revalidate304) {
+  scoped_refptr<const SecurityOrigin> security_origin =
+      SecurityOrigin::CreateUnique();
+  Context()->SetSecurityOrigin(security_origin);
+
   KURL url("http://127.0.0.1:8000/foo.html");
   Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
+  resource->SetSourceOrigin(security_origin);
   GetMemoryCache()->Add(resource);
+
   ResourceResponse response(url);
   response.SetHTTPStatusCode(304);
   response.SetHTTPHeaderField("etag", "1234567890");
