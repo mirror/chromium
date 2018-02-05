@@ -64,8 +64,7 @@ class ChromeSSLHostStateDelegate : public content::SSLHostStateDelegate {
   bool HasAllowException(const std::string& host) const override;
 
  protected:
-  // SetClock takes ownership of the passed in clock.
-  void SetClock(std::unique_ptr<base::Clock> clock);
+  void SetClock(base::Clock* clock);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(DefaultMemorySSLHostStateDelegateTest, AfterRestart);
@@ -108,7 +107,7 @@ class ChromeSSLHostStateDelegate : public content::SSLHostStateDelegate {
       CreateDictionaryEntriesDisposition create_entries,
       bool* expired_previous_decision);
 
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
   RememberSSLExceptionDecisionsDisposition should_remember_ssl_decisions_;
   Profile* profile_;
 

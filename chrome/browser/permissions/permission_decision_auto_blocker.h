@@ -139,7 +139,7 @@ class PermissionDecisionAutoBlocker : public KeyedService {
       scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> db_manager,
       int timeout);
 
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+  void SetClockForTesting(base::Clock* clock);
 
   // Keys used for storing count data in a website setting.
   static const char kPromptDismissCountKey[];
@@ -154,7 +154,7 @@ class PermissionDecisionAutoBlocker : public KeyedService {
   // Timeout in ms.
   int safe_browsing_timeout_;
 
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(PermissionDecisionAutoBlocker);
 };

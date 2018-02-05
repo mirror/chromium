@@ -83,11 +83,11 @@ class MockBattOrConnection : public BattOrConnection {
 class TestableBattOrAgent : public BattOrAgent {
  public:
   TestableBattOrAgent(BattOrAgent::Listener* listener,
-                      std::unique_ptr<base::TickClock> tick_clock)
+                      base::TickClock* tick_clock)
       : BattOrAgent("/dev/test", listener, nullptr) {
     connection_ =
         std::unique_ptr<BattOrConnection>(new MockBattOrConnection(this));
-    tick_clock_ = std::move(tick_clock);
+    tick_clock_ = tick_clock;
   }
 
   MockBattOrConnection* GetConnection() {

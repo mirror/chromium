@@ -229,8 +229,6 @@ class MCSProbe {
       const checkin_proto::AndroidCheckinResponse& checkin_response);
   void StartMCSLogin();
 
-  base::DefaultClock clock_;
-
   base::CommandLine command_line_;
 
   base::FilePath gcm_store_path_;
@@ -320,9 +318,9 @@ void MCSProbe::Start() {
       gcm_store_path_, file_thread_.task_runner(),
       std::make_unique<FakeEncryptor>());
 
-  mcs_client_ =
-      std::make_unique<MCSClient>("probe", &clock_, connection_factory_.get(),
-                                  gcm_store_.get(), &recorder_);
+  mcs_client_ = std::make_unique<MCSClient>(
+      "probe", base::DefaultClock::GetInstance(), connection_factory_.get(),
+      gcm_store_.get(), &recorder_);
   run_loop_ = std::make_unique<base::RunLoop>();
   gcm_store_->Load(GCMStore::CREATE_IF_MISSING,
                    base::Bind(&MCSProbe::LoadCallback,

@@ -50,11 +50,9 @@ void AlarmManager::AlarmInfo::PostTask() {
 }
 
 AlarmManager::AlarmManager(
-    std::unique_ptr<base::Clock> clock,
+    base::Clock* clock,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : clock_(std::move(clock)),
-      task_runner_(std::move(task_runner)),
-      weak_factory_(this) {
+    : clock_(clock), task_runner_(std::move(task_runner)), weak_factory_(this) {
   DCHECK(clock_);
   DCHECK(task_runner_);
   clock_tick_timer_.SetTaskRunner(task_runner_);
@@ -66,7 +64,7 @@ AlarmManager::AlarmManager(
 }
 
 AlarmManager::AlarmManager()
-    : AlarmManager(std::make_unique<base::DefaultClock>(),
+    : AlarmManager(base::DefaultClock::GetInstance(),
                    base::ThreadTaskRunnerHandle::Get()) {}
 
 AlarmManager::~AlarmManager() {}

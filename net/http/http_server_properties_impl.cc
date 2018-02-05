@@ -134,8 +134,6 @@ void HttpServerPropertiesImpl::SetServerNetworkStats(
 
 void HttpServerPropertiesImpl::SetQuicServerInfoMap(
     std::unique_ptr<QuicServerInfoMap> quic_server_info_map) {
-  DCHECK_EQ(quic_server_info_map->max_size(), quic_server_info_map_.max_size());
-
   // Add the entries from persisted data.
   quic_server_info_map_.Swap(*quic_server_info_map);
 
