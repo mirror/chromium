@@ -983,7 +983,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, AutoMargin) {
 
 // Verifies that floats can be correctly positioned if they are inside of nested
 // empty blocks.
-TEST_F(NGBlockLayoutAlgorithmTest, PositionFloatInsideEmptyBlocks) {
+TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_PositionFloatInsideEmptyBlocks) {
   SetBodyInnerHTML(R"HTML(
       <style>
         #container {
@@ -1897,7 +1897,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, InnerChildrenFragmentationSmallHeight) {
 }
 
 // Tests that float children fragment correctly inside a parallel flow.
-TEST_F(NGBlockLayoutAlgorithmTest, FloatFragmentationParallelFlows) {
+TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_FloatFragmentationParallelFlows) {
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
@@ -1975,7 +1975,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, FloatFragmentationParallelFlows) {
 
 // Tests that float children don't fragment if they aren't in the same writing
 // mode as their parent.
-TEST_F(NGBlockLayoutAlgorithmTest, FloatFragmentationOrthogonalFlows) {
+TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_FloatFragmentationOrthogonalFlows) {
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
