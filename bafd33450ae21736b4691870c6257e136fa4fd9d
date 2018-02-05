@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18828a2b_271e987e",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:53:28Z",
+      "side": 1,
+      "message": "nit:  Braces",
+      "range": {
+        "startLine": 551,
+        "startChar": 14,
+        "endLine": 551,
+        "endChar": 0
+      },
+      "revId": "bafd33450ae21736b4691870c6257e136fa4fd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd7144d_a37f4e22",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:53:28Z",
+      "side": 1,
+      "message": "Just out of curiousity...Could you OOM the disk cache by using range requests for the bytes: \n kMaxSparseEntrySize-1, 2*kMaxSparseEntrySize-1, 3*kMaxSparseEntrySize-1, etc, resulting in consuming kMaxSparseEntrySize * \u003cwhatever the max in-memory cache size\u003e bytes of RAM for a larger file?  Not sure how well we\u0027d handle a comparable on-disk cached file, either, for that matter.",
+      "range": {
+        "startLine": 597,
+        "startChar": 34,
+        "endLine": 597,
+        "endChar": 43
+      },
+      "revId": "bafd33450ae21736b4691870c6257e136fa4fd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
