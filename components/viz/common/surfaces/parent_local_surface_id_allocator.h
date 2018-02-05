@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
+#include "base/unguessable_token.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/viz_common_export.h"
 
@@ -20,13 +21,17 @@ namespace viz {
 // child when the parent needs to change surface parameters, for example.
 class VIZ_COMMON_EXPORT ParentLocalSurfaceIdAllocator {
  public:
-  ParentLocalSurfaceIdAllocator();
-  ~ParentLocalSurfaceIdAllocator();
+  ParentLocalSurfaceIdAllocator() = default;
+  ~ParentLocalSurfaceIdAllocator() = default;
+
+  LocalSurfaceId set_child_sequence_number(uint32_t child_sequence_number);
 
   LocalSurfaceId GenerateId();
 
  private:
-  uint32_t next_id_;
+  uint32_t next_parent_id_ = 1;
+  uint32_t child_sequence_number_ = 1;
+  base::UnguessableToken nonce_;
 
   DISALLOW_COPY_AND_ASSIGN(ParentLocalSurfaceIdAllocator);
 };
