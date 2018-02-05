@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22829e48_7a88d992",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:04:14Z",
+      "side": 1,
+      "message": "Just in case: the last time I asked you to review a GetAvailableRange rewrite it was in a different backend :)\n\nSo children are at 4K boundaries, and so it\u0027s possible that the first potentially relevant child only has stuff that\u0027s before offset but on same 4K-aligned range; e.g. \nsuppose that offset \u003d 2048, len \u003d 4096, and that you have the following two ranges in the cache:\n[0, 1024),  [4096, 8192)\n\nHere it would find the child containing the [0, 1024) range first, as int(2048 / 4096) \u003d 0,\nbut it\u0027s not actually relevant to the request.",
+      "parentUuid": "9beb7e8e_9c0d3f51",
+      "range": {
+        "startLine": 534,
+        "startChar": 45,
+        "endLine": 534,
+        "endChar": 0
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35e38cca_cde9da15",
         "filename": "net/disk_cache/memory/mem_entry_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-05T19:28:19Z",
       "side": 1,
       "message": "Maybe rename next_child to reflect the final value it takes, not the initial value it\u0027s set to?",
+      "range": {
+        "startLine": 548,
+        "startChar": 17,
+        "endLine": 548,
+        "endChar": 30
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6917bee5_22745890",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:04:14Z",
+      "side": 1,
+      "message": "Maybe this instead:\n\nnet::Interval\u003cint64_t\u003e relevant_in_next_child;\nrequested.Intersects(ChildInterval(i), \u0026relevant_in_next_child))\n\nOr rather:\nnet::Interval\u003cint64_t\u003e relevant_in_next_child;\nif (!requested.Intersects(ChildInterval(i), \u0026relevant_in_next_child) ||\n    relevant_in_next_child.min() !\u003d found.max())\n  break;\n\n... since it makes thinking of what happens when the intersection is empty easier --- I think in current code we actually try to merge it in, then bail out on one more iteration.\n\n(Probably could throw in the end check too..)",
+      "parentUuid": "35e38cca_cde9da15",
       "range": {
         "startLine": 548,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "56872742_9f64d280",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:04:14Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "8a9503f6_3214c1b8",
+      "range": {
+        "startLine": 550,
+        "startChar": 14,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19c8b9b8_c0e84676",
         "filename": "net/disk_cache/memory/mem_entry_impl.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2018-02-05T19:28:19Z",
       "side": 1,
       "message": "this is the same as found.SetMax(next_child.max()), right?",
+      "range": {
+        "startLine": 551,
+        "startChar": 12,
+        "endLine": 551,
+        "endChar": 25
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952c7d54_b64966f5",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-05T20:04:14Z",
+      "side": 1,
+      "message": "Modulo weirdness if next_child is empty.",
+      "parentUuid": "19c8b9b8_c0e84676",
       "range": {
         "startLine": 551,
         "startChar": 12,
