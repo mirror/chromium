@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bb685f56_1af64a6c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query-order.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T23:21:13Z",
+      "side": 1,
+      "message": "I\u0027d personally find \"options || {}\" clearer for this case.",
+      "parentUuid": "1eaa7b55_4338a0b6",
+      "revId": "afb6e5e5417d7d1eed8e1adcbb0ebd0fd217319b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bed269a_53087dd6",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query-order.html",
         "patchSetId": 7
