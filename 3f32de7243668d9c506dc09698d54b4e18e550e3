@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8fc0a58_8cf50e31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-05T15:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cdb0e2f_1c23c98c",
+      "range": {
+        "startLine": 128,
+        "startChar": 17,
+        "endLine": 128,
+        "endChar": 21
+      },
+      "revId": "3f32de7243668d9c506dc09698d54b4e18e550e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf5ad25b_3278d2b7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "3f32de7243668d9c506dc09698d54b4e18e550e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2065bef_38da95f1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-05T15:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf5ad25b_3278d2b7",
+      "range": {
+        "startLine": 536,
+        "startChar": 8,
+        "endLine": 536,
+        "endChar": 65
+      },
+      "revId": "3f32de7243668d9c506dc09698d54b4e18e550e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
