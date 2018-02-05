@@ -98,9 +98,21 @@ uLong ZEXPORT adler32_z(adler, buf, len)
         return adler | (sum2 << 16);
     }
 
+#if defined(ADLER32_SIMD_SSSE3)
+    /*
+     * Use SSSE3 to compute the adler32. Since this routine can be
+     * freely used, check CPU features here.
+     */
+    if (buf == Z_NULL) {
+        if (!len) /* Assume user is calling adler32(0, NULL, 0); */
+            x86_check_features();
+        return 1L;
+    }
+#else
     /* initial Adler-32 value (deferred check for len == 1 speed) */
     if (buf == Z_NULL)
         return 1L;
+#endif
 
     /* in case short lengths are provided, keep it somewhat fast */
     if (len < 16) {
