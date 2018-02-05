@@ -164,8 +164,8 @@ public class ScreenShooter extends TestWatcher {
                 ? d.getMethodName()
                 : methodDirectoryAnnotation.value();
         if (!testMethodDir.isEmpty()) mDir = new File(mDir, testMethodDir);
-        if (!mDir.exists()) assertTrue("Create screenshot directory", mDir.mkdirs());
-        mFeatures = d.getAnnotation(Feature.class).value();
+        Feature featureAnnotation = d.getAnnotation(Feature.class);
+        mFeatures = featureAnnotation == null ? new String[]{} : featureAnnotation.value();
     }
 
     private static void setFilterValue(Map<String, String> tags, String name, String value) {
@@ -181,6 +181,8 @@ public class ScreenShooter extends TestWatcher {
      */
     public void shoot(String shotName, TagsEnum... tags) {
         assertNotNull("ScreenShooter rule initialized", mDir);
+        if (!mDir.exists()) assertTrue("Create screenshot directory", mDir.mkdirs());
+
         Map<String, String> filters = new HashMap<>();
         setFilterValue(filters, TEST_CLASS_FILTER, mTestClassName);
         setFilterValue(filters, TEST_METHOD_FILTER, mTestMethodName);
