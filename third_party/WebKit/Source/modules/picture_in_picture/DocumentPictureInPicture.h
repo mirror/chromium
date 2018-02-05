@@ -13,6 +13,7 @@ class Document;
 class HTMLVideoElement;
 class ScriptPromise;
 class ScriptState;
+class TreeScope;
 
 class DocumentPictureInPicture {
   STATIC_ONLY(DocumentPictureInPicture);
@@ -22,7 +23,7 @@ class DocumentPictureInPicture {
 
   static ScriptPromise exitPictureInPicture(ScriptState*, Document&);
 
-  static HTMLVideoElement* pictureInPictureElement(Document&);
+  static HTMLVideoElement* pictureInPictureElement(TreeScope&);
 };
 
 }  // namespace blink
