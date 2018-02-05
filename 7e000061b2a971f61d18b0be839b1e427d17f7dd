@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9beb7e8e_9c0d3f51",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T19:28:19Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve completely forgotten the details of all this.  Why would lower_bound(ToChildIndex(offset)) be before [offset, offset+len)?",
+      "range": {
+        "startLine": 534,
+        "startChar": 45,
+        "endLine": 534,
+        "endChar": 0
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e38cca_cde9da15",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T19:28:19Z",
+      "side": 1,
+      "message": "Maybe rename next_child to reflect the final value it takes, not the initial value it\u0027s set to?",
+      "range": {
+        "startLine": 548,
+        "startChar": 17,
+        "endLine": 548,
+        "endChar": 30
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9503f6_3214c1b8",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T19:28:19Z",
+      "side": 1,
+      "message": "Does this need to be after the IntersetWith?  That\u0027s an optimization that doesn\u0027t really matter for performance, but want to make sure I\u0027m understanding the code.",
+      "range": {
+        "startLine": 550,
+        "startChar": 14,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c8b9b8_c0e84676",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T19:28:19Z",
+      "side": 1,
+      "message": "this is the same as found.SetMax(next_child.max()), right?",
+      "range": {
+        "startLine": 551,
+        "startChar": 12,
+        "endLine": 551,
+        "endChar": 25
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
