@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44d39142_6ee0ef6a",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T20:37:18Z",
+      "side": 1,
+      "message": "Does this interface implementation expect to talk to multiple bindings at once? SetClient() seems like a 1:1 relationship, which indicates that this maybe should be mojo::Binding\u003c\u003e as well?",
+      "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
