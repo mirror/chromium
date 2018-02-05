@@ -16,6 +16,24 @@
       "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9838c205_6aa95020",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-05T21:35:06Z",
+      "side": 1,
+      "message": "Based on a discussion with jamescook@, we favored BindingSet\u003c\u003e over Binding\u003c\u003e eventhough we have a single client at the moment. The reason is that the client stays bound, but it\u0027s possible for some other random piece of code in chrome to temporarily bind the interface, call a method, and release the binding. If we use Binding\u003c\u003e that doesn\u0027t work, since there is only one Binding.",
+      "parentUuid": "44d39142_6ee0ef6a",
+      "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
