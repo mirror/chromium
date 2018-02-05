@@ -1,0 +1,18 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+// A return value when asked to commit a same-document navigation.
+enum CommitResult {
+  // The commit proceeded as expected.
+  Ok,
+
+  // The commit could not proceed.
+  Aborted,
+
+  // The commit could not proceed, and the navigation should be restarted as a
+  // cross-document navigation.
+  RestartCrossDocument,
+};
