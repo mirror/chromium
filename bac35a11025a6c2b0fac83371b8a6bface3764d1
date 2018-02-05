@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67d82370_550af759",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomButtonParams.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T16:04:54Z",
+      "side": 1,
+      "message": "Right now I\u0027m not adding this to the public API, so it\u0027s only for experimental purposes. Even on trunk, if someone adds extra items that don\u0027t have the toolbar ID, they will get added to the bottom bar instead. This CL doesn\u0027t change that, it just adds a different way to flag an item to go on the top toolbar.\n\nIf having both a RemoteView and bottom toolbar items is not desired, we can forbid that somehow, but it would be something that would apply regardless of this change.",
+      "parentUuid": "7412fe7c_1abd2243",
+      "range": {
+        "startLine": 219,
+        "startChar": 31,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "bac35a11025a6c2b0fac83371b8a6bface3764d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888bf5da_d843d8cb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "bac35a11025a6c2b0fac83371b8a6bface3764d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edb9498_b6211456",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T16:04:54Z",
+      "side": 1,
+      "message": "Updated this so we only ever add the buttons once to the toolbar and just update the visuals afterwards.",
+      "parentUuid": "888bf5da_d843d8cb",
+      "range": {
+        "startLine": 951,
+        "startChar": 28,
+        "endLine": 951,
+        "endChar": 52
+      },
+      "revId": "bac35a11025a6c2b0fac83371b8a6bface3764d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "72912be3_bed81bea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T16:04:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure I completely understand what you\u0027re saying, but I removed the ID from the API, because I\u0027m really interested in the params anyway.",
+      "parentUuid": "ae17e532_180c9c28",
+      "range": {
+        "startLine": 463,
+        "startChar": 12,
+        "endLine": 463,
+        "endChar": 32
+      },
+      "revId": "bac35a11025a6c2b0fac83371b8a6bface3764d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "478f84f8_72c66a45",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/CustomTabToolbar.java",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0fc55516_8c9fe7e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/CustomTabToolbar.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T16:04:54Z",
+      "side": 1,
+      "message": "Well, we do know that all the children should be image buttons. We don\u0027t know the number of children, but getChildAt() will just return null for an out-of-bounds access, which I felt was good enough for testing. If we wanted to return a List, we would have to build something manually.",
+      "parentUuid": "478f84f8_72c66a45",
+      "range": {
+        "startLine": 243,
+        "startChar": 56,
+        "endLine": 243,
+        "endChar": 61
+      },
+      "revId": "bac35a11025a6c2b0fac83371b8a6bface3764d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54f9ba8d_e0e3ad18",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-30T21:56:25Z",
       "side": 1,
       "message": "might be good to have another one testing a client that uses two buttons and a remoteview, since we know client might do that :) and the codepaths are intertwined in our implementation quite a bit.",
+      "range": {
+        "startLine": 872,
+        "startChar": 16,
+        "endLine": 872,
+        "endChar": 41
+      },
+      "revId": "bac35a11025a6c2b0fac83371b8a6bface3764d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d52c7c_73f76d6d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T16:04:54Z",
+      "side": 1,
+      "message": "I added a test for a single button and a remoteview, just for simplicity (a single button uses the same code path).",
+      "parentUuid": "54f9ba8d_e0e3ad18",
       "range": {
         "startLine": 872,
         "startChar": 16,
