@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea5778f6_cde7c9b1",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83eda9af_ed8f8712",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c9886c4_266455ef",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7c9208_f1d8e955",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c9886c4_266455ef",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6d649d19_1f306950",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708cd1b5_a7271eae",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c58ce94_42420821",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8248c6c9_78773166",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c58ce94_42420821",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9ee59531_db28087b",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ca9eb5_f042d336",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d75ffd75_fd3442cb",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea7ba75_3508054f",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done (renamed all relevant uses of \"Drop\" to \"Break\")",
+      "parentUuid": "d75ffd75_fd3442cb",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9298a5c6_da8e4602",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Moved, and went with just \"Break\". (The comment dated from when requests were aborted too, oops!)",
+      "parentUuid": "2fbbcfc4_1b98cd56",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9c24e3_66d404f7",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 13
@@ -135,6 +261,24 @@
       "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf2b113_c57f05e2",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Whoops, good catch!\n\n(-0 is still 0 since we\u0027re dealing with ints, which is why this worked.)",
+      "parentUuid": "cd9c24e3_66d404f7",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "147809c0_5bb92bb2",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e27d69b_701452e2",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b50e102_8c18f1af",
         "filename": "content/browser/locks/lock_manager.h",
         "patchSetId": 13
@@ -169,6 +331,24 @@
       "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a356237_9f092c5b",
+        "filename": "content/browser/locks/lock_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-05T18:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b50e102_8c18f1af",
+      "revId": "367b5a5d7377ce10082f80348f830f3de1fb05be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
