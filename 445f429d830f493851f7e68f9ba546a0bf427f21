@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51cdb79e_77801e51",
+        "filename": "third_party/WebKit/Source/core/css/media_feature_names.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-05T18:02:23Z",
+      "side": 1,
+      "message": "Please add a comment indicating that this is exposed only to UA stylesheets at the moment (bonus points for linking to a crbug tracking standardizing such a capability).",
+      "revId": "445f429d830f493851f7e68f9ba546a0bf427f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1509c13_50e72af6",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-05T18:02:23Z",
+      "side": 1,
+      "message": "The other media feature settings (like \"primaryHoverType\") have \u0027invalidate: \"MediaQuery\"\u0027.  I don\u0027t know what exactly that does, but regardless I\u0027m sure you want that here too.",
+      "range": {
+        "startLine": 236,
+        "startChar": 6,
+        "endLine": 236,
+        "endChar": 10
+      },
+      "revId": "445f429d830f493851f7e68f9ba546a0bf427f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
