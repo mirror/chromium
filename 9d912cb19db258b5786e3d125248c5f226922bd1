@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f0624e_b61674ae",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2018-02-05T05:16:39Z",
+      "side": 1,
+      "message": "\u003e Instead of doing this, try forward declaring all the \nnecessary symbols in sdk_forward_declarations.h [1],\nthen use the @available(macOS 10.13, *) in the face\ndetection provider. \n\u003e\n\u003e [1] https://cs.chromium.org/chromium/src/base/mac/sdk_forward_declarations.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d5\n\nThe Vision Framework still need to be linked, otherwise NSClassFromString will always return nil because no class of the name is currently loaded [2].\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/900707/2/services/shape_detection/face_detection_impl_mac_vision.mm#12\n[2] https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring",
+      "revId": "9d912cb19db258b5786e3d125248c5f226922bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
