@@ -182,6 +182,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
      */
     WebViewChromiumFactoryProvider(WebViewDelegate delegate) {
         initialize(delegate);
+        WebViewChromiumFactoryProviderSingleton.create(this);
     }
 
     // Protected to allow downstream to override.
