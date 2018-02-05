@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "da4b8e93_ed8bf8b4",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-05T02:28:28Z",
+      "side": 1,
+      "message": "\u003e Thanks for the analysis. I agree with your assessment of the current usage.\n\u003e \n\u003e However, I don\u0027t think the keyboard granularity is necessarily transient and the two uses are that different. The only distinction I can draw is a collapsed selection vs a non-collapsed selection. Both have some kind of granularity; the latter granularity is reflected in the selection itself (e.g. a word is selected), while the other reflects user intent (e.g. a caret moved to the next word, so the selection is at the start of a word). Mixing mouse and keyboard should reset the selection and the mouse related logic should account for collapsed selection with granularity.\n\nBy \"transient\", I mean the keyboard selection modification granularity currently has no consumer once the selection modification is finished.\n\nI agree that AX consuming this granularity is a meaningful use case.\n\n\u003e \n\u003e Nonetheless, I don\u0027t want to introduce something like this if generally unneeded. I\u0027ll explore some other way of passing the information along and ping this thread.\n\nThanks!\n\nI\u0027m fine as long as we don\u0027t modify how FrameSelection\u0027s granularity is set, so that the current consumers of FrameSelection\u0027s granularity are not affected.",
+      "parentUuid": "974392fb_9162433f",
+      "revId": "eacbad3d9d10d766bc9070136149d9d2a38d746d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b0886f_7574bbdb",
         "filename": "third_party/WebKit/public/web/WebAXEnums.h",
         "patchSetId": 3
