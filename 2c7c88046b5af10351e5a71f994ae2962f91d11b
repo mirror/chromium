@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e62bf2_ab134e8a",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:57:19Z",
+      "side": 1,
+      "message": "Would it be too awkward if we keep FilterSourceStream structure while splitting the body part into another SourceStream?  I\u0027m slightly afraid if having this loop instead of FilterSourceStream\u0027s main loop may make how the streaming parser be implemented a bit skewed, i.e. we may be copying all the bytes in DidRead regardless of whether we wanted to consume that amount of bytes or not.  (We can chat offline)",
+      "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ac5151_3f677538",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:57:19Z",
+      "side": 1,
+      "message": "Replacing some CHECKs to a simple failure handling code doesn\u0027t seem too tough, could we start doing that in this CL?",
+      "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9c0e83_f8e9ce98",
+        "filename": "content/browser/loader/web_package_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:57:19Z",
+      "side": 1,
+      "message": "nit: no need of empty lines on line 17/19",
+      "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
