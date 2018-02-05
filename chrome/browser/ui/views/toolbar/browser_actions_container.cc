@@ -39,15 +39,6 @@
 #include "ui/views/painter.h"
 #include "ui/views/widget/widget.h"
 
-namespace {
-
-// Returns the ToolbarView for the given |browser|.
-ToolbarView* GetToolbarView(Browser* browser) {
-  return BrowserView::GetBrowserViewForBrowser(browser)->toolbar();
-}
-
-}  // namespace
-
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserActionsContainer::DropPosition
 
@@ -71,20 +62,22 @@ BrowserActionsContainer::DropPosition::DropPosition(
 
 BrowserActionsContainer::BrowserActionsContainer(
     Browser* browser,
-    BrowserActionsContainer* main_container)
-    : toolbar_actions_bar_(new ToolbarActionsBar(
-          this,
-          browser,
-          main_container ? main_container->toolbar_actions_bar_.get()
-                         : nullptr)),
-      browser_(browser),
-      main_container_(main_container) {
+    BrowserActionsContainer* main_container,
+    Delegate* delegate,
+    bool needs_resize_area)
+    : delegate_(delegate), browser_(browser), main_container_(main_container) {
   set_id(VIEW_ID_BROWSER_ACTION_TOOLBAR);
+
+  toolbar_actions_bar_ = delegate_->GetToolbarActionsBar(
+      this,
+      main_container ? main_container->toolbar_actions_bar_.get() : nullptr);
 
   if (!ShownInsideMenu()) {
     resize_animation_.reset(new gfx::SlideAnimation(this));
-    resize_area_ = new views::ResizeArea(this);
-    AddChildView(resize_area_);
+    if (needs_resize_area) {
+      resize_area_ = new views::ResizeArea(this);
+      AddChildView(resize_area_);
+    }
 
     const int kWarningImages[] = IMAGE_GRID(IDR_DEVELOPER_MODE_HIGHLIGHT);
     warning_highlight_painter_ =
@@ -146,8 +139,7 @@ void BrowserActionsContainer::OnToolbarActionViewDragDone() {
 }
 
 views::MenuButton* BrowserActionsContainer::GetOverflowReferenceView() {
-  return static_cast<views::MenuButton*>(
-      GetToolbarView(browser_)->app_menu_button());
+  return delegate_->GetOverflowReferenceView();
 }
 
 void BrowserActionsContainer::AddViewForAction(
@@ -214,8 +206,8 @@ void BrowserActionsContainer::ResizeAndAnimate(gfx::Tween::Type tween_type,
   if (resize_animation_ && !toolbar_actions_bar_->suppress_animation()) {
     if (!ShownInsideMenu()) {
       // Make sure we don't try to animate to wider than the allowed width.
-      int max_width = GetToolbarView(browser_)->GetMaxBrowserActionsWidth();
-      if (target_width > max_width)
+      int max_width = delegate_->GetMaxBrowserActionsWidth();
+      if (max_width != -1 && target_width > max_width)
         target_width = GetWidthForMaxWidth(max_width);
     }
     // Animate! We have to set the animation_target_size_ after calling Reset(),
@@ -553,7 +545,7 @@ void BrowserActionsContainer::OnResize(int resize_amount, bool done_resizing) {
 
   if (!done_resizing) {
     resize_amount_ = resize_amount;
-    parent()->Layout();
+    PreferredSizeChanged();
     return;
   }
 
@@ -573,7 +565,7 @@ void BrowserActionsContainer::AnimationProgressed(
   DCHECK_EQ(resize_animation_.get(), animation);
   resize_amount_ = static_cast<int>(resize_animation_->GetCurrentValue() *
       (resize_starting_width_ - animation_target_size_));
-  parent()->Layout();
+  PreferredSizeChanged();
 }
 
 void BrowserActionsContainer::AnimationCanceled(
@@ -585,7 +577,7 @@ void BrowserActionsContainer::AnimationEnded(const gfx::Animation* animation) {
   animation_target_size_ = 0;
   resize_amount_ = 0;
   resize_starting_width_ = -1;
-  parent()->Layout();
+  PreferredSizeChanged();
 
   toolbar_actions_bar_->OnAnimationEnded();
 }

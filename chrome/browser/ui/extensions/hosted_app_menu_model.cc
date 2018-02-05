@@ -20,9 +20,9 @@ HostedAppMenuModel::HostedAppMenuModel(ui::AcceleratorProvider* provider,
 HostedAppMenuModel::~HostedAppMenuModel() {}
 
 void HostedAppMenuModel::Build() {
+  CreateActionToolbarOverflowMenu();
   AddItemWithStringId(IDC_COPY_URL, IDS_COPY_URL);
   AddItemWithStringId(IDC_OPEN_IN_CHROME, IDS_OPEN_IN_CHROME);
-  CreateActionToolbarOverflowMenu();
   CreateZoomMenu();
   AddItemWithStringId(IDC_PRINT, IDS_PRINT);
   AddItemWithStringId(IDC_FIND, IDS_FIND);

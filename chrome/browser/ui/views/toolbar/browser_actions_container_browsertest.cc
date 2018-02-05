@@ -295,7 +295,9 @@ void BrowserActionsContainerOverflowTest::SetUpOnMainThread() {
                   ->toolbar()->browser_actions();
   overflow_parent_.reset(new views::View());
   overflow_parent_->set_owned_by_client();
-  overflow_bar_ = new BrowserActionsContainer(browser(), main_bar_);
+  overflow_bar_ = new BrowserActionsContainer(
+      browser(), main_bar_,
+      BrowserView::GetBrowserViewForBrowser(browser())->toolbar(), true);
   overflow_parent_->AddChildView(overflow_bar_);
 }
 

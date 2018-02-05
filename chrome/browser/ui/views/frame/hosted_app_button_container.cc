@@ -12,6 +12,7 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
+#include "chrome/browser/ui/views/toolbar/browser_actions_container.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/color_utils.h"
@@ -25,6 +26,20 @@ namespace {
 constexpr int kContentSettingIconInteriorPadding = 4;
 
 }  // namespace
+
+class HostedAppToolbarActionsBar : public ToolbarActionsBar {
+ public:
+  HostedAppToolbarActionsBar(ToolbarActionsBarDelegate* delegate,
+                             Browser* browser,
+                             ToolbarActionsBar* main_bar)
+      : ToolbarActionsBar(delegate, browser, main_bar) {}
+  ~HostedAppToolbarActionsBar() override {}
+
+  size_t GetIconCount() const override { return popped_out_action() ? 1 : 0; }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(HostedAppToolbarActionsBar);
+};
 
 HostedAppButtonContainer::AppMenuButton::AppMenuButton(
     BrowserView* browser_view)
@@ -60,7 +75,12 @@ HostedAppButtonContainer::HostedAppButtonContainer(BrowserView* browser_view,
     : browser_view_(browser_view),
       active_icon_color_(active_icon_color),
       inactive_icon_color_(inactive_icon_color),
-      app_menu_button_(new AppMenuButton(browser_view)) {
+      app_menu_button_(new AppMenuButton(browser_view)),
+      browser_actions_container_(
+          new BrowserActionsContainer(browser_view->browser(),
+                                      nullptr,
+                                      this,
+                                      false /* needs_resize_area */)) {
   DCHECK(browser_view_);
   auto layout =
       std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
@@ -83,11 +103,27 @@ HostedAppButtonContainer::HostedAppButtonContainer(BrowserView* browser_view,
     AddChildView(image_view.release());
   }
 
+  AddChildView(browser_actions_container_);
+  browser_view_->SetBrowserActionsContainer(browser_actions_container_);
+
   app_menu_button_->SetIconColor(active_icon_color);
   AddChildView(app_menu_button_);
 }
 
 HostedAppButtonContainer::~HostedAppButtonContainer() {}
+
+void HostedAppButtonContainer::RefreshContentSettingViews() {
+  for (auto* v : content_setting_views_)
+    v->Update();
+}
+
+void HostedAppButtonContainer::SetPaintAsActive(bool active) {
+  for (auto* v : content_setting_views_)
+    v->SetIconColor(active ? active_icon_color_ : inactive_icon_color_);
+
+  app_menu_button_->SetIconColor(active ? active_icon_color_
+                                        : inactive_icon_color_);
+}
 
 content::WebContents* HostedAppButtonContainer::GetContentSettingWebContents() {
   return browser_view_->GetActiveWebContents();
@@ -105,9 +141,11 @@ void HostedAppButtonContainer::OnContentSettingImageBubbleShown(
       ContentSettingImageModel::ImageType::NUM_IMAGE_TYPES);
 }
 
-void HostedAppButtonContainer::RefreshContentSettingViews() {
-  for (auto* v : content_setting_views_)
-    v->Update();
+void HostedAppButtonContainer::ChildPreferredSizeChanged(views::View* child) {
+  if (child != browser_actions_container_)
+    return;
+
+  PreferredSizeChanged();
 }
 
 void HostedAppButtonContainer::ChildVisibilityChanged(views::View* child) {
@@ -115,10 +153,18 @@ void HostedAppButtonContainer::ChildVisibilityChanged(views::View* child) {
   PreferredSizeChanged();
 }
 
-void HostedAppButtonContainer::SetPaintAsActive(bool active) {
-  for (auto* v : content_setting_views_)
-    v->SetIconColor(active ? active_icon_color_ : inactive_icon_color_);
+views::MenuButton* HostedAppButtonContainer::GetOverflowReferenceView() {
+  return app_menu_button_;
+}
 
-  app_menu_button_->SetIconColor(active ? active_icon_color_
-                                        : inactive_icon_color_);
+int HostedAppButtonContainer::GetMaxBrowserActionsWidth() const {
+  return -1;
+}
+
+std::unique_ptr<ToolbarActionsBar>
+HostedAppButtonContainer::GetToolbarActionsBar(
+    ToolbarActionsBarDelegate* delegate,
+    ToolbarActionsBar* main_bar) const {
+  return std::make_unique<HostedAppToolbarActionsBar>(
+      delegate, browser_view_->browser(), main_bar);
 }

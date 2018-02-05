@@ -183,9 +183,9 @@ void ToolbarView::Init() {
   home_->set_id(VIEW_ID_HOME_BUTTON);
   home_->Init();
 
-  browser_actions_ = new BrowserActionsContainer(
-      browser_,
-      nullptr);  // No master container for this one (it is master).
+  // No master container for this one (it is master).
+  browser_actions_ = new BrowserActionsContainer(browser_, nullptr, this,
+                                                 true /* needs_resize_area */);
 
   app_menu_button_ = new AppMenuButton(this);
   app_menu_button_->EnableCanvasFlippingForRTLUI(true);
@@ -325,14 +325,6 @@ void ToolbarView::ShowTranslateBubble(
     bubble_widget->AddObserver(translate_icon_view);
 }
 
-int ToolbarView::GetMaxBrowserActionsWidth() const {
-  // The browser actions container is allowed to grow, but only up until the
-  // omnibox reaches its minimum size. So its maximum allowed width is its
-  // current size, plus any that the omnibox could give up.
-  return browser_actions_->width() +
-         (location_bar_->width() - location_bar_->GetMinimumSize().width());
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // ToolbarView, AccessiblePaneView overrides:
 
@@ -380,6 +372,27 @@ const ToolbarModel* ToolbarView::GetToolbarModel() const {
 ContentSettingBubbleModelDelegate*
 ToolbarView::GetContentSettingBubbleModelDelegate() {
   return browser_->content_setting_bubble_model_delegate();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ToolbarView, BrowserActionsContainer::Delegate implementation:
+
+views::MenuButton* ToolbarView::GetOverflowReferenceView() {
+  return app_menu_button_;
+}
+
+int ToolbarView::GetMaxBrowserActionsWidth() const {
+  // The browser actions container is allowed to grow, but only up until the
+  // omnibox reaches its minimum size. So its maximum allowed width is its
+  // current size, plus any that the omnibox could give up.
+  return browser_actions_->width() +
+         (location_bar_->width() - location_bar_->GetMinimumSize().width());
+}
+
+std::unique_ptr<ToolbarActionsBar> ToolbarView::GetToolbarActionsBar(
+    ToolbarActionsBarDelegate* delegate,
+    ToolbarActionsBar* main_bar) const {
+  return std::make_unique<ToolbarActionsBar>(delegate, browser_, main_bar);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -574,6 +587,11 @@ bool ToolbarView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   if (focused_view && (focused_view->id() == VIEW_ID_OMNIBOX))
     return false;  // Let the omnibox handle all accelerator events.
   return AccessiblePaneView::AcceleratorPressed(accelerator);
+}
+
+void ToolbarView::ChildPreferredSizeChanged(views::View* child) {
+  if (child == browser_actions_)
+    Layout();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
