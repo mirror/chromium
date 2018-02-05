@@ -46,6 +46,30 @@
       "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c31e24_c4e8536d",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-05T16:19:51Z",
+      "side": 1,
+      "message": "Can you give me a bit more background, what exactly does \" default enabled features\" refer to?",
+      "parentUuid": "136c5db6_9cc14b3b",
+      "range": {
+        "startLine": 703,
+        "startChar": 27,
+        "endLine": 703,
+        "endChar": 55
+      },
+      "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
