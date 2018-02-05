@@ -31,6 +31,7 @@ import android.widget.FrameLayout;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -61,6 +62,7 @@ import java.util.List;
 /**
  * Unit tests for {@link TileGroup}.
  */
+@Ignore // Disabled for new Chrome Home, see: https://crbug.com/805160
 @RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @DisableFeatures({ChromeFeatureList.NTP_MODERN_LAYOUT})
