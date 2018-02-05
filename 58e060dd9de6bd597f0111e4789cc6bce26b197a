@@ -34,6 +34,24 @@
       "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56ef76cb_70f627e9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-05T06:17:26Z",
+      "side": 0,
+      "message": "\u003e --smoke didn\u0027t and doesn\u0027t really affect whether we retry, i.e. we retry when a) the list of tests is not explicit, or b) explicit retry flags are given. This chunk of code is no-op because if all the conditions were satisfied, we would retry anyway.\n\nActually, sorry I just realized what I said was not correct. This block is not no-op and removing it changed the behaviour, because --smoke essentially adds SmokeTests as a test list file, which will make the test list explicit (the file lists individual tests). I don\u0027t plan to change that behaviour in this CL, so I\u0027ll fix it up (and perhaps add a unit test).",
+      "parentUuid": "15a6f613_b5d217ae",
+      "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
