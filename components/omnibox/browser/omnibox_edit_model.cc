@@ -41,6 +41,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/toolbar/toolbar_model.h"
 #include "components/url_formatter/url_fixer.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
 #include "ui/gfx/image/image.h"
 #include "url/url_util.h"
@@ -586,11 +587,19 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
   // clear why this happens.
   alternate_input.set_current_url(client_->GetURL());
   alternate_input.set_current_title(client_->GetTitle());
+  GURL empty_alternate_nav_url;
+  const GURL* alternate_nav_url_used = &empty_alternate_nav_url;
+  if (!net::registry_controlled_domains::IsRegistry(
+          alternate_nav_url,
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
+    alternate_nav_url_used = &alternate_nav_url;
+  else
+    std::cout << "OpenMatch rejecting '" << alternate_nav_url.spec() << "'\n";
   std::unique_ptr<OmniboxNavigationObserver> observer(
       client_->CreateOmniboxNavigationObserver(
           input_text, match,
           autocomplete_controller()->history_url_provider()->SuggestExactInput(
-              alternate_input, alternate_nav_url, false)));
+              alternate_input, *alternate_nav_url_used, false)));
 
   base::TimeDelta elapsed_time_since_last_change_to_default_match(
       now - autocomplete_controller()->last_time_default_match_changed());

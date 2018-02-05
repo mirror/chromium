@@ -188,6 +188,12 @@ void AutocompleteResult::SortAndCull(
     if (default_match_->allowed_to_be_default_match &&
         default_match_->destination_url.is_valid()) {
       if (AutocompleteMatch::IsSearchType(default_match_->type)) {
+        std::cout << "Input text '" << input.text() << "'\n";
+        std::cout << "Input type " << (int)input.type() << "\n";
+        std::cout << "Match text '" << default_match_->contents << "'\n";
+        std::cout << "Match type " << (int)default_match_->type << "\n";
+        std::cout << "Match URL '" << default_match_->destination_url.spec()
+          << "'\n";
         // We shouldn't get query matches for URL inputs.
         DCHECK_NE(metrics::OmniboxInputType::URL, input.type()) << debug_info;
       } else {
