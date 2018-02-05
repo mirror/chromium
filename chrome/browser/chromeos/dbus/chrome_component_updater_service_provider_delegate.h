@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_DBUS_CHROME_COMPONENT_UPDATER_SERVICE_PROVIDER_DELEGATE_H_
 
 #include "base/macros.h"
+#include "chrome/browser/component_updater/cros_component_installer.h"
 #include "chromeos/dbus/services/component_updater_service_provider.h"
 
 namespace chromeos {

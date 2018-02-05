@@ -69,7 +69,15 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
 // This class contains functions used to register and install a component.
 class CrOSComponentManager {
  public:
-  using LoadCallback = base::OnceCallback<void(const base::FilePath&)>;
+  enum class Error {
+    NONE = 0,
+    NOT_EXIST = 1,       // Component requested does not exist.
+    NOT_COMPATIBLE = 2,  // Component version requested is not compatible.
+    DOWNLOAD_ERROR = 3,  // update_client fails to download component.
+    MOUNT_ERROR = 4,     // Component can not be mounted.
+  };
+  using LoadCallback =
+      base::OnceCallback<void(Error error, const base::FilePath&)>;
   enum class MountPolicy {
     kMount,
     kDontMount,
