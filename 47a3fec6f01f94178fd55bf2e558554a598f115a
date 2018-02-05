@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82c88980_e3557d20",
+        "filename": "chrome/browser/ui/views/sad_tab_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T21:11:36Z",
+      "side": 1,
+      "message": "Added SadTabViewTestApi.",
+      "parentUuid": "5dae42b6_a6e32348",
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0123f3f0_3d57bdd0",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 15
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-02T22:13:22Z",
       "side": 1,
       "message": "How come SetWebContents implicitly destroys the view? Shouldn\u0027t that be up to the client, not this code? What harm is there in a long lived crashed overlay view?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d129bb4c_1059a096",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T21:11:36Z",
+      "side": 1,
+      "message": "It\u0027d be okay to leave this out, the client handles it as currently\nwritten, but Trent suggested this and I think it might be better\nto err on the safe side.\n\nNote that leaving the wrong SadTab active when the WebContents changes\ncould lead to the action button reloading the wrong tab. It seemed more\nfoolproof to put it here rather than leaving it up to the client,\nin case SetWebContents is called from multiple places.\n\nUp to you, I\u0027ll remove it if you think it should be up to the client.",
+      "parentUuid": "0123f3f0_3d57bdd0",
       "range": {
         "startLine": 57,
         "startChar": 2,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "408eb9ba_2c1e5277",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T21:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ef2137_aaee92f0",
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92973a70_fccf03ce",
         "filename": "ui/views/controls/webview/webview_unittest.cc",
         "patchSetId": 15
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ba49eb1a_2b2c89be",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T21:11:36Z",
+      "side": 1,
+      "message": "Yes, works great. I didn\u0027t realize that CreateWebContents was already\ncalled by the test harness, but it is.",
+      "parentUuid": "92973a70_fccf03ce",
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f96f7ee9_6de2c28e",
         "filename": "ui/views/view.h",
         "patchSetId": 15
@@ -87,6 +165,30 @@
       "writtenOn": "2018-02-02T23:57:58Z",
       "side": 1,
       "message": "Apparently you aren\u0027t the only needing this. https://chromium-review.googlesource.com/c/chromium/src/+/888543 added it, so if you sync you should be good.",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 22
+      },
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b74df8c_2f7f51a7",
+        "filename": "ui/views/view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T21:11:36Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "f96f7ee9_6de2c28e",
       "range": {
         "startLine": 267,
         "startChar": 7,
