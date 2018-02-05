@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "ddec999c_8dcb0be4",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-05T14:15:18Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll update this.\n\nThe change isn\u0027t going to land until I can e2e test it, which means figuring out the library loading deadlock :/",
+      "parentUuid": "9737be18_9663dedb",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "3b4b548a27fceb197c73f8eb3bc8cadb0d997381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd4d480c_4af0e1a2",
         "filename": "tools/cygprofile/cyglog_to_orderfile_unittest.py",
         "patchSetId": 4
