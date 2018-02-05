@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efec62e_e3522471",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:22:04Z",
+      "side": 1,
+      "message": "both child classes have mUrlFocusChangePercent, so maybe we should just have a function on this class, overridden by the child classes to return that instead of adding a duplicate value?",
+      "range": {
+        "startLine": 246,
+        "startChar": 18,
+        "endLine": 246,
+        "endChar": 38
+      },
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be03e1f_96ce79c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:22:04Z",
+      "side": 1,
+      "message": "why do you need these to be MarginLayoutParams?  we were using .width before and my eyes don\u0027t immediately spot anything new",
+      "range": {
+        "startLine": 1549,
+        "startChar": 29,
+        "endLine": 1549,
+        "endChar": 47
+      },
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1011711b_b96b232a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:22:04Z",
+      "side": 1,
+      "message": "why the need for mNativeInitialized here?\n\nWon\u0027t this prevent the voice icon from appearing when no text is present?",
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f317dedc_29f51677",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlActionContainer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:22:04Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de456966_c08c5ec7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlActionContainer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:22:04Z",
+      "side": 1,
+      "message": "Assuming this launches, we should just replace this with a LinearLayout and remove the need for this specialized class.\n\nActually, do we ever cross fade between the mic and the X button?  If not, we should be able to use a LinearLayout right now and this would all work.  If we do animate, then I think this wouldn\u0027t work as the previous cross-fading wouldn\u0027t work (if there is any).",
+      "range": {
+        "startLine": 18,
+        "startChar": 40,
+        "endLine": 18,
+        "endChar": 51
+      },
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06d1561_dbda27df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlActionContainer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-05T19:22:04Z",
+      "side": 1,
+      "message": "setLayoutParams triggers a requestLayout, which to me looks like this would loop indefinitely unless View suppresses layout requests inside of a layout.\n\nIf nothing else, it seems like we could move this loop to the top before super.onLayout w/o calling setLayoutParams.  You can manipulate the LayoutParams w/o calling setLayoutParams and layout should handle that correctly w/o requesting a new layout.\n\nNone the less, it looks like we\u0027re replicating LinearLayout essentially here, so we should verify that we can\u0027t use that off the shelf right now.",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
