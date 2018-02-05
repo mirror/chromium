@@ -35,6 +35,12 @@ class VIEWS_EXPORT TabbedPane : public View {
     kVertical,
   };
 
+  // The sytle of the tab.
+  enum class TabStyle {
+    kBorder,     // Draw border around the selected tab.
+    kHighlight,  // Highligh background and text of the selected tab.
+  };
+
   explicit TabbedPane(Orientation orientation = Orientation::kHorizontal);
   ~TabbedPane() override;
 
@@ -70,6 +76,11 @@ class VIEWS_EXPORT TabbedPane : public View {
 
   // Returns true if the tab alignment is horizontal.
   bool IsHorizontal() const;
+
+  // Sets the style of the selected tab.
+  void SetTabStyle(TabStyle style);
+  // Returns true if the selected tab style is TabStyle::kBorder.
+  bool IsBorderStyle() const;
 
  private:
   friend class FocusTraversalTest;
@@ -153,6 +164,9 @@ class Tab : public View {
 
   void SetState(TabState tab_state);
 
+  // views::View:
+  void OnPaint(gfx::Canvas* canvas) override;
+
   TabbedPane* tabbed_pane_;
   Label* title_;
   gfx::Size preferred_title_size_;
@@ -191,9 +205,17 @@ class TabStrip : public View {
     return orientation_ == TabbedPane::Orientation::kHorizontal;
   }
 
+  void set_tab_style(TabbedPane::TabStyle style);
+  bool IsBorderStyle() const {
+    return tab_style_ == TabbedPane::TabStyle::kBorder;
+  }
+
  private:
   // The orientation of the tab alignment.
   const TabbedPane::Orientation orientation_;
+
+  // The style of the tab.
+  TabbedPane::TabStyle tab_style_ = TabbedPane::TabStyle::kBorder;
 
   DISALLOW_COPY_AND_ASSIGN(TabStrip);
 };

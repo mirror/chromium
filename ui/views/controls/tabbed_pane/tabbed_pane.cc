@@ -37,8 +37,13 @@ namespace {
 const SkColor kTabTitleColor_Inactive = SkColorSetRGB(0x64, 0x64, 0x64);
 const SkColor kTabTitleColor_Active = SK_ColorBLACK;
 const SkColor kTabTitleColor_Hovered = SK_ColorBLACK;
+constexpr int kTabTitleColor_Highlight = SkColorSetRGB(0x42, 0x85, 0xF4);
 const SkColor kTabBorderColor = SkColorSetRGB(0xC8, 0xC8, 0xC8);
 const SkScalar kTabBorderThickness = 1.0f;
+constexpr int kTabHighlightBorderRadius = 32;
+constexpr int kTabHighlightBackgroundColor = SkColorSetRGB(0xE8, 0xF0, 0xFE);
+constexpr int kTabHighlightPreferredWidth = 192;
+constexpr int kTabHighlightPreferredHeight = 32;
 
 const gfx::Font::Weight kHoverWeight = gfx::Font::Weight::NORMAL;
 const gfx::Font::Weight kActiveWeight = gfx::Font::Weight::BOLD;
@@ -133,15 +138,24 @@ Tab::Tab(TabbedPane* tabbed_pane, const base::string16& title, View* contents)
   // Calculate this now while the font list is guaranteed to be bold.
   preferred_title_size_ = title_->GetPreferredSize();
 
-  const int kTabVerticalPadding = 5;
-  const int kTabHorizontalPadding = 10;
 
   if (!tabbed_pane_->IsHorizontal())
     title_->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_LEFT);
-  SetBorder(CreateEmptyBorder(
-      gfx::Insets(kTabVerticalPadding, kTabHorizontalPadding)));
-  SetLayoutManager(std::make_unique<FillLayout>());
+  if (!tabbed_pane_->IsBorderStyle())
+    title_->SetElideBehavior(gfx::ElideBehavior::NO_ELIDE);
 
+  if (!tabbed_pane_->IsBorderStyle() && !tabbed_pane_->IsHorizontal()) {
+    const int kTabVerticalPdding = 8;
+    const int kTabHorizontalPadding = 32;
+    SetBorder(CreateEmptyBorder(gfx::Insets(
+        kTabVerticalPdding, kTabHorizontalPadding, kTabVerticalPdding, 0)));
+  } else {
+    const int kTabVerticalPdding = 5;
+    const int kTabHorizontalPadding = 10;
+    SetBorder(CreateEmptyBorder(
+        gfx::Insets(kTabVerticalPdding, kTabHorizontalPadding)));
+  }
+  SetLayoutManager(std::make_unique<FillLayout>());
   SetState(TAB_INACTIVE);
   AddChildView(title_);
 }
@@ -168,7 +182,9 @@ void Tab::OnStateChanged() {
           ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kInactiveWeight));
       break;
     case TAB_ACTIVE:
-      title_->SetEnabledColor(kTabTitleColor_Active);
+      title_->SetEnabledColor(tabbed_pane_->IsBorderStyle()
+                                  ? kTabTitleColor_Active
+                                  : kTabTitleColor_Highlight);
       title_->SetFontList(rb.GetFontListWithDelta(
           ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kActiveWeight));
       break;
@@ -215,6 +231,10 @@ void Tab::OnGestureEvent(ui::GestureEvent* event) {
 gfx::Size Tab::CalculatePreferredSize() const {
   gfx::Size size(preferred_title_size_);
   size.Enlarge(GetInsets().width(), GetInsets().height());
+  if (!tabbed_pane_->IsBorderStyle() && !tabbed_pane_->IsHorizontal()) {
+    size.SetToMax(
+        gfx::Size(kTabHighlightPreferredWidth, kTabHighlightPreferredHeight));
+  }
   return size;
 }
 
@@ -228,6 +248,27 @@ void Tab::SetState(TabState tab_state) {
   tab_state_ = tab_state;
   OnStateChanged();
   SchedulePaint();
+}
+
+void Tab::OnPaint(gfx::Canvas* canvas) {
+  View::OnPaint(canvas);
+  if (tabbed_pane_->IsHorizontal() || tabbed_pane_->IsBorderStyle() ||
+      ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    return;
+  }
+
+  SkScalar radius = SkIntToScalar(kTabHighlightBorderRadius);
+  const SkScalar kRadius[8] = {0, 0, radius, radius, radius, radius, 0, 0};
+  SkPath path;
+  gfx::Rect bounds(size());
+  path.addRoundRect(gfx::RectToSkRect(bounds), kRadius);
+  cc::PaintFlags fill_flags;
+  fill_flags.setAntiAlias(true);
+  if (selected())
+    fill_flags.setColor(kTabHighlightBackgroundColor);
+  else
+    fill_flags.setColor(SK_ColorTRANSPARENT);
+  canvas->DrawPath(path, fill_flags);
 }
 
 void Tab::GetAccessibleNodeData(ui::AXNodeData* data) {
@@ -332,15 +373,19 @@ const char TabStrip::kViewClassName[] = "TabStrip";
 
 TabStrip::TabStrip(TabbedPane::Orientation orientation)
     : orientation_(orientation) {
-  const int kTabStripLeadingEdgePadding = 9;
   std::unique_ptr<BoxLayout> layout;
   if (IsHorizontal()) {
+    const int kTabStripLeadingEdgePadding = 9;
     layout = std::make_unique<BoxLayout>(
         BoxLayout::kHorizontal, gfx::Insets(0, kTabStripLeadingEdgePadding));
     layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_END);
   } else {
+    const int kTabStripEdgePadding = 8;
+    const int kTabSpacing = 16;
     layout = std::make_unique<BoxLayout>(
-        BoxLayout::kVertical, gfx::Insets(kTabStripLeadingEdgePadding, 0));
+        BoxLayout::kVertical,
+        gfx::Insets(kTabStripEdgePadding, 0, 0, kTabStripEdgePadding),
+        kTabSpacing);
     layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_START);
   }
   layout->set_main_axis_alignment(BoxLayout::MAIN_AXIS_ALIGNMENT_START);
@@ -373,7 +418,7 @@ void TabStrip::OnPaintBorder(gfx::Canvas* canvas) {
   }
 
   int selected_tab_index = GetSelectedTabIndex();
-  if (selected_tab_index >= 0) {
+  if (IsBorderStyle() && selected_tab_index >= 0) {
     Tab* selected_tab = GetTabAtIndex(selected_tab_index);
     SkPath path;
     SkScalar tab_height =
@@ -405,14 +450,15 @@ void TabStrip::OnPaintBorder(gfx::Canvas* canvas) {
     fill_flags.setStyle(cc::PaintFlags::kStroke_Style);
     canvas->DrawPath(path, fill_flags);
   } else {
-    if (IsHorizontal())
+    if (IsHorizontal()) {
       canvas->sk_canvas()->drawLine(0, line_center_cross_axis,
                                     line_end_main_axis, line_center_cross_axis,
                                     fill_flags);
-    else
+    } else {
       canvas->sk_canvas()->drawLine(line_center_cross_axis, 0,
                                     line_center_cross_axis, line_end_main_axis,
                                     fill_flags);
+    }
   }
 }
 
@@ -437,6 +483,13 @@ Tab* TabStrip::GetTabAtDeltaFromSelected(int delta) const {
   if (index < 0)
     index += child_count();
   return GetTabAtIndex(index);
+}
+
+void TabStrip::set_tab_style(TabbedPane::TabStyle style) {
+  if (tab_style_ == style)
+    return;
+  tab_style_ = style;
+  SchedulePaint();
 }
 
 MdTabStrip::MdTabStrip(TabbedPane::Orientation orientation)
@@ -663,6 +716,14 @@ gfx::Size TabbedPane::CalculatePreferredSize() const {
 
 bool TabbedPane::IsHorizontal() const {
   return tab_strip_->IsHorizontal();
+}
+
+void TabbedPane::SetTabStyle(TabStyle style) {
+  tab_strip_->set_tab_style(style);
+}
+
+bool TabbedPane::IsBorderStyle() const {
+  return tab_strip_->IsBorderStyle();
 }
 
 Tab* TabbedPane::GetSelectedTab() {

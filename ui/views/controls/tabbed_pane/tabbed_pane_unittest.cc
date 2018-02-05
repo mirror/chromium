@@ -74,6 +74,18 @@ TEST_F(TabbedPaneTest, VerticalOrientation) {
   EXPECT_EQ(tabbed_pane_->IsHorizontal(), false);
 }
 
+// Tests tab style.
+TEST_F(TabbedPaneTest, TabBorderStyle) {
+  EXPECT_EQ(tabbed_pane_->IsBorderStyle(), true);
+}
+
+// Tests tab style.
+TEST_F(TabbedPaneTest, TabHighlightStyle) {
+  MakeTabbedPaneForOrientation(TabbedPane::Orientation::kVertical);
+  tabbed_pane_->SetTabStyle(TabbedPane::TabStyle::kHighlight);
+  EXPECT_EQ(tabbed_pane_->IsBorderStyle(), false);
+}
+
 // Tests the preferred size and layout when tabs are aligned horizontally.
 // TabbedPane requests a size that fits its largest tab, and disregards the
 // width of horizontal tab strips for preferred size calculations. Tab titles
