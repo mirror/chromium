@@ -558,6 +558,15 @@ void DesktopWindowTreeHostWin::ReleaseCapture() {
   message_handler_->ReleaseCapture();
 }
 
+void DesktopWindowTreeHostWin::LockKeys(
+    const std::vector<int>& native_key_codes) {
+  message_handler_->LockKeys(native_key_codes);
+}
+
+void DesktopWindowTreeHostWin::UnlockKeys() {
+  message_handler_->UnlockKeys();
+}
+
 void DesktopWindowTreeHostWin::SetCursorNative(gfx::NativeCursor cursor) {
   ui::CursorLoaderWin cursor_loader;
   cursor_loader.SetPlatformCursor(&cursor);
