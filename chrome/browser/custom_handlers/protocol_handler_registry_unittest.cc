@@ -992,6 +992,37 @@ TEST_F(ProtocolHandlerRegistryTest, TestPrefPolicyOverlapIgnore) {
   ASSERT_EQ(InMemoryIgnoredHandlerCount(), 4);
 }
 
+TEST_F(ProtocolHandlerRegistryTest, TestURIPercentEncoded) {
+  ProtocolHandler ph =
+      CreateProtocolHandler("web+example", GURL("https://example.org/url=%s"));
+  registry()->OnAcceptRegisterProtocolHandler(ph);
+
+  std::vector<std::pair<std::string, std::string>> escaped_entries = {
+      {"web+example://custom/protocol+handler/something%20else/chicken-kïwi",
+       "https://example.org/"
+       "url=web%2Bexample%3A%2F%2Fcustom%2Fprotocol%2Bhandler%"
+       "2Fsomething%2520else%2Fchicken-k%25C3%25AFwi"},
+      {"web+example://bar/%3Fxyz",
+       "https://example.org/url=web%2Bexample%3A%2F%2Fbar%2F%253Fxyz"},
+      {"web+example://escaped_char=$&'()*+,-./:",
+       "https://example.org/"
+       "url=web%2Bexample%3A%2F%2Fescaped_char%3D%24%26'()*%2B%2C-.%2F%3A"},
+      {"web+example://escaped_char=%20",
+       "https://example.org/url=web%2Bexample%3A%2F%2Fescaped_char%3D%2520"},
+      {"web+example://escaped_char=%20with%20%25%20percent",
+       "https://example.org/"
+       "url=web%2Bexample%3A%2F%2Fescaped_char%3D%2520with%2520%2525%"
+       "2520percent"},
+      {"web+example://escaped_char=<>`{}\x7F#?\"' '😂 ",
+       "https://example.org/"
+       "url=web%2Bexample%3A%2F%2Fescaped_char%3D%3C%3E%60%7B%7D%7F%23%3F%22'+'"
+       "%25F0%259F%2598%2582"},
+  };
+
+  for (const auto& entry : escaped_entries)
+    ASSERT_EQ(ph.TranslateUrl(GURL(entry.first)), entry.second);
+}
+
 TEST_F(ProtocolHandlerRegistryTest, TestMultiplePlaceholders) {
   ProtocolHandler ph =
       CreateProtocolHandler("test", GURL("http://example.com/%s/url=%s"));
