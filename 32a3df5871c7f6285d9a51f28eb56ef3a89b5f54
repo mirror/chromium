@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0792296_f0c500b8",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-05T23:34:43Z",
+      "side": 1,
+      "message": "Can we join all these blocks and just rely on InSequence now?  Should all just be .Times(1) right?",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 35
+      },
+      "revId": "32a3df5871c7f6285d9a51f28eb56ef3a89b5f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f933b85_c174dfa9",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-05T23:34:43Z",
+      "side": 1,
+      "message": "Is this valid?  I feel like all observer call should come through regardless because of the notification layer.",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "32a3df5871c7f6285d9a51f28eb56ef3a89b5f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
