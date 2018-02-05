@@ -181,6 +181,7 @@ SignedExchangeCertFetcher::SignedExchangeCertFetcher(
     resource_request_->load_flags |=
         net::LOAD_DISABLE_CACHE | net::LOAD_BYPASS_CACHE;
   }
+  resource_request_->render_frame_id = MSG_ROUTING_NONE;
 }
 
 SignedExchangeCertFetcher::~SignedExchangeCertFetcher() {}
