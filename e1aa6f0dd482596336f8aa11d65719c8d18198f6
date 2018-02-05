@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c21ec08_f589b349",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-05T20:08:34Z",
+      "side": 1,
+      "message": "Did you mean gen/... instead of get/... ?",
+      "revId": "e1aa6f0dd482596336f8aa11d65719c8d18198f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
