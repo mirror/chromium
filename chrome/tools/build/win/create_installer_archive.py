@@ -68,27 +68,35 @@ def BuildVersion(build_dir):
   return '%s.%s.%s.%s' % (major, minor, build, patch)
 
 
-def CompressUsingLZMA(build_dir, compressed_file, input_file, verbose):
+def CompressUsingLZMA(build_dir, compressed_file, input_file, verbose,
+                      fast):
   lzma_exec = GetLZMAExec(build_dir)
-  cmd = [lzma_exec,
-         'a', '-t7z',
-          # Flags equivalent to -mx9 (ultra) but with the bcj2 turned on (exe
-          # pre-filter). This results in a ~2.3MB decrease in installer size on
-          # a 24MB installer.
-          # Additionally, these settings reflect a 7zip 4.42 and up change in
-          # the definition of -mx9, increasting the dicionary size moving to
-          # 26bit = 64MB. This results in an additional ~3.5MB decrease.
-          # Older 7zip versions can support these settings, as these changes
-          # rely on existing functionality in the lzma format.
-          '-m0=BCJ2',
-          '-m1=LZMA:d27:fb128',
-          '-m2=LZMA:d22:fb128:mf=bt2',
-          '-m3=LZMA:d22:fb128:mf=bt2',
-          '-mb0:1',
-          '-mb0s1:2',
-          '-mb0s2:3',
-          os.path.abspath(compressed_file),
-          os.path.abspath(input_file),]
+  cmd = [lzma_exec, 'a', '-t7z']
+  if fast:
+    # zero compression level
+    cmd += [ '-mx0' ]
+  else:
+    cmd += [
+      # Flags equivalent to -mx9 (ultra) but with the bcj2 turned on (exe
+      # pre-filter). This results in a ~2.3MB decrease in installer size on
+      # a 24MB installer.
+      # Additionally, these settings reflect a 7zip 4.42 and up change in
+      # the definition of -mx9, increasting the dicionary size moving to
+      # 26bit = 64MB. This results in an additional ~3.5MB decrease.
+      # Older 7zip versions can support these settings, as these changes
+      # rely on existing functionality in the lzma format.
+      '-m0=BCJ2',
+      '-m1=LZMA:d27:fb128',
+      '-m2=LZMA:d22:fb128:mf=bt2',
+      '-m3=LZMA:d22:fb128:mf=bt2',
+      '-mb0:1',
+      '-mb0s1:2',
+      '-mb0s2:3',
+    ]
+  cmd += [
+    os.path.abspath(compressed_file),
+    os.path.abspath(input_file),
+  ]
   if os.path.exists(compressed_file):
     os.remove(compressed_file)
   RunSystemCommand(cmd, verbose)
@@ -297,7 +305,7 @@ def CreateArchiveFile(options, staging_dir, current_version, prev_version):
   compressed_archive_file_path = os.path.join(options.output_dir,
                                               compressed_archive_file)
   CompressUsingLZMA(options.build_dir, compressed_archive_file_path, orig_file,
-                    options.verbose)
+                    options.verbose, options.fast)
 
   return compressed_archive_file
 
@@ -319,7 +327,7 @@ def PrepareSetupExec(options, current_version, prev_version):
                  '_from_' + prev_version + COMPRESSED_FILE_EXT
     setup_file_path = os.path.join(options.build_dir, setup_file)
     CompressUsingLZMA(options.build_dir, setup_file_path, patch_file,
-                      options.verbose)
+                      options.verbose, options.fast)
   else:
     # Use makecab.py instead of makecab.exe so that this works when building
     # on non-Windows hosts too.
@@ -629,6 +637,9 @@ def _ParseOptions():
       help='Specify the target architecture for installer - this is used '
            'to determine which CRT runtime files to pull and package '
            'with the installer archive {x86|x64}.')
+  parser.add_option('--fast', action='store_true', dest='fast',
+                    help='Archive files without compression.',
+                    default=False)
   parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
                     default=False)
 

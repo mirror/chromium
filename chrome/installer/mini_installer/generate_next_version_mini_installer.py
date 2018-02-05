@@ -12,14 +12,21 @@ import sys
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('--out', help='Path to the generated mini_installer.')
+  parser.add_argument('--fast', action='store_true', default=False,
+                      help='Disable compression for fast execution.')
   args = parser.parse_args()
   assert args.out
 
-  return subprocess.call([
-      'alternate_version_generator.exe',
-      '--force',
-      '--out=' + args.out,
-      ])
+
+  cmd = [
+    'alternate_version_generator.exe',
+    '--force',
+    '--out=' + args.out,
+  ]
+  if args.fast:
+    cmd += [ '--fast' ]
+
+  return subprocess.call(cmd)
 
 
 if '__main__' == __name__:
