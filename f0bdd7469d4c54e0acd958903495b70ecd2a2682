@@ -214,6 +214,29 @@
     },
     {
       "key": {
+        "uuid": "25b57fa2_52e3b3cb",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T15:29:51Z",
+      "side": 1,
+      "message": "nit: s/in the middle/approximately in the middle/ :)",
+      "range": {
+        "startLine": 59,
+        "startChar": 26,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5991b7e2_e948e205",
         "filename": "tools/cygprofile/reorder_native_library.py",
         "patchSetId": 3
@@ -249,6 +272,30 @@
       "side": 1,
       "message": "Really really close.",
       "parentUuid": "5991b7e2_e948e205",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8c72d7_a4a0108a",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T15:29:51Z",
+      "side": 1,
+      "message": "\u003e perhaps also subtract (end_of_ordered_index - start_of_ordered_index)?\n\nanswering to myself: this should have been \"(end_of_ordered_index - start_of_ordered_index) / 2\" to be _the_real_middle_. We probably don\u0027t care about this difference.",
+      "parentUuid": "67b92df9_7c9e52a9",
       "range": {
         "startLine": 78,
         "startChar": 2,
