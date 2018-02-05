@@ -54,7 +54,6 @@ HTMLFormControlElement::HTMLFormControlElement(const QualifiedName& tag_name,
     : LabelableElement(tag_name, document),
       ancestor_disabled_state_(kAncestorDisabledStateUnknown),
       data_list_ancestor_state_(kUnknown),
-      may_have_field_set_ancestor_(true),
       is_autofilled_(false),
       has_validation_message_(false),
       will_validate_initialized_(false),
@@ -112,11 +111,6 @@ bool HTMLFormControlElement::FormNoValidate() const {
 }
 
 void HTMLFormControlElement::UpdateAncestorDisabledState() const {
-  if (!may_have_field_set_ancestor_) {
-    ancestor_disabled_state_ = kAncestorDisabledStateEnabled;
-    return;
-  }
-  may_have_field_set_ancestor_ = false;
   HTMLFieldSetElement* highest_disabled_field_set_ancestor = nullptr;
   ContainerNode* highest_legend_ancestor = nullptr;
   for (HTMLElement* ancestor = Traversal<HTMLElement>::FirstAncestor(*this);
@@ -124,7 +118,6 @@ void HTMLFormControlElement::UpdateAncestorDisabledState() const {
     if (IsHTMLLegendElement(*ancestor))
       highest_legend_ancestor = ancestor;
     if (IsHTMLFieldSetElement(*ancestor)) {
-      may_have_field_set_ancestor_ = true;
       if (ancestor->IsDisabledFormControl())
         highest_disabled_field_set_ancestor = ToHTMLFieldSetElement(ancestor);
     }
@@ -291,8 +284,6 @@ void HTMLFormControlElement::DidMoveToNewDocument(Document& old_document) {
 Node::InsertionNotificationRequest HTMLFormControlElement::InsertedInto(
     ContainerNode* insertion_point) {
   ancestor_disabled_state_ = kAncestorDisabledStateUnknown;
-  // Force traversal to find ancestor
-  may_have_field_set_ancestor_ = true;
   data_list_ancestor_state_ = kUnknown;
   SetNeedsWillValidateCheck();
   HTMLElement::InsertedInto(insertion_point);
@@ -341,8 +332,6 @@ void HTMLFormControlElement::FormOwnerSetNeedsValidityCheck() {
 void HTMLFormControlElement::FieldSetAncestorsSetNeedsValidityCheck(
     Node* node) {
   if (!node)
-    return;
-  if (!may_have_field_set_ancestor_)
     return;
   for (HTMLFieldSetElement* field_set =
            Traversal<HTMLFieldSetElement>::FirstAncestorOrSelf(*node);

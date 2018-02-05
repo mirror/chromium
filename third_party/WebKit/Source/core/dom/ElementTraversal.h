@@ -300,13 +300,35 @@ inline ElementType* Traversal<ElementType>::FirstChild(
   return element;
 }
 
+template <class T, typename U = void>
+class FirstAncestorImpl {
+ public:
+  static T* Impl(const Node& current) {
+    ContainerNode* ancestor = current.parentNode();
+    while (ancestor && !IsElementOfType<const T>(*ancestor))
+      ancestor = ancestor->parentNode();
+    return ToElement<T>(ancestor);
+  }
+};
+
+template <class T>
+class FirstAncestorImpl<T, std::enable_if_t<T::kIsCountedByDocument>> {
+ public:
+  static T* Impl(const Node& current) {
+    if (current.isConnected() &&
+        !T::GetElementCountFromDocument(current.GetDocument()))
+      return nullptr;
+    ContainerNode* ancestor = current.parentNode();
+    while (ancestor && !IsElementOfType<const T>(*ancestor))
+      ancestor = ancestor->parentNode();
+    return ToElement<T>(ancestor);
+  }
+};
+
 template <class ElementType>
 inline ElementType* Traversal<ElementType>::FirstAncestor(const Node& current) {
-  ContainerNode* ancestor = current.parentNode();
-  while (ancestor && !IsElementOfType<const ElementType>(*ancestor))
-    ancestor = ancestor->parentNode();
-  return ToElement<ElementType>(ancestor);
-}
+  return FirstAncestorImpl<ElementType>::Impl(current);
+};
 
 template <class ElementType>
 template <class NodeType>

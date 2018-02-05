@@ -32,6 +32,8 @@
 #ifndef HTMLDataListElement_h
 #define HTMLDataListElement_h
 
+#include "core/dom/Document.h"
+#include "core/dom/DocumentElementCounts.h"
 #include "core/html/HTMLElement.h"
 
 namespace blink {
@@ -40,6 +42,7 @@ class HTMLDataListOptionsCollection;
 
 class CORE_EXPORT HTMLDataListElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
+  COUNTER_CHANGE_OVERLOADS(HTMLDataListElement);
 
  public:
   static HTMLDataListElement* Create(Document&);

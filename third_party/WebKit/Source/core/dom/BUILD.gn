@@ -73,6 +73,7 @@ blink_core_sources("dom") {
     "DistributedNodes.h",
     "Document.cpp",
     "Document.h",
+    "DocumentElementCounts.h",
     "DocumentEncodingData.cpp",
     "DocumentEncodingData.h",
     "DocumentFragment.cpp",

@@ -104,6 +104,8 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   void AnonymousNamedGetter(const AtomicString& name, RadioNodeListOrElement&);
   void InvalidateDefaultButtonStyle() const;
 
+  COUNTER_CHANGE_OVERLOADS(HTMLFormElement);
+
  private:
   explicit HTMLFormElement(Document&);
 
