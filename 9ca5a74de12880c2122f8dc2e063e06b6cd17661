@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fc5f3d5_684308b8",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T23:35:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28c88bd3_de135563",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b1e094_12b9d9c7",
         "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "824d4066_a63b4519",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T23:35:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c2b1e094_12b9d9c7",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a75724_c22f1a3e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3b61fa_5f9236a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 32031,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T23:35:31Z",
+      "side": 1,
+      "message": "Done. I hadn\u0027t considered that namespace but that SGTM.",
+      "parentUuid": "e5a75724_c22f1a3e",
+      "range": {
+        "startLine": 32031,
+        "startChar": 17,
+        "endLine": 32031,
+        "endChar": 46
+      },
+      "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
