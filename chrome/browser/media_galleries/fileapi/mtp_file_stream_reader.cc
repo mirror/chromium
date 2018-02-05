@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "base/numerics/safe_conversions.h"
+#include "chrome/browser/media_galleries/fileapi/device_media_async_file_util.h"
 #include "chrome/browser/media_galleries/fileapi/mtp_device_async_delegate.h"
 #include "chrome/browser/media_galleries/fileapi/mtp_device_map_service.h"
 #include "chrome/browser/media_galleries/fileapi/native_media_file_util.h"
@@ -19,14 +20,6 @@
 using storage::FileStreamReader;
 
 namespace {
-
-// Called on the IO thread.
-MTPDeviceAsyncDelegate* GetMTPDeviceDelegate(
-    const storage::FileSystemURL& url) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  return MTPDeviceMapService::GetInstance()->GetMTPDeviceAsyncDelegate(
-      url.filesystem_id());
-}
 
 void CallCompletionCallbackWithPlatformFileError(
     const net::CompletionCallback& callback,
@@ -47,7 +40,8 @@ void ReadBytes(
     int buf_len,
     const MTPDeviceAsyncDelegate::ReadBytesSuccessCallback& success_callback,
     const net::CompletionCallback& error_callback) {
-  MTPDeviceAsyncDelegate* delegate = GetMTPDeviceDelegate(url);
+  MTPDeviceAsyncDelegate* delegate =
+      DeviceMediaAsyncFileUtil::GetMTPDeviceDelegate(url);
   if (!delegate) {
     error_callback.Run(net::ERR_FAILED);
     return;
@@ -84,7 +78,8 @@ int MTPFileStreamReader::Read(net::IOBuffer* buf, int buf_len,
                               const net::CompletionCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
-  MTPDeviceAsyncDelegate* delegate = GetMTPDeviceDelegate(url_);
+  MTPDeviceAsyncDelegate* delegate =
+      DeviceMediaAsyncFileUtil::GetMTPDeviceDelegate(url_);
   if (!delegate)
     return net::ERR_FAILED;
 
@@ -124,7 +119,8 @@ int64_t MTPFileStreamReader::GetLength(
     const net::Int64CompletionCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
-  MTPDeviceAsyncDelegate* delegate = GetMTPDeviceDelegate(url_);
+  MTPDeviceAsyncDelegate* delegate =
+      DeviceMediaAsyncFileUtil::GetMTPDeviceDelegate(url_);
   if (!delegate)
     return net::ERR_FAILED;
 

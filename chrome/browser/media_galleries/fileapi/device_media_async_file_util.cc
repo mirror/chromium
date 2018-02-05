@@ -37,12 +37,6 @@ namespace {
 
 const char kDeviceMediaAsyncFileUtilTempDir[] = "DeviceMediaFileSystem";
 
-MTPDeviceAsyncDelegate* GetMTPDeviceDelegate(const FileSystemURL& url) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  return MTPDeviceMapService::GetInstance()->GetMTPDeviceAsyncDelegate(
-      url.filesystem_id());
-}
-
 // Called when GetFileInfo method call failed to get the details of file
 // specified by the requested url. |callback| is invoked to notify the
 // caller about the file |error|.
@@ -218,7 +212,8 @@ void OnSnapshotFileCreatedRunTask(
     OnCreateSnapshotFileError(callback, base::File::FILE_ERROR_FAILED);
     return;
   }
-  MTPDeviceAsyncDelegate* delegate = GetMTPDeviceDelegate(url);
+  MTPDeviceAsyncDelegate* delegate =
+      DeviceMediaAsyncFileUtil::GetMTPDeviceDelegate(url);
   if (!delegate) {
     OnCreateSnapshotFileError(callback, base::File::FILE_ERROR_NOT_FOUND);
     return;
@@ -700,4 +695,11 @@ void DeviceMediaAsyncFileUtil::OnDidDeleteDirectory(
 
 bool DeviceMediaAsyncFileUtil::validate_media_files() const {
   return media_path_filter_wrapper_.get() != NULL;
+}
+
+MTPDeviceAsyncDelegate* DeviceMediaAsyncFileUtil::GetMTPDeviceDelegate(
+    const FileSystemURL& url) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  return MTPDeviceMapService::GetInstance()->GetMTPDeviceAsyncDelegate(
+      url.filesystem_id());
 }
