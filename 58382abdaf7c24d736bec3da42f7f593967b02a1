@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "04903df3_2977239c",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "yeah this is not super nice. I\u0027d just pass the guid here.",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 45
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "210c71c8_c02fb241",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 6
@@ -18,6 +41,29 @@
         "startChar": 11,
         "endLine": 217,
         "endChar": 13
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1b9c4e_146f8113",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "and this could go away as well using a map",
+      "range": {
+        "startLine": 402,
+        "startChar": 17,
+        "endLine": 402,
+        "endChar": 52
       },
       "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -94,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "862591d5_6cb7748b",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "could this just take the dump id (see my comment below)? Keeping around the iterator makes code harder to reason about. If for any reason we clear in_progress_vm_region_requests_ (shutdown / tests ?) the iterator here would cause UAF.",
+      "parentUuid": "845799ad_b5924f0e",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 48
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "631fea18_9ae82c63",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 6
@@ -109,6 +179,76 @@
         "startLine": 170,
         "startChar": 7,
         "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347123d9_eacaae21",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "IMHO if this is a map\u003cuint64_t /*dump_id*/, QueuedVMRR\u003e the rest of the code looks way nicer as you stop passing iterators around",
+      "parentUuid": "631fea18_9ae82c63",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac67ea0_34ed101a",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "D/V log?",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 5
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb55d536_2c953054",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "should we fail the callback (return empty args) in this case?",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 328,
         "endChar": 11
       },
       "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
@@ -140,6 +280,29 @@
     },
     {
       "key": {
+        "uuid": "ad769fd7_0db74b0b",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "I think the \"1 chrome\" part is not true anymore given that this will return only OS dumps?",
+      "range": {
+        "startLine": 354,
+        "startChar": 60,
+        "endLine": 354,
+        "endChar": 69
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3227397_9d3e8d6a",
         "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
         "patchSetId": 6
@@ -156,6 +319,29 @@
         "startChar": 0,
         "endLine": 384,
         "endChar": 6
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16c7d35_d86bdcaa",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-05T16:19:20Z",
+      "side": 1,
+      "message": "can we have different names for these two functions.\nI think this is one of the cases where the overload is not trivial has as a different semantic, so might be worth its own name.",
+      "range": {
+        "startLine": 61,
+        "startChar": 14,
+        "endLine": 61,
+        "endChar": 30
       },
       "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
