@@ -16,6 +16,24 @@
       "revId": "3494b1b391f7b04d3f49c2b7daf2871cc58ea021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123f7f8b_c912694d",
+        "filename": "base/ring_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-02-05T19:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5220579_fffb9879",
+      "revId": "3494b1b391f7b04d3f49c2b7daf2871cc58ea021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
