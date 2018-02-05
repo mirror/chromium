@@ -16,6 +16,24 @@
       "revId": "0ac8b5c8c742a08111940c203c3b7c89cdfa5421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6f4dee_96de280d",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T23:11:52Z",
+      "side": 1,
+      "message": "As discussed offline, added transform and updated test.",
+      "parentUuid": "1e587816_f97cfc64",
+      "revId": "0ac8b5c8c742a08111940c203c3b7c89cdfa5421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
