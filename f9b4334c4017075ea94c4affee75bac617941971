@@ -22,6 +22,29 @@
       "revId": "f9b4334c4017075ea94c4affee75bac617941971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731b2352_9a9caf12",
+        "filename": "ui/aura/test/test_screen.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T17:44:19Z",
+      "side": 1,
+      "message": "Is this line necessary? I think you can replace the whole block (44-47) with delete host_, which should trigger removal of the observer in 157.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "f9b4334c4017075ea94c4affee75bac617941971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
