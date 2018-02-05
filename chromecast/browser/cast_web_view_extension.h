@@ -24,7 +24,6 @@
 namespace chromecast {
 
 class CastExtensionHost;
-class CastWebContentsManager;
 
 // A simplified interface for loading and displaying WebContents in cast_shell.
 class CastWebViewExtension : public CastWebView {
@@ -34,16 +33,12 @@ class CastWebViewExtension : public CastWebView {
   CastWebViewExtension(const extensions::Extension* extension,
                        const GURL& initial_url,
                        CastWebView::Delegate* delegate,
-                       CastWebContentsManager* web_contents_manager,
+                       std::unique_ptr<CastContentWindow> window,
                        content::BrowserContext* browser_context,
-                       scoped_refptr<content::SiteInstance> site_instance,
-                       bool transparent,
-                       bool allow_media_access,
-                       bool is_headless,
-                       bool enable_touch_input);
+                       scoped_refptr<content::SiteInstance> site_instance);
   ~CastWebViewExtension() override;
 
-  shell::CastContentWindow* window() const override;
+  CastContentWindow* window() const override;
 
   content::WebContents* web_contents() const override;
 
@@ -53,7 +48,7 @@ class CastWebViewExtension : public CastWebView {
   void Show(CastWindowManager* window_manager) override;
 
  private:
-  const std::unique_ptr<shell::CastContentWindow> window_;
+  const std::unique_ptr<CastContentWindow> window_;
   const std::unique_ptr<CastExtensionHost> extension_host_;
   scoped_refptr<content::SiteInstance> site_instance_;
 

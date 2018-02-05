@@ -41,13 +41,12 @@ class CastWebContentsManager {
 
   std::unique_ptr<CastWebView> CreateWebView(
       CastWebView::Delegate* delegate,
+      std::unique_ptr<CastContentWindow> window,
       const extensions::Extension* extension,
       const GURL& initial_url,
       scoped_refptr<content::SiteInstance> site_instance,
       bool transparent,
-      bool allow_media_access,
-      bool is_headless,
-      bool enable_touch_input);
+      bool allow_media_access);
 
   // Take ownership of |web_contents| and delete after |time_delta|, or sooner
   // if necessary.

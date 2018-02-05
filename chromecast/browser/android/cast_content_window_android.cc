@@ -15,7 +15,6 @@
 #include "ui/events/keycodes/keyboard_code_conversion_android.h"
 
 namespace chromecast {
-namespace shell {
 
 namespace {
 base::android::ScopedJavaLocalRef<jobject>
@@ -79,5 +78,4 @@ void CastContentWindowAndroid::OnKeyDown(
   delegate_->OnKeyEvent(key_event);
 }
 
-}  // namespace shell
 }  // namespace chromecast

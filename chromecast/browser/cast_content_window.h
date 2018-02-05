@@ -19,8 +19,6 @@ class WebContents;
 namespace chromecast {
 class CastWindowManager;
 
-namespace shell {
-
 // Class that represents the "window" a WebContents is displayed in cast_shell.
 // For Linux, this represents an Aura window. For Android, this is a Activity.
 // See CastContentWindowLinux and CastContentWindowAndroid.
@@ -51,7 +49,6 @@ class CastContentWindow {
                                CastWindowManager* window_manager) = 0;
 };
 
-}  // namespace shell
 }  // namespace chromecast
 
 #endif  // CHROMECAST_BROWSER_CAST_CONTENT_WINDOW_H_

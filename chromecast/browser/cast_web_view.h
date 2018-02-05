@@ -16,7 +16,7 @@ class CastWindowManager;
 // A simplified interface for loading and displaying WebContents in cast_shell.
 class CastWebView {
  public:
-  class Delegate : public shell::CastContentWindow::Delegate {
+  class Delegate : public CastContentWindow::Delegate {
    public:
     // Called when the page has stopped. ie: A 404 occured when loading the page
     // or if the render process crashes. |error_code| will return a net::Error
@@ -30,7 +30,7 @@ class CastWebView {
 
   virtual ~CastWebView() {}
 
-  virtual shell::CastContentWindow* window() const = 0;
+  virtual CastContentWindow* window() const = 0;
 
   virtual content::WebContents* web_contents() const = 0;
 

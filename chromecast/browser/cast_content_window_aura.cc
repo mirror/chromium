@@ -14,7 +14,6 @@
 #include "ui/display/screen.h"
 
 namespace chromecast {
-namespace shell {
 
 // static
 std::unique_ptr<CastContentWindow> CastContentWindow::Create(
@@ -37,5 +36,4 @@ void CastContentWindowAura::ShowWebContents(content::WebContents* web_contents,
   window->Show();
 }
 
-}  // namespace shell
 }  // namespace chromecast
