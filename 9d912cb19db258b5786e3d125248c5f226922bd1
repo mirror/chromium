@@ -16,6 +16,23 @@
       "revId": "9d912cb19db258b5786e3d125248c5f226922bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a30abd0_b145adf7",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T16:01:14Z",
+      "side": 1,
+      "message": "By using the @available annotations and forward declaring the classes you are using you should no longer need to use NSClassFromString as by the time this function is reached you are guaranteed to be running on macOS 10.13 and can assume the Vision framework is available.",
+      "revId": "9d912cb19db258b5786e3d125248c5f226922bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
