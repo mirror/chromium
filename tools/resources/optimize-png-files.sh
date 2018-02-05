@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/bin/bash
 # Copyright 2013 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -81,13 +81,13 @@ function pngout_loop {
   if [ $OPTIMIZE_LEVEL == 1 ]; then
     for j in $(eval echo {0..5}); do
       throbber
-      pngout -q -k1 -s1 -f$j $opts $file
+      ~/Downloads/pngout -q -k1 -s1 -f$j $opts $file
     done
   else
     for i in 0 128 256 512; do
       for j in $(eval echo {0..5}); do
         throbber
-        pngout -q -k1 -s1 -b$i -f$j $opts $file
+        ~/Downloads/pngout -q -k1 -s1 -b$i -f$j $opts $file
       done
     done
   fi
@@ -155,7 +155,7 @@ function huffman_blocks {
 
   for i in $(eval echo {2..$max_blocks}); do
     throbber
-    pngout -q -k1 -ks -s1 -n$i $file
+    ~/Downloads/pngout -q -k1 -ks -s1 -n$i $file
   done
 }
 
@@ -175,7 +175,7 @@ function random_huffman_table_trial {
   fi
   for i in $(eval echo {1..$trials_count}); do
     throbber
-    pngout -q -k1 -ks -s0 -r $file
+    ~/Downloads/pngout -q -k1 -ks -s0 -r $file
   done
   local new_size=$(stat -c%s $file)
   if [ $new_size -lt $old_size ]; then
@@ -238,13 +238,13 @@ function optimize_size {
 
   advdef -q -z -4 $file
 
-  pngout -q -s4 -c0 -force $file $file.tmp.png
+  ~/Downloads/pngout -q -s4 -c0 -force $file $file.tmp.png
   if [ -f $file.tmp.png ]; then
     rm $file.tmp.png
     process_grayscale $file
     process_grayscale_alpha $file
   else
-    pngout -q -s4 -c4 -force $file $file.tmp.png
+    ~/Downloads/pngout -q -s4 -c4 -force $file $file.tmp.png
     if [ -f $file.tmp.png ]; then
       rm $file.tmp.png
       process_grayscale_alpha $file
@@ -267,7 +267,7 @@ function optimize_size {
   else
     mv $file.tmp.png $file
   fi
-  pngout -q -k1 -s1 $file
+  ~/Downloads/pngout -q -k1 -s1 $file
 
   huffman_blocks $file
 
@@ -275,10 +275,10 @@ function optimize_size {
   info -ne "\b\b\b\b\b\b\b\bstrategy"
   if [ $OPTIMIZE_LEVEL == 2 ]; then
     for i in 3 2 0; do
-      pngout -q -k1 -ks -s$i $file
+      ~/Downloads/pngout -q -k1 -ks -s$i $file
     done
   else
-    pngout -q -k1 -ks -s1 $file
+    ~/Downloads/pngout -q -k1 -ks -s1 $file
   fi
 
   if [ $OPTIMIZE_LEVEL == 2 ]; then
@@ -493,7 +493,7 @@ if [ $OPTIMIZE_LEVEL -ge 1 ]; then
   else
     pngout_url="http://www.jonof.id.au/kenutils"
   fi
-  fail_if_not_installed pngout $pngout_url
+  # fail_if_not_installed pngout $pngout_url
 fi
 
 # Create tmp directory for crushed png file.
