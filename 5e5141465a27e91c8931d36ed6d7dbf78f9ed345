@@ -106,6 +106,24 @@
       "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e919a72_54b468de",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-05T19:35:19Z",
+      "side": 1,
+      "message": "(I got rid of base::Optional and just used empty string for \"no custom reason\".)\n\nBecause 90% of time the callers don\u0027t need to use this parameter, I personally feel that having every callsite passing \"std::string()\" / \"{}\" / \"\\\"\\\"\" doesn\u0027t really help readability. So if you don\u0027t mind, I will keep the default argument.\n\nThanks!",
+      "parentUuid": "f8dc437a_f26aab76",
+      "revId": "5e5141465a27e91c8931d36ed6d7dbf78f9ed345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
