@@ -4,6 +4,10 @@
 
 import("//build/config/android/rules.gni")
 
-android_java_prebuilt("ub_uiautomator_java") {
-  jar_path = "lib/ub-uiautomator.jar"
+android_aar_prebuilt("ub_uiautomator_java") {
+  deps = [
+    "//third_party/junit"
+  ]
+  testonly = true
+  aar_path = "lib/uiautomator-v18-2.1.2.aar"
 }

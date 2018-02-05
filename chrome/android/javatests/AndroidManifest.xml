@@ -17,7 +17,8 @@
     <application
         android:label="ChromePublicTest">
 
-        <uses-library android:name="android.test.runner" />
+        <uses-library android:name="android.test.base" android:required="false" />
+        <uses-library android:name="android.test.mock" android:required="false" />
 
         <provider android:name="org.chromium.chrome.test.TestContentProvider"
             android:authorities="org.chromium.chrome.test.TestContentProvider"
