@@ -756,15 +756,24 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     }
 
     /**
-     * Sets/adds a custom action button to the {@link Toolbar} if it is supported. If there is
-     * already an action button, update the button instead.
+     * Adds a custom action button to the {@link Toolbar}, if it is supported.
      * @param drawable The {@link Drawable} to use as the background for the button.
      * @param description The content description for the custom action button.
      * @param listener The {@link OnClickListener} to use for clicks to the button.
      */
-    public void setCustomActionButton(Drawable drawable, String description,
-            OnClickListener listener) {
-        mToolbar.setCustomActionButton(drawable, description, listener);
+    public void addCustomActionButton(
+            Drawable drawable, String description, OnClickListener listener) {
+        mToolbar.addCustomActionButton(drawable, description, listener);
+    }
+
+    /**
+     * Adds a custom action button to the {@link Toolbar}, if it is supported.
+     * @param index XXX
+     * @param drawable The {@link Drawable} to use as the background for the button.
+     * @param description The content description for the custom action button.
+     */
+    public void updateCustomActionButton(int index, Drawable drawable, String description) {
+        mToolbar.updateCustomActionButton(index, drawable, description);
     }
 
     /**
