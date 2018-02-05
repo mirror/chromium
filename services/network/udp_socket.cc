@@ -93,6 +93,8 @@ class SocketWrapperImpl : public UDPSocket::SocketWrapper {
     return socket_.RecvFrom(buf, buf_len, address, callback);
   }
 
+  void Close() override { socket_.Close(); }
+
  private:
   int ConfigureOptions(mojom::UDPSocketOptionsPtr options) {
     if (!options)
@@ -270,6 +272,19 @@ void UDPSocket::Send(
       nullptr, data,
       static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation),
       std::move(callback));
+}
+
+void UDPSocket::Close() {
+  if (!IsConnectedOrBound()) {
+    return;
+  }
+  is_connected_ = false;
+  is_bound_ = false;
+  recvfrom_buffer_ = nullptr;
+  send_callback_.Reset();
+  send_buffer_ = nullptr;
+  remaining_recv_slots_ = 0;
+  wrapped_socket_->Close();
 }
 
 std::unique_ptr<UDPSocket::SocketWrapper> UDPSocket::CreateSocketWrapper()

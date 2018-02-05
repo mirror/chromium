@@ -9,6 +9,7 @@ include_rules = [
   "+remoting/base",
   "+remoting/host",
   "+services/network/public/interfaces",
+  "+services/network",
 ]
 
 specific_include_rules = {
