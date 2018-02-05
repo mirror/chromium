@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa8cd026_b2551cd4",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T22:04:17Z",
+      "side": 1,
+      "message": "content",
+      "revId": "b55b674b3484317cf07ba4b8adae820d7ca4bb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271c01d8_5809d15d",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_model.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T22:04:17Z",
+      "side": 1,
+      "message": "FullscreenModelObserver",
+      "revId": "b55b674b3484317cf07ba4b8adae820d7ca4bb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
