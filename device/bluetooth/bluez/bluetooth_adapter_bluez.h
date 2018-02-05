@@ -31,6 +31,10 @@
 #include "device/bluetooth/dbus/bluetooth_profile_manager_client.h"
 #include "device/bluetooth/dbus/bluetooth_profile_service_provider.h"
 
+#if defined(OS_CHROMEOS)
+#include "chromeos/dbus/power_manager_client.h"
+#endif  // defined(OS_CHROMEOS)
+
 namespace base {
 class SequencedTaskRunner;
 class TimeDelta;
@@ -70,6 +74,9 @@ class BluetoothPairingBlueZ;
 // BluetoothBlueZTest, Shutdown.
 class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterBlueZ
     : public device::BluetoothAdapter,
+#if defined(OS_CHROMEOS)
+      public chromeos::PowerManagerClient::Observer,
+#endif  // defined(OS_CHROMEOS)
       public bluez::BluetoothAdapterClient::Observer,
       public bluez::BluetoothDeviceClient::Observer,
       public bluez::BluetoothInputClient::Observer,
@@ -86,6 +93,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterBlueZ
   // Calls |init_callback| after a BluetoothAdapter is fully initialized.
   static base::WeakPtr<BluetoothAdapter> CreateAdapter(
       const InitCallback& init_callback);
+
+#if defined(OS_CHROMEOS)
+  // public chromeos::PowerManagerClient::Observer
+  void SuspendImminent(power_manager::SuspendImminent::Reason reason) override;
+  void SuspendDone(const base::TimeDelta& sleep_duration) override;
+#endif  // defined(OS_CHROMEOS)
 
   // BluetoothAdapter:
   void Shutdown() override;
