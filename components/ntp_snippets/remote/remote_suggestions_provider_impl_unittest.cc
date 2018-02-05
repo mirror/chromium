@@ -318,6 +318,7 @@ class MockRemoteSuggestionsStatusService
 
   MOCK_METHOD1(Init, void(const StatusChangeCallback& callback));
   MOCK_METHOD1(OnSignInStateChanged, void(bool));
+  MOCK_METHOD1(OnListVisibilityToggled, void(bool));
 };
 
 std::string BoolToString(bool value) {
@@ -410,7 +411,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     } else {
       remote_suggestions_status_service =
           std::make_unique<RemoteSuggestionsStatusServiceImpl>(
-              /*has_signed_in=*/false, utils_.pref_service(), std::string());
+              /*has_signed_in=*/false, utils_.pref_service());
     }
     remote_suggestions_status_service_ =
         remote_suggestions_status_service.get();

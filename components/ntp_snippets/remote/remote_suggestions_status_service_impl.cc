@@ -17,11 +17,10 @@ namespace ntp_snippets {
 
 RemoteSuggestionsStatusServiceImpl::RemoteSuggestionsStatusServiceImpl(
     bool is_signed_in,
-    PrefService* pref_service,
-    const std::string& additional_toggle_pref)
+    PrefService* pref_service)
     : status_(RemoteSuggestionsStatus::EXPLICITLY_DISABLED),
-      additional_toggle_pref_(additional_toggle_pref),
       is_signed_in_(is_signed_in),
+      list_visible_during_session_(true),
       pref_service_(pref_service) {
   ntp_snippets::metrics::RecordRemoteSuggestionsProviderState(
       !IsExplicitlyDisabled());
@@ -34,6 +33,7 @@ RemoteSuggestionsStatusServiceImpl::~RemoteSuggestionsStatusServiceImpl() =
 void RemoteSuggestionsStatusServiceImpl::RegisterProfilePrefs(
     PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kEnableSnippets, true);
+  registry->RegisterBooleanPref(prefs::kArticlesListVisible, true);
 }
 
 void RemoteSuggestionsStatusServiceImpl::Init(
@@ -47,20 +47,16 @@ void RemoteSuggestionsStatusServiceImpl::Init(
   RemoteSuggestionsStatus old_status = status_;
   status_ = GetStatusFromDeps();
   status_change_callback_.Run(old_status, status_);
+  // List is never visible during session only in case it was not visible based
+  // on pref setting at initialization time.
+  list_visible_during_session_ =
+      pref_service_->GetBoolean(prefs::kArticlesListVisible);
 
   pref_change_registrar_.Init(pref_service_);
   pref_change_registrar_.Add(
       prefs::kEnableSnippets,
       base::Bind(&RemoteSuggestionsStatusServiceImpl::OnSnippetsEnabledChanged,
                  base::Unretained(this)));
-
-  if (!additional_toggle_pref_.empty()) {
-    pref_change_registrar_.Add(
-        additional_toggle_pref_,
-        base::Bind(
-            &RemoteSuggestionsStatusServiceImpl::OnSnippetsEnabledChanged,
-            base::Unretained(this)));
-  }
 }
 
 void RemoteSuggestionsStatusServiceImpl::OnSnippetsEnabledChanged() {
@@ -87,17 +83,22 @@ void RemoteSuggestionsStatusServiceImpl::OnSignInStateChanged(
   OnStateChanged(GetStatusFromDeps());
 }
 
+void RemoteSuggestionsStatusServiceImpl::OnListVisibilityToggled(bool visible) {
+  if (visible)
+    list_visible_during_session_ = true;
+  pref_service_->SetBoolean(prefs::kArticlesListVisible, visible);
+  OnStateChanged(GetStatusFromDeps());
+}
+
 bool RemoteSuggestionsStatusServiceImpl::IsExplicitlyDisabled() const {
   if (!pref_service_->GetBoolean(prefs::kEnableSnippets)) {
-    DVLOG(1) << "[GetStatusFromDeps] Disabled via pref";
+    DVLOG(1) << "[GetStatusFromDeps] Disabled via pref.";
     return true;
   }
 
-  if (!additional_toggle_pref_.empty()) {
-    if (!pref_service_->GetBoolean(additional_toggle_pref_)) {
-      DVLOG(1) << "[GetStatusFromDeps] Disabled via additional pref";
-      return true;
-    }
+  if (!list_visible_during_session_) {
+    DVLOG(1) << "[GetStatusFromDeps] Disabled because articles list hidden.";
+    return true;
   }
 
   return false;
