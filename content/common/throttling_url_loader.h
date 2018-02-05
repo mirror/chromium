@@ -6,6 +6,7 @@
 #define CONTENT_COMMON_THROTTLING_URL_LOADER_H_
 
 #include <memory>
+#include <string>
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
@@ -51,9 +52,6 @@ class CONTENT_EXPORT ThrottlingURLLoader
 
   void FollowRedirect();
   void SetPriority(net::RequestPriority priority, int32_t intra_priority_value);
-
-  // Disconnects the client connection and releases the URLLoader.
-  void DisconnectClient();
 
   // Disconnect the forwarding URLLoaderClient and the URLLoader. Returns the
   // datapipe endpoints.
@@ -119,11 +117,14 @@ class CONTENT_EXPORT ThrottlingURLLoader
 
   void OnClientConnectionError();
 
-  void CancelWithError(int error_code);
+  void CancelWithError(int error_code, const std::string& custom_reason);
   void Resume();
   void SetPriority(net::RequestPriority priority);
   void PauseReadingBodyFromNet(URLLoaderThrottle* throttle);
   void ResumeReadingBodyFromNet(URLLoaderThrottle* throttle);
+
+  // Disconnects the client connection and releases the URLLoader.
+  void DisconnectClient(const std::string& custom_description);
 
   enum DeferredStage {
     DEFERRED_NONE,

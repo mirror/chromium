@@ -5,6 +5,8 @@
 #ifndef CONTENT_PUBLIC_BROWSER_RESOURCE_REQUEST_INFO_H_
 #define CONTENT_PUBLIC_BROWSER_RESOURCE_REQUEST_INFO_H_
 
+#include <string>
+
 #include "base/callback_forward.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
@@ -176,6 +178,12 @@ class ResourceRequestInfo {
 
   // Whether this request was canceled by DevTools.
   virtual bool CanceledByDevTools() const = 0;
+
+  // When the client of a request decides to cancel it, it may optionally
+  // provide an application-defined description of the canncellation reason.
+  // This method returns the custom reason. If no such reason has been provided,
+  // it returns an empty string.
+  virtual const std::string& GetCustomCancelReason() const = 0;
 
  protected:
   virtual ~ResourceRequestInfo() {}
