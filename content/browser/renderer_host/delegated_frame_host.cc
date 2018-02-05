@@ -107,6 +107,15 @@ bool DelegatedFrameHost::HasSavedFrame() {
 void DelegatedFrameHost::WasHidden() {
   frame_evictor_->SetVisible(false);
   released_front_lock_ = nullptr;
+
+  // When the tab is visible, we allow embedding outdated fallback SurfaceIds
+  // in order to show some progress to the user. However, when the tab is hidden
+  // we stop doing that in order to avoid showing outdated content when the user
+  // switches back to this tab.
+  if (enable_surface_synchronization_ &&
+      client_->GetLocalSurfaceId() != local_surface_id_) {
+    EvictDelegatedFrame();
+  }
 }
 
 void DelegatedFrameHost::MaybeCreateResizeLock() {
@@ -295,28 +304,29 @@ void DelegatedFrameHost::WasResized(const cc::DeadlinePolicy& deadline_policy) {
       client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId();
   gfx::Size new_size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
 
-  if (enable_surface_synchronization_ &&
-      client_->DelegatedFrameHostIsVisible() &&
-      (!primary_surface_id || primary_surface_id->local_surface_id() !=
-                                  client_->GetLocalSurfaceId())) {
-    current_frame_size_in_dip_ = new_size_in_dip;
+  if (new_size_in_dip != current_frame_size_in_dip_ &&
+      !client_->DelegatedFrameHostIsVisible()) {
+    EvictDelegatedFrame();
+  }
 
-    viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
-    client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_id, current_frame_size_in_dip_, GetGutterColor(),
-        deadline_policy);
-    if (compositor_ && !base::CommandLine::ForCurrentProcess()->HasSwitch(
-                           switches::kDisableResizeLock)) {
-      compositor_->OnChildResizing();
+  if (enable_surface_synchronization_) {
+    if (client_->DelegatedFrameHostIsVisible() &&
+        (!primary_surface_id || primary_surface_id->local_surface_id() !=
+                                    client_->GetLocalSurfaceId())) {
+      current_frame_size_in_dip_ = new_size_in_dip;
+
+      viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
+      client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
+          surface_id, current_frame_size_in_dip_, GetGutterColor(),
+          deadline_policy);
+      if (compositor_ && !base::CommandLine::ForCurrentProcess()->HasSwitch(
+                             switches::kDisableResizeLock)) {
+        compositor_->OnChildResizing();
+      }
     }
     // Input throttling and guttering are handled differently when surface
     // synchronization is enabled so exit early here.
     return;
-  }
-
-  if (new_size_in_dip != current_frame_size_in_dip_ &&
-      !client_->DelegatedFrameHostIsVisible()) {
-    EvictDelegatedFrame();
   }
 
   // If |create_resize_lock_after_commit_| is true, we're waiting to recreate
@@ -616,6 +626,16 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
 
   frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   // Note: the frame may have been evicted immediately.
+
+  // When the tab is visible, we allow embedding outdated fallback SurfaceIds
+  // in order to show some progress to the user. However, when the tab is hidden
+  // we stop doing that in order to avoid showing outdated content when the user
+  // switches back to this tab.
+  if (enable_surface_synchronization_ &&
+      !client_->DelegatedFrameHostIsVisible() &&
+      local_surface_id_ != client_->GetLocalSurfaceId()) {
+    EvictDelegatedFrame();
+  }
 }
 
 void DelegatedFrameHost::OnFrameTokenChanged(uint32_t frame_token) {
