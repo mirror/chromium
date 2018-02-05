@@ -4081,6 +4081,9 @@ void RenderFrameImpl::DidStartProvisionalLoad(
         pending_navigation_info_->triggering_event_info;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
+    info.url_loader_factory =
+        pending_navigation_info_->url_loader_factory.PassInterface()
+            .PassHandle();
 
     pending_navigation_info_.reset(nullptr);
     BeginNavigation(info);
@@ -6704,6 +6707,16 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
   if (info.is_client_redirect)
     client_side_redirect_url = frame_->GetDocument().Url();
 
+  network::mojom::URLLoaderFactoryPtrInfo url_loader_factory;
+  if (info.url_loader_factory.is_valid()) {
+    network::mojom::URLLoaderFactoryPtr factory(
+        network::mojom::URLLoaderFactoryPtrInfo(
+            mojo::ScopedMessagePipeHandle(info.url_loader_factory.get()),
+            network::mojom::URLLoaderFactory::Version_));
+    factory->Clone(MakeRequest(&url_loader_factory));
+    ignore_result(factory.PassInterface().PassHandle().release());
+  }
+
   int load_flags = GetLoadFlagsForWebURLRequest(info.url_request);
   mojom::BeginNavigationParamsPtr begin_navigation_params =
       mojom::BeginNavigationParams::New(
@@ -6713,7 +6726,8 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           GetRequestContextTypeForWebURLRequest(info.url_request),
           GetMixedContentContextTypeForWebURLRequest(info.url_request),
           is_form_submission, searchable_form_url, searchable_form_encoding,
-          initiator_origin, client_side_redirect_url);
+          initiator_origin, client_side_redirect_url,
+          std::move(url_loader_factory));
 
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
                                   std::move(begin_navigation_params));
@@ -7285,7 +7299,18 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       client_redirect(info.is_client_redirect),
       triggering_event_info(info.triggering_event_info),
       form(info.form),
-      source_location(info.source_location) {}
+      source_location(info.source_location) {
+  if (info.url_loader_factory.is_valid()) {
+    network::mojom::URLLoaderFactoryPtr factory(
+        network::mojom::URLLoaderFactoryPtrInfo(
+            mojo::ScopedMessagePipeHandle(info.url_loader_factory.get()),
+            network::mojom::URLLoaderFactory::Version_));
+    factory->Clone(MakeRequest(&url_loader_factory));
+    ignore_result(factory.PassInterface().PassHandle().release());
+  }
+}
+
+RenderFrameImpl::PendingNavigationInfo::~PendingNavigationInfo() = default;
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));

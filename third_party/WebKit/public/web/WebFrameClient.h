@@ -347,6 +347,7 @@ class BLINK_EXPORT WebFrameClient {
     WebSourceLocation source_location;
     WebContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy;
+    mojo::ScopedMessagePipeHandle url_loader_factory;
 
     // Specify whether or not a MHTML Archive can be used to load a subframe
     // resource instead of doing a network request.

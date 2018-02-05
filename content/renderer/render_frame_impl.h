@@ -1579,8 +1579,10 @@ class CONTENT_EXPORT RenderFrameImpl
     blink::WebTriggeringEventInfo triggering_event_info;
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
+    network::mojom::URLLoaderFactoryPtr url_loader_factory;
 
     explicit PendingNavigationInfo(const NavigationPolicyInfo& info);
+    ~PendingNavigationInfo();
   };
 
   // Contains information about a pending navigation to be sent to the browser.
