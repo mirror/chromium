@@ -35,6 +35,7 @@
 #include "chrome/browser/language/url_language_histogram_factory.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "chrome/browser/media/media_engagement_service_factory.h"
+#include "chrome/browser/media/mirror_service_proxy_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media_galleries/media_galleries_preferences_factory.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service_factory.h"
@@ -292,6 +293,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   if (MediaEngagementService::IsEnabled())
     MediaEngagementServiceFactory::GetInstance();
   media_router::MediaRouterFactory::GetInstance();
+  media::MirrorServiceProxyFactory::GetInstance();
 #if !defined(OS_ANDROID)
   media_router::MediaRouterUIServiceFactory::GetInstance();
 #endif

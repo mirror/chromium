@@ -66,6 +66,9 @@
         ],
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
+        ],
+        "gpu_mojo": [
+          "ui::mojom::Gpu"
         ]
       },
       "requires": {
