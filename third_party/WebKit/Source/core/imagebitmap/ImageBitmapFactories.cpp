@@ -332,9 +332,8 @@ void ImageBitmapFactories::ImageBitmapLoader::DecodeImageOnDecoderThread(
       true, alpha_op,
       ignore_color_space ? ColorBehavior::Ignore() : ColorBehavior::Tag()));
   sk_sp<SkImage> frame;
-  if (decoder) {
+  if (decoder)
     frame = ImageBitmap::GetSkImageFromDecoder(std::move(decoder));
-  }
   PostCrossThreadTask(
       *task_runner, FROM_HERE,
       CrossThreadBind(&ImageBitmapFactories::ImageBitmapLoader::
