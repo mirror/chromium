@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10ce0890_e8b3677e",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-02-05T19:16:48Z",
+      "side": 1,
+      "message": "This seems wrong? You just created this vector above, so it should always be empty here?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 37
+      },
+      "revId": "9ce811a221370df57bf3f034f98a126d8972382d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
