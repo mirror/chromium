@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd5383cf_bd27c252",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T20:08:53Z",
+      "side": 1,
+      "message": "Can do.",
+      "parentUuid": "24122099_e4c03683",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aab6743_4525b1a5",
         "filename": "cc/paint/paint_op_buffer_serializer.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8235e43_567128e8",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T20:08:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aab6743_4525b1a5",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 29
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e65e79_e5b09906",
         "filename": "cc/paint/paint_op_buffer_serializer.cc",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-05T19:49:07Z",
       "side": 1,
       "message": "I wish we could come up with a good way to avoid duplicating this from RasterSource...",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 79
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65532bd5_c0f5b5b3",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T20:08:53Z",
+      "side": 1,
+      "message": "I think it\u0027s a tradeoff.  These two pieces of code are doing similar things on very different APIs, and so I think it\u0027s better to just test that they do the same thing rather than try to shoehorn the codepaths to use the same code.",
+      "parentUuid": "b4e65e79_e5b09906",
       "range": {
         "startLine": 116,
         "startChar": 2,
@@ -91,6 +163,30 @@
       "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d7265d_a9487b72",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-05T20:08:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d39a2d_d4f5c692",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
