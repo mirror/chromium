@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "033bbed6_6b9504aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewResourceFrameLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-05T23:46:26Z",
+      "side": 1,
+      "message": "nit: might be worth setting this with the definition above, unless there is some case where we expect to not use it at all.",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 58
+      },
+      "revId": "1729109154869d1f020fcf42d4c9e8a1a53396e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
