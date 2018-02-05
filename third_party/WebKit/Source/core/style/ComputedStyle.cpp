@@ -191,6 +191,10 @@ StyleRecalcChange ComputedStyle::StylePropagationDiff(
       old_style->HasTextCombine() != new_style->HasTextCombine())
     return kReattach;
 
+  if (old_style->DisplayLayoutState() != new_style->DisplayLayoutState()) {
+    return kReattach;
+  }
+
   bool independent_equal = old_style->IndependentInheritedEqual(*new_style);
   bool non_independent_equal =
       old_style->NonIndependentInheritedEqual(*new_style);

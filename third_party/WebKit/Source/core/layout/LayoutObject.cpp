@@ -75,6 +75,7 @@
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/custom/LayoutCustom.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/layout_ng_table_cell.h"
@@ -275,8 +276,7 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
       return new LayoutGrid(element);
     case EDisplay::kLayoutCustom:
     case EDisplay::kInlineLayoutCustom:
-      // TODO(ikilpatrick): return new LayoutCustom(element);
-      return nullptr;
+      return new LayoutCustom(element);
   }
 
   NOTREACHED();
@@ -849,6 +849,9 @@ static inline bool ObjectIsRelayoutBoundary(const LayoutObject* object) {
   // heights (and the number of rows). Instead of identifying cases where it's
   // safe to allow relayout roots, just disallow them inside multicol.
   if (object->IsInsideFlowThread())
+    return false;
+
+  if (object->IsLayoutCustom())
     return false;
 
   return true;
