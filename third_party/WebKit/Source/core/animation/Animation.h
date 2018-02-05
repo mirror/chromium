@@ -41,6 +41,7 @@
 #include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/animation/AnimationEffectClient.h"
 #include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/CompositorAnimations.h"
 #include "core/animation/DocumentTimeline.h"
@@ -63,7 +64,8 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
                                     public ActiveScriptWrappable<Animation>,
                                     public ContextLifecycleObserver,
                                     public CompositorAnimationDelegate,
-                                    public CompositorAnimationPlayerClient {
+                                    public CompositorAnimationPlayerClient,
+                                    public AnimationEffectClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Animation);
 
@@ -94,6 +96,11 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   // Returns whether the animation is finished.
   bool Update(TimingUpdateReason);
 
+  // AnimationEffectClient:
+  void UpdateIfNecessary() override;
+  void SpecifiedTimingChanged() override;
+  Animation* GetAnimation() override { return this; }
+
   // timeToEffectChange returns:
   //  infinity  - if this animation is no longer in effect
   //  0         - if this animation requires an update on the next frame
@@ -111,7 +118,7 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
 
   void SetCurrentTimeInternal(double new_current_time,
                               TimingUpdateReason = kTimingUpdateOnDemand);
-  bool Paused() const { return paused_ && !is_paused_for_testing_; }
+  bool Paused() const override { return paused_ && !is_paused_for_testing_; }
   static const char* PlayStateString(AnimationPlayState);
   String playState() const { return PlayStateString(PlayStateInternal()); }
   AnimationPlayState PlayStateInternal() const;
@@ -148,7 +155,7 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   DocumentTimeline* TimelineInternal() { return timeline_; }
 
   double CalculateStartTime(double current_time) const;
-  bool HasStartTime() const { return !IsNull(start_time_); }
+  bool HasStartTime() const override { return !IsNull(start_time_); }
   double startTime(bool& is_null) const;
   double startTime() const;
   double StartTimeInternal() const { return start_time_; }
@@ -206,7 +213,7 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
     return animation1->SequenceNumber() < animation2->SequenceNumber();
   }
 
-  bool EffectSuppressed() const { return effect_suppressed_; }
+  bool EffectSuppressed() const override { return effect_suppressed_; }
   void SetEffectSuppressed(bool);
 
   void InvalidateKeyframeEffect(const TreeScope&);
