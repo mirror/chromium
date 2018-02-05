@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "be8c5104_07ba34c7",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-05T20:55:24Z",
+      "side": 1,
+      "message": "Makes sense thanks!",
+      "parentUuid": "d0937972_38cdb3f1",
+      "revId": "58d0ec34334a93eb885a3904bf1c14c69326829f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "900fa405_423524c6",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 6
