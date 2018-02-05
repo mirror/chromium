@@ -69,6 +69,24 @@
       "revId": "454065d9cecfbc116b097f214da8430a341c6405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50827a9c_f8295b18",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-05T23:24:37Z",
+      "side": 1,
+      "message": "Thanks for being so thorough! I replied on the bug as well.",
+      "parentUuid": "3437c3ac_1a93963e",
+      "revId": "454065d9cecfbc116b097f214da8430a341c6405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
