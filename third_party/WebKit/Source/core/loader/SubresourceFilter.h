@@ -34,11 +34,13 @@ class CORE_EXPORT SubresourceFilter final
                  SecurityViolationReportingPolicy);
   bool AllowWebSocketConnection(const KURL&);
 
-  void SetIsAdSubframe(bool is_ad_subframe) {
-    is_ad_subframe_ = is_ad_subframe;
+  void SetIsAssociatedWithAdSubframe(bool is_ad_subframe) {
+    is_associated_with_ad_subframe_ = is_ad_subframe;
   }
 
-  bool GetIsAdSubframe() { return is_ad_subframe_; }
+  bool GetIsAssociatedWithAdSubframe() {
+    return is_associated_with_ad_subframe_;
+  }
 
   virtual void Trace(blink::Visitor*);
 
@@ -51,7 +53,7 @@ class CORE_EXPORT SubresourceFilter final
 
   Member<ExecutionContext> execution_context_;
   std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter_;
-  bool is_ad_subframe_;
+  bool is_associated_with_ad_subframe_;
 };
 
 }  // namespace blink
