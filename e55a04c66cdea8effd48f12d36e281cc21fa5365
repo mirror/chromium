@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b86ed8d_d3599634",
+        "filename": "chrome/browser/chromeos/arc/cups_print/arc_cups_print_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-02-05T17:04:09Z",
+      "side": 1,
+      "message": "nit: the convention is to perform teardown steps in the inverse order in which they were set up: swap this and the next lines.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "e55a04c66cdea8effd48f12d36e281cc21fa5365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365e069d_d2bb6e5c",
+        "filename": "components/arc/common/cups_print.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-02-05T17:04:09Z",
+      "side": 1,
+      "message": "If you\u0027re just going to have a stub, better wait until you actually use it to declare it.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 2
+      },
+      "revId": "e55a04c66cdea8effd48f12d36e281cc21fa5365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
