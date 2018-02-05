@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "4e79e05f_5e3a3e53",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: Update mention of |GetMenuItemsForMojo| (now named GetMojoMenuItemsFromModel)",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e461b7c1_4a079831",
         "filename": "ash/public/cpp/menu_utils.h",
         "patchSetId": 10
@@ -42,6 +59,23 @@
         "endLine": 36,
         "endChar": 30
       },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007bded2_39907de5",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "Can this be replaced by the new util function, PopulateMenuFromMojoMenuItems?",
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +105,98 @@
     },
     {
       "key": {
+        "uuid": "e1e202c2_81c236aa",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "SimpleMenuModel requires subclasses like this to implement IsCommandId[Enabled|Checked], etc. and there\u0027s no obvious pre-existing menu item struct, other than the Mojo one I built for the shelf/wallpaper. Those MenuItem mojo structs are kept instead of creating yet another mechanism to cache the item state.",
+      "parentUuid": "3d2987f4_a3d44ee7",
+      "range": {
+        "startLine": 193,
+        "startChar": 44,
+        "endLine": 193,
+        "endChar": 55
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5152a1e3_522159ce",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b486b27_9366acfd",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81b5fb5_4a250494",
+        "filename": "ui/app_list/test/app_list_test_view_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: curly braces for a multi-line conditional body",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85854e06_4d67ff67",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "It seems reasonable to check these in the callback, OnGetContextMenuModel. Otherwise, the async interactions here might allow two requests to be sent before a response is received, and then the second callback would attempt to show a menu when one is already showing.",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cda400c_e1e5ce8a",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 10
@@ -88,6 +214,74 @@
         "endLine": 326,
         "endChar": 25
       },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c96f090_3bd8c57b",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: maybe \"Callback run when requesting a context menu from the app list delegate.\" or similar?",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7150614a_2f9a5773",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: \"OnGet\" is a little odd, maybe \"OnContextMenuModelReceived\" or similar.",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191bc39c_cdf36c6e",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "nit: |context_sub_menu_models_| or |context_submenu_models_| or |context_submenus_|",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0047813d_c55b9913",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T20:51:20Z",
+      "side": 1,
+      "message": "ditto nit: avoid \u0027OnGet\u0027 and expand comment",
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
