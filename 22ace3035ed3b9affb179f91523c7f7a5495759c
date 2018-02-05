@@ -16,6 +16,24 @@
       "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c5c6c0_e1836d46",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-05T20:20:24Z",
+      "side": 1,
+      "message": "This will early return from the recursion which would iterate all throttled descendants.",
+      "parentUuid": "970e924e_85192e16",
+      "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
