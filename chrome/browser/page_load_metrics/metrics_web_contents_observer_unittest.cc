@@ -922,6 +922,117 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming2) {
   CheckNoErrorEvents();
 }
 
+// Main frame delivers an input notification. Subsequently, a subframe delivers
+// an input notification, where the input occurred first. Verify that
+// FirstInputDelay and FirstInputTimestamp come from the subframe.
+TEST_F(MetricsWebContentsObserverTest,
+       FirstInputDelayAndTimingSubframeFirstDeliveredSecond) {
+  mojom::PageLoadTiming timing;
+  PopulatePageLoadTiming(&timing);
+  timing.interactive_timing->first_input_delay =
+      base::TimeDelta::FromMilliseconds(10);
+  // Set this far in the future. We currently can't control the navigation start
+  // offset, so we ensure that the subframe timestamp + the unknown offset is
+  // less than the main frame timestamp.
+  timing.interactive_timing->first_input_timestamp =
+      base::TimeDelta::FromMinutes(100);
+
+  content::WebContentsTester* web_contents_tester =
+      content::WebContentsTester::For(web_contents());
+  web_contents_tester->NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+
+  content::RenderFrameHostTester* rfh_tester =
+      content::RenderFrameHostTester::For(main_rfh());
+  content::RenderFrameHost* subframe = rfh_tester->AppendChild("subframe");
+
+  // Dispatch a timing update for the child frame that includes a first input
+  // earlier than the one for the main frame.
+  mojom::PageLoadTiming subframe_timing;
+  PopulatePageLoadTiming(&subframe_timing);
+  subframe_timing.interactive_timing->first_input_delay =
+      base::TimeDelta::FromMilliseconds(15);
+  subframe_timing.interactive_timing->first_input_timestamp =
+      base::TimeDelta::FromMilliseconds(90);
+
+  subframe = content::NavigationSimulator::NavigateAndCommitFromDocument(
+      GURL(kDefaultTestUrl2), subframe);
+  SimulateTimingUpdate(subframe_timing, subframe);
+
+  // Navigate again to confirm the timing updated for a subframe message.
+  web_contents_tester->NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  const mojom::InteractiveTiming& interactive_timing =
+      *complete_timings().back()->interactive_timing;
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(15),
+            interactive_timing.first_input_delay);
+  // Ensure the timestamp is from the subframe. The main frame timestamp was 100
+  // minutes.
+  EXPECT_LT(interactive_timing.first_input_timestamp,
+            base::TimeDelta::FromMinutes(10));
+
+  CheckNoErrorEvents();
+}
+
+// A subframe delivers an input notification. Subsequently, the mainframe
+// delivers an input notification, where the input occurred first. Verify that
+// FirstInputDelay and FirstInputTimestamp come from the main frame.
+TEST_F(MetricsWebContentsObserverTest,
+       FirstInputDelayAndTimingMainframeFirstDeliveredSecond) {
+  content::WebContentsTester* web_contents_tester =
+      content::WebContentsTester::For(web_contents());
+
+  // We need to navigate before we can navigate the subframe.
+  web_contents_tester->NavigateAndCommit(GURL(kDefaultTestUrl));
+
+  content::RenderFrameHostTester* rfh_tester =
+      content::RenderFrameHostTester::For(main_rfh());
+  content::RenderFrameHost* subframe = rfh_tester->AppendChild("subframe");
+
+  mojom::PageLoadTiming subframe_timing;
+  PopulatePageLoadTiming(&subframe_timing);
+  subframe_timing.interactive_timing->first_input_delay =
+      base::TimeDelta::FromMilliseconds(10);
+  subframe_timing.interactive_timing->first_input_timestamp =
+      base::TimeDelta::FromMinutes(100);
+
+  subframe = content::NavigationSimulator::NavigateAndCommitFromDocument(
+      GURL(kDefaultTestUrl2), subframe);
+  SimulateTimingUpdate(subframe_timing, subframe);
+
+  mojom::PageLoadTiming timing;
+  PopulatePageLoadTiming(&timing);
+  // Dispatch a timing update for the main frame that includes a first input
+  // earlier than the one for the subframe.
+
+  timing.interactive_timing->first_input_delay =
+      base::TimeDelta::FromMilliseconds(15);
+  // Set this far in the future. We currently can't control the navigation start
+  // offset, so we ensure that the main frame timestamp + the unknown offset is
+  // less than the subframe timestamp.
+  timing.interactive_timing->first_input_timestamp =
+      base::TimeDelta::FromMilliseconds(90);
+
+  web_contents_tester->NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+
+  // Navigate again to confirm the timing updated for the mainframe message.
+  web_contents_tester->NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  const mojom::InteractiveTiming& interactive_timing =
+      *complete_timings().back()->interactive_timing;
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(15),
+            interactive_timing.first_input_delay);
+  // Ensure the timestamp is from the main frame. The subframe timestamp was 100
+  // minutes.
+  EXPECT_LT(interactive_timing.first_input_timestamp,
+            base::TimeDelta::FromMinutes(10));
+
+  CheckNoErrorEvents();
+}
+
 TEST_F(MetricsWebContentsObserverTest, DispatchDelayedMetricsOnPageClose) {
   mojom::PageLoadTiming timing;
   PopulatePageLoadTiming(&timing);

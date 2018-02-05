@@ -877,12 +877,14 @@ TEST_F(CorePageLoadMetricsObserverTest, TimeToInteractiveStatusDidNotReachFMP) {
       internal::TIME_TO_INTERACTIVE_DID_NOT_REACH_FIRST_MEANINGFUL_PAINT, 1);
 }
 
-TEST_F(CorePageLoadMetricsObserverTest, FirstInputDelay) {
+TEST_F(CorePageLoadMetricsObserverTest, FirstInputDelayAndTimestamp) {
   page_load_metrics::mojom::PageLoadTiming timing;
   page_load_metrics::InitPageLoadTimingForTest(&timing);
   timing.navigation_start = base::Time::FromDoubleT(1);
   timing.interactive_timing->first_input_delay =
       base::TimeDelta::FromMilliseconds(5);
+  timing.interactive_timing->first_input_timestamp =
+      base::TimeDelta::FromMilliseconds(12);
   PopulateRequiredTimingFields(&timing);
 
   NavigateAndCommit(GURL(kDefaultTestUrl));
@@ -893,4 +895,7 @@ TEST_F(CorePageLoadMetricsObserverTest, FirstInputDelay) {
   EXPECT_THAT(
       histogram_tester().GetAllSamples(internal::kHistogramFirstInputDelay),
       testing::ElementsAre(base::Bucket(5, 1)));
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(internal::kHistogramFirstInputTimestamp),
+      testing::ElementsAre(base::Bucket(12, 1)));
 }
