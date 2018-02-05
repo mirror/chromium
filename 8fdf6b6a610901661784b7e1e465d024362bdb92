@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e1c62b_4612a4a1",
+        "filename": "ui/views/widget/widget_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-05T09:29:29Z",
+      "side": 1,
+      "message": "this is verbatim except these calls like parent-\u003eShow() now use the ShowSync helper that\u0027s in widget_interactive_unittest.cc",
+      "revId": "8fdf6b6a610901661784b7e1e465d024362bdb92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
