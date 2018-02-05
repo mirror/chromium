@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e208addf_1df88719",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:32:29Z",
+      "side": 1,
+      "message": "I think you could move this into the mutation observer to only do `SetIsWanted(ShouldShowPictureInPictureButton(MediaElement()))`. The `ShouldShowControls()` isn\u0027t really needed.\n\nYou could also move `BatchedControlUpdate` in the mutation observer code and call `RefreshCastButtonVisibilityWithoutUpdate()` instead.",
+      "revId": "eaef8d9eb14933f4fe5cb5f3ad7c73a7394bd197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
