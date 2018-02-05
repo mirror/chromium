@@ -31,7 +31,6 @@ import java.io.IOException;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
 @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE) // Tab switcher button only exists on phones.
-@ScreenShooter.Directory("Example")
 public class ExampleUiCaptureTest {
     @Rule
     public ChromeActivityTestRule<ChromeTabbedActivity> mActivityTestRule =

@@ -43,15 +43,16 @@ import java.util.Map;
 
 /**
  * Rule for taking screen shots within tests. Screenshots are saved as
- * {@code screenshot_dir/test_class_directory/test_directory/shot_name random.png}.
+ * {@code screenshot_dir/shot_name random.png}.
  * The associated JSON file describing the screenshot is saved as
- * {@code screenshot_dir/test_class_directory/test_directory/shot_name random.json}.
+ * {@code screenshot_dir/shot_name random.json}.
  * <p>
  * {@code screenshot_dir} comes from the instrumentation test command line, which is set by the
- * test runners. {@code test_class_directory} and {@code test_directory} can both the set by the
- * {@link ScreenShooter.Directory} annotation. {@code test_class_directory} defaults to nothing
- * (i.e. no directory created at this level), and {@code test_directory} defaults to the name of
- * the individual test. {@code random} is a random value to make the filenames unique.
+ * test runners
+ * <p>
+ * {@code shot_name} is the argument to {@code shoot()}
+ * </p>
+ * {@code random} is a random value to make the filenames unique.
  * <p>
  * The JSON file contains three categories of data:
  * <dl>
@@ -70,7 +71,6 @@ import java.util.Map;
  * &#064;RunWith(ChromeJUnit4ClassRunner.class)
  * &#064;CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
  * &#064;Restriction(RESTRICTION_TYPE_PHONE) // Tab switcher button only exists on phones.
- * &#064;ScreenShooter.Directory("Example")
  * public class ExampleUiCaptureTest {
  *     &#064;Rule
  *     public ChromeActivityTestRule<ChromeTabbedActivity> mActivityTestRule =
@@ -88,7 +88,6 @@ import java.util.Map;
  *     &#064;Test
  *     &#064;SmallTest
  *     &#064;Feature({"UiCatalogue"})
- *     &#064;ScreenShooter.Directory("TabSwitcher")
  *     public void testCaptureTabSwitcher() throws IOException, InterruptedException {
  *         mScreenShooter.shoot("NTP");
  *         Espresso.onView(ViewMatchers.withId(R.id.tab_switcher_button)).
@@ -155,15 +154,6 @@ public class ScreenShooter extends TestWatcher {
         mTestClassName = d.getClassName();
         mTestMethodName = d.getMethodName();
         Class<?> testClass = d.getTestClass();
-        Directory classDirectoryAnnotation = testClass.getAnnotation(Directory.class);
-        String classDirName =
-                classDirectoryAnnotation == null ? "" : classDirectoryAnnotation.value();
-        if (!classDirName.isEmpty()) mDir = new File(mBaseDir, classDirName);
-        Directory methodDirectoryAnnotation = d.getAnnotation(Directory.class);
-        String testMethodDir = methodDirectoryAnnotation == null
-                ? d.getMethodName()
-                : methodDirectoryAnnotation.value();
-        if (!testMethodDir.isEmpty()) mDir = new File(mDir, testMethodDir);
         if (!mDir.exists()) assertTrue("Create screenshot directory", mDir.mkdirs());
         mFeatures = d.getAnnotation(Feature.class).value();
     }
