@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44614bd9_d8831750",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T20:37:54Z",
+      "side": 1,
+      "message": "ScreenAngleSin",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43302e1b_44b910fa",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T20:37:54Z",
+      "side": 1,
+      "message": "ScreenAngleCos",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7567ba8_fb35af3f",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T20:37:54Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cdf332_9b579bfd",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T20:37:54Z",
+      "side": 1,
+      "message": "It\u0027s odd that we are doing this here instead of in the constructor which only seems to check the maximum frequency.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 35
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05879492_bda95715",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T20:37:54Z",
+      "side": 1,
+      "message": "Call out the direction of rotation returned by this method because otherwise it is confusing that you say 90 degrees here and 270 degrees on the next line.",
+      "range": {
+        "startLine": 263,
+        "startChar": 42,
+        "endLine": 263,
+        "endChar": 65
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601ca7a4_61bd2015",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-05T20:37:54Z",
+      "side": 1,
+      "message": "This comment seems out of date.",
+      "range": {
+        "startLine": 72,
+        "startChar": 45,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
