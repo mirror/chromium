@@ -46,7 +46,7 @@ SubresourceFilter::SubresourceFilter(
     std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter)
     : execution_context_(execution_context),
       subresource_filter_(std::move(subresource_filter)),
-      is_ad_subframe_(false) {}
+      is_associated_with_ad_subframe_(false) {}
 
 SubresourceFilter::~SubresourceFilter() = default;
 
