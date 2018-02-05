@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "148ebb11_48605b60",
+        "filename": "components/viz/client/hit_test_data_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:53:26Z",
+      "side": 1,
+      "message": "It\u0027s generally preferred to use const references, especially since ClientLayerTreeFrameSink will always have a CompositorFrame to pass in so this shouldn\u0027t be null.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88088f8e_a04cf38a",
+        "filename": "components/viz/client/hit_test_data_provider_simple_bounds.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:53:26Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 23,
+        "startChar": 67,
+        "endLine": 23,
+        "endChar": 69
+      },
+      "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b060fc5_883c4ba4",
+        "filename": "components/viz/client/hit_test_data_provider_simple_bounds.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:53:26Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 24,
+        "startChar": 68,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd5856b_0137d697",
+        "filename": "ui/aura/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-05T14:53:26Z",
+      "side": 1,
+      "message": "If you add a protected CompositorFrame data member |empty_frame_| you can pass it instead of nulltpr for all these.",
+      "range": {
+        "startLine": 150,
+        "startChar": 47,
+        "endLine": 150,
+        "endChar": 54
+      },
+      "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
