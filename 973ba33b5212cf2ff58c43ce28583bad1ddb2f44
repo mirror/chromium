@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef70a6d2_0f5f900c",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-05T06:56:39Z",
+      "side": 1,
+      "message": "super-nit/style: We often encourage to use guard-ish pattern.\n\nif (!expected_condition)\n  return (default value or error);\n\n... continue ...\n\nSo, \"if (!exo::WMHelper::HasInstance()) return 1.0;\" may be slightly more consistent.",
+      "revId": "973ba33b5212cf2ff58c43ce28583bad1ddb2f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3fc9b5_801afb14",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-05T06:56:39Z",
+      "side": 1,
+      "message": "nit: maybe nice to link to something why Android always needs to use the default scale factor.",
+      "revId": "973ba33b5212cf2ff58c43ce28583bad1ddb2f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
