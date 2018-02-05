@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <map>
 #include <vector>
 
 #include "base/files/file_enumerator.h"
@@ -17,6 +18,7 @@
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/data_driven_test.h"
 #include "components/autofill/core/common/autofill_features.h"
+#include "components/autofill/core/common/signatures_util.h"
 #import "components/autofill/ios/browser/autofill_agent.h"
 #include "components/autofill/ios/browser/autofill_driver_ios.h"
 #import "ios/chrome/browser/autofill/autofill_controller.h"
@@ -112,7 +114,7 @@ class FormStructureBrowserTest
 
   // Serializes the given |forms| into a string.
   std::string FormStructuresToString(
-      const std::vector<std::unique_ptr<FormStructure>>& forms);
+      const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms);
 
   FormSuggestionController* suggestionController_;
   AutofillController* autofillController_;
@@ -164,16 +166,16 @@ void FormStructureBrowserTest::GenerateResults(const std::string& input,
   AutofillManager* autofill_manager =
       AutofillDriverIOS::FromWebState(web_state())->autofill_manager();
   ASSERT_NE(nullptr, autofill_manager);
-  const std::vector<std::unique_ptr<FormStructure>>& forms =
+  const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms =
       autofill_manager->form_structures_;
   *output = FormStructureBrowserTest::FormStructuresToString(forms);
 }
 
 std::string FormStructureBrowserTest::FormStructuresToString(
-    const std::vector<std::unique_ptr<FormStructure>>& forms) {
+    const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms) {
   std::string forms_string;
-  for (const std::unique_ptr<FormStructure>& form : forms) {
-    for (const auto& field : *form) {
+  for (const auto& form_it : forms) {
+    for (const auto& field : *form_it.second.get()) {
       std::string name = base::UTF16ToUTF8(field->name);
       if (base::StartsWith(name, "gChrome~field~",
                            base::CompareCase::SENSITIVE)) {
