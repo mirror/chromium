@@ -31,6 +31,7 @@ const char kHelp[] = "help";
 const char kMiniInstaller[] = "mini_installer";
 const char kOut[] = "out";
 const char kPrevious[] = "previous";
+const char kFast[] = "fast";
 
 }  // namespace switches
 
@@ -73,24 +74,31 @@ void DumpUsage(const base::CommandLine& cmd_line,
       fwprintf(stderr, L"\n");
   }
 
-  fwprintf(stderr,
-L"Usage: %s [ OPTIONS ]\n"
-L" Where OPTIONS is one or more of:\n"
-L" --help                     Display this help message.\n"
-L" --force                    Overwrite any existing output files.\n"
-L" --mini_installer=SRC_PATH  Path to mini_installer.exe.  Default value is\n"
-L"                            \"mini_installer.exe\" in the same directory as\n"
-L"                            this program.\n"
-L" --out=OUT_PATH             Path to output file. Default value is\n"
-L"                            \"mini_installer_new.exe\" in the current\n"
-L"                            directory.\n"
-L" --previous                 OUT_PATH will have a lower version than\n"
-L"                            SRC_PATH.  By default, OUT_PATH will have a\n"
-L"                            higher version.\n"
-L" --7za_path=7ZA_PATH        Path to the directory holding 7za.exe. Defaults\n"
-L"                            to ..\\..\\third_party\\lzma_sdk\\Executable\n"
-L"                            relative to this program's location.\n",
-           cmd_line.GetProgram().value().c_str());
+  fwprintf(
+      stderr,
+      L"Usage: %s [ OPTIONS ]\n"
+      L" Where OPTIONS is one or more of:\n"
+      L" --help                     Display this help message.\n"
+      L" --force                    Overwrite any existing output files.\n"
+      L" --mini_installer=SRC_PATH  Path to mini_installer.exe.  Default value "
+      L"is\n"
+      L"                            \"mini_installer.exe\" in the same "
+      L"directory as\n"
+      L"                            this program.\n"
+      L" --out=OUT_PATH             Path to output file. Default value is\n"
+      L"                            \"mini_installer_new.exe\" in the current\n"
+      L"                            directory.\n"
+      L" --previous                 OUT_PATH will have a lower version than\n"
+      L"                            SRC_PATH.  By default, OUT_PATH will have "
+      L"a\n"
+      L"                            higher version.\n"
+      L" --7za_path=7ZA_PATH        Path to the directory holding 7za.exe. "
+      L"Defaults\n"
+      L"                            to "
+      L"..\\..\\third_party\\lzma_sdk\\Executable\n"
+      L"                            relative to this program's location.\n"
+      L" --fast                     Archive files without compression.\n",
+      cmd_line.GetProgram().value().c_str());
 }
 
 // Gets the path to the source mini_installer.exe on which to operate, putting
@@ -163,7 +171,7 @@ int wmain(int argc, wchar_t *argv[]) {
   if (upgrade_test::GenerateAlternateVersion(
           base::MakeAbsoluteFilePath(mini_installer),
           base::MakeAbsoluteFilePath(out), direction, &original_version,
-          &new_version)) {
+          &new_version, cmd_line->HasSwitch(switches::kFast))) {
     fwprintf(stdout, L"Generated version %s from version %s\n",
              new_version.c_str(), original_version.c_str());
     return EXIT_SUCCESS;
