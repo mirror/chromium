@@ -45,6 +45,30 @@
       "revId": "9031b4a21f12349577d51b817d22113aed02501a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32987eae_7694184a",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T16:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236c8647_9ef3d733",
+      "range": {
+        "startLine": 120,
+        "startChar": 240,
+        "endLine": 120,
+        "endChar": 273
+      },
+      "revId": "9031b4a21f12349577d51b817d22113aed02501a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
