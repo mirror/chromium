@@ -16,6 +16,24 @@
       "revId": "c67722d1995290455ac3dd3107abf83b9d7ba56b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685fda1f_6653467a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-02-05T05:55:33Z",
+      "side": 1,
+      "message": "They\u0027re performed during parsing, so the parsed selector list should not contain any instances of :matches() if the feature is not enabled. This change was done in response to the review comment at: https://chromium-review.googlesource.com/c/chromium/src/+/900564/1/third_party/WebKit/Source/core/css/CSSSelectorList.cpp#161",
+      "parentUuid": "bb349291_474c8f9e",
+      "revId": "c67722d1995290455ac3dd3107abf83b9d7ba56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
