@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02bda6ec_482fb15c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-05T18:42:54Z",
+      "side": 1,
+      "message": "\u003e Do we need an IPC watcher to make sure the DSF IPC has been sent before sending the JS ... or are these guaranteed to always arrive \u0027in order\u0027?\n\nJust to help me understand, which waiting are you concerned about?  Is this a Mojo vs IPC ordering concern?  Or is there something async with changing DSF (e.g., posting a task to send an IPC, or telling one process, waiting for the reply, and telling another)?\n\nNormally I would expect two IPCs sent from the browser to arrive in the renderer at the same time.  There\u0027s admittedly two renderer processes here, but the JS code is also waiting until the DSF changes, so in theory it\u0027s ok even if they don\u0027t arrive in order.",
+      "parentUuid": "37a5730b_6beb2aea",
+      "range": {
+        "startLine": 732,
+        "startChar": 15,
+        "endLine": 732,
+        "endChar": 35
+      },
+      "revId": "f9b4334c4017075ea94c4affee75bac617941971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "731b2352_9a9caf12",
         "filename": "ui/aura/test/test_screen.cc",
         "patchSetId": 18
