@@ -16,6 +16,24 @@
       "revId": "f9dd29a2fd69b6d1e7c9efcd5d2930febedb83d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea0be8c_bbd4d592",
+        "filename": "chrome/test/chromedriver/embed_mobile_devices_in_cpp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-02-05T22:42:37Z",
+      "side": 1,
+      "message": "I think it\u0027s hard to say which heuristics is better, and we may have to adjust this in the future. Updating the device list is done manually, and goes through normally code review process. So hopefully we\u0027ll catch it if the code starts misbehaving.",
+      "parentUuid": "7c065802_516dcad9",
+      "revId": "f9dd29a2fd69b6d1e7c9efcd5d2930febedb83d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
