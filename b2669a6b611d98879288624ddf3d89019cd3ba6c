@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87055c6b_983257e5",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-05T15:43:29Z",
+      "side": 1,
+      "message": "I did a check at ToT...  175 elements in our UI, 37 of which are hit_testable().  I think maybe hit testability should move to opt-in, rather than out.  What do you think?",
+      "revId": "b2669a6b611d98879288624ddf3d89019cd3ba6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
