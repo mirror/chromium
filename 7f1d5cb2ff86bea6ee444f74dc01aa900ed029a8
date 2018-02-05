@@ -71,6 +71,78 @@
     },
     {
       "key": {
+        "uuid": "bc3e9f3d_88523722",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-05T22:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e04a78c_ed2ba218",
+      "range": {
+        "startLine": 757,
+        "startChar": 28,
+        "endLine": 757,
+        "endChar": 37
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c05e177a_6211bcb1",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-05T22:05:59Z",
+      "side": 1,
+      "message": "This isn\u0027t system modal. \"is_modal\" indicates the container (system modal containre), but the shell surface isn\u0027t modal. How about\nShellSurfaceInSystemModalContainer?",
+      "parentUuid": "3ea9b168_242505d6",
+      "range": {
+        "startLine": 757,
+        "startChar": 7,
+        "endLine": 757,
+        "endChar": 14
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0aa384_2da2b4c3",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-05T22:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6542c75b_6c7e5ddc",
+      "range": {
+        "startLine": 757,
+        "startChar": 15,
+        "endLine": 757,
+        "endChar": 27
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f58776dc_227653f9",
         "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-02-05T10:00:46Z",
       "side": 1,
       "message": "SystemModalIsUnresizeable, as \"overlay\" is a overloaded term that can easily be confused with other functionality",
+      "range": {
+        "startLine": 758,
+        "startChar": 41,
+        "endLine": 758,
+        "endChar": 48
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d0c435_b73b3692",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-05T22:05:59Z",
+      "side": 1,
+      "message": "Changed to ShellSurfaceInSystemModal",
+      "parentUuid": "f58776dc_227653f9",
       "range": {
         "startLine": 758,
         "startChar": 41,
@@ -128,6 +224,30 @@
       "writtenOn": "2018-02-05T10:00:46Z",
       "side": 1,
       "message": "not clear why the container should enforce a specific behavior. can movement_disabled_ be set correctly for these shell surface instances instead?",
+      "range": {
+        "startLine": 778,
+        "startChar": 6,
+        "endLine": 778,
+        "endChar": 60
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a8d93b_1f42ce13",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-05T22:05:59Z",
+      "side": 1,
+      "message": "Moved DisableMovement from ShellSurface to ShellSurfaceBase and used from InitializeWindowState.\n\nShellSurface in SystemModalContainer is used as a container for multiple windows (dialog, system windows created by an apps, etc), hence it shouldn\u0027t\nbe treated by resizable, at least for now. Probably can be relaxed when  b/65460424 is fixed.",
+      "parentUuid": "2f3bdf25_d6cb8985",
       "range": {
         "startLine": 778,
         "startChar": 6,
