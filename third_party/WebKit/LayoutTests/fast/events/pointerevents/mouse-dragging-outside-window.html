@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+
+<style>
+  * {
+    user-select:none;
+  }
+</style>
+
+<h1>PointerEvent: Receive pointermove when dragging outside window.</h1>
+<p>
+  Press and hold left mouse button and move the mouse outside the window,
+  Should still receive mousemove event.
+</p>
+
+<script>
+  var mousemoveReceived = false;
+
+  function mouseMoves(buttonPressed) {
+    actions = []
+    if (buttonPressed)
+      actions.push({name: 'pointerMove', x: 10, y: 10},
+                   {name: 'pointerDown', x: 10, y: 10});
+
+    actions.push({ name: "pointerMove", x: 10, y: 10 },
+                 { name: "pointerMove", x: -100, y: 10 },
+                 { name: "pointerMove", x: -200, y: 10 })
+
+    return new Promise(function(resolve, reject) {
+      if (window.chrome && chrome.gpuBenchmarking) {
+        var pointerActions =
+            [{source: "mouse",
+              actions: actions}];
+        chrome.gpuBenchmarking.pointerActionSequence(pointerActions, resolve);
+      }
+      else {
+        reject();
+      }
+    });
+  }
+
+  window.addEventListener("mousemove", event=>{
+    console.log("x:" + event.clientX + "y:" + event.clientY);
+    if (event.clientX < 0) {
+      mousemoveReceived = true;
+    }
+  });
+
+  promise_test(async () => {
+    mousemoveReceived = false;
+    await mouseMoves(false);
+    assert_false(mousemoveReceived)
+  }, 'No pointermove when mouse move outside window without button down.');
+
+  promise_test(async () => {
+    mousemoveReceived = false;
+    await mouseMoves(true);
+    assert_true(mousemoveReceived)
+  }, 'Receive pointermove when mouse down and move outside window.');
+
+</script>
