@@ -46,6 +46,30 @@
       "revId": "ab9c046f8190180584f15db0ae30216708e6905a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8347b862_9b26d16b",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-05T16:06:36Z",
+      "side": 1,
+      "message": "Hm, yeah. Bummer :-/",
+      "parentUuid": "1d2115a8_99f41efa",
+      "range": {
+        "startLine": 123,
+        "startChar": 18,
+        "endLine": 123,
+        "endChar": 42
+      },
+      "revId": "ab9c046f8190180584f15db0ae30216708e6905a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
