@@ -43,11 +43,6 @@
   AccessSyncSurpriseMeEnabledKey: 'sync-surprise-me-enabled-key',
 
   /**
-   * Suffix to append to baseURL if requesting high resoultion wallpaper.
-   */
-  HighResolutionSuffix: '_high_resolution.jpg',
-
-  /**
    * URL to get latest wallpaper RSS feed.
    */
   WallpaperRssURL: 'https://storage.googleapis.com/' +
@@ -86,11 +81,6 @@
    * Suffix to append to file name if it is a thumbnail.
    */
   CustomWallpaperThumbnailSuffix: '_thumbnail',
-
-  /**
-   * Suffix to append to the base url of an online wallpaper thumbnail.
-   */
-  OnlineWallpaperThumbnailUrlSuffix: '_thumbnail.png',
 
   /**
    * The default layout of each wallpaper thumbnail.
