@@ -1175,16 +1175,30 @@ void RenderWidgetHostViewMac::CopyFromSurface(
     const gfx::Size& dst_size,
     const ReadbackRequestCallback& callback,
     const SkColorType preferred_color_type) {
-  browser_compositor_->CopyFromCompositingSurface(
-      src_subrect, dst_size, callback, preferred_color_type);
+  auto callback_with_decrement =
+      base::BindOnce(&RenderWidgetHostViewMac::CopyFromSurfaceCompleted,
+                     weak_factory_.GetWeakPtr(), callback);
+  browser_compositor_->GetDelegatedFrameHost()->CopyFromCompositingSurface(
+      src_subrect, dst_size, callback_with_decrement, preferred_color_type);
 }
 
 void RenderWidgetHostViewMac::CopyFromSurfaceToVideoFrame(
     const gfx::Rect& src_subrect,
     scoped_refptr<media::VideoFrame> target,
     const base::Callback<void(const gfx::Rect&, bool)>& callback) {
-  browser_compositor_->CopyFromCompositingSurfaceToVideoFrame(
-      src_subrect, std::move(target), callback);
+  auto callback_with_decrement =
+      base::BindOnce(&RenderWidgetHostViewMac::CopyFromSurfaceCompleted,
+                     weak_factory_.GetWeakPtr(), callback);
+  delegated_frame_host_->CopyFromCompositingSurfaceToVideoFrame(
+      src_subrect, std::move(target), callback_with_decrement);
+}
+
+void RenderWidgetHostViewMac::CopyFromSurfaceCompleted(
+    base::WeakPtr<BrowserCompositorMac> browser_compositor,
+    const ReadbackRequestCallback& callback,
+    const SkBitmap& bitmap,
+    ReadbackResponse response) {
+  callback.Run(bitmap, response);
 }
 
 void RenderWidgetHostViewMac::BeginFrameSubscription(
