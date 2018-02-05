@@ -559,6 +559,17 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
       blink::WebMouseWheelEvent wheel_event,
       bool should_route_event);
 
+  // Run |callback| when CopyFromSurface finishes.
+  void CopyFromSurfaceCompleted(const ReadbackRequestCallback& callback,
+                                const SkBitmap& bitmap,
+                                ReadbackResponse response);
+
+  // Run |callback| when CopyFromSurfaceToVideoFrame finishes.
+  void CopyFromSurfaceToVideoFrameCompleted(
+      const base::RepeatingCallback<void(const gfx::Rect&, bool)>& callback,
+      const gfx::Rect& rect,
+      bool result);
+
   // The associated view. This is weak and is inserted into the view hierarchy
   // to own this RenderWidgetHostViewMac object. Set to nil at the start of the
   // destructor.
