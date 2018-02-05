@@ -70,6 +70,30 @@
       "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b289cc28_8a78fef1",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-05T18:57:36Z",
+      "side": 1,
+      "message": "I tried to reorder in root grid, app item works well, but folder item is not synced. Also after creating a folder in Deivce A, later the folder is always created in the end in Device B. I will investigate more to see why.",
+      "parentUuid": "a39fa82c_bc0c6c04",
+      "range": {
+        "startLine": 681,
+        "startChar": 2,
+        "endLine": 681,
+        "endChar": 30
+      },
+      "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
