@@ -46,6 +46,30 @@
       "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39fa82c_bc0c6c04",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-02-05T18:32:10Z",
+      "side": 1,
+      "message": "What if order was changed during syncing app position?\nFor example. You have 2 running device. Drag and Drop on one device, wait positions are synced on second device. Does second device work as expected?",
+      "parentUuid": "9dff89f5_3edd2a7e",
+      "range": {
+        "startLine": 681,
+        "startChar": 2,
+        "endLine": 681,
+        "endChar": 30
+      },
+      "revId": "0f153f3e62d56f881e47393ad1689a80791f685e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
