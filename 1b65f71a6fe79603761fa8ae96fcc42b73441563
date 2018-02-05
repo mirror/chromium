@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c59edbbc_0b139cda",
+        "filename": "chrome/browser/vr/elements/omnibox_text_field.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-05T23:05:33Z",
+      "side": 1,
+      "message": "So I was wrong - it\u0027s not a bug.  If there is ever a selection in the text, we don\u0027t make a new autocomplete request.  But, I did fix a different subtle but below, where cursor movement would look like new input.",
+      "parentUuid": "4cc3cf59_d7f275c0",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "1b65f71a6fe79603761fa8ae96fcc42b73441563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237cfc48_d9ad24d7",
         "filename": "chrome/browser/vr/elements/omnibox_text_field.h",
         "patchSetId": 1
