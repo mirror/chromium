@@ -51,8 +51,8 @@ typedef struct Cronet_UrlRequest* Cronet_UrlRequestPtr;
 typedef void* Cronet_UrlRequestContext;
 
 // Forward declare structs.
-typedef struct Cronet_Exception Cronet_Exception;
-typedef struct Cronet_Exception* Cronet_ExceptionPtr;
+typedef struct Cronet_Error Cronet_Error;
+typedef struct Cronet_Error* Cronet_ErrorPtr;
 typedef struct Cronet_QuicHint Cronet_QuicHint;
 typedef struct Cronet_QuicHint* Cronet_QuicHintPtr;
 typedef struct Cronet_PublicKeyPins Cronet_PublicKeyPins;
@@ -65,6 +65,8 @@ typedef struct Cronet_UrlResponseInfo Cronet_UrlResponseInfo;
 typedef struct Cronet_UrlResponseInfo* Cronet_UrlResponseInfoPtr;
 typedef struct Cronet_UrlRequestParams Cronet_UrlRequestParams;
 typedef struct Cronet_UrlRequestParams* Cronet_UrlRequestParamsPtr;
+typedef struct Cronet_RequestFinishedInfo Cronet_RequestFinishedInfo;
+typedef struct Cronet_RequestFinishedInfo* Cronet_RequestFinishedInfoPtr;
 
 // Declare enums
 typedef enum Cronet_RESULT {
@@ -73,30 +75,43 @@ typedef enum Cronet_RESULT {
   Cronet_RESULT_ILLEGAL_ARGUMENT_STORAGE_PATH_MUST_EXIST = -101,
   Cronet_RESULT_ILLEGAL_ARGUMENT_INVALID_PIN = -102,
   Cronet_RESULT_ILLEGAL_ARGUMENT_INVALID_HOSTNAME = -103,
+  Cronet_RESULT_ILLEGAL_ARGUMENT_INVALID_HTTP_METHOD = -104,
+  Cronet_RESULT_ILLEGAL_ARGUMENT_INVALID_HTTP_HEADER = -105,
   Cronet_RESULT_ILLEGAL_STATE = -200,
   Cronet_RESULT_ILLEGAL_STATE_STORAGE_PATH_IN_USE = -201,
   Cronet_RESULT_ILLEGAL_STATE_CANNOT_SHUTDOWN_ENGINE_FROM_NETWORK_THREAD = -202,
   Cronet_RESULT_ILLEGAL_STATE_ENGINE_ALREADY_STARTED = -203,
+  Cronet_RESULT_ILLEGAL_STATE_REQUEST_ALREADY_STARTED = -204,
+  Cronet_RESULT_ILLEGAL_STATE_REQUEST_NOT_INITIALIZED = -205,
+  Cronet_RESULT_ILLEGAL_STATE_UNEXPECTED_REDIRECT = -206,
+  Cronet_RESULT_ILLEGAL_STATE_UNEXPECTED_READ = -207,
   Cronet_RESULT_NULL_POINTER = -300,
   Cronet_RESULT_NULL_POINTER_HOSTNAME = -301,
   Cronet_RESULT_NULL_POINTER_SHA256_PINS = -302,
   Cronet_RESULT_NULL_POINTER_EXPIRATION_DATE = -303,
+  Cronet_RESULT_NULL_POINTER_ENGINE = -304,
+  Cronet_RESULT_NULL_POINTER_URL = -305,
+  Cronet_RESULT_NULL_POINTER_CALLBACK = -306,
+  Cronet_RESULT_NULL_POINTER_EXECUTOR = -307,
+  Cronet_RESULT_NULL_POINTER_METHOD = -308,
+  Cronet_RESULT_NULL_POINTER_HEADER_NAME = -309,
+  Cronet_RESULT_NULL_POINTER_HEADER_VALUE = -310,
 } Cronet_RESULT;
 
-typedef enum Cronet_Exception_ERROR_CODE {
-  Cronet_Exception_ERROR_CODE_ERROR_CALLBACK = 0,
-  Cronet_Exception_ERROR_CODE_ERROR_HOSTNAME_NOT_RESOLVED = 1,
-  Cronet_Exception_ERROR_CODE_ERROR_INTERNET_DISCONNECTED = 2,
-  Cronet_Exception_ERROR_CODE_ERROR_NETWORK_CHANGED = 3,
-  Cronet_Exception_ERROR_CODE_ERROR_TIMED_OUT = 4,
-  Cronet_Exception_ERROR_CODE_ERROR_CONNECTION_CLOSED = 5,
-  Cronet_Exception_ERROR_CODE_ERROR_CONNECTION_TIMED_OUT = 6,
-  Cronet_Exception_ERROR_CODE_ERROR_CONNECTION_REFUSED = 7,
-  Cronet_Exception_ERROR_CODE_ERROR_CONNECTION_RESET = 8,
-  Cronet_Exception_ERROR_CODE_ERROR_ADDRESS_UNREACHABLE = 9,
-  Cronet_Exception_ERROR_CODE_ERROR_QUIC_PROTOCOL_FAILED = 10,
-  Cronet_Exception_ERROR_CODE_ERROR_OTHER = 11,
-} Cronet_Exception_ERROR_CODE;
+typedef enum Cronet_Error_ERROR_CODE {
+  Cronet_Error_ERROR_CODE_ERROR_CALLBACK = 0,
+  Cronet_Error_ERROR_CODE_ERROR_HOSTNAME_NOT_RESOLVED = 1,
+  Cronet_Error_ERROR_CODE_ERROR_INTERNET_DISCONNECTED = 2,
+  Cronet_Error_ERROR_CODE_ERROR_NETWORK_CHANGED = 3,
+  Cronet_Error_ERROR_CODE_ERROR_TIMED_OUT = 4,
+  Cronet_Error_ERROR_CODE_ERROR_CONNECTION_CLOSED = 5,
+  Cronet_Error_ERROR_CODE_ERROR_CONNECTION_TIMED_OUT = 6,
+  Cronet_Error_ERROR_CODE_ERROR_CONNECTION_REFUSED = 7,
+  Cronet_Error_ERROR_CODE_ERROR_CONNECTION_RESET = 8,
+  Cronet_Error_ERROR_CODE_ERROR_ADDRESS_UNREACHABLE = 9,
+  Cronet_Error_ERROR_CODE_ERROR_QUIC_PROTOCOL_FAILED = 10,
+  Cronet_Error_ERROR_CODE_ERROR_OTHER = 11,
+} Cronet_Error_ERROR_CODE;
 
 typedef enum Cronet_EngineParams_HTTP_CACHE_MODE {
   Cronet_EngineParams_HTTP_CACHE_MODE_DISABLED = 0,
@@ -112,6 +127,12 @@ typedef enum Cronet_UrlRequestParams_REQUEST_PRIORITY {
   Cronet_UrlRequestParams_REQUEST_PRIORITY_REQUEST_PRIORITY_MEDIUM = 3,
   Cronet_UrlRequestParams_REQUEST_PRIORITY_REQUEST_PRIORITY_HIGHEST = 4,
 } Cronet_UrlRequestParams_REQUEST_PRIORITY;
+
+typedef enum Cronet_RequestFinishedInfo_FINISHED_REASON {
+  Cronet_RequestFinishedInfo_FINISHED_REASON_SUCCEEDED = 0,
+  Cronet_RequestFinishedInfo_FINISHED_REASON_FAILED = 1,
+  Cronet_RequestFinishedInfo_FINISHED_REASON_CANCELED = 2,
+} Cronet_RequestFinishedInfo_FINISHED_REASON;
 
 typedef enum Cronet_UrlRequestStatusListener_Status {
   Cronet_UrlRequestStatusListener_Status_INVALID = -1,
@@ -375,7 +396,8 @@ void Cronet_UrlRequestCallback_OnReadCompleted(
     Cronet_UrlRequestCallbackPtr self,
     Cronet_UrlRequestPtr request,
     Cronet_UrlResponseInfoPtr info,
-    Cronet_BufferPtr buffer);
+    Cronet_BufferPtr buffer,
+    uint64_t bytesRead);
 CRONET_EXPORT
 void Cronet_UrlRequestCallback_OnSucceeded(Cronet_UrlRequestCallbackPtr self,
                                            Cronet_UrlRequestPtr request,
@@ -384,7 +406,7 @@ CRONET_EXPORT
 void Cronet_UrlRequestCallback_OnFailed(Cronet_UrlRequestCallbackPtr self,
                                         Cronet_UrlRequestPtr request,
                                         Cronet_UrlResponseInfoPtr info,
-                                        Cronet_ExceptionPtr error);
+                                        Cronet_ErrorPtr error);
 CRONET_EXPORT
 void Cronet_UrlRequestCallback_OnCanceled(Cronet_UrlRequestCallbackPtr self,
                                           Cronet_UrlRequestPtr request,
@@ -404,7 +426,8 @@ typedef void (*Cronet_UrlRequestCallback_OnReadCompletedFunc)(
     Cronet_UrlRequestCallbackPtr self,
     Cronet_UrlRequestPtr request,
     Cronet_UrlResponseInfoPtr info,
-    Cronet_BufferPtr buffer);
+    Cronet_BufferPtr buffer,
+    uint64_t bytesRead);
 typedef void (*Cronet_UrlRequestCallback_OnSucceededFunc)(
     Cronet_UrlRequestCallbackPtr self,
     Cronet_UrlRequestPtr request,
@@ -413,7 +436,7 @@ typedef void (*Cronet_UrlRequestCallback_OnFailedFunc)(
     Cronet_UrlRequestCallbackPtr self,
     Cronet_UrlRequestPtr request,
     Cronet_UrlResponseInfoPtr info,
-    Cronet_ExceptionPtr error);
+    Cronet_ErrorPtr error);
 typedef void (*Cronet_UrlRequestCallback_OnCanceledFunc)(
     Cronet_UrlRequestCallbackPtr self,
     Cronet_UrlRequestPtr request,
@@ -448,12 +471,12 @@ void Cronet_UploadDataSink_OnReadSucceeded(Cronet_UploadDataSinkPtr self,
                                            bool finalChunk);
 CRONET_EXPORT
 void Cronet_UploadDataSink_OnReadError(Cronet_UploadDataSinkPtr self,
-                                       Cronet_ExceptionPtr error);
+                                       Cronet_ErrorPtr error);
 CRONET_EXPORT
 void Cronet_UploadDataSink_OnRewindSucceded(Cronet_UploadDataSinkPtr self);
 CRONET_EXPORT
 void Cronet_UploadDataSink_OnRewindError(Cronet_UploadDataSinkPtr self,
-                                         Cronet_ExceptionPtr error);
+                                         Cronet_ErrorPtr error);
 // Concrete interface Cronet_UploadDataSink is implemented by Cronet.
 // The app can implement these for testing / mocking.
 typedef void (*Cronet_UploadDataSink_OnReadSucceededFunc)(
@@ -461,12 +484,12 @@ typedef void (*Cronet_UploadDataSink_OnReadSucceededFunc)(
     bool finalChunk);
 typedef void (*Cronet_UploadDataSink_OnReadErrorFunc)(
     Cronet_UploadDataSinkPtr self,
-    Cronet_ExceptionPtr error);
+    Cronet_ErrorPtr error);
 typedef void (*Cronet_UploadDataSink_OnRewindSuccededFunc)(
     Cronet_UploadDataSinkPtr self);
 typedef void (*Cronet_UploadDataSink_OnRewindErrorFunc)(
     Cronet_UploadDataSinkPtr self,
-    Cronet_ExceptionPtr error);
+    Cronet_ErrorPtr error);
 // Concrete interface Cronet_UploadDataSink is implemented by Cronet.
 // The app can use this for testing / mocking.
 CRONET_EXPORT Cronet_UploadDataSinkPtr Cronet_UploadDataSink_CreateStub(
@@ -539,20 +562,22 @@ Cronet_UrlRequest_GetContext(Cronet_UrlRequestPtr self);
 // Concrete methods of Cronet_UrlRequest implemented by Cronet.
 // The app calls them to manipulate Cronet_UrlRequest.
 CRONET_EXPORT
-void Cronet_UrlRequest_InitWithParams(Cronet_UrlRequestPtr self,
-                                      Cronet_EnginePtr engine,
-                                      CharString url,
-                                      Cronet_UrlRequestParamsPtr params,
-                                      Cronet_UrlRequestCallbackPtr callback,
-                                      Cronet_ExecutorPtr executor);
+Cronet_RESULT Cronet_UrlRequest_InitWithParams(
+    Cronet_UrlRequestPtr self,
+    Cronet_EnginePtr engine,
+    CharString url,
+    Cronet_UrlRequestParamsPtr params,
+    Cronet_UrlRequestCallbackPtr callback,
+    Cronet_ExecutorPtr executor);
 CRONET_EXPORT
-void Cronet_UrlRequest_Start(Cronet_UrlRequestPtr self);
+Cronet_RESULT Cronet_UrlRequest_Start(Cronet_UrlRequestPtr self);
 CRONET_EXPORT
-void Cronet_UrlRequest_FollowRedirect(Cronet_UrlRequestPtr self);
+Cronet_RESULT Cronet_UrlRequest_FollowRedirect(Cronet_UrlRequestPtr self);
 CRONET_EXPORT
-void Cronet_UrlRequest_Read(Cronet_UrlRequestPtr self, Cronet_BufferPtr buffer);
+Cronet_RESULT Cronet_UrlRequest_Read(Cronet_UrlRequestPtr self,
+                                     Cronet_BufferPtr buffer);
 CRONET_EXPORT
-void Cronet_UrlRequest_Cancel(Cronet_UrlRequestPtr self);
+Cronet_RESULT Cronet_UrlRequest_Cancel(Cronet_UrlRequestPtr self);
 CRONET_EXPORT
 bool Cronet_UrlRequest_IsDone(Cronet_UrlRequestPtr self);
 CRONET_EXPORT
@@ -560,18 +585,20 @@ void Cronet_UrlRequest_GetStatus(Cronet_UrlRequestPtr self,
                                  Cronet_UrlRequestStatusListenerPtr listener);
 // Concrete interface Cronet_UrlRequest is implemented by Cronet.
 // The app can implement these for testing / mocking.
-typedef void (*Cronet_UrlRequest_InitWithParamsFunc)(
+typedef Cronet_RESULT (*Cronet_UrlRequest_InitWithParamsFunc)(
     Cronet_UrlRequestPtr self,
     Cronet_EnginePtr engine,
     CharString url,
     Cronet_UrlRequestParamsPtr params,
     Cronet_UrlRequestCallbackPtr callback,
     Cronet_ExecutorPtr executor);
-typedef void (*Cronet_UrlRequest_StartFunc)(Cronet_UrlRequestPtr self);
-typedef void (*Cronet_UrlRequest_FollowRedirectFunc)(Cronet_UrlRequestPtr self);
-typedef void (*Cronet_UrlRequest_ReadFunc)(Cronet_UrlRequestPtr self,
-                                           Cronet_BufferPtr buffer);
-typedef void (*Cronet_UrlRequest_CancelFunc)(Cronet_UrlRequestPtr self);
+typedef Cronet_RESULT (*Cronet_UrlRequest_StartFunc)(Cronet_UrlRequestPtr self);
+typedef Cronet_RESULT (*Cronet_UrlRequest_FollowRedirectFunc)(
+    Cronet_UrlRequestPtr self);
+typedef Cronet_RESULT (*Cronet_UrlRequest_ReadFunc)(Cronet_UrlRequestPtr self,
+                                                    Cronet_BufferPtr buffer);
+typedef Cronet_RESULT (*Cronet_UrlRequest_CancelFunc)(
+    Cronet_UrlRequestPtr self);
 typedef bool (*Cronet_UrlRequest_IsDoneFunc)(Cronet_UrlRequestPtr self);
 typedef void (*Cronet_UrlRequest_GetStatusFunc)(
     Cronet_UrlRequestPtr self,
@@ -588,33 +615,35 @@ CRONET_EXPORT Cronet_UrlRequestPtr Cronet_UrlRequest_CreateStub(
     Cronet_UrlRequest_GetStatusFunc GetStatusFunc);
 
 ///////////////////////
-// Struct Cronet_Exception.
-CRONET_EXPORT Cronet_ExceptionPtr Cronet_Exception_Create();
-CRONET_EXPORT void Cronet_Exception_Destroy(Cronet_ExceptionPtr self);
-// Cronet_Exception setters.
+// Struct Cronet_Error.
+CRONET_EXPORT Cronet_ErrorPtr Cronet_Error_Create();
+CRONET_EXPORT void Cronet_Error_Destroy(Cronet_ErrorPtr self);
+// Cronet_Error setters.
 CRONET_EXPORT
-void Cronet_Exception_set_error_code(Cronet_ExceptionPtr self,
-                                     Cronet_Exception_ERROR_CODE error_code);
+void Cronet_Error_set_errorCode(Cronet_ErrorPtr self,
+                                Cronet_Error_ERROR_CODE errorCode);
 CRONET_EXPORT
-void Cronet_Exception_set_internal_error_code(Cronet_ExceptionPtr self,
-                                              int32_t internal_error_code);
+void Cronet_Error_set_message(Cronet_ErrorPtr self, CharString message);
 CRONET_EXPORT
-void Cronet_Exception_set_immediately_retryable(Cronet_ExceptionPtr self,
-                                                bool immediately_retryable);
+void Cronet_Error_set_internalErrorCode(Cronet_ErrorPtr self,
+                                        int32_t internalErrorCode);
 CRONET_EXPORT
-void Cronet_Exception_set_quic_detailed_error_code(
-    Cronet_ExceptionPtr self,
-    int32_t quic_detailed_error_code);
-// Cronet_Exception getters.
+void Cronet_Error_set_immediatelyRetryable(Cronet_ErrorPtr self,
+                                           bool immediatelyRetryable);
 CRONET_EXPORT
-Cronet_Exception_ERROR_CODE Cronet_Exception_get_error_code(
-    Cronet_ExceptionPtr self);
+void Cronet_Error_set_quicDetailedErrorCode(Cronet_ErrorPtr self,
+                                            int32_t quicDetailedErrorCode);
+// Cronet_Error getters.
 CRONET_EXPORT
-int32_t Cronet_Exception_get_internal_error_code(Cronet_ExceptionPtr self);
+Cronet_Error_ERROR_CODE Cronet_Error_get_errorCode(Cronet_ErrorPtr self);
 CRONET_EXPORT
-bool Cronet_Exception_get_immediately_retryable(Cronet_ExceptionPtr self);
+CharString Cronet_Error_get_message(Cronet_ErrorPtr self);
 CRONET_EXPORT
-int32_t Cronet_Exception_get_quic_detailed_error_code(Cronet_ExceptionPtr self);
+int32_t Cronet_Error_get_internalErrorCode(Cronet_ErrorPtr self);
+CRONET_EXPORT
+bool Cronet_Error_get_immediatelyRetryable(Cronet_ErrorPtr self);
+CRONET_EXPORT
+int32_t Cronet_Error_get_quicDetailedErrorCode(Cronet_ErrorPtr self);
 
 ///////////////////////
 // Struct Cronet_QuicHint.
@@ -900,6 +929,14 @@ uint32_t Cronet_UrlRequestParams_get_annotationsSize(
 RawDataPtr Cronet_UrlRequestParams_get_annotationsAtIndex(
     Cronet_UrlRequestParamsPtr self,
     uint32_t index);
+
+///////////////////////
+// Struct Cronet_RequestFinishedInfo.
+CRONET_EXPORT Cronet_RequestFinishedInfoPtr Cronet_RequestFinishedInfo_Create();
+CRONET_EXPORT void Cronet_RequestFinishedInfo_Destroy(
+    Cronet_RequestFinishedInfoPtr self);
+// Cronet_RequestFinishedInfo setters.
+// Cronet_RequestFinishedInfo getters.
 
 #ifdef __cplusplus
 }

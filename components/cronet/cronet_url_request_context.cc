@@ -470,6 +470,38 @@ CronetURLRequestContext::NetworkTasks::GetURLRequestContext() {
   return context_.get();
 }
 
+// Request context getter for CronetURLRequestContext.
+class CronetURLRequestContext::ContextGetter
+    : public net::URLRequestContextGetter {
+ public:
+  explicit ContextGetter(CronetURLRequestContext* cronet_context)
+      : cronet_context_(cronet_context) {}
+
+  net::URLRequestContext* GetURLRequestContext() override {
+    DCHECK(cronet_context_);
+    return cronet_context_->GetURLRequestContext();
+  }
+
+  scoped_refptr<base::SingleThreadTaskRunner> GetNetworkTaskRunner()
+      const override {
+    DCHECK(cronet_context_);
+    return cronet_context_->GetNetworkTaskRunner();
+  }
+
+ private:
+  // Must be called on the IO thread.
+  ~ContextGetter() override {}
+
+  CronetURLRequestContext* cronet_context_;
+
+  DISALLOW_COPY_AND_ASSIGN(ContextGetter);
+};
+
+net::URLRequestContextGetter*
+CronetURLRequestContext::GetURLRequestContextGetter() {
+  return new ContextGetter(this);
+}
+
 net::URLRequestContext* CronetURLRequestContext::GetURLRequestContext() {
   DCHECK(IsOnNetworkThread());
   return network_tasks_->GetURLRequestContext();

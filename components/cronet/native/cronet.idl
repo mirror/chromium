@@ -52,8 +52,8 @@ interface BufferCallback {
   OnDestroy(Buffer buffer);
 };
 
-// Base exception passed to UrlRequestCallback.onFailed().
-struct Exception {
+// Base error passed to UrlRequestCallback.onFailed().
+struct Error {
   enum ERROR_CODE {
     /**
      * Error code indicating the error returned by app callback.
@@ -124,7 +124,13 @@ struct Exception {
   /**
    * Error code, one of ERROR_* values.
    */
-  ERROR_CODE error_code = ERROR_CALLBACK;
+  ERROR_CODE errorCode = ERROR_CALLBACK;
+
+  /**
+   * Message, explaining the error.
+   */
+  string message;
+
   /**
    * Cronet internal error code. This may provide more specific error
    * diagnosis than |error_code|, but the constant values  may change over time.
@@ -132,7 +138,7 @@ struct Exception {
    * <a href=https://chromium.googlesource.com/chromium/src/+/master/net/base/net_error_list.h>
    * here</a> for the lastest list of values.
    */
-  int32 internal_error_code = 0;
+  int32 internalErrorCode = 0;
 
   /**
    * |true| if retrying this request right away might succeed, |false|
@@ -143,14 +149,14 @@ struct Exception {
    * encounter the same failure (instead retrying should be delayed until device regains
    * network connectivity).
    */
-  bool immediately_retryable = false;
+  bool immediatelyRetryable = false;
 
   /**
    * Contains detailed <a href="https://www.chromium.org/quic">QUIC</a> error code from
    * <a href=https://cs.chromium.org/chromium/src/net/quic/quic_protocol.h?type=cs&q=%22enum+QuicErrorCode+%7B%22+file:src/net/quic/quic_protocol.h>
    * QuicErrorCode</a> when the |error_code| code is |ERROR_QUIC_PROTOCOL_FAILED|.
    */
-  int32 quic_detailed_error_code = 0;
+  int32 quicDetailedErrorCode = 0;
 };
 
 /**
@@ -201,6 +207,14 @@ enum RESULT {
    * Host name is invalid
    */
   ILLEGAL_ARGUMENT_INVALID_HOSTNAME = -103,
+  /**
+   * Invalid http method
+   */
+  ILLEGAL_ARGUMENT_INVALID_HTTP_METHOD = -104,
+  /**
+   * Invalid http header
+   */
+  ILLEGAL_ARGUMENT_INVALID_HTTP_HEADER = -105,
 
   /**
    * Illegal state
@@ -218,6 +232,22 @@ enum RESULT {
    * The engine has already started
    */
   ILLEGAL_STATE_ENGINE_ALREADY_STARTED = -203,
+  /**
+   * The request has already started
+   */
+  ILLEGAL_STATE_REQUEST_ALREADY_STARTED = -204,
+  /**
+   * The request is not initialized
+   */
+  ILLEGAL_STATE_REQUEST_NOT_INITIALIZED = -205,
+  /**
+   * No redirect to follow
+   */
+  ILLEGAL_STATE_UNEXPECTED_REDIRECT = -206,
+  /**
+   * Unexpected read attempt
+   */
+  ILLEGAL_STATE_UNEXPECTED_READ = -207,
 
   /**
    * Null pointer or empty data
@@ -235,6 +265,34 @@ enum RESULT {
    * The pin expiration date cannot be null
    */
   NULL_POINTER_EXPIRATION_DATE = -303,
+  /**
+   * Engine is required
+   */
+  NULL_POINTER_ENGINE = -304,
+  /**
+   * URL is required
+   */
+  NULL_POINTER_URL = -305,
+  /**
+   * Callback is required
+   */
+  NULL_POINTER_CALLBACK = -306,
+  /**
+   * Executor is required
+   */
+  NULL_POINTER_EXECUTOR = -307,
+  /**
+   * Method is required
+   */
+  NULL_POINTER_METHOD = -308,
+  /**
+   * Invalid header name
+   */
+  NULL_POINTER_HEADER_NAME = -309,
+  /**
+   * Invalid header value
+   */
+  NULL_POINTER_HEADER_VALUE = -310,
 };
 
 /**
@@ -736,10 +794,10 @@ interface UrlRequestCallback {
    * @param request Request that received data.
    * @param info Response information.
    * @param buffer The buffer that was passed in to UrlRequest.read(), now
-   *         containing the received data. The buffer's position is updated to the end of
-   *         the received data. The buffer's limit is not changed.
+   *         containing the received data.
+   * @param bytesRead The number of bytes read into buffer.
    */
-  OnReadCompleted(UrlRequest request, UrlResponseInfo info, Buffer buffer);
+  OnReadCompleted(UrlRequest request, UrlResponseInfo info, Buffer buffer, uint64 bytesRead);
 
   /**
    * Invoked when request is completed successfully. Once invoked, no other
@@ -760,7 +818,7 @@ interface UrlRequestCallback {
    *         received.
    * @param error information about error.
    */
-  OnFailed(UrlRequest request, UrlResponseInfo info, Exception error);
+  OnFailed(UrlRequest request, UrlResponseInfo info, Error error);
 
   /**
    * Invoked if request was canceled via UrlRequest.cancel(). Once
@@ -790,7 +848,7 @@ interface UploadDataSink {
    * Called by UploadDataProvider when a read fails.
    * @param error to pass on to UrlRequestCallback.onFailed().
    */
-  OnReadError(Exception error);
+  OnReadError(Error error);
 
   /**
    * Called by UploadDataProvider when a rewind succeeds.
@@ -802,7 +860,7 @@ interface UploadDataSink {
    * uploads is not supported.
    * @param error to pass on to UrlRequestCallback.onFailed().
    */
-  OnRewindError(Exception error);
+  OnRewindError(Error error);
 };
 
 /**
@@ -887,23 +945,26 @@ interface UrlRequest {
    * @param callback Callback that gets invoked on different events.
    * @param executor Executor on which all callbacks will be invoked.
    */
+  [Sync]
   InitWithParams(Engine engine,
                  string url,
                  UrlRequestParams params,
                  UrlRequestCallback callback,
-                 Executor executor);
+                 Executor executor) => (RESULT result);
 
   /**
    * Starts the request, all callbacks go to UrlRequestCallback. May only be called
    * once. May not be called if Cancel() has been called.
    */
-  Start();
+  [Sync]
+  Start() => (RESULT result);
 
   /**
    * Follows a pending redirect. Must only be called at most once for each
    * invocation of UrlRequestCallback.OnRedirectReceived().
    */
-  FollowRedirect();
+  [Sync]
+  FollowRedirect() => (RESULT result);
 
   /**
    * Attempts to read part of the response body into the provided buffer.
@@ -922,7 +983,8 @@ interface UrlRequest {
    *        modify buffer's position, limit, or data between its position and
    *        limit until the request calls back into the UrlRequestCallback.
    */
-  Read(Buffer buffer);
+  [Sync]
+  Read(Buffer buffer) => (RESULT result);
 
   /**
    * Cancels the request. Can be called at any time.
@@ -936,7 +998,8 @@ interface UrlRequest {
    * Cancel() is called. Otherwise, at most one callback method may be
    * invoked after Cancel() has completed.
    */
-  Cancel();
+  [Sync]
+  Cancel() =>  (RESULT result);
 
   /**
    * Returns true if the request was successfully started and is now
@@ -1036,4 +1099,27 @@ struct UrlRequestParams {
    * Passed through to a RequestFinishedInfo.Listener.
    */
   array<handle> annotations;
+};
+
+/**
+ * Information about a finished request.
+ */
+struct RequestFinishedInfo {
+  /**
+   * The reason why the request finished.
+   */
+  enum FINISHED_REASON {
+    /**
+     * The request succeeded.
+     */
+    SUCCEEDED = 0,
+    /**
+     * The request failed or returned an error.
+     */
+    FAILED = 1,
+    /**
+     * The request was canceled.
+     */
+    CANCELED = 2,
+  };
 };
