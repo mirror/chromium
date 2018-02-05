@@ -103,6 +103,24 @@
       "revId": "738a5f0ba22e1b8e2f9833584e234450ca7ee8bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6633b8eb_40e0496b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ImeAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-05T17:30:43Z",
+      "side": 1,
+      "message": "\u003e I agree that its odd to expose the ime code, but the ime adapter code is not visible from chrome/browser which is where the Vr* specific classes live. Would appreciate your feedback on how we can do this better.\n\nchangwan, note I had bigger objections here. is there any way to do this without exposing pretty much the entire implementation out of content?",
+      "parentUuid": "f9dd2fde_3c7d7978",
+      "revId": "738a5f0ba22e1b8e2f9833584e234450ca7ee8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
