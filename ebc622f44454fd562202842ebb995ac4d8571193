@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7101160a_c07b1920",
+        "filename": "chrome/browser/extensions/api/bookmarks/bookmarks_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T22:21:36Z",
+      "side": 1,
+      "message": "nit: I think we typically say that virtual functions should be NormalFunctionCase() instead of accessor_case()",
+      "revId": "ebc622f44454fd562202842ebb995ac4d8571193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
