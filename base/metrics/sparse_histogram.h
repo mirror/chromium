@@ -80,13 +80,7 @@ class BASE_EXPORT SparseHistogram : public HistogramBase {
                              ListValue* buckets) const override;
 
   // Helpers for emitting Ascii graphic.  Each method appends data to output.
-  void WriteAsciiImpl(bool graph_it,
-                      const std::string& newline,
-                      std::string* output) const;
-
-  // Write a common header message describing this histogram.
-  void WriteAsciiHeader(const Count total_count,
-                        std::string* output) const;
+  void WriteAsciiImpl(bool is_html, std::string* output) const;
 
   // For constuctor calling.
   friend class SparseHistogramTest;

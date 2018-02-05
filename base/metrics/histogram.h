@@ -250,16 +250,13 @@ class BASE_EXPORT Histogram : public HistogramBase {
   // HistogramBase implementation:
   void SerializeInfoImpl(base::Pickle* pickle) const override;
 
-  // Method to override to skip the display of the i'th bucket if it's empty.
-  virtual bool PrintEmptyBucket(uint32_t index) const;
-
   // Get normalized size, relative to the ranges(i).
   virtual double GetBucketSize(Count current, uint32_t i) const;
 
   // Return a string description of what goes in a given bucket.
   // Most commonly this is the numeric value, but in derived classes it may
   // be a name (or string description) given to the bucket.
-  virtual const std::string GetAsciiBucketRange(uint32_t it) const;
+  virtual std::string GetAsciiBucketRange(uint32_t it) const;
 
  private:
   // Allow tests to corrupt our innards for testing purposes.
@@ -285,25 +282,10 @@ class BASE_EXPORT Histogram : public HistogramBase {
   //----------------------------------------------------------------------------
   // Helpers for emitting Ascii graphic.  Each method appends data to output.
 
-  void WriteAsciiImpl(bool graph_it,
-                      const std::string& newline,
-                      std::string* output) const;
+  void WriteAsciiImpl(bool is_html, std::string* output) const;
 
   // Find out how large (graphically) the largest bucket will appear to be.
   double GetPeakBucketSize(const SampleVectorBase& samples) const;
-
-  // Write a common header message describing this histogram.
-  void WriteAsciiHeader(const SampleVectorBase& samples,
-                        Count sample_count,
-                        std::string* output) const;
-
-  // Write information about previous, current, and next buckets.
-  // Information such as cumulative percentage, etc.
-  void WriteAsciiBucketContext(const int64_t past,
-                               const Count current,
-                               const int64_t remaining,
-                               const uint32_t i,
-                               std::string* output) const;
 
   // WriteJSON calls these.
   void GetParameters(DictionaryValue* params) const override;
@@ -426,11 +408,7 @@ class BASE_EXPORT LinearHistogram : public Histogram {
 
   // If we have a description for a bucket, then return that.  Otherwise
   // let parent class provide a (numeric) description.
-  const std::string GetAsciiBucketRange(uint32_t i) const override;
-
-  // Skip printing of name for numeric range if we have a name (and if this is
-  // an empty bucket).
-  bool PrintEmptyBucket(uint32_t index) const override;
+  std::string GetAsciiBucketRange(uint32_t i) const override;
 
  private:
   friend BASE_EXPORT HistogramBase* DeserializeHistogramInfo(
