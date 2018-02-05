@@ -16,6 +16,24 @@
       "revId": "c35fc78a57aaaabb79227bc6a06c51130b7001c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ecbf08_8713fc02",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T17:58:34Z",
+      "side": 1,
+      "message": "Ok, will change. Does this change some observed behavior, or is it a no-op for some reason?",
+      "parentUuid": "65f01f84_a2204d7b",
+      "revId": "c35fc78a57aaaabb79227bc6a06c51130b7001c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
