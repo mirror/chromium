@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de62cc06_53b329d4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/offscreen-canvas/tools/tests2d.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4421,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T17:58:12Z",
+      "side": 1,
+      "message": "Spec edit required before you can land this. (see other comment)",
+      "range": {
+        "startLine": 4421,
+        "startChar": 51,
+        "endLine": 4421,
+        "endChar": 67
+      },
+      "revId": "406abcd87bc10c01813c72b363a848ca969e4cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635cad2c_55c3e904",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T17:58:12Z",
+      "side": 1,
+      "message": "Better message: \"The image argument is a canvas element with a width or height of 0.\"",
+      "range": {
+        "startLine": 909,
+        "startChar": 50,
+        "endLine": 909,
+        "endChar": 55
+      },
+      "revId": "406abcd87bc10c01813c72b363a848ca969e4cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c388568_9c14053d",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T17:58:12Z",
+      "side": 1,
+      "message": "The spec actually does not handle this case yet.  Care to edit the spec? It\u0027s just a one-liner.",
+      "range": {
+        "startLine": 929,
+        "startChar": 20,
+        "endLine": 929,
+        "endChar": 35
+      },
+      "revId": "406abcd87bc10c01813c72b363a848ca969e4cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28c2746_cf791c65",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-05T17:58:12Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 933,
+        "startChar": 50,
+        "endLine": 933,
+        "endChar": 55
+      },
+      "revId": "406abcd87bc10c01813c72b363a848ca969e4cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
