@@ -31,6 +31,8 @@
 #ifndef WebMediaStreamSource_h
 #define WebMediaStreamSource_h
 
+#include <vector>
+
 #include "WebCommon.h"
 #include "WebMediaStreamTrack.h"
 
@@ -73,6 +75,11 @@ class WebMediaStreamSource {
     kReadyStateEnded = 2
   };
 
+  struct Capabilities {
+    std::vector<bool> echo_cancellation;
+    WebString device_id;
+  };
+
   WebMediaStreamSource() = default;
   WebMediaStreamSource(const WebMediaStreamSource& other) { Assign(other); }
   ~WebMediaStreamSource() { Reset(); }
@@ -112,6 +119,8 @@ class WebMediaStreamSource {
   BLINK_PLATFORM_EXPORT void SetEchoCancellation(bool echo_cancellation);
 
   BLINK_PLATFORM_EXPORT WebMediaConstraints Constraints();
+
+  BLINK_PLATFORM_EXPORT void SetCapabilities(const Capabilities&);
 
   // Only used if if this is a WebAudio source.
   // The WebAudioDestinationConsumer is not owned, and has to be disposed of
