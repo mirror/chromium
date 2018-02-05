@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab7e58a_9d30c7a2",
+        "filename": "net/server/http_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:44:56Z",
+      "side": 1,
+      "message": "This results in discarding the traffic annotation, and using whatever the annotation of the current in-progress write was.  Also, should we have a test for this case?",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "5d3292907737fa706c48681427d74a3d4def29fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd4af9d_a45b02b3",
+        "filename": "net/server/http_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:44:56Z",
+      "side": 1,
+      "message": "None of these new consts are needed.",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "5d3292907737fa706c48681427d74a3d4def29fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
