@@ -93,6 +93,30 @@
       "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5aac240_07fa8676",
+        "filename": "components/sync/user_events/user_event_sync_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:34:11Z",
+      "side": 1,
+      "message": "good question, I guess it\u0027s personal preference although it might also be ruled by some style guideline. I\u0027m not sure why both exist since they are equivalent. My personal preference is based on:\n\n- anecdotally, I\u0027ve seen the deref operation used more often\n- base::Optional is a whole lot like a pointer (that may be null), and this uses the same syntax. This makes it readable IMO, and I\u0027ve had cases where I had to switch from one type to the other and the shared syntax cut down on the number of mechanical updates required.",
+      "parentUuid": "16fe8f40_b712804d",
+      "range": {
+        "startLine": 213,
+        "startChar": 41,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
