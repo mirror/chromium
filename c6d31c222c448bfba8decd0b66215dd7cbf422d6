@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3315849b_a4222f51",
+        "filename": "chromecast/media/cma/pipeline/audio_pipeline_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e24b1c97_7ba4b7d6",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d35117c_26cf7985",
         "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d157c7e_02d77a68",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d35117c_26cf7985",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a43e156a_743a71dc",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1931743_ccf572cd",
+      "range": {
+        "startLine": 78,
+        "startChar": 44,
+        "endLine": 78,
+        "endChar": 68
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96195070_4c661679",
         "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
         "patchSetId": 4
@@ -138,6 +210,30 @@
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18db4f5b_f21105c5",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96195070_4c661679",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +362,24 @@
     },
     {
       "key": {
+        "uuid": "f8afa4f0_767f5094",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f2beb6_474c2228",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
@@ -336,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "bdff77fa_a2033ab2",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "It\u0027s needed for subclass. Subclass do not need to explicitly initialize base class.",
+      "parentUuid": "efae237c_0a8c5f1f",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eed1c9bc_6899a15d",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 4
@@ -356,6 +494,30 @@
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf59aa8_cd25a989",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed1c9bc_6899a15d",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -448,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "2291f99c_d9b548ff",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Comments added in PushBufferForDecrypt.",
+      "parentUuid": "ee5e1b91_40838e13",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d864dc_c64bbb01",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 4
@@ -468,6 +648,30 @@
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05193d7d_f09a0e37",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d864dc_c64bbb01",
+      "range": {
+        "startLine": 229,
+        "startChar": 57,
+        "endLine": 229,
+        "endChar": 62
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -588,6 +792,78 @@
     },
     {
       "key": {
+        "uuid": "8446eb55_78ecd508",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c8d1fd_6f042e4c",
+      "range": {
+        "startLine": 230,
+        "startChar": 64,
+        "endLine": 230,
+        "endChar": 75
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa97f6b4_35f36442",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a60496_a8398097",
+      "range": {
+        "startLine": 230,
+        "startChar": 13,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ec74004_d14c435b",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e76e401_bac88775",
+      "range": {
+        "startLine": 230,
+        "startChar": 61,
+        "endLine": 230,
+        "endChar": 63
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703bdf2b_43168667",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 4
@@ -635,6 +911,30 @@
     },
     {
       "key": {
+        "uuid": "701aa0ee_55179556",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab9cd42_b2bfab98",
+      "range": {
+        "startLine": 287,
+        "startChar": 22,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03deb61b_dca0dbb7",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 4
@@ -655,6 +955,30 @@
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fba2734_544f1a4d",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T20:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03deb61b_dca0dbb7",
+      "range": {
+        "startLine": 289,
+        "startChar": 5,
+        "endLine": 289,
+        "endChar": 8
+      },
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
