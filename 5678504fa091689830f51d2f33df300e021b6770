@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd85ab6_eb0de485",
+        "filename": "chrome/browser/printing/print_preview_message_handler.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "Consider just passing the RenderFrameHost to PrintCompositeClient: then we can just call GenFrameGuid and ConvertContentInfoMap inside PrintCompositeClient for this block and the above block on line 148-157)",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 78
+      },
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7be0bd8_c1a9822a",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "Ditto: render_frame_host here",
+      "range": {
+        "startLine": 687,
+        "startChar": 47,
+        "endLine": 687,
+        "endChar": 55
+      },
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c962999f_2067067f",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "This dispatches JS events, so it\u0027s possible for the frame to be gone at this point.",
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c83801_70e04800",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 4028,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "Nit: please update this comment to explain when this can happen (right now, it just echos the condition, so it\u0027s not adding extra info)",
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80869a82_ef6c3d62",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "Nit: clarify what this rect corresponds to: is it the rect of the \u003ciframe\u003e element, or something else? How is this combined with page number for the cross-process subframe to calculate which part of the frame to print?",
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f5f26e_57048dde",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "Per the recommendations, we don\u0027t typically handle NOTREACHED(). So this should just be:\n\nDCHECK_EQ(data_-\u003epages_.size(), 1);\n\n(Since this is on serialization side, it\u0027s in the same process as the code generating this content; we should be able to assume that we\u0027ll satisfy our own invariants)",
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e750e73_d3602d43",
+        "filename": "printing/printing_utils.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:51:59Z",
+      "side": 1,
+      "message": "Super minor nit: GenerateFrameGuid, per the style guide recommendation to avoid abbreviations",
+      "revId": "5678504fa091689830f51d2f33df300e021b6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
