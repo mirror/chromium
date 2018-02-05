@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a2c9ec3_3725d724",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-05T19:51:48Z",
+      "side": 1,
+      "message": "Nit: Should there be a TODO about deciding whether we want subframe interstitials or not in the future?",
+      "revId": "441927584c8fb77e341988e4538e33309317f66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
