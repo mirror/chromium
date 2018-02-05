@@ -67,6 +67,29 @@
       "revId": "9b32af1a0aef3702526f829fbbda4cc5b4cb73d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44985124_11db9915",
+        "filename": "chrome/tools/build/win/create_installer_archive.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T13:13:11Z",
+      "side": 1,
+      "message": "Here",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 41
+      },
+      "revId": "9b32af1a0aef3702526f829fbbda4cc5b4cb73d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
