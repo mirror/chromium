@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5dae42b6_a6e32348",
+        "filename": "chrome/browser/ui/views/sad_tab_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-05T00:20:06Z",
+      "side": 1,
+      "message": "my feeling about this is that we should either:\n - declare a `friend class test::SadTabTestApi;` of SadTab that just does recorded_paint_ \u003d true in the test harness, or\n - just remove the DCHECK(recorded_paint_) in SadTab::PerformAction - I don\u0027t think it adds much.",
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0123f3f0_3d57bdd0",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 15
@@ -19,6 +36,40 @@
         "endLine": 57,
         "endChar": 23
       },
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ef2137_aaee92f0",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-05T00:20:06Z",
+      "side": 1,
+      "message": "this should already be done as part of WebViewUnitTest::SetUp()",
+      "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92973a70_fccf03ce",
+        "filename": "ui/views/controls/webview/webview_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-05T00:20:06Z",
+      "side": 1,
+      "message": "I think\n\n  content::WebContents* web_contents \u003d web_view()-\u003eGetWebContents()\n\nwould also work (then you don\u0027t need the CreateWebContents() or unique_ptr WebContents since the webview owns it)",
       "revId": "47a3fec6f01f94178fd55bf2e558554a598f115a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
