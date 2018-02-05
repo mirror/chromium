@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7d22dc9b_6956f0d9",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-02-05T14:10:26Z",
+      "side": 1,
+      "message": "Or is the plan to have to \"orderfiles\", where the first is the symbols that we want to order, and the second is the complete orderfile that\u0027s used here?\n\nThe first orderfile is degradable in Egor\u0027s sense; the second one is ephemeral and doesn\u0027t need to even be stored as it\u0027s generated and used only for one build.\n\nPerhaps this is what you were intending, and in that case this being a standalone script rather than integrated with the rest of the symbol processing stuff seems appropriate.",
+      "parentUuid": "47cc292f_5d67d8ae",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3f5604a_01efec2a",
         "filename": "tools/cygprofile/reorder_native_library.py",
         "patchSetId": 3
