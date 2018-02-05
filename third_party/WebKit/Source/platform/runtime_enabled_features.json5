@@ -280,6 +280,10 @@
       status: "experimental",
     },
     {
+      name: "CSSPartPseudoElement",
+      status: "test",
+    },
+    {
       name: "CSSScrollSnapPoints",
       status: "experimental",
     },
@@ -290,6 +294,10 @@
     {
       name: "CSSStickyPosition",
       status: "stable",
+    },
+    {
+      name: "CSSThemePseudoElement",
+      status: "test",
     },
     {
       name: "CSSTransformBox",
