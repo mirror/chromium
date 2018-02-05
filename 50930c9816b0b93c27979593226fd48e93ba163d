@@ -22,6 +22,30 @@
       "revId": "50930c9816b0b93c27979593226fd48e93ba163d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80147fb4_5eb9612e",
+        "filename": "components/sync/model/model_type_change_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-02-05T05:56:53Z",
+      "side": 0,
+      "message": "Done, went ahead with the syntax you propose, without introducing a struct, via uniform initialization, which is AFAIK compliant with the style guide. This makes the patch larger and is generally equivalent to the previous version, with the upside that ModelError might be extended in the future.",
+      "parentUuid": "1e40fad0_e5240ff4",
+      "range": {
+        "startLine": 104,
+        "startChar": 15,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "50930c9816b0b93c27979593226fd48e93ba163d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

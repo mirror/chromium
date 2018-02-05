@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "743af0bc_49aa8abf",
+        "filename": "components/sync/model/model_error.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-02-05T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcff98c3_4a354fee",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8f1c8b_f8fcd8cd",
         "filename": "components/sync/user_events/user_event_sync_bridge.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fe8f40_b712804d",
+        "filename": "components/sync/user_events/user_event_sync_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-02-05T05:56:53Z",
+      "side": 1,
+      "message": "Done, and update previously existing occurrences. But I\u0027m curious: do you propose this as a personal preference, or have you seen it recommended in the style guide or elsewhere? I\u0027m not convinced the short versions are more readable.",
+      "parentUuid": "8e8f1c8b_f8fcd8cd",
+      "range": {
+        "startLine": 213,
+        "startChar": 41,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "2070c77f28c283fc99a389a1f521613eac9eb369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
