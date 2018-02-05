@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e6fc4905_4852c8eb",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-02-05T04:34:21Z",
+      "side": 1,
+      "message": "Thanks for clarification. Realized PostMainMessageLoopRun is executed during Chrome shutdown which makes more sense.\nThe TranslateService::Shutdown() just reset some fields so it should be safe even run before RequestLanguageList is called.",
+      "parentUuid": "c7862f05_018d857d",
+      "range": {
+        "startLine": 1395,
+        "startChar": 50,
+        "endLine": 1395,
+        "endChar": 58
+      },
+      "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ba5bda_6c55ac6c",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d093ed_d1f9e0cf",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-02-05T04:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ba5bda_6c55ac6c",
+      "range": {
+        "startLine": 1905,
+        "startChar": 12,
+        "endLine": 1905,
+        "endChar": 31
+      },
+      "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
