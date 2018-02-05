@@ -52,7 +52,7 @@ Timing::FillMode ResolvedFillMode(Timing::FillMode fill_mode,
 
 AnimationEffectReadOnly::AnimationEffectReadOnly(const Timing& timing,
                                                  EventDelegate* event_delegate)
-    : animation_(nullptr),
+    : client_(nullptr),
       timing_(timing),
       event_delegate_(event_delegate),
       calculated_(),
@@ -89,9 +89,8 @@ void AnimationEffectReadOnly::UpdateSpecifiedTiming(const Timing& timing) {
   // FIXME: Test whether the timing is actually different?
   timing_ = timing;
   Invalidate();
-  if (animation_)
-    animation_->SetOutdated();
-  SpecifiedTimingChanged();
+  if (client_)
+    client_->SpecifiedTimingChanged();
 }
 
 void AnimationEffectReadOnly::getComputedTiming(
@@ -238,10 +237,10 @@ void AnimationEffectReadOnly::UpdateInheritedTime(
 
   // Test for events even if timing didn't need an update as the animation may
   // have gained a start time.
-  // FIXME: Refactor so that we can DCHECK(m_animation) here, this is currently
+  // FIXME: Refactor so that we can DCHECK(client_) here, this is currently
   // required to be nullable for testing.
   if (reason == kTimingUpdateForAnimationFrame &&
-      (!animation_ || animation_->HasStartTime() || animation_->Paused())) {
+      (!client_ || client_->HasStartTime() || client_->Paused())) {
     if (event_delegate_)
       event_delegate_->OnEventCondition(*this);
   }
@@ -258,11 +257,10 @@ void AnimationEffectReadOnly::UpdateInheritedTime(
 
 const AnimationEffectReadOnly::CalculatedTiming&
 AnimationEffectReadOnly::EnsureCalculated() const {
-  if (!animation_)
+  if (!client_)
     return calculated_;
-  if (animation_->Outdated())
-    animation_->Update(kTimingUpdateOnDemand);
-  DCHECK(!animation_->Outdated());
+
+  client_->UpdateIfNecessary();
   return calculated_;
 }
 
@@ -270,8 +268,15 @@ AnimationEffectTimingReadOnly* AnimationEffectReadOnly::timing() {
   return AnimationEffectTimingReadOnly::Create(this);
 }
 
+Animation* AnimationEffectReadOnly::GetAnimation() {
+  return client_ ? client_->GetAnimation() : nullptr;
+}
+const Animation* AnimationEffectReadOnly::GetAnimation() const {
+  return client_ ? client_->GetAnimation() : nullptr;
+}
+
 void AnimationEffectReadOnly::Trace(blink::Visitor* visitor) {
-  visitor->Trace(animation_);
+  visitor->Trace(client_);
   visitor->Trace(event_delegate_);
   ScriptWrappable::Trace(visitor);
 }
