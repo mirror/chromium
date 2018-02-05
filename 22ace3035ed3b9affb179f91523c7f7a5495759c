@@ -52,6 +52,24 @@
       "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012e55eb_b7c3841b",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-05T21:43:16Z",
+      "side": 1,
+      "message": "We throttle the whole frame subtree when a frame is throttled. The check is not necessary, but just to avoid some recursion work. Removed for less code.",
+      "parentUuid": "c1275113_15b4ff96",
+      "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
