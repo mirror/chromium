@@ -4,9 +4,26 @@
 
 #include "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h"
 
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/component_updater/cros_component_installer.h"
 
 namespace chromeos {
+
+namespace {
+
+void OnLoadComponent(
+    ChromeComponentUpdaterServiceProviderDelegate::LoadCallback load_callback,
+    component_updater::CrOSComponentManager::Error error,
+    const base::FilePath& mount_path) {
+  if (error != component_updater::CrOSComponentManager::Error::NONE) {
+    LOG(ERROR) << "component updater Load API error:"
+               << static_cast<int>(error);
+  }
+  base::PostTask(FROM_HERE,
+                 base::BindOnce(std::move(load_callback), mount_path));
+}
+
+}  // namespace
 
 ChromeComponentUpdaterServiceProviderDelegate::
     ChromeComponentUpdaterServiceProviderDelegate() {}
@@ -22,7 +39,7 @@ void ChromeComponentUpdaterServiceProviderDelegate::LoadComponent(
       name,
       mount ? component_updater::CrOSComponentManager::MountPolicy::kMount
             : component_updater::CrOSComponentManager::MountPolicy::kDontMount,
-      std::move(load_callback));
+      base::BindOnce(OnLoadComponent, std::move(load_callback)));
 }
 
 bool ChromeComponentUpdaterServiceProviderDelegate::UnloadComponent(
