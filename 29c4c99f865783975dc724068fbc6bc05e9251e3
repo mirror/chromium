@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24122099_e4c03683",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-05T19:49:07Z",
+      "side": 1,
+      "message": "I think we want to use the playback rect here?",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aab6743_4525b1a5",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-05T19:49:07Z",
+      "side": 1,
+      "message": "!playback_rect.IsEmpty()",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 29
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e65e79_e5b09906",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-05T19:49:07Z",
+      "side": 1,
+      "message": "I wish we could come up with a good way to avoid duplicating this from RasterSource...",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 79
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d39a2d_d4f5c692",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-05T19:49:07Z",
+      "side": 1,
+      "message": "This should be done now. :)",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "29c4c99f865783975dc724068fbc6bc05e9251e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
