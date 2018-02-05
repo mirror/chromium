@@ -113,6 +113,9 @@ TEST_F(BridgedNativeWidgetUITest, FullscreenSynchronousState) {
   EXPECT_TRUE(widget_->IsFullscreen());
   EXPECT_EQ(restored_bounds, widget_->GetRestoredBounds());
 
+  // Ensure the WindowServer is ready to exit fullscreen.
+  //[waiter waitForEnterCount:1 exitCount:0];
+
   // Always finish out of fullscreen. Otherwise there are 4 NSWindow objects
   // that Cocoa creates which don't close themselves and will be seen by the Mac
   // test harness on teardown. Note that the test harness will be waiting until
