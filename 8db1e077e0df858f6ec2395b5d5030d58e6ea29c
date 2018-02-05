@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf85f663_207dd3c1",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "Hmmm it looks like it should be OnceCallback: We don\u0027t store/reuse it in ADRH.",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2835b401_dec4c872",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "All these BindRepeating should be BindOnce (see above).",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2814f7fb_47f0661f",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "std::move?",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a808f8a_9f23473b",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "AudioDebugRecordingManager will need it own definition of CreateFileCallback, since it still needs a repeating callback.",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ab468d_b809810a",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "AudioDebugRecordingManager will need it own definition of CreateFileCallback, since it still needs a repeating callback.",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a56af55_fc973e7f",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "Could you align the comment?",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f316b947_374a958a",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "nit: empty line above",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31109b0_ed934131",
+        "filename": "media/audio/mock_audio_debug_recording_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d8101a_8b63563a",
+        "filename": "media/audio/mock_audio_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T09:54:27Z",
+      "side": 1,
+      "message": "Could you move to the bottom? (now it\u0027s in the middle of mock values and callbacks)",
+      "revId": "8db1e077e0df858f6ec2395b5d5030d58e6ea29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
