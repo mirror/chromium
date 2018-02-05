@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6c2bfd7f_42a68003",
+        "filename": "components/offline_pages/core/background/pick_request_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "Thanks! I did not think about that. I\u0027ll move all the extra logic out of the task.",
+      "parentUuid": "45d25099_df37bcce",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 5
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d180d9ad_635c8c2c",
         "filename": "components/offline_pages/core/background/pick_request_task.h",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2018-02-05T19:20:29Z",
       "side": 1,
       "message": "How do we ensure this vector outlives the PickRequestTask?  We might need to make a copy or pass a pointer here (std::unique_ptr might be nice here)",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 32,
+        "endChar": 41
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7648aaa_0ec19528",
+        "filename": "components/offline_pages/core/background/pick_request_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "Right now I have PickRequestTask::Choose making a copy of the request and placing the copy in the vector.\n\nThe reason I did not move it was because of where I populate the vector (at the AVAILABLE check). The requests are still in Choose used after the AVAILABLE check.",
+      "parentUuid": "d180d9ad_635c8c2c",
       "range": {
         "startLine": 32,
         "startChar": 40,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "827716e9_2508cc92",
+        "filename": "components/offline_pages/core/background/pick_request_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e060db60_81cbce09",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 65
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0d21b7_59f57b7a",
         "filename": "components/offline_pages/core/background/request_coordinator.cc",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2018-02-05T19:20:29Z",
       "side": 1,
       "message": "Instead of a Get, might it make sense to use the vector of results passed back from the previous call to the PickRequestTask here?  It would be great if we could avoid an extra DB query (DB queries can be pretty slow).  It would mean an extra memeber variable for the available list, but it might be worth it from a perf standpoint.  It would also mean that we can call the function to set all the avaiable states synchronously, which simplifies the code flow a bit.",
+      "range": {
+        "startLine": 767,
+        "startChar": 4,
+        "endLine": 767,
+        "endChar": 18
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6f56d0_6b363c6f",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "Regarding using the vector passed from PickRequestTask, the available requests may have changed since the call to PickRequestTask. New requests may have been added or existing requests may have been cancelled or paused.\n\nThe alternative to the database query is storing all the SavePageRequests (in RequestCoordinator or a new class) and update this every time a request is added or changed (in addition to updating the database) and checking/adding the pending reasons here.\n\nFor design simplicity and memory, I decided to go with this route. I discussed with Dmitry as well, and from my understanding users typically don\u0027t have many requests at one time.\n\nIf you free strongly, we can talk more offline about alternative designs.",
+      "parentUuid": "3e0d21b7_59f57b7a",
       "range": {
         "startLine": 767,
         "startChar": 4,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "9b538d1b_9443b7a4",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "The pending reason is not stored anywhere (it\u0027s added to the request before being sent off to observers for UI changes), so there is no place to check if the request is currently waiting for another download. Therefore I have it changing every available request just in case. :/\n\nMmm now that you mention it though the change is only relevant for the first time PickRequestTask is called since gaining network (available requests will go from \"Waiting for network...\" to \"Waiting for another download...\"), so I could add a boolean to RequestCoordinator about whether PickRequestTask has been called. Thoughts?",
+      "parentUuid": "6af217b6_5de5aac8",
+      "range": {
+        "startLine": 831,
+        "startChar": 4,
+        "endLine": 831,
+        "endChar": 50
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1c1db03_eeb75a43",
         "filename": "components/offline_pages/core/background/request_coordinator.cc",
         "patchSetId": 1
@@ -160,6 +280,30 @@
       "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa07eb9_f1931d03",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b1c1db03_eeb75a43",
+      "range": {
+        "startLine": 1180,
+        "startChar": 25,
+        "endLine": 1180,
+        "endChar": 57
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "cf60f7bc_12fb23c7",
+        "filename": "components/offline_pages/core/background/save_page_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "I was previously advised not to combine the two since RequestState is saved to the database and the reason for pending may change frequently and does not need to be saved, so I made a separate variable to store this info.",
+      "parentUuid": "07993d00_614daf80",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47758e64_6b183975",
         "filename": "components/offline_pages/core/downloads/offline_item_conversions.cc",
         "patchSetId": 1
@@ -220,6 +388,30 @@
       "writtenOn": "2018-02-05T19:20:29Z",
       "side": 1,
       "message": "Why do we have both available state and pending state enums?  Could we get by with just a single enum?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec0e7b5_b82ec570",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-05T22:31:42Z",
+      "side": 1,
+      "message": "Sounds good! I\u0027ll be moving the PendingState enum to a separate file (in the other CL) so I\u0027ll use PendingState for SavePageRequest too.",
+      "parentUuid": "47758e64_6b183975",
       "range": {
         "startLine": 57,
         "startChar": 0,
