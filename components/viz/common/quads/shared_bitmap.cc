@@ -24,12 +24,16 @@ SharedBitmap::SharedBitmap(uint8_t* pixels,
 SharedBitmap::~SharedBitmap() {}
 
 // static
-bool SharedBitmap::SizeInBytes(const gfx::Size& size, size_t* size_in_bytes) {
+bool SharedBitmap::SizeInBytes(const gfx::Size& size,
+                               const bool use_half_float_storage,
+                               size_t* size_in_bytes) {
   if (size.IsEmpty())
     return false;
   base::CheckedNumeric<size_t> s = 4;
   s *= size.width();
   s *= size.height();
+  if (use_half_float_storage)
+    s *= 2;
   if (!s.IsValid())
     return false;
   *size_in_bytes = s.ValueOrDie();
@@ -37,31 +41,60 @@ bool SharedBitmap::SizeInBytes(const gfx::Size& size, size_t* size_in_bytes) {
 }
 
 // static
-size_t SharedBitmap::CheckedSizeInBytes(const gfx::Size& size) {
+bool SharedBitmap::SizeInBytes(const gfx::Size& size, size_t* size_in_bytes) {
+  return SizeInBytes(size, false, size_in_bytes);
+}
+
+// static
+size_t SharedBitmap::CheckedSizeInBytes(const gfx::Size& size,
+                                        const bool use_half_float_storage) {
   CHECK(!size.IsEmpty());
   base::CheckedNumeric<size_t> s = 4;
   s *= size.width();
   s *= size.height();
+  if (use_half_float_storage)
+    s *= 2;
   return s.ValueOrDie();
 }
 
 // static
-size_t SharedBitmap::UncheckedSizeInBytes(const gfx::Size& size) {
+size_t SharedBitmap::CheckedSizeInBytes(const gfx::Size& size) {
+  return CheckedSizeInBytes(size, false);
+}
+
+// static
+size_t SharedBitmap::UncheckedSizeInBytes(const gfx::Size& size,
+                                          const bool use_half_float_storage) {
   DCHECK(VerifySizeInBytes(size));
   size_t s = 4;
   s *= size.width();
   s *= size.height();
+  if (use_half_float_storage)
+    s *= 2;
   return s;
 }
 
 // static
-bool SharedBitmap::VerifySizeInBytes(const gfx::Size& size) {
+size_t SharedBitmap::UncheckedSizeInBytes(const gfx::Size& size) {
+  return UncheckedSizeInBytes(size, false);
+}
+
+// static
+bool SharedBitmap::VerifySizeInBytes(const gfx::Size& size,
+                                     const bool use_half_float_storage) {
   if (size.IsEmpty())
     return false;
   base::CheckedNumeric<size_t> s = 4;
   s *= size.width();
   s *= size.height();
+  if (use_half_float_storage)
+    s *= 2;
   return s.IsValid();
+}
+
+// static
+bool SharedBitmap::VerifySizeInBytes(const gfx::Size& size) {
+  return VerifySizeInBytes(size, false);
 }
 
 // static
