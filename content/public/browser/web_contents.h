@@ -25,6 +25,7 @@
 #include "content/public/browser/save_page_type.h"
 #include "content/public/browser/screen_orientation_delegate.h"
 #include "content/public/browser/site_instance.h"
+#include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/stop_find_action.h"
@@ -429,9 +430,10 @@ class WebContents : public PageNavigator,
   virtual void WasShown() = 0;
   virtual void WasHidden() = 0;
 
-  // Whether the WebContents is visible. This can return true even if the page
-  // is still loading, as opposed to RenderWidgetHostView::IsShowing(), which
-  // always returns false when the page is still loading.
+  // Returns the visibility of the WebContents' view.
+  virtual Visibility GetVisibility() const = 0;
+
+  // DEPRECATED. Use GetVisbility().
   virtual bool IsVisible() const = 0;
 
   // Invoked when the WebContents becomes occluded/unoccluded. An occluded
