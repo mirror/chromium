@@ -302,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "6e05e984_5dc40901",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T14:34:46Z",
+      "side": 1,
+      "message": "Right you are, me and Olga were just chatting about it. I think a solution with a subclass of base::Thread that creates a message loop in its constructor is possible though. I\u0027m not saying it\u0027s necessarily a good idea. :)",
+      "parentUuid": "074f0e49_84638fdd",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
