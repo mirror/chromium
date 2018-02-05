@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6526a42_c3201d74",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T20:46:11Z",
+      "side": 1,
+      "message": "Note: this method was basically copy-pasted from WindowController::CreateWindowValue().",
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
