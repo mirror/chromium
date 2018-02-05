@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9d66439_c83d58f1",
+        "filename": "components/prefs/pref_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T17:32:35Z",
+      "side": 0,
+      "message": "I\u0027m not familiar with why this was added. Please add a local owner to ensure they agree with the removal.",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 65
+      },
+      "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
