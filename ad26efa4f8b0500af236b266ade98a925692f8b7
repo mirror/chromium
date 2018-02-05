@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58894248_8665f79b",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T21:43:47Z",
+      "side": 1,
+      "message": "InitForWebContents is called with either a valid RenderWidgetHost, or a nullptr. Therefore, to handle the situation, if we already had a RenderWidgetHost we were watching, we stop watching it, assign the new one (see line 81 below) and then start watching it again below.",
+      "parentUuid": "5537acdb_a957c099",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "ad26efa4f8b0500af236b266ade98a925692f8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9760bb2d_b4362844",
         "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
         "patchSetId": 5
