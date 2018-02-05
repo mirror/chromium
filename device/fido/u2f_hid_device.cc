@@ -9,9 +9,9 @@
 #include "base/command_line.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "crypto/random.h"
+#include "device/fido/fido_hid_message.h"
 #include "device/fido/u2f_apdu_command.h"
 #include "device/fido/u2f_command_type.h"
-#include "device/fido/u2f_message.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 
 namespace device {
@@ -61,13 +61,12 @@ void U2fHidDevice::Transition(std::unique_ptr<U2fApduCommand> command,
       break;
     case State::IDLE: {
       state_ = State::BUSY;
-      std::unique_ptr<U2fMessage> msg = U2fMessage::Create(
-          channel_id_, U2fCommandType::CMD_MSG, command->GetEncodedCommand());
-
       ArmTimeout(repeating_callback);
       // Write message to the device
       WriteMessage(
-          std::move(msg), true,
+          FidoHidMessage::Create(channel_id_, CtapHidDeviceCommand::kCtapHidMsg,
+                                 command->GetEncodedCommand()),
+          true,
           base::BindOnce(&U2fHidDevice::MessageReceived,
                          weak_factory_.GetWeakPtr(), repeating_callback));
       break;
@@ -118,10 +117,9 @@ void U2fHidDevice::AllocateChannel(std::unique_ptr<U2fApduCommand> command,
   // Send random nonce to device to verify received message
   std::vector<uint8_t> nonce(8);
   crypto::RandBytes(nonce.data(), nonce.size());
-  std::unique_ptr<U2fMessage> message =
-      U2fMessage::Create(channel_id_, U2fCommandType::CMD_INIT, nonce);
-
-  WriteMessage(std::move(message), true,
+  WriteMessage(FidoHidMessage::Create(
+                   channel_id_, CtapHidDeviceCommand::kCtapHidInit, nonce),
+               true,
                base::BindOnce(&U2fHidDevice::OnAllocateChannel,
                               weak_factory_.GetWeakPtr(), nonce,
                               std::move(command), std::move(callback)));
@@ -131,7 +129,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
                                      std::unique_ptr<U2fApduCommand> command,
                                      DeviceCallback callback,
                                      bool success,
-                                     std::unique_ptr<U2fMessage> message) {
+                                     std::unique_ptr<FidoHidMessage> message) {
   if (state_ == State::DEVICE_ERROR)
     return;
   timeout_callback_.Cancel();
@@ -156,6 +154,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
     Transition(nullptr, std::move(callback));
     return;
   }
+
   auto received_nonce = base::make_span(payload).first(8);
   // Received a broadcast message for a different client. Disregard and continue
   // reading.
@@ -166,7 +165,6 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
     ReadMessage(base::BindOnce(&U2fHidDevice::OnAllocateChannel,
                                weak_factory_.GetWeakPtr(), nonce,
                                std::move(command), repeating_callback));
-
     return;
   }
 
@@ -180,7 +178,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
   Transition(std::move(command), std::move(callback));
 }
 
-void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
+void U2fHidDevice::WriteMessage(std::unique_ptr<FidoHidMessage> message,
                                 bool response_expected,
                                 U2fHidMessageCallback callback) {
   if (!connection_ || !message || message->NumPackets() == 0) {
@@ -195,7 +193,7 @@ void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
                      std::move(message), true, std::move(callback)));
 }
 
-void U2fHidDevice::PacketWritten(std::unique_ptr<U2fMessage> message,
+void U2fHidDevice::PacketWritten(std::unique_ptr<FidoHidMessage> message,
                                  bool response_expected,
                                  U2fHidMessageCallback callback,
                                  bool success) {
@@ -229,8 +227,7 @@ void U2fHidDevice::OnRead(U2fHidMessageCallback callback,
 
   DCHECK(buf);
 
-  std::unique_ptr<U2fMessage> read_message =
-      U2fMessage::CreateFromSerializedData(*buf);
+  auto read_message = FidoHidMessage::CreateFromSerializedData(*buf);
 
   if (!read_message) {
     std::move(callback).Run(false, nullptr);
@@ -257,7 +254,7 @@ void U2fHidDevice::OnRead(U2fHidMessageCallback callback,
 }
 
 void U2fHidDevice::OnReadContinuation(
-    std::unique_ptr<U2fMessage> message,
+    std::unique_ptr<FidoHidMessage> message,
     U2fHidMessageCallback callback,
     bool success,
     uint8_t report_id,
@@ -280,7 +277,7 @@ void U2fHidDevice::OnReadContinuation(
 
 void U2fHidDevice::MessageReceived(DeviceCallback callback,
                                    bool success,
-                                   std::unique_ptr<U2fMessage> message) {
+                                   std::unique_ptr<FidoHidMessage> message) {
   if (state_ == State::DEVICE_ERROR)
     return;
   timeout_callback_.Cancel();
@@ -316,16 +313,17 @@ void U2fHidDevice::TryWink(WinkCallback callback) {
     return;
   }
 
-  std::unique_ptr<U2fMessage> wink_message = U2fMessage::Create(
-      channel_id_, U2fCommandType::CMD_WINK, std::vector<uint8_t>());
-  WriteMessage(std::move(wink_message), true,
-               base::BindOnce(&U2fHidDevice::OnWink, weak_factory_.GetWeakPtr(),
-                              std::move(callback)));
+  WriteMessage(
+      FidoHidMessage::Create(channel_id_, CtapHidDeviceCommand::kCtapHidWink,
+                             std::vector<uint8_t>()),
+      true,
+      base::BindOnce(&U2fHidDevice::OnWink, weak_factory_.GetWeakPtr(),
+                     std::move(callback)));
 }
 
 void U2fHidDevice::OnWink(WinkCallback callback,
                           bool success,
-                          std::unique_ptr<U2fMessage> response) {
+                          std::unique_ptr<FidoHidMessage> response) {
   std::move(callback).Run();
 }
 
