@@ -1,0 +1,3 @@
+# Support device scale factor change in browsertest (crbug.com/809231).
+-SitePerProcessBrowserTest.SubframeUpdateToCorrectDeviceScaleFactor
+
