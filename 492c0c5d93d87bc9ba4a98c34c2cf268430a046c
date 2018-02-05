@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a4dcd65_6f2d15a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-05T06:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4058ee73_85977f3e",
+      "range": {
+        "startLine": 17,
+        "startChar": 52,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "492c0c5d93d87bc9ba4a98c34c2cf268430a046c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70e4bc72_8a218473",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "492c0c5d93d87bc9ba4a98c34c2cf268430a046c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7075f56e_efe8b50e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-05T06:00:36Z",
+      "side": 1,
+      "message": "Moved the comment. I\u0027m aware of the rationale behind retrying, and I\u0027m not changing the behaviour (when and how many times we retry). It\u0027s the API that I\u0027m changing (taking away an unused flag).",
+      "parentUuid": "70e4bc72_8a218473",
+      "revId": "492c0c5d93d87bc9ba4a98c34c2cf268430a046c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

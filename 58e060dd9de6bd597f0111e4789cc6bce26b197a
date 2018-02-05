@@ -16,6 +16,24 @@
       "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a6f613_b5d217ae",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-02-05T06:00:36Z",
+      "side": 0,
+      "message": "--smoke didn\u0027t and doesn\u0027t really affect whether we retry, i.e. we retry when a) the list of tests is not explicit, or b) explicit retry flags are given. This chunk of code is no-op because if all the conditions were satisfied, we would retry anyway.",
+      "parentUuid": "bb9402cb_b56e13b9",
+      "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
