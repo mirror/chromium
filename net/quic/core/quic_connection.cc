@@ -656,9 +656,8 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
     current_packet_content_ = NO_FRAMES_RECEIVED;
     current_peer_migration_type_ = NO_CHANGE;
   }
-  PeerAddressChangeType peer_migration_type =
-      QuicUtils::DetermineAddressChangeType(peer_address_,
-                                            last_packet_source_address_);
+  AddressChangeType peer_migration_type = QuicUtils::DetermineAddressChangeType(
+      peer_address_, last_packet_source_address_);
   // Initiate connection migration if a non-reordered packet is received from a
   // new address.
   if (header.packet_number > received_packet_manager_.GetLargestObserved() &&
@@ -2638,8 +2637,7 @@ void QuicConnection::OnPeerMigrationValidated() {
 // from a packet with sequence number > the one that triggered the previous
 // migration. This should happen even if a migration is underway, since the
 // most recent migration is the one that we should pay attention to.
-void QuicConnection::StartPeerMigration(
-    PeerAddressChangeType peer_migration_type) {
+void QuicConnection::StartPeerMigration(AddressChangeType peer_migration_type) {
   // TODO(fayang): Currently, all peer address change type are allowed. Need to
   // add a method ShouldAllowPeerAddressChange(PeerAddressChangeType type) to
   // determine whether |type| is allowed.
@@ -2663,8 +2661,7 @@ void QuicConnection::StartPeerMigration(
   OnConnectionMigration(peer_migration_type);
 }
 
-void QuicConnection::OnConnectionMigration(
-    PeerAddressChangeType addr_change_type) {
+void QuicConnection::OnConnectionMigration(AddressChangeType addr_change_type) {
   visitor_->OnConnectionMigration(addr_change_type);
   sent_packet_manager_.OnConnectionMigration(addr_change_type);
 }

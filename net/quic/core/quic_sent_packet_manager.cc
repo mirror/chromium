@@ -905,7 +905,7 @@ void QuicSentPacketManager::SetSendAlgorithm(
   pacing_sender_.set_sender(send_algorithm);
 }
 
-void QuicSentPacketManager::OnConnectionMigration(PeerAddressChangeType type) {
+void QuicSentPacketManager::OnConnectionMigration(AddressChangeType type) {
   if (type == PORT_CHANGE || type == IPV4_SUBNET_CHANGE) {
     // Rtt and cwnd do not need to be reset when the peer address change is
     // considered to be caused by NATs.
