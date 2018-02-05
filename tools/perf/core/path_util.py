@@ -15,6 +15,10 @@ def GetTelemetryDir():
   return os.path.join(
       GetChromiumSrcDir(), 'third_party', 'catapult', 'telemetry')
 
+def GetTestingScriptsDir():
+  return os.path.join(
+      GetChromiumSrcDir(), 'testing', 'scripts')
+
 
 def GetPerfDir():
   return os.path.join(GetChromiumSrcDir(), 'tools', 'perf')
