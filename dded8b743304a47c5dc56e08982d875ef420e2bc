@@ -123,6 +123,24 @@
       "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4603d5_5af9aa1c",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T12:16:08Z",
+      "side": 1,
+      "message": "What I mean is to embed the short link into the value of the extra key:\n\n\"new_keys_may_be_added_here\": \"Do not rely on ... See: goo.gl/xzy.\"",
+      "parentUuid": "e7642a40_89c47381",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
