@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6275f0c_2ecabbfb",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "684f19b3_78b948af",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efb7615d_abfab2bb",
         "filename": "content/browser/frame_host/navigator.h",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61dfc2c2_38e0a26a",
+        "filename": "content/browser/frame_host/navigator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb7615d_abfab2bb",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a648f197_c95eec37",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3648,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a547102_5eeebef3",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b52893f_f8831e20",
         "filename": "content/common/frame.typemap",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7b670b_ec98877b",
+        "filename": "content/common/frame.typemap",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b52893f_f8831e20",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f69fe0d4_9a5f0bed",
+        "filename": "content/common/frame.typemap",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "No. This is a leftover of when it wasn\u0027t. Removed.",
+      "parentUuid": "7a35c008_f15570c5",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29412baa_575a4fa2",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 15
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-05T08:10:02Z",
       "side": 1,
       "message": "Are the changes in this file mainly just moving things around into their respective blocks? I had a hard time diffing this file.",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd196648_47dcfdac",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Mostly, except for one difference. Prior to this CL we would re-classify reloads as history naviagtions if this frame didn\u0027t have a history object, since it was needed to compute the ResourceRequest in that case pre-PlzNavigate. Since this is no longer a requirement with PlzNavigate, reloads are now always reloads.",
+      "parentUuid": "29412baa_575a4fa2",
       "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d2475659_ac3ca201",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "836e61d9_628bdef5",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27970bb7_bdeaba5e",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 15
@@ -132,6 +258,24 @@
       "writtenOn": "2018-02-05T08:10:02Z",
       "side": 1,
       "message": "Is it sufficient to only have the user gesture in scope when preparing the commit? What about when the navigation is actually committed? I would have expected that it ought to be in scope at the time of actual commit as well, e.g. a same document navigation is synchronous, so if the hashchange event is fire synchronusly, I would expect that the user gesture also needs to be active then? Is that bit of information getting forwarded in some other way now?",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09686d4_efda8e53",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5582,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Probably not, so I\u0027ve put it back in CommitNavigation and CommitSameDocumentNavigation (was trying to avoid code duplication, but this one makes sense ot have).",
+      "parentUuid": "27970bb7_bdeaba5e",
       "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +296,24 @@
       "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e805580_206dde33",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fc9a35_743600d4",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "4c40b8ef_9c447f14",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b809125_17297796",
+      "range": {
+        "startLine": 203,
+        "startChar": 10,
+        "endLine": 203,
+        "endChar": 17
+      },
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "026dd631_9c5b8d96",
         "filename": "third_party/WebKit/public/web/commit_result.mojom",
         "patchSetId": 15
@@ -192,6 +378,24 @@
       "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ff3f05_a08e0e39",
+        "filename": "third_party/WebKit/public/web/commit_result.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026dd631_9c5b8d96",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
