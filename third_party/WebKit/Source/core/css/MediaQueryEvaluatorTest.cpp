@@ -8,6 +8,8 @@
 #include "core/css/MediaList.h"
 #include "core/css/MediaValuesCached.h"
 #include "core/css/MediaValuesInitialViewport.h"
+#include "core/css/parser/CSSTokenizer.h"
+#include "core/css/parser/MediaQueryParser.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/media_type_names.h"
 #include "core/testing/DummyPageHolder.h"
@@ -152,14 +154,45 @@ MediaQueryEvaluatorTestCase g_print_test_cases[] = {
     {nullptr, 0}  // Do not remove the terminator line.
 };
 
+MediaQueryEvaluatorTestCase g_non_immersive_test_cases[] = {
+    {"(immersive: 1)", 0},
+    {"(immersive: 0)", 1},
+    {nullptr, 0}  // Do not remove the terminator line.
+};
+
+MediaQueryEvaluatorTestCase g_immersive_test_cases[] = {
+    {"(immersive: 1)", 1},
+    {"(immersive: 0)", 0},
+    {nullptr, 0}  // Do not remove the terminator line.
+};
+
+MediaQueryEvaluatorTestCase g_non_ua_sheet_immersive_test_cases[] = {
+    {"(immersive: 1)", 0},
+    {"(immersive: 0)", 0},
+    {nullptr, 0}  // Do not remove the terminator line.
+};
+
 void TestMQEvaluator(MediaQueryEvaluatorTestCase* test_cases,
-                     const MediaQueryEvaluator& media_query_evaluator) {
+                     const MediaQueryEvaluator& media_query_evaluator,
+                     CSSParserMode mode) {
   scoped_refptr<MediaQuerySet> query_set = nullptr;
   for (unsigned i = 0; test_cases[i].input; ++i) {
-    query_set = MediaQuerySet::Create(test_cases[i].input);
+    if (String(test_cases[i].input).IsEmpty()) {
+      query_set = MediaQuerySet::Create();
+    } else {
+      query_set = MediaQueryParser::ParseMediaQuerySetInMode(
+          CSSParserTokenRange(
+              CSSTokenizer(test_cases[i].input).TokenizeToEOF()),
+          mode);
+    }
     EXPECT_EQ(test_cases[i].output, media_query_evaluator.Eval(*query_set))
         << "Query: " << test_cases[i].input;
   }
+}
+
+void TestMQEvaluator(MediaQueryEvaluatorTestCase* test_cases,
+                     const MediaQueryEvaluator& media_query_evaluator) {
+  TestMQEvaluator(test_cases, media_query_evaluator, kHTMLStandardMode);
 }
 
 TEST(MediaQueryEvaluatorTest, Cached) {
@@ -179,6 +212,7 @@ TEST(MediaQueryEvaluatorTest, Cached) {
   data.strict_mode = true;
   data.display_mode = kWebDisplayModeBrowser;
   data.display_shape = kDisplayShapeRect;
+  data.immersive_mode = false;
 
   // Default values.
   {
@@ -186,6 +220,9 @@ TEST(MediaQueryEvaluatorTest, Cached) {
     MediaQueryEvaluator media_query_evaluator(*media_values);
     TestMQEvaluator(g_screen_test_cases, media_query_evaluator);
     TestMQEvaluator(g_viewport_test_cases, media_query_evaluator);
+    TestMQEvaluator(g_non_immersive_test_cases, media_query_evaluator,
+                    kUASheetMode);
+    TestMQEvaluator(g_non_ua_sheet_immersive_test_cases, media_query_evaluator);
   }
 
   // Print values.
@@ -206,6 +243,17 @@ TEST(MediaQueryEvaluatorTest, Cached) {
     TestMQEvaluator(g_monochrome_test_cases, media_query_evaluator);
     data.color_bits_per_component = 24;
     data.monochrome_bits_per_component = 0;
+  }
+
+  // Immersive values.
+  {
+    data.immersive_mode = true;
+    MediaValues* media_values = MediaValuesCached::Create(data);
+    MediaQueryEvaluator media_query_evaluator(*media_values);
+    TestMQEvaluator(g_immersive_test_cases, media_query_evaluator,
+                    kUASheetMode);
+    TestMQEvaluator(g_non_ua_sheet_immersive_test_cases, media_query_evaluator);
+    data.immersive_mode = false;
   }
 }
 
