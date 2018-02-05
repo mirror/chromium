@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "38a7b567_ab918b8e",
+        "filename": "chrome/browser/devtools/device/adb/mock_adb_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T17:51:15Z",
+      "side": 1,
+      "message": "This is a test code. Perhaps, you have a simple annotation for tests we can reuse here?",
+      "revId": "7d3a36b020f12eb99a5e9f8a5128fcceb66b5055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03ee163f_d7e35f7d",
         "filename": "remoting/host/security_key/security_key_socket.cc",
         "patchSetId": 2
