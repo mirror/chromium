@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c46591d_794fa3bc",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T13:58:55Z",
+      "side": 1,
+      "message": "nit: s/code/the code segment/ for some disambiguation",
+      "range": {
+        "startLine": 7,
+        "startChar": 70,
+        "endLine": 7,
+        "endChar": 74
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cc292f_5d67d8ae",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T13:58:55Z",
+      "side": 1,
+      "message": "Since this makes an orderfile that is more degradable (with cherrypicks to official branches) than the original (i.e. unpatched one), I\u0027m wondering what we should do.\n\nThe best solution for binary size and performance would be to introduce a step to run this script to downstream  official_buildbot.sh named like \"Optimize orderfile\" and run it between \"Patch orderfile\" and \"Verify orderfile\". Hopefully we agree that this is the plan (sorry, was not obvious from commit description).\n\nThis plan would slow down the build by a re-link, which takes ~1 minute these days - sounds appropriate.\n\nAnother possibility is to make it more degradable, but then there is a tradeoff between the 30K benefits of this optimization and overall efficiency of the orderfile in the official releases. Figuring out the best tradeoff here seems tricky... WDYT?\n\nFinal nit: this file should better be called like \"optimize_orderfile.py\" because:\n1. this is what it does :)\n2. an official step name \"Reorder orderfile\" looks like an overlook :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f5604a_01efec2a",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T13:58:55Z",
+      "side": 1,
+      "message": "does the resulting orderfile only work with LLD or the whole technique would fail with other linkers for some reason? Please clarify.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603860ad_f49d8b2e",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T13:58:55Z",
+      "side": 1,
+      "message": "does the thunk not have a symbol when linked with gold?\n\nI think we should match one underscore at the end because some C symbols would not have the second trailing underscore it seems: https://github.com/llvm-mirror/lld/blob/master/ELF/Thunks.cpp#L297\n\nAlso: how about __ARMV7PILongThunk_ and the aarch64 thunks? conditional branches on aarch64 are limited to +-1MiB with CBZ (and +-32KiB for TBZ).",
+      "range": {
+        "startLine": 53,
+        "startChar": 44,
+        "endLine": 53,
+        "endChar": 66
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5991b7e2_e948e205",
+        "filename": "tools/cygprofile/reorder_native_library.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-02-05T13:58:55Z",
+      "side": 1,
+      "message": "hm, perhaps also subtract (end_of_ordered_index - start_of_ordered_index)?\n\nalso, this is the middle in terms of symbol counts, how far it is from the middle in terms of sizes?",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "f0bdd7469d4c54e0acd958903495b70ecd2a2682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
