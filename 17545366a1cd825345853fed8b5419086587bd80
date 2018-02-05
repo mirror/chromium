@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97768f0_4959531c",
+        "filename": "third_party/WebKit/Source/core/scheduler/FrameThrottlingTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-05T17:41:54Z",
+      "side": 1,
+      "message": "nit: EXPECT_FALSE(frame_document-\u003e...",
+      "range": {
+        "startLine": 1379,
+        "startChar": 2,
+        "endLine": 1379,
+        "endChar": 15
+      },
+      "revId": "17545366a1cd825345853fed8b5419086587bd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5f085d_f3d84b4a",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-05T17:41:54Z",
+      "side": 1,
+      "message": "This is a bit of a behavior change, if !DrawsContent, then we now return an empty paint record. Are there any implications of that?",
+      "range": {
+        "startLine": 1316,
+        "startChar": 11,
+        "endLine": 1316,
+        "endChar": 47
+      },
+      "revId": "17545366a1cd825345853fed8b5419086587bd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f49b1c5_ca11bfc4",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayerClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-05T17:41:54Z",
+      "side": 1,
+      "message": "Can you please leave a short comment describing what the return value of this means?",
+      "revId": "17545366a1cd825345853fed8b5419086587bd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
