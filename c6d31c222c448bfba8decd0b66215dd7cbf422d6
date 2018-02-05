@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "f664e848_cc6e88ac",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T19:33:38Z",
+      "side": 1,
+      "message": "OK, I\u0027ll set the callback when create the decryptor.",
+      "parentUuid": "6bfe3ee2_9fb8919a",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
@@ -388,6 +406,24 @@
       "side": 1,
       "message": "Note that it is only the same size for CTR mode or similar, for CBC mode there is padding. I guess CBC mode is nver used though (?)",
       "parentUuid": "7868f472_69156e38",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5e1b91_40838e13",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-05T19:33:38Z",
+      "side": 1,
+      "message": "In CBC, the remained buffer (size smaller than a block) is left clear.",
+      "parentUuid": "aef14157_5e0b1157",
       "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
