@@ -63,5 +63,8 @@ group("perf_experimental") {
 
     # For Pylib used by benchmarks
     "//build/android/pylib/",
+
+    # For dashboard upload
+    "//third_party/catapult/third_party:httplib2",
   ]
 }
