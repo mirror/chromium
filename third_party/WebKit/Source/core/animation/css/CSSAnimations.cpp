@@ -1182,7 +1182,7 @@ void CSSAnimations::TransitionEventDelegate::OnEventCondition(
             ? property_.CustomPropertyName()
             : property_.GetCSSProperty().GetPropertyNameString();
     const Timing& timing = animation_node.SpecifiedTiming();
-    double elapsed_time = timing.iteration_duration;
+    float elapsed_time = timing.iteration_duration;
     const AtomicString& event_type = EventTypeNames::transitionend;
     String pseudo_element =
         PseudoElement::PseudoElementNameForEvents(GetPseudoId());

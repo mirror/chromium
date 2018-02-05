@@ -32,7 +32,7 @@ TransitionEvent::TransitionEvent() : elapsed_time_(0) {}
 
 TransitionEvent::TransitionEvent(const AtomicString& type,
                                  const String& property_name,
-                                 double elapsed_time,
+                                 float elapsed_time,
                                  const String& pseudo_element)
     : Event(type, true, true),
       property_name_(property_name),
@@ -56,7 +56,7 @@ const String& TransitionEvent::propertyName() const {
   return property_name_;
 }
 
-double TransitionEvent::elapsedTime() const {
+float TransitionEvent::elapsedTime() const {
   return elapsed_time_;
 }
 

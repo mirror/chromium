@@ -44,8 +44,8 @@ shouldBeEqualToString("new WebKitTransitionEvent('eventType', { propertyName: {v
 // elapsedTime is passed.
 // Numeric values.
 shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: 0 }).elapsedTime", "0");
-shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: 123.45 }).elapsedTime", "123.45");
-shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: -123.45 }).elapsedTime", "-123.45");
+shouldBeCloseTo("new WebKitTransitionEvent('eventType', { elapsedTime: 123.45 }).elapsedTime", "123.45", 0.00001);
+shouldBeCloseTo("new WebKitTransitionEvent('eventType', { elapsedTime: -123.45 }).elapsedTime", "-123.45", 0.00001);
 shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: 18446744073709551615 }).elapsedTime", "18446744073709551615");
 shouldThrow("new WebKitTransitionEvent('eventType', { elapsedTime: NaN })");
 shouldThrow("new WebKitTransitionEvent('eventType', { elapsedTime: Infinity })");
@@ -64,16 +64,16 @@ shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: true }).elapsedT
 shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: '' }).elapsedTime", "0");
 shouldThrow("new WebKitTransitionEvent('eventType', { elapsedTime: 'doremi' })");
 shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: [] }).elapsedTime", "0");
-shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: [123.45] }).elapsedTime", "123.45");
+shouldBeCloseTo("new WebKitTransitionEvent('eventType', { elapsedTime: [123.45] }).elapsedTime", "123.45", 0.00001);
 shouldThrow("new WebKitTransitionEvent('eventType', { elapsedTime: [123.45, 678.90] })");
 shouldThrow("new WebKitTransitionEvent('eventType', { elapsedTime: {doremi: 123.45} })");
-shouldBe("new WebKitTransitionEvent('eventType', { elapsedTime: {valueOf: function () { return 123.45 } } }).elapsedTime", "123.45");
+shouldBeCloseTo("new WebKitTransitionEvent('eventType', { elapsedTime: {valueOf: function () { return 123.45 } } }).elapsedTime", "123.45", 0.00001);
 
 // All initializers are passed.
 shouldBe("new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).bubbles", "true");
 shouldBe("new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).cancelable", "true");
 shouldBe("new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).propertyName", "'doremi'");
-shouldBe("new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).elapsedTime", "123.45");
+shouldBeCloseTo("new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).elapsedTime", "123.45", 0.00001);
 shouldBe("new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).pseudoElement", "'::after'");
 </script>
 </body>

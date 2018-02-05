@@ -26,12 +26,12 @@ PASS new WebKitTransitionEvent('eventType', { propertyName: [1, 2, 3] }).propert
 PASS new WebKitTransitionEvent('eventType', { propertyName: {doremi: 12345} }).propertyName is "[object Object]"
 PASS new WebKitTransitionEvent('eventType', { propertyName: {valueOf: function () { return 'doremi'; } } }).propertyName is "[object Object]"
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: 0 }).elapsedTime is 0
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: 123.45 }).elapsedTime is 123.45
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: -123.45 }).elapsedTime is -123.45
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: 123.45 }).elapsedTime is within 0.00001 of 123.45
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: -123.45 }).elapsedTime is within 0.00001 of -123.45
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: 18446744073709551615 }).elapsedTime is 18446744073709551615
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: NaN }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided double value is non-finite..
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: Infinity }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided double value is non-finite..
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: -Infinity }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided double value is non-finite..
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: NaN }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided float value is non-finite..
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: Infinity }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided float value is non-finite..
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: -Infinity }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided float value is non-finite..
 PASS new WebKitTransitionEvent('eventType', { pseudoElement: '::before' }).pseudoElement is "::before"
 PASS new WebKitTransitionEvent('eventType', { pseudoElement: '' }).pseudoElement is ""
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: undefined }).elapsedTime is 0
@@ -39,16 +39,16 @@ PASS new WebKitTransitionEvent('eventType', { elapsedTime: null }).elapsedTime i
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: false }).elapsedTime is 0
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: true }).elapsedTime is 1
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: '' }).elapsedTime is 0
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: 'doremi' }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided double value is non-finite..
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: 'doremi' }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided float value is non-finite..
 PASS new WebKitTransitionEvent('eventType', { elapsedTime: [] }).elapsedTime is 0
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: [123.45] }).elapsedTime is 123.45
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: [123.45, 678.90] }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided double value is non-finite..
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: {doremi: 123.45} }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided double value is non-finite..
-PASS new WebKitTransitionEvent('eventType', { elapsedTime: {valueOf: function () { return 123.45 } } }).elapsedTime is 123.45
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: [123.45] }).elapsedTime is within 0.00001 of 123.45
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: [123.45, 678.90] }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided float value is non-finite..
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: {doremi: 123.45} }) threw exception TypeError: Failed to construct 'TransitionEvent': The provided float value is non-finite..
+PASS new WebKitTransitionEvent('eventType', { elapsedTime: {valueOf: function () { return 123.45 } } }).elapsedTime is within 0.00001 of 123.45
 PASS new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).bubbles is true
 PASS new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).cancelable is true
 PASS new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).propertyName is 'doremi'
-PASS new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).elapsedTime is 123.45
+PASS new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).elapsedTime is within 0.00001 of 123.45
 PASS new WebKitTransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).pseudoElement is '::after'
 PASS successfullyParsed is true
 

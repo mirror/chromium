@@ -44,8 +44,8 @@ shouldBeEqualToString("new TransitionEvent('eventType', { propertyName: {valueOf
 // elapsedTime is passed.
 // Numeric values.
 shouldBe("new TransitionEvent('eventType', { elapsedTime: 0 }).elapsedTime", "0");
-shouldBe("new TransitionEvent('eventType', { elapsedTime: 123.45 }).elapsedTime", "123.45");
-shouldBe("new TransitionEvent('eventType', { elapsedTime: -123.45 }).elapsedTime", "-123.45");
+shouldBeCloseTo("new TransitionEvent('eventType', { elapsedTime: 123.45 }).elapsedTime", "123.45", 0.00001);
+shouldBeCloseTo("new TransitionEvent('eventType', { elapsedTime: -123.45 }).elapsedTime", "-123.45", 0.00001);
 shouldBe("new TransitionEvent('eventType', { elapsedTime: 18446744073709551615 }).elapsedTime", "18446744073709551615");
 shouldThrow("new TransitionEvent('eventType', { elapsedTime: NaN })");
 shouldThrow("new TransitionEvent('eventType', { elapsedTime: Infinity })");
@@ -64,16 +64,16 @@ shouldBe("new TransitionEvent('eventType', { elapsedTime: true }).elapsedTime", 
 shouldBe("new TransitionEvent('eventType', { elapsedTime: '' }).elapsedTime", "0");
 shouldThrow("new TransitionEvent('eventType', { elapsedTime: 'doremi' })");
 shouldBe("new TransitionEvent('eventType', { elapsedTime: [] }).elapsedTime", "0");
-shouldBe("new TransitionEvent('eventType', { elapsedTime: [123.45] }).elapsedTime", "123.45");
+shouldBeCloseTo("new TransitionEvent('eventType', { elapsedTime: [123.45] }).elapsedTime", "123.45", 0.00001);
 shouldThrow("new TransitionEvent('eventType', { elapsedTime: [123.45, 678.90] })");
 shouldThrow("new TransitionEvent('eventType', { elapsedTime: {doremi: 123.45} })");
-shouldBe("new TransitionEvent('eventType', { elapsedTime: {valueOf: function () { return 123.45 } } }).elapsedTime", "123.45");
+shouldBeCloseTo("new TransitionEvent('eventType', { elapsedTime: {valueOf: function () { return 123.45 } } }).elapsedTime", "123.45", 0.00001);
 
 // All initializers are passed.
 shouldBe("new TransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).bubbles", "true");
 shouldBe("new TransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).cancelable", "true");
 shouldBe("new TransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).propertyName", "'doremi'");
-shouldBe("new TransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).elapsedTime", "123.45");
+shouldBeCloseTo("new TransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).elapsedTime", "123.45", 0.00001);
 shouldBe("new TransitionEvent('eventType', { bubbles: true, cancelable: true, propertyName: 'doremi', elapsedTime: 123.45, pseudoElement: '::after' }).pseudoElement", "'::after'");
 </script>
 </body>

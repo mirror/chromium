@@ -39,7 +39,7 @@ class TransitionEvent final : public Event {
   static TransitionEvent* Create() { return new TransitionEvent; }
   static TransitionEvent* Create(const AtomicString& type,
                                  const String& property_name,
-                                 double elapsed_time,
+                                 float elapsed_time,
                                  const String& pseudo_element) {
     return new TransitionEvent(type, property_name, elapsed_time,
                                pseudo_element);
@@ -52,7 +52,7 @@ class TransitionEvent final : public Event {
   ~TransitionEvent() override;
 
   const String& propertyName() const;
-  double elapsedTime() const;
+  float elapsedTime() const;
   const String& pseudoElement() const;
 
   const AtomicString& InterfaceName() const override;
@@ -63,13 +63,13 @@ class TransitionEvent final : public Event {
   TransitionEvent();
   TransitionEvent(const AtomicString& type,
                   const String& property_name,
-                  double elapsed_time,
+                  float elapsed_time,
                   const String& pseudo_element);
   TransitionEvent(const AtomicString& type,
                   const TransitionEventInit& initializer);
 
   String property_name_;
-  double elapsed_time_;
+  float elapsed_time_;
   String pseudo_element_;
 };
 
