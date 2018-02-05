@@ -22,6 +22,30 @@
       "revId": "8f066d77e3282aa51466fced344b0cac571a2acf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c49d2d_c10da024",
+        "filename": "extensions/test/logging_timer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T19:06:19Z",
+      "side": 1,
+      "message": "Good idea; done!",
+      "parentUuid": "661d1740_52f6ceae",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "8f066d77e3282aa51466fced344b0cac571a2acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
