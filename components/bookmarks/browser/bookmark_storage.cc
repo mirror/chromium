@@ -58,6 +58,11 @@ void LoadCallback(const base::FilePath& path,
   bool load_index = false;
   bool bookmark_file_exists = base::PathExists(path);
   if (bookmark_file_exists) {
+    int64_t size = 0;
+    bool success = base::GetFileSize(path, &size);
+    if (success) {
+      UMA_HISTOGRAM_MEMORY_KB("Bookmarks.JSONFileSize", size);
+    }
     // Titles may end up containing invalid utf and we shouldn't throw away
     // all bookmarks if some titles have invalid utf.
     JSONFileValueDeserializer deserializer(
