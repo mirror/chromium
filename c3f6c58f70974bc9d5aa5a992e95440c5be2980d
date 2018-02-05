@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "91e5566d_eebfc95a",
+        "filename": "ash/system/status_area_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T17:54:01Z",
+      "side": 1,
+      "message": "Nice cleanup of AddTray.",
+      "parentUuid": "f8a8f03d_01a42e9d",
+      "revId": "c3f6c58f70974bc9d5aa5a992e95440c5be2980d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1712bbf4_b2ca9aef",
         "filename": "ash/system/status_area_widget.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Good point. I didn\u0027t find any obvious references. The bots seem happy. If I\u0027m wrong we should get a shutdown crash, rather than a use-after-free, since things are getting nulled out. Would you like me to add back some early exits (like early-out if system_tray_ is null) or should we try what I have?\n\n(I also updated the comment below.)",
       "parentUuid": "1712bbf4_b2ca9aef",
+      "revId": "c3f6c58f70974bc9d5aa5a992e95440c5be2980d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6153e459_23c5b776",
+        "filename": "ash/system/status_area_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T17:54:01Z",
+      "side": 1,
+      "message": "I like what you have, no need to restore any null checks.",
+      "parentUuid": "5c5810d4_345b6b6c",
       "revId": "c3f6c58f70974bc9d5aa5a992e95440c5be2980d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

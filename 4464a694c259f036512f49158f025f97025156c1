@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a9c692c_f92de8c3",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T17:54:01Z",
+      "side": 1,
+      "message": "optional nit: move Show() to ctor.",
+      "revId": "4464a694c259f036512f49158f025f97025156c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4f5290_ede5d40a",
+        "filename": "ash/system/status_area_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T17:54:01Z",
+      "side": 1,
+      "message": "It\u0027s slightly odd that this WidgetDelegate is-a View, deleted when the Views are destroyed, and not via StatusAreaWidgetDelegate::DeleteDelegate (that\u0027s a no-op). This probably works okay, but it\u0027s not the clearest pattern.",
+      "revId": "4464a694c259f036512f49158f025f97025156c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd6e79c_32f3d734",
+        "filename": "ash/system/status_area_widget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T17:54:01Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "4464a694c259f036512f49158f025f97025156c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
