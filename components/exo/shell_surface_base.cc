@@ -210,8 +210,10 @@ class CustomWindowTargeter : public aura::WindowTargeter {
       return false;
 
     int component = widget_->non_client_view()->NonClientHitTest(local_point);
-    if (component != HTNOWHERE && component != HTCLIENT)
+    if (component != HTNOWHERE && component != HTCLIENT &&
+        component != HTBORDER) {
       return true;
+    }
 
     aura::Window::ConvertPointToTarget(window, surface->window(), &local_point);
     return surface->HitTest(local_point);
@@ -772,8 +774,10 @@ void ShellSurfaceBase::OnSurfaceDestroying(Surface* surface) {
 // views::WidgetDelegate overrides:
 
 bool ShellSurfaceBase::CanResize() const {
-  if (movement_disabled_)
+  if (movement_disabled_ ||
+      container_ == ash::kShellWindowId_SystemModalContainer)
     return false;
+
   // The shell surface is resizable by default when min/max size is empty,
   // othersize it's resizable when min size != max size.
   return minimum_size_.IsEmpty() || minimum_size_ != maximum_size_;
