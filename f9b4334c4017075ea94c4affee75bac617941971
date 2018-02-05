@@ -117,6 +117,30 @@
       "revId": "f9b4334c4017075ea94c4affee75bac617941971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b476ea_f5c2e9a4",
+        "filename": "ui/aura/test/test_screen.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-05T20:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "731b2352_9a9caf12",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "f9b4334c4017075ea94c4affee75bac617941971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
