@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e783bb26_ef05d116",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-02-05T00:53:18Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is clang formatted? Just looks funny.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 64
+      },
+      "revId": "4cde3365b89a9b06e22b25d23889ca53a64f7196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063c2638_b3bcd0f7",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-02-05T00:53:18Z",
+      "side": 1,
+      "message": "I\u0027m leaning towards calling this LINUX_OR_ANDROID personally: 1) you don\u0027t have to go look up the build file to check what it means, 2) it\u0027s consistent with the ifdefs.\n\nThe other option is to define a preprocessor symbol with the same name. But that\u0027s a little more complicated for no real benefit IMO.\n\nBut get an opinion from an OWNER before you bother changing it. They may disagree.",
+      "range": {
+        "startLine": 157,
+        "startChar": 12,
+        "endLine": 157,
+        "endChar": 38
+      },
+      "revId": "4cde3365b89a9b06e22b25d23889ca53a64f7196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
