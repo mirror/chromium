@@ -4,10 +4,12 @@
 
 #include "modules/picture_in_picture/HTMLVideoElementPictureInPicture.h"
 
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/events/Event.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "modules/picture_in_picture/PictureInPictureController.h"
+#include "modules/picture_in_picture/PictureInPictureWindow.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 
 namespace blink {
@@ -55,10 +57,8 @@ ScriptPromise HTMLVideoElementPictureInPicture::requestPictureInPicture(
       break;
   }
 
-  // Frame is not null, otherwise `IsElementAllowed()` would have return
-  // `kFrameDetached`.
+  // Frame is not null as we've just checked frame was not detached above.
   LocalFrame* frame = element.GetFrame();
-  DCHECK(frame);
   if (!Frame::ConsumeTransientUserActivation(frame)) {
     return ScriptPromise::RejectWithDOMException(
         script_state,
@@ -73,7 +73,14 @@ ScriptPromise HTMLVideoElementPictureInPicture::requestPictureInPicture(
   element.DispatchEvent(
       Event::CreateBubble(EventTypeNames::enterpictureinpicture));
 
-  return ScriptPromise::CastUndefined(script_state);
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  PictureInPictureWindow* window =
+      PictureInPictureWindow::Create(document, 300, 150);
+  resolver->Resolve(window);
+
+  return promise;
 }
 
 // static
