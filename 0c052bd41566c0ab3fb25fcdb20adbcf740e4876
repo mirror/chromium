@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "803968a4_a6906984",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T21:18:37Z",
+      "side": 1,
+      "message": "konstant?",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c38bd1_0473f1d7",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T21:18:37Z",
+      "side": 1,
+      "message": "konstant",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734634e4_3b9970f9",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T21:18:37Z",
+      "side": 1,
+      "message": "konstant",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0268963_5eb9e6cd",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T21:18:37Z",
+      "side": 1,
+      "message": "-konstant",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3793887_8156d6e6",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T21:18:37Z",
+      "side": 1,
+      "message": "kDitto",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30dbdb84_3284edb2",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-05T21:18:37Z",
+      "side": 1,
+      "message": "and below",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
