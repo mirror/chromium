@@ -41,7 +41,7 @@ void WorkletAnimationController::DetachAnimation(
     compositor_animations_.erase(&animation);
 }
 
-void WorkletAnimationController::Update() {
+void WorkletAnimationController::UpdatePending() {
   DCHECK(IsMainThread());
   HeapHashSet<Member<WorkletAnimationBase>> animations;
   animations.swap(pending_animations_);
@@ -53,6 +53,18 @@ void WorkletAnimationController::Update() {
       document_->AddConsoleMessage(ConsoleMessage::Create(
           kOtherMessageSource, kWarningMessageLevel, failure_message));
     }
+  }
+}
+
+void WorkletAnimationController::UpdateAnimationTiming(
+    TimingUpdateReason reason) {
+  DCHECK(IsMainThread());
+  // TODO(majidvp): Given that worklet animations iherited time values are only
+  // ever updated once per frame we don't really need to do any updates for the
+  // reason == kTimingUpdateOnDemand case. Perhaps early return here!
+  HeapHashSet<Member<WorkletAnimationBase>> animations;
+  for (const auto& animation : compositor_animations_) {
+    animation->Update(reason);
   }
 }
 

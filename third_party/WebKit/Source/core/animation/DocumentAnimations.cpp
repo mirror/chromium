@@ -46,6 +46,7 @@ namespace {
 
 void UpdateAnimationTiming(Document& document, TimingUpdateReason reason) {
   document.Timeline().ServiceAnimations(reason);
+  document.GetWorkletAnimationController().UpdateAnimationTiming(reason);
 }
 
 }  // namespace
@@ -90,7 +91,7 @@ void DocumentAnimations::UpdateAnimations(
     }
   }
 
-  document.GetWorkletAnimationController().Update();
+  document.GetWorkletAnimationController().UpdatePending();
 
   document.Timeline().ScheduleNextService();
 }

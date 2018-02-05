@@ -8,6 +8,7 @@
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/modules/v8/document_timeline_or_scroll_timeline.h"
 #include "core/animation/Animation.h"
+#include "core/animation/AnimationEffectClient.h"
 #include "core/animation/KeyframeEffectReadOnly.h"
 #include "core/animation/WorkletAnimationBase.h"
 #include "modules/ModulesExport.h"
@@ -32,8 +33,10 @@ class AnimationEffectReadOnlyOrAnimationEffectReadOnlySequence;
 // Spec: https://wicg.github.io/animation-worklet/#worklet-animation-desc
 class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
                                         public CompositorAnimationPlayerClient,
-                                        public CompositorAnimationDelegate {
+                                        public CompositorAnimationDelegate,
+                                        public AnimationEffectClient {
   DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(WorkletAnimation);
   USING_PRE_FINALIZER(WorkletAnimation, Dispose);
 
  public:
@@ -50,7 +53,20 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
   void play();
   void cancel();
 
+  // AnimationEffectClient implementation:
+  unsigned SequenceNumber() const override { return sequence_number_; }
+  bool Playing() const override;
+  bool Paused() const override { return false; }
+  bool HasStartTime() const override;
+  bool EffectSuppressed() const override { return false; }
+
+  void SpecifiedTimingChanged() override {}
+  void UpdateIfNecessary() override {}
+
+  virtual Animation* GetAnimation() { return nullptr; }
+
   // WorkletAnimationBase implementation.
+  void Update(TimingUpdateReason) override;
   bool StartOnCompositor(String* failure_message) override;
 
   // CompositorAnimationPlayerClient implementation.
@@ -81,8 +97,16 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
                    DocumentTimelineOrScrollTimeline,
                    scoped_refptr<SerializedScriptValue>);
 
+  AnimationTimeline* GetAnimationTimeline();
+
+  // TODO(majidvp): This should actually come from the same source as other
+  // animation so that they have the correct ordering. :)
+  unsigned sequence_number_;
+
   const String animator_name_;
   Animation::AnimationPlayState play_state_;
+  // Start time in ms.
+  double start_time_;
 
   Member<Document> document_;
 

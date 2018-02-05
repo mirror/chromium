@@ -17,6 +17,10 @@ class CORE_EXPORT WorkletAnimationBase : public ScriptWrappable {
  public:
   virtual ~WorkletAnimationBase() = default;
 
+  // Request the animation to update its effect inherited time. This should be
+  // called once per animation frame.
+  virtual void Update(TimingUpdateReason) = 0;
+
   // Attempts to start the animation on the compositor side, returning true if
   // it succeeds or false otherwise. If false is returned and failure_message
   // was non-null, failure_message may be filled with an error description.

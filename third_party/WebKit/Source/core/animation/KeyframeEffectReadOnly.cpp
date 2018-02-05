@@ -175,12 +175,13 @@ bool KeyframeEffectReadOnly::HasIncompatibleStyle() {
 
 void KeyframeEffectReadOnly::ApplyEffects() {
   DCHECK(IsInEffect());
-  DCHECK(GetAnimation());
   if (!target_ || !model_->HasFrames())
     return;
 
-  if (HasIncompatibleStyle())
+  if (HasIncompatibleStyle()) {
+    DCHECK(GetAnimation());
     GetAnimation()->CancelAnimationOnCompositor();
+  }
 
   double iteration = CurrentIteration();
   DCHECK_GE(iteration, 0);
@@ -214,12 +215,13 @@ void KeyframeEffectReadOnly::ApplyEffects() {
 }
 
 void KeyframeEffectReadOnly::ClearEffects() {
-  DCHECK(GetAnimation());
   DCHECK(sampled_effect_);
 
   sampled_effect_->Clear();
   sampled_effect_ = nullptr;
-  GetAnimation()->RestartAnimationOnCompositor();
+  // TODO(majidvp): Is this correct?
+  if (GetAnimation())
+    GetAnimation()->RestartAnimationOnCompositor();
   target_->SetNeedsAnimationStyleRecalc();
   if (RuntimeEnabledFeatures::WebAnimationsSVGEnabled() &&
       target_->IsSVGElement())
@@ -230,7 +232,7 @@ void KeyframeEffectReadOnly::ClearEffects() {
 void KeyframeEffectReadOnly::UpdateChildrenAndEffects() const {
   if (!model_->HasFrames())
     return;
-  DCHECK(GetAnimation());
+  DCHECK(client_);
   if (IsInEffect() && !client_->EffectSuppressed())
     const_cast<KeyframeEffectReadOnly*>(this)->ApplyEffects();
   else if (sampled_effect_)

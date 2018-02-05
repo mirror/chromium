@@ -6,6 +6,7 @@
 #define WorkletAnimationController_h
 
 #include "core/CoreExport.h"
+#include "core/animation/AnimationEffectReadOnly.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/heap/Visitor.h"
@@ -34,7 +35,8 @@ class CORE_EXPORT WorkletAnimationController
   void AttachAnimation(WorkletAnimationBase&);
   void DetachAnimation(WorkletAnimationBase&);
 
-  void Update();
+  void UpdatePending();
+  void UpdateAnimationTiming(TimingUpdateReason);
 
   void Trace(blink::Visitor*);
 

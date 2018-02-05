@@ -145,6 +145,11 @@ std::unique_ptr<CompositorScrollTimeline> ToCompositorScrollTimeline(
   return std::make_unique<CompositorScrollTimeline>(element_id, orientation,
                                                     time_range.GetAsDouble());
 }
+
+static unsigned NextSequenceNumber() {
+  static unsigned next = 0;
+  return ++next;
+}
 }  // namespace
 
 WorkletAnimation* WorkletAnimation::Create(
@@ -180,7 +185,8 @@ WorkletAnimation::WorkletAnimation(
     const HeapVector<Member<KeyframeEffectReadOnly>>& effects,
     DocumentTimelineOrScrollTimeline timeline,
     scoped_refptr<SerializedScriptValue> options)
-    : animator_name_(animator_name),
+    : sequence_number_(NextSequenceNumber()),
+      animator_name_(animator_name),
       play_state_(Animation::kIdle),
       document_(document),
       effects_(effects),
@@ -189,6 +195,9 @@ WorkletAnimation::WorkletAnimation(
   DCHECK(IsMainThread());
   DCHECK(Platform::Current()->IsThreadedAnimationEnabled());
   DCHECK(Platform::Current()->CompositorSupport());
+
+  AnimationEffectReadOnly* target_effect = effects_.at(0);
+  target_effect->Attach(this);
 }
 
 String WorkletAnimation::playState() {
@@ -210,6 +219,45 @@ void WorkletAnimation::cancel() {
     document_->GetWorkletAnimationController().DetachAnimation(*this);
     play_state_ = Animation::kIdle;
   }
+}
+
+bool WorkletAnimation::Playing() const {
+  return play_state_ == Animation::kRunning;
+}
+
+bool WorkletAnimation::HasStartTime() const {
+  return play_state_ == Animation::kRunning;
+}
+
+void WorkletAnimation::Update(TimingUpdateReason reason) {
+  AnimationTimeline* timeline = GetAnimationTimeline();
+  if (play_state_ != Animation::kRunning || !timeline)
+    return;
+
+  bool is_null;
+  double current_time_ms = timeline->currentTime(is_null);
+
+  if (is_null)
+    return;
+
+  // TODO(majidvp): For now we use a inherited time for now but we will need to
+  // get the inherited time from worklet context. http://crbug.com/756539
+  double inherited_time_seconds = (current_time_ms - start_time_) / 1000;
+  LOG(ERROR) << "WorkletAnimation::Update inherited_time:"
+             << inherited_time_seconds;
+
+  KeyframeEffectReadOnly* target_effect = effects_.at(0);
+  target_effect->UpdateInheritedTime(inherited_time_seconds, reason);
+}
+
+AnimationTimeline* WorkletAnimation::GetAnimationTimeline() {
+  if (timeline_.IsNull())
+    return nullptr;
+
+  if (timeline_.IsScrollTimeline())
+    return timeline_.GetAsScrollTimeline();
+
+  return timeline_.GetAsDocumentTimeline();
 }
 
 bool WorkletAnimation::StartOnCompositor(String* failure_message) {
@@ -275,6 +323,12 @@ bool WorkletAnimation::StartOnCompositor(String* failure_message) {
   effects_.at(0)->StartAnimationOnCompositor(
       group, start_time, time_offset, playback_rate, compositor_player_.get());
   play_state_ = Animation::kRunning;
+
+  AnimationTimeline* timeline = GetAnimationTimeline();
+  bool is_null;
+  double time = timeline->currentTime(is_null);
+  start_time_ = is_null ? 0 : time;
+
   return true;
 }
 

@@ -43,6 +43,7 @@ class AnimationEffectClient;
 class AnimationEffectReadOnly;
 class AnimationEffectTimingReadOnly;
 class ComputedTimingProperties;
+class WorkletAnimation;
 
 enum TimingUpdateReason {
   kTimingUpdateOnDemand,
@@ -63,6 +64,7 @@ class CORE_EXPORT AnimationEffectReadOnly : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   // Calls Attach/Detach, GetAnimation, UpdateInheritedTime.
   friend class Animation;
+  friend class WorkletAnimation;
 
   // Calls GetAnimation().
   // TODO(majidvp): Remove this. EffectStack should not need to access animation
