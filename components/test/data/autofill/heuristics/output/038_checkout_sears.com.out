@@ -1,3 +1,4 @@
+UNKNOWN_TYPE | KmartSpuSpecialInstr |  |  | KmartSpuSpecialInstr_1-default
 EMAIL_ADDRESS | address_email | Email* | ne00_99@yahoo.com | address_email_1-default
 NAME_FIRST | shipping_firstName | First Name* |  | address_email_1-default
 NAME_LAST | shipping_lastName | Last Name* |  | address_email_1-default
@@ -22,4 +23,3 @@ ADDRESS_HOME_ZIP | zipCode | ZIP Code* ZIP Code* |  | firstName_1-default
 PHONE_HOME_WHOLE_NUMBER | day1 | Phone Number* |  | firstName_1-default
 PHONE_HOME_EXTENSION | ext1 | Ext. |  | firstName_1-default
 ADDRESS_HOME_STATE | county | County County | UNKNOWN | firstName_1-default
-UNKNOWN_TYPE | KmartSpuSpecialInstr |  |  | KmartSpuSpecialInstr_1-default
