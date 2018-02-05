@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a19386e3_36f0a47b",
+        "filename": "ash/shell/window_type_launcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:25:40Z",
+      "side": 0,
+      "message": "Wait, what the heck is this thing? Not part of production chrome os I take it (given lack of translations). Therefore it doesn\u0027t seem too important to share the semantic constant here.",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "3ea192285757861d168b6e508bb34bc054194a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

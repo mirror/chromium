@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e35ef4_2fcd6f65",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:25:40Z",
+      "side": 1,
+      "message": "Good example of what I am talking about below. The selector shadow thing is not a normal or active window.",
+      "range": {
+        "startLine": 837,
+        "startChar": 2,
+        "endLine": 837,
+        "endChar": 61
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef215cc6_76a05581",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:25:40Z",
+      "side": 1,
+      "message": "(ditto, see below) why not overlay? The keyboard UI could arguably be called an overlay.",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 52
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6639682_65c1f433",
+        "filename": "ui/wm/core/shadow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:25:40Z",
+      "side": 1,
+      "message": "nit: init in header",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e203c6_9ac8b7bc",
+        "filename": "ui/wm/core/shadow_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:25:40Z",
+      "side": 1,
+      "message": "I\u0027m not really sure I understand the semantics of these. What qualifies as an \"info bubble\" or an \"overlay\"? i.e. why is the chromevox thing an overlay and not an info bubble? It really seems like we are applying shadows on a case-by-case basis and the name change here just creates confusion. I\u0027m fine with changing this from enum to int constants, but to me the old names make more sense because they don\u0027t attempt to classify arbitrary windows into functional categories that they don\u0027t quite fit into.",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 42
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0229a684_b2fe3ba0",
+        "filename": "ui/wm/core/shadow_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T15:25:40Z",
+      "side": 1,
+      "message": "nit: kShadowElevationFoo, for consistency?",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
