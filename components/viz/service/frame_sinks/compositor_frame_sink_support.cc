@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/time/default_tick_clock.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_info.h"
@@ -404,7 +405,8 @@ Surface* CompositorFrameSinkSupport::CreateSurface(
     const SurfaceInfo& surface_info) {
   return surface_manager_->CreateSurface(
       weak_factory_.GetWeakPtr(), surface_info,
-      frame_sink_manager_->GetPrimaryBeginFrameSource(), needs_sync_tokens_);
+      frame_sink_manager_->GetPrimaryBeginFrameSource(),
+      frame_sink_manager_->GetTickClock(), needs_sync_tokens_);
 }
 
 void CompositorFrameSinkSupport::AttachCaptureClient(
