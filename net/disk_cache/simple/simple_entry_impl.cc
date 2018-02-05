@@ -1656,7 +1656,11 @@ int SimpleEntryImpl::SetStream0Data(net::IOBuffer* buf,
     data_size_[0] = buffer_size;
   }
   base::Time modification_time = base::Time::Now();
-  AdvanceCrc(buf, offset, buf_len, 0);
+
+  // Reset checksum; SimpleSynchronousEntry::Close will compute it for us,
+  // and do it off the I/O thread.
+  crc32s_end_offset_[0] = 0;
+
   UpdateDataFromEntryStat(
       SimpleEntryStat(modification_time, modification_time, data_size_,
                       sparse_data_size_));

@@ -829,7 +829,7 @@ void SimpleSynchronousEntry::Close(
   base::ElapsedTimer close_time;
   DCHECK(stream_0_data);
 
-  for (std::vector<CRCRecord>::const_iterator it = crc32s_to_write->begin();
+  for (std::vector<CRCRecord>::iterator it = crc32s_to_write->begin();
        it != crc32s_to_write->end(); ++it) {
     const int stream_index = it->index;
     const int file_index = GetFileIndexFromStreamIndex(stream_index);
@@ -861,6 +861,15 @@ void SimpleSynchronousEntry::Close(
         RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
         DVLOG(1) << "Could not write stream 0 data.";
         Doom();
+      }
+
+      // Re-compute stream 0 CRC if the data got changed (we may be here even
+      // if it didn't change if stream 0's position on disk got changed due to
+      // stream 1 write).
+      if (!it->has_crc32) {
+        it->data_crc32 =
+            simple_util::Crc32(stream_0_data->data(), entry_stat.data_size(0));
+        it->has_crc32 = true;
       }
     }
 
