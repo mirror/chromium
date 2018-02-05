@@ -76,6 +76,11 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
         without_accept_ch_without_lifetime_local_url_.SchemeIsHTTPOrHTTPS());
     EXPECT_FALSE(
         without_accept_ch_without_lifetime_local_url_.SchemeIsCryptographic());
+
+    without_accept_ch_without_lifetime_img_localhost_ = https_server_.GetURL(
+        "/without_accept_ch_without_lifetime_img_localhost.html");
+    without_accept_ch_without_lifetime_img_foo_com_ = https_server_.GetURL(
+        "/without_accept_ch_without_lifetime_img_foo_com.html");
   }
 
   ~ClientHintsBrowserTest() override {}
@@ -123,6 +128,18 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
   // Accept-CH-Lifetime headers. Navigating to this URL also fetches an image.
   const GURL& without_accept_ch_without_lifetime_local_url() const {
     return without_accept_ch_without_lifetime_local_url_;
+  }
+
+  // A URL whose response headers do not include either Accept-CH or
+  // Accept-CH-Lifetime headers. Navigating to this URL also fetches an image.
+  const GURL& without_accept_ch_without_lifetime_img_localhost() const {
+    return without_accept_ch_without_lifetime_img_localhost_;
+  }
+
+  // A URL whose response headers do not include either Accept-CH or
+  // Accept-CH-Lifetime headers. Navigating to this URL also fetches an image.
+  const GURL& without_accept_ch_without_lifetime_img_foo_com() const {
+    return without_accept_ch_without_lifetime_img_foo_com_;
   }
 
   size_t count_client_hints_headers_seen() const {
@@ -174,6 +191,8 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
   GURL accept_ch_without_lifetime_url_;
   GURL without_accept_ch_without_lifetime_url_;
   GURL without_accept_ch_without_lifetime_local_url_;
+  GURL without_accept_ch_without_lifetime_img_foo_com_;
+  GURL without_accept_ch_without_lifetime_img_localhost_;
 
   bool expect_client_hints_;
   // Expect client hints only on the main frame request, and not on
@@ -202,6 +221,93 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest, ClientHintsHttps) {
   // seconds.
   histogram_tester.ExpectUniqueSample("ClientHints.PersistDuration",
                                       3600 * 1000, 1);
+}
+
+// Loads a webpage that requests persisting of client hints. Verifies that
+// the browser receives the mojo notification from the renderer and persists the
+// client hints to the disk.
+IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
+                       ClientHintsHttpsSubresourceDifferentOrigin) {
+  base::HistogramTester histogram_tester;
+  ui_test_utils::NavigateToURL(browser(), accept_ch_with_lifetime_url());
+
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateEventCount", 1, 1);
+
+  GURL hosts[] = {GURL("https://example1.com/"), GURL("https://example2.com/")};
+  ContentSettingsForOneType client_hints_settings;
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(browser()->profile());
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_settings);
+  EXPECT_EQ(1U, client_hints_settings.size());
+  // Add setting for hosts[0].
+  const double expiration_time =
+      (base::Time::Now() + base::TimeDelta::FromDays(1)).ToDoubleT();
+  std::unique_ptr<base::ListValue> expiration_times_list =
+      base::MakeUnique<base::ListValue>();
+  expiration_times_list->AppendInteger(42 /* client hint  value */);
+  auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
+  expiration_times_dictionary->SetList("client_hints",
+                                       std::move(expiration_times_list));
+  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      hosts[0], GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      base::MakeUnique<base::Value>(expiration_times_dictionary->Clone()));
+
+  host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(browser()->profile());
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_settings);
+  ASSERT_EQ(2U, client_hints_settings.size());
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // client_hints_url() sets two client hints.
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateSize", 2, 1);
+  // accept_ch_with_lifetime_url() sets client hints persist duration to 3600
+  // seconds.
+  histogram_tester.ExpectUniqueSample("ClientHints.PersistDuration",
+                                      3600 * 1000, 1);
+  base::RunLoop().RunUntilIdle();
+
+  SetClientHintExpectations(true);
+  ui_test_utils::NavigateToURL(
+      browser(), without_accept_ch_without_lifetime_img_localhost());
+  base::RunLoop().RunUntilIdle();
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  if (content::IsBrowserSideNavigationEnabled()) {
+    // When browser side navigation is enabled, two client hints are attached to
+    // the image request, and the device-memory header is attached to the main
+    // frame request.
+    EXPECT_EQ(3u, count_client_hints_headers_seen());
+  } else {
+    // When browser side navigation is not enabled, two client hints are
+    // attached to each of the HTML and the image requests.
+    EXPECT_EQ(4u, count_client_hints_headers_seen());
+  }
+
+  SetClientHintExpectations(true);
+  ui_test_utils::NavigateToURL(
+      browser(), without_accept_ch_without_lifetime_img_foo_com());
+  base::RunLoop().RunUntilIdle();
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  if (content::IsBrowserSideNavigationEnabled()) {
+    // When browser side navigation is enabled, two client hints are attached to
+    // the image request, and the device-memory header is attached to the main
+    // frame request.
+    EXPECT_EQ(4u, count_client_hints_headers_seen());
+  } else {
+    // When browser side navigation is not enabled, two client hints are
+    // attached to each of the HTML and the image requests.
+    EXPECT_EQ(5u, count_client_hints_headers_seen());
+  }
 }
 
 // Loads a HTTP local webpage (which qualifies as a secure context) that
