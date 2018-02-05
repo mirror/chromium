@@ -109,9 +109,8 @@ size_t AddOrMergeReceivedSliceIntoSortedArray(
   return static_cast<size_t>(std::distance(received_slices.begin(), it));
 }
 
-bool CanRecoverFromError(
-    const DownloadFileImpl::SourceStream* error_stream,
-    const DownloadFileImpl::SourceStream* preceding_neighbor) {
+bool CanRecoverFromError(const DownloadSourceStream* error_stream,
+                         const DownloadSourceStream* preceding_neighbor) {
   DCHECK(error_stream->offset() >= preceding_neighbor->offset())
       << "Preceding"
          "stream's offset should be smaller than the error stream.";
