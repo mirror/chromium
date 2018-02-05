@@ -139,7 +139,7 @@ class flat_tree {
             FlatContainerDupes dupe_handling = KEEP_FIRST_OF_DUPES,
             const key_compare& comp = key_compare());
 
-  flat_tree(const flat_tree&);
+  explicit flat_tree(const flat_tree&);
   flat_tree(flat_tree&&);
 
   flat_tree(std::vector<value_type> items,
