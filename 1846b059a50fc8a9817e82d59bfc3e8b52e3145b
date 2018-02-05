@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "018ec4b3_744f6576",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-05T17:52:48Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right that these sequences can be removed by this code. I was only noting that in the specific case I was testing (from the bug), one such sequence still remained.",
+      "parentUuid": "f8e30591_1a50cb38",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28078265_6fb76f60",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -85,6 +103,24 @@
       "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b590f1d_8f7b53df",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-05T17:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63bbd0c1_7bcc19a8",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
