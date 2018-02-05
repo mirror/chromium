@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "680cf8af_7771f14b",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T17:28:43Z",
+      "side": 1,
+      "message": "What I was imagining is that AXEventGenerator would just generate a\nnew event type, like ACTIVE_DESCENDANT_TARGET_UPDATED. I\u0027m assuming\nwe might want to consider handling that event on other platforms too.",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f9ac3b_9414bfd4",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T17:28:43Z",
+      "side": 1,
+      "message": "It seems like a bug in Blink if we need to do this. If the target\nof an aria-labelledby is changing, Blink already needs to compute\nits name.\n\nIt\u0027s not clear to me how this code would help. If Blink didn\u0027t\nupdate the node that you\u0027re firing NAME_CHANGED on here, its\naccessible name will still be wrong. But if it did, then it will\nalready have the event fired.",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2084dd3a_357ce7f7",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T17:28:43Z",
+      "side": 1,
+      "message": "Agreed. I think I want to fix that by caching the old AXNodeDatas\nin AXTree until the end of the atomic update, then calling the\ncallbacks, and then finally deleting them.",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b41082a_130614b8",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T17:28:43Z",
+      "side": 1,
+      "message": "This looks great. The only difference is I was thinking we\u0027d just\nfire the needed events on the relation sources directly here in\nAXEventGenerator. Is there a good reason not to?",
+      "revId": "ef13a3479c17224d2fa70c21f5ea9fd8d762f3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
