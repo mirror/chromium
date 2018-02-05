@@ -2,7 +2,7 @@
   {
     "prefix": "color_space",
     "base": "fast/canvas/color-space",
-    "args": ["--force-color-profile=srgb"]
+    "args": ["--enable-blink-features=WebGLColorSpace"]
   },
   {
     "prefix": "custom-user-timing",

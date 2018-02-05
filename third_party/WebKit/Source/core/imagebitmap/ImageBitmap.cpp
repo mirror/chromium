@@ -19,7 +19,6 @@
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/PtrUtil.h"
 #include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/core/SkSwizzle.h"
@@ -346,18 +345,27 @@ scoped_refptr<StaticBitmapImage> ApplyColorSpaceConversion(
     ImageBitmap::ParsedOptions& options) {
   SkTransferFunctionBehavior transfer_function_behavior =
       SkTransferFunctionBehavior::kRespect;
-  // We normally expect to respect transfer function. However, in two scenarios
-  // we have to ignore the transfer function. First, when the source image is
-  // unpremul. Second, when the source image is drawn using a
-  // SkColorSpaceXformCanvas.
+  // We normally expect to respect transfer function. We ignore the transfer
+  // function when:
+  // - the source image is unpremul.
+  // - the source image is drawn using a SkColorSpaceXformCanvas.
+  // - the source image is a wide gamut decoded image
+  // Regarding the last case, essentially we expect kRespect to work fine for
+  // decoded images with color spaces that do not use sRGB gamma transfer
+  // function. However, when the source image is a decoded image, the decoder
+  // tags the decoded image with an ICC profile, which cannnot be converted to
+  // the original SkColorSpace (e.g., p3). This results in Skia applying sRGB
+  // gamma transfer function for kRespect mode, instead of linear transfer
+  // function.
   sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
   if (!skia_image->colorSpace() ||
-      skia_image->alphaType() == kUnpremul_SkAlphaType)
+      skia_image->alphaType() == kUnpremul_SkAlphaType ||
+      (options.source_is_decoded_image)) {
     transfer_function_behavior = SkTransferFunctionBehavior::kIgnore;
+  }
 
-  return image->ConvertToColorSpace(
-      options.color_params.GetSkColorSpaceForSkSurfaces(),
-      transfer_function_behavior);
+  return image->ConvertToColorSpace(options.color_params.GetSkColorSpace(),
+                                    transfer_function_behavior);
 }
 
 scoped_refptr<StaticBitmapImage> MakeBlankImage(
@@ -491,6 +499,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   parsed_options.source_is_unpremul =
       (input->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
        kUnpremul_SkAlphaType);
+  parsed_options.source_is_decoded_image = true;
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
@@ -710,9 +719,9 @@ ImageBitmap::ImageBitmap(scoped_refptr<StaticBitmapImage> image,
   parsed_options.source_is_unpremul =
       (image->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
        kUnpremul_SkAlphaType);
+  parsed_options.source_is_decoded_image = true;
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
-
   image_ =
       CropImageAndApplyColorSpaceConversion(std::move(image), parsed_options);
   if (!image_)
