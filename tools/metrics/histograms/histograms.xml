@@ -8457,6 +8457,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>How users add a new bookmark.</summary>
 </histogram>
 
+<histogram name="Bookmarks.JSONFileSize" units="ms">
+  <owner>mamir@chromium.org</owner>
+  <summary>
+    The size of the JSON file used to persist bookmarks. It's recorder everytime
+    the JSON file is loaded in memory.
+  </summary>
+</histogram>
+
 <histogram name="Bookmarks.LaunchDepth">
   <owner>yfriedman@chromium.org</owner>
   <summary>
@@ -29750,6 +29758,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Count of various failures in ImportantFileWrite when manipulating a temp
     file to write to before moving it into place (replacing another file).
+  </summary>
+</histogram>
+
+<histogram name="ImportantFile.TimeToWrite" units="ms">
+  <owner>mamir@chromium.org</owner>
+  <summary>
+    Time used to write a file in WriteScopedStringToFileAtomically.
   </summary>
 </histogram>
 
@@ -105100,6 +105115,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="ImportantFile.FileRenameError"/>
   <affected-histogram name="ImportantFile.FileWriteError"/>
   <affected-histogram name="ImportantFile.TempFileFailures"/>
+  <affected-histogram name="ImportantFile.TimeToWrite"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="IndexedDBLevelDBErrnoMethods" separator=".">
