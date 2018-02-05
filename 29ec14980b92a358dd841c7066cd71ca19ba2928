@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "bda013c8_fa740b46",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T16:23:11Z",
+      "side": 1,
+      "message": "In aura, we had multiple HTRs with the same FSID, because we can have different rects for different event types. In content, I don\u0027t think we have multiple HTRs with the same FSID so far, not totally sure if that\u0027s needed in the future yet...",
+      "parentUuid": "13e9f305_3cf3ba47",
+      "revId": "29ec14980b92a358dd841c7066cd71ca19ba2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7e0eba8_e83c7d6b",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 3

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa72b427_a107ed3d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T16:23:11Z",
+      "side": 1,
+      "message": "Yea changed to pass in kDisplayClientId initially.",
+      "parentUuid": "58927dc1_0f27bf7b",
+      "range": {
+        "startLine": 178,
+        "startChar": 41,
+        "endLine": 178,
+        "endChar": 66
+      },
+      "revId": "1ddc0dc0538dade9a389d85fffbfcaefe2c999b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29b9ba1a_fa1d5271",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-05T14:46:59Z",
       "side": 1,
       "message": "Is this right? |child_surface_id| is the same as the |surface_id|?",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "1ddc0dc0538dade9a389d85fffbfcaefe2c999b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb5c1a2_a020ed85",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T16:23:11Z",
+      "side": 1,
+      "message": "It would not be the same? We do id++ after initializing |surface_id|",
+      "parentUuid": "29b9ba1a_fa1d5271",
       "range": {
         "startLine": 188,
         "startChar": 16,
