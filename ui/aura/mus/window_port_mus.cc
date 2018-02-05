@@ -406,6 +406,17 @@ void WindowPortMus::AllocateLocalSurfaceId() {
   UpdatePrimarySurfaceId();
 }
 
+void WindowPortMus::SetLocalSurfaceId(
+    const viz::LocalSurfaceId& local_surface_id) {
+  local_surface_id_ = local_surface_id;
+}
+
+void WindowPortMus::SetLocalSurfaceIdWithChildSequenceNumber(
+    const viz::LocalSurfaceId& local_surface_id) {
+  SetLocalSurfaceId(parent_local_surface_id_allocator_.set_child_sequence_number(
+      local_surface_id.child_sequence_number()));
+}
+
 const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
   if (switches::IsMusHostingViz())
     return local_surface_id_;
@@ -504,8 +515,10 @@ void WindowPortMus::OnVisibilityChanged(bool visible) {
     window_tree_client_->OnWindowMusSetVisible(this, visible);
 }
 
-void WindowPortMus::OnDidChangeBounds(const gfx::Rect& old_bounds,
-                                      const gfx::Rect& new_bounds) {
+void WindowPortMus::OnDidChangeBounds(
+    const gfx::Rect& old_bounds,
+    const gfx::Rect& new_bounds,
+    const viz::LocalSurfaceId& id_for_autoresize) {
   ServerChangeData change_data;
   change_data.bounds_in_dip = new_bounds;
   if (!RemoveChangeByTypeAndData(ServerChangeType::BOUNDS, change_data))
