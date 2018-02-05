@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7709999_123b9b51",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "Technically speaking, this term dates back to 2007 with Ben\u0027s commit r13089 \n in the internal repo:\n\n  // ... Rather, it needs to be destroyed just like top level\n  // TabContentses are: from OnMsgCloseACK in RenderWidgetHost.\n\nAnd you\u0027ve probably taken the other side of this disagreement for the past 10 years. :)",
+      "parentUuid": "de1e2f2a_0d3bfb3d",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b47da12d_4e2f9897",
         "filename": "chrome/browser/ui/browser_finder.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f42e6a_ae3af465",
+        "filename": "chrome/browser/ui/browser_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "I find myself really bummed with C++ and that without ranges there\u0027s no easy way of doing searches/iterations in a container without doing all the hoisting.\n\nThis is actually a really great way of doing it. std::find becomes so much more useful when the iterator has other stuff on it.",
+      "parentUuid": "b47da12d_4e2f9897",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7c882c2_beb9bdd8",
+        "filename": "chrome/browser/ui/hung_renderer/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "You are really into the std algos! This LG and there are a few other changes I made across this CL to do that more.",
+      "parentUuid": "98bd1f48_b7d28285",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f27f5ed1_340be841",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69af5422_75179329",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f27f5ed1_340be841",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "59b091fb_13607e2d",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "511fd2d9_79dbcca4",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc847cfa_482da481",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator_unittest.cc",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "cf0603ab_4d0dec47",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc847cfa_482da481",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26195e71_7b376c9f",
         "filename": "chrome/browser/usb/web_usb_detector.cc",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e236dc3_1a999963",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T22:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26195e71_7b376c9f",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
