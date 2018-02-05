@@ -35,7 +35,7 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   const bool is_offscreen = true;
   gpu::ContextCreationAttribs attribs;
-  attribs.alpha_size = -1;
+  attribs.alpha_size = 8;
   attribs.depth_size = 24;
   attribs.stencil_size = 8;
   attribs.samples = 0;
