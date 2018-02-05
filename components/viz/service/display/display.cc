@@ -371,7 +371,7 @@ bool Display::DrawAndSwap() {
     if (scheduler_) {
       frame.metadata.latency_info.emplace_back(ui::SourceEventType::FRAME);
       frame.metadata.latency_info.back().AddLatencyNumberWithTimestamp(
-          ui::LATENCY_BEGIN_FRAME_DISPLAY_COMPOSITOR_COMPONENT, 0, 0,
+          ui::LATENCY_BEGIN_FRAME_DISPLAY_COMPOSITOR_COMPONENT, 0,
           scheduler_->CurrentFrameTime(), 1);
     }
 
@@ -414,8 +414,7 @@ bool Display::DrawAndSwap() {
           stored_latency_info_.push_back(std::move(latency));
         } else {
           latency.AddLatencyNumberWithTimestamp(
-              ui::INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT, 0, 0, now,
-              1);
+              ui::INPUT_EVENT_LATENCY_TERMINATED_NO_SWAP_COMPONENT, 0, now, 1);
         }
         frame.metadata.latency_info.pop_back();
       }
