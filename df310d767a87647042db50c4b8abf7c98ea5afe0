@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "811138cc_5a832ce8",
+        "filename": "chrome/browser/extensions/updater/extension_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-02-05T22:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7efa521_0258f68a",
+      "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fb2bce_cb0fd4b0",
         "filename": "chrome/browser/extensions/updater/extension_updater.h",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ae50f0_dac57501",
+        "filename": "chrome/browser/extensions/updater/extension_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-02-05T22:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1fb2bce_cb0fd4b0",
+      "range": {
+        "startLine": 179,
+        "startChar": 23,
+        "endLine": 179,
+        "endChar": 49
+      },
+      "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3e613060_9e36f3ca",
+        "filename": "chrome/browser/extensions/updater/extension_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-02-05T22:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4571df0_896e819e",
+      "range": {
+        "startLine": 240,
+        "startChar": 36,
+        "endLine": 240,
+        "endChar": 48
+      },
+      "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1df7ab88_b47c9e69",
         "filename": "chrome/browser/extensions/updater/extension_updater.h",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2018-02-01T22:16:17Z",
       "side": 1,
       "message": "Is there a way to have some kind of a managed pointer here?",
+      "range": {
+        "startLine": 244,
+        "startChar": 33,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932be289_a7bdc5dc",
+        "filename": "chrome/browser/extensions/updater/extension_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-02-05T22:21:19Z",
+      "side": 1,
+      "message": "As explained in the comment, this pointer is created through a KeyedServiceFactory, any smart pointer is not needed here because the KeyedServiceFactory will release the object at the end. I actually tried to use unique_ptr for this pointer, but got a crash at the end because the object is released twice. We could use scoped_refptr, but that would require to change UpdateService a little bit, and the gain is only the readability.",
+      "parentUuid": "1df7ab88_b47c9e69",
       "range": {
         "startLine": 244,
         "startChar": 33,
@@ -102,6 +192,24 @@
       "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b695a1a7_71396433",
+        "filename": "components/update_client/update_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-02-05T22:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e9addc_2259ae87",
+      "revId": "df310d767a87647042db50c4b8abf7c98ea5afe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
