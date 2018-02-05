@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c065802_516dcad9",
+        "filename": "chrome/test/chromedriver/embed_mobile_devices_in_cpp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-05T22:24:27Z",
+      "side": 1,
+      "message": "It seems that iPhone 6/7/8 is the only thing currently using this syntax so I think it is okay for now, and the implementation looks good.\n\nI worry that later we will have more devices that use a similar syntax that cannot be parsed in this way. Maybe we should look for startswith \u0027iPhone\u0027 instead of whether there is a \u0027/\u0027 in the title since it is only one case currently.",
+      "revId": "f9dd29a2fd69b6d1e7c9efcd5d2930febedb83d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
