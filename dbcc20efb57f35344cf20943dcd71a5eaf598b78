@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ecb73fa_2d1f1f22",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-02-05T16:24:38Z",
+      "side": 1,
+      "message": "[ All ]\n\nHmhh, not sure how PRESUBMIT failed to catch this typo",
+      "revId": "dbcc20efb57f35344cf20943dcd71a5eaf598b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
