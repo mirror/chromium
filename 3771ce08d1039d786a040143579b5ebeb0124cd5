@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "4bf0ce60_fc30bb51",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-02-05T10:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f543586_9dab7592",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5435a5_50ef25d4",
         "filename": "chrome/browser/ui/cocoa/extensions/extension_keybinding_registry_cocoa.mm",
         "patchSetId": 4
