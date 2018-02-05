@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6488ff22_7e391619",
+        "filename": "services/identity/public/cpp/identity_test_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-05T12:24:26Z",
+      "side": 1,
+      "message": "Done. A couple small amendments:\n\n- I just generated the ID as \"gaia_id_for_\" + email, and similarly for the token. If this is ever problematic for some reason we can change it.\n- I didn\u0027t return the AccountInfo at this point as no usage needs it. If it\u0027s ever convenient to have it we can thread it through.",
+      "parentUuid": "eade8426_7f2a9d4a",
+      "range": {
+        "startLine": 30,
+        "startChar": 39,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a42b885_e4391f03",
         "filename": "services/identity/public/cpp/identity_test_environment.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b752d0_ff108748",
+        "filename": "services/identity/public/cpp/identity_test_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-05T12:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a42b885_e4391f03",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 60
+      },
+      "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ccf755c2_2afcc170",
+        "filename": "services/identity/public/cpp/identity_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-05T12:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a3bb2a_5395038b",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675a8e2d_1d3794ac",
         "filename": "services/identity/public/cpp/identity_test_utils.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d262a79d_e61f5518",
+        "filename": "services/identity/public/cpp/identity_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-05T12:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "675a8e2d_1d3794ac",
+      "range": {
+        "startLine": 42,
+        "startChar": 44,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b15f68fc_3396e675",
         "filename": "services/identity/public/cpp/identity_test_utils.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4846d29e_d494f511",
+        "filename": "services/identity/public/cpp/identity_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-05T12:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b15f68fc_3396e675",
+      "range": {
+        "startLine": 44,
+        "startChar": 52,
+        "endLine": 44,
+        "endChar": 60
+      },
+      "revId": "b9bbc7b4d4228088eb374552885fa7478ff51f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
