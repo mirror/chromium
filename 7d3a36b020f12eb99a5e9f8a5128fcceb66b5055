@@ -46,6 +46,30 @@
       "revId": "7d3a36b020f12eb99a5e9f8a5128fcceb66b5055",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cb2040_b802cfa0",
+        "filename": "remoting/host/security_key/security_key_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-05T17:36:19Z",
+      "side": 1,
+      "message": "K thanks!",
+      "parentUuid": "d40bb7c4_122f7d43",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "7d3a36b020f12eb99a5e9f8a5128fcceb66b5055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
