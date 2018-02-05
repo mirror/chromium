@@ -11,6 +11,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromecast/base/cast_features.h"
 #include "chromecast/base/metrics/cast_metrics_helper.h"
+#include "chromecast/browser/cast_content_window.h"
 #include "chromecast/browser/cast_web_contents_manager.h"
 #include "chromecast/chromecast_features.h"
 #include "chromecast/public/cast_media_shlib.h"
@@ -60,21 +61,18 @@ std::unique_ptr<content::WebContents> CreateWebContents(
 CastWebViewDefault::CastWebViewDefault(
     Delegate* delegate,
     CastWebContentsManager* web_contents_manager,
+    std::unique_ptr<CastContentWindow> window,
     content::BrowserContext* browser_context,
     scoped_refptr<content::SiteInstance> site_instance,
     bool transparent,
-    bool allow_media_access,
-    bool is_headless,
-    bool enable_touch_input)
+    bool allow_media_access)
     : delegate_(delegate),
       web_contents_manager_(web_contents_manager),
       browser_context_(browser_context),
       site_instance_(std::move(site_instance)),
       transparent_(transparent),
       web_contents_(CreateWebContents(browser_context_, site_instance_)),
-      window_(shell::CastContentWindow::Create(delegate,
-                                               is_headless,
-                                               enable_touch_input)),
+      window_(std::move(window)),
       did_start_navigation_(false),
       allow_media_access_(allow_media_access) {
   DCHECK(delegate_);
@@ -87,7 +85,7 @@ CastWebViewDefault::CastWebViewDefault(
 
 CastWebViewDefault::~CastWebViewDefault() {}
 
-shell::CastContentWindow* CastWebViewDefault::window() const {
+CastContentWindow* CastWebViewDefault::window() const {
   return window_.get();
 }
 

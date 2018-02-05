@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/time/time.h"
+#include "chromecast/browser/cast_content_window.h"
 #include "chromecast/browser/cast_web_contents_manager.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
@@ -62,10 +63,12 @@ void CastServiceSimple::StartInternal() {
   }
 
   cast_web_view_ = web_contents_manager_->CreateWebView(
-      this, /* extension */ nullptr, /* initial_url */ GURL(),
-      /*site_instance*/ nullptr, /*transparent*/ false,
-      false /*allow_media_access*/, /*is_headless*/ false,
-      /*enable_touch_input*/ false);
+      this,
+      CastContentWindow::Create(this, false /* is_headless */,
+                                false /* enable_touch_input */),
+      nullptr /* extension */, GURL() /* initial_url */,
+      nullptr /* site_instance */, false /* transparent */,
+      false /* allow_media_access */);
   cast_web_view_->LoadUrl(startup_url_);
   cast_web_view_->Show(window_manager_);
 }

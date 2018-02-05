@@ -14,16 +14,10 @@ CastWebViewExtension::CastWebViewExtension(
     const extensions::Extension* extension,
     const GURL& initial_url,
     CastWebView::Delegate* delegate,
-    CastWebContentsManager* web_contents_manager,
+    std::unique_ptr<CastContentWindow> window,
     content::BrowserContext* browser_context,
-    scoped_refptr<content::SiteInstance> site_instance,
-    bool transparent,
-    bool allow_media_access,
-    bool is_headless,
-    bool enable_touch_input)
-    : window_(shell::CastContentWindow::Create(delegate,
-                                               is_headless,
-                                               enable_touch_input)),
+    scoped_refptr<content::SiteInstance> site_instance)
+    : window_(std::move(window)),
       extension_host_(std::make_unique<CastExtensionHost>(
           browser_context,
           delegate,
@@ -34,7 +28,7 @@ CastWebViewExtension::CastWebViewExtension(
 
 CastWebViewExtension::~CastWebViewExtension() {}
 
-shell::CastContentWindow* CastWebViewExtension::window() const {
+CastContentWindow* CastWebViewExtension::window() const {
   return window_.get();
 }
 

@@ -18,7 +18,6 @@ class WebContents;
 }
 
 namespace chromecast {
-namespace shell {
 
 // Android implementation of CastContentWindow, which displays WebContents in
 // CastWebContentsActivity.
@@ -51,7 +50,6 @@ class CastContentWindowAndroid : public CastContentWindow {
   DISALLOW_COPY_AND_ASSIGN(CastContentWindowAndroid);
 };
 
-}  // namespace shell
 }  // namespace chromecast
 
 #endif  // CHROMECAST_BROWSER_ANDROID_CAST_CONTENT_WINDOW_ANDROID_H_
