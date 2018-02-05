@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297f0545_6af35c64",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T22:31:05Z",
+      "side": 1,
+      "message": "same reason: rename it to show_user_name?",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd63132_409f300c",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T22:31:05Z",
+      "side": 1,
+      "message": "If the policy is not specified, I think it\u0027s expected to return false here, right?",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0dfd64_fd65b46a",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T22:31:05Z",
+      "side": 1,
+      "message": "Although the policy value might affect the user wallpaper on login screen, but it\u0027s confusing. How about name it to ShouldShowUserNamesOnLogin() and also rename Delegate::OnShowUserWallpaperOnLoginChanged() to Delegate::OnShowUserNamesOnLoginPolicyChanged() and rename (optional) WallpaperControllerClient::ShowRegisteredDeviceWallpaper() to WallpaperControllerClient::UpdateRegisteredDeviceWallpaper()?",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
