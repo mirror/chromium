@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c61fbdb7_461b1e5c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/picture-in-picture/enter-picture-in-picture.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-05T14:42:30Z",
+      "side": 1,
+      "message": "FAIL Test enterpictureinpicture event assert_equals: expected false but got true",
+      "parentUuid": "3afca419_d0806e30",
+      "revId": "32a2ca54f7fab2bcbeefa9666f5018bba6f2270a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4280b812_18cce60a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/picture-in-picture/leave-picture-in-picture.html",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "32a2ca54f7fab2bcbeefa9666f5018bba6f2270a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e452bb28_af4001e1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/picture-in-picture/leave-picture-in-picture.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-05T14:42:30Z",
+      "side": 1,
+      "message": "FAIL leavepictureinpicture event is fired if document.exitPictureInPicture assert_equals: expected false but got true\n    FAIL leavepictureinpicture event is fired if video.disablePictureInPicture is set to true assert_equals: expected false but got true",
+      "parentUuid": "4280b812_18cce60a",
+      "revId": "32a2ca54f7fab2bcbeefa9666f5018bba6f2270a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
