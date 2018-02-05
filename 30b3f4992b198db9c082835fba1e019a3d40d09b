@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c57108e_75af5325",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb17c49_05ba8b99",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b90afe6_dc218ce1",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e21182_c01e4f41",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b90afe6_dc218ce1",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7275835_64f65c5e",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Actually this was well specified. CBOR resp headers may not contain duplicated keys anyways.",
+      "parentUuid": "d5d71de0_3df71d94",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe17ed5a_964df9d3",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d05a2b_ae365492",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe17ed5a_964df9d3",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ccfb4ea9_046dc6f8",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6ee90e_983d75ec",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d5e1d0b_25f941cc",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a88796_0d75d939",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5e1d0b_25f941cc",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4da40090_54e614a6",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe61ea80_fc1ddd9e",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e67a6e3_e8b50c49",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
         "patchSetId": 4
@@ -132,6 +258,30 @@
       "writtenOn": "2018-02-02T01:56:59Z",
       "side": 1,
       "message": "Is this part of Input? GenerateCanonicalResponseCBOR extracts it from response_headers.",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30617d4a_a5aec65a",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "7e67a6e3_e8b50c49",
       "range": {
         "startLine": 27,
         "startChar": 29,
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "74734f84_2c4a092a",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "Changed to std::map",
+      "parentUuid": "497abcdf_2e21f1f7",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b6b85af_f3d8ffa4",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
         "patchSetId": 4
@@ -172,6 +340,24 @@
       "writtenOn": "2018-02-02T06:52:26Z",
       "side": 1,
       "message": "nit: if it\u0027s only used by testing add a suffix ForTesting",
+      "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783c6ffe_d0d6c6fb",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T00:50:26Z",
+      "side": 1,
+      "message": "This is also planned to be used from main logic.\nRemoved confusing comment.",
+      "parentUuid": "3b6b85af_f3d8ffa4",
       "revId": "30b3f4992b198db9c082835fba1e019a3d40d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
