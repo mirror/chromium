@@ -34,6 +34,24 @@
       "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1275113_15b4ff96",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-05T21:20:17Z",
+      "side": 1,
+      "message": "\u003e This will early return from the recursion which would iterate all throttled descendants.\n\nRight, which is why I asked whether all child layers are guaranteed to be throttled.\nI am also not sure if these three lines of code are necessary - isn\u0027t the change in\nPaintWithoutCommit sufficient?",
+      "parentUuid": "d7c5c6c0_e1836d46",
+      "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
