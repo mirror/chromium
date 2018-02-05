@@ -10,8 +10,8 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
-#include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "ui/gfx/buffer_format_util.h"
 
@@ -33,10 +33,13 @@ ServerGpuMemoryBufferManager::BufferInfo::~BufferInfo() = default;
 
 ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
     mojom::GpuService* gpu_service,
-    int client_id)
+    int client_id,
+    std::unique_ptr<gpu::GpuMemoryBufferImplFactory> buffer_factory)
     : gpu_service_(gpu_service),
       client_id_(client_id),
-      native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
+      buffer_factory_(std::move(buffer_factory)),
+      native_configurations_(
+          gpu::GetNativeGpuMemoryBufferConfigurations(buffer_factory_.get())),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_factory_(this) {
   weak_ptr_ = weak_factory_.GetWeakPtr();
@@ -53,7 +56,7 @@ void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
     gpu::SurfaceHandle surface_handle,
     base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  if (gpu::GetNativeGpuMemoryBufferType() != gfx::EMPTY_BUFFER) {
+  if (buffer_factory_->GetNativeGpuMemoryBufferType() != gfx::EMPTY_BUFFER) {
     const bool is_native = native_configurations_.find(std::make_pair(
                                format, usage)) != native_configurations_.end();
     if (is_native) {
@@ -123,7 +126,7 @@ ServerGpuMemoryBufferManager::CreateGpuMemoryBuffer(
   // The destruction callback can be called on any thread. So use an
   // intermediate callback here as the destruction callback, which bounces off
   // onto the |task_runner_| thread to do the real work.
-  return gpu::GpuMemoryBufferImpl::CreateFromHandle(
+  return buffer_factory_->CreateFromHandle(
       handle, size, format, usage,
       base::Bind(
           &OnGpuMemoryBufferDestroyed, task_runner_,
