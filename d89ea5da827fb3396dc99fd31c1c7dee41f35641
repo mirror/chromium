@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616a5158_eb1b8ddb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-05T18:48:38Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "d89ea5da827fb3396dc99fd31c1c7dee41f35641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9293457a_84c6c11a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-05T18:48:38Z",
+      "side": 1,
+      "message": "EXTRA_CUSTOM_TABS_SESSION",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "d89ea5da827fb3396dc99fd31c1c7dee41f35641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740898a6_04a0cb36",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-05T18:48:38Z",
+      "side": 1,
+      "message": "I dislike having transient state in member variables cause it requires clients to call functions in the correct order to work. I\u0027d prefer if you just pass it in showChooseHostBrowserDialog and the rest remains unchanged",
+      "revId": "d89ea5da827fb3396dc99fd31c1c7dee41f35641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4e24f9_77327961",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-05T18:48:38Z",
+      "side": 1,
+      "message": "Let\u0027s refer to these as \"CustomTabs\" as opposed to \"ChromeCustomTab\". We\u0027re using the open protocol and not chrome-specific.",
+      "revId": "d89ea5da827fb3396dc99fd31c1c7dee41f35641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9036e540_d159f3d2",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-05T18:48:38Z",
+      "side": 1,
+      "message": "Add comment at an extra is needed to indicate the desire to have custom tabs treatment, but we don\u0027t actually a client, hence we leave the session empty",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 43
+      },
+      "revId": "d89ea5da827fb3396dc99fd31c1c7dee41f35641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
