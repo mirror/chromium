@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "05d90f9d_8cdd5df9",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T10:24:04Z",
+      "side": 1,
+      "message": "I wonder if we could create a task runner ahead of the thread and AudioManager? I see a SetMessageLoop in base::Thread (https://cs.chromium.org/chromium/src/base/threading/thread.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d274), and MessageLoop itself has a CreateUnbound helper (https://cs.chromium.org/chromium/src/base/message_loop/message_loop.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d320), currently \"private\" though.",
+      "parentUuid": "cc173035_7676193e",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
