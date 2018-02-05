@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "26208def_ee96e6f4",
+        "filename": "chrome/browser/vr/elements/omnibox_text_field.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-05T16:22:58Z",
+      "side": 1,
+      "message": "Spoke to you offline. This seems like a bug?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "1b65f71a6fe79603761fa8ae96fcc42b73441563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237cfc48_d9ad24d7",
+        "filename": "chrome/browser/vr/elements/omnibox_text_field.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-05T16:22:58Z",
+      "side": 1,
+      "message": "nit/ optional suggestion: typedef?",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "1b65f71a6fe79603761fa8ae96fcc42b73441563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1b43d5e_113229d1",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 1
