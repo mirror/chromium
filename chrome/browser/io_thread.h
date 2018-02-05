@@ -66,6 +66,7 @@ class EventRouterForwarder;
 }
 
 namespace net {
+class CertVerifier;
 class CTLogVerifier;
 class HostResolver;
 class HttpAuthHandlerFactory;
@@ -161,6 +162,7 @@ class IOThread : public content::BrowserThreadDelegate {
   ~IOThread() override;
 
   static void RegisterPrefs(PrefRegistrySimple* registry);
+  static void SetCertVerifierForTesting(net::CertVerifier* cert_verifier);
 
   // Can only be called on the IO thread.
   Globals* globals();
