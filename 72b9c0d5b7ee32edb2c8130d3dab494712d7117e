@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3713b29_b3d1a80c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/abortsignal.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "nit: I think we\u0027re using CamelCase on parts of WPT filenames that represent spec class / method names. Definitely landed tests in IndexedDB and Cookies using this convention.",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a451a0_d0202292",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/abortsignal.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "I think you have two {} and no function... was the 2nd one supposed to be \"() \u003d\u003e {}\"?",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c424b0_d3842f34",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/abortsignal.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "I think that the acquire callback should assert that it\u0027s not called. unreached_func or assert_unreached?",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5c1d99_8482a5ab",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/abortsignal.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "Assert that the callback never gets invoked? (same idea as above)",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2272fb48_e1141b53",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/abortsignal.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "How about asserting that the timeout callback did get called, so we\u0027re sure AbortError didn\u0027t fire prematurely for some other reason?",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a72d01d_d1ebdaa9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/abortsignal.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "I think it\u0027s a really good idea to have a test covering expected real-world usage, like this one.",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd3a11be_c96d352d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-05T22:51:24Z",
+      "side": 1,
+      "message": "Huh, I thought I saw this test in the stealing CL. Not worth moving around -- it can land in here as well, the end state will be the same.",
+      "revId": "72b9c0d5b7ee32edb2c8130d3dab494712d7117e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
