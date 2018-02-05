@@ -77,6 +77,8 @@ WebRequestResourceType ToWebRequestResourceType(content::ResourceType type) {
       return WebRequestResourceType::CSP_REPORT;
     case content::RESOURCE_TYPE_PLUGIN_RESOURCE:
       return WebRequestResourceType::OBJECT;
+    case content::RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE:
+      return WebRequestResourceType::OTHER;
     case content::RESOURCE_TYPE_LAST_TYPE:
       return WebRequestResourceType::OTHER;
   }
