@@ -112,6 +112,39 @@ std::string GetEnterpriseDisplayDomain() {
   return connector->GetEnterpriseDisplayDomain();
 }
 
+std::unique_ptr<base::ListValue> GetEncryptionTypesList() {
+  static_assert(
+      3 == authpolicy::KerberosEncryptionTypes_ARRAYSIZE,
+      "Please modify the array to match authpolicy::KerberosEncryptionTypes");
+  const authpolicy::KerberosEncryptionTypes default_types =
+      authpolicy::JoinDomainRequest::default_instance()
+          .kerberos_encryption_types();
+  auto encryption_list = std::make_unique<base::ListValue>();
+#define ADD_ENCRYPTION(ENCRYPTION)                                             \
+  {                                                                            \
+    auto enc_option = std::make_unique<base::DictionaryValue>();               \
+    enc_option->SetKey(                                                        \
+        "value",                                                               \
+        base::Value(                                                           \
+            authpolicy::KerberosEncryptionTypes::ENC_TYPES_##ENCRYPTION));     \
+    enc_option->SetKey("title", base::Value(l10n_util::GetStringUTF16(         \
+                                    IDS_AD_ENCRYPTION_##ENCRYPTION##_TITLE))); \
+    enc_option->SetKey("subtitle",                                             \
+                       base::Value(l10n_util::GetStringUTF16(                  \
+                           IDS_AD_ENCRYPTION_##ENCRYPTION##_SUBTITLE)));       \
+    enc_option->SetBoolean(                                                    \
+        "selected",                                                            \
+        default_types ==                                                       \
+            authpolicy::KerberosEncryptionTypes::ENC_TYPES_##ENCRYPTION);      \
+    encryption_list->Append(std::move(enc_option));                            \
+  }
+  ADD_ENCRYPTION(STRONG);
+  ADD_ENCRYPTION(ALL);
+  ADD_ENCRYPTION(LEGACY);
+#undef ADD_ENCRYPTION
+  return encryption_list;
+}
+
 }  // namespace
 
 // EnrollmentScreenHandler, public ------------------------------
@@ -438,6 +471,12 @@ void EnrollmentScreenHandler::DeclareLocalizedValues(
                IDS_ENTERPRISE_ENROLLMENT_KIOSK_LICENSE_TYPE);
   builder->Add("licenseCountTemplate",
                IDS_ENTERPRISE_ENROLLMENT_LICENSES_REMAINING_TEMPLATE);
+  builder->Add("selectEncryption", IDS_AD_ENCRYPTION_SELECTION_SELECT);
+}
+
+void EnrollmentScreenHandler::GetAdditionalParameters(
+    base::DictionaryValue* parameters) {
+  parameters->Set("encryptionTypesList", GetEncryptionTypesList());
 }
 
 bool EnrollmentScreenHandler::IsOnEnrollmentScreen() const {
@@ -574,13 +613,17 @@ void EnrollmentScreenHandler::HandleCompleteLogin(
 void EnrollmentScreenHandler::HandleAdCompleteLogin(
     const std::string& machine_name,
     const std::string& distinguished_name,
+    const std::string& encryption_types,
     const std::string& user_name,
     const std::string& password) {
   observe_network_failure_ = false;
   DCHECK(controller_);
   DCHECK(authpolicy_login_helper_);
   authpolicy_login_helper_->JoinAdDomain(
-      machine_name, distinguished_name, user_name, password,
+      machine_name, distinguished_name,
+      static_cast<authpolicy::KerberosEncryptionTypes>(
+          std::stoi(encryption_types)),
+      user_name, password,
       base::BindOnce(&EnrollmentScreenHandler::HandleAdDomainJoin,
                      weak_ptr_factory_.GetWeakPtr(), machine_name, user_name));
 }
@@ -638,6 +681,9 @@ void EnrollmentScreenHandler::HandleAdDomainJoin(
       return;
     case authpolicy::ERROR_SETTING_OU_FAILED:
       ShowError(IDS_AD_OU_SETTING_FAILED, true);
+      return;
+    case authpolicy::ERROR_KDC_DOES_NOT_SUPPORT_ENCRYPTION_TYPE:
+      ShowError(IDS_AD_NOT_SUPPORTED_ENCRYPTION, true);
       return;
 #if !defined(ARCH_CPU_X86_64)
     // Currently, the Active Directory integration is only supported on x86_64

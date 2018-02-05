@@ -93,6 +93,7 @@ void AuthPolicyLoginHelper::Restart() {
       ->RestartAuthPolicyService();
 }
 
+// static
 bool AuthPolicyLoginHelper::IsAdLocked() {
   std::string mode;
   return chromeos::tpm_util::InstallAttributesGet(kAttrMode, &mode) &&
@@ -108,11 +109,13 @@ bool AuthPolicyLoginHelper::LockDeviceActiveDirectoryForTesting(
          tpm_util::InstallAttributesFinalize();
 }
 
-void AuthPolicyLoginHelper::JoinAdDomain(const std::string& machine_name,
-                                         const std::string& distinguished_name,
-                                         const std::string& username,
-                                         const std::string& password,
-                                         JoinCallback callback) {
+void AuthPolicyLoginHelper::JoinAdDomain(
+    const std::string& machine_name,
+    const std::string& distinguished_name,
+    authpolicy::KerberosEncryptionTypes encryption_types,
+    const std::string& username,
+    const std::string& password,
+    JoinCallback callback) {
   DCHECK(!IsAdLocked());
   DCHECK(!weak_factory_.HasWeakPtrs()) << "Another operation is in progress";
   authpolicy::JoinDomainRequest request;
@@ -123,8 +126,10 @@ void AuthPolicyLoginHelper::JoinAdDomain(const std::string& machine_name,
   }
   if (!machine_name.empty())
     request.set_machine_name(machine_name);
+  request.set_kerberos_encryption_types(encryption_types);
   if (!username.empty())
     request.set_user_principal_name(username);
+
   chromeos::DBusThreadManager::Get()->GetAuthPolicyClient()->JoinAdDomain(
       request, GetDataReadPipe(password).get(),
       base::BindOnce(&AuthPolicyLoginHelper::OnJoinCallback,
