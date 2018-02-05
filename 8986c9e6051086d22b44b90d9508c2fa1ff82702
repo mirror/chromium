@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "249b2476_ad5814ee",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T12:05:01Z",
+      "side": 1,
+      "message": "I like to have the explicit bool for DCHECKS. It protects against mistakes like calling Play off the audio manager thread and then calling Close on the audio manager thread (in which case Play could execute after Close). We can simplify once we launch streams in service though.",
+      "parentUuid": "53088009_1e3ed1be",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e008e129_f3f583e9",
         "filename": "media/audio/audio_output_controller.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe75244_73f160e3",
+        "filename": "media/audio/audio_output_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T12:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e008e129_f3f583e9",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0a048ce_6ce05b12",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T12:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f729a3_e7c67ff5",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc998879_bca7c2cd",
         "filename": "media/audio/audio_output_controller_unittest.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4f4dfa63_d5d470bd",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T12:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc998879_bca7c2cd",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e1fe52_1f2a39d2",
         "filename": "media/audio/audio_output_controller_unittest.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52656e1_ebf1ac25",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T12:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e1fe52_1f2a39d2",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
