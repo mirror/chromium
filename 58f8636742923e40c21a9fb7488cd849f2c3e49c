@@ -596,6 +596,24 @@
       "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9e870d_271d829d",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-05T00:38:23Z",
+      "side": 1,
+      "message": "Oops, you\u0027re totally right, thanks! I\u0027ve merged the two classes back together, but see the screenshots for side effects - the OmniboxResultView has a rounded highlight (I think this is OK because we need to change it to a different highlight anyway) and the KeywordHintView is also now rounded (which was supposed to happen anyway).",
+      "parentUuid": "d0d56568_75fdd83a",
+      "revId": "58f8636742923e40c21a9fb7488cd849f2c3e49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
