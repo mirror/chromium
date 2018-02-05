@@ -12,7 +12,6 @@
 #include "chrome/renderer/safe_browsing/scorer.h"
 #include "chrome/test/base/chrome_render_view_test.h"
 #include "chrome/test/base/chrome_unit_test_suite.h"
-#include "components/safe_browsing/common/safebrowsing_messages.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
@@ -61,21 +60,6 @@ class MockScorer : public Scorer {
 
 class FakeRenderThread : public ChromeMockRenderThread {
  public:
-  // Instead of sending this message, we verify its content here.
-  bool Send(IPC::Message* msg) override {
-    // handle and verify message here.
-    IPC_BEGIN_MESSAGE_MAP(FakeRenderThread, *msg)
-      IPC_MESSAGE_HANDLER(SafeBrowsingHostMsg_PhishingDetectionDone,
-                          VerifyMessageContent)
-    IPC_END_MESSAGE_MAP()
-    if (msg) {  // Prevent memory leak.
-      delete msg;
-      msg = nullptr;
-    }
-    // Return true anyway, since we don't want to block other IPC.
-    return true;
-  }
-
   void VerifyMessageContent(const std::string& verdict_str) {
     ClientPhishingRequest verdict;
     if (verdict.ParseFromString(verdict_str)) {
@@ -112,7 +96,7 @@ class PhishingClassifierDelegateTest : public ChromeRenderViewTest {
   }
 
   void OnStartPhishingDetection(const GURL& url) {
-    delegate_->OnStartPhishingDetection(url);
+    delegate_->StartPhishingDetection(url);
   }
 
   void PageCaptured(base::string16* page_text,

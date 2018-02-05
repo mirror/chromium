@@ -11,8 +11,10 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_thread_observer.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
@@ -21,21 +23,8 @@ class ClientPhishingRequest;
 class PhishingClassifier;
 class Scorer;
 
-class PhishingClassifierFilter : public content::RenderThreadObserver {
- public:
-  static PhishingClassifierFilter* Create();
-  ~PhishingClassifierFilter() override;
-
-  bool OnControlMessageReceived(const IPC::Message& message) override;
-
- private:
-  PhishingClassifierFilter();
-  void OnSetPhishingModel(const std::string& model);
-
-  DISALLOW_COPY_AND_ASSIGN(PhishingClassifierFilter);
-};
-
-class PhishingClassifierDelegate : public content::RenderFrameObserver {
+class PhishingClassifierDelegate : public content::RenderFrameObserver,
+                                   public mojom::PhishingDetector {
  public:
   // The RenderFrame owns us.  This object takes ownership of the classifier.
   // Note that if classifier is null, a default instance of PhishingClassifier
@@ -65,6 +54,10 @@ class PhishingClassifierDelegate : public content::RenderFrameObserver {
                                 bool is_same_document_navigation) override;
 
  private:
+  void SetPhishingModel(const std::string& model) override;
+  void PhishingDetectorRequest(mojom::PhishingDetectorRequest request);
+  mojo::BindingSet<mojom::PhishingDetector> phishing_detector_bindings_;
+
   friend class PhishingClassifierDelegateTest;
 
   PhishingClassifierDelegate(content::RenderFrame* render_frame,
@@ -83,7 +76,6 @@ class PhishingClassifierDelegate : public content::RenderFrameObserver {
   void CancelPendingClassification(CancelClassificationReason reason);
 
   // RenderFrameObserver implementation.
-  bool OnMessageReceived(const IPC::Message& message) override;
   void OnDestruct() override;
 
   // Called by the RenderFrame when it receives a StartPhishingDetection IPC
@@ -91,7 +83,7 @@ class PhishingClassifierDelegate : public content::RenderFrameObserver {
   // for the given toplevel URL.  If the URL has been fully loaded into the
   // RenderFrame and a Scorer has been set, this will begin classification,
   // otherwise classification will be deferred until these conditions are met.
-  void OnStartPhishingDetection(const GURL& url);
+  void StartPhishingDetection(const GURL& url) override;
 
   // Called when classification for the current page finishes.
   void ClassificationDone(const ClientPhishingRequest& verdict);
