@@ -81,6 +81,10 @@ _NEGATIVE_FILTER = [
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
     # https://bugs.chromium.org/p/chromium/issues/detail?id=746266
     'ChromeDriverSiteIsolation.testCanClickOOPIF',
+    # CQ Test
+    'PerfTest.testSessionStartTime',
+    'PerfTest.testSessionStopTime',
+    'RemoteBrowserTest.testConnectToRemoteBrowser',
 ]
 
 _VERSION_SPECIFIC_FILTER = {}
@@ -400,6 +404,12 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
 
   def testLoadUrl(self):
     self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    self._driver.Quit()
+    self._drivers = []
+    for i in range(1000):
+      driver = self.CreateDriver()
+      driver.Quit()
+      self._drivers = []
 
   def testGetCurrentWindowHandle(self):
     self._driver.GetCurrentWindowHandle()
@@ -2450,6 +2460,7 @@ class ChromeDriverLogTest(ChromeDriverBaseTest):
         ChromeDriverTest._http_server.GetUrl() + '/chromedriver/empty.html')
       driver.AddCookie({'name': 'secret_code', 'value': 'bosco'})
       driver.Quit()
+      self._drivers.remove(driver)
     finally:
       chromedriver_server.Kill()
     with open(tmp_log_path, 'r') as f:
