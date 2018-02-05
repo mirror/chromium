@@ -355,12 +355,22 @@
 
     <!-- Password Protection -->
     <if expr="not is_android">
-      <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
-        This site may have just stolen your password
-      </message>
-      <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
-        Your password may be compromised
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          This Site May Have Just Stolen Your Password
+        </message>
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          Your Password May Be Compromised
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          This site may have just stolen your password
+        </message>
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          Your password may be compromised
+        </message>
+      </if>
       <if expr="_google_chrome">
         <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_DETAILS" desc="A short paragraph explaining to the user that they has reuse their google password on current website.">
           You could lose access to your Google Account or experience identity theft. Chrome recommends changing your password now.
@@ -373,11 +383,14 @@
       </if>
 
       <if expr="use_titlecase">
-        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_BUTTON" desc="The string used in the page info change password button. Title case format.">
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_BUTTON" desc="In Title Case: The string used in the page info change password button. Title case format.">
           Help Me Fix This
         </message>
-        <message name="IDS_PAGE_INFO_IGNORE_PASSWORD_WARNING_BUTTON" desc="The string used in the page info ignore password warning button. Title case format.">
+        <message name="IDS_PAGE_INFO_IGNORE_PASSWORD_WARNING_BUTTON" desc="In Title Case: The string used in the page info ignore password warning button. Title case format.">
           Ignore
+        </message>
+        <message name="IDS_PAGE_INFO_WHITELIST_PASSWORD_REUSE_BUTTON" desc="In Title Case: The string used in the page info whitelist password reuse button.">
+          Site is Legitimate
         </message>
       </if>
       <if expr="not use_titlecase">
@@ -387,10 +400,10 @@
         <message name="IDS_PAGE_INFO_IGNORE_PASSWORD_WARNING_BUTTON" desc="The string used in the page info ignore password warning button.">
           Ignore
         </message>
+        <message name="IDS_PAGE_INFO_WHITELIST_PASSWORD_REUSE_BUTTON" desc="The string used in the page info whitelist password reuse button.">
+          Site is legitimate
+        </message>
       </if>
-      <message name="IDS_PAGE_INFO_WHITELIST_PASSWORD_REUSE_BUTTON" desc="The string used in the page info whitelist password reuse button.">
-        Site is legitimate
-      </message>
     </if>
   </if>
 </grit-part>
