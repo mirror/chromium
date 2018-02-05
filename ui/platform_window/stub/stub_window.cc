@@ -53,6 +53,12 @@ void StubWindow::SetCapture() {
 void StubWindow::ReleaseCapture() {
 }
 
+void StubWindow::LockKeys(const std::vector<int>& native_key_codes) {
+}
+
+void StubWindow::UnlockKeys() {
+}
+
 void StubWindow::ToggleFullscreen() {
 }
 
