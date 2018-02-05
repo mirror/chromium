@@ -6,6 +6,7 @@
 
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
+#include "core/html/media/HTMLVideoElement.h"
 #include "modules/picture_in_picture/PictureInPictureController.h"
 
 namespace blink {
@@ -26,7 +27,11 @@ bool DocumentPictureInPicture::pictureInPictureEnabled(Document& document) {
 ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
     ScriptState* script_state,
     Document& document) {
-  if (!PictureInPictureController::Ensure(document).PictureInPictureElement()) {
+  HTMLVideoElement* picture_in_picture_element =
+      PictureInPictureController::Ensure(document).PictureInPictureElement(
+          ToTreeScope(document));
+
+  if (!picture_in_picture_element) {
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(kInvalidStateError, kNoPictureInPictureElement));
@@ -40,10 +45,11 @@ ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
   return ScriptPromise::CastUndefined(script_state);
 }
 
-// static
 HTMLVideoElement* DocumentPictureInPicture::pictureInPictureElement(
-    Document& document) {
-  return PictureInPictureController::Ensure(document).PictureInPictureElement();
+    TreeScope& scope) {
+  LOG(INFO) << "DocumentPictureInPicture::pictureInPictureElement";
+  return PictureInPictureController::Ensure(scope.GetDocument())
+      .PictureInPictureElement(scope);
 }
 
 }  // namespace blink
