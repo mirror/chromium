@@ -176,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "1300af28_4600cffd",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1264032
+      },
+      "writtenOn": "2018-02-05T17:53:32Z",
+      "side": 1,
+      "message": "Are you suggesting a dramatically different interface from the current ones? Sorry I don\u0027t understand. Currently the backend component only call |push_buffer_complete_cb|(In the V2 it is merged into delegate and renamed to something else) in the situation where the operation is delayed, in which case Buffer_STATUS_PENDING is returned informing the caller that the operation cannot be completed synchronously.\n\nI am suggesting that you just relocate this callback function, just the same as the change from V1 to V2, but I am not suggesting change this callback to something else.\n\nAlso I\u0027d like to point out that 1. This operation shouldn\u0027t be expected to be \"always synchronous\" and 2. the caller doesn\u0027t only rely on the result (succesful vs failed) but also the timing of the completion, for the caller need to manage the buffer, the caller needs to know when the buffer can be reused.\n\n//////////////////////\n\nMy main point is: it is very good to be consistent with the other similar components to the one you create. Later when people need to use your component, they only need to do minimal things to plug your stuff.\n\nPeople send the content to backend to process. They could either send it to play, or send it to this component just to decrypt. Why have different \"input\" interface?",
+      "parentUuid": "be0662a8_5b061af5",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
