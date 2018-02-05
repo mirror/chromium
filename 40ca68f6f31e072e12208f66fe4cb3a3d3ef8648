@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c4b8e831_86b61b00",
+        "filename": "third_party/metrics_proto/cast_logs.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1264453
+      },
+      "writtenOn": "2018-02-05T22:14:13Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "1560c587_49441ac5",
+      "revId": "40ca68f6f31e072e12208f66fe4cb3a3d3ef8648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "915e1d69_11d74d5f",
         "filename": "third_party/metrics_proto/cast_logs.proto",
         "patchSetId": 1
@@ -143,6 +161,30 @@
       "side": 1,
       "message": "I see. \n\nBTW, actually we called platform as cast_shell itself. The platform you mentioned is little bit different meaning. It\u0027s more similar with system_build_number. \n\nIs that make sense to specify like:\n\n// True if the system which cast_shell is running on supports ip dual stack socket.\noptional bool system_support_dual_stack_ip_socket \u003d 5;\n\nCall @Gaofeng for naming help.",
       "parentUuid": "a5c60249_605d5e4c",
+      "range": {
+        "startLine": 227,
+        "startChar": 42,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "40ca68f6f31e072e12208f66fe4cb3a3d3ef8648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7462ccf3_cfc96e97",
+        "filename": "third_party/metrics_proto/cast_logs.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1264453
+      },
+      "writtenOn": "2018-02-05T22:14:13Z",
+      "side": 1,
+      "message": "This look fine. I have changed the name to this.",
+      "parentUuid": "e679e8f9_226e23fa",
       "range": {
         "startLine": 227,
         "startChar": 42,
