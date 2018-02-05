@@ -32,9 +32,9 @@ async_test(async function(test) {
 
     var computedAXNode1 = await window.getComputedAccessibleNode(element);
     var computedAXNode2 = await window.getComputedAccessibleNode(element);
-    assert_true(computedAXNode1 === computedAXNode2);
+    assert_false(computedAXNode1 === computedAXNode2);
     test.done();
-}, "Multiple calls to getComputedAccessibleNode will return the same node.");
+}, "Multiple calls to getComputedAccessibleNode will not return the same node.");
 
 </script>
 
