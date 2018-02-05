@@ -43,6 +43,7 @@ jumbo_component("views") {
   all_dependent_configs = [ ":flags" ]
 
   public = [
+    "accessibility/accessibility_checks.h",
     "accessibility/view_accessibility.h",
     "accessible_pane_view.h",
     "animation/bounds_animator.h",
@@ -249,6 +250,7 @@ jumbo_component("views") {
   ]
 
   sources = [
+    "accessibility/accessibility_checks.cc",
     "accessibility/view_accessibility.cc",
     "accessible_pane_view.cc",
     "animation/bounds_animator.cc",

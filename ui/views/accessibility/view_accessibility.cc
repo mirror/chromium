@@ -6,6 +6,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "ui/base/ui_features.h"
+#include "ui/views/accessibility/accessibility_checks.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
@@ -87,6 +88,15 @@ void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
 
   if (owner_view_->context_menu_controller())
     data->AddAction(ax::mojom::Action::kShowContextMenu);
+
+#if defined(AX_CHECKS)
+  if (owner_view_->IsCheckingAccessibility()) {
+    std::string ax_error;
+    CheckViewAccessibility(owner_view_, *data, &ax_error);
+    if (!ax_error.empty())
+      LOG(FATAL) << ax_error + "\nThe View accessibility check failed here:";
+  }
+#endif
 }
 
 void ViewAccessibility::OverrideRole(ax::mojom::Role role) {

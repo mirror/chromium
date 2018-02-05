@@ -62,6 +62,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/display/display_switches.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -157,6 +158,10 @@ void InProcessBrowserTest::SetUp() {
   // append switches::kEnableOfflineAutoReload, which will override the disable
   // here.
   command_line->AppendSwitch(switches::kDisableOfflineAutoReload);
+
+#if defined(AX_CHECKS)
+  views::View::TurnOnAccessibilityChecking();
+#endif
 
   // Turn off preconnects because they break the brittle python webserver;
   // see http://crbug.com/60035.
