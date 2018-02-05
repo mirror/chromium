@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "550d0ec0_eeeba880",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "|service_worker_https_server_| has hostname \u003d 127.0.0.1.\n|cross_origin_https_server_| has hostname \u003d localhost.\nThe difference comes from the call to SetSSLConfig with CERT_COMMON_NAME_IS_DOMAIN.\n\nI\u0027ve added a comment pointing this out.",
+      "parentUuid": "0b9902ad_f08c6402",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9444dbe2_82a73bd3",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6b2e7d69_3a7eb1d9",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9444dbe2_82a73bd3",
+      "range": {
+        "startLine": 397,
+        "startChar": 39,
+        "endLine": 397,
+        "endChar": 40
+      },
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c25410e2_00a10afb",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 12
@@ -56,6 +98,24 @@
       "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ba10de_5f43c0ab",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c25410e2_00a10afb",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "9c6c22b6_d6b33f74",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "You\u0027re right - the URL suffix is important here.  I\u0027ve added this qualification / clarification to the comment.",
+      "parentUuid": "05072629_457bc522",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bc8bb80_1360a7ad",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 12
@@ -90,6 +168,24 @@
       "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c6dc68_6b9f0b75",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "Without this change, we would get a test failure in the second new test, during the 1st fetch.  During the first fetch, the request errors out, because the service worker responds with an error.  UMA logging in response to the error is incorrect + makes the test confused (the call to InspectHistograms sees extra UMAs/buckets/values).",
+      "parentUuid": "8bc8bb80_1360a7ad",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "bfef6bd9_ac9878f4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "\u003e Ah yes that\u0027s a good point. Our new architecture is S13nServiceWorker. In this architecture, the request goes directly from page to service worker, and response from service worker to page. So the browser process would not know about the request/response at all.\n\u003e \n\u003e I don\u0027t know whether you want XSDB to be aware of the request/response in that architecture.\n\nPossibly not (because intercepting service_worker-\u003eserved_page responses by XSDB is kind of redundant, since XSDB should have already stripper the response body earlier, when intercepting network-\u003eservice_worker request).\n\nI wonder if this means that the new tests are overtesting to some extent:\n\n- CrossSiteDocumentBlockingServiceWorkerTest.NetworkAndOpaqueResponse:\n  - The first fetch is a good test - we want to ensure that\n    network-\u003eservice_worker request gets blocked by XSDB.\n    I think this is a moderately valuable test that is desirable overall.\n  - The second fetch won\u0027t be intercepted by XSDB after the architecture\n    change.  Maybe the test shouldn\u0027t bother with the second fetch?\n\n- CrossSiteDocumentBlockingServiceWorkerTest.NoNetwork - overtesting?\n  - The test will be invalid after S13nServiceWorker architecture change.\n  - Additionally, the test is somewhat repeating the valudation done already\n    by wpt/service-workers/service-worker/fetch-request-xhr.https.html\n\n\u003e The bug is 715640\n\nFor now, I\u0027ve added references to this bug in the tests.  Do you think I should go further and remove parts of the tests?",
+      "parentUuid": "2d1b16db_ebf7da14",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e9fd69_3b19248b",
         "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
         "patchSetId": 12
@@ -183,6 +297,30 @@
       "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9278f6af_1b1ff61b",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-02-05T16:45:09Z",
+      "side": 1,
+      "message": "Thanks for catching this - yes this is the second request.",
+      "parentUuid": "89e9fd69_3b19248b",
+      "range": {
+        "startLine": 31,
+        "startChar": 34,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
