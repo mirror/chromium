@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4bd3be68_6629c6da",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T12:35:01Z",
+      "side": 1,
+      "message": "Can we make the adjusted minimum 1 second but the default to be 1 minute or so?",
+      "parentUuid": "c2f58509_541f1f8f",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e4d8452_e2609597",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
         "patchSetId": 3
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "They will fail early due to not being called from a secure origin. For that reason, we can only have tests in -basics.html tests that have TypeError-type failures. I\u0027ll add comments to that effect.",
       "parentUuid": "2e4d8452_e2609597",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c38bb1_9b93d1cd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T12:35:01Z",
+      "side": 1,
+      "message": "Wait, localhost is secure, we fail because the host\u0027s an IP address, right? Can we instead just do the redirect trick in the *-basic tests and move these simple tests there?",
+      "parentUuid": "efa16c21_c1153d61",
       "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

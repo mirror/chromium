@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c4119cf_8d6cc300",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T12:35:01Z",
+      "side": 1,
+      "message": "nit: -{}",
+      "range": {
+        "startLine": 395,
+        "startChar": 73,
+        "endLine": 395,
+        "endChar": 74
+      },
+      "revId": "b7aa9a2f7100878ee288453b147a979c159b81df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
