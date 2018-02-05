@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d7c00e41_a399a4b6",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:02:47Z",
+      "side": 1,
+      "message": "SGTM. Or just DispatchFetchEventParams and move all params in it (suggested below)?",
+      "parentUuid": "5d40092d_03bfb348",
+      "revId": "2451cd435e09f6d1a7c1811fe29437b262f032ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "242d8206_bfd8559f",
         "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I think that dispatching a fetch event for subresources is:\nControllerServiceWorkerImpl::DispatchFetchEvent()\n-\u003e ServiceWorkerContextClient::DispatchOrQueueFetchEvent()\n-\u003e ServiceWorkerContextClient::DispatchEvent()\n\nAs ServiceWorkerContextClient implements this interface, we need to do either\n- Change the signature of ServiceWorkerEventDispatcher::DispatchFetchEvent (like this CL)\n- Add a new method to ServiceWorkerContextClient, for example DispatchFetchEventForSubresource()\n\nI think that you are suggesting the latter. Is my understanding collect? I\u0027m happy to take either approach :)",
       "parentUuid": "242d8206_bfd8559f",
+      "revId": "2451cd435e09f6d1a7c1811fe29437b262f032ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4250e6_d4f21ada",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:02:47Z",
+      "side": 1,
+      "message": "Ahh I see what you mean. I didn\u0027t remember ControllerServiceWorker needs to call this. I\u0027m OK with changing this signature then.\n\nActually I think we could put the other two params in FetchEventParams too maybe. FetchEventPreloadHandle fits as it\u0027s used to create FetchEvent#preloadResponse. The ResponseCallback also fits as it\u0027s used for FetchEvent#respondWith.",
+      "parentUuid": "8651ef64_cf23ded4",
       "revId": "2451cd435e09f6d1a7c1811fe29437b262f032ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
