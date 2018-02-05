@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bead6160_1537d51e",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-05T21:58:41Z",
+      "side": 1,
+      "message": "Can this be moved to generated_resources.grd?",
+      "range": {
+        "startLine": 1042,
+        "startChar": 23,
+        "endLine": 1042,
+        "endChar": 43
+      },
+      "revId": "11410ff1caabd21aa1d1f7e28f545b319482e987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
