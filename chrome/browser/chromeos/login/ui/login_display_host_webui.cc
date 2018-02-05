@@ -168,7 +168,8 @@ class AnimationObserver : public ui::ImplicitAnimationObserver {
 
 bool ShouldShowSigninScreen(chromeos::OobeScreen first_screen) {
   return (first_screen == chromeos::OobeScreen::SCREEN_UNKNOWN &&
-          chromeos::StartupUtils::IsOobeCompleted()) ||
+          chromeos::StartupUtils::IsOobeCompleted() &&
+          !user_manager::UserManager::Get()->GetUsers().empty()) ||
          first_screen == chromeos::OobeScreen::SCREEN_SPECIAL_LOGIN;
 }
 
@@ -1174,10 +1175,11 @@ void ShowLoginWizard(OobeScreen first_screen) {
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kNaturalScrollDefault));
 
+  bool is_oobe_complete = StartupUtils::IsOobeCompleted() &&
+                          !user_manager::UserManager::Get()->GetUsers().empty();
   session_manager::SessionManager::Get()->SetSessionState(
-      StartupUtils::IsOobeCompleted()
-          ? session_manager::SessionState::LOGIN_PRIMARY
-          : session_manager::SessionState::OOBE);
+      is_oobe_complete ? session_manager::SessionState::LOGIN_PRIMARY
+                       : session_manager::SessionState::OOBE);
 
   bool show_app_launch_splash_screen =
       (first_screen == OobeScreen::SCREEN_APP_LAUNCH_SPLASH);
