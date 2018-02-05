@@ -1732,6 +1732,7 @@
     'blink_css': ['alexis.menard@intel.com',
                   'apavlov+blink@chromium.org',
                   'blink-reviews-css@chromium.org',
+		  'jmedley@chromium.org',
                   'rob.buis@samsung.com'],
     'blink_css_flexbox': ['cbiesinger@chromium.org'],
     'blink_css_fragmentation_tests': ['mstensho@chromium.org'],
