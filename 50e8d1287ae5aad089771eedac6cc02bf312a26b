@@ -199,6 +199,24 @@
     },
     {
       "key": {
+        "uuid": "19ff7a62_2a453a5e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-02-05T15:55:11Z",
+      "side": 1,
+      "message": "\u003e Are you saying we shouldn\u0027t even bother separating kProgrammaticScroll into kBrowserScroll and kScriptScroll, because their behavior should be identical with respect to supressing history restore?\n\nWell, I think eventually we want to treat them the same for scroll restoration behavior. However, first step we wanted to measure how often we will suppress scroll restoration\nif we change the behavior. Given that it will have a UX impact it is important to know\nthis.\n\n\nI am not sure if we want to treat all of what is currently kProgrammaticScroll \nthe same though in this regard. For example it is odd to have \u0027FrameLoader::RestoreScrollPositionAndViewState\u0027 supress scroll restoration.\n\n\n\u003e Yeah it\u0027s gotten messy.  What do you think of expressing the overlapping categories with IsXxx helpers?  E.g.  bool IsProgrammaticScrollType(ScrollType type) { return type \u003d\u003d kBrowserScroll || type \u003d\u003d kScriptScroll || ...;} This seems simpler to me than a bit field.\n\nI think the main merit of bitfield idea is that we can has a single argument but use it to\nexpress cases where the scroll has multiple dimensions but perhaps we need\nan structs with two simple enums?. I can see two dimensions at least: \n\nStruct type { \n Source: kBrowserScroll || kScriptScroll || kUser || kCompositor\n Kind: Input || Clamping || Anchoring || Snapping || Restoring || Sequenced  \n}\n\nHere are some examples: \nTextFieldInputType::ForwardEvent  \u003d\u003e {kBrowserScroll, Input}\nFrameLoader::RestoreScroll        \u003d\u003e {kBrowserScroll, Restoring}\nPage::DidCommitLoad               \u003d\u003e {kBrowserScroll, ???} // this is the initial scroll\nRotationViewportAnchor::RestoreToAnchor \u003d\u003e {kBrowserScroll, Snapping\nSnapCoordinator::PerformSnapping  \u003d\u003e {[...], Snapping} // source is whatever caused the snap!\nImageDocument::ImageClicked       \u003d\u003e {kBrowserScroll, Input}\njavascript methods                \u003d\u003e {kScriptScroll, Input}\ncompositor                        \u003d\u003e {kCompositor, [...] }\n\n\nIn any case, I can see that this clean up may require more work than expected.\nSo I am fine if Chao want to land this CL in its current form with a TODO\nto do the refactor and clean up in a follow up patch.",
+      "parentUuid": "cc027695_ee63a4f0",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
