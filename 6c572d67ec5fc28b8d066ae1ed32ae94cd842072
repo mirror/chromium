@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32307184_12ba26c4",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T19:00:57Z",
+      "side": 1,
+      "message": "nit: s/gets/getting",
+      "revId": "6c572d67ec5fc28b8d066ae1ed32ae94cd842072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
