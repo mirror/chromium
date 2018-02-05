@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "1be8fa75_5caa4a3b",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T17:14:52Z",
+      "side": 1,
+      "message": "Can this be const?",
+      "range": {
+        "startLine": 24,
+        "startChar": 61,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e461b7c1_4a079831",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T17:14:52Z",
+      "side": 1,
+      "message": "Please add test coverage of these functions.",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2987f4_a3d44ee7",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T17:14:52Z",
+      "side": 1,
+      "message": "Is there a reason this code persists the menu_items_ rather than converting the MenuItemPtrs directly to members I\u0027m thinking of PopulateMenuFromMojoMenuItems.",
+      "range": {
+        "startLine": 193,
+        "startChar": 44,
+        "endLine": 193,
+        "endChar": 55
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cda400c_e1e5ce8a",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 10
