@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a3e322_dc8b33f7",
+        "filename": "base/win/scoped_handle_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-02-05T23:32:56Z",
+      "side": 1,
+      "message": "we have magic signatures in crash that rely on these function names - see http://shortn/_8Ub17nmFtd - please verify that none of these are changing...?",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "0923b5ed70e06af45e5ce94e19a818019f01b20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
