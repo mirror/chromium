@@ -22,6 +22,30 @@
       "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136c5db6_9cc14b3b",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-05T01:47:39Z",
+      "side": 1,
+      "message": "As per discussion in design doc, there aren\u0027t any default enabled features. Happy to change it to OS_ANDROID, what do OWNERs think?",
+      "parentUuid": "8232a09d_1660aee4",
+      "range": {
+        "startLine": 703,
+        "startChar": 27,
+        "endLine": 703,
+        "endChar": 55
+      },
+      "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
