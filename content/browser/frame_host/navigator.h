@@ -158,7 +158,8 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
   // BeginNavigation IPC from the renderer.
   virtual void OnBeginNavigation(FrameTreeNode* frame_tree_node,
                                  const CommonNavigationParams& common_params,
-                                 mojom::BeginNavigationParamsPtr begin_params);
+                                 mojom::BeginNavigationParamsPtr begin_params,
+                                 mojom::NavigationClientPtr navigation_client);
 
   // Used to abort an ongoing renderer-initiated navigation.
   virtual void OnAbortNavigation(FrameTreeNode* frame_tree_node) {}

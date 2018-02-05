@@ -15,6 +15,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/url_utils.h"
+#include "content/test/mock_navigation_client.h"
 #include "content/test/test_navigation_url_loader.h"
 #include "content/test/test_render_frame_host.h"
 #include "content/test/test_web_contents.h"
@@ -238,6 +239,7 @@ NavigationSimulator::NavigationSimulator(const GURL& original_url,
       transition_(browser_initiated ? ui::PAGE_TRANSITION_TYPED
                                     : ui::PAGE_TRANSITION_LINK),
       contents_mime_type_("text/html"),
+      navigation_client_impl_(nullptr),
       weak_factory_(this) {
   // For renderer-initiated navigation, the RenderFrame must be initialized. Do
   // it if it hasn't happened yet.
@@ -836,8 +838,12 @@ bool NavigationSimulator::SimulateRendererInitiatedStart() {
           ? FrameMsg_Navigate_Type::RELOAD
           : FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
   common_params.has_user_gesture = has_user_gesture_;
+
+  mojom::NavigationClientPtr navigation_client_ptr;
+  navigation_client_impl_ = std::make_unique<MockNavigationClientImpl>(
+      mojo::MakeRequest(&navigation_client_ptr));
   render_frame_host_->frame_host_binding_for_testing().impl()->BeginNavigation(
-      common_params, std::move(begin_params));
+      common_params, std::move(begin_params), std::move(navigation_client_ptr));
   NavigationRequest* request =
       render_frame_host_->frame_tree_node()->navigation_request();
 

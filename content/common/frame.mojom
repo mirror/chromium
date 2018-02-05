@@ -4,6 +4,7 @@
 
 module content.mojom;
 
+import "content/common/navigation.mojom";
 import "content/common/navigation_params.mojom";
 import "content/common/service_worker/controller_service_worker.mojom";
 import "content/common/url_loader_factory_bundle.mojom";
@@ -240,7 +241,8 @@ interface FrameHost {
   // Sent by the renderer to request a navigation.
   BeginNavigation(
       CommonNavigationParams common_params,
-      BeginNavigationParams begin_params);
+      BeginNavigationParams begin_params,
+			NavigationClient navigation_client);
 
   // Sent when a subresource response has started.
   SubresourceResponseStarted(

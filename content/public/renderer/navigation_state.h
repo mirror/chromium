@@ -28,6 +28,8 @@ class CONTENT_EXPORT NavigationState {
 
   // True if this navigation was not initiated via WebFrame::LoadRequest.
   virtual bool IsContentInitiated() = 0;
+
+  virtual void UnBindNavigationClient() = 0;
 };
 
 }  // namespace content

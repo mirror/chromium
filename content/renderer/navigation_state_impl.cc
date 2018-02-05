@@ -32,6 +32,10 @@ bool NavigationStateImpl::IsContentInitiated() {
   return is_content_initiated_;
 }
 
+void NavigationStateImpl::UnBindNavigationClient() {
+  navigation_client_binding_.reset();
+}
+
 NavigationStateImpl::NavigationStateImpl(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
