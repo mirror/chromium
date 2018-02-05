@@ -17,9 +17,10 @@ ControllerServiceWorkerConnector::ControllerServiceWorkerConnector(
 
 ControllerServiceWorkerConnector::ControllerServiceWorkerConnector(
     mojom::ServiceWorkerContainerHost* container_host,
-    mojom::ControllerServiceWorkerPtr controller_ptr)
+    mojom::ControllerServiceWorkerPtr controller_ptr,
+    const std::string& client_id)
     : container_host_(container_host) {
-  ResetControllerConnection(std::move(controller_ptr));
+  ResetControllerConnection(std::move(controller_ptr), client_id);
 }
 
 mojom::ControllerServiceWorker*
@@ -73,9 +74,11 @@ void ControllerServiceWorkerConnector::OnControllerConnectionClosed() {
 }
 
 void ControllerServiceWorkerConnector::ResetControllerConnection(
-    mojom::ControllerServiceWorkerPtr controller_ptr) {
+    mojom::ControllerServiceWorkerPtr controller_ptr,
+    const std::string& client_id) {
   DCHECK_NE(State::kNoContainerHost, state_);
   controller_service_worker_ = std::move(controller_ptr);
+  client_id_ = client_id;
   if (controller_service_worker_) {
     state_ = State::kConnected;
     controller_service_worker_.set_connection_error_handler(base::BindOnce(

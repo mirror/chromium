@@ -241,12 +241,10 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
   ~FakeControllerServiceWorker() override = default;
 
   // mojom::ControllerServiceWorker:
-  void DispatchFetchEvent(
-      const network::ResourceRequest& request,
-      mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      DispatchFetchEventCallback callback) override {
+  void DispatchFetchEvent(mojom::DispatchFetchEventParamsPtr params,
+                          DispatchFetchEventCallback callback) override {
     fetch_event_count_++;
-    fetch_event_request_ = request;
+    fetch_event_request_ = params->request;
     std::move(callback).Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
                             base::Time());
   }
