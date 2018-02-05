@@ -270,6 +270,7 @@ if (is_android) {
     java_src_dir = "//chromecast/base/java/src"
     java_files = [
       "$java_src_dir/org/chromium/chromecast/base/CastSettingsManager.java",
+      "$java_src_dir/org/chromium/chromecast/base/CastSwitches.java",
       "$java_src_dir/org/chromium/chromecast/base/ChromecastConfigAndroid.java",
       "$java_src_dir/org/chromium/chromecast/base/CircularBuffer.java",
       "$java_src_dir/org/chromium/chromecast/base/DumpstateWriter.java",

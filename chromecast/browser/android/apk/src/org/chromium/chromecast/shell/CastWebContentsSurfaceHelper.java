@@ -16,9 +16,11 @@ import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.FrameLayout;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.chromecast.base.CastSwitches;
 import org.chromium.content.browser.ActivityContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentView;
@@ -191,9 +193,9 @@ class CastWebContentsSurfaceHelper {
             }
         };
         mContentViewRenderView.onNativeLibraryLoaded(mWindow);
-        // Setting the background color to black avoids rendering a white splash screen
+        // Setting the background color avoids rendering a white splash screen
         // before the players are loaded. See https://crbug/307113 for details.
-        mContentViewRenderView.setSurfaceViewBackgroundColor(Color.BLACK);
+        mContentViewRenderView.setSurfaceViewBackgroundColor(getBackgroundColor());
 
         mCastWebContentsLayout.addView(mContentViewRenderView,
                 new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
@@ -299,6 +301,20 @@ class CastWebContentsSurfaceHelper {
 
     boolean isTouchInputEnabled() {
         return mTouchInputEnabled;
+    }
+
+    private static int getBackgroundColor() {
+        String colorString =
+                CommandLine.getInstance().getSwitchValue(CastSwitches.CAST_APP_BACKGROUND_COLOR);
+        try {
+            if (colorString != null) {
+                return Color.parseColor(colorString);
+            }
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid value for %s (%s). Using default of Color.BLACK.",
+                    CastSwitches.CAST_APP_BACKGROUND_COLOR, colorString);
+        }
+        return Color.BLACK;
     }
 
     private LocalBroadcastManager getLocalBroadcastManager() {
