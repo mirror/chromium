@@ -16,6 +16,24 @@
       "revId": "58d0ec34334a93eb885a3904bf1c14c69326829f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0937972_38cdb3f1",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2018-02-05T20:49:28Z",
+      "side": 1,
+      "message": "I think it will be - this status will be used when we have neither FMP nor TTI. See https://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc?l\u003d738\u0026rcl\u003d8bf0a86cb5b9242216bb16cb8f3948a08c4ac33c",
+      "parentUuid": "f2ca41c5_33d9c407",
+      "revId": "58d0ec34334a93eb885a3904bf1c14c69326829f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
