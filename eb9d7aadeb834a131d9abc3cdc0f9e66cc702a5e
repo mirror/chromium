@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0256be20_3a28c548",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10514,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T17:57:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc9e948_30c46a94",
+      "revId": "eb9d7aadeb834a131d9abc3cdc0f9e66cc702a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "569a87f8_216f76f7",
         "filename": "storage/browser/blob/blob_reader.cc",
         "patchSetId": 12
@@ -104,6 +122,24 @@
       "revId": "eb9d7aadeb834a131d9abc3cdc0f9e66cc702a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea0941c_534a4d75",
+        "filename": "storage/browser/blob/blob_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T17:57:12Z",
+      "side": 1,
+      "message": "Done.  This pattern is a little awkward, but didn\u0027t see a quick and low-effort way to restructure the code (And this is a bit too far removed from net for me to think investing time in it to be a good use of my time).",
+      "parentUuid": "569a87f8_216f76f7",
+      "revId": "eb9d7aadeb834a131d9abc3cdc0f9e66cc702a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
