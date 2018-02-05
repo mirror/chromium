@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f2a525_d30317ad",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupUnitTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-05T21:15:14Z",
+      "side": 1,
+      "message": "nit: Remove this comment",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 87
+      },
+      "revId": "a52fbd11d5cbc5a1a697332c9b7aa85bce0f772b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
