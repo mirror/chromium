@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec10ee2_86bbe963",
+        "filename": "chrome/browser/attestation_permission_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "nit: Add blank line.",
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6716753_d2db4858",
+        "filename": "chrome/browser/attestation_permission_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "Could we make this slightly less \"defensive programming\", and add a DCHECK that one of the three methods above must have been called by this point, so |callback_| must be null, and just not try invoking the callback at all?",
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06852529_80f21408",
+        "filename": "chrome/browser/attestation_permission_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "nit: callback_forward.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573df501_d07ebde1",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "Would be nice to have unittests for the logic here. Are there any easy ways?",
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad949891_32cfc60b",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3921,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "Can you please add a comment to explain the Android behavior?",
+      "range": {
+        "startLine": 3921,
+        "startChar": 2,
+        "endLine": 3921,
+        "endChar": 32
+      },
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ab8125_01dfb34b",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "Please add unittests for changes in this file, to cover all 4 cells of your table in the CL description.\n\nLooks like you can derive from TestContentBrowserClient and inject it via content::SetBrowserClientForTesting() to mock out the Chrome parts.",
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5f8abb_a1b363fc",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "Given that we invoke this callback from so many places with literal false/true, please consider introducing a scoped enum with two values instead.",
+      "range": {
+        "startLine": 347,
+        "startChar": 32,
+        "endLine": 347,
+        "endChar": 37
+      },
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e6eeb4_659b6456",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "nit: Calling EraseAttestationStatement() and invoking the callback directly here would allow omitting the {}s around the `case` block.",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 38
+      },
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19993e7_0e20fc88",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "To reduce the level of control-type coupling here, WDYT calling into this method only when |attestation_requested| \u003d\u003d true?\n\nThat would also allow removing |attestation_preference_| as a member variable (at least for now).",
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c47e71_3725b75f",
+        "filename": "content/public/browser/content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "Just to double-check: do we intentionally allow returning the attestation by default? Would tests fail if we made `false` the default?",
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06dc0fd_97c408e4",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T15:06:44Z",
+      "side": 1,
+      "message": "comment nit: Let\u0027s make this more specific:\n\nnit: may uniquely identify the authenticator, the embedder may choose to show a permission prompt to the user, and only invoke |callback| afterwards.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 18,
+        "endLine": 1058,
+        "endChar": 41
+      },
+      "revId": "17c5e81e6cea0fb6917afbdbb2917cac8a35063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
