@@ -52,6 +52,24 @@
       "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d87aa34f_63ff4c03",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-02-05T17:14:58Z",
+      "side": 0,
+      "message": "SGTM. --smoke mainly impacts the android bots (and apparently also fuschia? any platform that has default_smoke_test_only return True), and ideally we want similar behavior on different platforms.",
+      "parentUuid": "56ef76cb_70f627e9",
+      "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
