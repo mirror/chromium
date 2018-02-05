@@ -358,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "aef14157_5e0b1157",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-05T18:40:56Z",
+      "side": 1,
+      "message": "Note that it is only the same size for CTR mode or similar, for CBC mode there is padding. I guess CBC mode is nver used though (?)",
+      "parentUuid": "7868f472_69156e38",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76d864dc_c64bbb01",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 4
