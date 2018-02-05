@@ -290,6 +290,11 @@ void SnippetsInternalsMessageHandler::OnSuggestionInvalidated(
   SendContentSuggestions();
 }
 
+void SnippetsInternalsMessageHandler::OnSuggestionDismissed(
+    const ntp_snippets::ContentSuggestion::ID& suggestion_id) {
+  // TODO: Does this need to be handled here?
+}
+
 void SnippetsInternalsMessageHandler::OnFullRefreshRequired() {
   if (!dom_loaded_) {
     return;

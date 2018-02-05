@@ -114,6 +114,18 @@ void SuggestedArticlesObserver::OnSuggestionInvalidated(
                suggestion_id.id_within_category()));
 }
 
+void SuggestedArticlesObserver::OnSuggestionDismissed(
+    const ContentSuggestion::ID& suggestion_id) {
+  // TODO(dewittj): Change this to check whether a given category is not
+  // a _remote_ category.
+  if (suggestion_id.category() != ArticlesCategory())
+    return;
+
+  prefetch_service_->GetPrefetchDispatcher()->RemovePrefetchURLsByClientId(
+      ClientId(kSuggestedArticlesNamespace,
+               suggestion_id.id_within_category()));
+}
+
 void SuggestedArticlesObserver::OnFullRefreshRequired() {
   prefetch_service_->GetPrefetchDispatcher()->RemoveAllUnprocessedPrefetchURLs(
       kSuggestedArticlesNamespace);

@@ -403,6 +403,11 @@ void NTPSnippetsBridge::OnSuggestionInvalidated(
       ConvertUTF8ToJavaString(env, suggestion_id.id_within_category()));
 }
 
+void NTPSnippetsBridge::OnSuggestionDismissed(
+    const ContentSuggestion::ID& suggestion_id) {
+  // Suggestion dismissal originates in DismissSuggestion, nothing to do here.
+}
+
 void NTPSnippetsBridge::OnFullRefreshRequired() {
   JNIEnv* env = AttachCurrentThread();
   Java_SnippetsBridge_onFullRefreshRequired(env, bridge_);

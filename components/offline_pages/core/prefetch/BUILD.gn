@@ -11,6 +11,8 @@ static_library("prefetch") {
   sources = [
     "add_unique_urls_task.cc",
     "add_unique_urls_task.h",
+    "delete_pages_task.cc",
+    "delete_pages_task.h",
     "download_archives_task.cc",
     "download_archives_task.h",
     "download_cleanup_task.cc",
@@ -166,6 +168,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "add_unique_urls_task_unittest.cc",
+    "delete_pages_task_unittest.cc",
     "download_archives_task_unittest.cc",
     "download_cleanup_task_unittest.cc",
     "download_completed_task_unittest.cc",
