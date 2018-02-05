@@ -38,12 +38,14 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /** Tests for CustomTabsConnection. */
 @RunWith(ChromeJUnit4ClassRunner.class)
@@ -526,37 +528,31 @@ public class CustomTabsConnectionTest {
      *
      * To make testing easier the test assumes that the Android Framework uses
      * the same cgroup for background processes and background _threads_, which
-     * has been the case through LOLLIPOP_MR1.
+     * is the the case between LOLLIPOP_MR1 and O.
      */
     @Test
     @SmallTest
-    public void testGetSchedulerGroup() {
+    public void testGetSchedulerGroup() throws Exception {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
         Assert.assertNotNull(CustomTabsConnection.getSchedulerGroup(Process.myPid()));
         String cgroup = CustomTabsConnection.getSchedulerGroup(Process.myPid());
-        // Tests run in the foreground.
-        Assert.assertTrue(cgroup.equals("/") || cgroup.equals("/apps"));
+        // Tests run in the foreground. Last two are from Android O.
+        List<String> foregroundGroups = Arrays.asList("/", "/apps", "/top-app", "/foreground");
+        Assert.assertTrue(foregroundGroups.contains(cgroup));
 
-        final String[] backgroundThreadCgroup = {null};
-        Thread backgroundThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int tid = Process.myTid();
-                Process.setThreadPriority(tid, Process.THREAD_PRIORITY_BACKGROUND);
-                backgroundThreadCgroup[0] = CustomTabsConnection.getSchedulerGroup(tid);
-            }
+        // On O, a background thread is still in the foreground cgroup.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) return;
+        final AtomicReference<String> backgroundThreadCgroup = new AtomicReference<>();
+        Thread backgroundThread = new Thread(() -> {
+            int tid = Process.myTid();
+            Process.setThreadPriority(tid, Process.THREAD_PRIORITY_BACKGROUND);
+            backgroundThreadCgroup.set(CustomTabsConnection.getSchedulerGroup(tid));
         });
         backgroundThread.start();
-        try {
-            backgroundThread.join();
-        } catch (InterruptedException e) {
-            Assert.fail();
-            return;
-        }
-        String threadCgroup = backgroundThreadCgroup[0];
+        backgroundThread.join();
+        String threadCgroup = backgroundThreadCgroup.get();
         Assert.assertNotNull(threadCgroup);
-        Assert.assertTrue(threadCgroup.equals("/bg_non_interactive")
-                || threadCgroup.equals("/apps/bg_non_interactive"));
+        Assert.assertTrue(CustomTabsConnection.BACKGROUND_GROUPS.contains(threadCgroup));
     }
 
     /**
