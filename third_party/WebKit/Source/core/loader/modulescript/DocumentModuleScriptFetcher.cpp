@@ -92,7 +92,9 @@ void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {
   ModuleScriptCreationParams params(
       script_resource->GetResponse().Url(), script_resource->SourceText(),
       script_resource->GetResourceRequest().GetFetchCredentialsMode(),
-      script_resource->CalculateAccessControlStatus());
+      script_resource->CalculateAccessControlStatus(nullptr));
+  // FOXME: What is the right SecurityOrigin? Previously it was Modulator's
+  // SecurityOrigin
   Finalize(params, error_messages);
 }
 
