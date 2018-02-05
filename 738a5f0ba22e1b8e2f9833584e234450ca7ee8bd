@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "f937a8e9_1f63e1f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/keyboard/VrInputConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-05T16:43:33Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "738a5f0ba22e1b8e2f9833584e234450ca7ee8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8992a1f7_4e948e03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/keyboard/VrInputConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-05T16:43:33Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "738a5f0ba22e1b8e2f9833584e234450ca7ee8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dc9f44_9b6037d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/keyboard/VrInputConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-05T16:43:33Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this part. onWebInputEdited() seems to be called after input changes - why do we need to do anything here?\nWhere from the Android framework exactly causes the input changes then?",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 79
+      },
+      "revId": "738a5f0ba22e1b8e2f9833584e234450ca7ee8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "431ab7b5_75046dbc",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/ImeAdapter.java",
         "patchSetId": 15
