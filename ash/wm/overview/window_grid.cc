@@ -833,8 +833,8 @@ void WindowGrid::InitSelectionWidget(WindowSelector::Direction direction) {
   widget_window->SetBounds(target_bounds - fade_out_direction);
   widget_window->SetName("OverviewModeSelector");
 
-  selector_shadow_.reset(new ::wm::Shadow());
-  selector_shadow_->Init(::wm::ShadowElevation::LARGE);
+  selector_shadow_ = std::make_unique<::wm::Shadow>();
+  selector_shadow_->Init(::wm::kActiveNormalShadowElevation);
   selector_shadow_->layer()->SetVisible(true);
   selection_widget_->GetLayer()->SetMasksToBounds(false);
   selection_widget_->GetLayer()->Add(selector_shadow_->layer());

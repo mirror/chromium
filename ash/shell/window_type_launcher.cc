@@ -168,7 +168,7 @@ void InitWindowTypeLauncher(const base::Closure& show_views_examples_callback) {
       Shell::GetPrimaryRootWindow(), gfx::Rect(120, 150, 300, 410));
   widget->GetNativeView()->SetName("WindowTypeLauncher");
   ::wm::SetShadowElevation(widget->GetNativeView(),
-                           ::wm::ShadowElevation::MEDIUM);
+                           ::wm::kOverlayWindowShadowElevation);
   widget->Show();
 }
 
