@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bf011d9d_885915db",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:31:40Z",
+      "side": 1,
+      "message": "It\u0027s a bit awkward, but let\u0027s move the comma to the previous line.\n\nThat means we\u0027ll need to duplicate uint32 shared_footprint_kb line for the #else case as well, but I think the formatting will look more natural (and same below).",
+      "parentUuid": "4ad2c429_b6cb7ef4",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 64
+      },
+      "revId": "4cde3365b89a9b06e22b25d23889ca53a64f7196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "063c2638_b3bcd0f7",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 4
@@ -60,6 +84,30 @@
       "writtenOn": "2018-02-05T00:53:18Z",
       "side": 1,
       "message": "I\u0027m leaning towards calling this LINUX_OR_ANDROID personally: 1) you don\u0027t have to go look up the build file to check what it means, 2) it\u0027s consistent with the ifdefs.\n\nThe other option is to define a preprocessor symbol with the same name. But that\u0027s a little more complicated for no real benefit IMO.\n\nBut get an opinion from an OWNER before you bother changing it. They may disagree.",
+      "range": {
+        "startLine": 157,
+        "startChar": 12,
+        "endLine": 157,
+        "endChar": 38
+      },
+      "revId": "4cde3365b89a9b06e22b25d23889ca53a64f7196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2d0d8b_fd99d00a",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T19:31:40Z",
+      "side": 1,
+      "message": "OS_LINUX_OR_OS_ANDROID perhaps?",
+      "parentUuid": "063c2638_b3bcd0f7",
       "range": {
         "startLine": 157,
         "startChar": 12,
