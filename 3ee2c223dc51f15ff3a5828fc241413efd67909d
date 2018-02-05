@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "336aac92_a6b0b0c2",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "I realized after my initial CL that this script actually doesn\u0027t need to be in the isolate. It only needs to be in the Chromium checkout on the machine that does the build. Better to remove it to avoid confusion.",
+      "range": {
+        "startLine": 2103,
+        "startChar": 14,
+        "endLine": 2103,
+        "endChar": 15
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7494853e_6881c3db",
+        "filename": "testing/trigger_scripts/base_test_triggerer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "typo: multiple",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f1f5f0_5509dc92",
+        "filename": "testing/trigger_scripts/base_test_triggerer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "Should the temp files be renamed to use base_test_triggerer as the prefix?",
+      "range": {
+        "startLine": 130,
+        "startChar": 46,
+        "endLine": 130,
+        "endChar": 73
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8900cb15_8e574014",
+        "filename": "testing/trigger_scripts/base_test_triggerer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 243,
+        "startChar": 48,
+        "endLine": 243,
+        "endChar": 75
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9213ea9f_fd0fea9b",
+        "filename": "testing/trigger_scripts/perf_device_trigger.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "whitespace at end of line?",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7270461a_a8806ab5",
+        "filename": "testing/trigger_scripts/perf_device_trigger.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "on-\u003e one; end comment with period.",
+      "range": {
+        "startLine": 52,
+        "startChar": 40,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ce07c6_cb70d5d2",
+        "filename": "testing/trigger_scripts/perf_device_trigger.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "Please add a new method to the BaseTestTriggerer which adds all of these arguments to a passed-in ArgumentParser, so that the logic is shared between this class and trigger_multiple_dimensions.py. The base class is assuming the presence of these fields in the resulting args.",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bf84bb_aaeccbab",
+        "filename": "testing/trigger_scripts/trigger_multiple_dimensions_unittest.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-05T19:56:20Z",
+      "side": 1,
+      "message": "Oops, this was buggy initially? Good catch, thanks for the fix.",
+      "range": {
+        "startLine": 148,
+        "startChar": 58,
+        "endLine": 148,
+        "endChar": 66
+      },
+      "revId": "3ee2c223dc51f15ff3a5828fc241413efd67909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
