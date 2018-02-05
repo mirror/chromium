@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3732a95_a4ca62bc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T23:22:45Z",
+      "side": 1,
+      "message": "\u0026\u0026 !target.attached",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fb53cc_786453ea",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T23:22:45Z",
+      "side": 1,
+      "message": "I think it was important to not trigger observers or something like this. Or not to put this target into _targets.",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6450c985_24628956",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T23:22:45Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa402b1a_b390863b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T23:22:45Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fe5fce_e61a2678",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T23:22:45Z",
+      "side": 1,
+      "message": "You\u0027ll want to move this to Connections.js. Might be a different patch though.",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
