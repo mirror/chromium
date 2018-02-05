@@ -101,22 +101,15 @@ static const int kRenderFrameId = 1;
 class TestingServiceWorkerDispatcherHost : public ServiceWorkerDispatcherHost {
  public:
   TestingServiceWorkerDispatcherHost(int process_id,
-                                     ResourceContext* resource_context,
-                                     EmbeddedWorkerTestHelper* helper)
+                                     ResourceContext* resource_context)
       : ServiceWorkerDispatcherHost(process_id, resource_context),
-        bad_messages_received_count_(0),
-        helper_(helper) {}
-
-  bool Send(IPC::Message* message) override { return helper_->Send(message); }
-
-  IPC::TestSink* ipc_sink() { return helper_->ipc_sink(); }
+        bad_messages_received_count_(0) {}
 
   void ShutdownForBadMessage() override { ++bad_messages_received_count_; }
 
   int bad_messages_received_count_;
 
  protected:
-  EmbeddedWorkerTestHelper* helper_;
   ~TestingServiceWorkerDispatcherHost() override {}
 };
 
@@ -168,8 +161,8 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
     helper_.reset(helper.release());
     // Replace the default dispatcher host.
     int process_id = helper_->mock_render_process_id();
-    dispatcher_host_ = new TestingServiceWorkerDispatcherHost(
-        process_id, &resource_context_, helper_.get());
+    dispatcher_host_ = base::MakeRefCounted<TestingServiceWorkerDispatcherHost>(
+        process_id, &resource_context_);
     helper_->RegisterDispatcherHost(process_id, nullptr);
     dispatcher_host_->Init(context_wrapper());
   }
@@ -363,9 +356,9 @@ TEST_F(ServiceWorkerDispatcherHostTest, CleanupOnRendererCrash) {
   // We should be able to hook up a new dispatcher host although the old object
   // is not yet destroyed. This is what the browser does when reusing a crashed
   // render process.
-  scoped_refptr<TestingServiceWorkerDispatcherHost> new_dispatcher_host(
-      new TestingServiceWorkerDispatcherHost(process_id, &resource_context_,
-                                             helper_.get()));
+  auto new_dispatcher_host =
+      base::MakeRefCounted<TestingServiceWorkerDispatcherHost>(
+          process_id, &resource_context_);
   new_dispatcher_host->Init(context_wrapper());
 
   // To show the new dispatcher can operate, simulate provider creation. Since

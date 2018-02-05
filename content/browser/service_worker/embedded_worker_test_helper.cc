@@ -45,25 +45,6 @@ namespace content {
 
 namespace {
 
-class MockServiceWorkerDispatcherHost : public ServiceWorkerDispatcherHost {
- public:
-  MockServiceWorkerDispatcherHost(int process_id,
-                                  ResourceContext* resource_context,
-                                  IPC::Sender* sender)
-      : ServiceWorkerDispatcherHost(process_id, resource_context),
-        sender_(sender) {}
-
-  bool Send(IPC::Message* message) override { return sender_->Send(message); }
-
- protected:
-  ~MockServiceWorkerDispatcherHost() override {}
-
- private:
-  IPC::Sender* sender_;
-
-  DISALLOW_COPY_AND_ASSIGN(MockServiceWorkerDispatcherHost);
-};
-
 void OnFetchEventCommon(
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -491,8 +472,8 @@ void EmbeddedWorkerTestHelper::RegisterDispatcherHost(
 void EmbeddedWorkerTestHelper::EnsureDispatcherHostForProcess(int process_id) {
   if (context()->GetDispatcherHost(process_id))
     return;
-  auto dispatcher_host = base::MakeRefCounted<MockServiceWorkerDispatcherHost>(
-      process_id, browser_context_->GetResourceContext(), this);
+  auto dispatcher_host = base::MakeRefCounted<ServiceWorkerDispatcherHost>(
+      process_id, browser_context_->GetResourceContext());
   dispatcher_host->Init(wrapper_.get());
   RegisterDispatcherHost(process_id, std::move(dispatcher_host));
 }

@@ -85,18 +85,9 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   void Init(ServiceWorkerContextWrapper* context_wrapper);
 
   // BrowserMessageFilter implementation
-  void OnFilterAdded(IPC::Channel* channel) override;
   void OnFilterRemoved() override;
   void OnDestruct() const override;
   bool OnMessageReceived(const IPC::Message& message) override;
-
-  // IPC::Sender implementation
-
-  // Send() queues the message until the underlying sender is ready.  This
-  // class assumes that Send() can only fail after that when the renderer
-  // process has terminated, at which point the whole instance will eventually
-  // be destroyed.
-  bool Send(IPC::Message* message) override;
 
   // These methods are virtual only for testing.
   virtual void RegisterServiceWorkerHandle(
@@ -185,9 +176,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   scoped_refptr<ServiceWorkerContextWrapper> context_wrapper_;
 
   base::IDMap<std::unique_ptr<ServiceWorkerHandle>> handles_;
-
-  bool channel_ready_;  // True after BrowserMessageFilter::sender_ != NULL.
-  std::vector<std::unique_ptr<IPC::Message>> pending_messages_;
 
   base::WeakPtrFactory<ServiceWorkerDispatcherHost> weak_ptr_factory_;
 
