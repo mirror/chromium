@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28c88bd3_de135563",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T22:47:33Z",
+      "side": 1,
+      "message": "Move this inside the content namespace (otherwise it becomes awkward if you start using content types).",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b1e094_12b9d9c7",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-05T22:47:33Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "9ca5a74de12880c2122f8dc2e063e06b6cd17661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
