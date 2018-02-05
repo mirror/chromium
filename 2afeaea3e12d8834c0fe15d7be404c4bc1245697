@@ -22,6 +22,30 @@
       "revId": "2afeaea3e12d8834c0fe15d7be404c4bc1245697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ff0e5c_03354b71",
+        "filename": "components/url_pattern_index/url_pattern_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-05T20:05:24Z",
+      "side": 1,
+      "message": "Done good catch. Used append() instead which is similar.",
+      "parentUuid": "8ad5013a_cc8247c6",
+      "range": {
+        "startLine": 781,
+        "startChar": 2,
+        "endLine": 781,
+        "endChar": 7
+      },
+      "revId": "2afeaea3e12d8834c0fe15d7be404c4bc1245697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
