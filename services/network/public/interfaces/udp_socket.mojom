@@ -162,6 +162,9 @@ interface UDPSocket {
   Send(mojo.common.mojom.ReadOnlyBuffer data,
        MutableNetworkTrafficAnnotationTag traffic_annotation)
       => (int32 result);
+
+  // Closes the socket. The socket can be re-Opened() after Close().
+  Close();
 };
 
 // An interface the consumers of UDPSocket can implement to listen for incoming

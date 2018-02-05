@@ -67,6 +67,7 @@ class UDPSocket : public mojom::UDPSocket {
                          int buf_len,
                          net::IPEndPoint* address,
                          const net::CompletionCallback& callback) = 0;
+    virtual void Close() = 0;
   };
 
   UDPSocket(mojom::UDPSocketRequest request,
@@ -96,6 +97,7 @@ class UDPSocket : public mojom::UDPSocket {
   void Send(base::span<const uint8_t> data,
             const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
             SendCallback callback) override;
+  void Close() override;
 
  private:
   friend class UDPSocketTest;
