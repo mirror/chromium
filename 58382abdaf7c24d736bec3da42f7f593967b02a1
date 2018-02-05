@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "210c71c8_c02fb241",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "Surely this should be current because it has already been incremented above.",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 13
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f82cca_5b0ff508",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "Maybe keep consistency with other methods and remove this iterator and look it up here. It may require one more lookup but I feel it makes the code feel simpler.",
+      "range": {
+        "startLine": 411,
+        "startChar": 4,
+        "endLine": 411,
+        "endChar": 57
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bab8789_5e1c00eb",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "This should probably be a DCHECK not a if check.",
+      "range": {
+        "startLine": 414,
+        "startChar": 2,
+        "endLine": 414,
+        "endChar": 46
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845799ad_b5924f0e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "Remove this iterator to match comment in cc file.",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 48
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631fea18_9ae82c63",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "Since the ordering doesn\u0027t matter, maybe this can be a set instead of a list? It also encodes the \"requests executed in parallel\" at the type level which is nice.",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42f11ac_ec869f49",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "Please try and merge this code with the above code if possible; it basically looks exactly the same.",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 343,
+        "endChar": 28
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3227397_9d3e8d6a",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-02-05T14:37:54Z",
+      "side": 1,
+      "message": "Ditto merging with below.",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 384,
+        "endChar": 6
+      },
+      "revId": "58382abdaf7c24d736bec3da42f7f593967b02a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
