@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50242b5c_788fdeb1",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-02-05T10:17:59Z",
+      "side": 1,
+      "message": "Done\n\nThere\u0027s the catch that now the entire menu (including import) is blocked on the password list loading. But that\u0027s probably fine.",
+      "parentUuid": "0938efb2_376f442a",
+      "range": {
+        "startLine": 298,
+        "startChar": 6,
+        "endLine": 298,
+        "endChar": 18
+      },
+      "revId": "27986bbf740cfc16122e82a7f49296ce4fa93db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0bab145_f0bfaeec",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "27986bbf740cfc16122e82a7f49296ce4fa93db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4307b4_cf5115ec",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-02-05T10:17:59Z",
+      "side": 1,
+      "message": "None that I know of. It reflects whether the feature is enabled, which \"takes effect the next time you relaunch Google Chrome\".",
+      "parentUuid": "b0bab145_f0bfaeec",
+      "range": {
+        "startLine": 586,
+        "startChar": 11,
+        "endLine": 586,
+        "endChar": 58
+      },
+      "revId": "27986bbf740cfc16122e82a7f49296ce4fa93db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
