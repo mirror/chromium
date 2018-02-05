@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c383cc85_50b66351",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "134a7fae_0c3d7c51",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698c0d73_a6f21ea3",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 13
@@ -86,6 +104,24 @@
       "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5552b906_485c146f",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698c0d73_a6f21ea3",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "335f056e_856ee6ad",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d570b717_0a503c4e",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2101bf42_3e188833",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 13
@@ -123,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "73900b21_b8a9f2fe",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "Ah I used to have 2 separate test fixtures, but merged them without updating this comment. Fixed.",
+      "parentUuid": "2101bf42_3e188833",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19e402cf_ec177132",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 13
@@ -134,6 +206,24 @@
       "writtenOn": "2018-01-26T18:52:03Z",
       "side": 1,
       "message": "From a testing standpoint, this seems to introduce a dependency on the set of trusted logs we have, and a dependency on a Real Cert. Is there a way we can reduce those dependencies to fully hermetic copies?\n\nIf something goes wrong with these tests, or we want to build on them, I would have no idea on how to do that - hence the concern :)",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c52a46b_63e8121e",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "I had a look and it didn\u0027t appear to be trivial to override the log list, which is what is needed. That\u0027s why I opted to add a TODO (below) and I can put together a separate change to enable overriding the log list. The dependency on a Real Cert shouldn\u0027t be a problem, as it can\u0027t expire from the point of view of the test (cert verification is hard-coded to succeed).",
+      "parentUuid": "19e402cf_ec177132",
       "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +262,24 @@
       "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81c12d2_347f44e0",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "The hard-coded checks for localhost are exactly the problem this bypasses. I can\u0027t use the RuleBasedHostResolverProc because it doesn\u0027t get called for lookups of \"localhost\". Instead, I need to go directly to the HostCache and add an entry so that it appears as though a DNS lookup has been performed for \"localhost\".",
+      "parentUuid": "d8d91f4d_c2a3a090",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +330,24 @@
       "side": 1,
       "message": "Thanks!  Missed this.  This is the right way, and will continue to work post-servicification (Assuming cert verified injection is updated to work with the network service, of course).\n\nShould probably check that the returned value is net::OK, though.",
       "parentUuid": "24bd5203_a42e5915",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1952cc5_cab7670d",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2018-02-05T14:12:07Z",
+      "side": 1,
+      "message": "I was intentionally not doing that, because the request results in a 404 and so doesn\u0027t return net::OK. If I change the test to register some URL handlers and use one of those, Chrome ends up making at least one extra request as a side-effect which makes the histogram assertions messier.",
+      "parentUuid": "8e85f3d5_5ab9c1d1",
       "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
