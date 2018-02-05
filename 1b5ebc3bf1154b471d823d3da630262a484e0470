@@ -16,6 +16,24 @@
       "revId": "1b5ebc3bf1154b471d823d3da630262a484e0470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d36e80_eea5da5f",
+        "filename": "chrome/test/data/extensions/api_test/bookmarks/test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-05T22:12:38Z",
+      "side": 1,
+      "message": "Done (with some modifications to add chrome.test.passCallback).",
+      "parentUuid": "16ea06b5_76852573",
+      "revId": "1b5ebc3bf1154b471d823d3da630262a484e0470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
