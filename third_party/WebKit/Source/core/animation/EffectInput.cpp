@@ -63,11 +63,14 @@ namespace {
 //
 // If the composite property cannot be extracted or parsed for some reason, an
 // exception will be thrown in |exception_state|.
-Vector<EffectModel::CompositeOperation> ParseCompositeProperty(
+Vector<WTF::Optional<EffectModel::CompositeOperation>> ParseCompositeProperty(
     const BasePropertyIndexedKeyframe& keyframe,
     ExceptionState& exception_state) {
-  const CompositeOperationOrCompositeOperationSequence& composite =
+  const CompositeOperationOrCompositeOperationOrNullSequence& composite =
       keyframe.composite();
+  if (composite.IsNull())
+    return {};
+
   if (composite.IsCompositeOperation()) {
     EffectModel::CompositeOperation composite_operation;
     if (!EffectModel::StringToCompositeOperation(
@@ -79,17 +82,21 @@ Vector<EffectModel::CompositeOperation> ParseCompositeProperty(
     return {composite_operation};
   }
 
-  Vector<EffectModel::CompositeOperation> result;
+  Vector<WTF::Optional<EffectModel::CompositeOperation>> result;
   for (const String& composite_operation_string :
-       composite.GetAsCompositeOperationSequence()) {
-    EffectModel::CompositeOperation composite_operation;
-    if (!EffectModel::StringToCompositeOperation(composite_operation_string,
-                                                 composite_operation,
-                                                 &exception_state)) {
-      DCHECK(exception_state.HadException());
-      return {};
+       composite.GetAsCompositeOperationOrNullSequence()) {
+    if (composite_operation_string.IsNull()) {
+      result.push_back(WTF::nullopt);
+    } else {
+      EffectModel::CompositeOperation composite_operation;
+      if (!EffectModel::StringToCompositeOperation(composite_operation_string,
+                                                   composite_operation,
+                                                   &exception_state)) {
+        DCHECK(exception_state.HadException());
+        return {};
+      }
+      result.push_back(composite_operation);
     }
-    result.push_back(composite_operation);
   }
   return result;
 }
@@ -439,7 +446,7 @@ KeyframeEffectModelBase* EffectInput::ConvertObjectForm(
   else
     easings = property_indexed_keyframe.easing().GetAsStringSequence();
 
-  Vector<EffectModel::CompositeOperation> composite_operations =
+  Vector<WTF::Optional<EffectModel::CompositeOperation>> composite_operations =
       ParseCompositeProperty(property_indexed_keyframe, exception_state);
   if (exception_state.HadException())
     return nullptr;
@@ -579,8 +586,10 @@ KeyframeEffectModelBase* EffectInput::ConvertObjectForm(
       // property keyframes, repeat the elements in composite modes successively
       // starting from the beginning of the list until composite modes has as
       // many items as property keyframes.
-      keyframe->SetComposite(
-          composite_operations[i % composite_operations.size()]);
+      WTF::Optional<EffectModel::CompositeOperation> composite =
+          composite_operations[i % composite_operations.size()];
+      if (composite)
+        keyframe->SetComposite(composite.value());
     }
 
     results.push_back(keyframe);
