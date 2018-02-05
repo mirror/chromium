@@ -309,6 +309,9 @@ void GraphicsLayer::PaintRecursively() {
 }
 
 void GraphicsLayer::PaintRecursivelyInternal() {
+  if (client_.ShouldThrottleRendering())
+    return;
+
   if (DrawsContent())
     Paint(nullptr);
 
@@ -369,6 +372,9 @@ bool GraphicsLayer::PaintWithoutCommit(
     const IntRect* interest_rect,
     GraphicsContext::DisabledMode disabled_mode) {
   DCHECK(DrawsContent());
+
+  if (client_.ShouldThrottleRendering())
+    return false;
 
   if (FirstPaintInvalidationTracking::IsEnabled())
     debug_info_.ClearAnnotatedInvalidateRects();
@@ -1306,8 +1312,10 @@ CompositorElementId GraphicsLayer::GetElementId() const {
 }
 
 sk_sp<PaintRecord> GraphicsLayer::CapturePaintRecord() const {
-  if (!DrawsContent())
-    return nullptr;
+  DCHECK(DrawsContent());
+
+  if (client_.ShouldThrottleRendering())
+    return sk_sp<PaintRecord>(new PaintRecord);
 
   FloatRect bounds(IntRect(IntPoint(0, 0), ExpandedIntSize(Size())));
   GraphicsContext graphics_context(GetPaintController());
