@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efb25af9_19d509c0",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-02-05T23:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38300c0f_607de404",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376f7644_7073b09d",
         "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325ce147_4601c963",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-02-05T23:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376f7644_7073b09d",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0f403573_b426c700",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-02-05T23:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b359c08_f02eda14",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a87ac976_8b03fc81",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-05T05:01:31Z",
       "side": 1,
       "message": "Can we avoid code duplication by combining :matches / :is into a single case? Or call a helper that has lines 567..574?",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f720c81_91eddd18",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-02-05T23:30:33Z",
+      "side": 1,
+      "message": "If there is a helper function, don\u0027t we need a copy constructor for the selector which is type CSSParserSelector since it will get implicitly copied?\n\nNot sure what you mean by having a single case.",
+      "parentUuid": "a87ac976_8b03fc81",
       "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213b3242_26591455",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-02-05T23:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7525cf15_c72ea09d",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
