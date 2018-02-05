@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8a90eab_07b8b422",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-05T20:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1947da75_d6939bc2",
+      "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d907080_1a37d1bf",
         "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "516edfb7_e8f1abed",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-05T20:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d907080_1a37d1bf",
+      "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af53af86_38ac3fba",
         "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe5ee47_a6343e5f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2805,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-05T20:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af53af86_38ac3fba",
+      "revId": "0588804e258fa9cd3699530b3cefa47760b59263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
