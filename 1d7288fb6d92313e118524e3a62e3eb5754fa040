@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa32936_5fa710a8",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T19:48:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this one. This has been here since the code\u0027s been upstreamed -- can you check in the internal repo who added the code there, and ask them if this is an intentional fallthrough?  If so, why? If not, what are the repercussions of not having the break -- does this fix a real bug, or is the effect not observable for some reason?",
+      "revId": "1d7288fb6d92313e118524e3a62e3eb5754fa040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
