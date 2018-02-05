@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f5fd312_5affb3dd",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T18:28:57Z",
+      "side": 1,
+      "message": "Nit (optional): Given that this value depends solely on activePrinter.printerPPDPath, could it be converted to a computed property, see [1]\n\nBasically\ninvalidPPD: {\n  type:Boolean,\n  computed: \u0027computeInvalidPPD_(activePrinter.printerPPDPath)\u0027,\n},\n\nand later\n\ncomputeInvalidPPD_: function() {\n  return !this.activePrinter.printerPPDPath;\n}\n\n[1] https://www.polymer-project.org/1.0/docs/devguide/observers#define-a-computed-property",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "9e3374c804144994933834ec4a216f6ac631042e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
