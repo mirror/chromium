@@ -2000,6 +2000,9 @@ public class ToolbarPhone extends ToolbarLayout
             animator.setDuration(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
             animator.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
             animators.add(animator);
+
+            animator = createUrlFocusThemeColorTransition(true);
+            if (animator != null) animators.add(animator);
         }
     }
 
@@ -2078,7 +2081,40 @@ public class ToolbarPhone extends ToolbarLayout
             animator.setDuration(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
             animator.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
             animators.add(animator);
+
+            animator = createUrlFocusThemeColorTransition(false);
+            if (animator != null) animators.add(animator);
         }
+    }
+
+    /**
+     * @param hasFocus Whether the location bar is focused.
+     * @return An animator that transitions between the theme color and the default color.
+     */
+    private Animator createUrlFocusThemeColorTransition(boolean hasFocus) {
+        final int themeColor = getToolbarDataProvider().getPrimaryColor();
+        final int defaultColor =
+                ColorUtils.getDefaultThemeColor(getResources(), true, isIncognito());
+
+        final int themedLocationBarColor = getLocationBarColorForToolbarColor(themeColor);
+        final int defaultLocationBarColor = getLocationBarColorForToolbarColor(defaultColor);
+
+        if (themedLocationBarColor == defaultLocationBarColor || themeColor == defaultColor) {
+            return null;
+        }
+
+        ValueAnimator valueAnimator =
+                ValueAnimator.ofFloat(mUrlFocusChangePercent, hasFocus ? 1 : 0);
+        valueAnimator.setDuration(URL_FOCUS_CHANGE_ANIMATION_DURATION_MS);
+        valueAnimator.addUpdateListener((ValueAnimator a) -> {
+            float fraction = (float) a.getAnimatedValue();
+            updateToolbarBackground(
+                    ColorUtils.getColorWithOverlay(themeColor, defaultColor, fraction));
+            updateModernLocationBarColor(ColorUtils.getColorWithOverlay(
+                    themedLocationBarColor, defaultLocationBarColor, fraction));
+        });
+
+        return valueAnimator;
     }
 
     @Override
