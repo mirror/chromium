@@ -22,8 +22,8 @@
 
 namespace {
 // Time to wait for an authenticator to successfully complete an operation.
-constexpr TimeDelta kAdjustedTimeoutLower = TimeDelta::FromMinutes(1);
-constexpr TimeDelta kAdjustedTimeoutUpper = TimeDelta::FromMinutes(2);
+constexpr TimeDelta kAdjustedTimeoutLower = TimeDelta::FromSeconds(1);
+constexpr TimeDelta kAdjustedTimeoutUpper = TimeDelta::FromMinutes(1);
 
 WTF::TimeDelta AdjustTimeout(uint32_t timeout) {
   WTF::TimeDelta adjusted_timeout;
