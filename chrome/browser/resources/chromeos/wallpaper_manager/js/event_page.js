@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var WALLPAPER_PICKER_WIDTH = 574;
-var WALLPAPER_PICKER_HEIGHT = 420;
-
 var wallpaperPickerWindow = null;
 
 var surpriseWallpaper = null;
@@ -164,8 +161,8 @@ SurpriseWallpaper.prototype.setRandomWallpaper_ = function(dateString) {
           });
           var index = Math.floor(Math.random() * filtered.length);
           var wallpaper = filtered[index];
-          var wallpaperURL =
-              wallpaper.base_url + Constants.HighResolutionSuffix;
+          var wallpaperURL = wallpaper.base_url +
+              WallpaperUtil.getOnlineWallpaperHighResolutionSuffix();
           var onSuccess = function() {
             WallpaperUtil.saveWallpaperInfo(
                 wallpaperURL, wallpaper.default_layout,
@@ -259,23 +256,28 @@ chrome.app.runtime.onLaunched.addListener(function() {
     return;
   }
 
-  chrome.app.window.create(
-      'main.html', {
-        frame: 'none',
-        width: WALLPAPER_PICKER_WIDTH,
-        height: WALLPAPER_PICKER_HEIGHT,
-        resizable: false,
-        alphaEnabled: true
-      },
-      function(w) {
-        wallpaperPickerWindow = w;
-        chrome.wallpaperPrivate.minimizeInactiveWindows();
-        w.onClosed.addListener(function() {
-          wallpaperPickerWindow = null;
-          chrome.wallpaperPrivate.restoreMinimizedWindows();
+  chrome.commandLinePrivate.hasSwitch('new-wallpaper-picker', (result) => {
+    var windowWidth = result ? 800 : 574;
+    var windowHeight = result ? 800 : 420;
+
+    chrome.app.window.create(
+        'main.html', {
+          frame: 'none',
+          width: windowWidth,
+          height: windowHeight,
+          resizable: false,
+          alphaEnabled: true
+        },
+        function(w) {
+          wallpaperPickerWindow = w;
+          chrome.wallpaperPrivate.minimizeInactiveWindows();
+          w.onClosed.addListener(function() {
+            wallpaperPickerWindow = null;
+            chrome.wallpaperPrivate.restoreMinimizedWindows();
+          });
+          WallpaperUtil.testSendMessage('wallpaper-window-created');
         });
-        WallpaperUtil.testSendMessage('wallpaper-window-created');
-      });
+  });
 });
 
 chrome.syncFileSystem.onFileStatusChanged.addListener(function(detail) {
