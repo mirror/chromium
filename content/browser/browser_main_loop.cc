@@ -1626,8 +1626,14 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif
 
 #if BUILDFLAG(ENABLE_WEBRTC)
+  LOG(ERROR)
+      << "ELAD!!! Before WebRtcEventLogManager::CreateSingletonInstance = "
+      << ((void*)webrtc_event_log_manager_.get());
   webrtc_event_log_manager_.reset(
       WebRtcEventLogManager::CreateSingletonInstance());
+  LOG(ERROR)
+      << "ELAD!!! After WebRtcEventLogManager::CreateSingletonInstance = "
+      << ((void*)webrtc_event_log_manager_.get());
   webrtc_internals_.reset(WebRTCInternals::CreateSingletonInstance());
 #endif
 
