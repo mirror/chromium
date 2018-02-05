@@ -39,6 +39,30 @@
       "revId": "61ab792f785aea355d72704f1256af75a11c7229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2ab9c8_f7a29a14",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T01:39:31Z",
+      "side": 1,
+      "message": "oops",
+      "parentUuid": "6fe96dd5_43f29e29",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "61ab792f785aea355d72704f1256af75a11c7229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
