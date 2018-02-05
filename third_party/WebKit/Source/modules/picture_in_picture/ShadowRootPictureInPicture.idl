@@ -4,14 +4,10 @@
 
 // https://wicg.github.io/picture-in-picture/#documentorshadowroot-extension
 [
-    ImplementedAs=DocumentPictureInPicture,
+    ImplementedAs=ShadowRootPictureInPicture,
     RuntimeEnabled=PictureInPictureAPI
 ]
-partial interface Document {
-    readonly attribute boolean pictureInPictureEnabled;
-
-    [CallWith=ScriptState] Promise<void> exitPictureInPicture();
-
+partial interface ShadowRoot {
     // TODO(crbug.com/656517): Define this attribute in DocumentOrShadowRoot
     readonly attribute HTMLVideoElement? pictureInPictureElement;
 };
