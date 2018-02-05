@@ -19,10 +19,6 @@ class Browser;  // TODO(stevenjb) eliminate this dependency.
 class GURL;
 class Profile;
 
-namespace base {
-class DictionaryValue;
-}
-
 namespace ui {
 class BaseWindow;
 }
@@ -71,19 +67,6 @@ class WindowController {
 
   // Return the type name for the window.
   virtual std::string GetWindowTypeText() const = 0;
-
-  // Populates a dictionary for the Window object. Override this to set
-  // implementation specific properties (call the base implementation first to
-  // set common properties).
-  std::unique_ptr<base::DictionaryValue> CreateWindowValue() const;
-
-  // Populates a dictionary for the Window object, including a list of tabs.
-  virtual std::unique_ptr<base::DictionaryValue> CreateWindowValueWithTabs(
-      const extensions::Extension* extension) const = 0;
-
-  virtual std::unique_ptr<api::tabs::Tab> CreateTabObject(
-      const extensions::Extension* extension,
-      int tab_index) const = 0;
 
   // Returns false if the window is in a state where closing the window is not
   // permitted and sets |reason| if not NULL.

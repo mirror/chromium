@@ -46,62 +46,6 @@ std::string AppWindowController::GetWindowTypeText() const {
   return tabs_constants::kWindowTypeValueApp;
 }
 
-std::unique_ptr<base::DictionaryValue>
-AppWindowController::CreateWindowValueWithTabs(
-    const Extension* extension) const {
-  std::unique_ptr<base::DictionaryValue> result = CreateWindowValue();
-
-  std::unique_ptr<base::DictionaryValue> tab_value =
-      CreateTabObject(extension, 0)->ToValue();
-  if (!tab_value)
-    return result;
-
-  auto tab_list = std::make_unique<base::ListValue>();
-  tab_list->Append(std::move(tab_value));
-  result->Set(tabs_constants::kTabsKey, std::move(tab_list));
-
-  return result;
-}
-
-std::unique_ptr<api::tabs::Tab> AppWindowController::CreateTabObject(
-    const extensions::Extension* extension,
-    int tab_index) const {
-  if (tab_index > 0)
-    return nullptr;
-
-  content::WebContents* web_contents = app_window_->web_contents();
-  if (!web_contents)
-    return nullptr;
-
-  std::unique_ptr<api::tabs::Tab> tab_object(new api::tabs::Tab);
-  tab_object->id.reset(new int(SessionTabHelper::IdForTab(web_contents)));
-  tab_object->index = 0;
-  tab_object->window_id =
-      SessionTabHelper::IdForWindowContainingTab(web_contents);
-  tab_object->url.reset(new std::string(web_contents->GetURL().spec()));
-  tab_object->status.reset(new std::string(
-      ExtensionTabUtil::GetTabStatusText(web_contents->IsLoading())));
-  tab_object->active = app_window_->GetBaseWindow()->IsActive();
-  tab_object->selected = true;
-  tab_object->highlighted = true;
-  tab_object->pinned = false;
-  tab_object->title.reset(
-      new std::string(base::UTF16ToUTF8(web_contents->GetTitle())));
-  tab_object->incognito = app_window_->GetBaseWindow()->IsActive();
-  gfx::Rect bounds = app_window_->GetBaseWindow()->GetBounds();
-  tab_object->width.reset(new int(bounds.width()));
-  tab_object->height.reset(new int(bounds.height()));
-
-  const Extension* ext = app_window_->GetExtension();
-  if (ext) {
-    std::string icon_str(chrome::kChromeUIFaviconURL);
-    icon_str.append(app_window_->GetExtension()->url().spec());
-    tab_object->fav_icon_url.reset(new std::string(icon_str));
-  }
-
-  return tab_object;
-}
-
 bool AppWindowController::CanClose(Reason* reason) const {
   return true;
 }
