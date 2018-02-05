@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91f55d09_a9797cfa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc15d991_bcb86e7f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb3e651_45f53844",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2018-02-05T19:38:41Z",
       "side": 1,
       "message": "I think working with the service belongs to the panel, not dialog. Dialog should be about UI only.",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec3e5b3_9dd3ebc8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Talked to Paul about this, basically Audits2Dialog still owns the lifecycle and flow of running an audit after this CL. As you point out, there\u0027s a good case to be made for splitting this up further and making it just the UI and provide hooks into all the necessary places for lighthouse/protocol/emulation/etc. \n\nSince this is a sizable chunk of refactoring already though, keeping the dialog owning these pieces allowed for an easier to follow review. Not sure if you feel strongly about doing that next step in this CL though?",
+      "parentUuid": "4cb3e651_45f53844",
       "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6627b11d_71f6ce26",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f6644a_da1b6da8",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd7642e7_96b5be30",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b332d1_3600bdbb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd7642e7_96b5be30",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "582c6ad0_6d83d4a9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dc1f30b_0d022063",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f2f2d2f_0d0772a0",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "4e7a83d4_315c0697",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f2f2d2f_0d0772a0",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d88987d_65746d94",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba956444_cea78209",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d88987d_65746d94",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "99889838_c05c167b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2ProtocolService.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01799098_33fc97b0",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6aad894_4c1e7c54",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2StatusView.js",
         "patchSetId": 2
@@ -170,6 +326,30 @@
       "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf98065e_4cfbd365",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2StatusView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-02-05T20:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6aad894_4c1e7c54",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
