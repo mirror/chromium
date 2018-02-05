@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "788111bb_16383805",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2018-02-05T17:30:52Z",
+      "side": 1,
+      "message": "New patch set follows that actually takes this out.",
+      "revId": "c4f911d0013ab55697b1ce4ce75c7b46f11b4ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
