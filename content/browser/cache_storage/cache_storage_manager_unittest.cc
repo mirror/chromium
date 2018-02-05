@@ -53,9 +53,11 @@
 #include "storage/common/blob_storage/blob_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
+#include "url/origin.h"
 
 using blink::mojom::CacheStorageError;
 using network::mojom::FetchResponseType;
+using url::Origin;
 
 namespace content {
 namespace cache_storage_manager_unittest {
@@ -120,8 +122,8 @@ class CacheStorageManagerTest : public testing::Test {
         blob_storage_context_(nullptr),
         callback_bool_(false),
         callback_error_(CacheStorageError::kSuccess),
-        origin1_("http://example1.com"),
-        origin2_("http://example2.com") {}
+        origin1_(Origin::Create(GURL("http://example1.com"))),
+        origin2_(Origin::Create(GURL("http://example2.com"))) {}
 
   void SetUp() override {
     base::FilePath temp_dir_path;
@@ -225,9 +227,9 @@ class CacheStorageManagerTest : public testing::Test {
     mock_quota_manager_ = new MockQuotaManager(
         MemoryOnly(), temp_dir_path, base::ThreadTaskRunnerHandle::Get().get(),
         quota_policy_.get());
-    mock_quota_manager_->SetQuota(GURL(origin1_), StorageType::kTemporary,
+    mock_quota_manager_->SetQuota(origin1_.GetURL(), StorageType::kTemporary,
                                   1024 * 1024 * 100);
-    mock_quota_manager_->SetQuota(GURL(origin2_), StorageType::kTemporary,
+    mock_quota_manager_->SetQuota(origin2_.GetURL(), StorageType::kTemporary,
                                   1024 * 1024 * 100);
 
     quota_manager_proxy_ = new MockQuotaManagerProxy(
@@ -243,7 +245,7 @@ class CacheStorageManagerTest : public testing::Test {
         blob_storage_context->context()->AsWeakPtr());
   }
 
-  bool FlushCacheStorageIndex(const GURL& origin) {
+  bool FlushCacheStorageIndex(const Origin& origin) {
     callback_bool_ = false;
     base::RunLoop loop;
     bool write_was_scheduled =
@@ -278,7 +280,7 @@ class CacheStorageManagerTest : public testing::Test {
     cache_manager_ = nullptr;
   }
 
-  bool Open(const GURL& origin, const std::string& cache_name) {
+  bool Open(const Origin& origin, const std::string& cache_name) {
     base::RunLoop loop;
     cache_manager_->OpenCache(
         origin, cache_name,
@@ -294,7 +296,7 @@ class CacheStorageManagerTest : public testing::Test {
     return !error;
   }
 
-  bool Has(const GURL& origin, const std::string& cache_name) {
+  bool Has(const Origin& origin, const std::string& cache_name) {
     base::RunLoop loop;
     cache_manager_->HasCache(
         origin, cache_name,
@@ -305,7 +307,7 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_bool_;
   }
 
-  bool Delete(const GURL& origin, const std::string& cache_name) {
+  bool Delete(const Origin& origin, const std::string& cache_name) {
     base::RunLoop loop;
     cache_manager_->DeleteCache(
         origin, cache_name,
@@ -316,7 +318,7 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_bool_;
   }
 
-  size_t Keys(const GURL& origin) {
+  size_t Keys(const Origin& origin) {
     base::RunLoop loop;
     cache_manager_->EnumerateCaches(
         origin,
@@ -326,7 +328,7 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_cache_index_.num_entries();
   }
 
-  bool StorageMatch(const GURL& origin,
+  bool StorageMatch(const Origin& origin,
                     const std::string& cache_name,
                     const GURL& url,
                     const CacheStorageCacheQueryParams& match_params =
@@ -337,7 +339,7 @@ class CacheStorageManagerTest : public testing::Test {
   }
 
   bool StorageMatchWithRequest(
-      const GURL& origin,
+      const Origin& origin,
       const std::string& cache_name,
       const ServiceWorkerFetchRequest& request,
       const CacheStorageCacheQueryParams& match_params =
@@ -355,7 +357,7 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_error_ == CacheStorageError::kSuccess;
   }
 
-  bool StorageMatchAll(const GURL& origin,
+  bool StorageMatchAll(const Origin& origin,
                        const GURL& url,
                        const CacheStorageCacheQueryParams& match_params =
                            CacheStorageCacheQueryParams()) {
@@ -365,7 +367,7 @@ class CacheStorageManagerTest : public testing::Test {
   }
 
   bool StorageMatchAllWithRequest(
-      const GURL& origin,
+      const Origin& origin,
       const ServiceWorkerFetchRequest& request,
       const CacheStorageCacheQueryParams& match_params =
           CacheStorageCacheQueryParams()) {
@@ -483,11 +485,11 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_error_ == CacheStorageError::kSuccess;
   }
 
-  CacheStorage* CacheStorageForOrigin(const GURL& origin) {
+  CacheStorage* CacheStorageForOrigin(const Origin& origin) {
     return cache_manager_->FindOrCreateCacheStorage(origin);
   }
 
-  int64_t GetOriginUsage(const GURL& origin) {
+  int64_t GetOriginUsage(const Origin& origin) {
     base::RunLoop loop;
     cache_manager_->GetOriginUsage(
         origin, base::Bind(&CacheStorageManagerTest::UsageCallback,
@@ -517,7 +519,7 @@ class CacheStorageManagerTest : public testing::Test {
     run_loop->Quit();
   }
 
-  int64_t GetSizeThenCloseAllCaches(const GURL& origin) {
+  int64_t GetSizeThenCloseAllCaches(const Origin& origin) {
     base::RunLoop loop;
     CacheStorage* cache_storage = CacheStorageForOrigin(origin);
     cache_storage->GetSizeThenCloseAllCaches(
@@ -527,7 +529,7 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_usage_;
   }
 
-  int64_t Size(const GURL& origin) {
+  int64_t Size(const Origin& origin) {
     base::RunLoop loop;
     CacheStorage* cache_storage = CacheStorageForOrigin(origin);
     cache_storage->Size(base::BindOnce(&CacheStorageManagerTest::UsageCallback,
@@ -536,11 +538,11 @@ class CacheStorageManagerTest : public testing::Test {
     return callback_usage_;
   }
 
-  int64_t GetQuotaOriginUsage(const GURL& origin) {
+  int64_t GetQuotaOriginUsage(const Origin& origin) {
     int64_t usage(CacheStorage::kSizeUnknown);
     base::RunLoop loop;
     quota_manager_proxy_->GetUsageAndQuota(
-        base::ThreadTaskRunnerHandle::Get().get(), origin,
+        base::ThreadTaskRunnerHandle::Get().get(), origin.GetURL(),
         StorageType::kTemporary,
         base::Bind(&CacheStorageManagerTest::DidGetQuotaOriginUsage,
                    base::Unretained(this), base::Unretained(&usage), &loop));
@@ -579,8 +581,8 @@ class CacheStorageManagerTest : public testing::Test {
   std::unique_ptr<storage::BlobDataHandle> callback_data_handle_;
   CacheStorageIndex callback_cache_index_;
 
-  const GURL origin1_;
-  const GURL origin2_;
+  const Origin origin1_;
+  const Origin origin2_;
 
   int64_t callback_usage_;
   std::vector<CacheStorageUsageInfo> callback_all_origins_usage_;
@@ -890,7 +892,8 @@ TEST_F(CacheStorageManagerTest, BadCacheName) {
 TEST_F(CacheStorageManagerTest, BadOriginName) {
   // Since the implementation writes origin names to disk, ensure that we don't
   // escape the directory.
-  GURL bad_origin("http://../../../../../../../../../../../../../../foo");
+  Origin bad_origin(Origin::Create(
+      GURL("http://../../../../../../../../../../../../../../foo")));
   EXPECT_TRUE(Open(bad_origin, "foo"));
   EXPECT_EQ(1u, Keys(bad_origin));
   EXPECT_STREQ("foo", GetFirstIndexName().c_str());
@@ -1028,7 +1031,7 @@ TEST_F(CacheStorageManagerTest, CacheSizeCorrectAfterReopen) {
 }
 
 TEST_F(CacheStorageManagerTest, CacheSizePaddedAfterReopen) {
-  const GURL kFooURL = origin1_.Resolve("foo");
+  const GURL kFooURL = origin1_.GetURL().Resolve("foo");
   const std::string kCacheName = "foo";
 
   int64_t put_delta = quota_manager_proxy_->last_notified_delta();
@@ -1092,7 +1095,7 @@ TEST_F(CacheStorageManagerTest, QuotaCorrectAfterReopen) {
     CacheStorageCacheHandle cache_handle = std::move(callback_cache_handle_);
     base::RunLoop().RunUntilIdle();
 
-    const GURL kFooURL = origin1_.Resolve("foo");
+    const GURL kFooURL = origin1_.GetURL().Resolve("foo");
     EXPECT_TRUE(CachePut(cache_handle.value(), kFooURL, response_type));
     cache_size = Size(origin1_);
 
@@ -1109,14 +1112,14 @@ TEST_F(CacheStorageManagerTest, QuotaCorrectAfterReopen) {
   EXPECT_EQ(cache_size, GetQuotaOriginUsage(origin1_));
 
   // And write a second equally sized value and verify size is doubled.
-  const GURL kBarURL = origin1_.Resolve("bar");
+  const GURL kBarURL = origin1_.GetURL().Resolve("bar");
   EXPECT_TRUE(CachePut(cache_handle.value(), kBarURL, response_type));
 
   EXPECT_EQ(2 * cache_size, GetQuotaOriginUsage(origin1_));
 }
 
 TEST_F(CacheStorageManagerTest, PersistedCacheKeyUsed) {
-  const GURL kFooURL = origin1_.Resolve("foo");
+  const GURL kFooURL = origin1_.GetURL().Resolve("foo");
   const std::string kCacheName = "foo";
 
   EXPECT_TRUE(Open(origin1_, kCacheName));
@@ -1234,8 +1237,8 @@ TEST_P(CacheStorageManagerTestP, GetAllOriginsUsage) {
   std::vector<CacheStorageUsageInfo> usage = GetAllOriginsUsage();
   EXPECT_EQ(2ULL, usage.size());
 
-  int origin1_index = usage[0].origin == origin1_ ? 0 : 1;
-  int origin2_index = usage[1].origin == origin2_ ? 1 : 0;
+  int origin1_index = Origin::Create(usage[0].origin) == origin1_ ? 0 : 1;
+  int origin2_index = Origin::Create(usage[1].origin) == origin2_ ? 1 : 0;
   EXPECT_NE(origin1_index, origin2_index);
 
   int64_t origin1_size = usage[origin1_index].total_size_bytes;
@@ -1253,7 +1256,7 @@ TEST_P(CacheStorageManagerTestP, GetAllOriginsUsage) {
 
 TEST_F(CacheStorageManagerTest, GetAllOriginsUsageWithOldIndex) {
   // Write a single value (V1) to the cache.
-  const GURL kFooURL = origin1_.Resolve("foo");
+  const GURL kFooURL = origin1_.GetURL().Resolve("foo");
   const std::string kCacheName = "foo";
   EXPECT_TRUE(Open(origin1_, kCacheName));
   CacheStorageCacheHandle original_handle = std::move(callback_cache_handle_);
@@ -1283,7 +1286,7 @@ TEST_F(CacheStorageManagerTest, GetAllOriginsUsageWithOldIndex) {
   // Create a second value (V2) in the cache.
   EXPECT_TRUE(Open(origin1_, kCacheName));
   original_handle = std::move(callback_cache_handle_);
-  const GURL kBarURL = origin1_.Resolve("bar");
+  const GURL kBarURL = origin1_.GetURL().Resolve("bar");
   EXPECT_TRUE(CachePut(original_handle.value(), kBarURL));
   original_handle = CacheStorageCacheHandle();
 
@@ -1314,7 +1317,7 @@ TEST_F(CacheStorageManagerTest, GetAllOriginsUsageWithOldIndex) {
 
 TEST_F(CacheStorageManagerTest, GetOriginSizeWithOldIndex) {
   // Write a single value (V1) to the cache.
-  const GURL kFooURL = origin1_.Resolve("foo");
+  const GURL kFooURL = origin1_.GetURL().Resolve("foo");
   const std::string kCacheName = "foo";
   EXPECT_TRUE(Open(origin1_, kCacheName));
   CacheStorageCacheHandle original_handle = std::move(callback_cache_handle_);
@@ -1344,7 +1347,7 @@ TEST_F(CacheStorageManagerTest, GetOriginSizeWithOldIndex) {
   // Reopen the cache and write a second value (V2).
   EXPECT_TRUE(Open(origin1_, kCacheName));
   original_handle = std::move(callback_cache_handle_);
-  const GURL kBarURL = origin1_.Resolve("bar");
+  const GURL kBarURL = origin1_.GetURL().Resolve("bar");
   EXPECT_TRUE(CachePut(original_handle.value(), kBarURL));
   original_handle = CacheStorageCacheHandle();
   int64_t cache_size_v2 = Size(origin1_);
@@ -1710,10 +1713,10 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
     run_loop->Quit();
   }
 
-  int64_t QuotaGetOriginUsage(const GURL& origin) {
+  int64_t QuotaGetOriginUsage(const Origin& origin) {
     base::RunLoop loop;
     quota_client_->GetOriginUsage(
-        origin, StorageType::kTemporary,
+        origin.GetURL(), StorageType::kTemporary,
         base::Bind(&CacheStorageQuotaClientTest::QuotaUsageCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
@@ -1740,10 +1743,10 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
     return callback_origins_.size();
   }
 
-  bool QuotaDeleteOriginData(const GURL& origin) {
+  bool QuotaDeleteOriginData(const Origin& origin) {
     base::RunLoop loop;
     quota_client_->DeleteOriginData(
-        origin, StorageType::kTemporary,
+        origin.GetURL(), StorageType::kTemporary,
         base::Bind(&CacheStorageQuotaClientTest::DeleteOriginCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
@@ -1796,10 +1799,10 @@ TEST_P(CacheStorageQuotaClientTestP, QuotaGetOriginsForType) {
 
 TEST_P(CacheStorageQuotaClientTestP, QuotaGetOriginsForHost) {
   EXPECT_EQ(0u, QuotaGetOriginsForHost("example.com"));
-  EXPECT_TRUE(Open(GURL("http://example.com:8080"), "foo"));
-  EXPECT_TRUE(Open(GURL("http://example.com:9000"), "foo"));
-  EXPECT_TRUE(Open(GURL("ftp://example.com"), "foo"));
-  EXPECT_TRUE(Open(GURL("http://example2.com"), "foo"));
+  EXPECT_TRUE(Open(Origin::Create(GURL("http://example.com:8080")), "foo"));
+  EXPECT_TRUE(Open(Origin::Create(GURL("http://example.com:9000")), "foo"));
+  EXPECT_TRUE(Open(Origin::Create(GURL("ftp://example.com")), "foo"));
+  EXPECT_TRUE(Open(Origin::Create(GURL("http://example2.com")), "foo"));
   EXPECT_EQ(3u, QuotaGetOriginsForHost("example.com"));
   EXPECT_EQ(1u, QuotaGetOriginsForHost("example2.com"));
   EXPECT_TRUE(callback_origins_.find(GURL("http://example2.com")) !=

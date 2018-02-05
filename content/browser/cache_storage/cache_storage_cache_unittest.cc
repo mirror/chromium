@@ -48,9 +48,11 @@
 #include "storage/browser/test/mock_special_storage_policy.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/origin.h"
 
 using blink::mojom::CacheStorageError;
 using storage::BlobDataItem;
+using url::Origin;
 
 namespace content {
 namespace cache_storage_cache_unittest {
@@ -294,7 +296,7 @@ void OnBadMessage(base::Optional<bad_message::BadMessageReason>* result,
 class TestCacheStorageCache : public CacheStorageCache {
  public:
   TestCacheStorageCache(
-      const GURL& origin,
+      const Origin& origin,
       const std::string& cache_name,
       const base::FilePath& path,
       CacheStorage* cache_storage,
@@ -398,7 +400,8 @@ class CacheStorageCacheTest : public testing::Test {
     CreateRequests(blob_storage_context);
 
     cache_ = std::make_unique<TestCacheStorageCache>(
-        GURL(kOrigin), kCacheName, temp_dir_path, nullptr /* CacheStorage */,
+        Origin::Create(GURL(kOrigin)), kCacheName, temp_dir_path,
+        nullptr /* CacheStorage */,
         BrowserContext::GetDefaultStoragePartition(&browser_context_)
             ->GetURLRequestContext(),
         quota_manager_proxy_, blob_storage_context->context()->AsWeakPtr());

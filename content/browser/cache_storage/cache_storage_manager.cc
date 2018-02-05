@@ -35,6 +35,8 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+using url::Origin;
+
 namespace content {
 
 namespace {
@@ -179,7 +181,7 @@ std::unique_ptr<CacheStorageManager> CacheStorageManager::Create(
 CacheStorageManager::~CacheStorageManager() = default;
 
 void CacheStorageManager::OpenCache(
-    const GURL& origin,
+    const Origin& origin,
     const std::string& cache_name,
     CacheStorage::CacheAndErrorCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -190,7 +192,7 @@ void CacheStorageManager::OpenCache(
 }
 
 void CacheStorageManager::HasCache(
-    const GURL& origin,
+    const Origin& origin,
     const std::string& cache_name,
     CacheStorage::BoolAndErrorCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -200,7 +202,7 @@ void CacheStorageManager::HasCache(
 }
 
 void CacheStorageManager::DeleteCache(
-    const GURL& origin,
+    const Origin& origin,
     const std::string& cache_name,
     CacheStorage::BoolAndErrorCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -210,7 +212,7 @@ void CacheStorageManager::DeleteCache(
 }
 
 void CacheStorageManager::EnumerateCaches(
-    const GURL& origin,
+    const Origin& origin,
     CacheStorage::IndexCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
@@ -220,7 +222,7 @@ void CacheStorageManager::EnumerateCaches(
 }
 
 void CacheStorageManager::MatchCache(
-    const GURL& origin,
+    const Origin& origin,
     const std::string& cache_name,
     std::unique_ptr<ServiceWorkerFetchRequest> request,
     const CacheStorageCacheQueryParams& match_params,
@@ -232,7 +234,7 @@ void CacheStorageManager::MatchCache(
 }
 
 void CacheStorageManager::MatchAllCaches(
-    const GURL& origin,
+    const Origin& origin,
     std::unique_ptr<ServiceWorkerFetchRequest> request,
     const CacheStorageCacheQueryParams& match_params,
     CacheStorageCache::ResponseCallback callback) {
@@ -265,15 +267,15 @@ void CacheStorageManager::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
-void CacheStorageManager::NotifyCacheListChanged(const GURL& origin) {
+void CacheStorageManager::NotifyCacheListChanged(const Origin& origin) {
   for (auto& observer : observers_)
-    observer.OnCacheListChanged(url::Origin::Create(origin));
+    observer.OnCacheListChanged(origin);
 }
 
-void CacheStorageManager::NotifyCacheContentChanged(const GURL& origin,
+void CacheStorageManager::NotifyCacheContentChanged(const Origin& origin,
                                                     const std::string& name) {
   for (auto& observer : observers_)
-    observer.OnCacheContentChanged(url::Origin::Create(origin), name);
+    observer.OnCacheContentChanged(origin, name);
 }
 
 void CacheStorageManager::GetAllOriginsUsage(
@@ -286,7 +288,7 @@ void CacheStorageManager::GetAllOriginsUsage(
   if (IsMemoryBacked()) {
     for (const auto& origin_details : cache_storage_map_) {
       usages->push_back(
-          CacheStorageUsageInfo(origin_details.first, 0 /* size */,
+          CacheStorageUsageInfo(origin_details.first.GetURL(), 0 /* size */,
                                 base::Time() /* last modified */));
     }
     GetAllOriginsUsageGetSizes(std::move(usages), callback);
@@ -329,18 +331,19 @@ void CacheStorageManager::GetAllOriginsUsageGetSizes(
       base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, barrier_closure);
       continue;
     }
-    CacheStorage* cache_storage = FindOrCreateCacheStorage(usage.origin);
+    CacheStorage* cache_storage =
+        FindOrCreateCacheStorage(Origin::Create(usage.origin));
     cache_storage->Size(
         base::BindOnce(&OneOriginSizeReported, barrier_closure, &usage));
   }
 }
 
 void CacheStorageManager::GetOriginUsage(
-    const GURL& origin_url,
+    const Origin& origin,
     const storage::QuotaClient::GetUsageCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  CacheStorage* cache_storage = FindOrCreateCacheStorage(origin_url);
+  CacheStorage* cache_storage = FindOrCreateCacheStorage(origin);
 
   cache_storage->Size(callback);
 }
@@ -352,7 +355,7 @@ void CacheStorageManager::GetOrigins(
   if (IsMemoryBacked()) {
     std::set<GURL> origins;
     for (const auto& key_value : cache_storage_map_)
-      origins.insert(key_value.first);
+      origins.insert(key_value.first.GetURL());
 
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, origins));
@@ -372,8 +375,8 @@ void CacheStorageManager::GetOriginsForHost(
   if (IsMemoryBacked()) {
     std::set<GURL> origins;
     for (const auto& key_value : cache_storage_map_) {
-      if (host == net::GetHostOrSpecFromURL(key_value.first))
-        origins.insert(key_value.first);
+      if (host == net::GetHostOrSpecFromURL(key_value.first.GetURL()))
+        origins.insert(key_value.first.GetURL());
     }
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, origins));
@@ -387,7 +390,7 @@ void CacheStorageManager::GetOriginsForHost(
 }
 
 void CacheStorageManager::DeleteOriginData(
-    const GURL& origin,
+    const Origin& origin,
     const storage::QuotaClient::DeletionCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
@@ -406,13 +409,13 @@ void CacheStorageManager::DeleteOriginData(
                      base::Passed(base::WrapUnique(cache_storage))));
 }
 
-void CacheStorageManager::DeleteOriginData(const GURL& origin) {
+void CacheStorageManager::DeleteOriginData(const Origin& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DeleteOriginData(origin, base::Bind(&EmptyQuotaStatusCallback));
 }
 
 void CacheStorageManager::DeleteOriginDidClose(
-    const GURL& origin,
+    const Origin& origin,
     const storage::QuotaClient::DeletionCallback& callback,
     std::unique_ptr<CacheStorage> cache_storage,
     int64_t origin_size) {
@@ -422,7 +425,7 @@ void CacheStorageManager::DeleteOriginDidClose(
   cache_storage.reset();
 
   quota_manager_proxy_->NotifyStorageModified(
-      storage::QuotaClient::kServiceWorkerCache, origin,
+      storage::QuotaClient::kServiceWorkerCache, origin.GetURL(),
       blink::mojom::StorageType::kTemporary, -1 * origin_size);
   NotifyCacheListChanged(origin);
 
@@ -454,7 +457,7 @@ CacheStorageManager::CacheStorageManager(
 }
 
 CacheStorage* CacheStorageManager::FindOrCreateCacheStorage(
-    const GURL& origin) {
+    const Origin& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(request_context_getter_);
   CacheStorageMap::const_iterator it = cache_storage_map_.find(origin);
@@ -473,8 +476,9 @@ CacheStorage* CacheStorageManager::FindOrCreateCacheStorage(
 // static
 base::FilePath CacheStorageManager::ConstructOriginPath(
     const base::FilePath& root_path,
-    const GURL& origin) {
-  const std::string identifier = storage::GetIdentifierFromOrigin(origin);
+    const Origin& origin) {
+  const std::string identifier =
+      storage::GetIdentifierFromOrigin(origin.GetURL());
   const std::string origin_hash = base::SHA1HashString(identifier);
   const std::string origin_hash_hex = base::ToLowerASCII(
       base::HexEncode(origin_hash.c_str(), origin_hash.length()));
