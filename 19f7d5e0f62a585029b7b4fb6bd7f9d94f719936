@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b3dbf96_b625f266",
+        "filename": "third_party/android_crazy_linker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-02-05T15:36:13Z",
+      "side": 1,
+      "message": "Indeed a very good idea. Thanks. I\u0027ll keep that in mind.",
+      "parentUuid": "6a0a04c3_0827c178",
+      "revId": "19f7d5e0f62a585029b7b4fb6bd7f9d94f719936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f14a5253_1b5e2447",
         "filename": "third_party/android_crazy_linker/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-02T14:52:34Z",
       "side": 1,
       "message": "should this be checking android_enable_debuggable_release_builds?",
+      "revId": "19f7d5e0f62a585029b7b4fb6bd7f9d94f719936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a4392e_9f802ab3",
+        "filename": "third_party/android_crazy_linker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-02-05T15:36:13Z",
+      "side": 1,
+      "message": "Absolutely, I don\u0027t know what happened here, it used to check for it at some point :-/ ??",
+      "parentUuid": "f14a5253_1b5e2447",
       "revId": "19f7d5e0f62a585029b7b4fb6bd7f9d94f719936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
