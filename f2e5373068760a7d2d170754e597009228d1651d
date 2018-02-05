@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70f2eb2e_4e5a8558",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-05T20:14:07Z",
+      "side": 1,
+      "message": "nit: We don\u0027t have any test for this now.",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 70
+      },
+      "revId": "f2e5373068760a7d2d170754e597009228d1651d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
