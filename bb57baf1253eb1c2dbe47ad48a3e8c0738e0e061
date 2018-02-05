@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "95177401_71f8ef3c",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-05T02:56:04Z",
+      "side": 1,
+      "message": "The comment is not entirely true. Unfortunately, I don\u0027t have any suggestions for how to improve it. Maybe sky@ will have suggestions. (Otherwise you can leave the comment as is)\n\n1) If in the database before MergeFavicon() is called, there is:\na 32x32 icon for the icon URL\nAnd MergeFavicon() is called with\na 16x16 icon for the icon URL\n\nThe 16x16 icon will not be redownloaded when the user visits the page (with or without this change)\n\n2) MergeFavicon() is not used solely by sync",
+      "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adce628_2fe5f507",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1829,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-05T02:56:04Z",
+      "side": 1,
+      "message": "1) This function should take an icon type as a parameter because SetOnDemandFavicons() takes an icon type as a parameter (and should continue to do so)\n\n2) I thought that CanSetOnDemandFavicons() would be a new method in FaviconService in addition to how you are using it in HistoryBackend::SetOnDemandFavicons()\nWe should not waste user\u0027s \"data plan\" downloading icons that we can\u0027t use",
+      "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a2e20fe_29afa4c5",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 4
@@ -19,6 +53,64 @@
         "endLine": 1830,
         "endChar": 64
       },
+      "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d861cc33_ab60d491",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-05T02:56:04Z",
+      "side": 1,
+      "message": "I don\u0027t think that restricting this to bookmark pages is useful. This:\n1) makes when the HistoryBackend::SetOnDemandFavicons() can be called super confusing\n2) opens the door to further hacks\n\nYou mention that bookmark favicon sync might one day be deleted\nThere was talk at one point of syncing favicons for more than just bookmarks (e.g. recents)",
+      "parentUuid": "6a2e20fe_29afa4c5",
+      "range": {
+        "startLine": 1830,
+        "startChar": 25,
+        "endLine": 1830,
+        "endChar": 64
+      },
+      "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43f020de_ffc605bc",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-05T02:56:04Z",
+      "side": 1,
+      "message": "Nit: You should move the |thumbnail_db_| check into CanSetOnDemainFavicons()",
+      "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4263d80_1a218e21",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-05T02:56:04Z",
+      "side": 1,
+      "message": "Why not do this (like the other callers?)\n\n*last_updated \u003d base::Time::FromInternalValue(statement.ColumnInt64(0))",
       "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
