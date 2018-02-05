@@ -194,7 +194,8 @@ class CORE_EXPORT FrameLoader final {
       FrameLoadType,
       bool is_client_redirect,
       WebTriggeringEventInfo,
-      HTMLFormElement*);
+      HTMLFormElement*,
+      network::mojom::blink::URLLoaderFactoryPtr);
 
   // Like ShouldContinueForNavigationPolicy, but should be used when following
   // redirects.

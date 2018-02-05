@@ -4,6 +4,7 @@
 
 #include "core/loader/FrameLoadRequest.h"
 
+#include "core/fileapi/PublicURLManager.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebURLRequest.h"
@@ -93,6 +94,14 @@ FrameLoadRequest::FrameLoadRequest(
     DCHECK(!resource_request_.RequestorOrigin());
     resource_request_.SetRequestorOrigin(
         SecurityOrigin::Create(origin_document->Url()));
+
+    if (resource_request.Url().ProtocolIs("blob") &&
+        RuntimeEnabledFeatures::MojoBlobURLsEnabled()) {
+      url_loader_factory_ = new base::RefCountedData<
+          network::mojom::blink::URLLoaderFactoryPtr>();
+      origin_document->GetPublicURLManager().Resolve(
+          resource_request.Url(), MakeRequest(&url_loader_factory_->data));
+    }
   }
 }
 
