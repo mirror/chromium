@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74ca6ea5_e07836fd",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-05T21:28:41Z",
+      "side": 1,
+      "message": "That is much better. Thanks, I couldn\u0027t find that function.",
+      "parentUuid": "1edffb9e_c8a29471",
+      "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3a0362_ef0cc052",
         "filename": "content/browser/android/synchronous_compositor_host.cc",
         "patchSetId": 24
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8e111dc7_28467a4d",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-05T21:28:41Z",
+      "side": 1,
+      "message": "I\u0027ve adjusted it to return a bool. It previously cleared out the frame. \n\nNote that GetSynchronousCompositor() !\u003d IsReadyForSynchronousCall.... GetSynchronousCompositor means we\u0027ve bound the channel and events can get queued to it. IsReadyForSynchronousCall is that we\u0027ve actually been ack\u0027d from the renderer that it is ready. I don\u0027t want to conflate them unless you really think it should be done.",
+      "parentUuid": "1d3a0362_ef0cc052",
+      "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac6866ce_053d6920",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 24
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-02T21:39:22Z",
       "side": 1,
       "message": "did you ever work out the that problem with the pop up test?\n\nmaybe the problem is that with window.open pop ups, sync_compositor_ can actually be null here in webview. Those pop ups are weird because it\u0027s WebContents that\u0027s created from within content rather than created by embedder, so some initialization stuff are out of order..\n\nwhich means more state tracking :(",
+      "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9846edee_e983dd40",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-05T21:28:41Z",
+      "side": 1,
+      "message": "Yes the popup test is fixed. I didn\u0027t call OnRenderWidgetInit in the popup case in the render_widget_host_impl which I now do.",
+      "parentUuid": "ac6866ce_053d6920",
       "revId": "e0aae733dd46cbbd385b892d03d50cfda963cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
