@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "281659ca_859d87f2",
+        "filename": "third_party/WebKit/common/heap_profiler/sampling_heap_profiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-05T09:21:10Z",
+      "side": 1,
+      "message": "heap_profiler/ is confusing with other existing profilers.\n\nWould sampling_heap_profiler/ sound nicer?",
+      "revId": "9e9e272db8c7c3cb182b7171ca0bc72badca1d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850c0b8f_a21a3b25",
+        "filename": "third_party/WebKit/common/heap_profiler/sampling_heap_profiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-05T09:21:10Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "9e9e272db8c7c3cb182b7171ca0bc72badca1d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
