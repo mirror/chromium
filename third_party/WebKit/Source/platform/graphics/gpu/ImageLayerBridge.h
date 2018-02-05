@@ -43,6 +43,7 @@ class PLATFORM_EXPORT ImageLayerBridge
 
   void ResourceReleasedSoftware(std::unique_ptr<viz::SharedBitmap>,
                                 const IntSize&,
+                                const bool uses_half_float_storage,
                                 const gpu::SyncToken&,
                                 bool lost_resource);
 
@@ -59,7 +60,9 @@ class PLATFORM_EXPORT ImageLayerBridge
   void Trace(blink::Visitor* visitor) {}
 
  private:
-  std::unique_ptr<viz::SharedBitmap> CreateOrRecycleBitmap(const IntSize& size);
+  std::unique_ptr<viz::SharedBitmap> CreateOrRecycleBitmap(
+      const IntSize&,
+      const bool uses_half_float_storage);
 
   scoped_refptr<StaticBitmapImage> image_;
   std::unique_ptr<WebExternalTextureLayer> layer_;
@@ -70,6 +73,14 @@ class PLATFORM_EXPORT ImageLayerBridge
   struct RecycledBitmap {
     std::unique_ptr<viz::SharedBitmap> bitmap;
     IntSize size;
+    bool uses_half_float_storage;
+    bool SameBufferSize(const IntSize& target_size,
+                        const bool target_uses_half_float_storage) {
+      unsigned bytes_per_pixel = uses_half_float_storage ? 8 : 4;
+      unsigned target_bytes_per_pixel = target_uses_half_float_storage ? 8 : 4;
+      return (size.Area() * bytes_per_pixel ==
+              target_size.Area() * target_bytes_per_pixel);
+    };
   };
   Vector<RecycledBitmap> recycled_bitmaps_;
 
