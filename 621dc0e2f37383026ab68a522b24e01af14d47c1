@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07db50c2_da5e27d1",
+        "filename": "content/browser/renderer_host/delegated_frame_host.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-05T23:49:19Z",
+      "side": 1,
+      "message": "I\u0027d vaguely prefer renaming\n  device_scale_factor_ -\u003e active_device_scale_factor_\nAnd adding a comment that it reflects the surface most recently activated via OnFirstSurfaceActivation.",
+      "revId": "621dc0e2f37383026ab68a522b24e01af14d47c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291742ad_62fc0352",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-05T23:49:19Z",
+      "side": 1,
+      "message": "These ones can be deleted too :D",
+      "revId": "621dc0e2f37383026ab68a522b24e01af14d47c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512d8b30_f35539f4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-05T23:49:19Z",
+      "side": 1,
+      "message": "I think that you can pass |callback| in directly here -- RenderWidgetHostViewMac::CopyFromSurfaceCompleted can just be deleted.",
+      "revId": "621dc0e2f37383026ab68a522b24e01af14d47c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d71b79_f2cda241",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-05T23:49:19Z",
+      "side": 1,
+      "message": "(same here) -- we can pass in |callback| directly (cause we don\u0027t need the decrement anymore)",
+      "revId": "621dc0e2f37383026ab68a522b24e01af14d47c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
