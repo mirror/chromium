@@ -185,6 +185,11 @@ class ContentSuggestionsNotifierService::NotifyingObserver
         suggestion_id, ContentSuggestionsNotificationAction::HIDE_EXPIRY);
   }
 
+  void OnSuggestionDismissed(
+      const ContentSuggestion::ID& suggestion_id) override {
+    // TODO: Does this need to be handled here?
+  }
+
   void OnFullRefreshRequired() override {
     notifier_->HideAllNotifications(
         ContentSuggestionsNotificationAction::HIDE_EXPIRY);
