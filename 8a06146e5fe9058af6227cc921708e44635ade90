@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a0bb7ba_14c4c0d3",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-05T03:36:50Z",
+      "side": 0,
+      "message": "In Mojo world we do not need to provide such a pending mechanism by ourselves, because Mojo will suspend those messages without a proper receiver (the other endpoint has not been bound) inside the Message Pipe.",
+      "range": {
+        "startLine": 699,
+        "startChar": 2,
+        "endLine": 704,
+        "endChar": 3
+      },
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
