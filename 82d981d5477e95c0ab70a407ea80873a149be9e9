@@ -168,6 +168,24 @@
     },
     {
       "key": {
+        "uuid": "a716736d_f8fe84ec",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-02-05T23:06:39Z",
+      "side": 1,
+      "message": "The support for Xcode 8 is added, reverting the version back to 8E2002.",
+      "parentUuid": "4085c6c3_88c7eeb0",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a4fffe_55c6698d",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
