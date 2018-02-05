@@ -16,6 +16,24 @@
       "revId": "2654439d5d415f785a30e17f050f07adcc1c3e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c0e3f5_fd85359b",
+        "filename": "third_party/WebKit/Source/core/dom/AbortSignal.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-02-05T06:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c78c47e_c7628ab6",
+      "revId": "2654439d5d415f785a30e17f050f07adcc1c3e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
