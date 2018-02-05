@@ -14,6 +14,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -35,6 +36,7 @@
 #include "components/offline_pages/core/model/offline_page_model_taskified.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h"
+#include "components/offline_pages/core/system_download_manager_stub.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
 #include "content/public/browser/browser_thread.h"
@@ -94,6 +96,8 @@ const char kPageSizeAccessOfflineHistogramBase[] =
     "OfflinePages.PageSizeOnAccess.Offline.";
 const char kPageSizeAccessOnlineHistogramBase[] =
     "OfflinePages.PageSizeOnAccess.Online.";
+
+const int64_t kDownloadId = 42LL;
 
 class OfflinePageRequestJobTestDelegate
     : public OfflinePageRequestJob::Delegate {
@@ -284,6 +288,21 @@ class TestOfflinePageArchiver : public OfflinePageArchiver {
                    digest_));
   }
 
+  // Override SavePageToDownloads, and always call the callback with "SUCCESS"
+  void SavePageToDownloads(
+      OfflinePageItem offline_page,
+      const SavePageCallback& save_page_callback,
+      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      ArchiveManager* archive_manager,
+      SystemDownloadManager* download_manager,
+      base::WeakPtr<OfflinePageModelTaskified> model_weak_ptr) override {
+    scoped_refptr<MoveAndAddResults> move_results = new MoveAndAddResults();
+    move_results->set_move_result(SavePageResult::SUCCESS);
+    move_results->set_new_file_path(offline_page.file_path);
+    model_weak_ptr->MoveAndAddDone(save_page_callback, offline_page,
+                                   move_results);
+  }
+
  private:
   const GURL url_;
   const base::FilePath archive_file_path_;
@@ -310,16 +329,26 @@ std::unique_ptr<KeyedService> BuildTestOfflinePageModel(
   base::FilePath public_archives_dir =
       test_data_dir_path.AppendASCII(kPublicOfflineFileDir);
 
+  // Ensure the public dir exists.  The OS will create it on Android, but the
+  // unit test must create its own.
+  if (!base::DirectoryExists(public_archives_dir)) {
+    base::File::Error dir_error = base::File::FILE_OK;
+    base::CreateDirectoryAndGetError(public_archives_dir, &dir_error);
+    EXPECT_TRUE(base::File::FILE_OK == dir_error);
+  }
+
   // Since we're not saving page into temporary dir, it's set the same as the
   // private dir.
   std::unique_ptr<ArchiveManager> archive_manager(
       new ArchiveManager(private_archives_dir, private_archives_dir,
                          public_archives_dir, task_runner));
+  std::unique_ptr<SystemDownloadManager> download_manager(
+      new SystemDownloadManagerStub(kDownloadId, true));
   std::unique_ptr<base::Clock> clock(new base::DefaultClock);
 
   return std::unique_ptr<KeyedService>(new OfflinePageModelTaskified(
-      std::move(metadata_store), std::move(archive_manager), task_runner,
-      std::move(clock)));
+      std::move(metadata_store), std::move(archive_manager),
+      std::move(download_manager), task_runner, std::move(clock)));
 }
 
 // Helper function to make a character array filled with |size| bytes of

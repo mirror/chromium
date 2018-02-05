@@ -9,10 +9,23 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "base/task_scheduler/post_task.h"
+#include "components/offline_pages/core/move_and_add_results.h"
+#include "components/offline_pages/core/offline_page_item.h"
 #include "url/gurl.h"
 
+namespace base {
+class SequencedTaskRunner;
+}  // namespace base
+
 namespace offline_pages {
+
+class SystemDownloadManager;
+class ArchiveManager;
+class SystemDownloadManager;
+class OfflinePageModelTaskified;
 
 // Interface of a class responsible for creation of the archive for offline use.
 //
@@ -86,6 +99,24 @@ class OfflinePageArchiver {
   virtual void CreateArchive(const base::FilePath& archives_dir,
                              const CreateArchiveParams& create_archive_params,
                              const CreateArchiveCallback& callback) = 0;
+
+  // Calls a task to publish the page on a background thread, then returns
+  // to the OfflinePageModelTaskified to add the offline page item to the DB.
+  virtual void SavePageToDownloads(
+      OfflinePageItem offline_page,
+      const SavePageCallback& save_page_callback,
+      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      ArchiveManager* archive_manager,
+      SystemDownloadManager* download_manager,
+      base::WeakPtr<OfflinePageModelTaskified> model_weak_ptr);
+
+  // Move the page to a public directory, and add the page to any system
+  // download manager (for instance, on android).  Results will be put into
+  // the move_results object.
+  static void PublishPage(OfflinePageItem offline_page,
+                          const base::FilePath public_directory,
+                          SystemDownloadManager* download_manager,
+                          scoped_refptr<MoveAndAddResults> move_results);
 };
 
 }  // namespace offline_pages
