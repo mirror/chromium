@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fd3b846_763d4ec3",
+        "filename": "BUILD.gn",
+        "patchSetId": 82
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-05T05:22:16Z",
+      "side": 1,
+      "message": "I moved this line of code here from chrome/BUILD.gn. Please review, thanks!",
+      "range": {
+        "startLine": 580,
+        "startChar": 9,
+        "endLine": 580,
+        "endChar": 28
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e83988_c7364427",
+        "filename": "chrome/install_static/install_util.h",
+        "patchSetId": 82
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-05T05:22:16Z",
+      "side": 1,
+      "message": "I moved this method here from installer/setup/, as it is now also used in notification_helper_process_unittest.cc. WDYT?",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 42
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
