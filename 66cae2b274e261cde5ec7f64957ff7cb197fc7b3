@@ -46,6 +46,30 @@
       "revId": "66cae2b274e261cde5ec7f64957ff7cb197fc7b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6316fddf_6a6321ed",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T18:34:27Z",
+      "side": 1,
+      "message": "Okay, as long as the consumer of the API is aware and on board, this should be fine.",
+      "parentUuid": "45697cc5_02bcb181",
+      "range": {
+        "startLine": 400,
+        "startChar": 66,
+        "endLine": 400,
+        "endChar": 72
+      },
+      "revId": "66cae2b274e261cde5ec7f64957ff7cb197fc7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
