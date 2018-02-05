@@ -154,7 +154,8 @@ void VrTestContext::HandleInput(ui::Event* event) {
     if (event->type() != ui::ET_KEY_PRESSED) {
       return;
     }
-    if (keyboard_delegate_->HandleInput(event)) {
+    if (keyboard_delegate_->HandleInput(event) &&
+        event->AsKeyEvent()->code() != ui::DomCode::US_D) {
       return;
     }
     switch (event->AsKeyEvent()->code()) {
