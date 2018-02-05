@@ -232,13 +232,6 @@ ui::SourceEventType MojoSourceEventTypeToUI(ui::mojom::SourceEventType type) {
 }  // namespace
 
 // static
-int64_t StructTraits<ui::mojom::LatencyComponentDataView,
-                     ui::LatencyInfo::LatencyComponent>::
-    sequence_number(const ui::LatencyInfo::LatencyComponent& component) {
-  return component.sequence_number;
-}
-
-// static
 base::TimeTicks StructTraits<ui::mojom::LatencyComponentDataView,
                              ui::LatencyInfo::LatencyComponent>::
     event_time(const ui::LatencyInfo::LatencyComponent& component) {
@@ -277,7 +270,6 @@ bool StructTraits<ui::mojom::LatencyComponentDataView,
     return false;
   if (!data.ReadLastEventTime(&out->last_event_time))
     return false;
-  out->sequence_number = data.sequence_number();
   out->event_count = data.event_count();
   return true;
 }
