@@ -566,7 +566,8 @@ bool GenerateAlternateVersion(const base::FilePath& original_installer_path,
                               const base::FilePath& target_path,
                               Direction direction,
                               base::string16* original_version,
-                              base::string16* new_version) {
+                              base::string16* new_version,
+                              bool fast) {
   // Create a temporary directory in which we'll do our work.
   ScopedTempDirectory work_dir;
   if (!work_dir.Initialize())
@@ -684,7 +685,7 @@ bool GenerateAlternateVersion(const base::FilePath& original_installer_path,
 
   // Compress chrome.7z into chrome.packed.7z for static builds.
   if (!chrome_packed_7z.empty() &&
-      !CreateArchive(chrome_packed_7z, chrome_7z, 9)) {
+      !CreateArchive(chrome_packed_7z, chrome_7z, fast ? 0 : 9)) {
     return false;
   }
 

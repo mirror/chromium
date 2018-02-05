@@ -13,6 +13,10 @@ import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 import("//ui/base/ui_features.gni")
 import("//v8/gni/v8.gni")
 
+declare_args() {
+  fast_compression = !is_official_build
+}
+
 config("mini_installer_compiler_flags") {
   # Disable buffer security checking.
   cflags = [ "/GS-" ]
@@ -170,6 +174,11 @@ template("generate_mini_installer") {
       #'--verbose',
     ]
 
+    if (fast_compression) {
+      # Fast archiving by zero compression
+      args += [ "--fast" ]
+    }
+
     deps = [
       ":chrome_runtime_deps",
       ":setup_runtime_deps",
@@ -301,6 +310,12 @@ if (!(is_component_build && is_debug && target_cpu == "x86")) {
       "--out",
       "$target_name.exe",
     ]
+
+    if (fast_compression) {
+      # Fast archiving by zero compression
+      args += [ "--fast" ]
+    }
+
     deps = [
       ":mini_installer",
       "//chrome/installer/test:alternate_version_generator",
