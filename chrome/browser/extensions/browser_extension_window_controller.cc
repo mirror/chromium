@@ -41,26 +41,6 @@ std::string BrowserExtensionWindowController::GetWindowTypeText() const {
   return keys::kWindowTypeValueNormal;
 }
 
-std::unique_ptr<base::DictionaryValue>
-BrowserExtensionWindowController::CreateWindowValueWithTabs(
-    const extensions::Extension* extension) const {
-  std::unique_ptr<base::DictionaryValue> result = CreateWindowValue();
-
-  result->Set(keys::kTabsKey,
-              extensions::ExtensionTabUtil::CreateTabList(browser_, extension));
-
-  return result;
-}
-
-std::unique_ptr<extensions::api::tabs::Tab>
-BrowserExtensionWindowController::CreateTabObject(
-    const extensions::Extension* extension,
-    int tab_index) const {
-  TabStripModel* tab_strip = browser_->tab_strip_model();
-  return extensions::ExtensionTabUtil::CreateTabObject(
-      tab_strip->GetWebContentsAt(tab_index), tab_strip, tab_index);
-}
-
 bool BrowserExtensionWindowController::CanClose(Reason* reason) const {
   // Don't let an extension remove the window if the user is dragging tabs
   // in that window.
