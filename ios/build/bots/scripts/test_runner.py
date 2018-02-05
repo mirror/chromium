@@ -7,8 +7,10 @@
 import argparse
 import collections
 import errno
+import json
 import os
 import plistlib
+import re
 import shutil
 import subprocess
 import sys
@@ -198,6 +200,27 @@ def install_xcode(xcode_build_version, mac_toolchain_cmd, xcode_app_path):
   return True
 
 
+def shard_xctest(object_path, shards, test_cases=None):
+  """shard xctest"""
+  regex = r'imp -\[[A-Za-z_][A-Za-z0-9_]*Test[Case]* test[A-Za-z0-9_]*\]'
+  cmd = ['otool', '-ov', object_path]
+  tests = re.findall(regex, subprocess.check_output(cmd))
+  clean_tests = [
+    test[:-1].split('imp -[')[1].replace(' ', '/') for test in
+                 tests if 'ChromeTestCase' not in test]
+  if test_cases:
+    test_list = []
+    for test in test_cases:
+      for test_method in clean_tests:
+        if test in test_method:
+          test_list.append(test_method)
+    clean_tests = test_list
+
+  shard_len = len(clean_tests)/shards  + (len(clean_tests) % shards > 0)
+  sublist=[clean_tests[i:i + shard_len] for i in
+    range(0,  len(clean_tests), shard_len)]
+  return sublist
+
 class TestRunner(object):
   """Base class containing common functionality."""
 
@@ -289,7 +312,8 @@ class TestRunner(object):
       if not os.path.exists(self.xctest_path):
         raise XCTestPlugInNotFoundError(self.xctest_path)
 
-  def get_launch_command(self, test_filter=None, invert=False):
+  def get_launch_command(
+    self, test_filter=None, invert=False, shard_test=False):
     """Returns the command that can be used to launch the test app.
 
     Args:
@@ -349,7 +373,7 @@ class TestRunner(object):
       shutil.rmtree(DERIVED_DATA)
       os.mkdir(DERIVED_DATA)
 
-  def _run(self, cmd):
+  def _run(self, cmds):
     """Runs the specified command, parsing GTest output.
 
     Args:
@@ -358,33 +382,36 @@ class TestRunner(object):
     Returns:
       GTestResult instance.
     """
-    print ' '.join(cmd)
-    print
-
-    result = gtest_utils.GTestResult(cmd)
+    result = gtest_utils.GTestResult(cmds)
     if self.xctest_path:
       parser = xctest_utils.XCTestLogParser()
     else:
       parser = gtest_utils.GTestLogParser()
 
-    proc = subprocess.Popen(
-        cmd,
-        env=self.get_launch_env(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    procs = []
+    for cmd in cmds:
+      print ' '.join(cmd)
+      print
 
-    while True:
-      line = proc.stdout.readline()
-      if not line:
-        break
-      line = line.rstrip()
-      parser.ProcessLine(line)
-      print line
+      procs.append(subprocess.Popen(
+          cmd,
+          env=self.get_launch_env(),
+          stdout=subprocess.PIPE,
+          stderr=subprocess.STDOUT,
+      ))
+
+    for proc in procs:
+      while True:
+        line = proc.stdout.readline()
+        if not line:
+          break
+        line = line.rstrip()
+        parser.ProcessLine(line)
+        print line
+        sys.stdout.flush()
+
+      proc.wait()
       sys.stdout.flush()
-
-    proc.wait()
-    sys.stdout.flush()
 
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
@@ -407,7 +434,8 @@ class TestRunner(object):
   def launch(self):
     """Launches the test app."""
     self.set_up()
-    cmd = self.get_launch_command()
+    shard_test = True if self.shards else False
+    cmd = self.get_launch_command(shard_test=shard_test)
     try:
       result = self._run(cmd)
       if result.crashed and not result.crashed_test:
@@ -558,6 +586,10 @@ class SimulatorTestRunner(TestRunner):
     self.start_time = None
     self.version = version
 
+    self.udids = []
+    self.shards = 4
+
+
   @staticmethod
   def kill_simulators():
     """Kills all running simulators."""
@@ -664,12 +696,43 @@ class SimulatorTestRunner(TestRunner):
     self.retrieve_derived_data()
     self.screenshot_desktop()
     self.kill_simulators()
+    self.deleteSimulators()
     self.wipe_simulator()
     if os.path.exists(self.homedir):
       shutil.rmtree(self.homedir, ignore_errors=True)
       self.homedir = ''
 
-  def get_launch_command(self, test_filter=None, invert=False):
+  def getSimulators(self):
+    out = subprocess.check_output(['xcrun', 'simctl', 'list', '-j'])
+    simctl_list = json.loads(out)
+    runtimes = simctl_list['runtimes']
+    devices = simctl_list['devicetypes']
+    device_type_id = ''
+
+    for device in devices:
+      if device['name'] == self.platform:
+        device_type_id = device['identifier']
+
+    runtime_id = ''
+    for runtime in runtimes:
+      if runtime['name'] == 'iOS %s' % self.version:
+        runtime_id = runtime['identifier']
+
+    name = '%s test' % self.platform
+    print 'creating simulator %s' % name
+    udid = subprocess.check_output([
+      'xcrun', 'simctl', 'create', name, device_type_id, runtime_id]).rstrip()
+    print udid
+    self.udids.append(udid)
+    return udid
+
+  def deleteSimulators(self):
+    if self.udids:
+      for udid in self.udids:
+        subprocess.check_output(['xcrun', 'simctl', 'delete', udid])
+
+  def get_launch_command(
+    self, test_filter=None, invert=False, shard_test=False):
     """Returns the command that can be used to launch the test app.
 
     Args:
@@ -680,26 +743,12 @@ class SimulatorTestRunner(TestRunner):
     Returns:
       A list of strings forming the command to launch the test.
     """
+    cmds = []
     cmd = [
         self.iossim_path,
         '-d', self.platform,
         '-s', self.version,
     ]
-
-    if test_filter:
-      if self.xctest_path:
-        # iossim doesn't support inverted filters for XCTests.
-        if not invert:
-          for test in test_filter:
-            cmd.extend(['-t', test])
-      else:
-        kif_filter = get_kif_test_filter(test_filter, invert=invert)
-        gtest_filter = get_gtest_filter(test_filter, invert=invert)
-        cmd.extend(['-e', 'GKIF_SCENARIO_FILTER=%s' % kif_filter])
-        cmd.extend(['-c', '--gtest_filter=%s' % gtest_filter])
-    elif self.xctest_path and not invert:
-      for test_case in self.test_cases:
-        cmd.extend(['-t', test_case])
 
     for env_var in self.env_vars:
       cmd.extend(['-e', env_var])
@@ -707,10 +756,40 @@ class SimulatorTestRunner(TestRunner):
     for test_arg in self.test_args:
       cmd.extend(['-c', test_arg])
 
-    cmd.append(self.app_path)
-    if self.xctest_path:
-      cmd.append(self.xctest_path)
-    return cmd
+    if shard_test and self.shards and self.xctest_path:
+      # test_filter is used for retries, self.test_cases are passed in test
+      # filters. Don't shard xctests for retry
+      test_shards_lists = shard_xctest(
+        os.path.join(self.app_path, self.app_name),
+        self.shards, self.test_cases)
+      for test_list in test_shards_lists:
+        cmd_tmp = cmd[:]
+        cmd_tmp.extend(['-u', self.getSimulators()])
+        for test in test_list:
+          cmd_tmp.extend(['-t', test])
+        cmds.append(cmd_tmp)
+    else:
+      if test_filter:
+        if self.xctest_path:
+          # iossim doesn't support inverted filters for XCTests.
+          if not invert:
+            for test in test_filter:
+              cmd.extend(['-t', test])
+        else:
+          kif_filter = get_kif_test_filter(test_filter, invert=invert)
+          gtest_filter = get_gtest_filter(test_filter, invert=invert)
+          cmd.extend(['-e', 'GKIF_SCENARIO_FILTER=%s' % kif_filter])
+          cmd.extend(['-c', '--gtest_filter=%s' % gtest_filter])
+      elif self.xctest_path and not invert:
+        for test_case in self.test_cases:
+          cmd.extend(['-t', test_case])
+      cmds.append(cmd)
+
+    for acmd in cmds:
+      acmd.append(self.app_path)
+      if self.xctest_path:
+        acmd.append(self.xctest_path)
+    return cmds
 
   def get_launch_env(self):
     """Returns a dict of environment variables to use to launch the test app.
@@ -895,7 +974,8 @@ class DeviceTestRunner(TestRunner):
         self.xctestrun_data['TestTargetName'].update(
           {'OnlyTestIdentifiers': test_filter})
 
-  def get_launch_command(self, test_filter=None, invert=False):
+  def get_launch_command(
+    self, test_filter=None, invert=False, shard_test=False):
     """Returns the command that can be used to launch the test app.
 
     Args:
@@ -943,7 +1023,7 @@ class DeviceTestRunner(TestRunner):
       cmd.extend(self.test_args)
       cmd.extend(args)
 
-    return cmd
+    return [cmd]
 
   def get_launch_env(self):
     """Returns a dict of environment variables to use to launch the test app.
