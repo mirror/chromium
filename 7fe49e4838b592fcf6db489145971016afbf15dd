@@ -22,6 +22,30 @@
       "revId": "7fe49e4838b592fcf6db489145971016afbf15dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed67c39_3acafc5a",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-02-05T17:31:07Z",
+      "side": 1,
+      "message": "Done. I renamed ChildCanOverrideUserSelectNone to UserSelectTextCanOverrideUserSelectNone and added UserSelectNoneCanOverrideUserSelectAll.",
+      "parentUuid": "0175c02f_04f59195",
+      "range": {
+        "startLine": 389,
+        "startChar": 25,
+        "endLine": 389,
+        "endChar": 63
+      },
+      "revId": "7fe49e4838b592fcf6db489145971016afbf15dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
