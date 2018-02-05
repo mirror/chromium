@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed0b75b9_ce0bd973",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-02-05T18:38:16Z",
+      "side": 1,
+      "message": "tiny nit: \"the percent-encoded\" -\u003e \"percent-encoding\" (also in the description); also \"has not tested\" -\u003e \"was not tested\" in the description",
+      "revId": "6be5d335a8856ffeab1010e00df9c57995e6eee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
