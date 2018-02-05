@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "6bfe3ee2_9fb8919a",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1264032
+      },
+      "writtenOn": "2018-02-05T18:56:40Z",
+      "side": 1,
+      "message": "Good to know you don\u0027t change the protocol in the case of pending frame. And I suggest you follow the same style/format as well, for the reason I stated. Thanks for clarification.",
+      "parentUuid": "946e076f_2db56cbc",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
