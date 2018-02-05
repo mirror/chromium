@@ -122,6 +122,7 @@ source_set("settings") {
     "//ios/chrome/browser/content_settings",
     "//ios/chrome/browser/feature_engagement",
     "//ios/chrome/browser/history",
+    "//ios/chrome/browser/mailto:features",
     "//ios/chrome/browser/passwords",
     "//ios/chrome/browser/prefs",
     "//ios/chrome/browser/search_engines",
