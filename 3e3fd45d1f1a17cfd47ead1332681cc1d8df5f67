@@ -16,6 +16,24 @@
       "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176cbc16_0f03acaa",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-02-05T16:36:17Z",
+      "side": 1,
+      "message": "Yes:\n  // Invoked when the NativeTheme associated with this View changes, including\n  // when one first becomes available (after the view is added to a widget\n  // hierarchy).",
+      "parentUuid": "a680a1a0_c2ebf546",
+      "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
