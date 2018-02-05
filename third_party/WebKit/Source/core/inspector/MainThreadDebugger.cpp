@@ -237,11 +237,16 @@ void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
   // Do not pause in Context of detached frame.
   if (!paused_frame)
     return;
-  // TODO(crbug.com/788219): this is a temporary hack that disables breakpoint
-  // for paint worklet.
   if (paused_frame->GetDocument() &&
-      !paused_frame->GetDocument()->Lifecycle().StateAllowsTreeMutations())
-    return;
+      !paused_frame->GetDocument()->Lifecycle().StateAllowsTreeMutations()) {
+    if (postponed_transition_scope_) {
+      postponed_transition_scope_->SetLifecyclePostponed();
+    } else {
+      postponed_transition_scope_ =
+          std::make_unique<DocumentLifecycle::PostponeTransitionScope>(
+              paused_frame->GetDocument()->Lifecycle());
+    }
+  }
   DCHECK(paused_frame == paused_frame->LocalFrameRoot());
   paused_ = true;
 
@@ -254,6 +259,7 @@ void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
 
 void MainThreadDebugger::quitMessageLoopOnPause() {
   paused_ = false;
+  postponed_transition_scope_->ResetLifecyclePostponed();
   if (client_message_loop_)
     client_message_loop_->QuitNow();
 }

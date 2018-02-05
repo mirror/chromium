@@ -47,6 +47,7 @@ class ErrorEvent;
 class LocalFrame;
 class SecurityOrigin;
 class SourceLocation;
+class DocumentLifecycle;
 
 class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
  public:
@@ -121,6 +122,8 @@ class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
   std::unique_ptr<InspectorTaskRunner> task_runner_;
   bool paused_;
   static MainThreadDebugger* instance_;
+  std::unique_ptr<DocumentLifecycle::PostponeTransitionScope>
+      postponed_transition_scope_;
   DISALLOW_COPY_AND_ASSIGN(MainThreadDebugger);
 };
 
