@@ -26,8 +26,11 @@ cr.define('test_util', function() {
             return;
           }
         }
-      }).observe(
-          target, {attributes: true, childList: false, characterData: false});
+      }).observe(target, {
+        attributes: true,
+        childList: false,
+        characterData: false
+      });
     });
   }
 
@@ -66,9 +69,124 @@ cr.define('test_util', function() {
     el2.addEventListener(property + '-changed', forwardChange.bind(null, el1));
   }
 
+  /**
+   * Helper to create an object containing a ContentSettingsType key to array or
+   * object value. This is a convenience function that can eventually be
+   * replaced with ES6 computed properties.
+   * @param {settings.ContentSettingsTypes} contentType The ContentSettingsType
+   *     to use as the key.
+   * @param {Array<RawSiteException>|DefaultContentSetting} value The value to
+   *     map to |contentType|.
+   * @return {Object<setting: settings.ContentSettingsTypes,
+   *                 value: Array<RawSiteException|DefaultContentSetting>}
+   */
+  function createContentSettingTypeToValuePair(contentType, value) {
+    return {setting: contentType, value: value};
+  }
+
+  /**
+   * Helper to create a mock DefaultContentSetting.
+   * @param {!Object=} override An object with a subset of the properties of
+   *     DefaultContentSetting. Properties defined in |override| will
+   * overwrite the defaults in this function's return value.
+   * @return {DefaultContentSetting}
+   */
+  function createDefaultContentSetting(override) {
+    if (override === undefined)
+      override = {};
+    return Object.assign(
+        {
+          setting: settings.ContentSetting.ASK,
+          source: settings.SiteSettingSource.PREFERENCE,
+        },
+        override);
+  }
+
+  /**
+   * Helper to create a mock RawSiteException.
+   * @param {!string} origin The origin to use for this RawSiteException.
+   * @param {!Object=} override An object with a subset of the properties of
+   *     RawSiteException. Properties defined in |override| will overwrite the
+   *     defaults in this function's return value.
+   * @return {RawSiteException}
+   */
+  function createRawSiteException(origin, override) {
+    if (override === undefined)
+      override = {};
+    return Object.assign(
+        {
+          embeddingOrigin: origin,
+          incognito: false,
+          origin: origin,
+          displayName: '',
+          setting: settings.ContentSetting.ALLOW,
+          source: settings.SiteSettingSource.PREFERENCE,
+        },
+        override);
+  }
+
+  /**
+   * Helper to create a mock SiteSettingsPref.
+   * @param {!Array<Object>} defaultsList A list of objects which contain a
+   *     subset of the properties in DefaultContentSetting which will
+   *     overwrite the defaults in DefaultContentSetting returned by this
+   *     function.
+   * @param {!Array<Object>} exceptionsList A list of objects which contain a
+   *     subset of the properties in RawSiteException which will overwrite the
+   *     exceptions in SiteSettingsPref returned by this function.
+   * @return {SiteSettingsPref}
+   */
+  function createSiteSettingsPrefs(defaultsList, exceptionsList) {
+    const siteSettingsPref = {
+      defaults: {},
+      exceptions: {},
+    };
+    // These test defaults reflect the actual defaults assigned to each
+    // ContentSettingType, but keeping these in sync shouldn't matter for tests.
+    for (let type in settings.ContentSettingsTypes) {
+      siteSettingsPref.defaults[settings.ContentSettingsTypes[type]] =
+          createDefaultContentSetting({});
+    }
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.COOKIES].setting =
+        settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.IMAGES].setting =
+        settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.JAVASCRIPT]
+        .setting = settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.SOUND].setting =
+        settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.POPUPS].setting =
+        settings.ContentSetting.BLOCK;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.PROTOCOL_HANDLERS]
+        .setting = settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.BACKGROUND_SYNC]
+        .setting = settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.ADS].setting =
+        settings.ContentSetting.BLOCK;
+    for (let type in settings.ContentSettingsTypes) {
+      siteSettingsPref.exceptions[settings.ContentSettingsTypes[type]] = [];
+    }
+
+    for (let i = 0; i < defaultsList.length; ++i) {
+      Object.assign(
+          siteSettingsPref.defaults[defaultsList[i].setting],
+          defaultsList[i].value);
+    }
+    for (let i = 0; i < exceptionsList.length; ++i) {
+      siteSettingsPref.exceptions[exceptionsList[i].setting].push(
+          exceptionsList[i].value);
+    }
+    return siteSettingsPref;
+  }
+
   return {
     eventToPromise: eventToPromise,
     fakeDataBind: fakeDataBind,
     whenAttributeIs: whenAttributeIs,
+    createContentSettingTypeToValuePair: createContentSettingTypeToValuePair,
+    createDefaultContentSetting: createDefaultContentSetting,
+    createRawSiteException: createRawSiteException,
+    createSiteSettingsPrefs: createSiteSettingsPrefs,
   };
+
 });
