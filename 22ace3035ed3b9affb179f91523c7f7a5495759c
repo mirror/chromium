@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "970e924e_85192e16",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-05T20:15:59Z",
+      "side": 1,
+      "message": "Why is this needed, if Paint() will early-out?\n\nAlso, are all child layers guaranteed to be throttled?",
+      "revId": "22ace3035ed3b9affb179f91523c7f7a5495759c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
