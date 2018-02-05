@@ -1321,4 +1321,112 @@ TEST_F(WindowOcclusionTrackerTest,
   window->layer()->GetAnimator()->StopAnimating();
 }
 
+namespace {
+
+class WindowDelegateChangingWindowVisibility : public MockWindowDelegate {
+ public:
+  WindowDelegateChangingWindowVisibility(Window* other_window,
+                                         MockWindowDelegate* other_delegate)
+      : other_window_(other_window), other_delegate_(other_delegate) {}
+
+  // MockWindowDelegate:
+  void OnWindowOcclusionChanged(bool is_occluded) override {
+    MockWindowDelegate::OnWindowOcclusionChanged(is_occluded);
+    if (is_occluded) {
+      other_window_->Hide();
+      other_delegate_->set_expectation(
+          WindowOcclusionChangedExpectation::OCCLUDED);
+    }
+  }
+
+ private:
+  Window* other_window_;
+  MockWindowDelegate* other_delegate_;
+
+  DISALLOW_COPY_AND_ASSIGN(WindowDelegateChangingWindowVisibility);
+};
+
+}  // namespace
+
+// Verify that a window delegate can change the visibility of another window
+// when it is notified that its occlusion changed.
+TEST_F(WindowOcclusionTrackerTest, HideFromOnWindowOcclusionChanged) {
+  // Create a tracked window. Expect it to be visible.
+  MockWindowDelegate* delegate_a = new MockWindowDelegate();
+  delegate_a->set_expectation(WindowOcclusionChangedExpectation::NOT_OCCLUDED);
+  Window* window_a = CreateTrackedWindow(delegate_a, gfx::Rect(0, 0, 10, 10));
+  EXPECT_FALSE(delegate_a->is_expecting_call());
+
+  // Create a tracked window. Expect it to be visible.
+  MockWindowDelegate* delegate_b =
+      new WindowDelegateChangingWindowVisibility(window_a, delegate_a);
+  delegate_b->set_expectation(WindowOcclusionChangedExpectation::NOT_OCCLUDED);
+  Window* window_b = CreateTrackedWindow(delegate_b, gfx::Rect(5, 5, 10, 10));
+  EXPECT_FALSE(delegate_b->is_expecting_call());
+
+  // Hide the tracked window. It should be able to hide |window_a|.
+  delegate_b->set_expectation(WindowOcclusionChangedExpectation::OCCLUDED);
+  window_b->Hide();
+  EXPECT_FALSE(delegate_a->is_expecting_call());
+  EXPECT_FALSE(delegate_b->is_expecting_call());
+  EXPECT_FALSE(window_a->IsVisible());
+  EXPECT_FALSE(window_b->IsVisible());
+}
+
+namespace {
+
+class WindowDelegateDeletingWindow : public MockWindowDelegate {
+ public:
+  WindowDelegateDeletingWindow() = default;
+
+  void set_other_window(Window* other_window) { other_window_ = other_window; }
+
+  // MockWindowDelegate:
+  void OnWindowOcclusionChanged(bool is_occluded) override {
+    MockWindowDelegate::OnWindowOcclusionChanged(is_occluded);
+    if (is_occluded) {
+      delete other_window_;
+      other_window_ = nullptr;
+    }
+  }
+
+ private:
+  Window* other_window_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(WindowDelegateDeletingWindow);
+};
+
+}  // namespace
+
+// Verify that a window can delete a window that is on top of it when it is
+// notified that its occlusion changed (a crash would occur if
+// WindowOcclusionTracker accessed that window after it was deleted).
+TEST_F(WindowOcclusionTrackerTest, DeleteFromOnWindowOcclusionChanged) {
+  // Create a tracked window. Expect it to be visible.
+  WindowDelegateDeletingWindow* delegate_a = new WindowDelegateDeletingWindow();
+  delegate_a->set_expectation(WindowOcclusionChangedExpectation::NOT_OCCLUDED);
+  Window* window_a = CreateTrackedWindow(delegate_a, gfx::Rect(0, 0, 10, 10));
+  EXPECT_FALSE(delegate_a->is_expecting_call());
+
+  // Create a tracked window. Expect it to be visible.
+  MockWindowDelegate* delegate_b = new MockWindowDelegate();
+  delegate_b->set_expectation(WindowOcclusionChangedExpectation::NOT_OCCLUDED);
+  Window* window_b = CreateTrackedWindow(delegate_b, gfx::Rect(10, 0, 10, 10));
+  EXPECT_FALSE(delegate_b->is_expecting_call());
+
+  // Create a tracked window. Expect it to be visible.
+  MockWindowDelegate* delegate_c = new MockWindowDelegate();
+  delegate_c->set_expectation(WindowOcclusionChangedExpectation::NOT_OCCLUDED);
+  Window* window_c = CreateTrackedWindow(delegate_c, gfx::Rect(20, 0, 10, 10));
+  EXPECT_FALSE(delegate_c->is_expecting_call());
+
+  // |window_c| will be deleted when |window_a| is occluded.
+  delegate_a->set_other_window(window_c);
+
+  // Move |window_b| on top of |window_a|.
+  delegate_a->set_expectation(WindowOcclusionChangedExpectation::OCCLUDED);
+  window_b->SetBounds(window_a->bounds());
+  EXPECT_FALSE(delegate_a->is_expecting_call());
+}
+
 }  // namespace aura

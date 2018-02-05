@@ -8,7 +8,7 @@
 #include "base/stl_util.h"
 #include "third_party/skia/include/core/SkRect.h"
 #include "third_party/skia/include/core/SkRegion.h"
-#include "ui/aura/window.h"
+#include "ui/aura/window_tracker.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/transform.h"
 
@@ -102,7 +102,8 @@ void WindowOcclusionTracker::Track(Window* window) {
   if (!g_tracker)
     g_tracker = new WindowOcclusionTracker();
 
-  auto insert_result = g_tracker->tracked_windows_.insert(window);
+  auto insert_result = g_tracker->tracked_windows_.insert(
+      {window, Window::OcclusionState::UNKNOWN});
   DCHECK(insert_result.second);
   if (!window->HasObserver(g_tracker))
     window->AddObserver(g_tracker);
@@ -115,21 +116,55 @@ WindowOcclusionTracker::WindowOcclusionTracker() = default;
 WindowOcclusionTracker::~WindowOcclusionTracker() = default;
 
 void WindowOcclusionTracker::MaybeRecomputeOcclusion() {
-  if (g_num_pause_occlusion_tracking)
+  if (g_num_pause_occlusion_tracking || is_in_maybe_recompute_occlusion_)
     return;
-  for (auto& root_window_pair : root_windows_) {
-    RootWindowState& root_window_state = root_window_pair.second;
-    if (root_window_state.dirty == true) {
-      ScopedPauseOcclusionTracking scoped_pause_occlusion_tracking;
-      root_window_state.dirty = false;
-      SkRegion occluded_region;
-      RecomputeOcclusionImpl(root_window_pair.first, gfx::Transform(), nullptr,
-                             &occluded_region);
-      // WindowDelegate::OnWindowOcclusionChanged() impls must not change any
-      // Window.
-      DCHECK(!root_window_state.dirty);
+
+  is_in_maybe_recompute_occlusion_ = true;
+
+  for (int iteration = 0;; ++iteration) {
+    bool found_dirty_root = false;
+
+    // Update occlusion states in |tracked_windows_|. Do not call
+    // Window::SetOcclusionState() for now to prevent changes to the window tree
+    // while it is being traversed.
+    for (auto& root_window_pair : root_windows_) {
+      if (root_window_pair.second.dirty) {
+        found_dirty_root = true;
+        root_window_pair.second.dirty = false;
+        SkRegion occluded_region;
+        RecomputeOcclusionImpl(root_window_pair.first, gfx::Transform(),
+                               nullptr, &occluded_region);
+      }
+    }
+
+    if (!found_dirty_root)
+      break;
+
+    // After 2 iterations, occlusion states should be stable.
+    // TODO(fdoray): Change this to DCHECK once we have validated that
+    // |kMaxIterations| works in production https://crbug.com/668690
+    constexpr int kMaxIterations = 2;
+    CHECK_LT(iteration, kMaxIterations);
+
+    // Call Window::SetOcclusionState() on tracked windows. A WindowDelegate may
+    // change the window tree in response to this.
+    WindowTracker tracked_windows_list;
+    for (const auto& tracked_window : tracked_windows_)
+      tracked_windows_list.Add(tracked_window.first);
+
+    while (!tracked_windows_list.windows().empty()) {
+      Window* window = tracked_windows_list.Pop();
+      auto it = tracked_windows_.find(window);
+      if (it != tracked_windows_.end()) {
+        if (it->second == Window::OcclusionState::NOT_OCCLUDED)
+          window->SetOccluded(false);
+        else if (it->second == Window::OcclusionState::OCCLUDED)
+          window->SetOccluded(true);
+      }
     }
   }
+
+  is_in_maybe_recompute_occlusion_ = false;
 }
 
 bool WindowOcclusionTracker::RecomputeOcclusionImpl(
@@ -224,8 +259,11 @@ void WindowOcclusionTracker::SetWindowAndDescendantsAreOccluded(
 }
 
 void WindowOcclusionTracker::SetOccluded(Window* window, bool occluded) {
-  if (WindowIsTracked(window))
-    window->SetOccluded(occluded);
+  auto tracked_window = tracked_windows_.find(window);
+  if (tracked_window != tracked_windows_.end()) {
+    tracked_window->second = occluded ? Window::OcclusionState::OCCLUDED
+                                      : Window::OcclusionState::NOT_OCCLUDED;
+  }
 }
 
 bool WindowOcclusionTracker::WindowIsTracked(Window* window) const {
