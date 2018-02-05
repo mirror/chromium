@@ -22,6 +22,30 @@
       "revId": "065f3687ccddb36d0a8ddc5367526488dd348bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797ef930_26a04042",
+        "filename": "content/common/p2p_socket_type.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-02-05T07:47:45Z",
+      "side": 1,
+      "message": "This is not a new dependency - I checked that it\u0027s whitelisted in  content/DEPS (https://cs.chromium.org/chromium/src/content/DEPS?rcl\u003d852b8b1208cb2d0bd42a825405c3178b59fdb54a\u0026l\u003d74)\n\nIf this is incorrect, please tighten the DEPS entries in chrome to point to the public API only",
+      "parentUuid": "ef291296_58ad24c6",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "065f3687ccddb36d0a8ddc5367526488dd348bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
