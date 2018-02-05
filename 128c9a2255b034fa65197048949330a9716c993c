@@ -85,6 +85,23 @@
       "revId": "128c9a2255b034fa65197048949330a9716c993c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c76dd9c_9772beb3",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridgeImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2018-02-05T18:55:40Z",
+      "side": 1,
+      "message": "That bug shows the whole history of the discussion, which is more than most people will want. Rather than linking to the bug, could you just explain the current design? (That \"other projects\" may specify a different PlatformServiceBridgeImpl via the GN mechanism.)",
+      "revId": "128c9a2255b034fa65197048949330a9716c993c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
