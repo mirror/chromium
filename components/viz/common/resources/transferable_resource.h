@@ -34,14 +34,17 @@ struct VIZ_COMMON_EXPORT TransferableResource {
   static std::vector<ReturnedResource> ReturnResources(
       const std::vector<TransferableResource>& input);
 
-  static TransferableResource MakeSoftware(const SharedBitmapId& id,
-                                           uint32_t sequence_number,
-                                           const gfx::Size& size) {
+  static TransferableResource MakeSoftware(
+      const SharedBitmapId& id,
+      uint32_t sequence_number,
+      const gfx::Size& size,
+      const bool uses_half_float_storage = false) {
     TransferableResource r;
     r.is_software = true;
     r.mailbox_holder.mailbox = id;
     r.shared_bitmap_sequence_number = sequence_number;
     r.size = size;
+    r.uses_half_float_storage = uses_half_float_storage;
     return r;
   }
 
@@ -92,6 +95,10 @@ struct VIZ_COMMON_EXPORT TransferableResource {
   // and may be unset.
   gfx::Size size;
 
+  // Indicates if the resource uses half floats to store color components. This
+  // must be set for software bitmaps and may be unset for gpu mailboxes.
+  bool uses_half_float_storage;
+
   // The format of the pixels in the gpu mailbox/software bitmap. This should
   // almost always be RGBA_8888 for resources generted by compositor clients,
   // and must be RGBA_8888 always for software resources.
@@ -141,6 +148,7 @@ struct VIZ_COMMON_EXPORT TransferableResource {
     return id == o.id && format == o.format &&
            buffer_format == o.buffer_format && filter == o.filter &&
            size == o.size &&
+           uses_half_float_storage == o.uses_half_float_storage &&
            mailbox_holder.mailbox == o.mailbox_holder.mailbox &&
            mailbox_holder.sync_token == o.mailbox_holder.sync_token &&
            mailbox_holder.texture_target == o.mailbox_holder.texture_target &&

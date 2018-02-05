@@ -561,7 +561,8 @@ class BLINK_PLATFORM_EXPORT Platform {
   }
 
   virtual std::unique_ptr<viz::SharedBitmap> AllocateSharedBitmap(
-      const WebSize& size) {
+      const WebSize& size,
+      const bool use_half_float_storage) {
     return nullptr;
   }
 

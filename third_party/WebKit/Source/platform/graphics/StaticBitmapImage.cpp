@@ -10,6 +10,7 @@
 #include "platform/graphics/ImageObserver.h"
 #include "platform/graphics/UnacceleratedStaticBitmapImage.h"
 #include "platform/graphics/paint/PaintImage.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "skia/ext/texture_handle.h"
@@ -75,6 +76,22 @@ void StaticBitmapImage::DrawHelper(PaintCanvas* canvas,
 
   canvas->drawImageRect(image, adjusted_src_rect, dst_rect, &flags,
                         WebCoreClampingModeToSkiaRectConstraint(clamp_mode));
+}
+
+CanvasColorParams StaticBitmapImage::ColorParams() {
+  if (!RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled())
+    return CanvasColorParams();
+  sk_sp<SkImage> skia_image = PaintImageForCurrentFrame().GetSkImage();
+  DCHECK(skia_image);
+  if (!skia_image)
+    return CanvasColorParams();
+  SkColorType color_type = kN32_SkColorType;
+  if (skia_image->colorSpace() && skia_image->colorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  SkImageInfo image_info =
+      SkImageInfo::Make(skia_image->width(), skia_image->height(), color_type,
+                        skia_image->alphaType(), skia_image->refColorSpace());
+  return CanvasColorParams(image_info);
 }
 
 scoped_refptr<StaticBitmapImage> StaticBitmapImage::ConvertToColorSpace(
