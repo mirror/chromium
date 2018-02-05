@@ -31,10 +31,6 @@ namespace base {
 class SingleThreadTaskRunner;
 }
 
-namespace IPC {
-class Message;
-}
-
 namespace content {
 
 class ThreadSafeSender;
@@ -48,8 +44,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   explicit ServiceWorkerDispatcher(
       scoped_refptr<ThreadSafeSender> thread_safe_sender);
   ~ServiceWorkerDispatcher() override;
-
-  void OnMessageReceived(const IPC::Message& msg);
 
   // Returns the existing service worker or a newly created one with the given
   // object info.
