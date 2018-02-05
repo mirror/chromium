@@ -317,10 +317,17 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
                        const gfx::Size& output_size,
                        const ReadbackRequestCallback& callback,
                        const SkColorType color_type) override;
+  void CopyFromSurfaceCompleted(const ReadbackRequestCallback& callback,
+                                const SkBitmap& bitmap,
+                                ReadbackResponse response);
   void CopyFromSurfaceToVideoFrame(
       const gfx::Rect& src_rect,
       scoped_refptr<media::VideoFrame> target,
       const base::Callback<void(const gfx::Rect&, bool)>& callback) override;
+  void CopyFromSurfaceToVideoFrameCompleted(
+      const base::RepeatingCallback<void(const gfx::Rect&, bool)>& callback,
+      const gfx::Rect& rect,
+      bool result);
   void BeginFrameSubscription(
       std::unique_ptr<RenderWidgetHostViewFrameSubscriber> subscriber) override;
   void EndFrameSubscription() override;
