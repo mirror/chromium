@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d615e7dd_ec5cf5f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T18:13:58Z",
+      "side": 1,
+      "message": "why is this? Is it because of the code in AutofillPopupBaseView::OnMouseMoved or some other method in that class? Because you just want to not have that code execute at all. Meaning I would override OnMouseMoved() to no-op with the TODO to remove both that override and the superclass override.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 64
+      },
+      "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a680a1a0_c2ebf546",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 3
@@ -34,6 +57,52 @@
       "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2b47b8a_de00b692",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T18:13:58Z",
+      "side": 1,
+      "message": "you don\u0027t need this param any more",
+      "range": {
+        "startLine": 184,
+        "startChar": 38,
+        "endLine": 184,
+        "endChar": 56
+      },
+      "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5099c297_1d0a8d18",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-05T18:13:58Z",
+      "side": 1,
+      "message": "gfx::kPlaceholderColor instead of black (then you probably don\u0027t need the comment)",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "3e3fd45d1f1a17cfd47ead1332681cc1d8df5f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
