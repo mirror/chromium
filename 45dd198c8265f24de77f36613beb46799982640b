@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5c5f18_2f2f1033",
+        "filename": "base/logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T20:05:26Z",
+      "side": 1,
+      "message": "mention this change in the cl description.\n\nassuming you\u0027ve checked that this compiles to nothing in this case in prod builds, this cl lgtm",
+      "revId": "45dd198c8265f24de77f36613beb46799982640b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
