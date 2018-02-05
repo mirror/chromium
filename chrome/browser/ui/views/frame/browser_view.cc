@@ -1269,6 +1269,18 @@ void BrowserView::ShowAppMenu() {
   toolbar_->app_menu_button()->Activate(nullptr);
 }
 
+void BrowserView::ShowBookmarkMenu() {
+  if (!toolbar_->app_menu_button())
+    return;
+
+  // Keep the top-of-window views revealed as long as the app menu is visible.
+  std::unique_ptr<ImmersiveRevealedLock> revealed_lock(
+      immersive_mode_controller_->GetRevealedLock(
+          ImmersiveModeController::ANIMATE_REVEAL_NO));
+
+  toolbar_->app_menu_button()->OpenBookmarkMenu();
+}
+
 content::KeyboardEventProcessingResult BrowserView::PreHandleKeyboardEvent(
     const NativeWebKeyboardEvent& event) {
   if ((event.GetType() != blink::WebInputEvent::kRawKeyDown) &&

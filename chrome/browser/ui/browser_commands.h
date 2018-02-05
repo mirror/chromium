@@ -140,6 +140,7 @@ void OpenTaskManager(Browser* browser);
 void OpenFeedbackDialog(Browser* browser, FeedbackSource source);
 void ToggleBookmarkBar(Browser* browser);
 void ShowAppMenu(Browser* browser);
+void ShowBookmarkMenu(Browser* browser);
 void ShowAvatarMenu(Browser* browser);
 void OpenUpdateChromeDialog(Browser* browser);
 void DistillCurrentPage(Browser* browser);
