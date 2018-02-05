@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed40622e_c512e5bc",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-02-05T14:53:22Z",
+      "side": 1,
+      "message": "Why is this going in FrameConnectorDelegate rather than CrossProcessFrameConnector? This method doesn\u0027t seem like it belongs in the delegate interface.",
+      "revId": "97fa13f385fd72f8ddc9f258718d3015fc3c81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
