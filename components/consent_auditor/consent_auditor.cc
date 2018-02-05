@@ -26,16 +26,26 @@ const char kLocalConsentConfirmationKey[] = "confirmation";
 const char kLocalConsentVersionKey[] = "version";
 const char kLocalConsentLocaleKey[] = "locale";
 
-UserEventSpecifics::UserConsent::ConsentStatus ToProtoEnum(
+UserEventSpecifics::UserConsent::Feature FeatureToProtoEnum(
+    consent_auditor::Feature feature) {
+  switch (feature) {
+    case consent_auditor::Feature::CHROME_SYNC:
+      return UserEventSpecifics::UserConsent::CHROME_SYNC;
+  }
+  NOTREACHED();
+  return UserEventSpecifics::UserConsent::FEATURE_UNSPECIFIED;
+}
+
+UserEventSpecifics::UserConsent::ConsentStatus StatusToProtoEnum(
     consent_auditor::ConsentStatus status) {
   switch (status) {
-    case consent_auditor::ConsentStatus::REVOKED:
-      return UserEventSpecifics::UserConsent::REVOKED;
+    case consent_auditor::ConsentStatus::NOT_GIVEN:
+      return UserEventSpecifics::UserConsent::NOT_GIVEN;
     case consent_auditor::ConsentStatus::GIVEN:
       return UserEventSpecifics::UserConsent::GIVEN;
   }
   NOTREACHED();
-  return UserEventSpecifics::UserConsent::UNSPECIFIED;
+  return UserEventSpecifics::UserConsent::CONSENT_STATUS_UNSPECIFIED;
 }
 
 }  // namespace
@@ -63,15 +73,13 @@ void ConsentAuditor::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(prefs::kLocalConsentsDictionary);
 }
 
-void ConsentAuditor::RecordGaiaConsent(
-    const std::string& feature,
-    const std::vector<int>& consent_grd_ids,
-    const std::vector<std::string>& placeholder_replacements,
-    ConsentStatus status) {
+void ConsentAuditor::RecordGaiaConsent(Feature feature,
+                                       const std::vector<int>& consent_grd_ids,
+                                       ConsentStatus status) {
   if (!base::FeatureList::IsEnabled(switches::kSyncUserConsentEvents))
     return;
-  std::unique_ptr<sync_pb::UserEventSpecifics> specifics = ConstructUserConsent(
-      feature, consent_grd_ids, placeholder_replacements, status);
+  std::unique_ptr<sync_pb::UserEventSpecifics> specifics =
+      ConstructUserConsent(feature, consent_grd_ids, status);
   // For real usage, UserEventSyncBridge should always be ready to receive
   // events when a consent gets recorded.
   // FakeUserEventService doesn't have a sync bridge.
@@ -85,24 +93,19 @@ void ConsentAuditor::RecordGaiaConsent(
 }
 
 std::unique_ptr<sync_pb::UserEventSpecifics>
-ConsentAuditor::ConstructUserConsent(
-    const std::string& feature,
-    const std::vector<int>& consent_grd_ids,
-    const std::vector<std::string>& placeholder_replacements,
-    ConsentStatus status) {
-  auto specifics = std::make_unique<sync_pb::UserEventSpecifics>();
+ConsentAuditor::ConstructUserConsent(Feature feature,
+                                     const std::vector<int>& consent_grd_ids,
+                                     ConsentStatus status) {
+  auto specifics = base::MakeUnique<sync_pb::UserEventSpecifics>();
   specifics->set_event_time_usec(
       base::Time::Now().since_origin().InMicroseconds());
   auto* consent = specifics->mutable_user_consent();
-  consent->set_feature(feature);
+  consent->set_feature(FeatureToProtoEnum(feature));
   for (int id : consent_grd_ids) {
     consent->add_consent_grd_ids(id);
   }
-  for (const auto& string : placeholder_replacements) {
-    consent->add_placeholder_replacements(string);
-  }
   consent->set_locale(app_locale_);
-  consent->set_status(ToProtoEnum(status));
+  consent->set_status(StatusToProtoEnum(status));
   return specifics;
 }
 
