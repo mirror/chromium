@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efa42b37_a76e4a7c",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-05T23:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297f0545_6af35c64",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd63132_409f300c",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-05T22:31:05Z",
       "side": 1,
       "message": "If the policy is not specified, I think it\u0027s expected to return false here, right?",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8288d0_32e10e69",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-05T23:03:41Z",
+      "side": 1,
+      "message": "This part is trying to be consistent with the current code https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc?q\u003dwallpaper_manager.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d227 (I guess the DCHECK may never fail since the policy is always specified with a default value of True?)",
+      "parentUuid": "ffd63132_409f300c",
       "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996054f8_b3bbdbfd",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-05T23:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0dfd64_fd65b46a",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
