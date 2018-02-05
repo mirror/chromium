@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b67d34a8_e67d606e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-05T23:16:06Z",
+      "side": 1,
+      "message": "wrong direction..\n\ntests in chrome only need this method to check the return value is not null, so you can just make the public one return a bool instead",
+      "revId": "563d118540f1713e2908b10506efca8a9042c2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
