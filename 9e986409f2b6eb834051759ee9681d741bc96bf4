@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "97c8e09f_c2051c88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-05T21:50:56Z",
+      "side": 1,
+      "message": "it would be clearer to point out this is talking about devtools\u0027 breakpoint, not GDB debugging or something else.",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47cc0a14_a2d805eb",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 3
@@ -30,6 +53,24 @@
       "writtenOn": "2018-02-05T20:28:29Z",
       "side": 1,
       "message": "Maybe we can rely on our layout / unit tests for this matter?",
+      "parentUuid": "47cc0a14_a2d805eb",
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda9e0fd_8063089e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-05T21:50:56Z",
+      "side": 1,
+      "message": "Yeah, we\u0027ll miss updating the layout size so you might be out of sync in the future. SetLayoutSizeInternal shouldn\u0027t ever cause us to enter a lifecycle update, it should only mark as needing one. That of itself shouldn\u0027t cause a problem should it? (i.e. it seems like we should avoid entering a lifecycle update, rather than prevent dirtying state)",
       "parentUuid": "47cc0a14_a2d805eb",
       "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
