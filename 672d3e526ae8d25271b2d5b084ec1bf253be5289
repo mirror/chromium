@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa2e530_36bf3ed1",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:43:44Z",
+      "side": 1,
+      "message": "It\u0027s a bit hard to parse this. What does \"impl instance\" refer to?",
+      "revId": "672d3e526ae8d25271b2d5b084ec1bf253be5289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3616e7fb_5771d959",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:43:44Z",
+      "side": 1,
+      "message": "Since the other comments talk about how service worker and shared worker are different, does this comment mean a particular type of worker?",
+      "range": {
+        "startLine": 46,
+        "startChar": 50,
+        "endLine": 46,
+        "endChar": 56
+      },
+      "revId": "672d3e526ae8d25271b2d5b084ec1bf253be5289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
