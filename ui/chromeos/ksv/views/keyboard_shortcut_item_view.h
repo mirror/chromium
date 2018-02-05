@@ -24,6 +24,12 @@ class KeyboardShortcutItemView : public views::View {
   int GetHeightForWidth(int w) const override;
   void Layout() override;
 
+  views::StyledLabel* description_label_view() {
+    return description_label_view_;
+  }
+
+  views::StyledLabel* shortcut_label_view() { return shortcut_label_view_; }
+
  private:
   // View of the text describing what action the shortcut performs.
   views::StyledLabel* description_label_view_;

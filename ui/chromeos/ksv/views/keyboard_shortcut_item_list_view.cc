@@ -5,6 +5,7 @@
 #include "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.h"
 
 #include "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h"
+#include "ui/views/controls/label.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
@@ -28,6 +29,14 @@ KeyboardShortcutItemListView::KeyboardShortcutItemListView()
 void KeyboardShortcutItemListView::AddItemView(
     KeyboardShortcutItemView* item_view) {
   shortcut_item_views_->AddChildView(item_view);
+}
+
+void KeyboardShortcutItemListView::AddCategoryLabel(
+    const base::string16& text) {
+  views::Label* category_label = new views::Label(text);
+  category_label->SetHorizontalAlignment(gfx::ALIGN_TO_HEAD);
+  category_label->SetEnabledColor(SK_ColorBLUE);
+  shortcut_item_views_->AddChildView(category_label);
 }
 
 }  // namespace keyboard_shortcut_viewer

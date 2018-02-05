@@ -20,6 +20,8 @@ class KeyboardShortcutItemListView : public views::View {
 
   void AddItemView(KeyboardShortcutItemView* item_view);
 
+  void AddCategoryLabel(const base::string16& text);
+
  private:
   // The parent view of the list of KeyboardShortcutItemView.
   views::View* shortcut_item_views_;

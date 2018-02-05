@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grit-part>
+  <!-- Search illustration -->
+  <message name="IDS_KSV_SEARCH_START" desc="Start searching.">
+    Start search...
+  </message>
+  <message name="IDS_KSV_SEARCH_NO_RESULT" desc="No search results.">
+    No matching results found
+  </message>
+
   <!-- Categories -->
   <message name="IDS_KSV_CATEGORY_POPULAR" desc="Category of the keyboard shortcut.">
     Popular Shortcut
