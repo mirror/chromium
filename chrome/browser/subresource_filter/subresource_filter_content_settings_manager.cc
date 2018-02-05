@@ -46,7 +46,7 @@ SubresourceFilterContentSettingsManager::
     SubresourceFilterContentSettingsManager(Profile* profile)
     : history_observer_(this),
       settings_map_(HostContentSettingsMapFactory::GetForProfile(profile)),
-      clock_(base::MakeUnique<base::DefaultClock>(base::DefaultClock())),
+      clock_(base::DefaultClock::GetInstance()),
       should_use_smart_ui_(ShouldUseSmartUI()) {
   DCHECK(profile);
   DCHECK(settings_map_);

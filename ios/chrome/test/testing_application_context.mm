@@ -136,8 +136,8 @@ TestingApplicationContext::GetNetworkTimeTracker() {
   if (!network_time_tracker_) {
     DCHECK(local_state_);
     network_time_tracker_.reset(new network_time::NetworkTimeTracker(
-        base::WrapUnique(new base::DefaultClock),
-        base::WrapUnique(new base::DefaultTickClock), local_state_,
+        base::DefaultClock::GetInstance(),
+        base::DefaultTickClock::GetInstance(), local_state_,
         GetSystemURLRequestContext()));
   }
   return network_time_tracker_.get();

@@ -247,8 +247,8 @@ ApplicationContextImpl::GetNetworkTimeTracker() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!network_time_tracker_) {
     network_time_tracker_.reset(new network_time::NetworkTimeTracker(
-        base::WrapUnique(new base::DefaultClock),
-        base::WrapUnique(new base::DefaultTickClock), GetLocalState(),
+        base::DefaultClock::GetInstance(),
+        base::DefaultTickClock::GetInstance(), GetLocalState(),
         GetSystemURLRequestContext()));
   }
   return network_time_tracker_.get();
