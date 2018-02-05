@@ -312,55 +312,12 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    * @return {Object} Object of data from formElement.
    */
   __gCrWeb.getPasswordFormData = function(formElement) {
-    var inputs = getFormInputElements_(formElement);
-
-    var fields = [];
-    var passwords = [];
-    var firstPasswordIndex = 0;
-    for (var j = 0; j < inputs.length; j++) {
-      var input = inputs[j];
-
-      fields.push({
-        'element': __gCrWeb.common.getFieldIdentifier(input),
-        'type': input.type
-      });
-
-      if (!input.disabled && input.type == 'password') {
-        if (passwords.length == 0) {
-          firstPasswordIndex = j;
-        }
-        passwords.push({
-          'element': __gCrWeb.common.getFieldIdentifier(input),
-          'value': input.value
-        });
-      }
-    }
-
-    if (passwords.length == 0)
-      return null;
-
-    var usernameElement = '';
-    var usernameValue = '';
-    for (var j = firstPasswordIndex - 1; j >= 0; j--) {
-      var input = inputs[j];
-      if (!input.disabled && __gCrWeb.common.isTextField(input)) {
-        usernameElement = __gCrWeb.common.getFieldIdentifier(input);
-        usernameValue = input.value;
-        break;
-      }
-    }
-
-    var origin = __gCrWeb.common.removeQueryAndReferenceFromURL(
-        formElement.ownerDocument.location.href);
-
-    return {
-      'action': getCanonicalActionForForm_(formElement),
-      'name': __gCrWeb.common.getFormIdentifier(formElement),
-      'origin': origin,
-      'fields': fields,
-      'usernameElement': usernameElement,
-      'usernameValue': usernameValue,
-      'passwords': passwords
-    };
+      var extractMask = __gCrWeb.autofill.EXTRACT_MASK_VALUE;
+      var formData = {}
+      var ok = __gCrWeb.autofill.webFormElementToFormData(
+        window, formElement,  null /* formControlElement */,
+        extractMask, formData, null /* field */);
+      if (ok)
+        return formData;
   };
 }
