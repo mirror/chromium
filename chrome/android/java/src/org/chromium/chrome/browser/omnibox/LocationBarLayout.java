@@ -59,6 +59,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
@@ -240,6 +241,10 @@ public class LocationBarLayout extends FrameLayout
     private DeferredOnSelectionRunnable mDeferredOnSelection;
 
     private WebContentsObserver mVoiceSearchWebContentsObserver;
+
+    // Query in Omnibox
+    private boolean mQueryInOmniboxEnabled;
+    private CharSequence mOriginalVerboseStatusText;
 
     private static abstract class DeferredOnSelectionRunnable implements Runnable {
         protected final OmniboxSuggestion mSuggestion;
@@ -694,6 +699,7 @@ public class LocationBarLayout extends FrameLayout
         mSecurityIconResource = 0;
 
         mVerboseStatusTextView = (TextView) findViewById(R.id.location_bar_verbose_status);
+        mOriginalVerboseStatusText = mVerboseStatusTextView.getText().toString();
 
         mDeleteButton = (TintedImageButton) findViewById(R.id.delete_button);
 
@@ -890,6 +896,9 @@ public class LocationBarLayout extends FrameLayout
         mDeferredNativeRunnables.clear();
 
         updateVisualsForState();
+
+        mQueryInOmniboxEnabled = ChromeFeatureList.isEnabled(ChromeFeatureList.QUERY_IN_OMNIBOX);
+        if (mQueryInOmniboxEnabled) updateVerboseStatusVisibility();
     }
 
     /**
@@ -1459,6 +1468,12 @@ public class LocationBarLayout extends FrameLayout
                 mUseDarkColors ? R.color.locationbar_status_color
                         : R.color.locationbar_status_color_light));
         mVerboseStatusTextView.setVisibility(verboseStatusVisibility);
+        if (verboseStatusVisible) {
+            CharSequence verboseStatus = mUrlBar.isShowingDseSearchTerms()
+                    ? getSearchEngineVerboseStatusForUrl(mToolbarDataProvider.getCurrentUrl())
+                    : mOriginalVerboseStatusText;
+            mVerboseStatusTextView.setText(verboseStatus);
+        }
 
         View separator = findViewById(R.id.location_bar_verbose_status_separator);
         separator.setBackgroundColor(ApiCompatibilityUtils.getColor(getResources(), mUseDarkColors
@@ -2126,6 +2141,8 @@ public class LocationBarLayout extends FrameLayout
      * <p>The URL is converted to the most user friendly format (removing HTTP:// for example).
      *
      * <p>If the current tab is null, the URL text will be cleared.
+     *
+     * <p>When viewing a DSE results page, the SERP URL is replaced with the query string.
      */
     @Override
     public void setUrlToPageUrl() {
@@ -2684,5 +2701,20 @@ public class LocationBarLayout extends FrameLayout
      */
     public void scrollUrlBarToTld() {
         mUrlBar.scrollToTLD();
+    }
+
+    /**
+     * Returns the search engine's name if we're displaying a SRP URL for the DSE, to be displayed
+     * in the verbose status field in the omnibox.
+     *
+     * @param url The URL we're checking to be a SRP URL for the DSE.
+     * @return A string containing the name of the search provider, and null if this isn't a SRP
+     *         URL.
+     */
+    private String getSearchEngineVerboseStatusForUrl(String url) {
+        return UrlBar.isDseSearch(url) ? TemplateUrlService.getInstance()
+                                                 .getDefaultSearchEngineTemplateUrl()
+                                                 .getShortName()
+                                       : null;
     }
 }

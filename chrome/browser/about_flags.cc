@@ -3736,6 +3736,12 @@ const FeatureEntry kFeatureEntries[] = {
                                     kSimplifyHttpsIndicatorVariations,
                                     "SimplifyHttpsIndicator")},
 
+#if defined(OS_ANDROID)
+    {"enable-query-in-omnibox", flag_descriptions::kQueryInOmniboxName,
+     flag_descriptions::kQueryInOmniboxDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kQueryInOmnibox)},
+#endif
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the

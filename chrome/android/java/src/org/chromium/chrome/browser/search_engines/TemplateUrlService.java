@@ -435,6 +435,10 @@ public class TemplateUrlService {
         return nativeGetSearchEngineUrlFromTemplateUrl(mNativeTemplateUrlServiceAndroid, keyword);
     }
 
+    public String extractSearchTermsFromUrl(String url) {
+        return nativeExtractSearchTermsFromUrl(mNativeTemplateUrlServiceAndroid, url);
+    }
+
     @VisibleForTesting
     public String addSearchEngineForTesting(String keyword, int ageInDays) {
         return nativeAddSearchEngineForTesting(
@@ -477,4 +481,6 @@ public class TemplateUrlService {
             long nativeTemplateUrlServiceAndroid, String keyword, int offset);
     private native String nativeUpdateLastVisitedForTesting(
             long nativeTemplateUrlServiceAndroid, String keyword);
+    private native String nativeExtractSearchTermsFromUrl(
+            long nativeTemplateUrlServiceAndroid, String url);
 }
