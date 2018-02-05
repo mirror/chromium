@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "387828c1_ebf0e595",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-05T21:08:26Z",
+      "side": 1,
+      "message": "Ah, thanks. This is a bit confusing. Not sure if a comment would help or if this is just common knowledge by people working with Views.",
+      "parentUuid": "1845cfd5_2099d8dc",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e4b574_337fc787",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
         "patchSetId": 9
