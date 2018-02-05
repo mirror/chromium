@@ -4,6 +4,8 @@
 
 #include "cc/input/scroll_snap_data.h"
 
+#include "base/vlog.h"
+
 namespace cc {
 
 SnapContainerData::SnapContainerData() = default;

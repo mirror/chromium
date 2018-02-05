@@ -3879,6 +3879,29 @@ bool LayerTreeHostImpl::SnapAtScrollEnd() {
   return true;
 }
 
+bool LayerTreeHostImpl::CurrentNodeHasSnapData() {
+  ScrollNode* scroll_node = CurrentlyScrollingNode();
+  return scroll_node && scroll_node->snap_container_data.has_value();
+}
+
+gfx::Vector2dF LayerTreeHostImpl::GetSnapPosition(
+    const gfx::Vector2dF& displacement) {
+  ScrollNode* scroll_node = CurrentlyScrollingNode();
+  if (!scroll_node || !scroll_node->snap_container_data.has_value())
+    return gfx::Vector2dF();
+
+  const SnapContainerData& data = scroll_node->snap_container_data.value();
+  ScrollTree& scroll_tree = active_tree()->property_trees()->scroll_tree;
+  gfx::ScrollOffset current_position =
+      scroll_tree.current_scroll_offset(scroll_node->element_id);
+  did_scroll_x_for_scroll_gesture_ |= displacement.x() != 0;
+  did_scroll_y_for_scroll_gesture_ |= displacement.y() != 0;
+  gfx::ScrollOffset snap_offset = data.FindSnapPosition(
+      current_position + gfx::ScrollOffset(displacement),
+      did_scroll_x_for_scroll_gesture_, did_scroll_y_for_scroll_gesture_);
+  return ScrollOffsetToVector2dF(snap_offset - current_position);
+}
+
 void LayerTreeHostImpl::ClearCurrentlyScrollingNode() {
   active_tree_->ClearCurrentlyScrollingNode();
   did_lock_scrolling_layer_ = false;

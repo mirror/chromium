@@ -41,9 +41,18 @@ class EventWithCallback;
 class FlingBooster;
 class InputHandlerProxyClient;
 class InputScrollElasticityController;
+class SnapFlingCurve;
 class SynchronousInputHandler;
 class SynchronousInputHandlerProxy;
 struct DidOverscrollParams;
+
+enum class SnapState {
+  kInactive,
+  kNoSnap,
+  kMixing,
+  kFinished,
+  kAnimate,
+};
 
 // This class is a proxy between the blink web input events for a WebWidget and
 // the compositor's input handling logic. InputHandlerProxy instances live
@@ -161,6 +170,17 @@ class InputHandlerProxy : public cc::InputHandlerClient,
   // SynchronousInputHandler. They can provide that by calling Animate().
   void RequestAnimation();
 
+  void ResetSnapStates();
+
+  void SnapFlingEnds(double time);
+
+  void SnapFlingUpdates(const gfx::Vector2dF& delta, double time);
+
+  void AnimateSnapFlingCurve(base::TimeTicks time);
+
+  bool HandleInertialUpdatesForSnapping(
+      const blink::WebGestureEvent& gesture_event);
+
   // Used to send overscroll messages to the browser.
   // |bundle_overscroll_params_with_ack| means overscroll message should be
   // bundled with triggering event response, and won't fire |DidOverscroll|.
@@ -260,6 +280,9 @@ class InputHandlerProxy : public cc::InputHandlerClient,
   std::unique_ptr<base::TickClock> tick_clock_;
 
   std::unique_ptr<FlingBooster> fling_booster_;
+
+  SnapState snap_state_;
+  std::unique_ptr<SnapFlingCurve> snap_fling_curve_;
 
   DISALLOW_COPY_AND_ASSIGN(InputHandlerProxy);
 };

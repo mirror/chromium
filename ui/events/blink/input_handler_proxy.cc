@@ -29,6 +29,7 @@
 #include "ui/events/blink/fling_booster.h"
 #include "ui/events/blink/input_handler_proxy_client.h"
 #include "ui/events/blink/input_scroll_elasticity_controller.h"
+#include "ui/events/blink/snap_fling_curve.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/latency/latency_info.h"
@@ -161,7 +162,8 @@ InputHandlerProxy::InputHandlerProxy(
       current_overscroll_params_(nullptr),
       has_ongoing_compositor_scroll_fling_pinch_(false),
       is_first_gesture_scroll_update_(false),
-      tick_clock_(std::make_unique<base::DefaultTickClock>()) {
+      tick_clock_(std::make_unique<base::DefaultTickClock>()),
+      snap_state_(SnapState::kInactive) {
   DCHECK(client);
   input_handler_->BindToClient(this,
                                touchpad_and_wheel_scroll_latching_enabled_);
@@ -674,6 +676,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollBegin(
   if (gesture_scroll_on_impl_thread_)
     CancelCurrentFling();
 
+  ResetSnapStates();
+
 #ifndef NDEBUG
   expect_scroll_update_end_ = true;
 #endif
@@ -733,6 +737,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollBegin(
 InputHandlerProxy::EventDisposition
 InputHandlerProxy::HandleGestureScrollUpdate(
     const WebGestureEvent& gesture_event) {
+  if (snap_state_ == SnapState::kFinished)
+    return DROP_EVENT;
+
 #ifndef NDEBUG
   DCHECK(expect_scroll_update_end_);
 #endif
@@ -765,6 +772,15 @@ InputHandlerProxy::HandleGestureScrollUpdate(
         return DID_NOT_HANDLE;
     }
   }
+
+  if (scroll_state.is_in_inertial_phase() &&
+      snap_state_ != SnapState::kNoSnap) {
+    if (HandleInertialUpdatesForSnapping(gesture_event))
+      return DID_HANDLE;
+  } else if (snap_state_ != SnapState::kInactive) {
+    ResetSnapStates();
+  }
+
   cc::InputHandlerScrollResult scroll_result =
       input_handler_->ScrollBy(&scroll_state);
 
@@ -790,10 +806,29 @@ InputHandlerProxy::HandleGestureScrollUpdate(
 
 InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollEnd(
   const WebGestureEvent& gesture_event) {
+  if (snap_state_ == SnapState::kFinished)
+    return DROP_EVENT;
+
 #ifndef NDEBUG
   DCHECK(expect_scroll_update_end_);
   expect_scroll_update_end_ = false;
 #endif
+  if (snap_state_ == SnapState::kMixing && snap_fling_curve_) {
+    double time = gesture_event.TimeStampSeconds();
+    if (snap_fling_curve_->IsFinished()) {
+      SnapFlingEnds(time);
+    } else {
+      base::TimeTicks event_time =
+          base::TimeTicks() + base::TimeDelta::FromSecondsD(time);
+      gfx::Vector2dF snapped_delta =
+          snap_fling_curve_->SnapFlingDelta(gfx::Vector2dF(), event_time);
+      SnapFlingUpdates(snapped_delta, time);
+      snap_state_ = SnapState::kAnimate;
+      RequestAnimation();
+    }
+    return DID_HANDLE;
+  }
+
   if (ShouldAnimate(gesture_event.data.scroll_end.delta_units !=
                     blink::WebGestureEvent::ScrollUnits::kPixels)) {
     // Do nothing if the scroll is being animated; the scroll animation will
@@ -1025,6 +1060,9 @@ void InputHandlerProxy::Animate(base::TimeTicks time) {
   if (scroll_elasticity_controller_)
     scroll_elasticity_controller_->Animate(time);
 
+  if (snap_fling_curve_ && snap_state_ == SnapState::kAnimate)
+    AnimateSnapFlingCurve(time);
+
   if (!fling_curve_)
     return;
 
@@ -1128,6 +1166,88 @@ void InputHandlerProxy::SynchronouslyZoomBy(float magnify_delta,
   input_handler_->PinchGestureBegin();
   input_handler_->PinchGestureUpdate(magnify_delta, anchor);
   input_handler_->PinchGestureEnd(anchor, false);
+}
+
+void InputHandlerProxy::ResetSnapStates() {
+  snap_state_ = SnapState::kInactive;
+  snap_fling_curve_.reset();
+}
+
+void InputHandlerProxy::SnapFlingEnds(double time) {
+#ifndef NDEBUG
+  DCHECK(expect_scroll_update_end_);
+  expect_scroll_update_end_ = false;
+#endif
+  WebGestureEvent event(WebInputEvent::kGestureScrollEnd, 0, time);
+  event.data.scroll_end.delta_units = blink::WebGestureEvent::kPrecisePixels;
+  event.data.scroll_end.inertial_phase = WebGestureEvent::kMomentumPhase;
+  event.data.scroll_end.synthetic = true;
+  cc::ScrollState scroll_state = CreateScrollStateForGesture(event);
+  input_handler_->ScrollEnd(&scroll_state, false);
+  gesture_scroll_on_impl_thread_ = false;
+  snap_state_ = SnapState::kFinished;
+}
+
+void InputHandlerProxy::SnapFlingUpdates(const gfx::Vector2dF& delta,
+                                         double time) {
+  WebGestureEvent event(WebInputEvent::kGestureScrollUpdate, 0, time);
+  event.data.scroll_update.delta_x = -delta.x();
+  event.data.scroll_update.delta_y = -delta.y();
+  event.data.scroll_update.previous_update_in_sequence_prevented = false;
+  event.data.scroll_update.inertial_phase = WebGestureEvent::kMomentumPhase;
+  event.data.scroll_update.delta_units = blink::WebGestureEvent::kPrecisePixels;
+
+  cc::ScrollState scroll_state = CreateScrollStateForGesture(event);
+  cc::InputHandlerScrollResult scroll_result =
+      input_handler_->ScrollBy(&scroll_state);
+  snap_fling_curve_->UpdateScrolledDelta(delta -
+                                         scroll_result.unused_scroll_delta);
+}
+
+void InputHandlerProxy::AnimateSnapFlingCurve(base::TimeTicks time) {
+  double time_secs = (time - base::TimeTicks()).InSecondsF();
+  if (snap_fling_curve_->IsFinished()) {
+    SnapFlingEnds(time_secs);
+  } else {
+    gfx::Vector2dF snapped_delta =
+        snap_fling_curve_->SnapFlingDelta(gfx::Vector2dF(), time);
+    SnapFlingUpdates(snapped_delta, time_secs);
+    RequestAnimation();
+  }
+}
+
+bool InputHandlerProxy::HandleInertialUpdatesForSnapping(
+    const WebGestureEvent& gesture_event) {
+  gfx::Vector2dF event_delta(-gesture_event.data.scroll_update.delta_x,
+                             -gesture_event.data.scroll_update.delta_y);
+  base::TimeTicks event_time =
+      base::TimeTicks() +
+      base::TimeDelta::FromSecondsD(gesture_event.TimeStampSeconds());
+  if (snap_state_ == SnapState::kInactive) {
+    if (input_handler_->CurrentNodeHasSnapData()) {
+      snap_state_ = SnapState::kMixing;
+      gfx::Vector2dF ending_displacement =
+          SnapFlingCurve::EstimateDisplacement(event_delta);
+      ending_displacement =
+          input_handler_->GetSnapPosition(ending_displacement);
+      snap_fling_curve_ =
+          std::make_unique<SnapFlingCurve>(ending_displacement, event_time);
+    } else {
+      snap_state_ = SnapState::kNoSnap;
+    }
+  }
+
+  if (snap_fling_curve_) {
+    if (snap_fling_curve_->IsFinished()) {
+      SnapFlingEnds(gesture_event.TimeStampSeconds());
+    } else {
+      gfx::Vector2dF snapped_delta =
+          snap_fling_curve_->SnapFlingDelta(event_delta, event_time);
+      SnapFlingUpdates(snapped_delta, gesture_event.TimeStampSeconds());
+    }
+    return true;
+  }
+  return false;
 }
 
 void InputHandlerProxy::HandleOverscroll(

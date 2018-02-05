@@ -564,6 +564,9 @@ class CC_EXPORT LayerTreeHostImpl
 
   virtual bool IsUIResourceOpaque(UIResourceId uid) const;
 
+  bool CurrentNodeHasSnapData() override;
+  gfx::Vector2dF GetSnapPosition(const gfx::Vector2dF& displacement) override;
+
   struct UIResourceData {
     viz::ResourceId resource_id;
     bool opaque;
