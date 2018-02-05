@@ -42,6 +42,8 @@ ExtensionKeybindingRegistry::ExtensionKeybindingRegistry(
   registrar_.Add(this,
                  extensions::NOTIFICATION_EXTENSION_COMMAND_REMOVED,
                  content::Source<Profile>(profile->GetOriginalProfile()));
+  media_keys_listener_ = ui::MediaKeysListener::Create(
+      this, ui::MediaKeysListener::Scope::kFocused);
 }
 
 ExtensionKeybindingRegistry::~ExtensionKeybindingRegistry() {
@@ -72,6 +74,10 @@ void ExtensionKeybindingRegistry::RemoveExtensionKeybinding(
       // Let each platform-specific implementation get a chance to clean up.
       RemoveExtensionKeybindingImpl(old->first, command_name);
       event_targets_.erase(old);
+
+      if (media_keys_listener_ && !IsAnyMediaKeyRegistered()) {
+        media_keys_listener_->StopWatchingMediaKeys();
+      }
 
       // If a specific command_name was requested, it has now been deleted so no
       // further work is required.
@@ -144,8 +150,14 @@ void ExtensionKeybindingRegistry::AddEventTarget(
       std::make_pair(extension_id, command_name));
   // Shortcuts except media keys have only one target in the list. See comment
   // about |event_targets_|.
-  if (!extensions::Command::IsMediaKey(accelerator))
+  if (!extensions::Command::IsMediaKey(accelerator)) {
     DCHECK_EQ(1u, event_targets_[accelerator].size());
+  }
+
+  if (media_keys_listener_ && !media_keys_listener_->IsWatchingMediaKeys() &&
+      IsAnyMediaKeyRegistered()) {
+    media_keys_listener_->StartWatchingMediaKeys();
+  }
 }
 
 bool ExtensionKeybindingRegistry::GetFirstTarget(
@@ -227,6 +239,15 @@ void ExtensionKeybindingRegistry::Observe(
   }
 }
 
+ui::MediaKeysListener::MediaKeysHandleResult
+ExtensionKeybindingRegistry::OnMediaKeysAccelerator(
+    const ui::Accelerator& accelerator) {
+  if (NotifyEventTargets(accelerator)) {
+    return ui::MediaKeysListener::MediaKeysHandleResult::kSuppressPropagation;
+  }
+  return ui::MediaKeysListener::MediaKeysHandleResult::kIgnore;
+}
+
 bool ExtensionKeybindingRegistry::ExtensionMatchesFilter(
     const extensions::Extension* extension)
 {
@@ -262,6 +283,15 @@ bool ExtensionKeybindingRegistry::ExecuteCommands(
   }
 
   return executed;
+}
+
+bool ExtensionKeybindingRegistry::IsAnyMediaKeyRegistered() const {
+  for (auto iter : event_targets_) {
+    if (Command::IsMediaKey(iter.first)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 }  // namespace extensions
