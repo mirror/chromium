@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a53df7c0_73b3decc",
+        "filename": "chrome/browser/chromeos/crostini/crostini_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-05T23:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df60f25_2a31a104",
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3141068c_412dbcd6",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1c3a2cf2_801c29f8",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11147,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-05T23:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3141068c_412dbcd6",
+      "range": {
+        "startLine": 11147,
+        "startChar": 53,
+        "endLine": 11147,
+        "endChar": 60
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e0ac33_a776c8ca",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e4fb5c_ae85ca5a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-05T23:35:27Z",
+      "side": 1,
+      "message": "Done.\nI\u0027ve changed dynamic_refresh to true. Separately, virtual machines are disallowed for enterprise policy by default according to requirement.",
+      "parentUuid": "54e0ac33_a776c8ca",
+      "range": {
+        "startLine": 11149,
+        "startChar": 6,
+        "endLine": 11149,
+        "endChar": 112
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
