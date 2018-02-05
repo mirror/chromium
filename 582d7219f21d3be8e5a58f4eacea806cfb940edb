@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e4de81_c805858d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-05T20:55:01Z",
+      "side": 1,
+      "message": "This might be more clear as a base::Optional instead.",
+      "range": {
+        "startLine": 164,
+        "startChar": 30,
+        "endLine": 164,
+        "endChar": 60
+      },
+      "revId": "582d7219f21d3be8e5a58f4eacea806cfb940edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffdabec_8e692a5d",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-05T20:55:01Z",
+      "side": 1,
+      "message": "nit: switch whitelist_ to contain a url_matcher::URLMatcherConditionSet::ID and a map for Previews-\u003einflation, so you don\u0027t have to iterate through a set.",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 5
+      },
+      "revId": "582d7219f21d3be8e5a58f4eacea806cfb940edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6e707f_2592543f",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-05T20:55:01Z",
+      "side": 1,
+      "message": "nit: I said use an optional for the return type elsewhere, but would it just make sense to initialize this to the finch value? Your call, just giving ideas.",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 37
+      },
+      "revId": "582d7219f21d3be8e5a58f4eacea806cfb940edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
