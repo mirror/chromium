@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d47ea27_91e72c37",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:23:54Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "22829e48_7a88d992",
+      "range": {
+        "startLine": 534,
+        "startChar": 45,
+        "endLine": 534,
+        "endChar": 0
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35e38cca_cde9da15",
         "filename": "net/disk_cache/memory/mem_entry_impl.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Maybe this instead:\n\nnet::Interval\u003cint64_t\u003e relevant_in_next_child;\nrequested.Intersects(ChildInterval(i), \u0026relevant_in_next_child))\n\nOr rather:\nnet::Interval\u003cint64_t\u003e relevant_in_next_child;\nif (!requested.Intersects(ChildInterval(i), \u0026relevant_in_next_child) ||\n    relevant_in_next_child.min() !\u003d found.max())\n  break;\n\n... since it makes thinking of what happens when the intersection is empty easier --- I think in current code we actually try to merge it in, then bail out on one more iteration.\n\n(Probably could throw in the end check too..)",
       "parentUuid": "35e38cca_cde9da15",
+      "range": {
+        "startLine": 548,
+        "startChar": 17,
+        "endLine": 548,
+        "endChar": 30
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18f91f0_798d1720",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:23:54Z",
+      "side": 1,
+      "message": "Works for me.",
+      "parentUuid": "6917bee5_22745890",
       "range": {
         "startLine": 548,
         "startChar": 17,
@@ -183,6 +231,29 @@
         "startChar": 12,
         "endLine": 551,
         "endChar": 25
+      },
+      "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38483c7f_eea7305a",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-05T20:23:54Z",
+      "side": 1,
+      "message": "optional:  Would the second value make more sense as (i-\u003efirst) * kMaxSparseEntrySize + child-\u003eGetDataSize(kSparseData)?\n\nYou can then replace child_start_global with child_offset or somesuch, and make it have the value of (i-\u003efirst) * kMaxSparseEntrySize.",
+      "range": {
+        "startLine": 601,
+        "startChar": 42,
+        "endLine": 601,
+        "endChar": 43
       },
       "revId": "7e000061b2a971f61d18b0be839b1e427d17f7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
