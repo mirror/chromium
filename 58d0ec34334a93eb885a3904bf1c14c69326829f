@@ -34,6 +34,23 @@
       "revId": "58d0ec34334a93eb885a3904bf1c14c69326829f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900fa405_423524c6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-02-05T20:54:17Z",
+      "side": 1,
+      "message": "Could OnFirstMeaningfulPaintDetected take the enum value instead of a bool?",
+      "revId": "58d0ec34334a93eb885a3904bf1c14c69326829f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
