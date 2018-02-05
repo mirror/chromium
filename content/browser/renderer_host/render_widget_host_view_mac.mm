@@ -1092,8 +1092,11 @@ void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
   browser_compositor_->OnNSViewWasResized();
 }
 
-void RenderWidgetHostViewMac::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                    uint64_t sequence_number) {
+void RenderWidgetHostViewMac::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
+  // TODO(ericrk): Handle |surface_id| here to avoid extra ID generation.
   browser_compositor_->OnNSViewWillAutoResize(new_size);
   RenderWidgetHostViewBase::ResizeDueToAutoResize(new_size, sequence_number);
 }

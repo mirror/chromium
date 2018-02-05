@@ -1023,9 +1023,11 @@ void RenderWidgetHostViewChildFrame::GetScreenInfo(ScreenInfo* screen_info) {
 
 void RenderWidgetHostViewChildFrame::ResizeDueToAutoResize(
     const gfx::Size& new_size,
-    uint64_t sequence_number) {
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
   if (frame_connector_)
-    frame_connector_->ResizeDueToAutoResize(new_size, sequence_number);
+    frame_connector_->ResizeDueToAutoResize(new_size, sequence_number,
+                                            surface_id);
 }
 
 void RenderWidgetHostViewChildFrame::ClearCompositorSurfaceIfNecessary() {

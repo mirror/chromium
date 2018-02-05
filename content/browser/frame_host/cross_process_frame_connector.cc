@@ -413,9 +413,11 @@ void CrossProcessFrameConnector::EmbedRendererWindowTreeClientInParent(
 
 void CrossProcessFrameConnector::ResizeDueToAutoResize(
     const gfx::Size& new_size,
-    uint64_t sequence_number) {
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
   frame_proxy_in_parent_renderer_->Send(new FrameMsg_ResizeDueToAutoResize(
-      frame_proxy_in_parent_renderer_->GetRoutingID(), sequence_number));
+      frame_proxy_in_parent_renderer_->GetRoutingID(), sequence_number,
+      surface_id));
 }
 
 void CrossProcessFrameConnector::SetVisibilityForChildViews(

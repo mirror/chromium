@@ -981,8 +981,9 @@ IPC_MESSAGE_ROUTED0(FrameMsg_ClearFocusedElement)
 
 // Informs the parent renderer that the child would like a new
 // viz::LocalSurfaceId in response to an auto-resize.
-IPC_MESSAGE_ROUTED1(FrameMsg_ResizeDueToAutoResize,
-                    uint64_t /* sequence_number */)
+IPC_MESSAGE_ROUTED2(FrameMsg_ResizeDueToAutoResize,
+                    uint64_t /* sequence_number */,
+                    base::Optional<viz::LocalSurfaceId> /* surface_id */)
 
 #if defined(OS_ANDROID)
 // Request the distance to the nearest find result in a frame from the point at

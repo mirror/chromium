@@ -246,7 +246,7 @@ void RenderFrameProxy::Init(blink::WebRemoteFrame* web_frame,
 void RenderFrameProxy::ResendResizeParams() {
   // Reset |sent_resize_params_| in order to allocate a new viz::LocalSurfaceId.
   sent_resize_params_ = base::nullopt;
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
 void RenderFrameProxy::WillBeginCompositorFrame() {
@@ -262,7 +262,7 @@ void RenderFrameProxy::WillBeginCompositorFrame() {
 
 void RenderFrameProxy::OnScreenInfoChanged(const ScreenInfo& screen_info) {
   pending_resize_params_.screen_info = screen_info;
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
 void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
@@ -538,9 +538,11 @@ void RenderFrameProxy::OnScrollRectToVisible(
   web_frame_->ScrollRectToVisible(rect_to_scroll, params);
 }
 
-void RenderFrameProxy::OnResizeDueToAutoResize(uint64_t sequence_number) {
+void RenderFrameProxy::OnResizeDueToAutoResize(
+    uint64_t sequence_number,
+    base::Optional<viz::LocalSurfaceId> surface_id) {
   pending_resize_params_.sequence_number = sequence_number;
-  WasResized();
+  WasResized(surface_id.value());
 }
 
 #if defined(USE_AURA)
@@ -550,7 +552,8 @@ void RenderFrameProxy::SetMusEmbeddedFrame(
 }
 #endif
 
-void RenderFrameProxy::WasResized() {
+void RenderFrameProxy::WasResized(
+    const viz::LocalSurfaceId& surface_id_for_auto_resize) {
   if (!frame_sink_id_.is_valid())
     return;
 
@@ -562,10 +565,18 @@ void RenderFrameProxy::WasResized() {
           pending_resize_params_.screen_space_rect.size() ||
       sent_resize_params_->screen_info != pending_resize_params_.screen_info ||
       sent_resize_params_->sequence_number !=
-          pending_resize_params_.sequence_number;
+          pending_resize_params_.sequence_number ||
+      surface_id_for_auto_resize.is_valid();
 
-  if (synchronized_params_changed)
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+  if (synchronized_params_changed) {
+    if (surface_id_for_auto_resize.is_valid()) {
+      local_surface_id_ =
+          parent_local_surface_id_allocator_.set_child_sequence_number(
+              surface_id_for_auto_resize.child_sequence_number());
+    } else {
+      local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    }
+  }
 
   viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
   if (enable_surface_synchronization_) {
@@ -695,7 +706,7 @@ void RenderFrameProxy::FrameRectsChanged(
   pending_resize_params_.local_frame_size =
       gfx::Size(local_frame_rect.width, local_frame_rect.height);
   pending_resize_params_.screen_info = render_widget_->screen_info();
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
 void RenderFrameProxy::UpdateRemoteViewportIntersection(
