@@ -109,11 +109,14 @@ String RemoteFrameClientImpl::GetDevToolsFrameToken() const {
   return g_empty_string;
 }
 
-void RemoteFrameClientImpl::Navigate(const ResourceRequest& request,
-                                     bool should_replace_current_entry) {
+void RemoteFrameClientImpl::Navigate(
+    const ResourceRequest& request,
+    bool should_replace_current_entry,
+    network::mojom::blink::URLLoaderFactoryPtr url_loader_factory) {
   if (web_frame_->Client()) {
-    web_frame_->Client()->Navigate(WrappedResourceRequest(request),
-                                   should_replace_current_entry);
+    web_frame_->Client()->Navigate(
+        WrappedResourceRequest(request), should_replace_current_entry,
+        url_loader_factory.PassInterface().PassHandle());
   }
 }
 

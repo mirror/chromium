@@ -672,7 +672,8 @@ void NavigatorImpl::RequestTransferURL(
     const std::string& method,
     scoped_refptr<network::ResourceRequestBody> post_body,
     const std::string& extra_headers,
-    const base::Optional<std::string>& suggested_filename) {
+    const base::Optional<std::string>& suggested_filename,
+    network::mojom::URLLoaderFactoryPtr blob_url_loader_factory) {
   // |method != "POST"| should imply absence of |post_body|.
   if (method != "POST" && post_body) {
     NOTREACHED();
@@ -763,6 +764,7 @@ void NavigatorImpl::RequestTransferURL(
     entry->SetRedirectChain(redirect_chain);
   }
   entry->set_suggested_filename(suggested_filename);
+  entry->SetBlobURLLoaderFactory(std::move(blob_url_loader_factory));
 
   // Don't allow an entry replacement if there is no entry to replace.
   // http://crbug.com/457149

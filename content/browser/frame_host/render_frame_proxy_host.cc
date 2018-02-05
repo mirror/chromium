@@ -267,6 +267,13 @@ void RenderFrameProxyHost::OnOpenURL(
   GURL validated_url(params.url);
   GetProcess()->FilterURL(false, &validated_url);
 
+  mojo::ScopedMessagePipeHandle blob_url_loader_factory_handle(
+      params.blob_url_loader_factory);
+  network::mojom::URLLoaderFactoryPtr blob_url_loader_factory(
+      network::mojom::URLLoaderFactoryPtrInfo(
+          std::move(blob_url_loader_factory_handle),
+          network::mojom::URLLoaderFactory::Version_));
+
   // Verify that we are in the same BrowsingInstance as the current
   // RenderFrameHost.
   RenderFrameHostImpl* current_rfh = frame_tree_node_->current_frame_host();
@@ -281,6 +288,8 @@ void RenderFrameProxyHost::OnOpenURL(
                                     bad_message::RFPH_ILLEGAL_UPLOAD_PARAMS);
     return;
   }
+
+  // TODO: verify blob URL is same origin or no factory
 
   // Since this navigation targeted a specific RenderFrameProxy, it should stay
   // in the current tab.
@@ -297,7 +306,7 @@ void RenderFrameProxyHost::OnOpenURL(
       params.referrer, ui::PAGE_TRANSITION_LINK, GlobalRequestID(),
       params.should_replace_current_entry, params.uses_post ? "POST" : "GET",
       params.resource_request_body, params.extra_headers,
-      params.suggested_filename);
+      params.suggested_filename, std::move(blob_url_loader_factory));
 }
 
 void RenderFrameProxyHost::OnRouteMessageEvent(

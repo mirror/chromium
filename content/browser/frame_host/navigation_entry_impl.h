@@ -438,6 +438,18 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
     suggested_filename_ = suggested_filename;
   }
 
+  network::mojom::URLLoaderFactoryPtr blob_url_loader_factory() const {
+    if (!blob_url_loader_factory_)
+      return nullptr;
+    network::mojom::URLLoaderFactoryPtr clone;
+    blob_url_loader_factory_->Clone(MakeRequest(&clone));
+    return clone;
+  }
+
+  void SetBlobURLLoaderFactory(network::mojom::URLLoaderFactoryPtr factory) {
+    blob_url_loader_factory_ = std::move(factory);
+  }
+
  private:
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
   // Session/Tab restore save portions of this class so that it can be recreated
@@ -585,6 +597,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // attribute, |suggested_filename_| will contain the (possibly empty) value of
   // that attribute. Reset at commit and not persisted.
   base::Optional<std::string> suggested_filename_;
+
+  network::mojom::URLLoaderFactoryPtr blob_url_loader_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationEntryImpl);
 };

@@ -9,6 +9,7 @@
 #include "core/frame/FrameTypes.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "public/platform/WebFocusType.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom-blink.h"
 
 namespace blink {
 
@@ -23,7 +24,8 @@ class RemoteFrameClient : public FrameClient {
   ~RemoteFrameClient() override = default;
 
   virtual void Navigate(const ResourceRequest&,
-                        bool should_replace_current_entry) = 0;
+                        bool should_replace_current_entry,
+                        network::mojom::blink::URLLoaderFactoryPtr) = 0;
   virtual void Reload(FrameLoadType, ClientRedirectPolicy) = 0;
   virtual unsigned BackForwardLength() = 0;
 
