@@ -35,6 +35,7 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
@@ -1216,9 +1217,23 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    network::mojom::blink::URLLoaderFactoryPtr url_loader_factory) {
   DCHECK(!IsDetached());
   WrappedResourceRequest webreq(request);
+
+  // Deal with blob: URLs separately:
+  if (request.Url().ProtocolIs("blob") &&
+      RuntimeEnabledFeatures::MojoBlobURLsEnabled()) {
+    if (!url_loader_factory) {
+      document_->GetPublicURLManager().Resolve(
+          request.Url(), MakeRequest(&url_loader_factory));
+    }
+    return Platform::Current()
+        ->WrapURLLoaderFactory(url_loader_factory.PassInterface().PassHandle())
+        ->CreateURLLoader(webreq, task_runner);
+  }
+
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
     auto loader = MasterDocumentLoader()
                       ->GetServiceWorkerNetworkProvider()

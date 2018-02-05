@@ -5,6 +5,7 @@
 #include "core/loader/WorkerFetchContext.h"
 
 #include "base/single_thread_task_runner.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
@@ -222,11 +223,25 @@ const SecurityOrigin* WorkerFetchContext::GetSecurityOrigin() const {
 
 std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    network::mojom::blink::URLLoaderFactoryPtr url_loader_factory) {
   CountUsage(WebFeature::kOffMainThreadFetch);
+  WrappedResourceRequest wrapped(request);
+
+  // Deal with blob: URLs separately:
+  if (request.Url().ProtocolIs("blob") &&
+      RuntimeEnabledFeatures::MojoBlobURLsEnabled()) {
+    if (!url_loader_factory) {
+      global_scope_->GetPublicURLManager().Resolve(
+          request.Url(), MakeRequest(&url_loader_factory));
+    }
+    return Platform::Current()
+        ->WrapURLLoaderFactory(url_loader_factory.PassInterface().PassHandle())
+        ->CreateURLLoader(wrapped, task_runner);
+  }
+
   if (!url_loader_factory_)
     url_loader_factory_ = web_context_->CreateURLLoaderFactory();
-  WrappedResourceRequest wrapped(request);
   return url_loader_factory_->CreateURLLoader(wrapped, task_runner);
 }
 

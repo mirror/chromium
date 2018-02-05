@@ -93,8 +93,13 @@ void ResourceLoader::Trace(blink::Visitor* visitor) {
 void ResourceLoader::Start() {
   const ResourceRequest& request = resource_->GetResourceRequest();
   ActivateCacheAwareLoadingIfNeeded(request);
-  loader_ =
-      Context().CreateURLLoader(request, Context().GetLoadingTaskRunner());
+  network::mojom::blink::URLLoaderFactoryPtr url_loader_factory;
+  if (resource_->Options().url_loader_factory) {
+    resource_->Options().url_loader_factory->data->Clone(
+        MakeRequest(&url_loader_factory));
+  }
+  loader_ = Context().CreateURLLoader(request, Context().GetLoadingTaskRunner(),
+                                      std::move(url_loader_factory));
   DCHECK_EQ(ResourceLoadScheduler::kInvalidClientId, scheduler_client_id_);
   auto throttle_option = ResourceLoadScheduler::ThrottleOption::kCanBeThrottled;
 
@@ -155,8 +160,13 @@ void ResourceLoader::Release(
 void ResourceLoader::Restart(const ResourceRequest& request) {
   CHECK_EQ(resource_->Options().synchronous_policy, kRequestAsynchronously);
 
-  loader_ =
-      Context().CreateURLLoader(request, Context().GetLoadingTaskRunner());
+  network::mojom::blink::URLLoaderFactoryPtr url_loader_factory;
+  if (resource_->Options().url_loader_factory) {
+    resource_->Options().url_loader_factory->data->Clone(
+        MakeRequest(&url_loader_factory));
+  }
+  loader_ = Context().CreateURLLoader(request, Context().GetLoadingTaskRunner(),
+                                      std::move(url_loader_factory));
   StartWith(request);
 }
 

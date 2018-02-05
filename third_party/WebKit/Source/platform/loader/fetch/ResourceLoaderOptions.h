@@ -38,6 +38,7 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/WTFString.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom-blink.h"
 
 namespace blink {
 
@@ -112,6 +113,12 @@ struct ResourceLoaderOptions {
   IntegrityMetadataSet integrity_metadata;
   ParserDisposition parser_disposition;
   CacheAwareLoadingEnabled cache_aware_loading_enabled;
+
+  // Used for blob URLs to specify a specific URLLoaderFactory rather than
+  // whatever factory the system might otherwise use.
+  scoped_refptr<
+      base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>>
+      url_loader_factory;
 };
 
 // Encode AtomicString (in FetchInitiatorInfo) as String to cross threads.
@@ -134,7 +141,15 @@ struct CrossThreadResourceLoaderOptionsData {
             options.content_security_policy_nonce.IsolatedCopy()),
         integrity_metadata(options.integrity_metadata),
         parser_disposition(options.parser_disposition),
-        cache_aware_loading_enabled(options.cache_aware_loading_enabled) {}
+        cache_aware_loading_enabled(options.cache_aware_loading_enabled) {
+    if (options.url_loader_factory) {
+      DCHECK(options.url_loader_factory->data.is_bound());
+      url_loader_factory = new base::RefCountedData<
+          network::mojom::blink::URLLoaderFactoryPtrInfo>();
+      options.url_loader_factory->data->Clone(
+          MakeRequest(&url_loader_factory->data));
+    }
+  }
 
   operator ResourceLoaderOptions() const {
     ResourceLoaderOptions options;
@@ -151,6 +166,13 @@ struct CrossThreadResourceLoaderOptionsData {
     options.integrity_metadata = integrity_metadata;
     options.parser_disposition = parser_disposition;
     options.cache_aware_loading_enabled = cache_aware_loading_enabled;
+    if (url_loader_factory) {
+      DCHECK(url_loader_factory->data.is_valid());
+      options.url_loader_factory =
+          new base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>(
+              network::mojom::blink::URLLoaderFactoryPtr(
+                  std::move(url_loader_factory->data)));
+    }
     return options;
   }
 
@@ -168,6 +190,9 @@ struct CrossThreadResourceLoaderOptionsData {
   IntegrityMetadataSet integrity_metadata;
   ParserDisposition parser_disposition;
   CacheAwareLoadingEnabled cache_aware_loading_enabled;
+  scoped_refptr<
+      base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtrInfo>>
+      url_loader_factory;
 };
 
 template <>

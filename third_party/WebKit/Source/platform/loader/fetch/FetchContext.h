@@ -226,9 +226,12 @@ class PLATFORM_EXPORT FetchContext
     return platform_probe_sink_;
   }
 
+  // If the passed in URLLoaderFactoryPtr is not null, it should be used to
+  // create the URLLoader.
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&,
-      scoped_refptr<base::SingleThreadTaskRunner>) {
+      scoped_refptr<base::SingleThreadTaskRunner>,
+      network::mojom::blink::URLLoaderFactoryPtr) {
     NOTREACHED();
     return nullptr;
   }
