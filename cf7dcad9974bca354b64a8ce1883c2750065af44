@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8482275d_ba029a3d",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-05T20:18:57Z",
+      "side": 1,
+      "message": "Done. Thanks for this!",
+      "parentUuid": "6606bce3_20308832",
+      "revId": "cf7dcad9974bca354b64a8ce1883c2750065af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e17fd3_3a407557",
         "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cf7dcad9974bca354b64a8ce1883c2750065af44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1f889a_110cd6fa",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-05T20:18:57Z",
+      "side": 1,
+      "message": "Oh my bad. I shouldn\u0027t swap these. But yes it\u0027s fixed with the new call.",
+      "parentUuid": "72e17fd3_3a407557",
+      "revId": "cf7dcad9974bca354b64a8ce1883c2750065af44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
