@@ -63,7 +63,6 @@
 #include "chrome/renderer/prerender/prerender_dispatcher.h"
 #include "chrome/renderer/prerender/prerender_helper.h"
 #include "chrome/renderer/prerender/prerenderer_client.h"
-#include "chrome/renderer/safe_browsing/phishing_classifier_delegate.h"
 #include "chrome/renderer/tts_dispatcher.h"
 #include "chrome/renderer/url_loader_throttle_provider_impl.h"
 #include "chrome/renderer/worker_content_settings_client.h"
@@ -454,9 +453,6 @@ void ChromeContentRendererClient::RenderThreadStarted() {
   if (!spellcheck_)
     InitSpellCheck();
 #endif
-#if defined(FULL_SAFE_BROWSING)
-  phishing_classifier_.reset(safe_browsing::PhishingClassifierFilter::Create());
-#endif
   prerender_dispatcher_.reset(new prerender::PrerenderDispatcher());
   subresource_filter_ruleset_dealer_.reset(
       new subresource_filter::UnverifiedRulesetDealer());
@@ -466,9 +462,6 @@ void ChromeContentRendererClient::RenderThreadStarted() {
 #endif
 
   thread->AddObserver(chrome_observer_.get());
-#if defined(FULL_SAFE_BROWSING)
-  thread->AddObserver(phishing_classifier_.get());
-#endif
   thread->AddObserver(prerender_dispatcher_.get());
   thread->AddObserver(subresource_filter_ruleset_dealer_.get());
 

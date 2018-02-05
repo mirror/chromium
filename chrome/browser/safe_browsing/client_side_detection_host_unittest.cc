@@ -22,7 +22,6 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/safe_browsing/common/safebrowsing_messages.h"
 #include "components/safe_browsing/db/database_manager.h"
 #include "components/safe_browsing/db/test_database_manager.h"
 #include "components/safe_browsing/proto/csd.pb.h"
@@ -323,21 +322,6 @@ class ClientSideDetectionHostTest : public ChromeRenderViewHostTestHarness {
 
   void ExpectShouldClassifyForMalwareResult(bool should_classify) {
     EXPECT_EQ(should_classify, csd_host_->should_classify_for_malware_);
-  }
-
-  void ExpectStartPhishingDetection(const GURL* url) {
-    const IPC::Message* msg = process()->sink().GetFirstMessageMatching(
-        SafeBrowsingMsg_StartPhishingDetection::ID);
-    if (url) {
-      ASSERT_TRUE(msg);
-      std::tuple<GURL> actual_url;
-      SafeBrowsingMsg_StartPhishingDetection::Read(msg, &actual_url);
-      EXPECT_EQ(*url, std::get<0>(actual_url));
-      EXPECT_EQ(main_rfh()->GetRoutingID(), msg->routing_id());
-      process()->sink().ClearMessages();
-    } else {
-      ASSERT_FALSE(msg);
-    }
   }
 
   void TestUnsafeResourceCopied(const UnsafeResource& resource) {
@@ -972,7 +956,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckPass) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -984,7 +967,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(true);
 
   // Now try an in-page navigation.  This should not trigger an IPC.
@@ -995,7 +977,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(inpage);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1009,7 +990,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckXHTML) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1021,7 +1001,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckTwoNavigations) {
   NavigateAndCommit(url1);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url1);
   ExpectShouldClassifyForMalwareResult(true);
 
   GURL url2("http://host2.com/");
@@ -1030,7 +1009,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckTwoNavigations) {
   NavigateAndCommit(url2);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url2);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1049,7 +1027,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckMimeType) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1061,9 +1038,6 @@ TEST_F(ClientSideDetectionHostTest,
                                 NULL);
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
-  const IPC::Message* msg = process()->sink().GetFirstMessageMatching(
-      SafeBrowsingMsg_StartPhishingDetection::ID);
-  ASSERT_FALSE(msg);
   ExpectShouldClassifyForMalwareResult(false);
 }
 
@@ -1076,7 +1050,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckIncognito) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(false);
 }
 
@@ -1089,7 +1062,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckCsdWhitelist) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1102,7 +1074,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1116,7 +1087,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckInvalidCache) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1130,7 +1100,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1142,7 +1111,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(false);
 }
 
@@ -1154,7 +1122,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(false);
 }
 
@@ -1165,7 +1132,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckHttpsUrl) {
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(&url);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1177,7 +1143,6 @@ TEST_F(ClientSideDetectionHostTest,
   NavigateAndCommit(url);
   WaitAndCheckPreClassificationChecks();
 
-  ExpectStartPhishingDetection(NULL);
   ExpectShouldClassifyForMalwareResult(true);
 }
 
@@ -1196,8 +1161,6 @@ TEST_F(ClientSideDetectionHostTest, TestPreClassificationCheckValidCached) {
   WaitAndCheckPreClassificationChecks();
   EXPECT_EQ(url, resource.url);
   EXPECT_EQ(url, resource.original_url);
-
-  ExpectStartPhishingDetection(NULL);
 
   // Showing a phishing warning will invalidate all the weak pointers which
   // means we will not extract malware features.

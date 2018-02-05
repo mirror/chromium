@@ -36,10 +36,6 @@ class ClientSideDetectionHost : public content::WebContentsObserver,
   static ClientSideDetectionHost* Create(content::WebContents* tab);
   ~ClientSideDetectionHost() override;
 
-  // From content::WebContentsObserver.
-  bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* render_frame_host) override;
-
   // From content::WebContentsObserver.  If we navigate away we cancel all
   // pending callbacks that could show an interstitial, and check to see whether
   // we should classify the new URL.

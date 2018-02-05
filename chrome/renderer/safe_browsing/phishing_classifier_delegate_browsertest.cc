@@ -112,7 +112,7 @@ class PhishingClassifierDelegateTest : public ChromeRenderViewTest {
   }
 
   void OnStartPhishingDetection(const GURL& url) {
-    delegate_->OnStartPhishingDetection(url);
+    delegate_->StartPhishingDetection(url);
   }
 
   void PageCaptured(base::string16* page_text,

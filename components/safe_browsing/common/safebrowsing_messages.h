@@ -71,15 +71,3 @@ IPC_MESSAGE_ROUTED1(SafeBrowsingHostMsg_PhishingDetectionDone,
 // Request a DOM tree when a safe browsing interstitial is shown.
 IPC_MESSAGE_ROUTED0(SafeBrowsingMsg_GetThreatDOMDetails)
 
-#if defined(FULL_SAFE_BROWSING)
-// A classification model for client-side phishing detection.
-// The string is an encoded safe_browsing::ClientSideModel protocol buffer, or
-// empty to disable client-side phishing detection for this renderer.
-IPC_MESSAGE_CONTROL1(SafeBrowsingMsg_SetPhishingModel,
-                     std::string /* encoded ClientSideModel proto */)
-
-// Tells the renderer to begin phishing detection for the given toplevel URL
-// which it has started loading.
-IPC_MESSAGE_ROUTED1(SafeBrowsingMsg_StartPhishingDetection,
-                    GURL)
-#endif
