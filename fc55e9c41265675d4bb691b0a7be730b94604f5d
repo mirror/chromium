@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a939d8a_6aa07b83",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-05T17:15:40Z",
+      "side": 1,
+      "message": "Could you please expand this comment and explain that this variable should be accessed only on the main thread and describe the reasons why it should be kept out of MainThreadOnly struct.",
+      "range": {
+        "startLine": 599,
+        "startChar": 20,
+        "endLine": 599,
+        "endChar": 29
+      },
+      "revId": "fc55e9c41265675d4bb691b0a7be730b94604f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95167288_7987ebce",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-05T17:15:40Z",
+      "side": 1,
+      "message": "nit: prefer was_shutdown_ \u003d false; here instead of was_shutdown_(false).",
+      "range": {
+        "startLine": 600,
+        "startChar": 7,
+        "endLine": 600,
+        "endChar": 20
+      },
+      "revId": "fc55e9c41265675d4bb691b0a7be730b94604f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
