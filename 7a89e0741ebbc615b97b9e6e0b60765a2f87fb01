@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d9e6931_b65cc2d3",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b18823_1e5b3bfa",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54703a1c_ef74e5c4",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b582ae5d_30d1e6c9",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54703a1c_ef74e5c4",
+      "range": {
+        "startLine": 59,
+        "startChar": 48,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7745fc2_91048110",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7256715_f090299f",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 65
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59aebeaa_22299339",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf063dd_e7c73530",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59aebeaa_22299339",
+      "range": {
+        "startLine": 490,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 39
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e3bc55a0_348a4613",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "I have to call \"run\" because the stream delegate method will be run at the run loop. The run loop will stop after the stream is closed. Both NSStreamEventErrorOccurred and NSStreamEventEndEncountered will trigger the stream to be closed. Also, I move the global_queue to a self-created dispatch_queue, and the case will wait for the run loop stop.",
+      "parentUuid": "1dd8722a_935380ad",
+      "range": {
+        "startLine": 499,
+        "startChar": 47,
+        "endLine": 499,
+        "endChar": 50
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97cbab0_c4dfc949",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4448c28_1b7b0ead",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d97cbab0_c4dfc949",
+      "range": {
+        "startLine": 526,
+        "startChar": 44,
+        "endLine": 526,
+        "endChar": 50
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4309c6c8_55f8a7af",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e2532b7_de38c815",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 532,
+        "endChar": 3
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f0fc65_c9eb53a6",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 9
@@ -183,6 +351,30 @@
       "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728d16e9_64d4d49a",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f0fc65_c9eb53a6",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 556,
+        "endChar": 57
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e6ce5ee4_c52117b4",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac0c7e9f_76baf815",
+      "range": {
+        "startLine": 559,
+        "startChar": 47,
+        "endLine": 559,
+        "endChar": 53
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbf12563_33135ac9",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 9
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "8d350164_8e9877fd",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Yes, this can be removed to NSStreamEventEndEncountered.",
+      "parentUuid": "dbf12563_33135ac9",
+      "range": {
+        "startLine": 891,
+        "startChar": 0,
+        "endLine": 892,
+        "endChar": 24
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46a7e7c0_6eca1de2",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 9
@@ -252,6 +492,30 @@
       "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3478fc9_d3af8e7c",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-02-05T06:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a7e7c0_6eca1de2",
+      "range": {
+        "startLine": 904,
+        "startChar": 2,
+        "endLine": 904,
+        "endChar": 23
+      },
+      "revId": "7a89e0741ebbc615b97b9e6e0b60765a2f87fb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
