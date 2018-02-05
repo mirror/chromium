@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "905cbd70_9feb262e",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2018-02-05T18:52:25Z",
+      "side": 1,
+      "message": "In that case. ArcPrintService should simply own discovery sessions and print jobs.",
+      "parentUuid": "35df6ce7_07d16ce9",
+      "range": {
+        "startLine": 305,
+        "startChar": 19,
+        "endLine": 305,
+        "endChar": 44
+      },
+      "revId": "b7fccdccb09ba12a2e52fb9b36d39dcb9fbaebd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa042580_7fdb3c07",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 31
