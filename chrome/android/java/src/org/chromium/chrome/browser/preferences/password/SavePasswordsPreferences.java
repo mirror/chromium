@@ -216,6 +216,15 @@ public class SavePasswordsPreferences
     private void setUpSearchAction(MenuItem searchItem) {
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
+
+        // The following line had no effect at all.
+        // LayoutInflater.from(getActivity().getApplicationContext())
+        //      .inflate(R.layout.preferences_search, searchView);
+
+        // The following also has no effect. I'd like to have layouting changes in a layout file
+        // anyway, though.
+        // searchView.setGravity(Gravity.END);
+
         searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
         if (mSearchQuery != null) { // If a query was recovered, restore the search view.
             searchItem.expandActionView();

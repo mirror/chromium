@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:chrome="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <EditText
+        android:background="@null"
+        android:id="@+id/search_text"
+        android:inputType="text"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_gravity="end"
+        android:singleLine="true"/>
+
+    <org.chromium.chrome.browser.widget.TintedImageButton
+        android:background="@null"
+        android:id="@+id/clear_text_button"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:src="@drawable/btn_delete_24dp"
+        android:layout_gravity="end"
+        android:contentDescription="@string/accessibility_toolbar_btn_delete_url"
+        chrome:chrometint="@color/blue_mode_tint" />
+</LinearLayout>
