@@ -255,11 +255,8 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   //
   // This method needs to be used only if the event comes directly from a
   // client, which means it is coming through the ControllerServiceWorkerImpl.
-  void DispatchOrQueueFetchEvent(
-      const network::ResourceRequest& request,
-      mojom::FetchEventPreloadHandlePtr preload_handle,
-      mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      DispatchFetchEventCallback callback);
+  void DispatchOrQueueFetchEvent(mojom::DispatchFetchEventParamsPtr params,
+                                 DispatchFetchEventCallback callback);
 
  private:
   struct WorkerContextData;
@@ -310,11 +307,8 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override;
-  void DispatchFetchEvent(
-      const network::ResourceRequest& request,
-      mojom::FetchEventPreloadHandlePtr preload_handle,
-      mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      DispatchFetchEventCallback callback) override;
+  void DispatchFetchEvent(mojom::DispatchFetchEventParamsPtr params,
+                          DispatchFetchEventCallback callback) override;
   void DispatchNotificationClickEvent(
       const std::string& notification_id,
       const PlatformNotificationData& notification_data,
