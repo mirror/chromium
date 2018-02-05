@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca97b1a3_39acc829",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "I\u0027m confused by this. Isn\u0027t this always being overwritten in the next line? (apart from the side-effect of passing in returned_sync_token_ to PlaybackAndCopyOnWorkerThread which is necessary)",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4301b85b_abeb241c",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "nit: can you rename this to returned_sync_token (or compositor_sync_token or consumer_sync_token or something like that?)",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bff8df_867ffb6a",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "nit: why the mailbox qualifier?",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be166264_0ca5dce7",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "nit: Can you DCHECK(bool overlay_textures \u003d use_gpu_memory_buffer_resources \u0026\u0026\n                          caps.texture_storage_image \u0026\u0026\n                          IsGpuMemoryBufferFormatSupported(format)) here?",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eb28ad_06227369",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "nit: we don\u0027t really need to bind to 0, we\u0027re likely to bind the same texture again for raster, which will nop if it\u0027s already bound but won\u0027t if the binding is set to 0.",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959c2d0b_64144992",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6410bcc_3243b87a",
+        "filename": "components/viz/common/gpu/texture_allocation.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-05T21:58:09Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t allocate the storage, so calling what it returns TextureAllocation seems wrong.",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
