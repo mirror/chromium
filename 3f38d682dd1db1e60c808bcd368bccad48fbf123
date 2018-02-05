@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76673fd_08311753",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-05T16:17:25Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t this have been previously called for the existing install of the component extension?  If it\u0027s a new extension, we should hit the code block above, and call AddNewOrUpdatedExtension(), which in turn will call this.  If it\u0027s not a new extension, then it should already be registered in prefs, and RegisterExtension() is called during initialization.  What\u0027s happening to prevent this in the current flow?",
+      "revId": "3f38d682dd1db1e60c808bcd368bccad48fbf123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
