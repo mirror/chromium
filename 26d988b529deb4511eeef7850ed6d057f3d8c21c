@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a56c3c8_8092f63f",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-05T10:59:29Z",
+      "side": 1,
+      "message": "Please use braces for multi-line ifs.",
+      "range": {
+        "startLine": 809,
+        "startChar": 4,
+        "endLine": 809,
+        "endChar": 6
+      },
+      "revId": "26d988b529deb4511eeef7850ed6d057f3d8c21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30027920_4aec3fcb",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-05T10:59:29Z",
+      "side": 1,
+      "message": "nit: Capitalize \"Unknown\"\n\nLet\u0027s also \"return EXIT_FAILURE\";",
+      "range": {
+        "startLine": 813,
+        "startChar": 21,
+        "endLine": 813,
+        "endChar": 28
+      },
+      "revId": "26d988b529deb4511eeef7850ed6d057f3d8c21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c56e04c_0345ee4e",
+        "filename": "headless/app/headless_shell_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-05T10:59:29Z",
+      "side": 1,
+      "message": "Please add a comment here describing the option as well as the valid values. It gets parsed by an automated tool -- see https://peter.sh/experiments/chromium-command-line-switches/",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "26d988b529deb4511eeef7850ed6d057f3d8c21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e43fdb_43cbd9b7",
+        "filename": "headless/lib/browser/headless_browser_context_options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-02-05T10:59:29Z",
+      "side": 1,
+      "message": "Please move this to the block of other preferences above for consistency.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 6
+      },
+      "revId": "26d988b529deb4511eeef7850ed6d057f3d8c21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
