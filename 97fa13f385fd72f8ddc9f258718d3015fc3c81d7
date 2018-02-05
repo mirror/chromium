@@ -16,6 +16,24 @@
       "revId": "97fa13f385fd72f8ddc9f258718d3015fc3c81d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5779065f_527a7a53",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-05T15:57:33Z",
+      "side": 1,
+      "message": "For testability. We went back and forth offline chatting about where this code belongs. I personally feel like it belongs on RWHVChildFrame:\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d809067",
+      "parentUuid": "ed40622e_c512e5bc",
+      "revId": "97fa13f385fd72f8ddc9f258718d3015fc3c81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
