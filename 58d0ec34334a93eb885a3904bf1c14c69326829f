@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ca41c5_33d9c407",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-05T20:42:39Z",
+      "side": 1,
+      "message": "With this change, this status won\u0027t be recorded when this happens anymore, is that right?",
+      "revId": "58d0ec34334a93eb885a3904bf1c14c69326829f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
