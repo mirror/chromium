@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c1e968_7a4aedfe",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-05T18:36:37Z",
+      "side": 1,
+      "message": "Is bettes@ aware of this change?\nI expect that we want all our action buttons (blue background buttons) to be consistent, across the entire Settings UI. There have been talks in the past (as part of the \"Harmony\" effort), to remove capital case from all such buttons, but this has not happened yet.\n\nCan you verify with bettes@ ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "d8390ae93c70c2233518a62207206dbaf2c4286c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
