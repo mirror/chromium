@@ -5,6 +5,8 @@
 #ifndef UI_OZONE_PLATFORM_CAST_PLATFORM_WINDOW_CAST_H_
 #define UI_OZONE_PLATFORM_CAST_PLATFORM_WINDOW_CAST_H_
 
+#include <vector>
+
 #include "base/macros.h"
 #include "ui/events/platform/platform_event_dispatcher.h"
 #include "ui/gfx/geometry/rect.h"
@@ -31,6 +33,8 @@ class PlatformWindowCast : public PlatformWindow,
   void PrepareForShutdown() override {}
   void SetCapture() override {}
   void ReleaseCapture() override {}
+  void LockKeys(const std::vector<int>& native_key_codes) override {}
+  void UnlockKeys() override {}
   void ToggleFullscreen() override {}
   void Maximize() override {}
   void Minimize() override {}

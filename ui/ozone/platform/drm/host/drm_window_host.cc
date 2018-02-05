@@ -97,6 +97,10 @@ void DrmWindowHost::ReleaseCapture() {
   window_manager_->UngrabEvents(widget_);
 }
 
+void DrmWindowHost::LockKeys(const std::vector<int>& native_key_codes) {}
+
+void DrmWindowHost::UnlockKeys() {}
+
 void DrmWindowHost::ToggleFullscreen() {
 }
 

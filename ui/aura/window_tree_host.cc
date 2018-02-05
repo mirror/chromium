@@ -242,6 +242,14 @@ void WindowTreeHost::Hide() {
     compositor()->SetVisible(false);
 }
 
+void WindowTreeHost::LockKeys(const std::vector<int>& native_key_codes) {
+  NOTIMPLEMENTED();
+}
+
+void WindowTreeHost::UnlockKeys() {
+  NOTIMPLEMENTED();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // WindowTreeHost, protected:
 
