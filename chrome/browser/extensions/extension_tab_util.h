@@ -101,6 +101,9 @@ class ExtensionTabUtil {
 
   // Creates a Tab object but performs no extension permissions checks; the
   // returned object will contain privacy-sensitive data.
+  // TODO(devlin): These are easy to confuse with the safer, info-scrubbing
+  // versions above. We should get rid of these, and have callers explicitly
+  // pass in a null extension if they do not want values scrubbed.
   static std::unique_ptr<api::tabs::Tab> CreateTabObject(
       content::WebContents* web_contents) {
     return CreateTabObject(web_contents, nullptr, -1);
@@ -109,6 +112,20 @@ class ExtensionTabUtil {
       content::WebContents* web_contents,
       TabStripModel* tab_strip,
       int tab_index);
+
+  enum PopulateTabBehavior {
+    kPopulateTabs,
+    kDontPopulateTabs,
+  };
+  // Creates a DictionaryValue representing the window for the given |browser|,
+  // and scrubs any privacy-sensitive data that |for_extension| does not have
+  // access to. |populate_tab_behavior| determines whether tabs will be
+  // populated in the result.
+  // TODO(devlin): Convert this to a api::Windows::Window object.
+  static std::unique_ptr<base::DictionaryValue> CreateWindowValueForExtension(
+      Browser* browser,
+      const Extension* for_extension,
+      PopulateTabBehavior populate_tab_behavior);
 
   // Creates a tab MutedInfo object (see chrome/common/extensions/api/tabs.json)
   // with information about the mute state of a browser tab.
