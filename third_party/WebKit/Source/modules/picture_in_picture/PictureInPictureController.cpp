@@ -85,7 +85,12 @@ void PictureInPictureController::UnsetPictureInPictureElement() {
   picture_in_picture_element_ = nullptr;
 }
 
-HTMLVideoElement* PictureInPictureController::PictureInPictureElement() const {
+HTMLVideoElement* PictureInPictureController::PictureInPictureElement(
+    TreeScope& scope) const {
+  // if (!picture_in_picture_element_)
+  //   return nullptr;
+  // return scope.AdjustedElement(*target);
+
   return picture_in_picture_element_;
 }
 

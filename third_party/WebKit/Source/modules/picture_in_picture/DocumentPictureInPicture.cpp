@@ -29,7 +29,8 @@ ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
     ScriptState* script_state,
     Document& document) {
   HTMLVideoElement* picture_in_picture_element =
-      PictureInPictureController::Ensure(document).PictureInPictureElement();
+      PictureInPictureController::Ensure(document).PictureInPictureElement(
+          ToTreeScope(document));
 
   if (!picture_in_picture_element) {
     return ScriptPromise::RejectWithDOMException(
@@ -47,10 +48,10 @@ ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
   return ScriptPromise::CastUndefined(script_state);
 }
 
-// static
 HTMLVideoElement* DocumentPictureInPicture::pictureInPictureElement(
-    Document& document) {
-  return PictureInPictureController::Ensure(document).PictureInPictureElement();
+    TreeScope& scope) {
+  return PictureInPictureController::Ensure(scope.GetDocument())
+      .PictureInPictureElement(scope);
 }
 
 }  // namespace blink
