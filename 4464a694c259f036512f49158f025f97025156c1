@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33a7ddef_25b9bdee",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-05T18:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9c692c_f92de8c3",
+      "revId": "4464a694c259f036512f49158f025f97025156c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa4f5290_ede5d40a",
         "filename": "ash/system/status_area_widget.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6be64976_73b6684e",
+        "filename": "ash/system/status_area_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-05T18:25:12Z",
+      "side": 1,
+      "message": "I think I\u0027ll address this later. Shutdown of these Widgets is weird, and I think I might be able to clean it up with an explicit StatusAreaWidget::CloseNow(), but that will take some more looking.",
+      "parentUuid": "aa4f5290_ede5d40a",
+      "revId": "4464a694c259f036512f49158f025f97025156c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd6e79c_32f3d734",
         "filename": "ash/system/status_area_widget.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "4464a694c259f036512f49158f025f97025156c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f1b2d3_97d1af74",
+        "filename": "ash/system/status_area_widget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-05T18:25:12Z",
+      "side": 1,
+      "message": "I had to put this back. Some of the child tray views call back into StatusAreaWidget during their construction. :-(  I added a comment about that.",
+      "parentUuid": "2cd6e79c_32f3d734",
+      "revId": "4464a694c259f036512f49158f025f97025156c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
