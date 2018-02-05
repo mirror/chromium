@@ -10,6 +10,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "gles2_impl_export.h"
@@ -19,20 +20,26 @@
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 
 namespace gpu {
+
+class CommandBufferHelper;
+
 namespace gles2 {
 
-class GLES2Implementation;
 class GLES2ImplementationTest;
 class ProgramInfoManager;
 
-typedef void (GLES2Implementation::*DeleteFn)(GLsizei n, const GLuint* ids);
-typedef void (GLES2Implementation::*DeleteRangeFn)(const GLuint first_id,
-                                                   GLsizei range);
-typedef void (GLES2Implementation::*BindFn)(GLenum target, GLuint id);
-typedef void (GLES2Implementation::*BindIndexedFn)( \
-    GLenum target, GLuint index, GLuint id);
-typedef void (GLES2Implementation::*BindIndexedRangeFn)( \
-    GLenum target, GLuint index, GLuint id, GLintptr offset, GLsizeiptr size);
+typedef base::OnceCallback<void(GLsizei n, const GLuint* ids)> DeleteFn;
+typedef base::OnceCallback<void(const GLuint first_id, GLsizei range)>
+    DeleteRangeFn;
+typedef base::OnceCallback<void(GLenum target, GLuint id)> BindFn;
+typedef base::OnceCallback<void(GLenum target, GLuint index, GLuint id)>
+    BindIndexedFn;
+typedef base::OnceCallback<void(GLenum target,
+                                GLuint index,
+                                GLuint id,
+                                GLintptr offset,
+                                GLsizeiptr size)>
+    BindIndexedRangeFn;
 
 using SharedIdNamespaces = id_namespaces::SharedIdNamespaces;
 
@@ -62,31 +69,32 @@ class IdHandlerInterface {
   virtual ~IdHandlerInterface() = default;
 
   // Makes some ids at or above id_offset.
-  virtual void MakeIds(
-      GLES2Implementation* gl_impl,
-      GLuint id_offset, GLsizei n, GLuint* ids) = 0;
+  virtual void MakeIds(CommandBufferHelper* helper,
+                       ShareGroupContextData* ctxt_data,
+                       GLuint id_offset,
+                       GLsizei n,
+                       GLuint* ids) = 0;
 
   // Frees some ids.
-  virtual bool FreeIds(
-      GLES2Implementation* gl_impl, GLsizei n, const GLuint* ids,
-      DeleteFn delete_fn) = 0;
+  virtual bool FreeIds(CommandBufferHelper* helper,
+                       ShareGroupContextData* ctxt_data,
+                       GLsizei n,
+                       const GLuint* ids,
+                       DeleteFn delete_fn) = 0;
 
   // Marks an id as used for glBind functions. id = 0 does nothing.
   virtual bool MarkAsUsedForBind(
-      GLES2Implementation* gl_impl,
       GLenum target,
       GLuint id,
       BindFn bind_fn) = 0;
   // This is for glBindBufferBase.
   virtual bool MarkAsUsedForBind(
-      GLES2Implementation* gl_impl,
       GLenum target,
       GLuint index,
       GLuint id,
       BindIndexedFn bind_fn) = 0;
   // This is for glBindBufferRange.
   virtual bool MarkAsUsedForBind(
-      GLES2Implementation* gl_impl,
       GLenum target,
       GLuint index,
       GLuint id,
@@ -95,7 +103,8 @@ class IdHandlerInterface {
       BindIndexedRangeFn bind_fn) = 0;
 
   // Called when a context in the share group is destructed.
-  virtual void FreeContext(GLES2Implementation* gl_impl) = 0;
+  virtual void FreeContext(CommandBufferHelper* helper,
+                           ShareGroupContextData* ctxt_data) = 0;
 };
 
 class RangeIdHandlerInterface {
@@ -105,18 +114,18 @@ class RangeIdHandlerInterface {
 
   // Makes a continuous range of ids. Stores the first allocated id to
   // |first_id| or 0 if allocation failed.
-  virtual void MakeIdRange(GLES2Implementation* gl_impl,
+  virtual void MakeIdRange(CommandBufferHelper* helper,
                            GLsizei n,
                            GLuint* first_id) = 0;
 
   // Frees a continuous |range| of ids beginning at |first_id|.
-  virtual void FreeIdRange(GLES2Implementation* gl_impl,
+  virtual void FreeIdRange(CommandBufferHelper* helper,
                            const GLuint first_id,
                            GLsizei range,
                            DeleteRangeFn delete_fn) = 0;
 
   // Called when a context in the share group is destructed.
-  virtual void FreeContext(GLES2Implementation* gl_impl) = 0;
+  virtual void FreeContext(CommandBufferHelper* helper) = 0;
 };
 
 // ShareGroup manages shared resources for contexts that are sharing resources.
@@ -141,14 +150,15 @@ class GLES2_IMPL_EXPORT ShareGroup
     return program_info_manager_.get();
   }
 
-  void FreeContext(GLES2Implementation* gl_impl) {
+  void FreeContext(CommandBufferHelper* helper,
+                   ShareGroupContextData* ctxt_data) {
     for (int i = 0;
          i < static_cast<int>(SharedIdNamespaces::kNumSharedIdNamespaces);
          ++i) {
-      id_handlers_[i]->FreeContext(gl_impl);
+      id_handlers_[i]->FreeContext(helper, ctxt_data);
     }
     for (auto& range_id_handler : range_id_handlers_) {
-      range_id_handler->FreeContext(gl_impl);
+      range_id_handler->FreeContext(helper);
     }
   }
 

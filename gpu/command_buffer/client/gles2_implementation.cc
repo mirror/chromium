@@ -236,8 +236,8 @@ gpu::ContextResult GLES2Implementation::Initialize(
 
   if (support_client_side_arrays_) {
     GetIdHandler(SharedIdNamespaces::kBuffers)
-        ->MakeIds(this, kClientSideArrayId, arraysize(reserved_ids_),
-                  &reserved_ids_[0]);
+        ->MakeIds(helper_, &share_group_context_data_, kClientSideArrayId,
+                  arraysize(reserved_ids_), &reserved_ids_[0]);
   }
 
   vertex_array_object_manager_.reset(new VertexArrayObjectManager(
@@ -278,7 +278,7 @@ GLES2Implementation::~GLES2Implementation() {
   ClearMappedBufferRangeMap();
 
   // Release any per-context data in share group.
-  share_group_->FreeContext(this);
+  share_group_->FreeContext(helper_, &share_group_context_data_);
 
   buffer_tracker_.reset();
 
@@ -1649,8 +1649,9 @@ void GLES2Implementation::GetVertexAttribPointerv(
 
 bool GLES2Implementation::DeleteProgramHelper(GLuint program) {
   if (!GetIdHandler(SharedIdNamespaces::kProgramsAndShaders)
-           ->FreeIds(this, 1, &program,
-                     &GLES2Implementation::DeleteProgramStub)) {
+           ->FreeIds(helper_, &share_group_context_data_, 1, &program,
+                     base::BindOnce(&GLES2Implementation::DeleteProgramStub,
+                                    base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteProgram", "id not created by this context.");
@@ -1671,8 +1672,9 @@ void GLES2Implementation::DeleteProgramStub(
 
 bool GLES2Implementation::DeleteShaderHelper(GLuint shader) {
   if (!GetIdHandler(SharedIdNamespaces::kProgramsAndShaders)
-           ->FreeIds(this, 1, &shader,
-                     &GLES2Implementation::DeleteShaderStub)) {
+           ->FreeIds(helper_, &share_group_context_data_, 1, &shader,
+                     base::BindOnce(&GLES2Implementation::DeleteShaderStub,
+                                    base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteShader", "id not created by this context.");
@@ -1691,8 +1693,9 @@ void GLES2Implementation::DeleteShaderStub(
 void GLES2Implementation::DeleteSyncHelper(GLsync sync) {
   GLuint sync_uint = ToGLuint(sync);
   if (!GetIdHandler(SharedIdNamespaces::kSyncs)
-           ->FreeIds(this, 1, &sync_uint,
-                     &GLES2Implementation::DeleteSyncStub)) {
+           ->FreeIds(helper_, &share_group_context_data_, 1, &sync_uint,
+                     base::BindOnce(&GLES2Implementation::DeleteSyncStub,
+                                    base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteSync", "id not created by this context.");
@@ -4340,8 +4343,9 @@ void GLES2Implementation::BindBufferHelper(
   // TODO(gman): See note #2 above.
   if (changed) {
     GetIdHandler(SharedIdNamespaces::kBuffers)
-        ->MarkAsUsedForBind(this, target, buffer_id,
-                            &GLES2Implementation::BindBufferStub);
+        ->MarkAsUsedForBind(target, buffer_id,
+                            base::BindOnce(&GLES2Implementation::BindBufferStub,
+                                           base::Unretained(this)));
   }
 }
 
@@ -4381,8 +4385,10 @@ void GLES2Implementation::BindBufferBaseHelper(
       return;
   }
   GetIdHandler(SharedIdNamespaces::kBuffers)
-      ->MarkAsUsedForBind(this, target, index, buffer_id,
-                          &GLES2Implementation::BindBufferBaseStub);
+      ->MarkAsUsedForBind(
+          target, index, buffer_id,
+          base::BindOnce(&GLES2Implementation::BindBufferBaseStub,
+                         base::Unretained(this)));
 }
 
 void GLES2Implementation::BindBufferBaseStub(
@@ -4398,8 +4404,10 @@ void GLES2Implementation::BindBufferRangeHelper(
   // TODO(zmo): See note #1 above.
   // TODO(zmo): See note #2 above.
   GetIdHandler(SharedIdNamespaces::kBuffers)
-      ->MarkAsUsedForBind(this, target, index, buffer_id, offset, size,
-                          &GLES2Implementation::BindBufferRangeStub);
+      ->MarkAsUsedForBind(
+          target, index, buffer_id, offset, size,
+          base::BindOnce(&GLES2Implementation::BindBufferRangeStub,
+                         base::Unretained(this)));
 }
 
 void GLES2Implementation::BindBufferRangeStub(
@@ -4469,8 +4477,10 @@ void GLES2Implementation::BindRenderbufferHelper(
   // TODO(zmo): See note #2 above.
   if (changed) {
     GetIdHandler(SharedIdNamespaces::kRenderbuffers)
-        ->MarkAsUsedForBind(this, target, renderbuffer,
-                            &GLES2Implementation::BindRenderbufferStub);
+        ->MarkAsUsedForBind(
+            target, renderbuffer,
+            base::BindOnce(&GLES2Implementation::BindRenderbufferStub,
+                           base::Unretained(this)));
   }
 }
 
@@ -4518,8 +4528,10 @@ void GLES2Implementation::BindTextureHelper(GLenum target, GLuint texture) {
   // TODO(gman): See note #2 above.
   if (changed) {
     GetIdHandler(SharedIdNamespaces::kTextures)
-        ->MarkAsUsedForBind(this, target, texture,
-                            &GLES2Implementation::BindTextureStub);
+        ->MarkAsUsedForBind(
+            target, texture,
+            base::BindOnce(&GLES2Implementation::BindTextureStub,
+                           base::Unretained(this)));
   }
 }
 
@@ -4565,8 +4577,9 @@ bool GLES2Implementation::IsBufferReservedId(GLuint id) {
 void GLES2Implementation::DeleteBuffersHelper(
     GLsizei n, const GLuint* buffers) {
   if (!GetIdHandler(SharedIdNamespaces::kBuffers)
-           ->FreeIds(this, n, buffers,
-                     &GLES2Implementation::DeleteBuffersStub)) {
+           ->FreeIds(helper_, &share_group_context_data_, n, buffers,
+                     base::BindOnce(&GLES2Implementation::DeleteBuffersStub,
+                                    base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteBuffers", "id not created by this context.");
@@ -4629,8 +4642,10 @@ void GLES2Implementation::DeleteFramebuffersHelper(
 void GLES2Implementation::DeleteRenderbuffersHelper(
     GLsizei n, const GLuint* renderbuffers) {
   if (!GetIdHandler(SharedIdNamespaces::kRenderbuffers)
-           ->FreeIds(this, n, renderbuffers,
-                     &GLES2Implementation::DeleteRenderbuffersStub)) {
+           ->FreeIds(
+               helper_, &share_group_context_data_, n, renderbuffers,
+               base::BindOnce(&GLES2Implementation::DeleteRenderbuffersStub,
+                              base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteRenderbuffers", "id not created by this context.");
@@ -4651,8 +4666,9 @@ void GLES2Implementation::DeleteRenderbuffersStub(
 void GLES2Implementation::DeleteTexturesHelper(
     GLsizei n, const GLuint* textures) {
   if (!GetIdHandler(SharedIdNamespaces::kTextures)
-           ->FreeIds(this, n, textures,
-                     &GLES2Implementation::DeleteTexturesStub)) {
+           ->FreeIds(helper_, &share_group_context_data_, n, textures,
+                     base::BindOnce(&GLES2Implementation::DeleteTexturesStub,
+                                    base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteTextures", "id not created by this context.");
@@ -4705,8 +4721,9 @@ void GLES2Implementation::DeleteSamplersStub(
 void GLES2Implementation::DeleteSamplersHelper(
     GLsizei n, const GLuint* samplers) {
   if (!GetIdHandler(SharedIdNamespaces::kSamplers)
-           ->FreeIds(this, n, samplers,
-                     &GLES2Implementation::DeleteSamplersStub)) {
+           ->FreeIds(helper_, &share_group_context_data_, n, samplers,
+                     base::BindOnce(&GLES2Implementation::DeleteSamplersStub,
+                                    base::Unretained(this)))) {
     SetGLError(
         GL_INVALID_VALUE,
         "glDeleteSamplers", "id not created by this context.");
@@ -5984,7 +6001,8 @@ GLuint GLES2Implementation::CreateAndConsumeTextureCHROMIUM(
                               "mailbox that was not generated by "
                               "GenMailboxCHROMIUM.";
   GLuint client_id;
-  GetIdHandler(SharedIdNamespaces::kTextures)->MakeIds(this, 0, 1, &client_id);
+  GetIdHandler(SharedIdNamespaces::kTextures)
+      ->MakeIds(helper_, &share_group_context_data_, 0, 1, &client_id);
   helper_->CreateAndConsumeTextureINTERNALImmediate(client_id, data);
   if (share_group_->bind_generates_resource())
     helper_->CommandBufferHelper::Flush();
@@ -6609,7 +6627,7 @@ GLuint GLES2Implementation::GenPathsCHROMIUM(GLsizei range) {
 
   GLuint first_client_id = 0;
   GetRangeIdHandler(id_namespaces::kPaths)
-      ->MakeIdRange(this, range, &first_client_id);
+      ->MakeIdRange(helper_, range, &first_client_id);
 
   if (first_client_id == 0) {
     // Ran out of id space. Is not specified to raise any gl errors.
@@ -6652,8 +6670,10 @@ void GLES2Implementation::DeletePathsCHROMIUM(GLuint first_client_id,
   }
 
   GetRangeIdHandler(id_namespaces::kPaths)
-      ->FreeIdRange(this, first_client_id, range,
-                    &GLES2Implementation::DeletePathsCHROMIUMStub);
+      ->FreeIdRange(
+          helper_, first_client_id, range,
+          base::BindOnce(&GLES2Implementation::DeletePathsCHROMIUMStub,
+                         base::Unretained(this)));
   CheckGLError();
 }
 
