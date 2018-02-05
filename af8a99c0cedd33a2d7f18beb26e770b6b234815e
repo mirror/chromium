@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86b3b86f_688defbe",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "I updated the solution. I think it should be a better way. And added test coverage: we could have saved persistent display id, but shortcuts moved window to another display, which will cause the saved persistent display id become stale.",
+      "parentUuid": "502300e5_261d410b",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfd6443d_4cd63c3f",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f38b90ec_e070cd59",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfd6443d_4cd63c3f",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cf1034_7575cee9",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-02T23:49:46Z",
       "side": 1,
       "message": "To avoid doing this in every for loop iteration, please move this outside the for-loop.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 59
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481959fd_c341b9b6",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "yes, done.",
+      "parentUuid": "21cf1034_7575cee9",
       "range": {
         "startLine": 98,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9c47eb01_f27fda58",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "The solution I think is: saving another variable \"display_bounds_in_screen\". When restoring, display bounds position could change (in the case of reconnecting third display first), update |persistent_window_bounds| to contain this change.",
+      "parentUuid": "3c0848c5_c8bdb6c1",
+      "range": {
+        "startLine": 107,
+        "startChar": 29,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5c61272_4aba11d5",
         "filename": "ash/display/persistent_window_controller_unittest.cc",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2018-02-02T23:49:46Z",
       "side": 1,
       "message": "So it moved to display 0? Not for this CL, but we might want to consider moving windows to the nearest display in the layout.",
+      "range": {
+        "startLine": 143,
+        "startChar": 12,
+        "endLine": 143,
+        "endChar": 37
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5265264e_5289d971",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "yes, sounds like it moved to primary display.\n\nAck, may define \u0026 confirm this behavior with PM.",
+      "parentUuid": "a5c61272_4aba11d5",
       "range": {
         "startLine": 143,
         "startChar": 12,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8446d3db_7a9337ce",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b26ea31_46283ecc",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 145,
+        "endChar": 26
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd7f2d41_d47c87f4",
         "filename": "ash/display/persistent_window_controller_unittest.cc",
         "patchSetId": 8
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c67a52cd_c51a9c18",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd7f2d41_d47c87f4",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 25
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e44fb181_a6409725",
         "filename": "ash/display/persistent_window_controller_unittest.cc",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2018-02-02T23:49:46Z",
       "side": 1,
       "message": "We need the scenario when you connect the third before the second.",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "af8a99c0cedd33a2d7f18beb26e770b6b234815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a55ff4_875a9a64",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-05T18:52:19Z",
+      "side": 1,
+      "message": "done. The behavior is when reconnecting third display first, it will occupy the second display\u0027s layout. And when second display is reconnected, third display will give the position to second display.\n\nIt sounds reasonable to me. I didn\u0027t test it locally...",
+      "parentUuid": "e44fb181_a6409725",
       "range": {
         "startLine": 160,
         "startChar": 16,
