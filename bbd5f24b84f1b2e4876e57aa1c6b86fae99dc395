@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5e9fc5a_6d2dcba4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:00:44Z",
+      "side": 1,
+      "message": "Yes we ended up committing the simpler CL to fix the issue. However, there is still an underlying issue, for which I have filed a bug.",
+      "parentUuid": "7e4f2b00_0ef9c06c",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd996f73_45b3b6f4",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4524cd3e_bea3c0a7",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:00:44Z",
+      "side": 1,
+      "message": "Done. I\u0027m not passing the pending NavigationEntry here in preparation of the NavigationController refactoring (since I want to call this from a place where I don\u0027t have an entry).",
+      "parentUuid": "bd996f73_45b3b6f4",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58735e9_94a451ab",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-02T17:25:18Z",
       "side": 1,
       "message": "I\u0027m curious if there\u0027s a distinction for which of these checks belong inside ShouldTreatNavigationAsReload and which belong outside?  I see that some additional ones have moved inside, but I\u0027m not sure I understand the difference between them and the ones that stayed here.  (I\u0027m mainly asking in case more or all of these should move into the helper function.)",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e47571_d4218da2",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:00:44Z",
+      "side": 1,
+      "message": "I moved the ones related to the last committed entry, and the url/transition checks. The last_transient_entry_index_ check should go away with the interstitial refactoring. The pending_entry_index_ check I plan to remove in the NavigationController refactor. What remains is to only check for reload for main frame GET navigations. We can move this, or leave it here.",
+      "parentUuid": "d58735e9_94a451ab",
       "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "224d9dff_759b6e99",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5184,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:00:44Z",
+      "side": 1,
+      "message": "Done. Yes this test exercises exactly the behavior I want to fix.",
+      "parentUuid": "ce052349_3507d937",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2a53ec_1afb9e73",
         "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2018-02-02T17:25:18Z",
       "side": 1,
       "message": "Why did this start failing?",
+      "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e7751b_10544d46",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-02-05T16:00:44Z",
+      "side": 1,
+      "message": "Because when doing two downloads in a row, we stopped categorizing the second download as a reload. Somehow the network service had issues with that. Since I don\u0027t think we want to categorize the second download as a reload, I suspect that this wrong behavior was masking some other issue. I\u0027ll try to investigate somre more in a follow-up.",
+      "parentUuid": "ed2a53ec_1afb9e73",
       "revId": "bbd5f24b84f1b2e4876e57aa1c6b86fae99dc395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
