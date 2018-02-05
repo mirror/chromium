@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2682cbbe_a1c1e258",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-05T00:47:50Z",
+      "side": 1,
+      "message": "sadly.. views::View* doesn\u0027t belong here -- that\u0027s a layering violation or something. We can only plumb GetPageInfoAnchorRect() -- my hope is that the conflicts can be resolved neatly with only that plumbed through... if not, maybe we can negotiate a with sky@ and put a comment around it  -  it\u0027s possible this is the eventual state we want to be in anyway (i.e. \"views::\" concepts in chrome/browser/ui as well as chrome/browser/ui/views)",
+      "revId": "cdda17d656bff3fdb3eb527391e8274c26ecb830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
