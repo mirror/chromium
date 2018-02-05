@@ -33,9 +33,6 @@ class Shadow;
 // which observes all window creation.
 class WM_CORE_EXPORT ShadowController : public ActivationChangeObserver {
  public:
-  static constexpr ShadowElevation kActiveNormalShadowElevation =
-      ShadowElevation::LARGE;
-
   // Returns the shadow for the |window|, or NULL if no shadow exists.
   static ui::Shadow* GetShadowForWindow(aura::Window* window);
 

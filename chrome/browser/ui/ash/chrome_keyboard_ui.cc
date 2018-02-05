@@ -465,7 +465,7 @@ void ChromeKeyboardUI::SetShadowAroundKeyboard() {
 
   if (!shadow_) {
     shadow_ = std::make_unique<ui::Shadow>();
-    shadow_->Init(wm::ShadowElevation::LARGE);
+    shadow_->Init(wm::kActiveNormalShadowElevation);
     shadow_->layer()->SetVisible(true);
     contents_window->parent()->layer()->Add(shadow_->layer());
   }

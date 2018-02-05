@@ -10,11 +10,7 @@
 
 namespace wm {
 
-// Different types of drop shadows that can be drawn under a window by the
-// shell. Used as a value for the kShadowTypeKey property. The integer value of
-// each entry is directly used for determining the size of the shadow.
-enum ShadowElevation {
-  // Indicates an elevation should be chosen based on the window. This is the
+enum StandardShadowElevation {
   // default.
   DEFAULT = -1,
   NONE = 0,
@@ -24,11 +20,26 @@ enum ShadowElevation {
   LARGE = 24,
 };
 
+struct ShadowElevation {
+  explicit constexpr ShadowElevation(int elevation) : value(elevation) {}
+  constexpr operator int() const { return value; }
+
+  int value;
+};
+
+// Indicates an elevation should be chosen based on the window.
+constexpr ShadowElevation kShadowElevationDefault = ShadowElevation(-1);
+
+// Different types of drop shadows that can be drawn under a window by the
+// shell. Used as a value for the kShadowTypeKey property.
+constexpr ShadowElevation kInfoBubbleShadowElevation = ShadowElevation(2);
+constexpr ShadowElevation kMenuOrTooltipShadowElevation = ShadowElevation(6);
+constexpr ShadowElevation kInactiveNormalShadowElevation = ShadowElevation(8);
+constexpr ShadowElevation kOverlayWindowShadowElevation = ShadowElevation(8);
+constexpr ShadowElevation kActiveNormalShadowElevation = ShadowElevation(24);
+
 WM_CORE_EXPORT void SetShadowElevation(aura::Window* window,
                                        ShadowElevation elevation);
-
-// Returns true if |value| is a valid element of ShadowElevation elements.
-WM_CORE_EXPORT bool IsValidShadowElevation(int64_t value);
 
 // A property key describing the drop shadow that should be displayed under the
 // window. A null value is interpreted as using the default.

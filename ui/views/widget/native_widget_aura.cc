@@ -136,9 +136,10 @@ void NativeWidgetAura::SetShadowElevationFromInitParams(
     aura::Window* window,
     const Widget::InitParams& params) {
   if (params.shadow_type == Widget::InitParams::SHADOW_TYPE_NONE) {
-    SetShadowElevation(window, wm::ShadowElevation::NONE);
+    SetShadowElevation(window, wm::kShadowElevationNone);
   } else if (params.shadow_type == Widget::InitParams::SHADOW_TYPE_DROP &&
              params.shadow_elevation) {
+    DCEHCK(wm::IsValidShadowElevation(*params.shadow_elevation));
     SetShadowElevation(
         window, static_cast<wm::ShadowElevation>(*params.shadow_elevation));
   }

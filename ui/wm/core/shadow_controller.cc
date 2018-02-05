@@ -32,9 +32,6 @@ namespace wm {
 
 namespace {
 
-constexpr ShadowElevation kInactiveNormalShadowElevation =
-    ShadowElevation::MEDIUM;
-
 ShadowElevation GetDefaultShadowElevationForWindow(aura::Window* window) {
   switch (window->type()) {
     case aura::client::WINDOW_TYPE_NORMAL:
@@ -43,26 +40,26 @@ ShadowElevation GetDefaultShadowElevationForWindow(aura::Window* window) {
 
     case aura::client::WINDOW_TYPE_MENU:
     case aura::client::WINDOW_TYPE_TOOLTIP:
-      return ShadowElevation::SMALL;
+      return kMenuOrTooltipShadowElevation;
 
     default:
       break;
   }
-  return ShadowElevation::NONE;
+  return kShadowElevationNone;
 }
 
 // Returns the ShadowElevation for |window|, converting |DEFAULT| to the
 // appropriate ShadowElevation.
 ShadowElevation GetShadowElevationConvertDefault(aura::Window* window) {
   ShadowElevation elevation = window->GetProperty(kShadowElevationKey);
-  return elevation == ShadowElevation::DEFAULT
+  return elevation == kShadowElevationDefault
              ? GetDefaultShadowElevationForWindow(window)
              : elevation;
 }
 
 ShadowElevation GetShadowElevationForActiveState(aura::Window* window) {
   ShadowElevation elevation = window->GetProperty(kShadowElevationKey);
-  if (elevation != ShadowElevation::DEFAULT)
+  if (elevation != kShadowElevationDefault)
     return elevation;
 
   if (IsActiveWindow(window))
