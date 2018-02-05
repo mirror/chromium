@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72996bf_ed2b86d3",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-05T14:22:13Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027ve ever understood what we\u0027re doing here.  This is kind of a strange place to do this, right?  Can we leave a comment in here to explain why we don\u0027t do it up there where we actually call adler32_simd_()?\n\nIs it, we know that some other code path calls adler32() frequently, but\ncalls adler32(buf\u003dNULL, len\u003d0) always first and less frequently, so that\u0027s a\ngood time to make sure we call x86_check_features()?\n\nThere\u0027s another \"fun\" option here, which is to call the optimized routine via a global function pointer, which you first point to a routine that does\n  1) cpu detection\n  2) overwrite the global pointer to point the best routine\n  3) tail call into the real routine\n\nThings get a little annoying with threads, but you can still make it work, especially because it\u0027s idempotent.",
+      "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
