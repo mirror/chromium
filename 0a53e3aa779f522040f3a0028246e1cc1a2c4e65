@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300bb7da_fbc36c70",
+        "filename": "chromeos/dbus/shill_ipconfig_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-02-05T04:36:40Z",
+      "side": 1,
+      "message": "Thank you for finding this!\nThere should be a break here.\n\nWith the existing code, AppendBasicTypeValueDataAsVariant() below for base::Value::Type::LIST results in adding an empty variant which will be ignored when received by the ipconfig service.\nThis is practically no-op, but of course it\u0027s better to stop appending the unneeded variant.",
+      "revId": "0a53e3aa779f522040f3a0028246e1cc1a2c4e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
