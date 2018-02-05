@@ -65,6 +65,8 @@ enum InputToLoadPerfMetricReportPolicy : uint8_t {
   kReportIntent,  // Report metrics for this request as initiated by an intent.
 };
 
+enum class AdResourceType { kUnknown, kIsAd, kIsNotAd };
+
 struct CrossThreadResourceRequestData;
 
 // A ResourceRequest is a "request" object for ResourceLoader. Conceptually
@@ -361,6 +363,9 @@ class PLATFORM_EXPORT ResourceRequest final {
   }
   bool IsSameDocumentNavigation() const { return is_same_document_navigation_; }
 
+  void SetIsAdResource(bool is_ad_resource);
+  bool IsAdResource() const { return is_ad_resource_ == AdResourceType::kIsAd; }
+
  private:
   const CacheControlHeader& GetCacheControlHeader() const;
 
@@ -413,6 +418,8 @@ class PLATFORM_EXPORT ResourceRequest final {
   static double default_timeout_interval_;
 
   double navigation_start_ = 0;
+
+  AdResourceType is_ad_resource_ = AdResourceType::kUnknown;
 };
 
 // This class is needed to copy a ResourceRequest across threads, because it
@@ -468,6 +475,7 @@ struct CrossThreadResourceRequestData {
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
   base::Optional<String> suggested_filename_;
+  AdResourceType is_ad_resource_;
 };
 
 }  // namespace blink
