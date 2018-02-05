@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69bb96bf_e8dcfba7",
+        "filename": "chrome/browser/ui/views/accelerator_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T22:50:19Z",
+      "side": 1,
+      "message": "Note for reviewers: This was all changed by clang-format.\nSee comment below for new addition to this file.",
+      "revId": "483c5afa96fd6eb0fdfe3532cc08b4cec1d72773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfb557d_2f366fd8",
+        "filename": "chrome/browser/ui/views/accelerator_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T22:50:19Z",
+      "side": 1,
+      "message": "Note for reviewers: This is the only real addition to this file.",
+      "revId": "483c5afa96fd6eb0fdfe3532cc08b4cec1d72773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
