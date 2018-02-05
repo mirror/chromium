@@ -113,6 +113,10 @@ ExternalSearchProvider* ChromeBrowserProvider::GetExternalSearchProvider()
   return nullptr;
 }
 
+MailtoHandlerProvider* ChromeBrowserProvider::GetMailtoHandlerProvider() const {
+  return nullptr;
+}
+
 void ChromeBrowserProvider::CheckForFirstPartyApps() const {}
 
 BrandedImageProvider* ChromeBrowserProvider::GetBrandedImageProvider() const {
