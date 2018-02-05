@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "88c39b24_fc0d3161",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T19:07:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14302d6d_bf27afd9",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50cc92c9_0737f85d",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 4
@@ -264,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "003d3814_502798ff",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T19:07:55Z",
+      "side": 1,
+      "message": "I think you can pass a root window? And should be able to get it from SplitViewOverviewOverlay::widget_ since it\u0027s supposed to be in the same root window as the snapped windows.",
+      "parentUuid": "ee562225_e0ec743e",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d798ad1e_d613a89a",
         "filename": "ash/wm/splitview/split_view_overview_overlay.h",
         "patchSetId": 4
@@ -296,6 +332,24 @@
       "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c61e74d_789a97e0",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T19:07:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c5259ba_586aef3a",
+      "revId": "330dd489ce9b96d9980374462c3afbf28881cad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
