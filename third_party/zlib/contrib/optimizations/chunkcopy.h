@@ -3,7 +3,6 @@
  * Copyright 2017 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
  * found in the Chromium source repository LICENSE file.
- * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 #ifndef CHUNKCOPY_H
@@ -406,6 +405,38 @@ static inline unsigned char FAR* chunkcopy_lapped_safe(
   }
   return chunkcopy_lapped_relaxed(out, dist, len);
 }
+
+/*
+ * The chunk-copy code above deals with writing the decoded DEFLATE data to
+ * the output with SIMD methods to increase decode speed. Reading the input
+ * to the DEFLATE decoder with a wide, SIMD method can also increase decode
+ * speed. This option is supported on little endian machines, and reads the
+ * input data in 64-bit (8 byte) chunks.
+ */
+
+#ifndef INFLATE_CHUNK_READ_64LE
+/*
+ * Define the holding buffer type used to buffer the input data bits during
+ * inflate_fast_chunk_() reads.
+ */
+typedef unsigned long inflate_holder_t;
+
+#else
+/*
+ * Buffer the input in a uint64_t (8 bytes) in the wide input reading case.
+ */
+typedef uint64_t inflate_holder_t;
+
+/*
+ * Ask the compiler to perform a wide, unaligned load of a uint64_t using a
+ * machine instruction appropriate for the uint64_t type.
+ */
+static inline inflate_holder_t read64(const unsigned char FAR *in) {
+    inflate_holder_t input;
+    Z_BUILTIN_MEMCPY(&input, in, sizeof(input));
+    return input;
+}
+#endif /* !INFLATE_CHUNK_READ_64LE */
 
 #undef Z_STATIC_ASSERT
 #undef Z_RESTRICT
