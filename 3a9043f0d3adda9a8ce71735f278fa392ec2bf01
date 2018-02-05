@@ -34,6 +34,24 @@
       "revId": "3a9043f0d3adda9a8ce71735f278fa392ec2bf01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39724fc_7cc358a8",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-05T17:59:31Z",
+      "side": 1,
+      "message": "A reference is just an address :P It\u0027s not an efficiency concern, just a readability nit.",
+      "parentUuid": "4ca23a17_54227e7d",
+      "revId": "3a9043f0d3adda9a8ce71735f278fa392ec2bf01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
