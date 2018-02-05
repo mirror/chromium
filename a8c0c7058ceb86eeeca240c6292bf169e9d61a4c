@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8aaeb58_24424899",
+        "filename": "base/unguessable_token.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-05T19:25:57Z",
+      "side": 1,
+      "message": "As suggested by samans@, it\u0027s preferable to make changes in LocalSurfaceId::ToString(). As I quickly checked, there are over 1000 references to UnguessableToken in the code. Without consulting the owners of other references, we should not make the decision of changing the behavior of UnguessableToken::ToString().",
+      "revId": "a8c0c7058ceb86eeeca240c6292bf169e9d61a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e2e51d_66bcd118",
+        "filename": "base/unguessable_token.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-05T19:25:57Z",
+      "side": 1,
+      "message": "If the functions don\u0027t suppose to be called explicitly, then don\u0027t make them public.",
+      "revId": "a8c0c7058ceb86eeeca240c6292bf169e9d61a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0109f073_c6e9faeb",
+        "filename": "base/unguessable_token_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-05T19:25:57Z",
+      "side": 1,
+      "message": "You can change LogLevel in the test case rather than making the two ToString method public.",
+      "revId": "a8c0c7058ceb86eeeca240c6292bf169e9d61a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
