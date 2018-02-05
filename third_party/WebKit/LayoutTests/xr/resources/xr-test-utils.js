@@ -11,14 +11,22 @@ function xr_session_promise_test(
   addFakeDevice(device);
 
   promise_test((t) => {
-    return navigator.xr.requestDevice().then(
-        (device) => new Promise((resolve, reject) => {
-          // Perform the session request in a user gesture.
-          runWithUserGesture(() => {
-            resolve(device.requestSession(sessionOptions)
-                        .then((session) => func(session, t)));
-          });
-        }));
+    return navigator.xr.requestDevice()
+        .then((device) => {
+          if (gl) {
+            return gl.setCompatibleXRDevice(device).then(
+                () => Promise.resolve(device));
+          } else {
+            return Promise.resolve(device);
+          }
+        })
+        .then((device) => new Promise((resolve, reject) => {
+                // Perform the session request in a user gesture.
+                runWithUserGesture(() => {
+                  resolve(device.requestSession(sessionOptions)
+                              .then((session) => func(session, t)));
+                });
+              }));
   }, name, properties);
 }
 

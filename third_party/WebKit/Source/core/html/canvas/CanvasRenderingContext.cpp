@@ -55,8 +55,7 @@ CanvasRenderingContext::CanvasRenderingContext(
     color_params_.SetOpacityMode(kOpaque);
   }
 
-  if (!RuntimeEnabledFeatures::LowLatencyCanvasEnabled() &&
-      creation_attributes_.hasLowLatency())
+  if (!RuntimeEnabledFeatures::LowLatencyCanvasEnabled())
     creation_attributes_.setLowLatency(false);
 
   // Make m_creationAttributes reflect the effective colorSpace and pixelFormat
@@ -193,6 +192,7 @@ bool CanvasRenderingContext::WouldTaintOrigin(
 
 void CanvasRenderingContext::Trace(blink::Visitor* visitor) {
   visitor->Trace(host_);
+  visitor->Trace(creation_attributes_);
   ScriptWrappable::Trace(visitor);
 }
 
