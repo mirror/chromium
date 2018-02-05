@@ -47,6 +47,9 @@ EnumTraits<content::mojom::ResourceType, content::ResourceType>::ToMojom(
       return content::mojom::ResourceType::RESOURCE_TYPE_CSP_REPORT;
     case content::RESOURCE_TYPE_PLUGIN_RESOURCE:
       return content::mojom::ResourceType::RESOURCE_TYPE_PLUGIN_RESOURCE;
+    case content::RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE:
+      return content::mojom::ResourceType::
+          RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE;
     case content::RESOURCE_TYPE_LAST_TYPE:
       return content::mojom::ResourceType::RESOURCE_TYPE_LAST_TYPE;
   }
@@ -113,6 +116,9 @@ bool EnumTraits<content::mojom::ResourceType, content::ResourceType>::FromMojom(
       return true;
     case content::mojom::ResourceType::RESOURCE_TYPE_PLUGIN_RESOURCE:
       *output = content::RESOURCE_TYPE_PLUGIN_RESOURCE;
+      return true;
+    case content::mojom::ResourceType::RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE:
+      *output = content::RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE;
       return true;
     case content::mojom::ResourceType::RESOURCE_TYPE_LAST_TYPE:
       *output = content::RESOURCE_TYPE_LAST_TYPE;
