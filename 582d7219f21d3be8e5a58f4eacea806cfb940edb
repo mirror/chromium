@@ -140,6 +140,30 @@
       "revId": "582d7219f21d3be8e5a58f4eacea806cfb940edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf21b75_2acca8b9",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-05T22:52:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure of the real values, but it seems like it\u0027s probably fine. My idea was just initialize the percent here and overwrite it if there is a hit. That way you don\u0027t have to compare it with 0 later.",
+      "parentUuid": "a180f66a_4624459a",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 37
+      },
+      "revId": "582d7219f21d3be8e5a58f4eacea806cfb940edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
