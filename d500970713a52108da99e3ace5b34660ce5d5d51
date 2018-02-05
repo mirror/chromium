@@ -34,6 +34,24 @@
       "revId": "d500970713a52108da99e3ace5b34660ce5d5d51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3afed0b_9d6b9e6d",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-05T02:27:20Z",
+      "side": 1,
+      "message": "\u003e I just looked into it and it doesn\u0027t look like container_view() might be the same thing as parent_widget-\u003eGetNativeView()\n\nHuh - container_view() is always... web_contents()-\u003eGetNativeView() . I think that is slightly different on aura .. (maybe not in a way that makes a difference). What you have is fine. We can look for cleanups once the cocoa code is gone.",
+      "parentUuid": "fe3a52f1_c24f1e64",
+      "revId": "d500970713a52108da99e3ace5b34660ce5d5d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
