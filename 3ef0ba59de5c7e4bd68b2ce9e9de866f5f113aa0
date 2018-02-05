@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcee5bd8_3811732e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-05T23:45:07Z",
+      "side": 1,
+      "message": "This is because of a call to BeginNavigationParams::Clone(). Not sure if it\u0027s the right thing to explicitly include this, but we seem to do this in other places. I wonder if this should be included into navigation_params.mojom.h based on the import of values.mojom by the mojo generator.",
+      "revId": "3ef0ba59de5c7e4bd68b2ce9e9de866f5f113aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
