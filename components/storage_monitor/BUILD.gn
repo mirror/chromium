@@ -160,6 +160,9 @@ source_set("unit_tests") {
       sources += [ "storage_monitor_linux_unittest.cc" ]
     }
   }
+  if (is_linux && !use_udev) {
+    sources -= [    "storage_info_unittest.cc"]
+  }
   if (is_chromeos) {
     deps += [ "//chromeos:test_support" ]
   }

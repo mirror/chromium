@@ -7,6 +7,7 @@ import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//components/nacl/features.gni")
 import("//media/media_options.gni")
+import("//pdf/features.gni")
 import("//printing/features/features.gni")
 import("//rlz/features/features.gni")
 import("//testing/test.gni")
@@ -288,10 +289,14 @@ test("components_unittests") {
       "//components/guest_view/browser:unit_tests",
       "//components/multidevice:unit_tests",
       "//components/proximity_auth:unit_tests",
-      "//components/storage_monitor:unit_tests",
       "//components/web_modal:unit_tests",
       "//components/zoom:unit_tests",
     ]
+
+    if (!is_chromecast) {
+      deps +=  ["//components/storage_monitor:unit_tests"]
+
+    }
   }
 
   if (enable_rlz_support) {
@@ -483,7 +488,7 @@ if (!is_ios) {
       data += [ "$root_out_dir/Content Shell.app/" ]
     }
 
-    if (!is_android) {
+    if (enable_pdf) {
       sources += [ "pdf/renderer/pdf_accessibility_tree_browsertest.cc" ]
       deps += [ "//components/pdf/renderer" ]
     }

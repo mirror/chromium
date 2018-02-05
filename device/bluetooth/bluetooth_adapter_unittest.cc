@@ -33,6 +33,8 @@
 #include "device/bluetooth/test/bluetooth_test_mac.h"
 #elif defined(OS_WIN)
 #include "device/bluetooth/test/bluetooth_test_win.h"
+#elif defined(LINUX_WITHOUT_DBUS)
+// No include
 #elif defined(OS_CHROMEOS) || defined(OS_LINUX)
 #include "device/bluetooth/test/bluetooth_test_bluez.h"
 #endif
@@ -692,6 +694,7 @@ TEST_F(BluetoothTest, DiscoverMultipleLowEnergyDevices) {
 #else
 #define MAYBE_TogglePowerFakeAdapter TogglePowerFakeAdapter
 #endif
+#if !defined(LINUX_WITHOUT_DBUS)
 TEST_F(BluetoothTest, MAYBE_TogglePowerFakeAdapter) {
 #if defined(OS_MACOSX)
   if (!PlatformSupportsLowEnergy()) {
@@ -721,6 +724,7 @@ TEST_F(BluetoothTest, MAYBE_TogglePowerFakeAdapter) {
   EXPECT_TRUE(adapter_->IsPowered());
   EXPECT_EQ(2, observer.powered_changed_count());
 }
+#endif  // !defined(LINUX_WITHOUT_DBUS)
 
 #if defined(OS_MACOSX)
 // The following tests should be implemented on Android as well once pending

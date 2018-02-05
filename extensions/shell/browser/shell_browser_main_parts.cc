@@ -128,7 +128,7 @@ void ShellBrowserMainParts::PostMainMessageLoopStart() {
       switches::kAppShellAllowRoaming)) {
     network_controller_->SetCellularAllowRoaming(true);
   }
-#elif defined(OS_LINUX)
+#elif defined(OS_LINUX) && !defined(LINUX_WITHOUT_DBUS)
   // app_shell doesn't need GTK, so the fake input method context can work.
   // See crbug.com/381852 and revision fb69f142.
   // TODO(michaelpg): Verify this works for target environments.
@@ -293,7 +293,7 @@ void ShellBrowserMainParts::PostDestroyThreads() {
   device::BluetoothAdapterFactory::Shutdown();
   bluez::BluezDBusManager::Shutdown();
   chromeos::DBusThreadManager::Shutdown();
-#elif defined(OS_LINUX)
+#elif defined(OS_LINUX) && !defined(LINUX_WITHOUT_DBUS)
   device::BluetoothAdapterFactory::Shutdown();
   bluez::BluezDBusManager::Shutdown();
   bluez::DBusThreadManagerLinux::Shutdown();

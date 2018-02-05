@@ -395,7 +395,7 @@ component("bluetooth") {
     } else {  # !use_dbus
       sources += [ "bluetooth_adapter_stub.cc" ]
       if (is_linux) {
-        defines += [ "LINUX_WITHOUT_DBUS" ]
+        public_configs = [":linux_without_dbus"]
         sources += [
           "dbus/dbus_bluez_manager_wrapper_linux.h",
           "dbus/dbus_bluez_manager_wrapper_stub_linux.cc",
@@ -403,6 +403,10 @@ component("bluetooth") {
       }
     }
   }
+}
+
+config("linux_without_dbus") {
+  defines = [ "LINUX_WITHOUT_DBUS" ]
 }
 
 static_library("mocks") {

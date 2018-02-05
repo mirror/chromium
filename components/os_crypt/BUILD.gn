@@ -163,7 +163,7 @@ source_set("unit_tests") {
     "//testing/gtest",
   ]
 
-  if (is_desktop_linux) {
+  if (is_desktop_linux && !is_chromecast) {
     sources += [
       "key_storage_linux_unittest.cc",
       "key_storage_util_linux_unittest.cc",
