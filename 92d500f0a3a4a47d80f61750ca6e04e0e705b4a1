@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0452f2d2_494d3a63",
+        "filename": "storage/browser/blob/blob_memory_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-02-05T23:34:39Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f1481af0_448cc8a7",
+      "revId": "92d500f0a3a4a47d80f61750ca6e04e0e705b4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99807a59_65c60282",
         "filename": "third_party/WebKit/PerformanceTests/OWPStorage/blob-build-all-then-read-parallel-11mb.html",
         "patchSetId": 6
