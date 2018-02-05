@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c70d1bc_e060cd04",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:37:01Z",
+      "side": 1,
+      "message": "ControllerServiceWorker endpoint is not used for non-s13n case, so we can skip this block",
+      "revId": "d2f948d391e30f9422783b1d08e859783d461378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb209982_bc5a7111",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:37:01Z",
+      "side": 1,
+      "message": ":)",
+      "revId": "d2f948d391e30f9422783b1d08e859783d461378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c1ac40_20ae4e5d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:37:01Z",
+      "side": 1,
+      "message": "No need to make this for non-s13n sw case",
+      "revId": "d2f948d391e30f9422783b1d08e859783d461378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2efe28_391941db",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:37:01Z",
+      "side": 1,
+      "message": "No need to make this work for non-s13n sw case",
+      "revId": "d2f948d391e30f9422783b1d08e859783d461378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482a8ee4_8b2e1c4c",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T14:37:01Z",
+      "side": 1,
+      "message": "This code block isn\u0027t really necessary for non-s13n code path. Maybe you can leave CanCreateSubresourceLoaderFactory() and DCHECK here as is, but change the check on line 113 to also see if NavigationMojoResponseEnabled() is enabled.",
+      "revId": "d2f948d391e30f9422783b1d08e859783d461378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
