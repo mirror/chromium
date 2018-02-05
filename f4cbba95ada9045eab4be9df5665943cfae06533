@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a948b350_05989b45",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/mock_tts.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T17:32:04Z",
+      "side": 1,
+      "message": "Maybe call it speechCallbackStack, that way it\u0027s obvious that\nit\u0027s designed to be LIFO even without reading the comment.",
+      "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a886411_c6cd1ab5",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_mouse_selection_test.extjs",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-05T17:32:04Z",
+      "side": 1,
+      "message": "tiny nit: should this be one to the right? And also adjust 2 lines below",
+      "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
