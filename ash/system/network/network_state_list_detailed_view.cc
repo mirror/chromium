@@ -42,14 +42,17 @@ namespace tray {
 namespace {
 
 // Delay between scan requests.
-const int kRequestScanDelaySeconds = 10;
+constexpr int kRequestScanDelaySeconds = 10;
 
 // This margin value is used throughout the bubble:
 // - margins inside the border
 // - horizontal spacing between bubble border and parent bubble border
 // - distance between top of this bubble's border and the bottom of the anchor
 //   view (horizontal rule).
-const int kBubbleMargin = 8;
+constexpr int kBubbleMargin = 8;
+
+// Elevation used for the bubble shadow effect (tiny).
+constexpr int kBubbleShadowElevation = 2;
 
 }  // namespace
 
@@ -103,7 +106,7 @@ class NetworkStateListDetailedView::InfoBubble
   void OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
                                 views::Widget* widget) const override {
     params->shadow_type = views::Widget::InitParams::SHADOW_TYPE_DROP;
-    params->shadow_elevation = ::wm::ShadowElevation::TINY;
+    params->shadow_elevation = kBubbleShadowElevation;
     params->name = "NetworkStateListDetailedView::InfoBubble";
   }
 
