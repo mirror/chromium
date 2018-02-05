@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd762ad_f830a5ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-05T11:54:52Z",
+      "side": 1,
+      "message": "nit: this is statement of fact: it didn\u0027t explain to the reader \"why\" we need to add these counterparts.\n\nWeakStrongBindings is not a great name, but I can\u0027t suggest a better one either.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 70
+      },
+      "revId": "7d1685edddb9bf6e6622d9181602c6ecdf268163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b27f94_0b53ac15",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-05T11:54:52Z",
+      "side": 1,
+      "message": "\"is automatically closed when the InterfaceInvalidator ...\" ?",
+      "revId": "7d1685edddb9bf6e6622d9181602c6ecdf268163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
