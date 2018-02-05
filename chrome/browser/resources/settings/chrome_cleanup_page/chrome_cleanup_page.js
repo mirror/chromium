@@ -553,14 +553,20 @@ Polymer({
     this.renderCleanupCard_(settings.ChromeCleanerCardState.REBOOT_REQUIRED);
   },
 
+  renderCleanupCard_: function(state) {
+    this.state_ = state;
+    this.debounce(
+        'renderCleanupCard', this.debouncedRenderCleanupCard_.bind(this));
+  },
+
   /**
    * Renders the cleanup card given the state and list of files.
    * @param {!settings.ChromeCleanerCardState} state The card state to be
    *     rendered.
    * @private
    */
-  renderCleanupCard_: function(state) {
-    const components = this.cardStateToComponentsMap_.get(state);
+  debouncedRenderCleanupCard_: function() {
+    const components = this.cardStateToComponentsMap_.get(this.state_);
     assert(components);
 
     this.title_ = components.title || '';
