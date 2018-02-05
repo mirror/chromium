@@ -262,6 +262,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         mShouldDisableThreadChecking =
                 shouldDisableThreadChecking(ContextUtils.getApplicationContext());
         // Now safe to use WebView data directory.
+
+        WebViewChromiumFactoryProviderSingleton.create(this);
     }
 
     /* package */ static void checkStorageIsNotDeviceProtected(Context context) {

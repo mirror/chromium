@@ -22,11 +22,13 @@ import org.chromium.android_webview.AwSettings;
 public class ContentSettingsAdapter extends android.webkit.WebSettings {
     private AwSettings mAwSettings;
 
+    Object mCompat = null;
+
     public ContentSettingsAdapter(AwSettings awSettings) {
         mAwSettings = awSettings;
     }
 
-    AwSettings getAwSettings() {
+    public AwSettings getAwSettings() {
         return mAwSettings;
     }
 
@@ -627,5 +629,14 @@ public class ContentSettingsAdapter extends android.webkit.WebSettings {
     public boolean getVideoOverlayForEmbeddedEncryptedVideoEnabled() {
         // Always false, see http://crbug.com/616583
         return false;
+    }
+
+    // Support library stuff!
+    public Object getAttachedCompat() {
+        return mCompat;
+    }
+
+    public void attachCompat(Object compat) {
+        mCompat = compat;
     }
 }
