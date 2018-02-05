@@ -98,7 +98,7 @@ void V8TestEnumOrTestEnumSequence::ToImpl(v8::Isolate* isolate, v8::Local<v8::Va
         "EnumValue2",
         "EnumValue3",
     };
-    if (!IsValidEnum(cppValue, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnumSequence", exceptionState))
+    if (!IsValidEnum(cppValue, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnum", exceptionState, conversionMode == UnionTypeConversionMode::kNullable))
       return;
     impl.SetTestEnumSequence(cppValue);
     return;
