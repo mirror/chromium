@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0e85cd_e6ee3ba6",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-05T19:16:46Z",
+      "side": 1,
+      "message": "SimCompositor didn\u0027t capture the drawing commands in the parent frame because the GraphicsLayer containing the parent frame drawings was fully cached (GraphicsLayer::PaintWithoutCommit returned false) and the drawings didn\u0027t go through WebDisplayItemList. Now we capture all drawing commands regardless of cached status of GraphicsLayer drawings.",
+      "revId": "9cc691caeb3d0e4e30f9b3d5a77135adc156b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
