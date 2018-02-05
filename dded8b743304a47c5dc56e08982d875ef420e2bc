@@ -105,6 +105,24 @@
       "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7642a40_89c47381",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-05T09:38:36Z",
+      "side": 1,
+      "message": "My naive understanding is that we do this to prevent clients trying to build the JSON themselves, and then use that to calculate the wrong hash, i.e., not the one used by the user agent / authenticator in calculating signatures. Would be really nice to create an .md to this effect, create a short URL, and link it here.",
+      "parentUuid": "15a9c882_e6018200",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
