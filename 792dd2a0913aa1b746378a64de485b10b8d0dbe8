@@ -22,6 +22,30 @@
       "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b87e28c_86f681f0",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-02-05T23:17:19Z",
+      "side": 1,
+      "message": "It would be fairly consistent with existing conventions to do:\n\ntemplate(\"fuchsia_executable_runner\") {\n  forward_variables_from(invoker, [ \"exe_target\", \"deps\"])\n  ...\n\n  if (!defined(deps)) { \n    deps \u003d []\n  }\n  deps +\u003d [ exe_target ]\n  ...\n}\n\nno need to think of another name.",
+      "parentUuid": "cd7722ba_8bb55d9a",
+      "range": {
+        "startLine": 190,
+        "startChar": 5,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
