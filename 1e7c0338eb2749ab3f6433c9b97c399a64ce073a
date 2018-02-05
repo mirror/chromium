@@ -248,6 +248,42 @@
     },
     {
       "key": {
+        "uuid": "7d12d1ab_492df33e",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T14:13:46Z",
+      "side": 1,
+      "message": "We either need to delay current AudioManager construction logic to some AM::Start(), or we need an option to register the service later after InitializaMojo().",
+      "parentUuid": "09d67c97_a80fbf47",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6917f445_cf620ea8",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-02-05T14:13:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure we can do it for AudioManager created by ContentBrowserClient.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1828",
+      "parentUuid": "05d90f9d_8cdd5df9",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
