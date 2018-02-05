@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f6bbca_97f9d6ea",
+        "filename": "third_party/WebKit/Source/core/dom/CreateElementFlags.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-02-05T05:58:48Z",
+      "side": 1,
+      "message": "Can we also add created_during_document_write ?",
+      "revId": "6b342c51eac0e87a68edbda55a632073c13650e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
