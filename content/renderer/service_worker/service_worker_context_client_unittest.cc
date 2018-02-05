@@ -317,8 +317,11 @@ TEST_F(ServiceWorkerContextClientTest, DispatchFetchEvent) {
   request->url = expected_url;
   mojom::ServiceWorkerFetchResponseCallbackPtr fetch_callback_ptr;
   fetch_callback_request = mojo::MakeRequest(&fetch_callback_ptr);
+  auto fetch_request = mojom::FetchRequestInfo::New();
+  fetch_request->url_request = *request;
   pipes.event_dispatcher->DispatchFetchEvent(
-      *request, nullptr /* preload_handle */, std::move(fetch_callback_ptr),
+      std::move(fetch_request), nullptr /* preload_handle */,
+      std::move(fetch_callback_ptr),
       base::BindOnce(
           [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
   task_runner()->RunUntilIdle();
@@ -353,8 +356,11 @@ TEST_F(ServiceWorkerContextClientTest,
       mojo::MakeRequest(&fetch_callback_ptr);
   auto request = std::make_unique<network::ResourceRequest>();
   request->url = expected_url;
+  auto fetch_request = mojom::FetchRequestInfo::New();
+  fetch_request->url_request = *request;
   context_client->DispatchOrQueueFetchEvent(
-      *request, nullptr /* preload_handle */, std::move(fetch_callback_ptr),
+      std::move(fetch_request), nullptr /* preload_handle */,
+      std::move(fetch_callback_ptr),
       base::BindOnce(
           [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
   task_runner()->RunUntilIdle();
@@ -400,8 +406,10 @@ TEST_F(ServiceWorkerContextClientTest,
     fetch_callback_request = mojo::MakeRequest(&fetch_callback_ptr);
     auto request = std::make_unique<network::ResourceRequest>();
     request->url = expected_url;
+    auto fetch_request = mojom::FetchRequestInfo::New();
+    fetch_request->url_request = *request;
     pipes.controller->DispatchFetchEvent(
-        *request, std::move(fetch_callback_ptr),
+        std::move(fetch_request), std::move(fetch_callback_ptr),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
     task_runner()->RunUntilIdle();
@@ -448,8 +456,10 @@ TEST_F(ServiceWorkerContextClientTest,
     fetch_callback_request_1 = mojo::MakeRequest(&fetch_callback_ptr);
     auto request = std::make_unique<network::ResourceRequest>();
     request->url = expected_url_1;
+    auto fetch_request = mojom::FetchRequestInfo::New();
+    fetch_request->url_request = *request;
     pipes.controller->DispatchFetchEvent(
-        *request, std::move(fetch_callback_ptr),
+        std::move(fetch_request), std::move(fetch_callback_ptr),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
     task_runner()->RunUntilIdle();
@@ -463,8 +473,11 @@ TEST_F(ServiceWorkerContextClientTest,
     fetch_callback_request_2 = mojo::MakeRequest(&fetch_callback_ptr);
     auto request = std::make_unique<network::ResourceRequest>();
     request->url = expected_url_2;
+    auto fetch_request = mojom::FetchRequestInfo::New();
+    fetch_request->url_request = *request;
     pipes.event_dispatcher->DispatchFetchEvent(
-        *request, nullptr /* preload_handle */, std::move(fetch_callback_ptr),
+        std::move(fetch_request), nullptr /* preload_handle */,
+        std::move(fetch_callback_ptr),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerEventStatus, base::Time) {}));
     task_runner()->RunUntilIdle();
