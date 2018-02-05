@@ -16,6 +16,24 @@
       "revId": "a6fe45df606f753e590d9cb130c3411aed5da519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1d1c68_ad1ae31e",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T20:48:43Z",
+      "side": 1,
+      "message": "Some tests construct DirectLayerTreeFrameSink. I didn\u0027t think it was necessary to add these checks in tests so added a default value.",
+      "parentUuid": "03565265_88569f9e",
+      "revId": "a6fe45df606f753e590d9cb130c3411aed5da519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
