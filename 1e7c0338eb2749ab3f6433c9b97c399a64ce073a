@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "09d67c97_a80fbf47",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T12:37:02Z",
+      "side": 1,
+      "message": "Oh, nevermind, I\u0027m overcomplicating things :). Constructing a Thread object is cheap as long as we don\u0027t Start, so AudioThreadImpl could also have a cheap constructor (called before InitializeMojo) and a separate Start method which actually starts the thread which is called later.",
+      "parentUuid": "05d90f9d_8cdd5df9",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
