@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6415b255_42a73463",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "Link to https://chromium-review.googlesource.com/c/chromium/src/+/881017/1 here, e.g.\n\n\"\"\"\nas discussed on PS1 @\nhttps://chromium-review.googlesource.com/c/chromium/src/+/881017/1\n\"\"\"\n\n(PS: would have prefered a separate CL but this will do too)",
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45220601_64f67804",
+        "filename": "base/debug/thread_heap_usage_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE while you\u0027re here",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05f80ec_779b5977",
+        "filename": "base/debug/thread_heap_usage_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "I don\u0027t what \"RecordFree() above\" refers to?",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d43ec2_403809d9",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "Use inline (C++11 style) member initialization",
+      "range": {
+        "startLine": 326,
+        "startChar": 6,
+        "endLine": 326,
+        "endChar": 43
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21587a8_fca14a91",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "\u0026MyDestructorFunc",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a353e839_ebf3a1fe",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "\u003d kInvalidSlotValue;\n\nand DCHECK_EQ(kInvalidSlotValue, slot_) at the top of Initialize()",
+      "range": {
+        "startLine": 129,
+        "startChar": 13,
+        "endLine": 129,
+        "endChar": 14
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6a8732_29700304",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "Why does this test need a static slot? Seems it can be done with a Slot. The fact that some users now store the slot in static storage is a usage detail that\u0027s irrelevant to unit testing TLS::Slot itself I think?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cc335b_cdaa34fe",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 1,
+      "message": "Move this up to line 33 instead of fwd-declaring it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 1
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

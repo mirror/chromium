@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817b7ce0_fab564ce",
+        "filename": "net/dns/dns_reloader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 0,
+      "message": "Use non-static slot instead of one initialized in constructor",
+      "range": {
+        "startLine": 98,
+        "startChar": 35,
+        "endLine": 98,
+        "endChar": 56
+      },
+      "revId": "9b80ba39152a337c2542fcedf9a0809b4b41d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c484f5ec_a5b19ce6",
+        "filename": "third_party/crashpad/crashpad/util/thread/thread_log_messages.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-05T11:17:25Z",
+      "side": 0,
+      "message": "This should just have been a non-static Slot in the first place, right? i.e. constructor calls Initialize() anyways...?",
+      "range": {
+        "startLine": 75,
+        "startChar": 35,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "9b80ba39152a337c2542fcedf9a0809b4b41d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
