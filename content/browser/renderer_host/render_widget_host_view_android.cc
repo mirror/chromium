@@ -2295,6 +2295,7 @@ void RenderWidgetHostViewAndroid::OnBeginFrame(
   // sending the same MISSED args in infinite recursion.
   last_begin_frame_args_ = args;
 
+  host_->ProgressFling(args.frame_time);
   if ((outstanding_begin_frame_requests_ & BEGIN_FRAME) ||
       (outstanding_begin_frame_requests_ & PERSISTENT_BEGIN_FRAME)) {
     ClearBeginFrameRequest(BEGIN_FRAME);
@@ -2303,7 +2304,6 @@ void RenderWidgetHostViewAndroid::OnBeginFrame(
     OnDidNotProduceFrame(
         viz::BeginFrameAck(args.source_id, args.sequence_number, false));
   }
-  host_->ProgressFling(args.frame_time);
 }
 
 const viz::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
