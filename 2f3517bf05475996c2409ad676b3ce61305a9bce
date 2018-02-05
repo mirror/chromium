@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "929a1362_f8907e07",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-05T20:57:50Z",
+      "side": 1,
+      "message": "There aren\u0027t any original owners left. Ben originally committed the hung page dialog in private svn r34888 (April 24, 2008) and John made tweaks soon thereafter, but neither are interested :)\n\nBret stepped forward; thanks!",
+      "parentUuid": "00606fb9_b83b13b3",
+      "revId": "2f3517bf05475996c2409ad676b3ce61305a9bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4612592d_c867121c",
         "filename": "chrome/browser/ui/hung_renderer_core.cc",
         "patchSetId": 2
