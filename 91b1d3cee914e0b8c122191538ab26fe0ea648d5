@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7c4f3d_2acafd27",
+        "filename": "third_party/metrics_proto/cast_logs.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1203029
+      },
+      "writtenOn": "2018-02-05T22:18:04Z",
+      "side": 1,
+      "message": "ip_dual_stack_supported seems better.\n\nand, please make this CL in google3 first.\n\nchromium CL is just a \"sync to google3\"",
+      "range": {
+        "startLine": 228,
+        "startChar": 18,
+        "endLine": 228,
+        "endChar": 37
+      },
+      "revId": "91b1d3cee914e0b8c122191538ab26fe0ea648d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
