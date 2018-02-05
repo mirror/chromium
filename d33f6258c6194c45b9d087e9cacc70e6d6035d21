@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fbde372_41be61e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "Will this split into RemoteDebuggingMain, NodeMain and InspectorMain later? What\u0027s your plan?",
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d04f58_c68350d5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "Remove this one.",
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfef385f_548d236e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "this._webSocketConnectionLost.bind(this)",
+      "range": {
+        "startLine": 90,
+        "startChar": 61,
+        "endLine": 90,
+        "endChar": 98
+      },
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fe5d66_508494f1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "Inline?",
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce01a8e_fa9da7ac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975bdb0c_57e77860",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9990ee03_a2f020d7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T18:34:38Z",
+      "side": 1,
+      "message": "We can just SDK.SDKModel.Register() correct ChildTargetManager instead of explicitly handling it here.",
+      "revId": "d33f6258c6194c45b9d087e9cacc70e6d6035d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
