@@ -69,9 +69,9 @@ class WebPointerEvent : public WebInputEvent, public WebPointerProperties {
 
   // ------------ Common fields across pointer types ------------
 
-  // True if this pointer was processed as part of gesture detection and it may
-  // cause scrolling.
-  bool scroll_capable;
+  // True if this pointer was hovering. This entails the event was processed
+  // as part of gesture detection and it may cause scrolling.
+  bool hovering;
 
   // TODO(crbug.com/736014): We need a clarified definition of the scale and
   // the coordinate space on these attributes.
