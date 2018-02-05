@@ -21,8 +21,8 @@ import org.chromium.components.navigation_interception.InterceptNavigationDelega
 import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.components.web_contents_delegate_android.WebContentsDelegateAndroid;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
-import org.chromium.content.browser.ContentView;
-import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content_public.browser.ContentView;
+import org.chromium.content_public.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
@@ -361,11 +361,9 @@ public class OverlayPanelContent {
         nativeSetInterceptNavigationDelegate(
                 mNativeOverlayPanelContentPtr, mInterceptNavigationDelegate, panelWebContents);
 
-        mContentDelegate.onContentViewCreated(mContentViewCore);
-        if (mContentViewWidth != 0 && mContentViewHeight != 0) {
-            onPhysicalBackingSizeChanged(mContentViewWidth, mContentViewHeight);
-        }
-        panelWebContents.setSize(cv.getWidth(), cv.getHeight());
+        mContentDelegate.onContentViewCreated();
+        onPhysicalBackingSizeChanged(mContentViewWidth, mContentViewHeight);
+        panelWebContents.setSize(mContentViewWidth, mContentViewHeight);
     }
 
     /**
