@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a53342fe_b4561090",
+        "filename": "components/suggestions/image_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-02-05T16:25:56Z",
+      "side": 1,
+      "message": "I think the 100 is arbitrary here and this code path may not be hit often (typical number of images is 8). We should probably remove from this change and think about slowdowns by filing a crbug.com entry.",
+      "revId": "bcba05ebd822faf861cf25b1279f10cb3e2daae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4397dff2_5d04d018",
         "filename": "components/suggestions/image_manager.cc",
         "patchSetId": 2
@@ -37,6 +54,30 @@
       "side": 1,
       "message": "It looks like image_url_map_ is never changed? But I think i saw calls to AddImage yesterday! I believe the code the top sites and suggestion code has changed quite a bit in last week.\nWhateverz.. the pending_cache_request is never used after this point since the database is initialized. So, once we serve requests we can never add more requests. See |database_ready_|.",
       "parentUuid": "4397dff2_5d04d018",
+      "range": {
+        "startLine": 310,
+        "startChar": 2,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "bcba05ebd822faf861cf25b1279f10cb3e2daae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47044a7_7d8a2961",
+        "filename": "components/suggestions/image_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-02-05T16:25:56Z",
+      "side": 1,
+      "message": "BTW AddImageURL seems to be used only by GetPageThumbnailWithURL [1], which seems unused. Opportunity for cleanup?\n\nhttps://cs.chromium.org/chromium/src/components/suggestions/suggestions_service_impl.cc?rcl\u003d631048a10bb7eddb9da7dc812bb8d20eebc264a2\u0026l\u003d184",
+      "parentUuid": "aa3ac678_376ce5c6",
       "range": {
         "startLine": 310,
         "startChar": 2,
