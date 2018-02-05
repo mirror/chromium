@@ -68,6 +68,13 @@ RenderWidgetHostViewBase::~RenderWidgetHostViewBase() {
     text_input_manager_->Unregister(this);
 }
 
+bool RenderWidgetHostViewBase::IsAllocationPending() const {
+  return false;
+}
+
+void RenderWidgetHostViewBase::SetAllocationPendingFlag() const {}
+void RenderWidgetHostViewBase::ClearAllocationPendingFlag() const {}
+
 RenderWidgetHostImpl* RenderWidgetHostViewBase::GetFocusedWidget() const {
   RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
   return host && host->delegate()

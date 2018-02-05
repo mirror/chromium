@@ -2883,13 +2883,20 @@ void WebContentsImpl::ResizeDueToAutoResize(
     }
   }
 
-  if (delegate_)
-    delegate_->ResizeDueToAutoResize(this, new_size);
+  {
+    base::Optional<
+        content::RenderWidgetHostViewBase::ScopedAllocationPendingLock>
+        allocation_pending_lock;
+    RenderWidgetHostViewBase* view =
+        static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
+    if (view) {
+      view->ResizeDueToAutoResize(new_size, sequence_number);
+      allocation_pending_lock = view->GetAllocationPendingLock();
+    }
 
-  RenderWidgetHostViewBase* view =
-      static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
-  if (view)
-    view->ResizeDueToAutoResize(new_size, sequence_number);
+    if (delegate_)
+      delegate_->ResizeDueToAutoResize(this, new_size);
+  }
 }
 
 gfx::Size WebContentsImpl::GetAutoResizeSize() {
