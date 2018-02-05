@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f4bd76d_00461cad",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T13:13:06Z",
+      "side": 1,
+      "message": "Please always use positive forms for variables, else you end up with hard-to-understand double negation. Compare `if (!no_compression)` to `if (compress)` and `if (no_compression)` to `if (!compression)`: The non-negated form is easier to read.",
+      "revId": "9b32af1a0aef3702526f829fbbda4cc5b4cb73d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28fbf73_356a7de5",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T13:13:06Z",
+      "side": 1,
+      "message": "Please use a better, more descriptive flag name than `--fast`. (e.g. `--skip-compression`)",
+      "revId": "9b32af1a0aef3702526f829fbbda4cc5b4cb73d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76688164_ef85f23e",
+        "filename": "chrome/installer/test/alternate_version_generator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T13:13:06Z",
+      "side": 1,
+      "message": "same here, but also prefer enums over bool parameters. Again, compare `my_function(false)` to `my_function(kCompress)`. In the latter case it\u0027s clear what the parameter means, in the former it isn\u0027t.",
+      "revId": "9b32af1a0aef3702526f829fbbda4cc5b4cb73d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7148862_07a830ba",
+        "filename": "chrome/installer/test/upgrade_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-05T13:13:06Z",
+      "side": 1,
+      "message": "(this is a nice example where not using an enum makes for hard to read code)",
+      "revId": "9b32af1a0aef3702526f829fbbda4cc5b4cb73d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
