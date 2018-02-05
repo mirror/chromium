@@ -36,13 +36,12 @@ class MockByteStreamReader : public ByteStreamReader {
 };
 
 // Creates a source stream to test.
-std::unique_ptr<DownloadFileImpl::SourceStream> CreateSourceStream(
-    int64_t offset,
-    int64_t length) {
+std::unique_ptr<DownloadSourceStream> CreateSourceStream(int64_t offset,
+                                                         int64_t length) {
   auto input_stream = std::make_unique<DownloadManager::InputStream>(
       std::make_unique<MockByteStreamReader>());
-  return std::make_unique<DownloadFileImpl::SourceStream>(
-      offset, length, std::move(input_stream));
+  return std::make_unique<DownloadSourceStream>(offset, length,
+                                                std::move(input_stream));
 }
 
 }  // namespace
