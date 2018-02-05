@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1718a3eb_bc2c2259",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-05T22:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e65fe5b_49e5e778",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a8aff0_96eab4c4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
         "patchSetId": 3
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "fa2d7822_412ec1f0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-from-nested-frame.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-05T22:24:21Z",
+      "side": 1,
+      "message": "Sure. Also changed tests that formerly relied on algorithm for early failure to time out as well.",
+      "parentUuid": "4bd3be68_6629c6da",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e4d8452_e2609597",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
         "patchSetId": 3
@@ -158,6 +194,24 @@
       "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef14e14_f8239b97",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-get-origins.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-05T22:24:21Z",
+      "side": 1,
+      "message": "Done. *-origins.html now only contains tests that require custom-set origins. *-basic.html tests combinations of missing parameters.",
+      "parentUuid": "73c38bb1_9b93d1cd",
+      "revId": "ad79a9a27206b0bfb7297bc0a81d51ca119e9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
