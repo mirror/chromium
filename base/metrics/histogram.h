@@ -205,8 +205,6 @@ class BASE_EXPORT Histogram : public HistogramBase {
   std::unique_ptr<HistogramSamples> SnapshotFinalDelta() const override;
   void AddSamples(const HistogramSamples& samples) override;
   bool AddSamplesFromPickle(base::PickleIterator* iter) override;
-  void WriteHTMLGraph(std::string* output) const override;
-  void WriteAscii(std::string* output) const override;
 
   // Validates the histogram contents. If |crash_if_invalid| is true and the
   // histogram is invalid, this will trigger a CHECK. Otherwise, it will return
@@ -250,17 +248,6 @@ class BASE_EXPORT Histogram : public HistogramBase {
   // HistogramBase implementation:
   void SerializeInfoImpl(base::Pickle* pickle) const override;
 
-  // Method to override to skip the display of the i'th bucket if it's empty.
-  virtual bool PrintEmptyBucket(uint32_t index) const;
-
-  // Get normalized size, relative to the ranges(i).
-  virtual double GetBucketSize(Count current, uint32_t i) const;
-
-  // Return a string description of what goes in a given bucket.
-  // Most commonly this is the numeric value, but in derived classes it may
-  // be a name (or string description) given to the bucket.
-  virtual const std::string GetAsciiBucketRange(uint32_t it) const;
-
  private:
   // Allow tests to corrupt our innards for testing purposes.
   FRIEND_TEST_ALL_PREFIXES(HistogramTest, BoundsTest);
@@ -281,29 +268,6 @@ class BASE_EXPORT Histogram : public HistogramBase {
 
   // Create a copy of unlogged samples.
   std::unique_ptr<SampleVector> SnapshotUnloggedSamples() const;
-
-  //----------------------------------------------------------------------------
-  // Helpers for emitting Ascii graphic.  Each method appends data to output.
-
-  void WriteAsciiImpl(bool graph_it,
-                      const std::string& newline,
-                      std::string* output) const;
-
-  // Find out how large (graphically) the largest bucket will appear to be.
-  double GetPeakBucketSize(const SampleVectorBase& samples) const;
-
-  // Write a common header message describing this histogram.
-  void WriteAsciiHeader(const SampleVectorBase& samples,
-                        Count sample_count,
-                        std::string* output) const;
-
-  // Write information about previous, current, and next buckets.
-  // Information such as cumulative percentage, etc.
-  void WriteAsciiBucketContext(const int64_t past,
-                               const Count current,
-                               const int64_t remaining,
-                               const uint32_t i,
-                               std::string* output) const;
 
   // WriteJSON calls these.
   void GetParameters(DictionaryValue* params) const override;
@@ -380,24 +344,6 @@ class BASE_EXPORT LinearHistogram : public Histogram {
       HistogramSamples::Metadata* meta,
       HistogramSamples::Metadata* logged_meta);
 
-  struct DescriptionPair {
-    Sample sample;
-    const char* description;  // Null means end of a list of pairs.
-  };
-
-  // Create a LinearHistogram and store a list of number/text values for use in
-  // writing the histogram graph.
-  // |descriptions| can be NULL, which means no special descriptions to set. If
-  // it's not NULL, the last element in the array must has a NULL in its
-  // "description" field.
-  static HistogramBase* FactoryGetWithRangeDescription(
-      const std::string& name,
-      Sample minimum,
-      Sample maximum,
-      uint32_t bucket_count,
-      int32_t flags,
-      const DescriptionPair descriptions[]);
-
   static void InitializeBucketRanges(Sample minimum,
                                      Sample maximum,
                                      BucketRanges* ranges);
@@ -422,26 +368,10 @@ class BASE_EXPORT LinearHistogram : public Histogram {
                   HistogramSamples::Metadata* meta,
                   HistogramSamples::Metadata* logged_meta);
 
-  double GetBucketSize(Count current, uint32_t i) const override;
-
-  // If we have a description for a bucket, then return that.  Otherwise
-  // let parent class provide a (numeric) description.
-  const std::string GetAsciiBucketRange(uint32_t i) const override;
-
-  // Skip printing of name for numeric range if we have a name (and if this is
-  // an empty bucket).
-  bool PrintEmptyBucket(uint32_t index) const override;
-
  private:
   friend BASE_EXPORT HistogramBase* DeserializeHistogramInfo(
       base::PickleIterator* iter);
   static HistogramBase* DeserializeInfoImpl(base::PickleIterator* iter);
-
-  // For some ranges, we store a printable description of a bucket range.
-  // If there is no description, then GetAsciiBucketRange() uses parent class
-  // to provide a description.
-  typedef std::map<Sample, std::string> BucketDescriptionMap;
-  BucketDescriptionMap bucket_description_;
 
   DISALLOW_COPY_AND_ASSIGN(LinearHistogram);
 };
@@ -542,8 +472,6 @@ class BASE_EXPORT CustomHistogram : public Histogram {
 
   // HistogramBase implementation:
   void SerializeInfoImpl(base::Pickle* pickle) const override;
-
-  double GetBucketSize(Count current, uint32_t i) const override;
 
  private:
   friend BASE_EXPORT HistogramBase* DeserializeHistogramInfo(
