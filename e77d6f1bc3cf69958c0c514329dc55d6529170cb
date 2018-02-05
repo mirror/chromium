@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36a31a09_54a6587a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:51:20Z",
+      "side": 1,
+      "message": "Instead of being an ifdef, could we use the same Settings used to define whether double tap jumps or go fullscreen?",
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a784d64_4d84a25d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:51:20Z",
+      "side": 1,
+      "message": "This might be a naive question but is there any chance we can re-use the jump-svg-image? Also, that image seems to be used for both side, I guess we can use the same technique here?",
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523e6265_5c277d91",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlScrubbingMessageElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:51:20Z",
+      "side": 1,
+      "message": "This should be localized, right?",
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9480817_7e1647e5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlScrubbingMessageElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:51:20Z",
+      "side": 1,
+      "message": "Could this be an HTMLDivElement instead? It might remove the need to add so many boilerplate into accessibility code as the accessibility would be dealt with automatically.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
