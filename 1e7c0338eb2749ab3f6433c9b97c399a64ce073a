@@ -284,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "074f0e49_84638fdd",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-02-05T14:22:59Z",
+      "side": 1,
+      "message": "Note Max that the Thread has no task runner until you Start it, so I\u0027m not sure that would help much.\n\nI\u0027ll reiterate here that I\u0027m fine with landing this bit as-is. I would like to work out a general purpose solution since audio service is not the only one with such dependencies.",
+      "parentUuid": "7d12d1ab_492df33e",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b817b_e67074a1",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
