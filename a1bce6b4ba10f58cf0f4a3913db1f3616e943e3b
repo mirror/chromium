@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12d3c173_acb299ee",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T14:22:51Z",
+      "side": 1,
+      "message": "nit:\n\"// Frame is not null, otherwise `IsElementAllowed()` would have return `kFrameDetached`.\"\n\nYou might want to follow-up with a `DCHECK(frame);`",
+      "revId": "a1bce6b4ba10f58cf0f4a3913db1f3616e943e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
