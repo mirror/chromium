@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19febc05_59fa259c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-02-05T21:02:35Z",
+      "side": 1,
+      "message": "nit: internal b/72873767\n(Aside: Do we have a standard for this? If so feel free to ignore.)",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f8cf16_9f7036d3",
+        "filename": "chromecast/browser/cast_web_contents_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-02-05T21:02:35Z",
+      "side": 1,
+      "message": "Hmm, at this point I feel like we should condense all of these into a CastWebView::CreateParams struct. WDYT?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd09e56_1f65f559",
+        "filename": "chromecast/browser/devtools/remote_debugging_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2018-02-05T21:02:35Z",
+      "side": 1,
+      "message": "Would we want to add a LOG message such as:\nLOG(INFO) \u003c\u003c \"Disabling dev console for \" \u003c\u003c web_contents()-\u003eGetVisibleURL();",
+      "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
