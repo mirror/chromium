@@ -549,6 +549,11 @@ void MetricsService::InitializeMetricsState() {
   GetUptimes(local_state_, &startup_uptime, &ignored_uptime_parameter);
   DCHECK_EQ(0, startup_uptime.InMicroseconds());
 
+#if defined(OS_WIN)
+  // Start updating the last browser live timestamp.
+  StartUpdatingLastLiveTimestamp();
+#endif
+
   // Bookkeeping for the uninstall metrics.
   IncrementLongPrefsValue(prefs::kUninstallLaunchCount);
 }
