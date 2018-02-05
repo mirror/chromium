@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0d1b78d2_8b95d541",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-05T14:56:01Z",
+      "side": 1,
+      "message": "Made the bool implicit as discussed.",
+      "parentUuid": "249b2476_ad5814ee",
+      "revId": "8986c9e6051086d22b44b90d9508c2fa1ff82702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e008e129_f3f583e9",
         "filename": "media/audio/audio_output_controller.h",
         "patchSetId": 7
