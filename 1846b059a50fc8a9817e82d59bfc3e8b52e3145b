@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8e30591_1a50cb38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-05T17:39:13Z",
+      "side": 1,
+      "message": "I think this code could also produce such sequence (e.g. when the layer has offset and the chunk has the same state as the layer and draws nothing) which will be removed by this CL, right?",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28078265_6fb76f60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-05T17:39:13Z",
+      "side": 1,
+      "message": "I just recalled why we have DrawingDisplayItems/Chunks with empty drawing: https://codereview.chromium.org/1067663003. You can reference it from here to remind us the theory.",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d6be5e4_b303a492",
         "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
         "patchSetId": 4
@@ -31,6 +65,23 @@
       "side": 1,
       "message": "AdjustForScrolledContent calls GraphicsContext::Clip, and then nothing else is painted. So the resulting picture is non-empty (1 clip op). So the check in the other file if (!record || record-\u003esize() \u003d\u003d 0) fails because it\u0027s a non-empty record generated here. \n\nIn theory the record can itself know if it actually draws anything, but that code isn\u0027t implemented.",
       "parentUuid": "0d6be5e4_b303a492",
+      "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bbd0c1_7bcc19a8",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-05T17:39:13Z",
+      "side": 1,
+      "message": "Nit: need_translate seems not to need \u0027\u0026\u0027.",
       "revId": "1846b059a50fc8a9817e82d59bfc3e8b52e3145b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
