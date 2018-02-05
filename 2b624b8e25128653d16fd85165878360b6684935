@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087d12c9_6877bff0",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "\u003c3",
+      "revId": "2b624b8e25128653d16fd85165878360b6684935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16002445_7423124b",
+        "filename": "chrome/browser/ui/cocoa/task_manager_mac_browsertest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "Nit: Might be able to make this a little shorter (less wrapping) by pulling the lambda out into its own temp, but I don\u0027t know.",
+      "revId": "2b624b8e25128653d16fd85165878360b6684935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9511980_048d285c",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "You think it will confuse anyone to say \"std::algorithm\" rather than a concrete real call?",
+      "revId": "2b624b8e25128653d16fd85165878360b6684935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381e6f16_0f3eaace",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "\u003c3",
+      "revId": "2b624b8e25128653d16fd85165878360b6684935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c6fcd90_235227ef",
+        "filename": "chrome/browser/ui/views/task_manager_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "Nit: Same comment re: possible temp",
+      "revId": "2b624b8e25128653d16fd85165878360b6684935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

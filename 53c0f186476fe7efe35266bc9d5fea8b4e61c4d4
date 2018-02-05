@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "71233cdd_af868a19",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "LOL.  I had no idea it dates back that long.  I don\u0027t know that I\u0027d ever seen this word before your CL.\n\nNot gonna tilt at this windmill!",
+      "parentUuid": "a7709999_123b9b51",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b47da12d_4e2f9897",
         "filename": "chrome/browser/ui/browser_finder.cc",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "You are really into the std algos! This LG and there are a few other changes I made across this CL to do that more.",
       "parentUuid": "98bd1f48_b7d28285",
+      "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9037704_00d5f241",
+        "filename": "chrome/browser/ui/hung_renderer/hung_renderer_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-05T22:30:35Z",
+      "side": 1,
+      "message": "I got inspired a few years back by https://www.youtube.com/watch?v\u003dqH6sSOr-yk8 , where ex-Chromium team member Sean Parent basically suggests replacing every loop with an STL algorithm :)",
+      "parentUuid": "a7c882c2_beb9bdd8",
       "revId": "53c0f186476fe7efe35266bc9d5fea8b4e61c4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
