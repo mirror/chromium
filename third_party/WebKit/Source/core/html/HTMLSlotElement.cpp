@@ -43,6 +43,7 @@
 #include "core/html/AssignedNodesOptions.h"
 #include "core/html_names.h"
 #include "core/probe/CoreProbes.h"
+#include "core/style/ComputedStyle.h"
 #include "platform/bindings/Microtask.h"
 
 namespace blink {
@@ -251,7 +252,6 @@ void HTMLSlotElement::DispatchSlotChangeEvent() {
 }
 
 Node* HTMLSlotElement::AssignedNodeNextTo(const Node& node) const {
-  DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
   ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
   // TODO(crbug.com/776656): Use {node -> index} map to avoid O(N) lookup
@@ -263,7 +263,6 @@ Node* HTMLSlotElement::AssignedNodeNextTo(const Node& node) const {
 }
 
 Node* HTMLSlotElement::AssignedNodePreviousTo(const Node& node) const {
-  DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
   ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
   // TODO(crbug.com/776656): Use {node -> index} map to avoid O(N) lookup
@@ -303,6 +302,13 @@ AtomicString HTMLSlotElement::GetName() const {
 }
 
 void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
+  if (!GetNonAttachedStyle()) {
+    if (Element* host = ParentOrShadowHostElement()) {
+      if (IsHTMLOptGroupElement(host))
+        SetNonAttachedStyle(OriginalStyleForLayoutObject());
+    }
+  }
+
   HTMLElement::AttachLayoutTree(context);
 
   if (SupportsAssignment()) {
@@ -322,7 +328,7 @@ void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
 // of IncementalShadowDOM.
 const HeapVector<Member<Node>>&
 HTMLSlotElement::ChildrenInFlatTreeIfAssignmentIsSupported() {
-  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+  if (RuntimeEnabledFeatures::SlotInFlatTreeEnabled())
     return AssignedNodes();
   DCHECK(!NeedsDistributionRecalc());
   return distributed_nodes_;
@@ -331,9 +337,8 @@ HTMLSlotElement::ChildrenInFlatTreeIfAssignmentIsSupported() {
 void HTMLSlotElement::DetachLayoutTree(const AttachContext& context) {
   if (SupportsAssignment()) {
     const HeapVector<Member<Node>>& flat_tree_children =
-        RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()
-            ? assigned_nodes_
-            : distributed_nodes_;
+        RuntimeEnabledFeatures::SlotInFlatTreeEnabled() ? assigned_nodes_
+                                                        : distributed_nodes_;
     for (auto& node : flat_tree_children)
       node->LazyReattachIfAttached();
   }
@@ -421,7 +426,7 @@ void HTMLSlotElement::RemovedFrom(ContainerNode* insertion_point) {
 }
 
 void HTMLSlotElement::WillRecalcStyle(StyleRecalcChange change) {
-  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+  if (RuntimeEnabledFeatures::SlotInFlatTreeEnabled())
     return;
   if (change < kIndependentInherit &&
       GetStyleChangeType() < kSubtreeStyleChange) {
@@ -436,7 +441,7 @@ void HTMLSlotElement::WillRecalcStyle(StyleRecalcChange change) {
 }
 
 void HTMLSlotElement::DidRecalcStyle(StyleRecalcChange change) {
-  if (!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+  if (!RuntimeEnabledFeatures::SlotInFlatTreeEnabled())
     return;
   if (change < kIndependentInherit)
     return;
