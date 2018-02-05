@@ -49,6 +49,7 @@
 #include "printing/pdf_metafile_skia.h"
 #include "printing/print_settings.h"
 #include "printing/printed_document.h"
+#include "printing/printing_utils.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -351,10 +352,8 @@ void PrintViewManagerBase::OnDidPrintDocument(
   if (IsOopifEnabled() && !client->for_preview() &&
       document->settings().is_modifiable()) {
     client->DoCompositeDocumentToPdf(
-        params.document_cookie,
-        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
-                     render_frame_host->GetRoutingID()),
-        content.metafile_data_handle, content.data_size, ContentToFrameMap(),
+        params.document_cookie, render_frame_host, content.metafile_data_handle,
+        content.data_size, content.subframe_content_info,
         base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,
                        weak_ptr_factory_.GetWeakPtr(), params));
     return;

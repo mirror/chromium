@@ -232,6 +232,10 @@
 #include "chrome/browser/ui/settings_window_manager_chromeos.h"
 #endif
 
+#if BUILDFLAG(ENABLE_PRINTING)
+#include "components/printing/browser/print_composite_client.h"
+#endif
+
 using base::TimeDelta;
 using base::UserMetricsAction;
 using content::NativeWebKeyboardEvent;
@@ -1933,6 +1937,18 @@ gfx::Size Browser::GetSizeForNewRenderView(WebContents* web_contents) const {
   }
   return size;
 }
+
+#if BUILDFLAG(ENABLE_PRINTING)
+void Browser::PrintSubframe(content::WebContents* web_contents,
+                            const gfx::Rect& rect,
+                            int document_cookie,
+                            int page_number,
+                            content::RenderFrameHost* dst_host) const {
+  auto* client = printing::PrintCompositeClient::FromWebContents(web_contents);
+  if (client)
+    client->PrintSubframe(rect, document_cookie, page_number, dst_host);
+}
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, CoreTabHelperDelegate implementation:
