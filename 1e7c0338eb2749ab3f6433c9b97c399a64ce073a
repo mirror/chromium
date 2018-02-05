@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "2b911641_ac6c5429",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-05T18:06:20Z",
+      "side": 1,
+      "message": "Those windows calls were the ones I was worried about. If we don\u0027t need them anymore that\u0027s great. I can\u0027t confirm what the Fuschia ones do, so feel free to ask Sergey. I think it\u0027s fine either way at this stage for them though.\n\nDid local traces reveal any changes in total startup time in your tests?",
+      "parentUuid": "8d014b3e_900181a1",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6751234d_a2da6b87",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
