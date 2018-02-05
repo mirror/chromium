@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1418cc63_672a4fbd",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-05T15:38:39Z",
+      "side": 1,
+      "message": "I think these changes should go in _permission_features.json since the API is already accessible to extensions/apps with the right permission.\n\nYou might need to update permission_set_unittest.cc if the PermissionMessages test starts failing.",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
