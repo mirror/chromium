@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "27f2beb6_474c2228",
+        "filename": "chromecast/media/cma/pipeline/backend_decryptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1264032
+      },
+      "writtenOn": "2018-02-05T19:36:54Z",
+      "side": 1,
+      "message": "OK, I see you are sure you don\u0027t plan to add more callback. So I think this is really minor. And I see you can avoid some weak_ptr binding trouble by doing this. So no need to change.  Thanks.",
+      "parentUuid": "f664e848_cc6e88ac",
+      "revId": "c6d31c222c448bfba8decd0b66215dd7cbf422d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c7b5b_307b88d4",
         "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
         "patchSetId": 4
