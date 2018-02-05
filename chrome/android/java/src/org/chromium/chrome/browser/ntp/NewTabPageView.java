@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -143,6 +144,12 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     private int mSnapshotHeight;
     private int mSnapshotScrollY;
     private ContextMenuManager mContextMenuManager;
+
+    /**
+     * Lateral offset to add to the top and bottom of the search box bounds. May be 0 if no offset
+     * should be applied.
+     **/
+    private int mSearchBoxBoundsLateralOffset;
 
     /**
      * Manages the view interaction with the rest of the system.
@@ -283,7 +290,18 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
         mSearchBoxView = mNewTabPageLayout.findViewById(R.id.search_box);
         if (SuggestionsConfig.useModernLayout()) {
-            ViewUtils.setNinePatchBackgroundResource(mSearchBoxView, R.drawable.card_modern);
+            mSearchBoxView.setBackgroundResource(R.drawable.modern_toolbar_background);
+            if (!DeviceFormFactor.isTablet()) {
+                mSearchBoxView.getLayoutParams().height = getResources().getDimensionPixelSize(
+                        R.dimen.modern_toolbar_background_size);
+                mSearchBoxBoundsLateralOffset = getResources().getDimensionPixelSize(
+                        R.dimen.ntp_search_box_bounds_lateral_offset_modern);
+            } else {
+                mSearchBoxView.getLayoutParams().height =
+                        getResources().getDimensionPixelSize(R.dimen.toolbar_height_no_shadow);
+                GradientDrawable background = (GradientDrawable) mSearchBoxView.getBackground();
+                background.setCornerRadius(mSearchBoxView.getLayoutParams().height / 2.f);
+            }
         }
         mNoSearchLogoSpacer = mNewTabPageLayout.findViewById(R.id.no_search_logo_spacer);
 
@@ -363,7 +381,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         final TextView searchBoxTextView =
                 (TextView) mSearchBoxView.findViewById(R.id.search_box_text);
         String hintText = getResources().getString(R.string.search_or_type_web_address);
-        if (!DeviceFormFactor.isTablet()) {
+        if (!DeviceFormFactor.isTablet() || SuggestionsConfig.useModernLayout()) {
             searchBoxTextView.setHint(hintText);
         } else {
             searchBoxTextView.setContentDescription(hintText);
@@ -424,6 +442,14 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
                 mManager.focusSearchBox(true, null);
             }
         });
+
+        if (SuggestionsConfig.useModernLayout() && !DeviceFormFactor.isTablet()) {
+            ApiCompatibilityUtils.setMarginEnd(
+                    (MarginLayoutParams) mVoiceSearchButton.getLayoutParams(),
+                    getResources().getDimensionPixelSize(
+                            R.dimen.ntp_search_box_voice_search_margin_end_modern));
+        }
+
         TraceEvent.end(TAG + ".initializeVoiceSearchButton()");
     }
 
@@ -738,7 +764,8 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         int basePosition = mRecyclerView.computeVerticalScrollOffset()
                 + mNewTabPageLayout.getPaddingTop();
         int target = Math.max(basePosition,
-                    mSearchBoxView.getBottom() - mSearchBoxView.getPaddingBottom());
+                mSearchBoxView.getBottom() - mSearchBoxView.getPaddingBottom()
+                        + mSearchBoxBoundsLateralOffset);
 
         mNewTabPageLayout.setTranslationY(percent * (basePosition - target));
     }
@@ -774,11 +801,11 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     void getSearchBoxBounds(Rect bounds, Point translation) {
         int searchBoxX = (int) mSearchBoxView.getX();
         int searchBoxY = (int) mSearchBoxView.getY();
-
         bounds.set(searchBoxX + mSearchBoxView.getPaddingLeft(),
-                searchBoxY + mSearchBoxView.getPaddingTop(),
+                searchBoxY + mSearchBoxView.getPaddingTop() - mSearchBoxBoundsLateralOffset,
                 searchBoxX + mSearchBoxView.getWidth() - mSearchBoxView.getPaddingRight(),
-                searchBoxY + mSearchBoxView.getHeight() - mSearchBoxView.getPaddingBottom());
+                searchBoxY + mSearchBoxView.getHeight() - mSearchBoxView.getPaddingBottom()
+                        + mSearchBoxBoundsLateralOffset);
 
         translation.set(0, 0);
 
