@@ -81,6 +81,10 @@ _NEGATIVE_FILTER = [
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
     # https://bugs.chromium.org/p/chromium/issues/detail?id=746266
     'ChromeDriverSiteIsolation.testCanClickOOPIF',
+    # CQ Test
+    'PerfTest.testSessionStartTime',
+    'PerfTest.testSessionStopTime',
+    'RemoteBrowserTest.testConnectToRemoteBrowser',
 ]
 
 _VERSION_SPECIFIC_FILTER = {}
@@ -2450,6 +2454,7 @@ class ChromeDriverLogTest(ChromeDriverBaseTest):
         ChromeDriverTest._http_server.GetUrl() + '/chromedriver/empty.html')
       driver.AddCookie({'name': 'secret_code', 'value': 'bosco'})
       driver.Quit()
+      self._drivers.remove(driver)
     finally:
       chromedriver_server.Kill()
     with open(tmp_log_path, 'r') as f:
@@ -2752,12 +2757,11 @@ if __name__ == '__main__':
   if _ANDROID_PACKAGE_KEY:
     devil_chromium.Initialize()
 
-  if options.filter == '*':
-    if _ANDROID_PACKAGE_KEY:
-      negative_filter = _ANDROID_NEGATIVE_FILTER[_ANDROID_PACKAGE_KEY]
-    else:
-      negative_filter = _GetDesktopNegativeFilter(options.chrome_version)
-    options.filter = '*-' + ':__main__.'.join([''] + negative_filter)
+  if _ANDROID_PACKAGE_KEY:
+    negative_filter = _ANDROID_NEGATIVE_FILTER[_ANDROID_PACKAGE_KEY]
+  else:
+    negative_filter = _GetDesktopNegativeFilter(options.chrome_version)
+  options.filter = '*-' + ':__main__.'.join([''] + negative_filter)
 
   all_tests_suite = unittest.defaultTestLoader.loadTestsFromModule(
       sys.modules[__name__])
@@ -2765,7 +2769,8 @@ if __name__ == '__main__':
   ChromeDriverTest.GlobalSetUp()
   HeadlessInvalidCertificateTest.GlobalSetUp()
   MobileEmulationCapabilityTest.GlobalSetUp()
-  result = unittest.TextTestRunner(stream=sys.stdout, verbosity=2).run(tests)
+  for i in range(5):
+    result = unittest.TextTestRunner(stream=sys.stdout, verbosity=2).run(tests)
   ChromeDriverTest.GlobalTearDown()
   HeadlessInvalidCertificateTest.GlobalTearDown()
   MobileEmulationCapabilityTest.GlobalTearDown()
