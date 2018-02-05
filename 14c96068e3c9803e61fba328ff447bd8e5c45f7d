@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "253be673_6d6cf9fb",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-05T22:52:02Z",
+      "side": 1,
+      "message": "I\u0027d prefer to add this to accessibilityFeatures API (possibly behind a new permission), instead of exposing the whole settingsPrivate API to expose a single preference.\n\nThis seems to be a feature useful for other (kiosk) apps that use accessibilityFeatures API.\n\nAlso, exposing settingsPrivate to an app carries more risk, e.g. if the app itself gets compromised (though, if security is fine with this, I won\u0027t object).",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1418cc63_672a4fbd",
         "filename": "chrome/common/extensions/api/_api_features.json",
         "patchSetId": 2
@@ -13,6 +30,24 @@
       "writtenOn": "2018-02-05T15:38:39Z",
       "side": 1,
       "message": "I think these changes should go in _permission_features.json since the API is already accessible to extensions/apps with the right permission.\n\nYou might need to update permission_set_unittest.cc if the PermissionMessages test starts failing.",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621ea28d_260f6b34",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-05T22:52:02Z",
+      "side": 1,
+      "message": "yeah, let\u0027s add the whitelist to _permission_featues",
+      "parentUuid": "1418cc63_672a4fbd",
       "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
