@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cc3cf59_d7f275c0",
+        "filename": "chrome/browser/vr/elements/omnibox_text_field.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-05T16:34:28Z",
+      "side": 1,
+      "message": "It is.  And as a result, I am going to add the tests to this CL before landing.  Thanks.",
+      "parentUuid": "26208def_ee96e6f4",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "1b65f71a6fe79603761fa8ae96fcc42b73441563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237cfc48_d9ad24d7",
         "filename": "chrome/browser/vr/elements/omnibox_text_field.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-05T16:22:58Z",
       "side": 1,
       "message": "nit/ optional suggestion: typedef?",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "1b65f71a6fe79603761fa8ae96fcc42b73441563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a99f0d5_d509c0a4",
+        "filename": "chrome/browser/vr/elements/omnibox_text_field.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-05T16:34:28Z",
+      "side": 1,
+      "message": "Personally, for clarity, I prefer to avoid the typedef unless the type is really cumbersome (non-void return type, multiple args, etc), and renders arg lists harder to read.",
+      "parentUuid": "237cfc48_d9ad24d7",
       "range": {
         "startLine": 35,
         "startChar": 8,
