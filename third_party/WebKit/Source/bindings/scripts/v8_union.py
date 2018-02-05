@@ -151,9 +151,12 @@ def member_context(member, info_provider):
         'cpp_value_to_v8_value': member.cpp_value_to_v8_value(
             cpp_value='impl.GetAs%s()' % member.name, isolate='isolate',
             creation_context='creationContext'),
+        'element_type_is_nullable': member.element_type and member.element_type.is_nullable,
+        'enum_type': member.enum_type,
         'enum_values': member.enum_values,
         'is_array_buffer_or_view_type': member.is_array_buffer_or_view,
         'is_array_buffer_view_or_typed_array': member.is_array_buffer_view_or_typed_array,
+        'is_array_or_sequence_type': member.is_array_or_sequence_type,
         'is_traceable': member.is_traceable,
         'rvalue_cpp_type': member.cpp_type_args(used_as_rvalue_type=True),
         'specific_type_enum': 'k' + member.name,
