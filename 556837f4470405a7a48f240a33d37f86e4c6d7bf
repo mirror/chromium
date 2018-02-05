@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a11d681_72f50ba1",
+        "filename": "tools/perf/core/upload_results_to_perf_dashboard.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-02-05T15:11:06Z",
+      "side": 1,
+      "message": "Eventually I think we should make this a class that we call from our upload steps instead of a stand along script like it was in the build repo.  Just a note for the future.",
+      "revId": "556837f4470405a7a48f240a33d37f86e4c6d7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbb4b6a_ca1e1555",
+        "filename": "tools/perf/process_perf_results.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-02-05T15:11:06Z",
+      "side": 1,
+      "message": "I am wondering if this should actually be a default of the perf dashboard results URL.  I am not sure if this is necessary to pass in each time or not.  Can you add a comment here to investigate whether this is a standard that isn\u0027t required to come through in the json?",
+      "revId": "556837f4470405a7a48f240a33d37f86e4c6d7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
