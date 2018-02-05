@@ -22,6 +22,30 @@
       "revId": "cda83c8359cc95b8ef41110cc7702c49ce8e7ae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36578458_832faf5a",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-02-05T05:33:50Z",
+      "side": 1,
+      "message": "We have background ripple animation in NotificationInputContainerMD, so right now this is necessary.\nIf we want to enable subpixel AA, maybe we have to set solid background of Textfield at the end of the animation?",
+      "parentUuid": "4d018e31_cca4db6f",
+      "range": {
+        "startLine": 364,
+        "startChar": 21,
+        "endLine": 364,
+        "endChar": 40
+      },
+      "revId": "cda83c8359cc95b8ef41110cc7702c49ce8e7ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
