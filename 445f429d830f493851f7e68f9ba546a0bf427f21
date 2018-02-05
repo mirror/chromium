@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24d040dd_3f758fc1",
+        "filename": "third_party/WebKit/Source/core/css/media_feature_names.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-02-05T19:41:54Z",
+      "side": 1,
+      "message": "Done (and I think I get bonus points :))",
+      "parentUuid": "51cdb79e_77801e51",
+      "revId": "445f429d830f493851f7e68f9ba546a0bf427f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1509c13_50e72af6",
         "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "445f429d830f493851f7e68f9ba546a0bf427f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce41815_9f0bbc7b",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-02-05T19:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1509c13_50e72af6",
+      "range": {
+        "startLine": 236,
+        "startChar": 6,
+        "endLine": 236,
+        "endChar": 10
+      },
+      "revId": "445f429d830f493851f7e68f9ba546a0bf427f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
