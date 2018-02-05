@@ -446,7 +446,7 @@ class DownloadFileTest : public testing::Test {
     DCHECK(download_file_->source_streams_.find(data.offset) !=
            download_file_->source_streams_.end())
         << "Can't find stream at offset : " << data.offset;
-    DownloadFileImpl::SourceStream* stream =
+    DownloadSourceStream* stream =
         download_file_->source_streams_[data.offset].get();
     DCHECK(stream);
     EXPECT_EQ(data.offset, stream->offset());
