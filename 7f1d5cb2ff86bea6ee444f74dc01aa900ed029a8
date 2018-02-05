@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6542c75b_6c7e5ddc",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:00:46Z",
+      "side": 1,
+      "message": "nit: s/shellsurface/shell surface/",
+      "range": {
+        "startLine": 757,
+        "startChar": 15,
+        "endLine": 757,
+        "endChar": 27
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e04a78c_ed2ba218",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:00:46Z",
+      "side": 1,
+      "message": "should?",
+      "range": {
+        "startLine": 757,
+        "startChar": 28,
+        "endLine": 757,
+        "endChar": 37
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea9b168_242505d6",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:00:46Z",
+      "side": 1,
+      "message": "system modal?",
+      "range": {
+        "startLine": 757,
+        "startChar": 7,
+        "endLine": 757,
+        "endChar": 14
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58776dc_227653f9",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:00:46Z",
+      "side": 1,
+      "message": "SystemModalIsUnresizeable, as \"overlay\" is a overloaded term that can easily be confused with other functionality",
+      "range": {
+        "startLine": 758,
+        "startChar": 41,
+        "endLine": 758,
+        "endChar": 48
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4afcfd9_c54f7c96",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:00:46Z",
+      "side": 1,
+      "message": "system modal shell surface?",
+      "range": {
+        "startLine": 772,
+        "startChar": 7,
+        "endLine": 772,
+        "endChar": 27
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3bdf25_d6cb8985",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-05T10:00:46Z",
+      "side": 1,
+      "message": "not clear why the container should enforce a specific behavior. can movement_disabled_ be set correctly for these shell surface instances instead?",
+      "range": {
+        "startLine": 778,
+        "startChar": 6,
+        "endLine": 778,
+        "endChar": 60
+      },
+      "revId": "7f1d5cb2ff86bea6ee444f74dc01aa900ed029a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
