@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684f19b3_78b948af",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Does DCHECK(common_params_.navigation_type \u003d\u003d FrameMsg_Navigate_Type::SAME_DOCUMENT); make sense here?",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb7615d_abfab2bb",
+        "filename": "content/browser/frame_host/navigator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Nit: RestartNavigationAsCrossDocument reads a bit more naturally to me",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a547102_5eeebef3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3648,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Nit: this weak pointer isn\u0027t necessary: as this is making a call through a Mojo interface ptr owned by this class, any in-flight requests/replies will be dropped once this class is destroyed. I\u0027d prefer that this use base::Unretained() to make that clear.\n\n(Long-term, we might be able to make it a bit easier to differentiate this case without requiring base::Unretained… that\u0027s the hope anyway)",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b52893f_f8831e20",
+        "filename": "content/common/frame.typemap",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "I don\u0027t see anything below that would obviously require this?",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a35c008_f15570c5",
+        "filename": "content/common/frame.typemap",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "It looks like the mojom is defined directly in Blink now, so is typemapping still required?",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29412baa_575a4fa2",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Are the changes in this file mainly just moving things around into their respective blocks? I had a hard time diffing this file.",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836e61d9_628bdef5",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Please use FALLTHROUGH; from https://cs.chromium.org/chromium/src/base/compiler_specific.h?rcl\u003dc0187450913bbaf8408c8c5f662169848ed4bde4\u0026l\u003d227",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27970bb7_bdeaba5e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5582,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Is it sufficient to only have the user gesture in scope when preparing the commit? What about when the navigation is actually committed? I would have expected that it ought to be in scope at the time of actual commit as well, e.g. a same document navigation is synchronous, so if the hashchange event is fire synchronusly, I would expect that the user gesture also needs to be active then? Is that bit of information getting forwarded in some other way now?",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fc9a35_743600d4",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "A bit more detail here would be nice: how can the state go out of sync, and which process \"wins\"? et cetera",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b809125_17297796",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "started or committed?",
+      "range": {
+        "startLine": 203,
+        "startChar": 10,
+        "endLine": 203,
+        "endChar": 17
+      },
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026dd631_9c5b8d96",
+        "filename": "third_party/WebKit/public/web/commit_result.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T08:10:02Z",
+      "side": 1,
+      "message": "Some clarification here on the difference between the last two cases would be useful: what are the situations in which it\u0027s useful to restart the same-document navigation.",
+      "revId": "c2f7c2c8a8b2853752db064885a4bfd043397813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
