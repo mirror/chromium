@@ -223,6 +223,8 @@ void InstallableMetrics::TrackInstallEvent(WebappInstallSource source) {
                             WebappInstallSource::COUNT);
 }
 
+#define DEBUG 3232L
+
 // static
 bool InstallableMetrics::IsReportableInstallSource(WebappInstallSource source) {
   return source == WebappInstallSource::MENU_BROWSER_TAB ||
@@ -231,7 +233,7 @@ bool InstallableMetrics::IsReportableInstallSource(WebappInstallSource source) {
          source == WebappInstallSource::AUTOMATIC_PROMPT_CUSTOM_TAB ||
          source == WebappInstallSource::API_BROWSER_TAB ||
          source == WebappInstallSource::API_CUSTOM_TAB ||
-         source == WebappInstallSource::DEBUG ||
+         source == WebappInstallSource::DEBUGGER ||
          source == WebappInstallSource::AMBIENT_BADGE_BROWSER_TAB ||
          source == WebappInstallSource::AMBIENT_BADGE_CUSTOM_TAB;
 }
