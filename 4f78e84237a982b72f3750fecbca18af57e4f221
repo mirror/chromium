@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6736251a_c532f88f",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T00:34:11Z",
+      "side": 1,
+      "message": "Sorry, I had another look at this and think we should just say \"both for S13nServiceWorker and non-S13nServiceWorker\". That way we don\u0027t have to mention the command-line flag here. The rest of our code uses \"S13nServiceWorker\" as the common way to refer to this code path:\nhttps://cs.chromium.org/#search/\u0026q\u003ds13nserviceworker\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\n(much like how we had comments referring to \"PlzNavigate\" and code checking \"--enable-features\u003dBrowserSideNavigation\")",
+      "revId": "4f78e84237a982b72f3750fecbca18af57e4f221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2384be2d_7bd9cdc4",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T00:34:11Z",
+      "side": 1,
+      "message": "// Non-S13nServiceWorker.",
+      "revId": "4f78e84237a982b72f3750fecbca18af57e4f221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055b7d48_5568a1c6",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T00:34:11Z",
+      "side": 1,
+      "message": "// S13nServiceWorker.",
+      "revId": "4f78e84237a982b72f3750fecbca18af57e4f221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
