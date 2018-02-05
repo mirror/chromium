@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae9db4e2_0f8a0a41",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-05T19:37:59Z",
+      "side": 1,
+      "message": "Like in the impl, my intent is not to submit this CL until this TODO is resolved. I\u0027ll leave this comment unresolved until I replace the TODO.",
+      "parentUuid": "d4934054_cb83a3d7",
+      "range": {
+        "startLine": 1124,
+        "startChar": 37,
+        "endLine": 1124,
+        "endChar": 49
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2eb2f9_a41ae2bc",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d9402e_d31eeff5",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-05T19:37:59Z",
+      "side": 1,
+      "message": "Definitely. The long-term plan, once this feature flag is on by default, is to have mailto links fall back on the normal URL handling code, right?",
+      "parentUuid": "dd2eb2f9_a41ae2bc",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 62
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e6529c1f_589f1a7e",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-05T19:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9f3edfc_8dc7c106",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 61
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39bf5ae3_0a536097",
         "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1366fd57_8b79985f",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-05T19:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39bf5ae3_0a536097",
+      "range": {
+        "startLine": 130,
+        "startChar": 41,
+        "endLine": 130,
+        "endChar": 67
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df9bc14_08b77a2a",
         "filename": "ios/public/provider/chrome/browser/mailto/BUILD.gn",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56605679_bb5300d4",
+        "filename": "ios/public/provider/chrome/browser/mailto/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-05T19:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8df9bc14_08b77a2a",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
