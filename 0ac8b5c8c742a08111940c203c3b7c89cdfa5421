@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a97319c3_2d5965f2",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-02-05T23:13:00Z",
+      "side": 1,
+      "message": "this is client code? It belongs in the viz client code? Per discussion offline, I am sad. Please make sure that there is a bug and TODO to remove the duplicate code.",
+      "revId": "0ac8b5c8c742a08111940c203c3b7c89cdfa5421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e587816_f97cfc64",
         "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
         "patchSetId": 5
