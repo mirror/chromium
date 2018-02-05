@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "6dbcb72b_3b8e82f5",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-05T16:23:27Z",
+      "side": 1,
+      "message": "I saw that CheckCanStartElementOnCompositor has multiple call sites where CheckCanStartEffectOnCompositor has one call site only. So it may require some more effect to merge these two functions.",
+      "parentUuid": "bf5969de_8c0212e2",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 298,
+        "endChar": 56
+      },
+      "revId": "cf26fe1c64c3d6bbff63b7b6bc856e3fc35eb0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d024d9a2_a0cde676",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 8
