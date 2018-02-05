@@ -141,6 +141,24 @@
       "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d33b5f_28044366",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-05T18:21:41Z",
+      "side": 1,
+      "message": "It\u0027s more to prevent RPs from unexpectedly breaking should we add new keys to CollectedClientData in future iterations of the spec (like how this would have conveniently broken my original test).\n\nBut I agree, might as well make the additional key as informative for the developer as possible.",
+      "parentUuid": "ce4603d5_5af9aa1c",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
