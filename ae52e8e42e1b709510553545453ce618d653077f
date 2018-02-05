@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "3f69da5b_fbbed586",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-05T10:54:49Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "7598afbc_15fbdb4c",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "000975da_ff0fef49",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -376,6 +400,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44368cce_e9ea18dd",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-05T10:54:49Z",
+      "side": 1,
+      "message": "Ok, np, I\u0027ve changed to const FormFieldData*. I think all such considerations are very subjective, depending on style of thinking and working with code. I still think that in these cases auto makes things more readable and hides not neccasary information from a reader. About knowledge of code, I\u0027d prefer auto in similar cases in any code, because verbosity is usually pretty bad for understanding any code.",
+      "parentUuid": "4a185a56_0f60c46b",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -967,6 +1015,30 @@
     },
     {
       "key": {
+        "uuid": "fd0464d3_b3a41aae",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-05T10:54:49Z",
+      "side": 1,
+      "message": "Ok, done",
+      "parentUuid": "534147d3_fa38fa1f",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 6
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a3e6fad_89a1b8cb",
         "filename": "ios/chrome/browser/passwords/form_parser.cc",
         "patchSetId": 10
@@ -1035,6 +1107,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4482852_103738bf",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-05T10:54:49Z",
+      "side": 1,
+      "message": "Ok, removed this sentence.",
+      "parentUuid": "6eaa9cbe_c1dccae1",
+      "range": {
+        "startLine": 161,
+        "startChar": 55,
+        "endLine": 162,
+        "endChar": 79
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1506,6 +1602,30 @@
       "revId": "ae52e8e42e1b709510553545453ce618d653077f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d014ce42_ffcf7a42",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-02-05T10:54:49Z",
+      "side": 1,
+      "message": "Ok, let\u0027s remove namespace (in general my feeling that most decisions about namespaces are pretty random, it\u0027s just good to stick to one style)",
+      "parentUuid": "fe989ec6_45c5013e",
+      "range": {
+        "startLine": 300,
+        "startChar": 10,
+        "endLine": 300,
+        "endChar": 19
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
