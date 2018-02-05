@@ -22,17 +22,17 @@ class NGPaintFragmentTest : public RenderingTest,
         ScopedLayoutNGPaintFragmentsForTest(true) {}
 
  protected:
-  const NGPaintFragment& RootPaintFragmentByElementId(const char* id) {
-    const LayoutNGBlockFlow& block_flow =
-        ToLayoutNGBlockFlow(*GetLayoutObjectByElementId(id));
-    const NGPaintFragment& root = *block_flow.PaintFragment();
-    return root;
+  const NGPaintFragment* GetPaintFragmentByElementId(const char* id) {
+    const LayoutNGBlockFlow* block_flow =
+        ToLayoutNGBlockFlow(GetLayoutObjectByElementId(id));
+    return block_flow ? block_flow->PaintFragment() : nullptr;
   }
 
   const NGPaintFragment& FirstLineBoxByElementId(const char* id) {
-    const NGPaintFragment& root = RootPaintFragmentByElementId(id);
-    EXPECT_GE(1u, root.Children().size());
-    const NGPaintFragment& line_box = *root.Children()[0];
+    const NGPaintFragment* root = GetPaintFragmentByElementId(id);
+    EXPECT_TRUE(root);
+    EXPECT_GE(1u, root->Children().size());
+    const NGPaintFragment& line_box = *root->Children()[0];
     EXPECT_EQ(NGPhysicalFragment::kFragmentLineBox,
               line_box.PhysicalFragment().Type());
     return line_box;
@@ -155,6 +155,53 @@ TEST_F(NGPaintFragmentTest, InlineBoxWithDecorations) {
   // VisualRect of descendants of inline boxes are relative to its inline
   // formatting context, not to its parent inline box.
   EXPECT_EQ(LayoutRect(100, 0, 30, 10), text.VisualRect());
+}
+
+TEST_F(NGPaintFragmentTest, InlineBlock) {
+  LoadAhem();
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <style>
+    html, body { margin: 0; }
+    div { font: 10px Ahem; width: 10ch; }
+    #box { display: inline-block; }
+    </style>
+    <body>
+      <div id="container">12345 <span id="box">X<span></div>
+    </body>
+  )HTML");
+  const NGPaintFragment* container = GetPaintFragmentByElementId("container");
+  EXPECT_TRUE(container);
+  EXPECT_EQ(1u, container->Children().size());
+  const NGPaintFragment& line1 = *container->Children()[0];
+  EXPECT_EQ(2u, line1.Children().size());
+
+  const NGPaintFragment& outer_text = *line1.Children()[0];
+  EXPECT_EQ(NGPhysicalFragment::kFragmentText,
+            outer_text.PhysicalFragment().Type());
+  EXPECT_EQ(LayoutRect(0, 0, 50, 10), outer_text.VisualRect());
+
+  const NGPaintFragment& inline_box1 = *line1.Children()[1];
+  EXPECT_EQ(NGPhysicalFragment::kFragmentBox,
+            inline_box1.PhysicalFragment().Type());
+  EXPECT_EQ(NGPhysicalFragment::kAtomicInline,
+            inline_box1.PhysicalFragment().BoxType());
+#ifdef DISABLED
+  // TODO(kojii): This is still wrong.
+  EXPECT_EQ(LayoutRect(60, 0, 10, 10), inline_box1.VisualRect());
+#endif
+
+  auto fragments =
+      NGPaintFragment::InlineFragmentsFor(GetLayoutObjectByElementId("box"));
+  EXPECT_FALSE(fragments.IsEmpty());
+  EXPECT_EQ(&inline_box1, *fragments.begin());
+
+  const NGPaintFragment* inline_block_container =
+      GetPaintFragmentByElementId("box");
+  EXPECT_TRUE(inline_block_container);
+
+  EXPECT_EQ(inline_block_container->GetLayoutObject(),
+            inline_box1.GetLayoutObject());
 }
 
 TEST_F(NGPaintFragmentTest, RelativeBlock) {
