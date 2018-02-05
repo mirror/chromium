@@ -596,6 +596,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // TaskQueueThrottler.
   void VirtualTimeResumed();
 
+  // Indicates that scheduler has been shutdown.
+  bool was_shutdown_;
+
   // This controller should be initialized before any TraceableVariables
   // because they require one to initialize themselves.
   TraceableVariableController tracing_controller_;
@@ -678,7 +681,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
         stopping_when_backgrounded_enabled;
     TraceableState<bool, kTracingCategoryNameInfo>
         stopped_when_backgrounded;
-    TraceableState<bool, kTracingCategoryNameInfo> was_shutdown;
     TraceableCounter<base::TimeDelta, kTracingCategoryNameInfo>
         loading_task_estimated_cost;
     TraceableCounter<base::TimeDelta, kTracingCategoryNameInfo>
