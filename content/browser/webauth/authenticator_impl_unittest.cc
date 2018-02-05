@@ -404,8 +404,8 @@ TEST_F(AuthenticatorImplTest, TestMakeCredentialTimeout) {
   // Set up a timer for testing.
   auto task_runner = base::MakeRefCounted<base::TestMockTimeTaskRunner>(
       base::Time::Now(), base::TimeTicks::Now());
-  auto tick_clock = task_runner->GetMockTickClock();
-  auto timer = std::make_unique<base::OneShotTimer>(tick_clock.get());
+  base::TickClock* tick_clock = task_runner->GetMockTickClock();
+  auto timer = std::make_unique<base::OneShotTimer>(tick_clock);
   timer->SetTaskRunner(task_runner);
   AuthenticatorPtr authenticator =
       ConnectToAuthenticator(connector.get(), std::move(timer));
@@ -460,8 +460,8 @@ TEST_F(AuthenticatorImplTest, TestGetAssertionTimeout) {
   // Set up a timer for testing.
   auto task_runner = base::MakeRefCounted<base::TestMockTimeTaskRunner>(
       base::Time::Now(), base::TimeTicks::Now());
-  auto tick_clock = task_runner->GetMockTickClock();
-  auto timer = std::make_unique<base::OneShotTimer>(tick_clock.get());
+  base::TickClock* tick_clock = task_runner->GetMockTickClock();
+  auto timer = std::make_unique<base::OneShotTimer>(tick_clock);
   timer->SetTaskRunner(task_runner);
   AuthenticatorPtr authenticator =
       ConnectToAuthenticator(connector.get(), std::move(timer));

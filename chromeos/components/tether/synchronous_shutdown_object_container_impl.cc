@@ -132,10 +132,10 @@ SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
           asychronous_container->ble_connection_manager(),
           master_host_scan_cache_.get(),
           device_id_tether_network_guid_map_.get())),
-      clock_(std::make_unique<base::DefaultClock>()),
+      clock_(base::DefaultClock::GetInstance()),
       hotspot_usage_duration_tracker_(
           std::make_unique<HotspotUsageDurationTracker>(active_host_.get(),
-                                                        clock_.get())),
+                                                        clock_)),
       host_scanner_(std::make_unique<HostScanner>(
           network_state_handler_,
           asychronous_container->tether_host_fetcher(),
@@ -146,7 +146,7 @@ SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
           notification_presenter,
           device_id_tether_network_guid_map_.get(),
           master_host_scan_cache_.get(),
-          clock_.get())),
+          clock_)),
       host_scan_scheduler_(
           std::make_unique<HostScanSchedulerImpl>(network_state_handler_,
                                                   host_scanner_.get())),
@@ -165,7 +165,7 @@ SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
           host_connection_metrics_logger_.get(),
           asychronous_container->disconnect_tethering_request_sender(),
           asychronous_container->wifi_hotspot_disconnector(),
-          clock_.get())),
+          clock_)),
       tether_disconnector_(std::make_unique<TetherDisconnectorImpl>(
           active_host_.get(),
           asychronous_container->wifi_hotspot_disconnector(),

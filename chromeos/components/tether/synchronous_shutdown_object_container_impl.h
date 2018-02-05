@@ -119,7 +119,7 @@ class SynchronousShutdownObjectContainerImpl
   std::unique_ptr<MasterHostScanCache> master_host_scan_cache_;
   std::unique_ptr<NotificationRemover> notification_remover_;
   std::unique_ptr<KeepAliveScheduler> keep_alive_scheduler_;
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
   std::unique_ptr<HotspotUsageDurationTracker> hotspot_usage_duration_tracker_;
   std::unique_ptr<HostScanner> host_scanner_;
   std::unique_ptr<HostScanScheduler> host_scan_scheduler_;

@@ -94,6 +94,8 @@ class TestExtensionPrefs {
   ChromeAppSorting* app_sorting();
 
  protected:
+  class IncrementalClock;
+
   base::ScopedTempDir temp_dir_;
   base::FilePath preferences_file_;
   base::FilePath extensions_dir_;
@@ -101,6 +103,7 @@ class TestExtensionPrefs {
   std::unique_ptr<sync_preferences::PrefServiceSyncable> pref_service_;
   std::unique_ptr<ExtensionPrefValueMap> extension_pref_value_map_;
   const scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  std::unique_ptr<IncrementalClock> clock_;
 
  private:
   TestingProfile profile_;
