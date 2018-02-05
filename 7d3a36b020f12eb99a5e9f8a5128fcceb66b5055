@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db2c4e00_273d2b83",
+        "filename": "chrome/browser/devtools/device/adb/mock_adb_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-05T18:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a7b567_ab918b8e",
+      "revId": "7d3a36b020f12eb99a5e9f8a5128fcceb66b5055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03ee163f_d7e35f7d",
         "filename": "remoting/host/security_key/security_key_socket.cc",
         "patchSetId": 2
