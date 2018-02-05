@@ -139,11 +139,6 @@ class Histogram::Factory {
         new Histogram(GetPermanentName(name_), minimum_, maximum_, ranges));
   }
 
-  // Perform any required datafill on the just-created histogram.  If
-  // overridden, be sure to call the "super" version -- this method may not
-  // always remain empty.
-  virtual void FillHistogram(HistogramBase* histogram) {}
-
   // These values are protected (instead of private) because they need to
   // be accessible to methods of sub-classes in order to avoid passing
   // unnecessary parameters everywhere.
@@ -207,8 +202,6 @@ HistogramBase* Histogram::Factory::Build() {
       tentative_histogram = HeapAlloc(registered_ranges);
       tentative_histogram->SetFlags(flags_);
     }
-
-    FillHistogram(tentative_histogram.get());
 
     // Register this histogram with the StatisticsRecorder. Keep a copy of
     // the pointer value to tell later whether the locally created histogram
@@ -526,16 +519,6 @@ bool Histogram::AddSamplesFromPickle(PickleIterator* iter) {
   return unlogged_samples_->AddFromPickle(iter);
 }
 
-// The following methods provide a graphical histogram display.
-void Histogram::WriteHTMLGraph(std::string* output) const {
-  // TBD(jar) Write a nice HTML bar chart, with divs an mouse-overs etc.
-  WriteAsciiImpl(true, output);
-}
-
-void Histogram::WriteAscii(std::string* output) const {
-  WriteAsciiImpl(false, output);
-}
-
 bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
                                           int identifier) const {
   enum Fields : int {
@@ -632,10 +615,6 @@ double Histogram::GetBucketSize(Count current, uint32_t i) const {
   return current/denominator;
 }
 
-std::string Histogram::GetAsciiBucketRange(uint32_t i) const {
-  return GetSimpleAsciiBucketRange(ranges(i));
-}
-
 //------------------------------------------------------------------------------
 // Private methods
 
@@ -685,68 +664,6 @@ std::unique_ptr<SampleVector> Histogram::SnapshotUnloggedSamples() const {
   return samples;
 }
 
-void Histogram::WriteAsciiImpl(const bool is_html,
-                               std::string* const output) const {
-  // Get local (stack) copies of all effectively volatile class data so that we
-  // are consistent across our output activities.
-  std::unique_ptr<SampleVector> snapshot = SnapshotAllSamples();
-  Count sample_count = snapshot->TotalCount();
-
-  StringAppendF(output, is_html ? "<h2>%s</h2><pre>" : "%s\n\n",
-                histogram_name());
-
-  // If there are no samples, display the mean as 0.0 instead of NaN.
-  const double mean = sample_count != 0
-                          ? static_cast<double>(snapshot->sum()) / sample_count
-                          : 0.0;
-  StringAppendF(output, "Samples: %d, Mean: %.1f, Flags: 0x%x\n\n",
-                sample_count, mean, flags());
-
-  if (sample_count != 0) {
-    *output += "+------------+------------+--------+------------+--------+\n";
-    *output += "|     Bucket |    Samples |      % |  Cumulated |      % |\n";
-    *output += "+------------+------------+--------+------------+--------+\n";
-
-    // Prepare to normalize graphical rendering of bucket contents.
-    const double bar_scaling = 50.0 / GetPeakBucketSize(*snapshot);
-    const double percent_scaling = 100.0 / sample_count;
-
-    Count previous = 0;
-    Count cumulated = 0;
-    // Output the actual histogram graph.
-    for (uint32_t i = 0; i < bucket_count(); ++i) {
-      const Count current = snapshot->GetCountAtIndex(i);
-      cumulated += current;
-      if (current != 0 || previous != 0) {
-        StringAppendF(output, "| %10s | %10d | %5.1f%% | %10d | %5.1f%% | ",
-                      GetAsciiBucketRange(i).c_str(), current,
-                      current * percent_scaling, cumulated,
-                      cumulated * percent_scaling);
-
-        output->append(GetBucketSize(current, i) * bar_scaling, '*');
-        *output += '\n';
-      }
-      previous = current;
-    }
-
-    DCHECK_EQ(sample_count, cumulated);
-    *output += "+------------+------------+--------+------------+--------+\n";
-  }
-
-  if (is_html)
-    output->append("</pre>");
-}
-
-double Histogram::GetPeakBucketSize(const SampleVectorBase& samples) const {
-  double max = 0;
-  for (uint32_t i = 0; i < bucket_count(); ++i) {
-    double current_size = GetBucketSize(samples.GetCountAtIndex(i), i);
-    if (current_size > max)
-      max = current_size;
-  }
-  return max;
-}
-
 void Histogram::GetParameters(DictionaryValue* params) const {
   params->SetString("type", HistogramTypeToString(GetHistogramType()));
   params->SetInteger("min", declared_min());
@@ -786,12 +703,13 @@ class LinearHistogram::Factory : public Histogram::Factory {
           HistogramBase::Sample minimum,
           HistogramBase::Sample maximum,
           uint32_t bucket_count,
-          int32_t flags,
-          const DescriptionPair* descriptions)
-    : Histogram::Factory(name, LINEAR_HISTOGRAM, minimum, maximum,
-                         bucket_count, flags) {
-    descriptions_ = descriptions;
-  }
+          int32_t flags)
+      : Histogram::Factory(name,
+                           LINEAR_HISTOGRAM,
+                           minimum,
+                           maximum,
+                           bucket_count,
+                           flags) {}
 
  protected:
   BucketRanges* CreateRanges() override {
@@ -806,21 +724,7 @@ class LinearHistogram::Factory : public Histogram::Factory {
                                           maximum_, ranges));
   }
 
-  void FillHistogram(HistogramBase* base_histogram) override {
-    Histogram::Factory::FillHistogram(base_histogram);
-    LinearHistogram* histogram = static_cast<LinearHistogram*>(base_histogram);
-    // Set range descriptions.
-    if (descriptions_) {
-      for (int i = 0; descriptions_[i].description; ++i) {
-        histogram->bucket_description_[descriptions_[i].sample] =
-            descriptions_[i].description;
-      }
-    }
-  }
-
  private:
-  const DescriptionPair* descriptions_;
-
   DISALLOW_COPY_AND_ASSIGN(Factory);
 };
 
@@ -831,8 +735,11 @@ HistogramBase* LinearHistogram::FactoryGet(const std::string& name,
                                            Sample maximum,
                                            uint32_t bucket_count,
                                            int32_t flags) {
-  return FactoryGetWithRangeDescription(name, minimum, maximum, bucket_count,
-                                        flags, NULL);
+  bool valid_arguments = Histogram::InspectConstructionArguments(
+      name, &minimum, &maximum, &bucket_count);
+  DCHECK(valid_arguments);
+
+  return Factory(name, minimum, maximum, bucket_count, flags).Build();
 }
 
 HistogramBase* LinearHistogram::FactoryTimeGet(const std::string& name,
@@ -875,21 +782,6 @@ std::unique_ptr<HistogramBase> LinearHistogram::PersistentCreate(
                                         logged_counts, meta, logged_meta));
 }
 
-HistogramBase* LinearHistogram::FactoryGetWithRangeDescription(
-    const std::string& name,
-    Sample minimum,
-    Sample maximum,
-    uint32_t bucket_count,
-    int32_t flags,
-    const DescriptionPair descriptions[]) {
-  bool valid_arguments = Histogram::InspectConstructionArguments(
-      name, &minimum, &maximum, &bucket_count);
-  DCHECK(valid_arguments);
-
-  return Factory(name, minimum, maximum, bucket_count, flags, descriptions)
-      .Build();
-}
-
 HistogramType LinearHistogram::GetHistogramType() const {
   return LINEAR_HISTOGRAM;
 }
@@ -924,14 +816,6 @@ double LinearHistogram::GetBucketSize(Count current, uint32_t i) const {
   // samples in a histogram if we didn't normalize this way.
   const double denominator = ranges(i + 1) - ranges(i);
   return current / denominator;
-}
-
-std::string LinearHistogram::GetAsciiBucketRange(uint32_t i) const {
-  const int range = ranges(i);
-  BucketDescriptionMap::const_iterator it = bucket_description_.find(range);
-  if (it == bucket_description_.end())
-    return Histogram::GetAsciiBucketRange(i);
-  return it->second;
 }
 
 // static
