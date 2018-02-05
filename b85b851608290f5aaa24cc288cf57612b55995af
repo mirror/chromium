@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4f22179e_c96cf177",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-05T23:26:31Z",
+      "side": 1,
+      "message": "We usually don\u0027t throttle requests from the browser process, for example URLFetcher doesn\u0027t go through them. Hm, I think we\u0027ll need to ask about this. (My thinking was putting the integration part out of this patch so that we can have separate reviews on the part, but we can start that now too)",
+      "parentUuid": "e1fbb68f_7ff8a900",
+      "revId": "b85b851608290f5aaa24cc288cf57612b55995af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5a124c0_e83fdba8",
         "filename": "content/public/common/resource_type.h",
         "patchSetId": 2
