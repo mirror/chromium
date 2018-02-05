@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "264de36d_6e9dc86a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:54:06Z",
+      "side": 1,
+      "message": "I don\u0027t know the full path of how the ResourceResponse ends up here, but was_fetched_via_service_worker gets set by the browser whenever it uses a response provided by a service worker.",
+      "parentUuid": "e71e99e9_08bce866",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1eddca9_b541d324",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 12
@@ -121,6 +139,24 @@
       "writtenOn": "2018-02-03T00:01:12Z",
       "side": 1,
       "message": "falken@: I seem to remember there was talk of changes to ServiceWorker so that the responses it generates wouldn\u0027t need to go through the network stack but could be delivered directly.  Would that eliminate the need for this check in the future?  If so, can we put a TODO with a bug number?  (Sorry if I\u0027m misunderstanding how this works.)",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1b16db_ebf7da14",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-05T06:54:06Z",
+      "side": 1,
+      "message": "Ah yes that\u0027s a good point. Our new architecture is S13nServiceWorker. In this architecture, the request goes directly from page to service worker, and response from service worker to page. So the browser process would not know about the request/response at all.\n\nI don\u0027t know whether you want XSDB to be aware of the request/response in that architecture.\n\nThe bug is 715640",
+      "parentUuid": "e1eddca9_b541d324",
       "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
