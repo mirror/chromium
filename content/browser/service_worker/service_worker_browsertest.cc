@@ -880,8 +880,10 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
       request->url = url;
       request->method = "GET";
       request->resource_type = resource_type;
+      auto fetch_request = mojom::FetchRequestInfo::New();
+      fetch_request->url_request = *request;
       fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-          std::move(request), version_, net::NetLogWithSource(),
+          std::move(fetch_request), version_, net::NetLogWithSource(),
           std::move(prepare_callback), std::move(fetch_callback));
     } else {
       auto legacy_request = std::make_unique<ServiceWorkerFetchRequest>(

@@ -202,9 +202,10 @@ blink::WebServiceWorkerClientInfo ToWebServiceWorkerClientInfo(
   return web_client_info;
 }
 
-void ToWebServiceWorkerRequest(const network::ResourceRequest& request,
+void ToWebServiceWorkerRequest(const mojom::FetchRequestInfoPtr& fetch_request,
                                blink::WebServiceWorkerRequest* web_request) {
   DCHECK(web_request);
+  auto& request = fetch_request->url_request;
   web_request->SetURL(blink::WebURL(request.url));
   web_request->SetMethod(blink::WebString::FromUTF8(request.method));
   if (!request.headers.IsEmpty()) {
@@ -232,7 +233,8 @@ void ToWebServiceWorkerRequest(const network::ResourceRequest& request,
   web_request->SetRequestContext(GetBlinkRequestContext(
       static_cast<RequestContextType>(request.fetch_request_context_type)));
   web_request->SetFrameType(request.fetch_frame_type);
-  // TODO(falken): Set client id. The browser needs to pass it to us.
+  web_request->SetClientId(
+      blink::WebString::FromUTF8(fetch_request->client_id));
   web_request->SetIsReload(ui::PageTransitionCoreTypeIs(
       static_cast<ui::PageTransition>(request.transition_type),
       ui::PAGE_TRANSITION_RELOAD));
@@ -1369,18 +1371,18 @@ void ServiceWorkerContextClient::Claim(
 }
 
 void ServiceWorkerContextClient::DispatchOrQueueFetchEvent(
-    const network::ResourceRequest& request,
+    mojom::FetchRequestInfoPtr request,
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
   if (RequestedTermination()) {
-    context_->timeout_timer->PushPendingTask(
-        base::BindOnce(&ServiceWorkerContextClient::DispatchFetchEvent,
-                       GetWeakPtr(), request, std::move(preload_handle),
-                       std::move(response_callback), std::move(callback)));
+    context_->timeout_timer->PushPendingTask(base::BindOnce(
+        &ServiceWorkerContextClient::DispatchFetchEvent, GetWeakPtr(),
+        std::move(request), std::move(preload_handle),
+        std::move(response_callback), std::move(callback)));
     return;
   }
-  DispatchFetchEvent(request, std::move(preload_handle),
+  DispatchFetchEvent(std::move(request), std::move(preload_handle),
                      std::move(response_callback), std::move(callback));
 }
 
@@ -1641,7 +1643,7 @@ void ServiceWorkerContextClient::DispatchLegacyFetchEvent(
 
 // S13nServiceWorker
 void ServiceWorkerContextClient::DispatchFetchEvent(
-    const network::ResourceRequest& request,
+    mojom::FetchRequestInfoPtr request,
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
@@ -1660,7 +1662,8 @@ void ServiceWorkerContextClient::DispatchFetchEvent(
   // Set up for navigation preload (FetchEvent#preloadResponse) if needed.
   const bool navigation_preload_sent = !!preload_handle;
   if (navigation_preload_sent) {
-    SetupNavigationPreload(event_id, request.url, std::move(preload_handle));
+    SetupNavigationPreload(event_id, request->url_request.url,
+                           std::move(preload_handle));
   }
 
   // Dispatch the event to the service worker execution context.

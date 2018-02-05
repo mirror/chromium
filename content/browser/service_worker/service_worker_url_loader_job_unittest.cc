@@ -542,6 +542,7 @@ class ServiceWorkerURLLoaderJobTest
     SingleRequestURLLoaderFactory::RequestHandler handler;
     job_ = std::make_unique<ServiceWorkerURLLoaderJob>(
         base::BindOnce(&ReceiveRequestHandler, &handler), this, *request,
+        "" /* client_id */,
         base::WrapRefCounted<URLLoaderFactoryGetter>(
             helper_->context()->loader_factory_getter()));
     job_->ForwardToServiceWorker();
@@ -918,6 +919,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, FallbackToNetwork) {
   SingleRequestURLLoaderFactory::RequestHandler handler;
   auto job = std::make_unique<ServiceWorkerURLLoaderJob>(
       base::BindOnce(&ReceiveRequestHandler, &handler), this, request,
+      "" /* client_id */,
       base::WrapRefCounted<URLLoaderFactoryGetter>(
           helper_->context()->loader_factory_getter()));
   // Ask the job to fallback to network. In production code,

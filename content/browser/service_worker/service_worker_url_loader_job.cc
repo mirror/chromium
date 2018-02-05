@@ -74,10 +74,12 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
     URLLoaderRequestHandler::LoaderCallback callback,
     Delegate* delegate,
     const network::ResourceRequest& resource_request,
+    const std::string& client_id,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
     : loader_callback_(std::move(callback)),
       delegate_(delegate),
       resource_request_(resource_request),
+      client_id_(client_id),
       url_loader_factory_getter_(std::move(url_loader_factory_getter)),
       binding_(this),
       weak_factory_(this) {
@@ -158,24 +160,24 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
     return;
   }
 
-  // ServiceWorkerFetchDispatcher requires a std::unique_ptr<ResourceRequest>
-  // so make one here.
+  auto fetch_request = mojom::FetchRequestInfo::New();
   // TODO(crbug.com/803125): Try to eliminate unnecessary copying?
-  auto request = std::make_unique<network::ResourceRequest>(resource_request_);
-
+  fetch_request->url_request = resource_request_;
   // Passing the request body over Mojo moves out the DataPipeGetter elements,
   // which would mean we should clone the body like
   // ServiceWorkerSubresourceLoader does. But we don't expect DataPipeGetters
   // here yet: they are only created by the renderer when converting from a
   // Blob, which doesn't happen for navigations. In interest of speed, just
   // don't clone until proven necessary.
-  DCHECK(BodyHasNoDataPipeGetters(request->request_body.get()))
+  DCHECK(
+      BodyHasNoDataPipeGetters(fetch_request->url_request.request_body.get()))
       << "We assumed there would be no data pipe getter elements here, but "
          "there are. Add code here to clone the body before proceeding.";
+  fetch_request->client_id = client_id_;
 
   // Dispatch the fetch event.
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-      std::move(request), active_worker,
+      std::move(fetch_request), active_worker,
       net::NetLogWithSource() /* TODO(scottmg): net log? */,
       base::BindOnce(&ServiceWorkerURLLoaderJob::DidPrepareFetchEvent,
                      weak_factory_.GetWeakPtr(),

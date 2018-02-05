@@ -25,13 +25,13 @@ void ControllerServiceWorkerImpl::Clone(
 }
 
 void ControllerServiceWorkerImpl::DispatchFetchEvent(
-    const network::ResourceRequest& request,
+    mojom::FetchRequestInfoPtr request,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
   DCHECK(context_client_);
   context_client_->DispatchOrQueueFetchEvent(
-      request, nullptr /* preload_handle */, std::move(response_callback),
-      std::move(callback));
+      std::move(request), nullptr /* preload_handle */,
+      std::move(response_callback), std::move(callback));
 }
 
 }  // namespace content

@@ -53,6 +53,12 @@ struct ExtendableMessageEvent {
   blink.mojom.ServiceWorkerObjectInfo? source_info_for_service_worker;
 };
 
+// TODO(bashi): Give this struct more appropriate name and put it elsewhere?
+struct FetchRequestInfo {
+  network.mojom.URLRequest url_request;
+  string client_id;
+};
+
 // The number of seconds for which a 'push' event should be allowed to run.
 // This is not in the spec but for Chromium specific internal timeouts. Each
 // event dispatched to service workers has 5 minutes timeout in the Chrome
@@ -112,7 +118,7 @@ interface ServiceWorkerEventDispatcher {
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
   // S13nServiceWorker
-  DispatchFetchEvent(network.mojom.URLRequest request,
+  DispatchFetchEvent(FetchRequestInfo request,
                      FetchEventPreloadHandle? preload_handle,
                      ServiceWorkerFetchResponseCallback response_callback)
       => (blink.mojom.ServiceWorkerEventStatus status,
