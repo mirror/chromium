@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6cc63f8_8d17b299",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-02-05T19:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d5dbda_149b6236",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5532fc2_1445b7ca",
         "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5378f4b_a33bcdda",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-02-05T19:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5532fc2_1445b7ca",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 25
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ebfb064d_77587ef4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-02-05T19:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047c451e_84f77a02",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 32
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d6eaed_8eb15cfc",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d5684a_6c3e0f30",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-02-05T19:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d6eaed_8eb15cfc",
+      "range": {
+        "startLine": 266,
+        "startChar": 6,
+        "endLine": 266,
+        "endChar": 69
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6dab574e_e749968a",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-02-05T19:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cb2bc05_fdc53c56",
+      "range": {
+        "startLine": 276,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883a4b2d_3e3c82d4",
         "filename": "chrome/browser/metrics/tab_stats_tracker_browsertest.cc",
         "patchSetId": 17
@@ -137,6 +257,30 @@
       "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c59801_1e843486",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-02-05T19:05:36Z",
+      "side": 1,
+      "message": "The style guide isn\u0027t clear about this, and the GTest FAQ seem to favor the *_TRUE(foo !\u003d nullptr) form (https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#why-does-google-test-support-expect_eqnull-ptr-and-assert_eqnull-ptr-but-not-expect_nenull-ptr-and-assert_nenull-ptr), I\u0027ve switched to this form.",
+      "parentUuid": "883a4b2d_3e3c82d4",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 52
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
