@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a58e0fd6_130b73b5",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T19:41:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why this statement is true. It seems like the underlying interception of cross-origin requests is something that would need to remain true, regardless of ServiceWorker servicification.\n\nIs the idea that, after servicification, we won\u0027t be able to distinguish the \u0027network\u0027 and \u0027no-network\u0027 cases?",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37be0450_e505f6f1",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T19:41:35Z",
+      "side": 1,
+      "message": "Would this test case be more interesting if the response body were blockable (e.g., it contained a parser breaker prefix)? It\u0027s not clear just from looking at this if it sniffs as a blockable document (maybe it has a nosniff header?)",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac6effb_57fd5c17",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T19:41:35Z",
+      "side": 1,
+      "message": "This is a good change; is it orthogonal to the rest of the CL (specifically, would we want to merge this back)?",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07367f23_196678f2",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-05T19:41:35Z",
+      "side": 1,
+      "message": "I\u0027m trying to reason about what this (kCORS) case means, since we know here that IsValidCorsHeaderSet is false. When we get a kCORS response from a serviceworker, what is the expected state of the access-control-allow-origin header -- and do the renderer-side CORS checks still apply?",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
