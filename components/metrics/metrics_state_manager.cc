@@ -259,7 +259,7 @@ MetricsStateManager::CreateDefaultEntropyProvider() {
     const std::string high_entropy_source =
         client_id_ + base::IntToString(low_entropy_source_value);
     return std::unique_ptr<const base::FieldTrial::EntropyProvider>(
-        new SHA1EntropyProvider(high_entropy_source));
+        new variations::SHA1EntropyProvider(high_entropy_source));
   }
 
   UpdateEntropySourceReturnedValue(ENTROPY_SOURCE_LOW);
@@ -272,12 +272,12 @@ MetricsStateManager::CreateLowEntropyProvider() {
 
 #if defined(OS_ANDROID) || defined(OS_IOS)
   return std::unique_ptr<const base::FieldTrial::EntropyProvider>(
-      new CachingPermutedEntropyProvider(local_state_, low_entropy_source_value,
-                                         kMaxLowEntropySize));
+      new variations::CachingPermutedEntropyProvider(
+          local_state_, low_entropy_source_value, kMaxLowEntropySize));
 #else
   return std::unique_ptr<const base::FieldTrial::EntropyProvider>(
-      new PermutedEntropyProvider(low_entropy_source_value,
-                                  kMaxLowEntropySize));
+      new variations::PermutedEntropyProvider(low_entropy_source_value,
+                                              kMaxLowEntropySize));
 #endif
 }
 
