@@ -68,8 +68,6 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
      */
     public void setUseModernDesign(boolean useModernDesign) {
         mUseModernDesign = useModernDesign;
-        setPrimaryColor(ColorUtils.getDefaultThemeColor(
-                ContextUtils.getApplicationContext().getResources(), useModernDesign, false));
     }
 
     @Override

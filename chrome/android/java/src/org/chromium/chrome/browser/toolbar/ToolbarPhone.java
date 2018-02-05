@@ -2456,6 +2456,7 @@ public class ToolbarPhone extends ToolbarLayout
         boolean visualStateChanged = mVisualState != newVisualState;
 
         int currentPrimaryColor = getToolbarDataProvider().getPrimaryColor();
+
         int themeColorForProgressBar = getProgressBarColor();
 
         // If The page is native force the use of the standard theme for the progress bar.

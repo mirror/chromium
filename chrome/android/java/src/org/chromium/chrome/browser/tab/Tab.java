@@ -1075,6 +1075,7 @@ public class Tab
         // Ensure there is no alpha component to the theme color as that is not supported in the
         // dependent UI.
         themeColor |= 0xFF000000;
+
         return themeColor;
     }
 
