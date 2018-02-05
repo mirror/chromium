@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4205ac3_f61b8029",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "Please add a test for invalidation just after sending the response.",
+      "range": {
+        "startLine": 381,
+        "startChar": 33,
+        "endLine": 381,
+        "endChar": 57
+      },
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6373f8_6e8779c4",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "Does impl2\u0027s error handler get called?",
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236e99c2_a96c7628",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary. Resetting |ptr| means its error handler will never be invoked.",
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b23ab0_d99f4d65",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "I think we want to check the value of |called| here too.",
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a1d3c2_d273fa0b",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "According to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d622438, this is intended to be removed so let\u0027s remove it.",
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a96a1e0_85911de5",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "I feel like we can skip these internals-exposing test-only methods until someone actually needs them:\n- EnableTestingMode()\n- RouterForTesting()\n- SwapImplForTesting()",
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e1744b_af48d1ab",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakStrongBinding.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-05T00:27:11Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 25
+      },
+      "revId": "c776fe407228e8cbc04a50d431df1607c9baf34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
