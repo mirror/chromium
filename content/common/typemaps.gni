@@ -6,6 +6,7 @@ typemaps = [
   "//content/common/background_fetch/background_fetch_types.typemap",
   "//content/common/frame.typemap",
   "//content/common/frame_messages.typemap",
+  "//content/common/input/synchronous_compositor.typemap",
   "//content/common/media/media_devices.typemap",
   "//content/common/media/media_stream.typemap",
   "//content/common/native_types.typemap",
