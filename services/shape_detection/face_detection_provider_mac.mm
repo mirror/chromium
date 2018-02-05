@@ -9,6 +9,7 @@
 
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/shape_detection/face_detection_impl_mac.h"
+#include "services/shape_detection/face_detection_impl_mac_vision.h"
 
 namespace shape_detection {
 
@@ -26,6 +27,14 @@ void FaceDetectionProviderMac::Create(
 void FaceDetectionProviderMac::CreateFaceDetection(
     mojom::FaceDetectionRequest request,
     mojom::FaceDetectorOptionsPtr options) {
+  if (@available(macOS 10.13, *)) {
+    if (!options->fast_mode) {
+      mojo::MakeStrongBinding(std::make_unique<FaceDetectionImplMacVision>(),
+                              std::move(request));
+      return;
+    }
+  }
+
   mojo::MakeStrongBinding(
       std::make_unique<FaceDetectionImplMac>(std::move(options)),
       std::move(request));
