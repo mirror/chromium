@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "6cf5dd3c_8b1fb89f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-05T19:24:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88c6dc68_6b9f0b75",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e71e99e9_08bce866",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 12
@@ -274,6 +292,24 @@
       "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5e941a_aca77872",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-05T19:24:24Z",
+      "side": 1,
+      "message": "\u003e \u003e Ah yes that\u0027s a good point. Our new architecture is S13nServiceWorker. In this architecture, the request goes directly from page to service worker, and response from service worker to page. So the browser process would not know about the request/response at all.\n\u003e \u003e \n\u003e \u003e I don\u0027t know whether you want XSDB to be aware of the request/response in that architecture.\n\u003e \n\u003e Possibly not (because intercepting service_worker-\u003eserved_page responses by XSDB is kind of redundant, since XSDB should have already stripper the response body earlier, when intercepting network-\u003eservice_worker request).\n\u003e \n\u003e I wonder if this means that the new tests are overtesting to some extent:\n\u003e \n\u003e - CrossSiteDocumentBlockingServiceWorkerTest.NetworkAndOpaqueResponse:\n\u003e   - The first fetch is a good test - we want to ensure that\n\u003e     network-\u003eservice_worker request gets blocked by XSDB.\n\u003e     I think this is a moderately valuable test that is desirable overall.\n\u003e   - The second fetch won\u0027t be intercepted by XSDB after the architecture\n\u003e     change.  Maybe the test shouldn\u0027t bother with the second fetch?\n\u003e \n\u003e - CrossSiteDocumentBlockingServiceWorkerTest.NoNetwork - overtesting?\n\u003e   - The test will be invalid after S13nServiceWorker architecture change.\n\u003e   - Additionally, the test is somewhat repeating the valudation done already\n\u003e     by wpt/service-workers/service-worker/fetch-request-xhr.https.html\n\u003e \n\u003e \u003e The bug is 715640\n\u003e \n\u003e For now, I\u0027ve added references to this bug in the tests.  Do you think I should go further and remove parts of the tests?\n\nI think your comments are probably sufficient, allowing the tests to be removed or changed when that work happens.  For now, I think it\u0027s good to have the regression tests in place.",
+      "parentUuid": "bfef6bd9_ac9878f4",
+      "revId": "d690ea97d61e1a5d765f422e3b025a49eb122283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
