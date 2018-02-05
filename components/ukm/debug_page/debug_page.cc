@@ -65,7 +65,8 @@ void DebugPage::StartDataRequest(
         // 'id' attribute set so tests can extract this element.
         base::StringPrintf("<p>IsEnabled:<span id='state'>%s</span></p>",
                            ukm_service->recording_enabled_ ? "True" : "False"));
-    data.append(base::StringPrintf("<p>ClientId:%" PRIu64 "</p>",
+    data.append(base::StringPrintf("<p>ClientId:<span id='clientid'>%" PRIu64
+                                   "</span></p>",
                                    ukm_service->client_id_));
     data.append(
         base::StringPrintf("<p>SessionId:%d</p>", ukm_service->session_id_));
