@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38300c0f_607de404",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-05T05:01:31Z",
+      "side": 1,
+      "message": "while ((!RuntimeEnabledFeatures::CSSMatchesEnabled() || !selector_boundaries[i]-\u003eHasPseudoMatches()) \u0026\u0026 (!RuntimeEnabledFeatures::CSSPseudoISEnabled() || !selector_boundaries[i]-\u003eHasPseudoIS()))\n  simple_selector \u003d simple_selector-\u003eTagHistory();\n\nAlternately, HasPseudoIS() / HasPseudoMatches() could check the runtime flags.\n\nAlternately, we don\u0027t need to check the flags at all as we would have rejected :matches / :is at parse time if they weren\u0027t enabled. (DCHECKs are fine, but we don\u0027t need complicated logic to cater for impossible situations.)\n\nAlso, could we have a single helper that replaces HasPseudoMatches() || HasPseudoIS() ?\nIt is faster to traverse once than twice.",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376f7644_7073b09d",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-05T05:01:31Z",
+      "side": 1,
+      "message": "while ((RuntimeEnabledFeatures::CSSMatchesEnabled() \u0026\u0026 transformed.HasPseudoMatches()) || (RuntimeEnabledFeatures::CSSPseudoISEnabled() \u0026\u0026 transformed.HasPseudoIS()))\n  transformed \u003d transformed.ExpandedFirstPseudoClass();\n\n(or see comment above)",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b359c08_f02eda14",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-05T05:01:31Z",
+      "side": 1,
+      "message": "NOTREACHED(); is sufficient",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87ac976_8b03fc81",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-05T05:01:31Z",
+      "side": 1,
+      "message": "Can we avoid code duplication by combining :matches / :is into a single case? Or call a helper that has lines 567..574?",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7525cf15_c72ea09d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-02-05T05:01:31Z",
+      "side": 1,
+      "message": "We could DCHECK.",
+      "revId": "7df32b63dba32f4bf8518e48b5f3c165e3d460e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
