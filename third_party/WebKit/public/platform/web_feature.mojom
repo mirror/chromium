@@ -1869,6 +1869,7 @@ enum WebFeature {
   kCSSPaintFunction = 2356,
   kWebkitCrossFade = 2357,
   kDisablePictureInPictureAttribute = 2358,
+  kV8AbortController_Constructor = 2359,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
