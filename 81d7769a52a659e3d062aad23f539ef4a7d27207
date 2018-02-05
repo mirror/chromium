@@ -34,6 +34,24 @@
       "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65f17b5_daa24f61",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-05T23:33:04Z",
+      "side": 1,
+      "message": "I don\u0027t understand the model then. What if some random code in Chrome calls SetClient()? Doesn\u0027t that break everything?",
+      "parentUuid": "9838c205_6aa95020",
+      "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
