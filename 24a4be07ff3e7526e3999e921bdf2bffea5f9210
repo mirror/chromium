@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b83ee7_250f7453",
+        "filename": "ash/system/status_area_widget_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T23:37:58Z",
+      "side": 1,
+      "message": "aside: Even better might be using WidgetDelegateView as a base class, I wonder if the |default_last_focusable_child_| code is really needed (I would have thought that the proclaimed intent of that code is the standard views forward/reverse tab-cycling of focus between widgets). That\u0027s okay to ignore or investigate separately.",
+      "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b68a13_b40128cf",
+        "filename": "ash/system/status_area_widget_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T23:37:58Z",
+      "side": 1,
+      "message": "It might be nice if ShelfWidget::DelegateView did the same thing. Also okay to ignore or handle separately.",
+      "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39218c82_24496043",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-05T23:37:58Z",
+      "side": 1,
+      "message": "Did you intend to leave this logging change?",
+      "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
