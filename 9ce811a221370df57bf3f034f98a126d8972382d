@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cbcc43ff_fdbed664",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-02-05T19:24:42Z",
+      "side": 1,
+      "message": "It sounds a bit like \"creates VEA no matter what\" :) \n\nCreates a MediaFoundationVEA for Windows 7 or above only. If |compatible_with_win7| is true, VEA is limited to a subset of features that is compatible with Windows 7.",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "9ce811a221370df57bf3f034f98a126d8972382d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10ce0890_e8b3677e",
         "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
         "patchSetId": 9
