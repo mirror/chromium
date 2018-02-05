@@ -8,7 +8,7 @@
 #include "content/browser/renderer_host/media/video_capture_factory_delegate.h"
 #include "content/browser/renderer_host/media/video_capture_provider.h"
 #include "content/public/common/media_stream_request.h"
-#include "services/video_capture/public/interfaces/device_factory.mojom.h"
+#include "services/video_capture/public/mojom/device_factory.mojom.h"
 
 namespace content {
 

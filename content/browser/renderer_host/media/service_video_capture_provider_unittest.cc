@@ -9,8 +9,8 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "services/video_capture/public/interfaces/device_factory.mojom.h"
-#include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
+#include "services/video_capture/public/mojom/device_factory.mojom.h"
+#include "services/video_capture/public/mojom/device_factory_provider.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
