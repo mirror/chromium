@@ -2,29 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef DocumentPictureInPicture_h
-#define DocumentPictureInPicture_h
+#ifndef ShadowRootPictureInPicture_h
+#define ShadowRootPictureInPicture_h
 
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class Document;
 class HTMLVideoElement;
-class ScriptPromise;
-class ScriptState;
 class TreeScope;
 
-class DocumentPictureInPicture {
-  STATIC_ONLY(DocumentPictureInPicture);
+class ShadowRootPictureInPicture {
+  STATIC_ONLY(ShadowRootPictureInPicture);
 
  public:
-  static bool pictureInPictureEnabled(Document&);
-
-  static ScriptPromise exitPictureInPicture(ScriptState*, Document&);
   static HTMLVideoElement* pictureInPictureElement(TreeScope&);
 };
 
 }  // namespace blink
 
-#endif  // DocumentPictureInPicture_h
+#endif  // ShadowRootPictureInPicture_h
