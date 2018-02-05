@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cca672f_94ccad7d",
+        "filename": "chrome/browser/media/media_engagement_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:40:36Z",
+      "side": 1,
+      "message": "Correct. the `significant_playback_recorded_` above will be set to true and there is a DCHECK that guarantees it\u0027s not true when entering the function.",
+      "parentUuid": "3411c701_baa255b4",
+      "revId": "5d98ef252791c2ef4827e75c8a3afec0e7afc5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1f35d27_4a03c4d8",
         "filename": "chrome/browser/media/media_engagement_session.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c97476e6_d72bebe6",
+        "filename": "chrome/browser/media/media_engagement_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1f35d27_4a03c4d8",
+      "range": {
+        "startLine": 67,
+        "startChar": 37,
+        "endLine": 67,
+        "endChar": 68
+      },
+      "revId": "5d98ef252791c2ef4827e75c8a3afec0e7afc5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d816a6a_8efa4791",
         "filename": "chrome/browser/media/media_engagement_session.h",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2018-02-05T17:27:16Z",
       "side": 1,
       "message": "Does this need to be set here (since it\u0027s required on the ctor)",
+      "range": {
+        "startLine": 108,
+        "startChar": 32,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "5d98ef252791c2ef4827e75c8a3afec0e7afc5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6e7722_24fc9c1d",
+        "filename": "chrome/browser/media/media_engagement_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-05T18:40:36Z",
+      "side": 1,
+      "message": "Probably doesn\u0027t matter indeed but adding the default value doesn\u0027t cost anything and if we add a ctor later, it will avoid potential issues :)",
+      "parentUuid": "1d816a6a_8efa4791",
       "range": {
         "startLine": 108,
         "startChar": 32,
