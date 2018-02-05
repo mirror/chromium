@@ -8,10 +8,11 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/debug/stack_trace.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/test/test_simple_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/test/test_mock_time_task_runner.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -57,53 +58,105 @@ class MockObject {
   MockObject() = default;
 
   MOCK_METHOD1(Task, void(scoped_refptr<ObjectToDelete>));
-  MOCK_METHOD0(Reply, void());
+  MOCK_METHOD1(Reply, void(scoped_refptr<ObjectToDelete>));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockObject);
 };
 
+// A TestMockTimeTaskRunner bound to the current thread that always returns
+// false from RunsTasksOnCurrentSequence().
+class PretendTasksDontRunOnCurrentSequenceTaskRunner
+    : public TestMockTimeTaskRunner {
+ public:
+  PretendTasksDontRunOnCurrentSequenceTaskRunner()
+      : TestMockTimeTaskRunner(Type::kBoundToThread) {}
+
+  // TaskRunner:
+  bool RunsTasksInCurrentSequence() const override { return false; }
+
+ private:
+  ~PretendTasksDontRunOnCurrentSequenceTaskRunner() override = default;
+
+  DISALLOW_COPY_AND_ASSIGN(PretendTasksDontRunOnCurrentSequenceTaskRunner);
+};
+
 }  // namespace
 
 TEST(PostTaskAndReplyImplTest, PostTaskAndReply) {
-  scoped_refptr<TestSimpleTaskRunner> post_runner(new TestSimpleTaskRunner);
-  scoped_refptr<TestSimpleTaskRunner> reply_runner(new TestSimpleTaskRunner);
-  ThreadTaskRunnerHandle task_runner_handle(reply_runner);
+  auto post_runner = MakeRefCounted<TestMockTimeTaskRunner>();
+  auto reply_runner = MakeRefCounted<TestMockTimeTaskRunner>(
+      TestMockTimeTaskRunner::Type::kBoundToThread);
 
   testing::StrictMock<MockObject> mock_object;
-  bool delete_flag = false;
+  bool task_deleted = false;
+  bool reply_deleted = false;
 
-  EXPECT_TRUE(PostTaskAndReplyTaskRunner(post_runner.get())
-                  .PostTaskAndReply(
-                      FROM_HERE,
-                      BindOnce(&MockObject::Task, Unretained(&mock_object),
-                               MakeRefCounted<ObjectToDelete>(&delete_flag)),
-                      BindOnce(&MockObject::Reply, Unretained(&mock_object))));
+  EXPECT_TRUE(
+      PostTaskAndReplyTaskRunner(post_runner.get())
+          .PostTaskAndReply(
+              FROM_HERE,
+              BindOnce(&MockObject::Task, Unretained(&mock_object),
+                       MakeRefCounted<ObjectToDelete>(&task_deleted)),
+              BindOnce(&MockObject::Reply, Unretained(&mock_object),
+                       MakeRefCounted<ObjectToDelete>(&reply_deleted))));
 
   // Expect the task to be posted to |post_runner|.
   EXPECT_TRUE(post_runner->HasPendingTask());
   EXPECT_FALSE(reply_runner->HasPendingTask());
-  EXPECT_FALSE(delete_flag);
+  EXPECT_FALSE(task_deleted);
 
   EXPECT_CALL(mock_object, Task(_));
   post_runner->RunUntilIdle();
   testing::Mock::VerifyAndClear(&mock_object);
 
   // |task| should have been deleted right after being run.
-  EXPECT_TRUE(delete_flag);
+  EXPECT_TRUE(task_deleted);
 
   // Expect the reply to be posted to |reply_runner|.
   EXPECT_FALSE(post_runner->HasPendingTask());
   EXPECT_TRUE(reply_runner->HasPendingTask());
 
-  EXPECT_CALL(mock_object, Reply());
+  EXPECT_CALL(mock_object, Reply(_));
   reply_runner->RunUntilIdle();
   testing::Mock::VerifyAndClear(&mock_object);
-  EXPECT_TRUE(delete_flag);
+  EXPECT_TRUE(task_deleted);
 
   // Expect no pending task in |post_runner| and |reply_runner|.
   EXPECT_FALSE(post_runner->HasPendingTask());
   EXPECT_FALSE(reply_runner->HasPendingTask());
+}
+
+// Verify that the "reply" is deleted on the origin TaskRunner when the "task"
+// can't run.
+TEST(PostTaskAndReplyImplTest, DeleteReplyWhenTaskIsCanceled) {
+  auto post_runner = MakeRefCounted<TestMockTimeTaskRunner>();
+  auto reply_runner =
+      MakeRefCounted<PretendTasksDontRunOnCurrentSequenceTaskRunner>();
+
+  testing::StrictMock<MockObject> mock_object;
+  bool task_deleted = false;
+  bool reply_deleted = false;
+
+  EXPECT_TRUE(
+      PostTaskAndReplyTaskRunner(post_runner.get())
+          .PostTaskAndReply(
+              FROM_HERE,
+              BindOnce(&MockObject::Task, Unretained(&mock_object),
+                       MakeRefCounted<ObjectToDelete>(&task_deleted)),
+              BindOnce(&MockObject::Reply, Unretained(&mock_object),
+                       MakeRefCounted<ObjectToDelete>(&reply_deleted))));
+
+  EXPECT_FALSE(task_deleted);
+  EXPECT_FALSE(reply_deleted);
+
+  post_runner->ClearPendingTasks();
+  EXPECT_TRUE(task_deleted);
+  EXPECT_FALSE(reply_deleted);
+
+  reply_runner->RunUntilIdle();
+  EXPECT_TRUE(task_deleted);
+  EXPECT_TRUE(reply_deleted);
 }
 
 }  // namespace internal

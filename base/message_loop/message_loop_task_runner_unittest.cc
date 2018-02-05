@@ -200,60 +200,6 @@ TEST_F(MessageLoopTaskRunnerTest, PostTaskAndReply_SameLoop) {
   EXPECT_LT(task_delete_order, reply_delete_order);
 }
 
-TEST_F(MessageLoopTaskRunnerTest,
-       PostTaskAndReply_DeadReplyTaskRunnerBehavior) {
-  // Annotate the scope as having memory leaks to suppress heapchecker reports.
-  ANNOTATE_SCOPED_MEMORY_LEAK;
-  MessageLoop* task_run_on = nullptr;
-  MessageLoop* task_deleted_on = nullptr;
-  int task_delete_order = -1;
-  MessageLoop* reply_run_on = nullptr;
-  MessageLoop* reply_deleted_on = nullptr;
-  int reply_delete_order = -1;
-
-  scoped_refptr<LoopRecorder> task_recorder =
-      new LoopRecorder(&task_run_on, &task_deleted_on, &task_delete_order);
-  scoped_refptr<LoopRecorder> reply_recorder =
-      new LoopRecorder(&reply_run_on, &reply_deleted_on, &reply_delete_order);
-
-  // Enqueue the relay.
-  task_thread_.task_runner()->PostTaskAndReply(
-      FROM_HERE, BindOnce(&RecordLoop, task_recorder),
-      BindOnce(&RecordLoopAndQuit, reply_recorder));
-
-  // Die if base::Bind doesn't retain a reference to the recorders.
-  task_recorder = nullptr;
-  reply_recorder = nullptr;
-  ASSERT_FALSE(task_deleted_on);
-  ASSERT_FALSE(reply_deleted_on);
-
-  UnblockTaskThread();
-
-  // Mercilessly whack the current loop before |reply| gets to run.
-  current_loop_.reset();
-
-  // This should ensure the relay has been run.  We need to record the
-  // MessageLoop pointer before stopping the thread because Thread::Stop() will
-  // NULL out its own pointer.
-  MessageLoop* task_loop = task_thread_.message_loop();
-  task_thread_.Stop();
-
-  // Even if the reply task runner is already gone, the original task should
-  // already be deleted. However, the reply which hasn't executed yet should
-  // leak to avoid thread-safety issues.
-  EXPECT_EQ(task_loop, task_run_on);
-  EXPECT_EQ(task_loop, task_deleted_on);
-  EXPECT_FALSE(reply_run_on);
-  ASSERT_FALSE(reply_deleted_on);
-
-  // The PostTaskAndReplyRelay is leaked here.  Even if we had a reference to
-  // it, we cannot just delete it because PostTaskAndReplyRelay's destructor
-  // checks that MessageLoop::current() is the the same as when the
-  // PostTaskAndReplyRelay object was constructed.  However, this loop must have
-  // already been deleted in order to perform this test.  See
-  // http://crbug.com/86301.
-}
-
 class MessageLoopTaskRunnerThreadingTest : public testing::Test {
  public:
   void Release() const {

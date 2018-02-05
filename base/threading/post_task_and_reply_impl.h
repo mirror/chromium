@@ -25,10 +25,14 @@ class BASE_EXPORT PostTaskAndReplyImpl {
  public:
   virtual ~PostTaskAndReplyImpl() = default;
 
-  // Posts |task| by calling PostTask(). On completion, |reply| is posted to the
-  // sequence or thread that called this. Can only be called when
-  // SequencedTaskRunnerHandle::IsSet(). Both |task| and |reply| are guaranteed
-  // to be deleted on the sequence or thread that called this.
+  // Invokes PostTask() with a callback that:
+  // 1) Runs |task|.
+  // 2) Posts |reply| back to the origin SequencedTaskRunner (i.e. the one
+  //    returned by SequencedTaskRunnerHandle::Get() in the context from which
+  //    this method is called).
+  // If the callback passed to PostTask() is deleted before it runs, |task| is
+  // deleted synchronously and a callback that owns |reply| is posted to the
+  // origin SequencedTaskRunner.
   bool PostTaskAndReply(const Location& from_here,
                         OnceClosure task,
                         OnceClosure reply);
