@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e587816_f97cfc64",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-02-05T22:15:58Z",
+      "side": 1,
+      "message": "these can never have a transform? Even on CrOS while doing an orientation change?",
+      "revId": "0ac8b5c8c742a08111940c203c3b7c89cdfa5421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
