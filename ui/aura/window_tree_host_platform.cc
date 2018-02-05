@@ -113,6 +113,15 @@ void WindowTreeHostPlatform::ReleaseCapture() {
   platform_window_->ReleaseCapture();
 }
 
+void WindowTreeHostPlatform::LockKeys(
+    const std::vector<int>& native_key_codes) {
+  platform_window_->LockKeys(native_key_codes);
+}
+
+void WindowTreeHostPlatform::UnlockKeys() {
+  platform_window_->UnlockKeys();
+}
+
 void WindowTreeHostPlatform::SetCursorNative(gfx::NativeCursor cursor) {
   if (cursor == current_cursor_)
     return;
