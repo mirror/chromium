@@ -157,11 +157,10 @@ void OutdatedUpgradeBubbleView::Init() {
   text_label->SetMultiLine(true);
   text_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
 
-  constexpr int kExpectedBubbleWidth = 320;
-  int text_width =
-      kExpectedBubbleWidth - ChromeLayoutProvider::Get()
-                                 ->GetInsetsMetric(views::INSETS_DIALOG)
-                                 .width();
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  int text_width = provider->GetDistanceMetric(
+                       ChromeDistanceMetric::DISTANCE_BUBBLE_PREFERRED_WIDTH) -
+                   provider->GetInsetsMetric(views::INSETS_DIALOG).width();
   text_label->SizeToFit(text_width);
   AddChildView(text_label);
 }
