@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f28cef0c_8b502186",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T18:45:06Z",
+      "side": 1,
+      "message": "If this has to be kept in sync with something on the C++ side, we should have a comment both here and on the C++ side saying that they need to be kept in sync.",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb05c146_ebbb5ee0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
         "patchSetId": 1
@@ -25,6 +48,53 @@
     },
     {
       "key": {
+        "uuid": "9d6b1181_3341a508",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T18:45:06Z",
+      "side": 1,
+      "message": "I agree with Joy here, this might be better in its own file.",
+      "parentUuid": "fb05c146_ebbb5ee0",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f019884b_1f70a755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T18:45:06Z",
+      "side": 1,
+      "message": "Do you think our code is better off with or without the default?  Without the default, we will find any unhandled cases sooner. With the default, it is more robust to a type of coding error.\n\nI\u0027ve read in some places that case statements that fall through are dangerous.  I like the fact that you\u0027ve commented the intentional fall through, if we do need to do an intentional fall through, that is the way to do it, but I ask if the benefits outweigh the drawbacks here.",
+      "range": {
+        "startLine": 684,
+        "startChar": 12,
+        "endLine": 684,
+        "endChar": 19
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51130195_d86cfa81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
         "patchSetId": 1
@@ -41,6 +111,29 @@
         "startChar": 4,
         "endLine": 687,
         "endChar": 5
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8079b76_a27548ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageNotificationBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-05T18:45:06Z",
+      "side": 1,
+      "message": "Just curious, what does this \"@\" mean in context?  I haven\u0027t run across this before.",
+      "range": {
+        "startLine": 117,
+        "startChar": 45,
+        "endLine": 117,
+        "endChar": 46
       },
       "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
