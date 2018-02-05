@@ -419,6 +419,40 @@ void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
 
   fragment_data.SetVisualRect(new_visual_rect);
   fragment_data.SetLocationInBacking(new_location);
+
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return;
+
+  if (object.IsLayoutNGMixin()) {
+    if (NGPaintFragment* fragment = ToLayoutBlockFlow(object).PaintFragment())
+      fragment->SetVisualRect(new_visual_rect);
+    return;
+  }
+
+  if (object.IsInline()) {
+    // An inline LayoutObject can produce multiple NGPaintFragment. Compute
+    // VisualRect for each fragment from |new_visual_rect|.
+    auto fragments = NGPaintFragment::InlineFragmentsFor(&object);
+    if (fragments.IsEmpty())
+      return;
+    // Compute the location of united rect. VisualRect for each fragment is
+    // offset by the offset from the united rect.
+    NGPhysicalOffset united_location(LayoutUnit::Max(), LayoutUnit::Max());
+    for (NGPaintFragment* fragment : fragments) {
+      const NGPhysicalOffset& offset = fragment->InlineOffsetToContainerBox();
+      united_location =
+          NGPhysicalOffset(std::min(united_location.left, offset.left),
+                           std::min(united_location.top, offset.top));
+    }
+    for (NGPaintFragment* fragment : fragments) {
+      const NGPhysicalOffset& offset = fragment->InlineOffsetToContainerBox();
+      fragment->SetVisualRect(
+          LayoutRect(new_visual_rect.Location() +
+                         (offset - united_location).ToLayoutPoint(),
+                     fragment->Size().ToLayoutSize()));
+    }
+    return;
+  }
 }
 
 void PaintInvalidator::InvalidatePaint(
@@ -584,30 +618,10 @@ void PaintInvalidator::InvalidatePaint(
     }
   }
 
-  if (RuntimeEnabledFeatures::LayoutNGEnabled() && object.IsLayoutNGMixin()) {
-    // If the LayoutObject has a paint fragment, it means this LayoutObject and
-    // its descendants are painted by NG painter.
-    // In the inline NG paint phase, this is a block flow with inline children.
-    if (NGPaintFragment* paint_fragment =
-            ToLayoutBlockFlow(object).PaintFragment()) {
-      // At this point, PaintInvalidator has updated VisualRect of the
-      // LayoutObject. Update NGPaintFragment from the LayoutObject.
-      //
-      // VisualRect of descendants are not updated yet, but this code does not
-      // rely on them.
-      //
-      // TODO(kojii): When we have NGPaintFragment, we should walk
-      // NGPaintFragment tree instead, computes VisualRect from fragments,
-      // and update LayoutObject from it if needed for compat.
-      paint_fragment->UpdateVisualRectFromLayoutObject();
-    }
-  }
-
   if (object.MayNeedPaintInvalidationSubtree()) {
     context.subtree_flags |=
         PaintInvalidatorContext::kSubtreeInvalidationChecking;
   }
-
 
   if (context.subtree_flags && context.NeedsVisualRectUpdate(object)) {
     // If any subtree flag is set, we also need to pass needsVisualRectUpdate
