@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc15d991_bcb86e7f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb3e651_45f53844",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "I think working with the service belongs to the panel, not dialog. Dialog should be about UI only.",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f6644a_da1b6da8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "JSDoc please.",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7642e7_96b5be30",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc1f30b_0d022063",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "And here :)",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2f2d2f_0d0772a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "While you are here, mind switching to awaits?",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d88987d_65746d94",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "Everywhere!",
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01799098_33fc97b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2ProtocolService.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6aad894_4c1e7c54",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2StatusView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-05T19:38:41Z",
+      "side": 1,
+      "message": "no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "48a6a27a9365d77a0854bdbccd46dcbde9422012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
