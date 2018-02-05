@@ -211,27 +211,27 @@ SimpleSynchronousEntry::CRCRecord::CRCRecord(int index_p,
                                              uint32_t data_crc32_p)
     : index(index_p), has_crc32(has_crc32_p), data_crc32(data_crc32_p) {}
 
-SimpleSynchronousEntry::EntryOperationData::EntryOperationData(int index_p,
-                                                               int offset_p,
-                                                               int buf_len_p)
+SimpleSynchronousEntry::ReadRequest::ReadRequest(int index_p,
+                                                 int offset_p,
+                                                 int buf_len_p)
     : index(index_p),
       offset(offset_p),
-      buf_len(buf_len_p) {}
+      buf_len(buf_len_p),
+      request_update_crc(false) {}
 
-SimpleSynchronousEntry::EntryOperationData::EntryOperationData(int index_p,
-                                                               int offset_p,
-                                                               int buf_len_p,
-                                                               bool truncate_p,
-                                                               bool doomed_p)
+SimpleSynchronousEntry::WriteRequest::WriteRequest(int index_p,
+                                                   int offset_p,
+                                                   int buf_len_p,
+                                                   bool truncate_p,
+                                                   bool doomed_p)
     : index(index_p),
       offset(offset_p),
       buf_len(buf_len_p),
       truncate(truncate_p),
       doomed(doomed_p) {}
 
-SimpleSynchronousEntry::EntryOperationData::EntryOperationData(
-    int64_t sparse_offset_p,
-    int buf_len_p)
+SimpleSynchronousEntry::SparseRequest::SparseRequest(int64_t sparse_offset_p,
+                                                     int buf_len_p)
     : sparse_offset(sparse_offset_p), buf_len(buf_len_p) {}
 
 // static
@@ -369,20 +369,20 @@ int SimpleSynchronousEntry::DeleteEntrySetFiles(
   return (did_delete_count == key_hashes->size()) ? net::OK : net::ERR_FAILED;
 }
 
-void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
-                                      CRCRequest* crc_request,
+void SimpleSynchronousEntry::ReadData(const ReadRequest& in_entry_op,
                                       SimpleEntryStat* entry_stat,
                                       net::IOBuffer* out_buf,
-                                      int* out_result) {
+                                      ReadResult* out_result) {
   DCHECK(initialized_);
   DCHECK_NE(0, in_entry_op.index);
   int file_index = GetFileIndexFromStreamIndex(in_entry_op.index);
   SimpleFileTracker::FileHandle file =
       file_tracker_->Acquire(this, SubFileForFileIndex(file_index));
 
+  out_result->crc_updated = false;
   if (!file.IsOK() || (header_and_key_check_needed_[file_index] &&
                        !CheckHeaderAndKey(file.get(), file_index))) {
-    *out_result = net::ERR_FAILED;
+    out_result->result = net::ERR_FAILED;
     Doom();
     return;
   }
@@ -396,36 +396,36 @@ void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
       file->Read(file_offset, out_buf->data(), in_entry_op.buf_len);
   if (bytes_read > 0) {
     entry_stat->set_last_used(Time::Now());
-    if (crc_request != nullptr) {
-      crc_request->data_crc32 = simple_util::IncrementalCrc32(
-          crc_request->data_crc32, out_buf->data(), bytes_read);
+    if (in_entry_op.request_update_crc) {
+      out_result->data_crc32 = simple_util::IncrementalCrc32(
+          in_entry_op.data_crc32, out_buf->data(), bytes_read);
+      out_result->crc_updated = true;
       // Verify checksum after last read, if we've been asked to.
-      if (crc_request->request_verify &&
+      if (in_entry_op.request_verify_crc &&
           in_entry_op.offset + bytes_read ==
               entry_stat->data_size(in_entry_op.index)) {
-        crc_request->performed_verify = true;
-        int checksum_result =
-            CheckEOFRecord(file.get(), in_entry_op.index, *entry_stat,
-                           crc_request->data_crc32);
+        out_result->crc_performed_verify = true;
+        int checksum_result = CheckEOFRecord(
+            file.get(), in_entry_op.index, *entry_stat, out_result->data_crc32);
         if (checksum_result < 0) {
-          crc_request->verify_ok = false;
-          *out_result = checksum_result;
+          out_result->crc_verify_ok = false;
+          out_result->result = checksum_result;
           return;
         } else {
-          crc_request->verify_ok = true;
+          out_result->crc_verify_ok = true;
         }
       }
     }
   }
   if (bytes_read >= 0) {
-    *out_result = bytes_read;
+    out_result->result = bytes_read;
   } else {
-    *out_result = net::ERR_CACHE_READ_FAILURE;
+    out_result->result = net::ERR_CACHE_READ_FAILURE;
     Doom();
   }
 }
 
-void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
+void SimpleSynchronousEntry::WriteData(const WriteRequest& in_entry_op,
                                        net::IOBuffer* in_buf,
                                        SimpleEntryStat* out_entry_stat,
                                        int* out_result) {
@@ -533,11 +533,10 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
   *out_result = buf_len;
 }
 
-void SimpleSynchronousEntry::ReadSparseData(
-    const EntryOperationData& in_entry_op,
-    net::IOBuffer* out_buf,
-    base::Time* out_last_used,
-    int* out_result) {
+void SimpleSynchronousEntry::ReadSparseData(const SparseRequest& in_entry_op,
+                                            net::IOBuffer* out_buf,
+                                            base::Time* out_last_used,
+                                            int* out_result) {
   DCHECK(initialized_);
   int64_t offset = in_entry_op.sparse_offset;
   int buf_len = in_entry_op.buf_len;
@@ -611,12 +610,11 @@ void SimpleSynchronousEntry::ReadSparseData(
   *out_result = read_so_far;
 }
 
-void SimpleSynchronousEntry::WriteSparseData(
-    const EntryOperationData& in_entry_op,
-    net::IOBuffer* in_buf,
-    uint64_t max_sparse_data_size,
-    SimpleEntryStat* out_entry_stat,
-    int* out_result) {
+void SimpleSynchronousEntry::WriteSparseData(const SparseRequest& in_entry_op,
+                                             net::IOBuffer* in_buf,
+                                             uint64_t max_sparse_data_size,
+                                             SimpleEntryStat* out_entry_stat,
+                                             int* out_result) {
   DCHECK(initialized_);
   int64_t offset = in_entry_op.sparse_offset;
   int buf_len = in_entry_op.buf_len;
@@ -726,10 +724,9 @@ void SimpleSynchronousEntry::WriteSparseData(
   *out_result = written_so_far;
 }
 
-void SimpleSynchronousEntry::GetAvailableRange(
-    const EntryOperationData& in_entry_op,
-    int64_t* out_start,
-    int* out_result) {
+void SimpleSynchronousEntry::GetAvailableRange(const SparseRequest& in_entry_op,
+                                               int64_t* out_start,
+                                               int* out_result) {
   DCHECK(initialized_);
   int64_t offset = in_entry_op.sparse_offset;
   int len = in_entry_op.buf_len;

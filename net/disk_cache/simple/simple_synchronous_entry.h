@@ -118,39 +118,50 @@ class SimpleSynchronousEntry {
     uint32_t data_crc32;
   };
 
-  struct CRCRequest {
-    CRCRequest()
-        : data_crc32(0),
-          request_verify(false),
-          performed_verify(false),
-          verify_ok(false) {}
-
-    // Initial CRC, to be updated with CRC of block.
-    uint32_t data_crc32;
-
-    // If true, CRC should be verified if at end of stream.
-    bool request_verify;
-
-    // If true, CRC was actually checked.
-    bool performed_verify;
-    bool verify_ok;
-  };
-
-  struct EntryOperationData {
-    EntryOperationData(int index_p, int offset_p, int buf_len_p);
-    EntryOperationData(int index_p,
-                       int offset_p,
-                       int buf_len_p,
-                       bool truncate_p,
-                       bool doomed_p);
-    EntryOperationData(int64_t sparse_offset_p, int buf_len_p);
-
+  struct ReadRequest {
+    // Also sets request_update_crc to false.
+    ReadRequest(int index_p, int offset_p, int buf_len_p);
     int index;
     int offset;
-    int64_t sparse_offset;
+    int buf_len;
+
+    // Partial CRC of data immediately preceeding this read. Only relevant if
+    // request_update_crc is set.
+    uint32_t data_crc32;
+    bool request_update_crc;
+    bool request_verify_crc;  // only relevant if request_update_crc is set
+  };
+
+  struct ReadResult {
+    ReadResult()
+        : crc_updated(false),
+          crc_performed_verify(false),
+          crc_verify_ok(false) {}
+    int result;
+    uint32_t data_crc32;  // only relevant if crc_updated set
+    bool crc_updated;
+    bool crc_performed_verify;  // only relevant if crc_updated set
+    bool crc_verify_ok;         // only relevant if crc_updated set
+  };
+
+  struct WriteRequest {
+    WriteRequest(int index_p,
+                 int offset_p,
+                 int buf_len_p,
+                 bool truncate_p,
+                 bool doomed_p);
+    int index;
+    int offset;
     int buf_len;
     bool truncate;
     bool doomed;
+  };
+
+  struct SparseRequest {
+    SparseRequest(int64_t sparse_offset_p, int buf_len_p);
+
+    int64_t sparse_offset;
+    int buf_len;
   };
 
   // Opens a disk cache entry on disk. The |key| parameter is optional, if empty
@@ -207,14 +218,11 @@ class SimpleSynchronousEntry {
   //
   // All of these methods will put the //net return value into |*out_result|.
 
-  // |crc_request| can be nullptr here, to denote that no CRC computation is
-  // requested.
-  void ReadData(const EntryOperationData& in_entry_op,
-                CRCRequest* crc_request,
+  void ReadData(const ReadRequest& in_entry_op,
                 SimpleEntryStat* entry_stat,
                 net::IOBuffer* out_buf,
-                int* out_result);
-  void WriteData(const EntryOperationData& in_entry_op,
+                ReadResult* out_result);
+  void WriteData(const WriteRequest& in_entry_op,
                  net::IOBuffer* in_buf,
                  SimpleEntryStat* out_entry_stat,
                  int* out_result);
@@ -223,16 +231,16 @@ class SimpleSynchronousEntry {
                      const SimpleEntryStat& entry_stat,
                      uint32_t expected_crc32);
 
-  void ReadSparseData(const EntryOperationData& in_entry_op,
+  void ReadSparseData(const SparseRequest& in_entry_op,
                       net::IOBuffer* out_buf,
                       base::Time* out_last_used,
                       int* out_result);
-  void WriteSparseData(const EntryOperationData& in_entry_op,
+  void WriteSparseData(const SparseRequest& in_entry_op,
                        net::IOBuffer* in_buf,
                        uint64_t max_sparse_data_size,
                        SimpleEntryStat* out_entry_stat,
                        int* out_result);
-  void GetAvailableRange(const EntryOperationData& in_entry_op,
+  void GetAvailableRange(const SparseRequest& in_entry_op,
                          int64_t* out_start,
                          int* out_result);
 
