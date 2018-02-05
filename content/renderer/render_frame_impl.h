@@ -36,6 +36,7 @@
 #include "content/common/frame_message_enums.h"
 #include "content/common/host_zoom.mojom.h"
 #include "content/common/media/renderer_audio_input_stream_factory.mojom.h"
+#include "content/common/navigation.mojom.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/unique_name_helper.h"
@@ -188,6 +189,7 @@ class CONTENT_EXPORT RenderFrameImpl
       mojom::FullscreenVideoElementHandler,
       mojom::HostZoom,
       mojom::FrameBindingsControl,
+      public mojom::NavigationClient,
       public blink::WebFrameClient,
       public blink::WebFrameSerializerClient,
       service_manager::mojom::InterfaceProvider {
