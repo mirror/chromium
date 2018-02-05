@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82ecbb93_abb4c371",
+        "filename": "components/viz/client/hit_test_data_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T19:27:52Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "148ebb11_48605b60",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88088f8e_a04cf38a",
         "filename": "components/viz/client/hit_test_data_provider_simple_bounds.cc",
         "patchSetId": 18
@@ -64,6 +88,29 @@
         "startChar": 68,
         "endLine": 24,
         "endChar": 70
+      },
+      "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6974a761_47bea0cc",
+        "filename": "components/viz/client/hit_test_data_provider_simple_bounds.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-05T19:27:52Z",
+      "side": 1,
+      "message": "nit: 2018 (and same for other HTDPSB places)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
       },
       "revId": "ed999e8fae930aaa05398302e0fe089828c693d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
