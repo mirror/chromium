@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a491c7be_ba2eea3c",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-05T22:18:07Z",
+      "side": 1,
+      "message": "Can you also update the comment here as you did in line 301?",
+      "revId": "05598bca9090681e4bb234f30f28587ba8f4effa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
