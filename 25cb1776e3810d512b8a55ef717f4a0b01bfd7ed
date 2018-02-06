@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343b4e35_dd7b6c41",
+        "filename": "ui/wm/core/shadow.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:14:43Z",
+      "side": 1,
+      "message": "Document what this int means.",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "25cb1776e3810d512b8a55ef717f4a0b01bfd7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25ac788_a993615d",
+        "filename": "ui/wm/core/shadow_types.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:14:43Z",
+      "side": 1,
+      "message": "Indicate this isn\u0027t a valid value to Shadow?",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "25cb1776e3810d512b8a55ef717f4a0b01bfd7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1817dd98_638f6490",
+        "filename": "ui/wm/core/shadow_types.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:14:43Z",
+      "side": 1,
+      "message": "Please add an overall description indicating what all the constants mean. In particular what the \u0027int\u0027 value translates to.",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "25cb1776e3810d512b8a55ef717f4a0b01bfd7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
