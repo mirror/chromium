@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60794abe_1ca9b38b",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T20:23:36Z",
+      "side": 1,
+      "message": "This is the same element as #pageselector at line 17. Can we move the contents of this rule there?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "d3147eda2ec9f04736a102a3edde354adf4b2f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1aad44f_027113bc",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T20:23:36Z",
+      "side": 1,
+      "message": "Should there be a \";\" here too?\n\nBut also, more importantly, I am not sure if this is the best way to fix this. Basically we are overriding a mixin that is used internally by paper-input-container at [1], and it actually originates in iron-flex-layout.html at [2]. In theory we should only override mixins that are exposed by paper-input-container itself see [3].\n\nCan you take a look at https://pastebin.com/HWDGL8tU which I played with locally? It seems to produce the same result, without having to override an internal mixin.\n\n[1] https://github.com/PolymerElements/paper-input/blob/master/paper-input-container.html#L218\n[2] https://github.com/PolymerElements/iron-flex-layout/blob/master/iron-flex-layout.html#L85\n[3] https://www.webcomponents.org/element/PolymerElements/paper-input/elements/paper-input-container#styling",
+      "range": {
+        "startLine": 57,
+        "startChar": 45,
+        "endLine": 57,
+        "endChar": 46
+      },
+      "revId": "d3147eda2ec9f04736a102a3edde354adf4b2f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
