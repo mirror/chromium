@@ -140,6 +140,24 @@
       "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3730889_f0e6e272",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-06T00:57:28Z",
+      "side": 1,
+      "message": "FYI: I just noticed the recent Windows CQ outage was attributed to something close to this: https://chromium.googlesource.com/infra/infra/+/965cb361bb9cbd3e412f345e6cc8c78261d9ec5b and the comments there imply there\u0027s no pywin32 in the Python infra is moving to. So this might come up again.",
+      "parentUuid": "79ee079c_7b20e8d1",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
