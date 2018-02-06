@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "295d1e4f_e4d38734",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T22:03:11Z",
+      "side": 1,
+      "message": "I guess my short answer is google3 seems to have no problem doing it this way. Should callers really care which one is called? As long as we implement a class that provides reasonable behavior, then I suspect that callers shouldn\u0027t want to know about this detail: it\u0027s really meant to just be a transparent forwarding helper (along the lines of std::make_unique).\n\nMy biggest worry with forcing in_place_t to be used is that it\u0027d encourage constructions like this instead:\n\nNoDestructor\u003cMyStruct\u003e m(MyStruct(param1, param2, param3));\n\nIt\u0027s not clear that this would optimize as well as the in-place variant.\n\nFor the actual question of which overload will be selected:\nMost of the time, the compiler should prefer the perfect forwarding constructor. Since perfect forwarding synthesizes parameters that are exact matches, it will generally be the best viable function. The main exceptions would be conversion constructors from list initialization (in which case, const T\u0026 or T\u0026\u0026 would be selected as the exact match).",
+      "parentUuid": "3e839849_fef67cba",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a625fd47_1c72e15a",
         "filename": "base/no_destructor.h",
         "patchSetId": 5
@@ -84,6 +102,24 @@
       "writtenOn": "2018-02-06T18:50:56Z",
       "side": 1,
       "message": "Should we delete operator\u003d too?",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43792ef8_8aedb81c",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T22:03:11Z",
+      "side": 1,
+      "message": "Oops, yeah. That\u0027s what I meant to write (since deleting the copy ctor suppresses the move ctor)",
+      "parentUuid": "a625fd47_1c72e15a",
       "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
