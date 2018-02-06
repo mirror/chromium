@@ -153,7 +153,7 @@ ScriptPromise OffscreenCanvas::CreateImageBitmap(
 bool OffscreenCanvas::IsOpaque() const {
   if (!context_)
     return false;
-  return !context_->CreationAttributes().hasAlpha();
+  return !context_->CreationAttributes().alpha();
 }
 
 CanvasRenderingContext* OffscreenCanvas::GetCanvasRenderingContext(
