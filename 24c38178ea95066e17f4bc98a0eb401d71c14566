@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eaaa674_703baeef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T01:26:14Z",
+      "side": 1,
+      "message": "Nit: \"sqlite\".",
+      "revId": "24c38178ea95066e17f4bc98a0eb401d71c14566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
