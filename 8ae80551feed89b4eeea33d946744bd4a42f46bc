@@ -22,6 +22,30 @@
       "revId": "8ae80551feed89b4eeea33d946744bd4a42f46bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b0ec14_884fde71",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T22:45:01Z",
+      "side": 1,
+      "message": "Done. Added a rule to make it left: -6px.",
+      "parentUuid": "206bbb7f_f33ae864",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "8ae80551feed89b4eeea33d946744bd4a42f46bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
