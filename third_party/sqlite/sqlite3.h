@@ -9,10 +9,6 @@
 // This is a shim header to include the right sqlite3 header.
 // Use this instead of referencing the sqlite3 header directly.
 
-#if defined(USE_SYSTEM_SQLITE)
-#include <sqlite3.h>
-#else
 #include "third_party/sqlite/amalgamation/sqlite3.h"
-#endif
 
 #endif  // THIRD_PARTY_SQLITE_SQLITE3_H_
