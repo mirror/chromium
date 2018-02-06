@@ -209,7 +209,7 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
   void CancelRetransmissionsForStream(QuicStreamId stream_id);
 
   // Called when peer address changes and the connection migrates.
-  void OnConnectionMigration(PeerAddressChangeType type);
+  void OnConnectionMigration(AddressChangeType type);
 
   void SetDebugDelegate(DebugDelegate* debug_delegate);
 

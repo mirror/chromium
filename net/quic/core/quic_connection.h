@@ -136,7 +136,7 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   virtual void OnCongestionWindowChange(QuicTime now) = 0;
 
   // Called when the connection receives a packet from a migrated client.
-  virtual void OnConnectionMigration(PeerAddressChangeType type) = 0;
+  virtual void OnConnectionMigration(AddressChangeType type) = 0;
 
   // Called when the peer seems unreachable over the current path.
   virtual void OnPathDegrading() = 0;
@@ -747,7 +747,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Called after a packet is received from a new peer address and is decrypted.
   // Starts validation of peer's address change.
-  virtual void StartPeerMigration(PeerAddressChangeType peer_migration_type);
+  virtual void StartPeerMigration(AddressChangeType peer_migration_type);
 
   // Called when a peer address migration is validated.
   virtual void OnPeerMigrationValidated();
@@ -766,7 +766,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
     per_packet_options_ = options;
   }
 
-  PeerAddressChangeType active_peer_migration_type() {
+  AddressChangeType active_peer_migration_type() {
     return active_peer_migration_type_;
   }
 
@@ -788,7 +788,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Notify various components(SendPacketManager, Session etc.) that this
   // connection has been migrated.
-  void OnConnectionMigration(PeerAddressChangeType addr_change_type);
+  void OnConnectionMigration(AddressChangeType addr_change_type);
 
  private:
   friend class test::QuicConnectionPeer;
@@ -920,7 +920,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Caches the current peer migration type if a peer migration might be
   // initiated. As soon as the current packet is confirmed not a connectivity
   // probe, peer migration will start.
-  PeerAddressChangeType current_peer_migration_type_;
+  AddressChangeType current_peer_migration_type_;
   QuicConnectionHelperInterface* helper_;  // Not owned.
   QuicAlarmFactory* alarm_factory_;        // Not owned.
   PerPacketOptions* per_packet_options_;   // Not owned.
@@ -940,7 +940,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Records change type when the peer initiates migration to a new peer
   // address. Reset to NO_CHANGE after peer migration is validated.
-  PeerAddressChangeType active_peer_migration_type_;
+  AddressChangeType active_peer_migration_type_;
 
   // Records highest sent packet number when peer migration is started.
   QuicPacketNumber highest_packet_sent_before_peer_migration_;
