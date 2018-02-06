@@ -333,7 +333,7 @@ BOOL CALLBACK OnResourceFound(HMODULE module, const wchar_t* type,
   return TRUE;
 }
 
-#if defined(COMPONENT_BUILD)
+#if defined(SKIP_COMPRESS)
 // An EnumResNameProc callback that writes the resource |name| to disk in the
 // directory |base_path_ptr| (which must end with a path separator).
 BOOL CALLBACK WriteResourceToDirectory(HMODULE module,
@@ -459,7 +459,7 @@ ProcessExitResult UnpackBinaryResources(const Configuration& configuration,
     exit_code = ProcessExitResult(UNABLE_TO_EXTRACT_SETUP_EXE);
   }
 
-#if defined(COMPONENT_BUILD)
+#if defined(SKIP_COMPRESS)
   if (exit_code.IsSuccess()) {
     // Extract the (uncompressed) modules required by setup.exe.
     if (!::EnumResourceNames(module, kBinResourceType, WriteResourceToDirectory,
@@ -502,7 +502,7 @@ ProcessExitResult RunSetup(const Configuration& configuration,
 
   // Append the command line param for chrome archive file.
   if (!cmd_line.append(L" --") ||
-#if defined(COMPONENT_BUILD)
+#if defined(SKIP_COMPRESS)
       // For faster developer turnaround, the component build generates
       // uncompressed archives.
       !cmd_line.append(kCmdUncompressedArchive) ||

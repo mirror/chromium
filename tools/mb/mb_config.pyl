@@ -726,7 +726,7 @@
     },
 
     'tryserver.chromium.win': {
-      'win7_chromium_rel_ng': 'gpu_tests_release_trybot_x86_minimal_symbols',
+      'win7_chromium_rel_ng': 'gpu_tests_release_trybot_x86_minimal_symbols_skip_compress',
       'win7_chromium_rel_loc_exp': 'gpu_tests_release_trybot_x86_minimal_symbols',
       'win10_chromium_x64_rel_ng': 'release_trybot',
       'win10_chromium_x64_rel_ng_exp': 'release_trybot',
@@ -1374,6 +1374,10 @@
 
     'gpu_tests_release_trybot_cm': [
       'gpu_tests', 'release_trybot', 'v8_concurrent_marking',
+    ],
+
+    'gpu_tests_release_trybot_x86_minimal_symbols_skip_compress': [
+      'gpu_tests', 'release_trybot', 'x86', 'minimal_symbols', 'skip_compress',
     ],
 
     'gpu_tests_release_trybot_x86_minimal_symbols': [
@@ -2086,6 +2090,12 @@
 
     'shared_release_bot': {
       'mixins': ['shared', 'release', 'goma']
+    },
+
+    # This arg disables compression of chrome archived in windows installer.
+    # Only for faster latency on tryserver, should not use in other builder.
+    'skip_compress': {
+      'gn_args': 'skip_compress=true',
     },
 
     'static': {
