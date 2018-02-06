@@ -70,6 +70,24 @@
       "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c3fa8b_29412859",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T00:45:02Z",
+      "side": 1,
+      "message": "It just seems odd to have an interface that expects a 1:1 relationship with a client interface, but also expects random components to call into it. I would expect one or the other. If it\u0027s logically 1:1, then please use Binding. If it\u0027s meant to support multiple clients, then SetClient should be AddClient.\n\nIt\u0027s useful to be as precise as possible when defining these things:, since Mojo adds a considerable amount of abstraction that can make it harder how to understand how different components are related.\n\nSpeaking of this... is there any high level documentation for how ash expects to interact with other parts of the system going forward?",
+      "parentUuid": "dc502a25_d8ac88cf",
+      "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
