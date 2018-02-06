@@ -318,6 +318,8 @@ AudioWorkletNode* AudioWorkletNode::Create(
 
   v8::Isolate* isolate = script_state->GetIsolate();
   SerializedScriptValue::SerializeOptions serialize_options;
+  serialize_options.wasm_policy =
+      SerializedScriptValue::SerializeOptions::kSerialize;
   serialize_options.for_storage = SerializedScriptValue::kNotForStorage;
 
   // The node options must be serialized since they are passed to and consumed
