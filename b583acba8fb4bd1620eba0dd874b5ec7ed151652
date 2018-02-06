@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "994c24ff_aa06246d",
+        "filename": "third_party/WebKit/LayoutTests/sensor/accelerometer.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2018-02-06T15:55:29Z",
+      "side": 1,
+      "message": "Is there supposed to be parameter after \u0027sensorType,\u0027?",
+      "range": {
+        "startLine": 31,
+        "startChar": 61,
+        "endLine": 31,
+        "endChar": 62
+      },
+      "revId": "b583acba8fb4bd1620eba0dd874b5ec7ed151652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccca8bc_e7a6fffc",
+        "filename": "third_party/WebKit/Source/modules/sensor/Accelerometer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2018-02-06T15:55:29Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "b583acba8fb4bd1620eba0dd874b5ec7ed151652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150053c0_de388d0f",
+        "filename": "third_party/WebKit/Source/modules/sensor/SpatialSensorOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2018-02-06T15:55:29Z",
+      "side": 1,
+      "message": "https://w3c.github.io/accelerometer/#the-spatialsensoroptions-dictionary",
+      "revId": "b583acba8fb4bd1620eba0dd874b5ec7ed151652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
