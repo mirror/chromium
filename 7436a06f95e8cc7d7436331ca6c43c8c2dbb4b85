@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06bd493_7368e478",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:45:18Z",
+      "side": 1,
+      "message": "this one also has a confusing name. GetYValueForAlignment? Maybe reuse the \"baseline\" nomenclature, so GetBaselineForToast?",
+      "range": {
+        "startLine": 374,
+        "startChar": 28,
+        "endLine": 374,
+        "endChar": 41
+      },
+      "revId": "7436a06f95e8cc7d7436331ca6c43c8c2dbb4b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cbf128_7a41474d",
+        "filename": "ui/message_center/views/message_popup_collection.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:45:18Z",
+      "side": 1,
+      "message": "I don\u0027t know what this means. We identify edges with integers? I think this should be called last_removed_notification_baseline_ or something, with a note that it\u0027s the origin y or bottom y depending on alignment",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 70
+      },
+      "revId": "7436a06f95e8cc7d7436331ca6c43c8c2dbb4b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f20f0ae_f9149963",
+        "filename": "ui/message_center/views/message_popup_collection_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:45:18Z",
+      "side": 1,
+      "message": "why does this need to be restricted to cros?",
+      "range": {
+        "startLine": 592,
+        "startChar": 12,
+        "endLine": 592,
+        "endChar": 23
+      },
+      "revId": "7436a06f95e8cc7d7436331ca6c43c8c2dbb4b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
