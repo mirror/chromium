@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ebfba7fb_e8c7b288",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T06:19:07Z",
+      "side": 1,
+      "message": "OK.\nI upload Patch Set 6 in which I stopped using ThrottlingURLLoader and the new resource type.\n\nIf we will need to use the throttling mechanism, we can re-introduce ThrottlingURLLoader.",
+      "parentUuid": "4f22179e_c96cf177",
+      "revId": "b85b851608290f5aaa24cc288cf57612b55995af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5a124c0_e83fdba8",
         "filename": "content/public/common/resource_type.h",
         "patchSetId": 2
