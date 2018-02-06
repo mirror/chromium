@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22972650_aad0863c",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T04:49:32Z",
+      "side": 1,
+      "message": "Combining them in one message is a bit inconvenient from a debugging standpoint. :-(\n\nCould the success bool be converted into a Result enum instead?",
+      "revId": "2a41b7f157fa40d3145cdbe36ae26a38cad75329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
