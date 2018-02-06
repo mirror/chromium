@@ -94,6 +94,30 @@
       "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffd3f03_0e8a9515",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-06T00:48:15Z",
+      "side": 1,
+      "message": "My only concern with default OS-based enabled_features would be that since the EnableIf attribute can only be defined once per mojom definition and doesn\u0027t allow boolean operators you wouldn\u0027t be able to do e.g. [EnableIf\u003dOS_ANDROID,EnableIf\u003dOS_LINUX] or [EnableIf\u003dOS_ANDROID||OS_LINUX]. That means a feature enabled on both Android and Linux would still probably need GN boilerplate to add a combined \"OS_ANDROID_OR_OS_LINUX\" enabled_feature.\n\nThis doesn\u0027t seem like a huge problem though and I don\u0027t mind either way. I\u0027m happy to make a CL to add a default set of enabled features based on operating system, if you think that\u0027s the right thing to do?\n\nAlso the design doc is at go/mojo-enable-if if needed :)",
+      "parentUuid": "37cc9a2b_6c33896b",
+      "range": {
+        "startLine": 703,
+        "startChar": 27,
+        "endLine": 703,
+        "endChar": 55
+      },
+      "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
