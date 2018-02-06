@@ -127,6 +127,8 @@ class MockPasswordProtectionService
   MOCK_CONST_METHOD1(
       GetPasswordProtectionTriggerPref,
       safe_browsing::PasswordProtectionTrigger(const std::string& pref_name));
+  MOCK_CONST_METHOD1(GetPasswordProtectionEmailDomainsPref,
+                     void(std::vector<std::string>*));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockPasswordProtectionService);
