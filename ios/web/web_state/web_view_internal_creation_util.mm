@@ -67,7 +67,6 @@ WKWebView* BuildWKWebView(CGRect frame,
                              context_menu_controller,
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
-
   // Uses the default value for |allowsLinkPreview| i.e., YES in iOS 10 or
   // later, and NO for iOS 9 or before. But the link preview is still disabled
   // by default on iOS 10 or later. You need to return true from
