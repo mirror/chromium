@@ -67,6 +67,10 @@ void RecordTimeDelta(base::TimeTicks network_time, base::TimeTicks stale_time) {
   }
 }
 
+void RecordReturnTiming(base::TimeTicks now, base::TimeTicks start) {
+  UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.TotalTime", now - start);
+}
+
 bool StaleEntryIsUsable(const StaleHostResolver::StaleOptions& options,
                         const net::HostCache::EntryStaleness& entry) {
   if (options.max_expired_time != base::TimeDelta() &&
@@ -173,6 +177,8 @@ class StaleHostResolver::RequestImpl {
   // A timer that fires when the |Request| should return stale results, if the
   // underlying network request has not finished yet.
   base::OneShotTimer stale_timer_;
+  // If a network request is tried, the time when the network request started.
+  base::TimeTicks start_time_;
 
   // The address list the underlying network request will fill in. (Can't be the
   // one passed to |Start()|, or else the network request would overwrite stale
@@ -251,6 +257,10 @@ int StaleHostResolver::RequestImpl::Start(
   // Don't check the cache again.
   net::HostResolver::RequestInfo no_cache_info(info);
   no_cache_info.set_allow_cached_response(false);
+  // Marking the request as speculative will prevent it from being recorded in
+  // ... no it won't.
+  no_cache_info.set_is_speculative(true);
+  start_time_ = base::TimeTicks::Now();
   int network_rv = resolver->Resolve(
       no_cache_info, priority, &network_addresses_,
       base::Bind(&StaleHostResolver::RequestImpl::OnNetworkRequestComplete,
@@ -327,12 +337,15 @@ void StaleHostResolver::RequestImpl::ReturnResult(
     const net::AddressList& addresses) {
   DCHECK(result_callback_);
   returning_result_ = true;
+  RecordReturnTiming(base::TimeTicks::Now(), start_time_);
   base::ResetAndReturn(&result_callback_).Run(HandleResult(rv, addresses));
   returning_result_ = false;
 }
 
 void StaleHostResolver::RequestImpl::RecordSynchronousRequest() {
   RecordRequestOutcome(SYNCHRONOUS);
+  base::TimeTicks now = base::TimeTicks::Now();
+  RecordReturnTiming(now, now);
 }
 
 void StaleHostResolver::RequestImpl::RecordNetworkRequest(
