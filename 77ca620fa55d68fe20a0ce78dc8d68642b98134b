@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "75282706_017ffda3",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T18:02:38Z",
+      "side": 1,
+      "message": "Another option here would be pass in something like an optional ShouldAbortCB \u003d base::OnceCallback\u003cbool(PipelineMetadata)\u003e with the understanding that it will be called from an arbitrary thread.\n\nThis compartmentalizes the logic a bit, but is also confusing since we can\u0027t remove the existing RenderClient::ReportMetadata which is always delivered on the render thread.",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ec16387_f783381e",
         "filename": "media/base/pipeline_impl.cc",
         "patchSetId": 3
