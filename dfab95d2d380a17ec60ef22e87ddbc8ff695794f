@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "f45b12a1_6265dc76",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "Now that I\u0027ve read through more, I think this is\n\n// Swizzle RGBA to SkPMColor order, and return the AND of all alpha channels.",
+      "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2e1cbd_4e852088",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s drop these 16\u0027s.  You don\u0027t need to know whether pixel_count \u003e\u003d 16 to call it, and it sort of reads like we\u0027re working with 16-bit pixels or 16-bit channels.",
+      "range": {
+        "startLine": 285,
+        "startChar": 36,
+        "endLine": 285,
+        "endChar": 38
+      },
+      "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddbf4465_20f01c69",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 7
@@ -13,6 +53,58 @@
       "writtenOn": "2018-02-06T20:38:25Z",
       "side": 1,
       "message": "Blink style suggests to use references to non-null pointers.\n\nOn the other hand, the code here already uses raw pointers, so I guess is ok.",
+      "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf9c5b1_b438e995",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "That\u0027s for pointers to single values, right?  This here is an array... it\u0027d be kinda wacky to pass a reference to the first pixel in an array.",
+      "parentUuid": "ddbf4465_20f01c69",
+      "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd72045_3a213283",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "This feels wrong.  bgra here doesn\u0027t mean bgra anymore.\n\nLet\u0027s test exactly what we care about.  It looks like ImageFrame::SetRGBARaw() is creating SkPMColors, which in Chromium are indeed RGBA pixels on Android and BGRA otherwise.  We can test this directly.\n\nrgba \u003d vld4q_u8(src_ptr);\nalpha_mask_vector \u003d vandq_u8(alpha_mask_vector, rgba.val[3]);\n\n#if SK_PMCOLOR_BYTE_ORDER(R,G,B,A)\n  vst4q_u8(reinterpret_cast\u003cuint8_t*\u003e(dst_pixel), rgba);\n\n#elif SK_PMCOLOR_BYTE_ORDER(B,G,R,A)\n  uint8x16x4_t bgra \u003d {{\n    rgba.val[2],\n    rgba.val[1],\n    rgba.val[0],\n    rgba.val[3],\n  }};\n  vst4q_u8(reinterpret_cast\u003cuint8_t*\u003e(dst_pixel), bgra);\n\n#endif\n...",
+      "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82af7c51_0ed8b7ca",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "All the same above here too?",
       "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
