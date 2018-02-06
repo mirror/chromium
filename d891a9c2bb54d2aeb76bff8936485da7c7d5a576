@@ -16,6 +16,24 @@
       "revId": "d891a9c2bb54d2aeb76bff8936485da7c7d5a576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7194c05_a2a3ec33",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T19:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcad84ec_b0483f8b",
+      "revId": "d891a9c2bb54d2aeb76bff8936485da7c7d5a576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

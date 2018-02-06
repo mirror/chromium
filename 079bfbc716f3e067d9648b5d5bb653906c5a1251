@@ -617,6 +617,24 @@
     },
     {
       "key": {
+        "uuid": "ec98f24e_40b7a9ca",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T19:29:52Z",
+      "side": 1,
+      "message": "Thanks for the information. Added the null check.",
+      "parentUuid": "8333f7e7_77e42f62",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c8b60d7_f4ea84e3",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
