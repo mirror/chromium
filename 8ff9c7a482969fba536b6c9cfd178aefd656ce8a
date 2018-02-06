@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2ec9e81_b5d0ed41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aea4557_49af57c4",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7af073d_d3fdcc12",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca80c3d7_bf200327",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7af073d_d3fdcc12",
+      "range": {
+        "startLine": 172,
+        "startChar": 47,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c42f49a3_18b8e441",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "This is in reference to https://cs.chromium.org/chromium/src/chrome/browser/ui/views/tabs/tab.cc?l\u003d399\n\nI will add that the overlap is from the succeeding tab, but why this value is stored in this way I am not sure.",
+      "parentUuid": "bcb48bfd_e8dc8c08",
+      "range": {
+        "startLine": 53,
+        "startChar": 38,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4817c11f_54d5623f",
         "filename": "chrome/browser/ui/layout_constants.h",
         "patchSetId": 7
@@ -105,6 +177,24 @@
       "writtenOn": "2018-02-04T23:13:00Z",
       "side": 1,
       "message": "Why do we need TAB_TOUCH_WIDTH and TAB_STANDARD_WIDTH? shouldn\u0027t all non-pinned tabs in a browser process have equivalent widths?",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15038acb_2b6ad102",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "TAB_TOUCH_WIDTH is an existing terminology that refers to the width of the tab when the tabstrip is in touch layout mode and the tabs are stacked. The tab standard width is the standard width when its size is not being affected by anything.",
+      "parentUuid": "4817c11f_54d5623f",
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "ebd4137a_ed469406",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b692115_5a97343f",
+      "range": {
+        "startLine": 567,
+        "startChar": 13,
+        "endLine": 567,
+        "endChar": 14
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817fe6de_44ffecbd",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -154,6 +268,30 @@
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af061925_89bb59d3",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "817fe6de_44ffecbd",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 570,
+        "endChar": 64
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "5f5aaab6_d89ee976",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9d70532_42b2c57b",
+      "range": {
+        "startLine": 602,
+        "startChar": 1,
+        "endLine": 606,
+        "endChar": 25
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd21dd56_5905512d",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "6b9a7ad9_1c0398bb",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd21dd56_5905512d",
+      "range": {
+        "startLine": 1036,
+        "startChar": 6,
+        "endLine": 1036,
+        "endChar": 35
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8fda17b_9e72c60f",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -214,6 +400,30 @@
       "writtenOn": "2018-02-03T01:35:48Z",
       "side": 1,
       "message": "Isn\u0027t this case the same as the one in line 1035 (although the widths are reversed with the condition)?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1044,
+        "endChar": 64
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a820ed_7478bf89",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "d8fda17b_9e72c60f",
       "range": {
         "startLine": 1044,
         "startChar": 16,
@@ -243,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "34d185e5_d71ccaa3",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "The priority order matters.\nIf close button width is 16 and favicon \u0026 alert icon width are 12.\nThen an available width of 24px for an active tab will only show 1 icon.\nBut an available width of 24px for an inactive tab will show 2 icons. Not sure how this can be done in an alternative way.",
+      "parentUuid": "545363e7_f8b73d6f",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "641d14b0_d4a8ae8d",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -263,6 +491,30 @@
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d24c50_9cf6b1e5",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "641d14b0_d4a8ae8d",
+      "range": {
+        "startLine": 1137,
+        "startChar": 39,
+        "endLine": 1137,
+        "endChar": 43
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "61f20ac2_2f271548",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0319e2c6_5c19b3ea",
+      "range": {
+        "startLine": 1142,
+        "startChar": 39,
+        "endLine": 1142,
+        "endChar": 44
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea27e996_299bbe1e",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 7
@@ -300,6 +576,24 @@
       "writtenOn": "2018-02-04T23:13:00Z",
       "side": 1,
       "message": "non-primitive statics are not allowed (this will add a call to its destructor after main() exits). But there\u0027s already a VectorIconCache in paint_vector_icon.cc -- gfx::IconDescription already includes color -- I don\u0027t think you need this.",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e49f30_3bf2f0a8",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "This icon requires superimposing 2 other icons. I am trying to avoid this operation of superimposition at every tab state change for every tab in the tabstrip.\n\nAlso this will be reused for every browser window during a session.\nChanging it to base::NoDestructor\u003cT\u003e to avoid call on destructor after main().",
+      "parentUuid": "ea27e996_299bbe1e",
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -323,6 +617,24 @@
     },
     {
       "key": {
+        "uuid": "4e8b42e5_4bc1879f",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1101a068_1de79009",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1b55df_136695c1",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
         "patchSetId": 7
@@ -337,6 +649,24 @@
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7285a2ea_a4334ba9",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-06T01:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1b55df_136695c1",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
