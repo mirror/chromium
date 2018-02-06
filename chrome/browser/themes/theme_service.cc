@@ -47,6 +47,7 @@
 #include "extensions/common/extension_set.h"
 #include "extensions/features/features.h"
 #include "ui/base/layout.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia.h"
@@ -423,6 +424,9 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
   const int kNtpText = ThemeProperties::COLOR_NTP_TEXT;
   const int kLabelBackground =
       ThemeProperties::COLOR_SUPERVISED_USER_LABEL_BACKGROUND;
+
+  const bool is_touch_optimized_ui =
+      ui::MaterialDesignController::IsTouchOptimizedUiEnabled();
   switch (id) {
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON:
       return color_utils::HSLShift(
@@ -457,6 +461,10 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
           0x4D);
     }
     case ThemeProperties::COLOR_BACKGROUND_TAB: {
+      // Material design 2 uses different tab background colors.
+      if (is_touch_optimized_ui)
+        break;
+
       // The tints here serve a different purpose than TINT_BACKGROUND_TAB.
       // That tint is used to create background tab images for custom themes by
       // lightening the frame images.  The tints here create solid colors for

@@ -39,6 +39,7 @@
 #include "third_party/skia/include/pathops/SkPathOps.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
@@ -70,11 +71,7 @@ using base::UserMetricsAction;
 
 namespace {
 
-// Width of touch tabs.
-const int kTouchWidth = 120;
-
 const int kExtraLeftPaddingToBalanceCloseButtonPadding = 2;
-const int kAfterTitleSpacing = 4;
 
 // When a non-pinned tab becomes a pinned tab the width of the tab animates. If
 // the width of a pinned tab is at least kPinnedTabExtraWidthToRenderAsNormal
@@ -266,6 +263,36 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
 Tab::~Tab() {
 }
 
+SkColor Tab::GetAlertIndicatorColor(TabAlertState state) const {
+  if (!ui::MaterialDesignController::IsTouchOptimizedUiEnabled())
+    return button_color_;
+
+  // If theme provider is not yet available, return the default button
+  // color.
+  const ui::ThemeProvider* theme_provider = GetThemeProvider();
+  if (!theme_provider)
+    return button_color_;
+
+  switch (state) {
+    case TabAlertState::AUDIO_PLAYING:
+    case TabAlertState::AUDIO_MUTING:
+      return theme_provider->GetColor(ThemeProperties::COLOR_TAB_ALERT_AUDIO);
+      break;
+
+    case TabAlertState::MEDIA_RECORDING:
+      return theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_ALERT_RECORDING);
+      break;
+
+    case TabAlertState::TAB_CAPTURING:
+      return theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_ALERT_CAPTURING);
+
+    default:
+      return button_color_;
+  }
+}
+
 bool Tab::IsActive() const {
   return controller_->IsActiveTab(this);
 }
@@ -397,14 +424,14 @@ gfx::Size Tab::GetMinimumActiveSize() {
 
 // static
 gfx::Size Tab::GetStandardSize() {
-  constexpr int kNetTabWidth = 193;
+  const int kNetTabWidth = GetLayoutConstant(TAB_STANDARD_WIDTH);
   const int overlap = GetOverlap();
   return gfx::Size(kNetTabWidth + overlap, GetMinimumInactiveSize().height());
 }
 
 // static
 int Tab::GetTouchWidth() {
-  return kTouchWidth;
+  return GetLayoutConstant(TAB_TOUCH_WIDTH);
 }
 
 // static
@@ -567,6 +594,8 @@ void Tab::Layout() {
   icon_->SetBoundsRect(favicon_bounds);
   icon_->SetVisible(showing_icon_);
 
+  const int kAfterTitleSpacing = GetLayoutConstant(TAB_AFTER_TITLE_SPACING);
+
   showing_close_button_ = ShouldShowCloseBox();
   if (showing_close_button_) {
     // If the ratio of the close button size to tab width exceeds the maximum.
@@ -596,9 +625,14 @@ void Tab::Layout() {
 
   showing_alert_indicator_ = ShouldShowAlertIndicator();
   if (showing_alert_indicator_) {
+    const bool is_touch_optimized =
+        ui::MaterialDesignController::IsTouchOptimizedUiEnabled();
     const gfx::Size image_size(alert_indicator_button_->GetPreferredSize());
-    const int right = showing_close_button_ ?
-        close_button_->x() + close_button_->GetInsets().left() : lb.right();
+    const int close_button_left_offset =
+        is_touch_optimized ? 0 : close_button_->GetInsets().left();
+    const int right = showing_close_button_
+                          ? close_button_->x() + close_button_left_offset
+                          : lb.right();
     gfx::Rect bounds(
         std::max(lb.x(), right - image_size.width()),
         lb.y() + (lb.height() - image_size.height() + 1) / 2,
@@ -612,13 +646,14 @@ void Tab::Layout() {
   // Size the title to fill the remaining width and use all available height.
   bool show_title = ShouldRenderAsNormalTab();
   if (show_title) {
-    constexpr int kTitleSpacing = 6;
+    const int kPreTitleSpacing = GetLayoutConstant(TAB_PRE_TITLE_SPACING);
     // When computing the spacing from the favicon, don't count the actual
     // icon view width (which will include extra room for the alert indicator),
     // but rather the normal favicon width which is what it will look like.
     const int title_left =
-        showing_icon_ ? (favicon_bounds.x() + gfx::kFaviconSize + kTitleSpacing)
-                      : start;
+        showing_icon_
+            ? (favicon_bounds.x() + gfx::kFaviconSize + kPreTitleSpacing)
+            : start;
     int title_right = lb.right();
     if (showing_alert_indicator_) {
       title_right = alert_indicator_button_->x() - kAfterTitleSpacing;
@@ -1015,11 +1050,33 @@ int Tab::IconCapacity() const {
   const gfx::Size min_size(GetMinimumInactiveSize());
   if (height() < min_size.height())
     return 0;
-  const int available_width = std::max(0, width() - min_size.width());
-  // All icons are the same size as the favicon.
-  const int icon_width = gfx::kFaviconSize;
+  const int width_available = std::max(0, width() - min_size.width());
+
+  const int favicon_width = gfx::kFaviconSize;
+  const int alert_indicator_width =
+      alert_indicator_button_->GetPreferredSize().width();
+
+  // Cannot use GetContentBounds(), as it may have not been initialized.
+  const int close_button_width = close_button_->GetPreferredSize().width() -
+                                 close_button_->GetInsets().width();
+
   // We need enough space to display the icons flush against each other.
-  const int visible_icons = available_width / icon_width;
+  int visible_icons = 0;
+
+  // In active tab, the close button is given priority over favicon.
+  int width_used = IsActive() ? close_button_width : favicon_width;
+  if (width_used <= width_available)
+    visible_icons++;
+
+  // Next priority is given to the alert indicator.
+  width_used += alert_indicator_width;
+  if (width_used <= width_available)
+    visible_icons++;
+
+  width_used += IsActive() ? favicon_width : close_button_width;
+  if (width_used <= width_available)
+    visible_icons++;
+
   // When the close button will be visible on inactive tabs, we add additional
   // padding to the left of the favicon to balance the whitespace inside the
   // non-hovered close button image; otherwise, the tab contents look too close
@@ -1030,9 +1087,14 @@ int Tab::IconCapacity() const {
   // shift.
   if (visible_icons < 3)
     return visible_icons;
+
   const int padding = controller_->ShouldHideCloseButtonForInactiveTabs() ?
       0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
-  return (available_width - padding) / icon_width;
+
+  if (width_used + padding > width_available)
+    visible_icons--;
+
+  return visible_icons;
 }
 
 bool Tab::ShouldShowIcon() const {
@@ -1086,12 +1148,43 @@ void Tab::OnButtonColorMaybeChanged() {
       ThemeProperties::COLOR_TAB_TEXT :
       ThemeProperties::COLOR_BACKGROUND_TAB_TEXT);
   const SkColor new_button_color = SkColorSetA(title_color, 0xA0);
+  const bool is_touch_optimized =
+      ui::MaterialDesignController::IsTouchOptimizedUiEnabled();
+
   if (button_color_ != new_button_color) {
+    // Initialize the tab close button colors if this is the first run.
+    if (is_touch_optimized && button_color_ == SK_ColorTRANSPARENT) {
+      // Set the active color info.
+      TabCloseButton::StateColorInfo active_color_info, inactive_color_info;
+      active_color_info.icon =
+          theme_provider->GetColor(ThemeProperties::COLOR_TOOLBAR);
+      active_color_info.icon_hover = theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_CLOSE_BUTTON_ICON_HOVER);
+      active_color_info.background = theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE);
+      active_color_info.background_hover = theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER);
+      active_color_info.background_pressed = theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER);
+
+      // Set the inactive color info.
+      inactive_color_info = active_color_info;
+      inactive_color_info.background = theme_provider->GetColor(
+          ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE);
+
+      close_button_->SetStateColorInfo(active_color_info, inactive_color_info);
+    }
+
     button_color_ = new_button_color;
     title_->SetEnabledColor(title_color);
     alert_indicator_button_->OnParentTabButtonColorChanged();
-    close_button_->SetTabColor(button_color_);
+    if (!is_touch_optimized)
+      close_button_->SetTabColor(button_color_);
   }
+
+  // Update the close button's active state.
+  if (is_touch_optimized)
+    close_button_->ActiveStateChanged(IsActive());
 }
 
 Tab::BackgroundCache::BackgroundCache() = default;

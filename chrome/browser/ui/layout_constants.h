@@ -11,7 +11,7 @@
 enum LayoutConstant {
   // The vertical padding (additional to TOOLBAR_ELEMENT_PADDING) above and
   // below location bar bubbles.
-  LOCATION_BAR_BUBBLE_VERTICAL_PADDING,
+  LOCATION_BAR_BUBBLE_VERTICAL_PADDING = 0,
 
   // The vertical padding between the edge of a location bar bubble and its
   // contained text.
@@ -43,6 +43,27 @@ enum LayoutConstant {
 
   // The horizontal space between most items in the toolbar.
   TOOLBAR_STANDARD_SPACING,
+
+  // The standard width of a touch tab. This does not include the endcap width.
+  TAB_TOUCH_WIDTH,
+
+  // The padding between tabs when stacked in touch mode.
+  TAB_STACK_PADDING,
+
+  // The standard tab width excluding the overlap or the endcap width on one
+  // side.
+  TAB_STANDARD_WIDTH,
+
+  TAB_PRE_TITLE_SPACING,
+
+  TAB_AFTER_TITLE_SPACING,
+
+  // Width of the alert indicator icon displayed in the tab. The same widht is
+  // used for all 3 states of normal, hovered and pressed.
+  TAB_ALERT_INDICATOR_ICON_DEFAULT_WIDTH,
+
+  // Width of the icon when using the presenting alert indicator.
+  TAB_ALERT_INDICATOR_PRESENTING_ICON_WIDTH,
 };
 
 enum LayoutInset {
