@@ -26,6 +26,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/proxy_resolution/proxy_config.h"
 #include "net/proxy_resolution/proxy_config_service_common_unittest.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
@@ -214,8 +215,8 @@ class MockSettingGetter : public ProxyConfigServiceLinux::SettingGetter {
     return task_runner_;
   }
 
-  ProxyConfigSource GetConfigSource() override {
-    return PROXY_CONFIG_SOURCE_TEST;
+  NetworkTrafficAnnotationTag GetTrafficAnnotation() override {
+    return TRAFFIC_ANNOTATION_FOR_TESTS;
   }
 
   bool GetString(StringSetting key, std::string* result) override {

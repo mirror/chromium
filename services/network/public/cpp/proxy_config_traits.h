@@ -8,8 +8,8 @@
 #include "base/component_export.h"
 #include "net/proxy_resolution/proxy_bypass_rules.h"
 #include "net/proxy_resolution/proxy_config.h"
-#include "net/proxy_resolution/proxy_config_source.h"
 #include "net/proxy_resolution/proxy_list.h"
+#include "services/network/public/cpp/mutable_network_traffic_annotation_tag_struct_traits.h"
 #include "services/network/public/interfaces/proxy_config.mojom-shared.h"
 #include "url/mojom/url_gurl_mojom_traits.h"
 
@@ -90,17 +90,6 @@ struct COMPONENT_EXPORT(NETWORK_CPP_BASE)
 
 template <>
 struct COMPONENT_EXPORT(NETWORK_CPP_BASE)
-    EnumTraits<network::mojom::ProxyConfigSource, net::ProxyConfigSource> {
- public:
-  static network::mojom::ProxyConfigSource ToMojom(
-      net::ProxyConfigSource net_proxy_config_source);
-  static bool FromMojom(
-      network::mojom::ProxyConfigSource mojo_proxy_config_source,
-      net::ProxyConfigSource* out);
-};
-
-template <>
-struct COMPONENT_EXPORT(NETWORK_CPP_BASE)
     StructTraits<network::mojom::ProxyConfigDataView, net::ProxyConfig> {
  public:
   static bool auto_detect(const net::ProxyConfig& r) { return r.auto_detect(); }
@@ -112,8 +101,9 @@ struct COMPONENT_EXPORT(NETWORK_CPP_BASE)
       const net::ProxyConfig& r) {
     return r.proxy_rules();
   }
-  static net::ProxyConfigSource source(const net::ProxyConfig& r) {
-    return r.source();
+  static net::MutableNetworkTrafficAnnotationTag traffic_annotation(
+      const net::ProxyConfig& r) {
+    return net::MutableNetworkTrafficAnnotationTag(r.traffic_annotation());
   }
   static int32_t id(const net::ProxyConfig& r) { return r.id(); }
   static bool Read(network::mojom::ProxyConfigDataView data,
