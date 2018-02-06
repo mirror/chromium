@@ -16,6 +16,24 @@
       "revId": "f1a32804ff96698152c127cd3ed52f85020bd7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a915a9c_b27d4b25",
+        "filename": "third_party/WebKit/Source/core/html/HTMLScriptElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-02-06T14:32:32Z",
+      "side": 1,
+      "message": "ok, I\u0027ll make a few CLs to achieve it.",
+      "parentUuid": "4ff77120_9214f402",
+      "revId": "f1a32804ff96698152c127cd3ed52f85020bd7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
