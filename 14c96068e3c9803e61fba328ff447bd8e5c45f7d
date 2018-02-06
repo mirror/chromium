@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1695017e_ac4935ac",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-02-06T08:21:06Z",
+      "side": 1,
+      "message": "I understand your point. Security said that this whitelisting is okay. See more details in the bug on CL description.",
+      "parentUuid": "253be673_6d6cf9fb",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1418cc63_672a4fbd",
         "filename": "chrome/common/extensions/api/_api_features.json",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436ca017_a3576500",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-02-06T08:21:06Z",
+      "side": 1,
+      "message": "Moving the whitelist to _permission_features seems not working for hotrod. I\u0027ve added settingsPrivate permission to the app side. Do you have any idea why?",
+      "parentUuid": "621ea28d_260f6b34",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
