@@ -9,8 +9,13 @@
 #include "base/feature_list.h"
 #include "base/strings/stringprintf.h"
 #include "content/browser/loader/data_pipe_to_source_stream.h"
+#include "content/browser/loader/signed_exchange_cert_fetcher.h"
 #include "content/browser/loader/signed_exchange_handler.h"
 #include "content/browser/loader/source_stream_to_data_pipe.h"
+#include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/common/content_features.h"
 #include "net/http/http_util.h"
 #include "services/network/public/cpp/features.h"
@@ -70,11 +75,16 @@ class WebPackageLoader::ResponseTimingInfo {
 WebPackageLoader::WebPackageLoader(
     const network::ResourceResponseHead& original_response,
     network::mojom::URLLoaderClientPtr forwarding_client,
-    network::mojom::URLLoaderClientEndpointsPtr endpoints)
+    network::mojom::URLLoaderClientEndpointsPtr endpoints,
+    network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_for_browser,
+    net::URLRequestContext* request_context)
     : original_response_timing_info_(
           std::make_unique<ResponseTimingInfo>(original_response)),
       forwarding_client_(std::move(forwarding_client)),
       url_loader_client_binding_(this),
+      url_loader_factory_for_browser_(
+          std::move(url_loader_factory_for_browser)),
+      request_context_(request_context),
       weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
   url_loader_.Bind(std::move(endpoints->url_loader));
@@ -145,7 +155,8 @@ void WebPackageLoader::OnStartLoadingResponseBody(
   signed_exchange_handler_ = std::make_unique<SignedExchangeHandler>(
       std::make_unique<DataPipeToSourceStream>(std::move(body)),
       base::BindOnce(&WebPackageLoader::OnHTTPExchangeFound,
-                     weak_factory_.GetWeakPtr()));
+                     weak_factory_.GetWeakPtr()),
+      std::move(url_loader_factory_for_browser_), request_context_);
 }
 
 void WebPackageLoader::OnComplete(
