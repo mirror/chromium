@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3a89a69_b18029de",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-06T01:59:26Z",
+      "side": 1,
+      "message": "No, this is just temporary. Meredith has a change planned to fix this.",
+      "parentUuid": "ebbe4040_3d636c00",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453a04df_a7fe676a",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T01:31:13Z",
       "side": 1,
       "message": "Would it be possible to check if layout is clean and then\njust resolve immediately if so?",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a02acd_5b853335",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-06T01:59:26Z",
+      "side": 1,
+      "message": "Good idea! I just had a go and it seems non-trivial - mind if I do it as a follow-up so that Meredith can start working on the solution for the consistency issue you mention in your other comment, in parallel?",
+      "parentUuid": "453a04df_a7fe676a",
       "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
