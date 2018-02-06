@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfe90617_fdc9b9e3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-06T22:24:49Z",
+      "side": 1,
+      "message": "Is this supposed to be called when the preference changes? Seems like this is not added to pref_change_registrar_?",
+      "range": {
+        "startLine": 97,
+        "startChar": 41,
+        "endLine": 97,
+        "endChar": 64
+      },
+      "revId": "58dcfa1580eb288dc16b022560c6bd6cbeb7d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
