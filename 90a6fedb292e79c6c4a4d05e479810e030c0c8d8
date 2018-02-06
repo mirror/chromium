@@ -229,6 +229,30 @@
     },
     {
       "key": {
+        "uuid": "35fd80ce_7bbf2681",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T12:16:12Z",
+      "side": 1,
+      "message": "ThreadLocalStorageCleanup receives a void* from the item stored in the TLS::Slot (i.e. |tls_value_ptr_|), right? It has nothing to do with the Slot being static? Or am I missing something?",
+      "parentUuid": "ea36a799_7a8cad83",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cc335b_cdaa34fe",
         "filename": "base/threading/thread_local_storage_unittest.cc",
         "patchSetId": 4
