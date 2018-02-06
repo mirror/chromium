@@ -22,6 +22,30 @@
       "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067e7406_d89264d6",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-06T15:46:19Z",
+      "side": 1,
+      "message": "GetStateOfTabReloader is a member function, and as soon as the compiler started complaining about the \"this\" pointer I just gave up :)",
+      "parentUuid": "f533439e_24b6ed75",
+      "range": {
+        "startLine": 1243,
+        "startChar": 2,
+        "endLine": 1248,
+        "endChar": 18
+      },
+      "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
