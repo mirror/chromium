@@ -37,6 +37,7 @@ class Layer;
 class LayerTreeFrameSink;
 class LayerTreeHost;
 class MutatorHost;
+class RenderFrameMetadataObserver;
 }
 
 namespace gfx {
@@ -223,6 +224,9 @@ class CONTENT_EXPORT RenderWidgetCompositor
   const cc::LayerTreeSettings& GetLayerTreeSettings() const {
     return layer_tree_host_->GetSettings();
   }
+
+  void SetRenderFrameObserver(
+      std::unique_ptr<cc::RenderFrameMetadataObserver> observer);
 
  protected:
   friend class RenderViewImplScaleFactorTest;
