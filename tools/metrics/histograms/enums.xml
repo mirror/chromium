@@ -2444,6 +2444,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Some other item selected"/>
 </enum>
 
+<enum name="AutofillSubmittedCardState">
+  <int value="0" label="Valid Card"/>
+  <int value="1" label="Invalid card number"/>
+  <int value="2" label="Invalid expiration date"/>
+</enum>
+
 <enum name="AutofillSubmittedServerCardExpirationStatus">
   <int value="0" label="Expiration date matched, full server card"/>
   <int value="1" label="Expiration date did not match, full server card"/>

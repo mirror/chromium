@@ -6114,6 +6114,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Autofill.SubmittedCardState" enum="AutofillSubmittedCardState">
+  <owner>dlkumar@google.com</owner>
+  <summary>Metric to measure card state when form is submitted.</summary>
+</histogram>
+
 <histogram name="Autofill.SubmittedServerCardExpirationStatus"
     enum="AutofillSubmittedServerCardExpirationStatus">
   <owner>jsaul@google.com</owner>
