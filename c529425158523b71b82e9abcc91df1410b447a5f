@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344437ea_4a531fda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-02-06T13:52:41Z",
+      "side": 1,
+      "message": "Please wrap this for `git log`.",
+      "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db5a25f_30115ff3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-02-06T13:52:41Z",
+      "side": 1,
+      "message": "Is there an associated Bug: ?",
+      "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205af2bc_34230548",
+        "filename": "third_party/google_toolbox_for_mac/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-02-06T13:52:41Z",
+      "side": 1,
+      "message": "Does this not need libs \u003d [ \"sqlite\" ] too?",
+      "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
