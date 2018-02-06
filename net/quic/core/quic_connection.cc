@@ -400,6 +400,11 @@ void QuicConnection::SetMaxPacingRate(QuicBandwidth max_pacing_rate) {
   sent_packet_manager_.SetMaxPacingRate(max_pacing_rate);
 }
 
+void QuicConnection::AdjustNetworkParameters(QuicBandwidth bandwidth,
+                                             QuicTime::Delta rtt) {
+  sent_packet_manager_.AdjustNetworkParameters(bandwidth, rtt);
+}
+
 QuicBandwidth QuicConnection::MaxPacingRate() const {
   return sent_packet_manager_.MaxPacingRate();
 }

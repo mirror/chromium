@@ -122,6 +122,10 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
   // and the previously encrypted data needs to be encrypted with a new key.
   void RetransmitUnackedPackets(TransmissionType retransmission_type);
 
+  // Notify the sent packet manager of an external network measurement or
+  // prediction for either |bandwidth| or |rtt|; either can be empty.
+  void AdjustNetworkParameters(QuicBandwidth bandwidth, QuicTime::Delta rtt);
+
   // Retransmits the oldest pending packet there is still a tail loss probe
   // pending.  Invoked after OnRetransmissionTimeout.
   bool MaybeRetransmitTailLossProbe();
