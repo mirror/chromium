@@ -16,6 +16,24 @@
       "revId": "43fd5fa8ece158628901e511b7b955a93414bad7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abeebd3_975e0a23",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T23:48:13Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for bringing this up! I thought the same way, yet haven\u0027t pushed myself to coming up with a better comment.",
+      "parentUuid": "f265f46d_7a825fd2",
+      "revId": "43fd5fa8ece158628901e511b7b955a93414bad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
