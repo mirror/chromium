@@ -51,8 +51,9 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 // the body of the main resource to the renderer process. When enabled, the
 // NavigationMojoResponse feature replaces this mechanism by a Mojo DataPipe.
 // Design doc: https://goo.gl/Rrrc7n.
+// TODO(arthursonzogni): Remove this change before sending this CL to the CQ.
 const base::Feature kNavigationMojoResponse{"NavigationMojoResponse",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 // If Canvas2D Image Chromium is allowed, this feature controls whether it is
 // enabled.
