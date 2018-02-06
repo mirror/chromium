@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd0bcc73_2da9c512",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T04:12:23Z",
+      "side": 1,
+      "message": "To help me understand this code, why do we need to do this both in MaybeCreateSubresourceLoaderparams and here? Is it only needed here in the non-S13nServiceWorker case? If so, could we add a comment/TODO to remove it after S13nServiceWorker is enabled?",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed711279_728f060c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
