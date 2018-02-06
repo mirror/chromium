@@ -28,6 +28,12 @@ namespace arc {
 
 namespace {
 
+double GetDefaultScaleFactor() {
+  if (exo::WMHelper::HasInstance())
+    return exo::WMHelper::GetInstance()->GetDefaultDeviceScaleFactor();
+  return 1.0;
+}
+
 class ArcWindowDelegateImpl : public ArcImeService::ArcWindowDelegate {
  public:
   explicit ArcWindowDelegateImpl(ArcImeService* ime_service)
@@ -283,11 +289,13 @@ void ArcImeService::OnKeyboardAppearanceChanging(
     const keyboard::KeyboardStateDescriptor& state) {
   if (!focused_arc_window_)
     return;
-  aura::Window* window = focused_arc_window_;
   gfx::Rect new_bounds = state.occluded_bounds;
   // Multiply by the scale factor. To convert from DPI to physical pixels.
-  gfx::Rect bounds_in_px = gfx::ScaleToEnclosingRect(
-      new_bounds, window->layer()->device_scale_factor());
+  // The default scale factor is always used because Android side is always
+  // using the default scale factor regardless of dynamic scale factor in Chrome
+  // side.
+  gfx::Rect bounds_in_px =
+      gfx::ScaleToEnclosingRect(new_bounds, GetDefaultScaleFactor());
 
   ime_bridge_->SendOnKeyboardAppearanceChanging(bounds_in_px,
                                                 state.is_available);
@@ -369,26 +377,16 @@ ui::TextInputType ArcImeService::GetTextInputType() const {
 }
 
 gfx::Rect ArcImeService::GetCaretBounds() const {
-  if (!focused_arc_window_)
-    return gfx::Rect();
-  aura::Window* window = focused_arc_window_;
-
   // |cursor_rect_| holds the rectangle reported from ARC apps, in the "screen
   // coordinates" in ARC, counted by physical pixels.
   // Chrome OS input methods expect the coordinates in Chrome OS screen, within
   // device independent pixels. Two factors are involved for the conversion.
 
   // Divide by the scale factor. To convert from physical pixels to DIP.
-  gfx::Rect converted = gfx::ScaleToEnclosingRect(
-      cursor_rect_, 1 / window->layer()->device_scale_factor());
-
-  // Add the offset of the window showing the ARC app.
-  // TODO(yoshiki): Support for non-arc toplevel window. The following code do
-  // not work correctly with arc windows inside non-arc toplevel window (eg.
-  // notification).
-  converted.Offset(
-      window->GetToplevelWindow()->GetBoundsInScreen().OffsetFromOrigin());
-  return converted;
+  // The default scale factor is always used because Android side is always
+  // using the default scale factor regardless of dynamic scale factor in Chrome
+  // side.
+  return gfx::ScaleToEnclosingRect(cursor_rect_, 1 / GetDefaultScaleFactor());
 }
 
 bool ArcImeService::GetTextRange(gfx::Range* range) const {
