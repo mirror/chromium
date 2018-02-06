@@ -22,6 +22,7 @@ RemoteSuggestionsStatusServiceImpl::RemoteSuggestionsStatusServiceImpl(
     : status_(RemoteSuggestionsStatus::EXPLICITLY_DISABLED),
       additional_toggle_pref_(additional_toggle_pref),
       is_signed_in_(is_signed_in),
+      list_visible_during_session_(true),
       pref_service_(pref_service) {
   ntp_snippets::metrics::RecordRemoteSuggestionsProviderState(
       !IsExplicitlyDisabled());
@@ -34,6 +35,7 @@ RemoteSuggestionsStatusServiceImpl::~RemoteSuggestionsStatusServiceImpl() =
 void RemoteSuggestionsStatusServiceImpl::RegisterProfilePrefs(
     PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kEnableSnippets, true);
+  registry->RegisterBooleanPref(prefs::kArticlesListVisible, true);
 }
 
 void RemoteSuggestionsStatusServiceImpl::Init(
@@ -41,6 +43,11 @@ void RemoteSuggestionsStatusServiceImpl::Init(
   DCHECK(status_change_callback_.is_null());
 
   status_change_callback_ = callback;
+
+  // List is never visible during session only in case it was not visible based
+  // on pref setting at initialization time.
+  list_visible_during_session_ =
+      pref_service_->GetBoolean(prefs::kArticlesListVisible);
 
   // Notify about the current state before registering the observer, to make
   // sure we don't get a double notification due to an undefined start state.
@@ -87,12 +94,26 @@ void RemoteSuggestionsStatusServiceImpl::OnSignInStateChanged(
   OnStateChanged(GetStatusFromDeps());
 }
 
+void RemoteSuggestionsStatusServiceImpl::OnListVisibilityToggled(bool visible) {
+  if (visible)
+    list_visible_during_session_ = true;
+  pref_service_->SetBoolean(prefs::kArticlesListVisible, visible);
+  OnStateChanged(GetStatusFromDeps());
+}
+
 bool RemoteSuggestionsStatusServiceImpl::IsExplicitlyDisabled() const {
   if (!pref_service_->GetBoolean(prefs::kEnableSnippets)) {
-    DVLOG(1) << "[GetStatusFromDeps] Disabled via pref";
+    DVLOG(1) << "[GetStatusFromDeps] Disabled via pref.";
     return true;
   }
 
+  if (!list_visible_during_session_) {
+    DVLOG(1) << "[GetStatusFromDeps] Disabled because articles list hidden.";
+    return true;
+  }
+
+  // This setting will only be set if NTP Opt-out, by hidding the list is
+  // disabled.
   if (!additional_toggle_pref_.empty()) {
     if (!pref_service_->GetBoolean(additional_toggle_pref_)) {
       DVLOG(1) << "[GetStatusFromDeps] Disabled via additional pref";
