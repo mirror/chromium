@@ -239,16 +239,15 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
         std::move(response_callback), std::move(callback));
   }
 
-  void DispatchFetchEvent(
-      const network::ResourceRequest& request,
-      mojom::FetchEventPreloadHandlePtr preload_handle,
-      mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      DispatchFetchEventCallback callback) override {
+  void DispatchFetchEvent(mojom::DispatchFetchEventParamsPtr params,
+                          DispatchFetchEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnFetchEventStub(thread_id_, request, std::move(preload_handle),
-                              std::move(response_callback),
-                              std::move(callback));
+    mojom::ServiceWorkerFetchResponseCallbackPtr response_callback(
+        std::move(params->response_callback));
+    helper_->OnFetchEventStub(
+        thread_id_, params->request, std::move(params->preload_handle),
+        std::move(response_callback), std::move(callback));
   }
 
   void DispatchNotificationClickEvent(
