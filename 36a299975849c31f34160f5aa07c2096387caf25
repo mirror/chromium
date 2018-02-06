@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a0b12b4_7f796cdb",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-06T22:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfd4aabc_b3488c6a",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f794cf_dae877d1",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T17:03:04Z",
       "side": 1,
       "message": "why scoped_refptr? why not unique_ptr?",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2520557f_f619a28b",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3714,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-06T22:13:12Z",
+      "side": 1,
+      "message": "At the time, I was maintaining it between two threads. This is no longer the case and it is now a unique_ptr.",
+      "parentUuid": "53f794cf_dae877d1",
       "revId": "36a299975849c31f34160f5aa07c2096387caf25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cdb909b8_2d21f6f6",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-06T22:13:12Z",
+      "side": 1,
+      "message": "At the time, I was maintaining it between two threads. This is no longer the case and it is now a unique_ptr.",
+      "parentUuid": "b74afbe2_e9403d04",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435d6099_04631dff",
         "filename": "cc/trees/single_thread_proxy.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "36a299975849c31f34160f5aa07c2096387caf25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70c795b_de7ac14a",
+        "filename": "cc/trees/single_thread_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-06T22:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435d6099_04631dff",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
