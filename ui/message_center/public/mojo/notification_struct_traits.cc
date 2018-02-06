@@ -57,6 +57,13 @@ const base::string16& RichNotificationDataStructTraits::accessible_name(
 }
 
 // static
+const std::string& RichNotificationDataStructTraits::vector_small_image_id(
+    const message_center::RichNotificationData& r) {
+  return message_center::Notification::GetIdForIcon(r.vector_small_image());
+}
+
+
+// static
 SkColor RichNotificationDataStructTraits::accent_color(
     const message_center::RichNotificationData& r) {
   return r.accent_color;
@@ -70,6 +77,8 @@ bool RichNotificationDataStructTraits::Read(RichNotificationDataDataView data,
       data.should_make_spoken_feedback_for_popup_updates();
   out->clickable = data.clickable();
   out->pinned = data.pinned();
+  out->vector_small_image =
+      message_center::GetIconForId(data.vector_small_image_id());
   out->accent_color = data.accent_color();
   return data.ReadProgressStatus(&out->progress_status) &&
          data.ReadAccessibleName(&out->accessible_name);
