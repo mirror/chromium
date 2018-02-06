@@ -79132,6 +79132,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Security.SecurityLevel.FormSubmission" enum="SecurityLevel">
+  <owner>cthomp@chromium.org</owner>
+  <summary>
+    Records the security level of a page when submitting a form. This histogram
+    is recorded from the DidStartNavigation method of SecurityStateTabHelper so
+    the recorded level matches that of the site the form was submitted from, not
+    that of the one the form targets.
+  </summary>
+</histogram>
+
 <histogram name="Security.SecurityLevel.NoncryptographicScheme"
     enum="SecurityLevel">
   <owner>estark@chromium.org</owner>

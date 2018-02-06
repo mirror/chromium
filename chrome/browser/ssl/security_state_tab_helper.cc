@@ -16,6 +16,7 @@
 #include "components/safe_browsing/features.h"
 #include "components/security_state/content/content_utils.h"
 #include "components/ssl_config/ssl_config_prefs.h"
+#include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
@@ -81,6 +82,15 @@ void SecurityStateTabHelper::GetSecurityInfo(
 
 void SecurityStateTabHelper::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
+  content::NavigationHandleImpl* handle_impl =
+      static_cast<content::NavigationHandleImpl*>(navigation_handle);
+  if (handle_impl->is_form_submission()) {
+    security_state::SecurityInfo info;
+    GetSecurityInfo(&info);
+    UMA_HISTOGRAM_ENUMERATION("Security.SecurityLevel.FormSubmission",
+                              info.security_level,
+                              security_state::SECURITY_LEVEL_COUNT);
+  }
   if (time_of_http_warning_on_current_navigation_.is_null() ||
       !navigation_handle->IsInMainFrame() ||
       navigation_handle->IsSameDocument()) {
