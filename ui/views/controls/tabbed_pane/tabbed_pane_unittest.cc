@@ -65,13 +65,28 @@ class TabbedPaneTest : public ViewsTestBase {
 
 // Tests tab orientation.
 TEST_F(TabbedPaneTest, HorizontalOrientation) {
-  EXPECT_EQ(tabbed_pane_->IsHorizontal(), true);
+  EXPECT_EQ(tabbed_pane_->GetOrientation(),
+            TabbedPane::Orientation::kHorizontal);
 }
 
 // Tests tab orientation.
 TEST_F(TabbedPaneTest, VerticalOrientation) {
   MakeTabbedPaneForOrientation(TabbedPane::Orientation::kVertical);
-  EXPECT_EQ(tabbed_pane_->IsHorizontal(), false);
+  EXPECT_EQ(tabbed_pane_->GetOrientation(), TabbedPane::Orientation::kVertical);
+}
+
+// Tests tab strip style.
+TEST_F(TabbedPaneTest, TabStripBorderStyle) {
+  EXPECT_EQ(tabbed_pane_->GetTabStripStyle(),
+            TabbedPane::TabStripStyle::kBorder);
+}
+
+// Tests tab strip style.
+TEST_F(TabbedPaneTest, TabStripHighlightStyle) {
+  MakeTabbedPaneForOrientation(TabbedPane::Orientation::kVertical);
+  tabbed_pane_->SetTabStripStyle(TabbedPane::TabStripStyle::kHighlight);
+  EXPECT_EQ(tabbed_pane_->GetTabStripStyle(),
+            TabbedPane::TabStripStyle::kHighlight);
 }
 
 // Tests the preferred size and layout when tabs are aligned horizontally.
