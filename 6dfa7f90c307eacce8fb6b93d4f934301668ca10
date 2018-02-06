@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d380319_cca90d6c",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:34:48Z",
+      "side": 1,
+      "message": "I\u0027m wondering if it wouldn\u0027t make sense to have empty `IntSize()` as the default value for `SetUp()`. Maybe something to look into after.",
+      "revId": "6dfa7f90c307eacce8fb6b93d4f934301668ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
