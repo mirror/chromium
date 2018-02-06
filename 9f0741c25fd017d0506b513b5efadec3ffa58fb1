@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f533439e_24b6ed75",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T04:11:26Z",
+      "side": 1,
+      "message": "I\u0027m surprised you didn\u0027t use count_if here like you did above. That said, I personally prefer this. Easier to read.",
+      "range": {
+        "startLine": 1243,
+        "startChar": 2,
+        "endLine": 1248,
+        "endChar": 18
+      },
+      "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
