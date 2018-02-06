@@ -72,9 +72,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   bool IsInitialized() const override;
   bool IsPresent() const override;
   bool IsPowered() const override;
-  void SetPowered(bool powered,
-                  const base::Closure& callback,
-                  const ErrorCallback& error_callback) override;
   bool IsDiscoverable() const override;
   void SetDiscoverable(bool discoverable,
                        const base::Closure& callback,
@@ -127,6 +124,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
 
  protected:
   // BluetoothAdapter override:
+  bool SetPoweredImpl(bool powered) override;
   void RemovePairingDelegateInternal(
       device::BluetoothDevice::PairingDelegate* pairing_delegate) override;
 
@@ -135,15 +133,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // instead of a bool, since the production code calls into a C API that does
   // not know about bool.
   using SetControllerPowerStateFunction = base::RepeatingCallback<void(int)>;
-
-  struct SetPoweredCallbacks {
-    SetPoweredCallbacks();
-    ~SetPoweredCallbacks();
-
-    bool powered = false;
-    base::OnceClosure callback;
-    ErrorCallback error_callback;
-  };
 
   // Resets |low_energy_central_manager_| to |central_manager| and sets
   // |low_energy_central_manager_delegate_| as the manager's delegate. Should

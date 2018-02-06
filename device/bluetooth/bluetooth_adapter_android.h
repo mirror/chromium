@@ -56,9 +56,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterAndroid final
   bool IsInitialized() const override;
   bool IsPresent() const override;
   bool IsPowered() const override;
-  void SetPowered(bool powered,
-                  const base::Closure& callback,
-                  const ErrorCallback& error_callback) override;
   bool IsDiscoverable() const override;
   void SetDiscoverable(bool discoverable,
                        const base::Closure& callback,
@@ -118,6 +115,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterAndroid final
   ~BluetoothAdapterAndroid() override;
 
   // BluetoothAdapter:
+  bool SetPoweredImpl(bool powered) override;
   void AddDiscoverySession(
       BluetoothDiscoveryFilter* discovery_filter,
       const base::Closure& callback,
