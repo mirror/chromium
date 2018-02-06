@@ -128,6 +128,29 @@
     },
     {
       "key": {
+        "uuid": "5d6666c1_ce49e937",
+        "filename": "device/fido/ctap_make_credential_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-06T18:03:35Z",
+      "side": 1,
+      "message": "Since GetU2fApplicationParameter and GetU2fChallengeParameter are the same between get_assertion_request_param and make_credential_request_param, what do you think about putting them in CtapRequestParam?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d81f4ac3_3f2c07e9",
         "filename": "device/fido/ctap_request_param.h",
         "patchSetId": 13
@@ -185,6 +208,30 @@
       "writtenOn": "2018-02-06T10:08:04Z",
       "side": 1,
       "message": "do we need this class given that we already have CTAPMakeCredentialRequestParam?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb45f0d_01a204d1",
+        "filename": "device/fido/u2f_register_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-02-06T18:03:35Z",
+      "side": 1,
+      "message": "We could consolidate the request classes by letting CtapMakeCredentialRequestParam have a method like CreateFromU2fRequest(app_id, ...), and same for GetAssertion. Then we can get rid of U2fRegisterParam or U2fSignParam. Although, you were perhaps already planning that in a future CL.",
+      "parentUuid": "bcaddbc6_adb353f1",
       "range": {
         "startLine": 17,
         "startChar": 6,
