@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "749edfc1_479d762c",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T00:07:07Z",
+      "side": 1,
+      "message": "Not sure if this came from a rebase mistake or what. There is no update_child_sequence_number.",
+      "range": {
+        "startLine": 103,
+        "startChar": 45,
+        "endLine": 103,
+        "endChar": 51
+      },
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "951f5cd4_e6f92682",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T00:07:07Z",
+      "side": 1,
+      "message": "This seemed to be calling GenerateId() twice? Changed to calling once.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 70
+      },
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

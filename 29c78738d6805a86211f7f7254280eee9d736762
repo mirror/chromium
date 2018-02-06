@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9333d7d_1ec69f6d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T00:07:07Z",
+      "side": 1,
+      "message": "I just threw this here to put it somewhere. Preferences on where it should go? (Separate file?)",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb5a9eb_d37a1ca7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 5437,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T00:07:07Z",
+      "side": 1,
+      "message": "Yeaahhh this looks like a rebase mistake. Sorry about that. :(",
+      "range": {
+        "startLine": 5437,
+        "startChar": 2,
+        "endLine": 5437,
+        "endChar": 69
+      },
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4349c4_4de3a014",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T00:07:07Z",
+      "side": 1,
+      "message": "Here is one of the allocation prevention sites.",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 42
+      },
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e26123b7_5d022c76",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T00:07:07Z",
+      "side": 1,
+      "message": "Here is the other. I\u0027m not sure if we want to prevent the allocation differently.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
