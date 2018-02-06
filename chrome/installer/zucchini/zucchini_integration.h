@@ -5,6 +5,7 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_INTEGRATION_H_
 #define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_INTEGRATION_H_
 
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "chrome/installer/zucchini/zucchini.h"
 
@@ -17,6 +18,10 @@ namespace zucchini {
 status::Code Apply(const base::FilePath& old_path,
                    const base::FilePath& patch_path,
                    const base::FilePath& new_path);
+
+status::Code Apply(base::File old_file,
+                   base::File patch_file,
+                   base::File new_file);
 
 }  // namespace zucchini
 

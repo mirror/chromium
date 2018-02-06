@@ -21,6 +21,7 @@ class MappedFileReader {
  public:
   // Opens |file_path| and maps it to memory for reading.
   explicit MappedFileReader(const base::FilePath& file_path);
+  explicit MappedFileReader(base::File file_path);
 
   bool IsValid() const { return buffer_.IsValid(); }
   const uint8_t* data() const { return buffer_.data(); }
@@ -39,6 +40,7 @@ class MappedFileWriter {
  public:
   // Creates |file_path| and maps it to memory for writing.
   MappedFileWriter(const base::FilePath& file_path, size_t length);
+  MappedFileWriter(base::File file, size_t length);
   ~MappedFileWriter();
 
   bool IsValid() const { return buffer_.IsValid(); }
@@ -51,6 +53,8 @@ class MappedFileWriter {
   bool Keep();
 
  private:
+  void BaseConstructor(base::File file, size_t length);
+
   enum OnCloseDeleteBehavior {
     kKeep,
     kAutoDeleteOnClose,
