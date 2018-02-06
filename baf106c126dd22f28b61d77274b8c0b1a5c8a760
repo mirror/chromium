@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6f028b_0539a652",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T21:55:48Z",
+      "side": 1,
+      "message": "We shouldn\u0027t add more flags here - prefer to add top-level setters to the URLRequest.  This is a bit too much of a smorgasbord of random flags that are handles at random locations all over the network stack, which we want to work on cleaning up.",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb9f2bf_bf6b5a18",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T21:55:48Z",
+      "side": 1,
+      "message": "Do we trust arbitrary renderers to set this flag?  I\u0027m no authority on our security model, or same-site cookies, I\u0027m just wondering if it would make more sense to modify the request itself (Make it look like a top level request by setting a null initiator?), rather than add another way to set this information.",
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
