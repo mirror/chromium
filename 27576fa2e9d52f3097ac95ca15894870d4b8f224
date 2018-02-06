@@ -34,6 +34,24 @@
       "revId": "27576fa2e9d52f3097ac95ca15894870d4b8f224",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160dd0af_8f92931c",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T21:13:01Z",
+      "side": 1,
+      "message": "Thanks! Took me a bit to find the relevant UI even with this pointer. I verified that this does in fact fix a \"user\"-visible bug and I updated the CL description to mention this.",
+      "parentUuid": "80e8a7d0_e8fa7fb5",
+      "revId": "27576fa2e9d52f3097ac95ca15894870d4b8f224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
