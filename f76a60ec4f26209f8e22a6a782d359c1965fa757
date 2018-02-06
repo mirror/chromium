@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c8eba87_06a4d60f",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T03:16:26Z",
+      "side": 1,
+      "message": "Did you check that \"inspect\" link from chrome://inspect works for local node?",
+      "revId": "f76a60ec4f26209f8e22a6a782d359c1965fa757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
