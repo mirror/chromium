@@ -1,0 +1,437 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb06575a_9364f967",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "if this fails, is there any benefit to trying again on the next OnNewModuleList call?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cc3243_67a3fd05",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "wdyt:\n  DCHECK(module_list_filter_);\n  DCHECK(installed_programs_.initialized());",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c51839_a8d075a5",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "when both the filter and InstalledPrograms are available, right?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6096eedf_83bfd8e0",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "precompute these digests (here and line 45) in IsWhitelisted so that the same values aren\u0027t computed once for each of N modules in M groups.",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669e7353_1baadfaf",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "wdyt of condensing this:\n  initialized_ \u003d base::ReadFileToString(module_list_path, \u0026contents) \u0026\u0026\n                 module_list_.ParseFromString(contents);\n  return initialized_;",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a54d91_a20f3cdb",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "DCHECK(allowed_load);\n  DCHECK(blacklist_message_type);\n  DCHECK(message_url);",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574437d8_a8d06ce7",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "must be virtual since the class has virtual methods (https://google.github.io/styleguide/cppguide.html#Inheritance).",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6d69ff_8d7d8274",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "since the pb types are already spilling out of this interface (message type), what do you think of having this return an instance of the BlacklistAction message (the true case) or an empty unique_ptr (the false case)?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de74cce_5382b9e3",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "it indicates whether or not it has succeeded, not whether or not it has been called.",
+      "range": {
+        "startLine": 62,
+        "startChar": 34,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f375577_568f45e4",
+        "filename": "chrome/browser/conflicts/module_list_filter_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "8",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c09d6e_6ba0370e",
+        "filename": "chrome/browser/conflicts/module_list_filter_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "these are both required fields -- do you need to do this in order for them to exist?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd28642_2a196dd3",
+        "filename": "chrome/browser/conflicts/module_list_filter_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "return module_list_.SerializeToString(\u0026contents) \u0026\u0026 WriteStringToFile(module_list_path_, contents);",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878a2b3f_25d53fe1",
+        "filename": "chrome/browser/conflicts/module_list_filter_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "const",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e226cbd8_bc6331b4",
+        "filename": "chrome/browser/conflicts/module_list_filter_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "static const string members need an out-of-class definition, no?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410fb0ce_390729b7",
+        "filename": "chrome/browser/conflicts/module_list_manager_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "please document |observer|.",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27e5bd5_610db8c5",
+        "filename": "chrome/browser/conflicts/module_list_manager_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "Observer* const observer_;",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdec8737_2db73d6c",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "nit: to -\u003e with",
+      "range": {
+        "startLine": 144,
+        "startChar": 51,
+        "endLine": 144,
+        "endChar": 53
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1be1581_ef196c46",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "nit: do this before checking installed programs?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1c4286_5423e67c",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "std::move(associated_program)",
+      "range": {
+        "startLine": 163,
+        "startChar": 41,
+        "endLine": 163,
+        "endChar": 59
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db9361d_524c3bb0",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "std::move(associated_program)",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e17a33b_397e2417",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "use BlacklistAction for these three members? or do you want to be free to change the proto message without changing this code?",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25a92c2_5f03c717",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "nit: omit \"explicit\"",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9bb7fe_b059e3fb",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T12:02:35Z",
+      "side": 1,
+      "message": "override",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
