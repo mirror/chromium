@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97d0e68f_34656c44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-06T14:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53036d7_89b44a1d",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c3bc21_a7d71b04",
         "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
         "patchSetId": 18
@@ -39,6 +63,24 @@
       "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270ef320_22f230db",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-06T14:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c3bc21_a7d71b04",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "cd4aa523_52dffbc3",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-06T14:44:44Z",
+      "side": 1,
+      "message": "Yes, it gets addresses from existing MtpStorageInfo objects stored in storage_info_map_.",
+      "parentUuid": "96c71633_d8ffd2d3",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d63b306_1a423324",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 18
@@ -87,6 +147,24 @@
       "writtenOn": "2018-02-05T18:51:32Z",
       "side": 1,
       "message": "Maybe instead of making this assumption about the caller, change the interface to allow only 1 observer at a time?",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32fafa4_3040b022",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-06T14:44:44Z",
+      "side": 1,
+      "message": "Yes, it is one observer at a time. I can delete this comment. It registers one observer and return existing storages\u0027 info.",
+      "parentUuid": "8d63b306_1a423324",
       "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
