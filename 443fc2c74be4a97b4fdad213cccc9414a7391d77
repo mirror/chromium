@@ -16,6 +16,24 @@
       "revId": "443fc2c74be4a97b4fdad213cccc9414a7391d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0d90d5_120ec289",
+        "filename": "testing/libfuzzer/proto/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-02-06T19:14:14Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "8c894b6e_0edd4c99",
+      "revId": "443fc2c74be4a97b4fdad213cccc9414a7391d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
