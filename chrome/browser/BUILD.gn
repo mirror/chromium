@@ -2538,11 +2538,8 @@ split_static_library("browser") {
       "metrics/tab_usage_recorder.h",
       "net/firefox_proxy_settings.cc",
       "net/firefox_proxy_settings.h",
-      "notifications/message_center_notification_manager.cc",
-      "notifications/message_center_notification_manager.h",
       "notifications/notification_system_observer.cc",
       "notifications/notification_system_observer.h",
-      "notifications/notification_ui_manager_desktop.cc",
       "notifications/profile_notification.cc",
       "notifications/profile_notification.h",
       "obsolete_system/obsolete_system.h",
@@ -3631,8 +3628,11 @@ split_static_library("browser") {
 
   if (enable_message_center) {
     sources += [
+      "notifications/message_center_notification_manager.cc",
+      "notifications/message_center_notification_manager.h",
       "notifications/notification_platform_bridge_message_center.cc",
       "notifications/notification_platform_bridge_message_center.h",
+      "notifications/notification_ui_manager_desktop.cc",
     ]
   }
 

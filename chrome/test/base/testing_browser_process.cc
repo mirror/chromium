@@ -34,7 +34,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "printing/features/features.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/message_center/message_center.h"
+#include "ui/base/ui_features.h"
 
 #if BUILDFLAG(ENABLE_BACKGROUND_MODE)
 #include "chrome/browser/background/background_mode_manager.h"
@@ -46,6 +46,10 @@
 #include "chrome/browser/ui/apps/chrome_app_window_client.h"
 #include "components/storage_monitor/storage_monitor.h"
 #include "components/storage_monitor/test_storage_monitor.h"
+#endif
+
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
+#include "ui/message_center/message_center.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -295,7 +299,7 @@ TestingBrowserProcess::extension_event_router_forwarder() {
 }
 
 NotificationUIManager* TestingBrowserProcess::notification_ui_manager() {
-#if !defined(OS_ANDROID)
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
   if (!notification_ui_manager_.get())
     notification_ui_manager_.reset(NotificationUIManager::Create());
   return notification_ui_manager_.get();
@@ -311,7 +315,11 @@ TestingBrowserProcess::notification_platform_bridge() {
 }
 
 message_center::MessageCenter* TestingBrowserProcess::message_center() {
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
   return message_center::MessageCenter::Get();
+#else
+  return nullptr;
+#endif
 }
 
 IntranetRedirectDetector* TestingBrowserProcess::intranet_redirect_detector() {

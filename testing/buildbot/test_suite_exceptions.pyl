@@ -2255,19 +2255,6 @@
   'message_center_unittests': {
     'remove_from': [
       'Win7 Tests (dbg)(1)',
-      # On chromium.mac, unclear why these aren't run.
-      'Mac10.10 Tests',
-      'Mac10.11 Tests',
-      'Mac10.12 Tests',
-      'Mac10.9 Tests',
-      'Mac10.9 Tests (dbg)',
-
-      # chromium.fyi
-      'Chromium Mac 10.10 MacViews',
-      'Chromium Mac 10.11',
-      'Chromium Mac 10.11 Force Mac Toolchain',
-      'Chromium Mac 10.13',
-      'Out of Process Profiling Mac',
 
       # On chromium.linux, unclear why these aren't run.
       'Linux Tests',
@@ -2284,7 +2271,6 @@
       'Linux ChromiumOS MSan Tests',
       'Linux MSan Tests',
       'Linux TSan Tests',
-      'Mac ASan 64 Tests (1)',
     ],
   },
   'metrics_python_tests': {
