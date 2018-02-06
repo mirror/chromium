@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed711279_728f060c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T03:50:41Z",
+      "side": 1,
+      "message": "nit: Remove \u0027/NavigationMojoResponse\u0027",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cd751e_d089f404",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T03:50:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080d1949_272fa1c1",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T03:50:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a9b9c2_122f0a9b",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T03:50:41Z",
+      "side": 1,
+      "message": "nit: Remove \u0027/NavigationMojoResponse\u0027",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa2ddca_3cc62ee0",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T03:50:41Z",
+      "side": 1,
+      "message": "Let\u0027s make it a little clearer (since it\u0027s confusing):\n\n|controller_info| contains the endpoint (which is non-null only when S13nServiceWorker is enabled) and ...",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
