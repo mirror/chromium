@@ -7,16 +7,25 @@
 
 #include "base/memory/weak_ptr.h"
 #include "content/browser/loader/url_loader_request_handler.h"
+#include "content/public/common/resource_type.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
+
+namespace net {
+class URLRequestContext;
+}  // namespace net
 
 namespace content {
 
+class ResourceContext;
 class WebPackageLoader;
 
 class WebPackageRequestHandler final : public URLLoaderRequestHandler {
  public:
   static bool IsSupportedMimeType(const std::string& mime_type);
 
-  WebPackageRequestHandler();
+  WebPackageRequestHandler(
+      network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_for_browser,
+      net::URLRequestContext* request_context);
   ~WebPackageRequestHandler() override;
 
   // URLLoaderRequestHandler implementation
@@ -37,6 +46,9 @@ class WebPackageRequestHandler final : public URLLoaderRequestHandler {
   // the loader is re-bound to the new client for the redirected request in
   // StartResponse.
   std::unique_ptr<WebPackageLoader> web_package_loader_;
+
+  network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_for_browser_;
+  net::URLRequestContext* request_context_;
 
   base::WeakPtrFactory<WebPackageRequestHandler> weak_factory_;
 
