@@ -33,6 +33,87 @@
       "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95ba4056_e590edd1",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35514,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T18:40:38Z",
+      "side": 1,
+      "message": "Please add the standard UMA warning in that file to all the UMA-emitted enums.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "parentUuid": "f1b0090d_a323b1be",
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1892adb9_ae33e61c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35517,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T18:40:38Z",
+      "side": 1,
+      "message": "nit: missing (",
+      "range": {
+        "startLine": 35517,
+        "startChar": 61,
+        "endLine": 35517,
+        "endChar": 71
+      },
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375cbe18_3ed0803c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35518,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T18:40:38Z",
+      "side": 1,
+      "message": "UpdaterPrintSettings failed versus invalid printer settings -- these sound like different things to me.  Which is this value supposed to be?",
+      "range": {
+        "startLine": 35518,
+        "startChar": 24,
+        "endLine": 35518,
+        "endChar": 43
+      },
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32f905d_bce1dc98",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35519,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T18:40:38Z",
+      "side": 1,
+      "message": "This is not part of the enum in that file.  What gives?",
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
