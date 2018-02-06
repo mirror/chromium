@@ -420,6 +420,7 @@
 #endif
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 #include "chrome/services/printing/public/interfaces/constants.mojom.h"
+#include "components/printing/service/public/interfaces/print_backend_handler.mojom.h"
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
@@ -3201,6 +3202,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PRINTING_SERVICE_NAME);
 #endif
 
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && defined(OS_WIN)
+  (*services)[printing::mojom::kPrintBackendHandlerServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PRINTING_BACKEND_NAME);
+#endif
+
   (*services)[profiling::mojom::kServiceName] =
       base::ASCIIToUTF16("Profiling Service");
 
@@ -3287,6 +3293,10 @@ ChromeContentBrowserClient::GetExtraServiceManifests() {
 #endif  // BUILDFLAG(ENABLE_NACL)
 #if BUILDFLAG(ENABLE_PRINTING)
         {printing::mojom::kServiceName, IDR_PDF_COMPOSITOR_MANIFEST},
+#endif
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && defined(OS_WIN)
+        {printing::mojom::kPrintBackendHandlerServiceName,
+         IDR_PRINT_BACKEND_HANDLER_MANIFEST},
 #endif
         {chrome::mojom::kRendererServiceName,
          IDR_CHROME_RENDERER_SERVICE_MANIFEST},

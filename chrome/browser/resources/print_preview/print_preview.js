@@ -382,7 +382,7 @@ cr.define('print_preview', function() {
       this.tracker.add(
           this.previewArea_,
           print_preview.PreviewArea.EventType.SETTINGS_INVALID,
-          this.onSettingsInvalid_.bind(this));
+          this.onSettingsInvalid_.bind(this, false));
 
       this.tracker.add(
           this.destinationStore_,
@@ -1019,9 +1019,15 @@ cr.define('print_preview', function() {
 
     /**
      * Called when native layer receives invalid settings for a print request.
+     * @param {boolean} showPreviewAreaMessage Whether to tell the preview
+     *     area to show an error message.
      * @private
      */
-    onSettingsInvalid_: function() {
+    onSettingsInvalid_: function(showPreviewAreaMessage) {
+      if (showPreviewAreaMessage) {
+        this.previewArea_.showCustomMessage(
+            loadTimeData.getString('invalidPrinterSettings'));
+      }
       this.uiState_ = PrintPreviewUiState_.ERROR;
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = false;

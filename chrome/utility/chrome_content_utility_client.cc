@@ -71,6 +71,11 @@
 #include "chrome/services/printing/public/interfaces/constants.mojom.h"
 #endif
 
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && defined(OS_WIN)
+#include "components/printing/service/print_backend_handler_service.h"
+#include "components/printing/service/public/interfaces/print_backend_handler.mojom.h"
+#endif
+
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) || \
     (BUILDFLAG(ENABLE_BASIC_PRINTING) && defined(OS_WIN))
 #include "chrome/utility/printing_handler.h"
@@ -236,6 +241,16 @@ void ChromeContentUtilityClient::RegisterServices(
         base::Bind(&printing::PrintingService::CreateService);
     services->emplace(printing::mojom::kChromePrintingServiceName,
                       printing_info);
+  }
+#endif
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && defined(OS_WIN)
+  {
+    service_manager::EmbeddedServiceInfo print_backend_handler_info;
+    print_backend_handler_info.factory = base::BindRepeating(
+        &printing::PrintBackendHandlerService::CreateService);
+    services->emplace(printing::mojom::kPrintBackendHandlerServiceName,
+                      print_backend_handler_info);
   }
 #endif
 

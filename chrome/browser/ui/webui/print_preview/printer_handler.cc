@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 
+#include "build/build_config.h"
 #include "build/buildflag.h"
 #include "chrome/browser/ui/webui/print_preview/extension_printer_handler.h"
 #include "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h"
@@ -15,6 +16,8 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.h"
+#elif defined(OS_WIN)
+#include "chrome/browser/ui/webui/print_preview/local_printer_handler_win.h"
 #else
 #include "chrome/browser/ui/webui/print_preview/local_printer_handler_default.h"
 #endif
@@ -32,6 +35,8 @@ std::unique_ptr<PrinterHandler> PrinterHandler::CreateForLocalPrinters(
 #if defined(OS_CHROMEOS)
   return std::make_unique<LocalPrinterHandlerChromeos>(profile,
                                                        preview_web_contents);
+#elif defined(OS_WIN)
+  return std::make_unique<LocalPrinterHandlerWin>(preview_web_contents);
 #else
   return std::make_unique<LocalPrinterHandlerDefault>(preview_web_contents);
 #endif

@@ -3317,6 +3317,9 @@ are declared in build/common.gypi.
         <message name="IDS_UTILITY_PROCESS_PRINTING_SERVICE_NAME" desc="The name of the utility process used for printing conversions.">
           Printing service
         </message>
+        <message name="IDS_UTILITY_PROCESS_PRINTING_BACKEND_NAME" desc="The name of the utility process used to talk to printer drivers.">
+          Printing Backend
+        </message>
       </if>
       <message name="IDS_UTILITY_PROCESS_PATCH_NAME" desc="The name of the utility process used for patching file operations.">
           Patch Service
@@ -6283,11 +6286,6 @@ I don't think this site should be blocked!
           </message>
           <message name="IDS_PRINT_PREVIEW_OPEN_PDF_IN_PREVIEW_APP" desc="Option allowing the user to open the pdf in native preview app">
           Open PDF in Preview
-          </message>
-        </if>
-        <if expr="is_win">
-          <message name="IDS_PRINT_PREVIEW_FRIENDLY_WIN_NETWORK_PRINTER_NAME" desc="Friendly name for a printer with a given name on a given server. This uses the same format as the Windows print dialog.">
-            <ph name="PRINTER_NAME">$1<ex>HP LaserJet</ex></ph> on <ph name="SERVER_NAME">$2<ex>printserver</ex></ph>
           </message>
         </if>
       </if>

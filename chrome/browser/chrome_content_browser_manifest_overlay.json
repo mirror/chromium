@@ -48,6 +48,7 @@
         "nacl_loader": [ "browser" ],
         "patch": [ "patch_file" ],
         "pdf_compositor": [ "compositor" ],
+        "print_backend_handler": [ "handler" ],
         "profile_import": [ "import" ],
         "profiling": [ "profiling" ],
         "proxy_resolver": [ "factory" ],

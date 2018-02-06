@@ -1,0 +1,15 @@
+{
+  "sandbox_type": "none",
+  "name": "print_backend_handler",
+  "display_name": "Printing Backend",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "handler": [ "printing::mojom::PrintBackendHandler" ]
+      },
+      "requires": {
+        "service_manager": [ "service_manager:all_users" ]
+      }
+    }
+  }
+}
