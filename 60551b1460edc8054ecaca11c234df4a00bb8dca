@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d918a6e8_8dfdf7f6",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-06T04:00:38Z",
+      "side": 1,
+      "message": "Please use std::make_unique",
+      "revId": "60551b1460edc8054ecaca11c234df4a00bb8dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
