@@ -83,6 +83,7 @@ class SocketWrapperTestImpl : public UDPSocket::SocketWrapper {
     NOTREACHED();
     return net::ERR_NOT_IMPLEMENTED;
   }
+  void Close() override { NOTREACHED(); }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SocketWrapperTestImpl);
@@ -279,6 +280,12 @@ TEST_F(UDPSocketTest, TestUnexpectedSequences) {
   // Calling Connect() after Bind() should fail because they can't be both used.
   ASSERT_EQ(net::ERR_SOCKET_IS_CONNECTED,
             helper.ConnectSync(local_addr, nullptr, &local_addr));
+
+  // Now Close() the socket.
+  socket_ptr->Close();
+
+  // Re-Bind() is okay.
+  ASSERT_EQ(net::OK, helper.BindSync(local_addr, nullptr, &local_addr));
 }
 
 // Tests that if the underlying socket implementation's Send() returned
@@ -433,6 +440,25 @@ TEST_F(UDPSocketTest, TestReadSend) {
   // results in an early rejection.
   std::vector<uint8_t> large_msg(64 * 1024, 1);
   EXPECT_EQ(net::ERR_MSG_TOO_BIG, helper.SendToSync(client_addr, large_msg));
+
+  // Close and re-Connect client socket.
+  client_socket->Close();
+  client_socket.FlushForTesting();
+
+  // Make sure datagram can still be sent from the re-connected client socket.
+  ASSERT_EQ(net::OK,
+            client_helper.ConnectSync(server_addr, nullptr, &client_addr));
+  server_socket->ReceiveMore(1);
+  std::vector<uint8_t> msg(CreateTestMessage(0, kDatagramSize));
+  EXPECT_EQ(net::OK, client_helper.SendSync(msg));
+
+  receiver.WaitForReceivedResults(kDatagramCount + 1);
+  ASSERT_EQ(kDatagramCount + 1, receiver.results().size());
+
+  auto result = receiver.results()[kDatagramCount];
+  EXPECT_EQ(net::OK, result.net_error);
+  EXPECT_EQ(result.src_addr, client_addr);
+  EXPECT_EQ(msg, result.data.value());
 }
 
 TEST_F(UDPSocketTest, TestReadSendTo) {
@@ -484,6 +510,21 @@ TEST_F(UDPSocketTest, TestReadSendTo) {
   // results in an early rejection.
   std::vector<uint8_t> large_msg(64 * 1024, 1);
   EXPECT_EQ(net::ERR_MSG_TOO_BIG, helper.SendToSync(client_addr, large_msg));
+
+  // Make sure datagram can still be sent from the re-bound server socket.
+  server_socket->Close();
+  ASSERT_EQ(net::OK, helper.BindSync(server_addr, nullptr, &server_addr));
+  client_socket->ReceiveMore(1);
+  std::vector<uint8_t> msg(CreateTestMessage(0, kDatagramSize));
+  EXPECT_EQ(net::OK, helper.SendToSync(client_addr, msg));
+
+  receiver.WaitForReceivedResults(kDatagramCount + 1);
+  ASSERT_EQ(kDatagramCount + 1, receiver.results().size());
+
+  auto result = receiver.results()[kDatagramCount];
+  EXPECT_EQ(net::OK, result.net_error);
+  EXPECT_FALSE(result.src_addr);
+  EXPECT_EQ(msg, result.data.value());
 }
 
 // Make sure passing an invalid net::IPEndPoint will be detected by
