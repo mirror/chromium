@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "096cc0e7_c7330a49",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-06T19:26:20Z",
+      "side": 1,
+      "message": "I believe* audio.disablePictureInPicture doesn\u0027t exist as the disablePictureInPicture is only exposed to video elements. See https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.idl?l\u003d17\u0026rcl\u003df9230a78b254ec916650e745904207743195d864",
+      "parentUuid": "6b2069ce_009c6611",
+      "revId": "a489d8849c74d085e274711f413441aa5ef08ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1d1e250_b94e1955",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T18:52:36Z",
       "side": 1,
       "message": "optional nit: maybe a switch(record-\u003eattributeName()) that calls NOTREACHED on default?",
+      "revId": "a489d8849c74d085e274711f413441aa5ef08ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcd8b12_a6abf6e1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-06T19:26:20Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "c1d1e250_b94e1955",
       "revId": "a489d8849c74d085e274711f413441aa5ef08ba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
