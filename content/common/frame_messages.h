@@ -1715,6 +1715,17 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_ScrollRectToVisibleInParentFrame,
 // Sent to notify that a frame called |window.focus()|.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_FrameDidCallFocus)
 
+// Ask the frame host to print a cross-process subframe.
+// The printed content of this subframe belongs to the document specified by
+// its document cookie. And the content will be rendered in the specified
+// rectangular area on the page with given page number.
+// The page number is 0-based. When it is -1, it means the subframe content
+// will be rendered on a document -- with no page number specified.
+IPC_MESSAGE_ROUTED3(FrameHostMsg_PrintSubframe,
+                    gfx::Rect /* rect area of the frame content */,
+                    int /* rendered document cookie */,
+                    int /* page number this frame is rendered in */)
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
 // Message to show/hide a popup menu using native controls.

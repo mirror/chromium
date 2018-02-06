@@ -31,8 +31,6 @@
 #ifndef INTERNAL_COMPONENTS_PRINTING_COMMON_PRINT_MESSAGES_H_
 #define INTERNAL_COMPONENTS_PRINTING_COMMON_PRINT_MESSAGES_H_
 
-using ContentToProxyIdMap = std::map<uint32_t, int>;
-
 struct PrintMsg_Print_Params {
   PrintMsg_Print_Params();
   PrintMsg_Print_Params(const PrintMsg_Print_Params& other);
@@ -267,7 +265,7 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPrintContent_Params)
   IPC_STRUCT_MEMBER(uint32_t, data_size)
 
   // Content id to render frame proxy id mapping for out-of-process subframes.
-  IPC_STRUCT_MEMBER(ContentToProxyIdMap, subframe_content_info)
+  IPC_STRUCT_MEMBER(printing::ContentToProxyIdMap, subframe_content_info)
 IPC_STRUCT_END()
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -416,8 +414,9 @@ IPC_MESSAGE_ROUTED1(PrintHostMsg_DidPrintDocument,
 
 // Sends back to the browser the rendered subframe content that was
 // requested by a PrintMsg_PrintFrameContent message.
-IPC_MESSAGE_ROUTED2(PrintHostMsg_DidPrintFrameContent,
+IPC_MESSAGE_ROUTED3(PrintHostMsg_DidPrintFrameContent,
                     int /* rendered document cookie */,
+                    int /* page number this frame is rendered in */,
                     PrintHostMsg_DidPrintContent_Params)
 
 // The renderer wants to know the default print settings.
