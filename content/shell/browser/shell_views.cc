@@ -468,6 +468,7 @@ void Shell::Close() {
 }
 
 void Shell::PlatformSetTitle(const base::string16& title) {
+  LOG(ERROR) << "======= mDebug " << __FILE__;
   if (headless_)
     return;
   ShellWindowDelegateView* delegate_view =

@@ -75,6 +75,7 @@ void Shell::SizeTo(const gfx::Size& content_size) {
 }
 
 void Shell::PlatformSetTitle(const base::string16& title) {
+  LOG(ERROR) << "======= mDebug " << __FILE__;
   NOTIMPLEMENTED() << ": " << title;
 }
 
