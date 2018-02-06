@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 #include "base/memory/scoped_refptr.h"
+#include "base/memory/ptr_util.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileReaderLoader.h"
@@ -84,7 +85,8 @@ ProtocolResponse ParseCacheId(const String& id,
 
 ProtocolResponse AssertCacheStorage(
     const String& security_origin,
-    std::unique_ptr<WebServiceWorkerCacheStorage>* result) {
+    std::unique_ptr<WebServiceWorkerCacheStorage>* result,
+    InspectedFrames* frames) {
   scoped_refptr<const SecurityOrigin> sec_origin =
       SecurityOrigin::CreateFromString(security_origin);
 
@@ -94,8 +96,19 @@ ProtocolResponse AssertCacheStorage(
         sec_origin->IsPotentiallyTrustworthyErrorMessage());
   }
 
+  // TODO(lucmult): Is this the right way to get the execution context?
+  LocalFrame* frame = frames->FrameWithSecurityOrigin(security_origin);
+  if (!frame)
+    return ProtocolResponse::Error("No frame with origin " + security_origin);
+
+  blink::Document* document = frame->GetDocument();
+  if (!document)
+    return ProtocolResponse::Error("No execution context found");
+
   std::unique_ptr<WebServiceWorkerCacheStorage> cache =
-      Platform::Current()->CreateCacheStorage(WebSecurityOrigin(sec_origin));
+      Platform::Current()->CreateCacheStorage(
+          WebSecurityOrigin(sec_origin),
+          document->GetExecutionContext()->GetInterfaceProvider());
   if (!cache)
     return ProtocolResponse::Error("Could not find cache storage.");
   *result = std::move(cache);
@@ -105,13 +118,14 @@ ProtocolResponse AssertCacheStorage(
 ProtocolResponse AssertCacheStorageAndNameForId(
     const String& cache_id,
     String* cache_name,
-    std::unique_ptr<WebServiceWorkerCacheStorage>* result) {
+    std::unique_ptr<WebServiceWorkerCacheStorage>* result,
+    InspectedFrames* frames) {
   String security_origin;
   ProtocolResponse response =
       ParseCacheId(cache_id, &security_origin, cache_name);
   if (!response.isSuccess())
     return response;
-  return AssertCacheStorage(security_origin, result);
+  return AssertCacheStorage(security_origin, result, frames);
 }
 
 CString CacheStorageErrorString(mojom::CacheStorageError error) {
@@ -307,17 +321,23 @@ class GetCacheResponsesForRequestData
                                   const WebServiceWorkerRequest& request,
                                   scoped_refptr<ResponsesAccumulator> accum)
       : params_(params), request_(request), accumulator_(std::move(accum)) {}
-  ~GetCacheResponsesForRequestData() override = default;
+  ~GetCacheResponsesForRequestData() override {
+    DLOG(ERROR) << "disposing GetCacheResponsesForRequestData.";
+  }
 
   void OnSuccess(const WebServiceWorkerResponse& response) override {
+    DLOG(ERROR) << "Success on match method.";
     accumulator_->AddRequestResponsePair(request_, response);
+    DLOG(ERROR) << "End of Success on match method.";
   }
 
   void OnError(mojom::CacheStorageError error) override {
+    DLOG(ERROR) << "error on match method: " << params_.cache_name.Utf8().data() << " - " << CacheStorageErrorString(error).data();
     accumulator_->SendFailure(ProtocolResponse::Error(
         String::Format("Error requesting responses for cache  %s: %s",
                        params_.cache_name.Utf8().data(),
                        CacheStorageErrorString(error).data())));
+    DLOG(ERROR) << "end of error";
   }
 
  private:
@@ -326,21 +346,33 @@ class GetCacheResponsesForRequestData
   scoped_refptr<ResponsesAccumulator> accumulator_;
 };
 
+struct CacheHolder {
+  std::unique_ptr<WebServiceWorkerCache> cache;
+};
+
 class GetCacheKeysForRequestData
     : public WebServiceWorkerCache::CacheWithRequestsCallbacks {
   WTF_MAKE_NONCOPYABLE(GetCacheKeysForRequestData);
 
  public:
   GetCacheKeysForRequestData(const DataRequestParams& params,
+                             //CacheHolder& cache_holder,
                              std::unique_ptr<WebServiceWorkerCache> cache,
                              std::unique_ptr<RequestEntriesCallback> callback)
       : params_(params),
         cache_(std::move(cache)),
-        callback_(std::move(callback)) {}
-  ~GetCacheKeysForRequestData() override = default;
+        //cache_holder_(cache_holder),
+        callback_(std::move(callback)) {
+          //DCHECK(cache_holder_.cache) << "Need a cache_holder_.cache .";
+          //cache_holder_ = *cache_holder;
+  }
+  ~GetCacheKeysForRequestData() override {
+    DLOG(ERROR) << "Disposing GetCacheKeysForRequestData.";
+  };
 
   WebServiceWorkerCache* Cache() { return cache_.get(); }
   void OnSuccess(const WebVector<WebServiceWorkerRequest>& requests) override {
+    DLOG(ERROR) << "Received Keys/requests...";
     if (requests.IsEmpty()) {
       std::unique_ptr<Array<DataEntry>> array = Array<DataEntry>::create();
       callback_->sendSuccess(std::move(array), false);
@@ -354,12 +386,15 @@ class GetCacheKeysForRequestData
       const auto& request = requests[i];
       auto cache_request = std::make_unique<GetCacheResponsesForRequestData>(
           params_, request, accumulator);
-      cache_->DispatchMatch(std::move(cache_request), request,
-                            WebServiceWorkerCache::QueryParams());
+      DLOG(ERROR) << "Dispatching match method...";
+      cache_->DispatchMatch(std::move(cache_request), request, WebServiceWorkerCache::QueryParams());
+      //cache_holder_.cache->DispatchMatch(std::move(cache_request), request, WebServiceWorkerCache::QueryParams());
     }
+    DLOG(ERROR) << "End of keys success";
   }
 
   void OnError(mojom::CacheStorageError error) override {
+    DLOG(ERROR) << "Error on dispatch keys.";
     callback_->sendFailure(ProtocolResponse::Error(
         String::Format("Error requesting requests for cache %s: %s",
                        params_.cache_name.Utf8().data(),
@@ -369,6 +404,7 @@ class GetCacheKeysForRequestData
  private:
   DataRequestParams params_;
   std::unique_ptr<WebServiceWorkerCache> cache_;
+  //CacheHolder& cache_holder_;
   std::unique_ptr<RequestEntriesCallback> callback_;
 };
 
@@ -378,19 +414,40 @@ class GetCacheForRequestData
 
  public:
   GetCacheForRequestData(const DataRequestParams& params,
-                         std::unique_ptr<RequestEntriesCallback> callback)
-      : params_(params), callback_(std::move(callback)) {}
-  ~GetCacheForRequestData() override = default;
+                         std::unique_ptr<RequestEntriesCallback> callback
+                         /* , CacheHolder& cache_holder*/)
+      : params_(params), //callback_(std::move(callback)) {
+        //cache_holder_(cache_holder),
+        callback_(std::move(callback)) {
+
+    //cache_holder_ = cache_holder;
+  }
+  ~GetCacheForRequestData() override {
+    DLOG(ERROR) << "Disposing GetCacheForRequestData.";
+  }
 
   void OnSuccess(std::unique_ptr<WebServiceWorkerCache> cache) override {
-    auto cache_request = std::make_unique<GetCacheKeysForRequestData>(
-        params_, std::move(cache), std::move(callback_));
+    DLOG(ERROR) << " success (inside resolver), assigning cache...";
+
+    //DLOG(ERROR) << "Releasing...";
+    //auto* c = cache.release();
+    //
+    //DLOG(ERROR) << "Assigning to cache_holder.";
+    //cache_holder_.cache.reset(c);
+    //cache_holder_.cache.swap(cache);
+    DLOG(ERROR) << " assigned, passing to GetCacheKeysForRequestData";
+    //auto cache_request = std::make_unique<GetCacheKeysForRequestData>(params_, cache_holder_, std::move(callback_));
+    auto cache_request = std::make_unique<GetCacheKeysForRequestData>(params_, std::move(cache), std::move(callback_));
+    DLOG(ERROR) << " dispatching cache Keys...";
     cache_request->Cache()->DispatchKeys(std::move(cache_request),
-                                         WebServiceWorkerRequest(),
-                                         WebServiceWorkerCache::QueryParams());
+    //cache_holder_.cache->DispatchKeys(std::move(cache_request),
+                                      WebServiceWorkerRequest(),
+                                      WebServiceWorkerCache::QueryParams());
+    DLOG(ERROR) << " cache Keys dispatched.";
   }
 
   void OnError(mojom::CacheStorageError error) override {
+    DLOG(ERROR) << " error (inside resolver)";
     callback_->sendFailure(ProtocolResponse::Error(String::Format(
         "Error requesting cache %s: %s", params_.cache_name.Utf8().data(),
         CacheStorageErrorString(error).data())));
@@ -398,6 +455,7 @@ class GetCacheForRequestData
 
  private:
   DataRequestParams params_;
+  //CacheHolder& cache_holder_;
   std::unique_ptr<RequestEntriesCallback> callback_;
 };
 
@@ -594,7 +652,8 @@ void InspectorCacheStorageAgent::requestCacheNames(
   }
 
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
-  ProtocolResponse response = AssertCacheStorage(security_origin, &cache);
+  ProtocolResponse response =
+      AssertCacheStorage(security_origin, &cache, frames_);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
     return;
@@ -602,6 +661,7 @@ void InspectorCacheStorageAgent::requestCacheNames(
   cache->DispatchKeys(std::make_unique<RequestCacheNames>(security_origin,
                                                           std::move(callback)));
 }
+
 
 void InspectorCacheStorageAgent::requestEntries(
     const String& cache_id,
@@ -611,8 +671,9 @@ void InspectorCacheStorageAgent::requestEntries(
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
   ProtocolResponse response =
-      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache);
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache, frames_);
   if (!response.isSuccess()) {
+    DLOG(ERROR) << "Error on assert:" << response.status() << response.errorCode();
     callback->sendFailure(response);
     return;
   }
@@ -620,9 +681,15 @@ void InspectorCacheStorageAgent::requestEntries(
   params.cache_name = cache_name;
   params.page_size = page_size;
   params.skip_count = skip_count;
-  cache->DispatchOpen(
-      std::make_unique<GetCacheForRequestData>(params, std::move(callback)),
+  DLOG(ERROR) << "Dispatching Open...";
+
+  //CacheHolder cache_holder;
+  //DCHECK(&cache_holder);
+
+  //cache->DispatchOpen(std::make_unique<GetCacheForRequestData>(params, std::move(callback) , cache_holder ),
+  cache->DispatchOpen(std::make_unique<GetCacheForRequestData>(params, std::move(callback) ),
       WebString(cache_name));
+  DLOG(ERROR) << "Dispatched.";
 }
 
 void InspectorCacheStorageAgent::deleteCache(
@@ -631,7 +698,7 @@ void InspectorCacheStorageAgent::deleteCache(
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
   ProtocolResponse response =
-      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache);
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache, frames_);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
     return;
@@ -647,7 +714,7 @@ void InspectorCacheStorageAgent::deleteEntry(
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
   ProtocolResponse response =
-      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache);
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache, frames_);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
     return;
@@ -664,7 +731,7 @@ void InspectorCacheStorageAgent::requestCachedResponse(
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
   ProtocolResponse response =
-      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache);
+      AssertCacheStorageAndNameForId(cache_id, &cache_name, &cache, frames_);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
     return;

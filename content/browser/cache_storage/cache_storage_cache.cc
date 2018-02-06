@@ -879,6 +879,7 @@ void CacheStorageCache::QueryCacheFilterEntry(
   query_cache_context->enumerated_entry = nullptr;
 
   if (backend_state_ == BACKEND_CLOSED) {
+    DLOG(ERROR) << "Backend closed.";
     std::move(query_cache_context->callback)
         .Run(CacheStorageError::kErrorNotFound,
              std::move(query_cache_context->matches));
@@ -1032,6 +1033,7 @@ void CacheStorageCache::MatchDidMatchAll(
   }
 
   if (match_all_responses.empty()) {
+    DLOG(ERROR) << "match all responses is empty.";
     std::move(callback).Run(CacheStorageError::kErrorNotFound,
                             std::unique_ptr<ServiceWorkerResponse>(),
                             std::unique_ptr<storage::BlobDataHandle>());

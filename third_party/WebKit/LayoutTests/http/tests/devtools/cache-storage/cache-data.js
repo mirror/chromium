@@ -21,17 +21,29 @@
 
   function main() {
     ApplicationTestRunner.clearAllCaches()
+        .then(console.log('1'))
         .then(ApplicationTestRunner.dumpCacheTree)
+        .then(console.log('1'))
         .then(ApplicationTestRunner.createCache.bind(this, 'testCache1'))
+        .then(console.log('1'))
         .then(ApplicationTestRunner.createCache.bind(this, 'testCache2'))
+        .then(console.log('1'))
         .then(ApplicationTestRunner.dumpCacheTree)
+        .then(console.log('1'))
         .then(ApplicationTestRunner.addCacheEntry.bind(this, 'testCache1', 'http://fake.request.com/1', 'OK'))
+        .then(console.log('1'))
         .then(ApplicationTestRunner.addCacheEntry.bind(this, 'testCache1', 'http://fake.request.com/2', 'Not Found'))
+        .then(console.log('1'))
         .then(ApplicationTestRunner.addCacheEntry.bind(this, 'testCache2', 'http://fake.request2.com/1', 'OK'))
+        .then(console.log('1'))
         .then(ApplicationTestRunner.addCacheEntry.bind(this, 'testCache2', 'http://fake.request2.com/2', 'Not Found'))
+        .then(console.log('1'))
         .then(ApplicationTestRunner.dumpCacheTree)
+        .then(console.log('1'))
         .then(ApplicationTestRunner.clearAllCaches)
+        .then(console.log('1'))
         .then(TestRunner.completeTest)
+        .then(console.log('1'))
         .catch(errorAndExit);
   }
 
