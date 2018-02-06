@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482add8f_2c257b76",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "PublishArchiveDone",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ad1f75_6c279010",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "nit: end with period",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1843162a_b2583c0b",
+        "filename": "components/offline_pages/core/move_and_add_results.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "nit: add class comment. This don\u0027t need to be ref counted and thus it can turn to struct.\n\nAlso I think you can simply move this to OfflinePageArchiver.\n\nnit: MoveAndAddResults \u003d\u003e ArchivePublishResult",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77986a29_01709396",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be ref counted.\n  MoveAndAddResults* move_results \u003d new MoveAndAddResults();\n  background_task_runner-\u003ePostTaskAndReply(\n      FROM_HERE,\n      base::BindOnce(\u0026OfflinePageArchiver::PublishPage, ..., base::Unretained(move_results)),\n      base::BindOnce(\u0026OfflinePageModelTaskified::MoveAndAddDone, ..., base::Owned(move_results)));",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a873d8_22284729",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "nit: sort all these",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4050c33_0bf39b45",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "nit: add const \u0026\n\nAlso, it seems to be a bit unnatural to expose this just for testing purpose. I think we can simply move the logic in SavePageToDownloads, i.e PostTaskAndReply, to OfflinePageModelTaskified and expose this method as a virtual method.\n\nSince this class deals with archive, it is kind of confusing to have a name like PublicPage? How about renaming to PublishArchive (or PublicizeArchive, I am not sure which one sounds better). Please update the comment to something like:\n  Move the archive to a public directory, and register it with any system download manager ...",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4b9e51_52854cbf",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:45:00Z",
+      "side": 1,
+      "message": "nit: add \u0026",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
