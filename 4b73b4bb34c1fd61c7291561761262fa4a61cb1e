@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317925db_d3503920",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started_complete/background.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "Formatting on this bit is a little odd.  What does it look like if you do clang-format --js \u003cfilepath\u003e?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa28bd7e_9df298e0",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started_complete/options.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "nit: missing semicolon",
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa9f743_95505e2e",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started_complete/popup.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "nit: we can actually omit this query call.  executeScript defaults to the current tab of the active window.  So this can just be\n\nchangeColor.onclick \u003d function(element) {\n  let color \u003d element.target.value;\n  chrome.tabs.executeScript(\n      {code: \u0027document.body.style.backgroundColor \u003d \"\u0027 + color + \u0027\";\u0027});\n};",
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4fc6c4_d9f5bfcd",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started_complete/popup.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "nit: semicolon",
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e61ba1_aaf6f671",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 21
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "add \u003c/p\u003e to end \u003cp\u003e tag from line 166",
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2990b07c_b87b6bc5",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 21
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": ";",
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831dab00_6be57399",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 21
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "nit: Update (not updated)",
+      "range": {
+        "startLine": 383,
+        "startChar": 1,
+        "endLine": 383,
+        "endChar": 9
+      },
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f377c34_b3e70d06",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 21
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "note: same comment as in popup.js",
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754e06f7_2e88e00f",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 21
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:59:48Z",
+      "side": 1,
+      "message": "nit: user-invoked",
+      "range": {
+        "startLine": 402,
+        "startChar": 42,
+        "endLine": 402,
+        "endChar": 54
+      },
+      "revId": "4b73b4bb34c1fd61c7291561761262fa4a61cb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
