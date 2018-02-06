@@ -1294,8 +1294,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
       input_target_client_impl_(this),
-      devtools_frame_token_(
-          blink::WebString::FromUTF8(params.devtools_frame_token.ToString())),
+      devtools_frame_token_(params.devtools_frame_token),
       weak_factory_(this) {
   // The InterfaceProvider to access Mojo services exposed by the RFHI must be
   // provided at construction time. See: https://crbug.com/729021/.
@@ -4541,7 +4540,7 @@ void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {
   Send(new FrameHostMsg_DidBlockFramebust(GetRoutingID(), url));
 }
 
-blink::WebString RenderFrameImpl::GetDevToolsFrameToken() {
+base::UnguessableToken RenderFrameImpl::GetDevToolsFrameToken() {
   return devtools_frame_token_;
 }
 
