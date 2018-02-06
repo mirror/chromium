@@ -24,6 +24,8 @@ bool PeerConnectionTrackerHost::OnMessageReceived(const IPC::Message& message) {
                         OnAddPeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_RemovePeerConnection,
                         OnRemovePeerConnection)
+    IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_StopPeerConnection,
+                        OnStopPeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_UpdatePeerConnection,
                         OnUpdatePeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_AddStats, OnAddStats)
@@ -86,6 +88,12 @@ void PeerConnectionTrackerHost::OnRemovePeerConnection(int lid) {
   }
   WebRtcEventLogManager::GetInstance()->PeerConnectionRemoved(
       render_process_id_, lid);
+}
+
+void PeerConnectionTrackerHost::OnStopPeerConnection(int lid) {
+  WebRtcEventLogManager::GetInstance()->PeerConnectionStopped(
+      render_process_id_, lid);
+  OnUpdatePeerConnection(lid, "stop", std::string());
 }
 
 void PeerConnectionTrackerHost::OnUpdatePeerConnection(
