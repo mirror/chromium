@@ -429,3 +429,13 @@ class SmoothnessToughSchedulingCases(_Smoothness):
     # has been named this way for long time, we keep the name as-is to avoid
     # data migration.
     return 'scheduler.tough_scheduling_cases'
+
+@benchmark.Owner(emails=['chiniforooshan@chromium.org', 'sadrul@chromium.org'])
+class SmoothnessToughUiCases(_Smoothness):
+  """Measures desktop UI performance."""
+  page_set = page_sets.ToughUiCasesPageSet
+  SUPPORTED_PLATFORMS = [story_module.expectations.ALL_CHROMEOS]
+
+  @classmethod
+  def Name(cls):
+    return 'smoothness.tough_ui_cases'
