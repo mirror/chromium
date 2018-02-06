@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a513ffd6_e15ddaa9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-06T00:21:25Z",
+      "side": 0,
+      "message": "I\u0027m wondering if we should keep this until we fully roll out the new opt-out feature so that a user has an option to disable the suggestions during the transition?\n\nThis is used under content_suggestions_service_factory.cc [1] to pass in the current preference that controls disabling the suggestions.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ntp_snippets/content_suggestions_service_factory.cc?q\u003dadditional_toggle_pref",
+      "range": {
+        "startLine": 24,
+        "startChar": 56,
+        "endLine": 24,
+        "endChar": 78
+      },
+      "revId": "eaef95eb843a160ace9e802ebf6b45ac1d509292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
