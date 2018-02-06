@@ -50,9 +50,9 @@ PictureInPictureController::IsDocumentAllowed() const {
   // "picture-in-picture", return kDisabledByFeaturePolicy status.
   LocalFrame* frame = GetSupplementable()->GetFrame();
   if (IsSupportedInFeaturePolicy(
-          blink::FeaturePolicyFeature::kPictureInPicture) &&
+          blink::mojom::FeaturePolicyFeature::kPictureInPicture) &&
       !frame->IsFeatureEnabled(
-          blink::FeaturePolicyFeature::kPictureInPicture)) {
+          blink::mojom::FeaturePolicyFeature::kPictureInPicture)) {
     return Status::kDisabledByFeaturePolicy;
   }
 

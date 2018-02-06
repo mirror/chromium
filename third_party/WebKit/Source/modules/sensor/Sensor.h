@@ -67,7 +67,7 @@ class Sensor : public EventTargetWithInlineData,
          const SensorOptions&,
          ExceptionState&,
          device::mojom::blink::SensorType,
-         const Vector<FeaturePolicyFeature>&);
+         const Vector<mojom::FeaturePolicyFeature>&);
 
   using SensorConfigurationPtr = device::mojom::blink::SensorConfigurationPtr;
   using SensorConfiguration = device::mojom::blink::SensorConfiguration;
