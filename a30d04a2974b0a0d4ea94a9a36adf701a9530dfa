@@ -70,6 +70,23 @@
       "revId": "a30d04a2974b0a0d4ea94a9a36adf701a9530dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9780c788_6f82f739",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T17:15:17Z",
+      "side": 1,
+      "message": "activating the minimized window should show the window. Do you know what\u0027s broken? Or do we have to show before activating it?",
+      "revId": "a30d04a2974b0a0d4ea94a9a36adf701a9530dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
