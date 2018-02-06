@@ -19,6 +19,7 @@
 #include "bindings/core/v8/double_or_string.h"
 #include "bindings/core/v8/float_or_boolean.h"
 #include "bindings/core/v8/long_or_boolean.h"
+#include "bindings/core/v8/test_enum_or_test_enum_or_null_sequence.h"
 #include "bindings/core/v8/test_enum_or_test_enum_sequence.h"
 #include "bindings/core/v8/test_interface_2_or_uint8_array.h"
 #include "bindings/tests/idls/core/TestInterface2.h"
@@ -201,6 +202,12 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   }
   inline void setLongMember(int32_t);
 
+  bool hasNullableTestEnumOrTestEnumSequenceMember() const { return !nullable_test_enum_or_test_enum_sequence_member_.IsNull(); }
+  const TestEnumOrTestEnumSequence& nullableTestEnumOrTestEnumSequenceMember() const {
+    return nullable_test_enum_or_test_enum_sequence_member_;
+  }
+  void setNullableTestEnumOrTestEnumSequenceMember(const TestEnumOrTestEnumSequence&);
+
   bool hasObjectMember() const { return !(object_member_.IsEmpty() || object_member_.IsNull() || object_member_.IsUndefined()); }
   ScriptValue objectMember() const {
     return object_member_;
@@ -295,6 +302,12 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
     return string_sequence_member_;
   }
   void setStringSequenceMember(const Vector<String>&);
+
+  bool hasTestEnumOrNullableTestEnumSequenceMember() const { return !test_enum_or_nullable_test_enum_sequence_member_.IsNull(); }
+  const TestEnumOrTestEnumOrNullSequence& testEnumOrNullableTestEnumSequenceMember() const {
+    return test_enum_or_nullable_test_enum_sequence_member_;
+  }
+  void setTestEnumOrNullableTestEnumSequenceMember(const TestEnumOrTestEnumOrNullSequence&);
 
   bool hasTestEnumOrTestEnumSequenceMember() const { return !test_enum_or_test_enum_sequence_member_.IsNull(); }
   const TestEnumOrTestEnumSequence& testEnumOrTestEnumSequenceMember() const {
@@ -468,6 +481,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   HeapVector<InternalDictionary> internal_dictionary_sequence_member_;
   bool is_public_;
   int32_t long_member_;
+  TestEnumOrTestEnumSequence nullable_test_enum_or_test_enum_sequence_member_;
   ScriptValue object_member_;
   ScriptValue object_or_null_member_;
   bool origin_trial_member_;
@@ -482,6 +496,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   Vector<std::pair<String, String>> string_or_null_record_member_;
   Vector<String> string_or_null_sequence_member_;
   Vector<String> string_sequence_member_;
+  TestEnumOrTestEnumOrNullSequence test_enum_or_nullable_test_enum_sequence_member_;
   TestEnumOrTestEnumSequence test_enum_or_test_enum_sequence_member_;
   TestInterface2OrUint8Array test_interface_2_or_uint8_array_member_;
   Member<TestInterfaceGarbageCollected> test_interface_garbage_collected_member_;

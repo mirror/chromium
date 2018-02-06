@@ -101,6 +101,10 @@ void TestDictionary::setInternalDictionarySequenceMember(const HeapVector<Intern
   has_internal_dictionary_sequence_member_ = true;
 }
 
+void TestDictionary::setNullableTestEnumOrTestEnumSequenceMember(const TestEnumOrTestEnumSequence& value) {
+  nullable_test_enum_or_test_enum_sequence_member_ = value;
+}
+
 void TestDictionary::setObjectMember(ScriptValue value) {
   object_member_ = value;
 }
@@ -134,6 +138,10 @@ void TestDictionary::setStringOrNullSequenceMember(const Vector<String>& value) 
 void TestDictionary::setStringSequenceMember(const Vector<String>& value) {
   string_sequence_member_ = value;
   has_string_sequence_member_ = true;
+}
+
+void TestDictionary::setTestEnumOrNullableTestEnumSequenceMember(const TestEnumOrTestEnumOrNullSequence& value) {
+  test_enum_or_nullable_test_enum_sequence_member_ = value;
 }
 
 void TestDictionary::setTestEnumOrTestEnumSequenceMember(const TestEnumOrTestEnumSequence& value) {
@@ -197,7 +205,9 @@ void TestDictionary::Trace(blink::Visitor* visitor) {
   visitor->Trace(event_target_member_);
   visitor->Trace(garbage_collected_record_member_);
   visitor->Trace(internal_dictionary_sequence_member_);
+  visitor->Trace(nullable_test_enum_or_test_enum_sequence_member_);
   visitor->Trace(other_double_or_string_member_);
+  visitor->Trace(test_enum_or_nullable_test_enum_sequence_member_);
   visitor->Trace(test_enum_or_test_enum_sequence_member_);
   visitor->Trace(test_interface_2_or_uint8_array_member_);
   visitor->Trace(test_interface_garbage_collected_member_);

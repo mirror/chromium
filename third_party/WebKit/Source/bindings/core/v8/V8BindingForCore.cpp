@@ -821,7 +821,10 @@ bool IsValidEnum(const String& value,
                  const char** valid_values,
                  size_t length,
                  const String& enum_name,
-                 ExceptionState& exception_state) {
+                 ExceptionState& exception_state,
+                 bool value_may_be_null) {
+  if (value.IsNull() && value_may_be_null)
+    return true;
   for (size_t i = 0; i < length; ++i) {
     // Avoid the strlen inside String::operator== (because of the StringView).
     if (WTF::Equal(value.Impl(), valid_values[i]))
@@ -837,9 +840,11 @@ bool IsValidEnum(const Vector<String>& values,
                  const char** valid_values,
                  size_t length,
                  const String& enum_name,
-                 ExceptionState& exception_state) {
+                 ExceptionState& exception_state,
+                 bool values_may_be_null) {
   for (auto value : values) {
-    if (!IsValidEnum(value, valid_values, length, enum_name, exception_state))
+    if (!IsValidEnum(value, valid_values, length, enum_name, exception_state,
+                     values_may_be_null))
       return false;
   }
   return true;
