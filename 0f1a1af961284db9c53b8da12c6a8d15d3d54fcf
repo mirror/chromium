@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9c7c935_0581225c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T15:00:09Z",
+      "side": 1,
+      "message": "You might want to DCHECK() that it\u0027s an HTMLVideoElement.",
+      "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5bfdf1_9223adf1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T15:00:09Z",
+      "side": 1,
+      "message": "Note that I don\u0027t think you need this. You could add a test where you remove the src and see what happens but I think the button would drop.",
+      "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deaec88f_a07aee4e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T15:00:09Z",
+      "side": 1,
+      "message": "You are testing that the button only shows up when metadata are available too. It\u0027s fair to do that in the same unit test as they are not that much \"unit\" anyway but maybe rename the test. Otherwise, you could have something checking that metadata + video track is required and another test for the attribute.",
+      "range": {
+        "startLine": 600,
+        "startChar": 7,
+        "endLine": 600,
+        "endChar": 64
+      },
+      "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
