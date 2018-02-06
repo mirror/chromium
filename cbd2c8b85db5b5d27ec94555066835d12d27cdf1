@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "42376329_30bd7d91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-06T15:40:26Z",
+      "side": 1,
+      "message": "nit: invalidated",
+      "range": {
+        "startLine": 10,
+        "startChar": 60,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "cbd2c8b85db5b5d27ec94555066835d12d27cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57ff3bf_12cbce99",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-06T15:40:26Z",
+      "side": 1,
+      "message": "s/3/WKErrorWebViewInvalidated",
+      "range": {
+        "startLine": 304,
+        "startChar": 28,
+        "endLine": 304,
+        "endChar": 29
+      },
+      "revId": "cbd2c8b85db5b5d27ec94555066835d12d27cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5c991e_a74a29d5",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-06T15:40:26Z",
+      "side": 1,
+      "message": "Can we check that error.domain \u003d\u003d WKErrorDomain?",
+      "range": {
+        "startLine": 304,
+        "startChar": 2,
+        "endLine": 304,
+        "endChar": 12
+      },
+      "revId": "cbd2c8b85db5b5d27ec94555066835d12d27cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "833daac7_73a46ecb",
         "filename": "ios/chrome/test/app/web_view_interaction_test_util.mm",
         "patchSetId": 4
