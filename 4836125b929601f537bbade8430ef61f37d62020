@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "86801536_85dd5db6",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-02-06T18:08:22Z",
+      "side": 1,
+      "message": "Oops, sorry, apparently not. The CQ got jammed. :(\nhttps://chromium-review.googlesource.com/c/chromium/src/+/896810",
+      "parentUuid": "56763f9d_2e287776",
+      "revId": "4836125b929601f537bbade8430ef61f37d62020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6890b2c6_d2e6bf6e",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
         "patchSetId": 2
