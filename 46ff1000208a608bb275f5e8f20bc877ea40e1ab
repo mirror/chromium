@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24077a10_7dd3c6f6",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-02-06T23:22:30Z",
+      "side": 1,
+      "message": "Hm, this is related to your other comment about |damaged_frame_limit_|. I think/hope damaged_frame_limit_ \u003d 3, for example, means that we do the early damage check whenever any of the last 3 frames had damage. It doesn\u0027t mean that we need 3 frames of damage before we start the check.\n\nI was trying to figure out if your explanation above worked: if the explanation for Frame 2 was right, then you\u0027re right, we\u0027re really talking about Frame |damaged_frame_limit_ - 1|. So the test should fail if we bump |damaged_frame_limit_| up, but I just checked that the test still passes with a higher |damaged_frame_limit_|.\n\nSo really, I think Frame 2 has no visible damage and is not invalidated because *a* frame within the last |damaged_frame_limit_| had no damage. What I don\u0027t understand is why Frame 1 invalidates - I attributed that to setup. Is it possible that Frame 0 has visible damage, or a way to check that in the test?\n\nSo here\u0027s where I\u0027m at (the way you wrote it out is really helpful):\n// Frame 0 - ??? Maybe there is visible damage here.\n// Frame 1 - No visible damage, but invalidated (makes sense if all the frames before had visible damage).\n// Frame 2 - No visible damage, not invalidated because one of the last |damaged_frame_limit_| frames (Frame 1) had no visible damage.\n// Frame 3 - Visible damage, invalidated as a result.\n// Frame 4 - Visible damage, invalidated as a result.\n// Frame 5 - Visible damage, invalidated as a result.\n// Frame 6 - No visible damage, but invalidated because all of the last |damaged_frame_limit_| frames had damage.",
+      "parentUuid": "72f840c9_4c007a88",
+      "revId": "46ff1000208a608bb275f5e8f20bc877ea40e1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa3aeee7_5fabde08",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 21
