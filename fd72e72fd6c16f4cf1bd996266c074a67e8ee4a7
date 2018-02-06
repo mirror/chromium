@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f0d6179_6d5e7658",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ContentView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-06T06:08:23Z",
+      "side": 1,
+      "message": "Done.\n\nThere are 3 embedders (chrome/content shell/cast shell) that need its own content view. Though there is Chrome-only logic which I removed from those for the other embedders, they still have a lot in common, which seems unnecessarily duplicated. But I don\u0027t have a good idea how to factor out those commonalities and where to put them.",
+      "parentUuid": "221ebe29_9961d6cc",
+      "revId": "fd72e72fd6c16f4cf1bd996266c074a67e8ee4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "201cbf42_96b01fc8",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/ContentViewCore.java",
         "patchSetId": 1
