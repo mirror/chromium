@@ -117,12 +117,13 @@ public class ProcessInitializationHandler {
      * @return The ProcessInitializationHandler for use during the lifetime of the browser process.
      */
     public static ProcessInitializationHandler getInstance() {
+    try (TraceEvent te = TraceEvent.scoped("ProcessInitializationHandler.getInstance")) {
         ThreadUtils.checkUiThread();
         if (sInstance == null) {
             sInstance = AppHooks.get().createProcessInitializationHandler();
         }
         return sInstance;
-    }
+    }}
 
     /**
      * Initializes the any dependencies that must occur before native library has been loaded.
@@ -133,11 +134,12 @@ public class ProcessInitializationHandler {
      * startup.
      */
     public final void initializePreNative() {
+    try (TraceEvent te = TraceEvent.scoped("ProcessInitializationHandler.initializePreNative")) {
         ThreadUtils.checkUiThread();
         if (mInitializedPreNative) return;
         handlePreNativeInitialization();
         mInitializedPreNative = true;
-    }
+    }}
 
     /**
      * Performs the shared class initialization.

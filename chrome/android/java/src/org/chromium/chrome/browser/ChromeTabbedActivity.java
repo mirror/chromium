@@ -683,6 +683,7 @@ public class ChromeTabbedActivity
 
     @Override
     public void onResumeWithNative() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeTabbedActivity.onResumeWithNative")) {
         super.onResumeWithNative();
 
         if (shouldDestroyIncognitoProfile()) {
@@ -713,7 +714,7 @@ public class ChromeTabbedActivity
         }
 
         maybeStartMonitoringForScreenshots();
-    }
+    }}
 
     private void maybeStartMonitoringForScreenshots() {
         // Part of the (more runtime-related) check to determine whether to trigger help UI is
@@ -756,19 +757,21 @@ public class ChromeTabbedActivity
 
     @Override
     public void onStart() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeTabbedActivity.onStart")) {
         super.onStart();
         StartupMetrics.getInstance().updateIntent(getIntent());
-    }
+    }}
 
     @Override
     public void onStartWithNative() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeTabbedActivity.onStartWithNative")) {
         super.onStartWithNative();
 
         setInitialOverviewState();
         BrowserActionsService.onTabbedModeForegrounded();
 
         resetSavedInstanceState();
-    }
+    }}
 
     @Override
     public void onNewIntentWithNative(Intent intent) {
@@ -1512,6 +1515,7 @@ public class ChromeTabbedActivity
 
     @Override
     public void preInflationStartup() {
+    try (TraceEvent te = TraceEvent.scoped("ChromeTabbedActivity.preInflationStartup")) {
         super.preInflationStartup();
 
         // Decide whether to record startup UMA histograms. This is done  early in the main
@@ -1549,7 +1553,7 @@ public class ChromeTabbedActivity
                 && OmahaBase.isProbablyFreshInstall(this)) {
             getIntent().setData(null);
         }
-    }
+    }}
 
     @Override
     protected int getControlContainerLayoutId() {
@@ -1569,6 +1573,7 @@ public class ChromeTabbedActivity
 
     @Override
     public void postInflationStartup() {
+    try (TraceEvent te = TraceEvent.scoped("ChromeTabbedActivity.postInflationStartup")) {
         super.postInflationStartup();
 
         // Critical path for startup. Create the minimum objects needed
@@ -1586,7 +1591,7 @@ public class ChromeTabbedActivity
 
         mUndoBarPopupController = new UndoBarController(this, mTabModelSelectorImpl,
                 getSnackbarManager());
-    }
+    }}
 
     @Override
     protected void initializeToolbar() {

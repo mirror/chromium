@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.invalidation;
 
+import org.chromium.base.TraceEvent;
 import org.chromium.chrome.browser.init.ProcessInitializationHandler;
 import org.chromium.components.invalidation.InvalidationClientService;
 
@@ -14,7 +15,8 @@ public class ChromeInvalidationClientService extends InvalidationClientService {
 
     @Override
     public void onCreate() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeInvalidationClientService.onCreate")) {
         ProcessInitializationHandler.getInstance().initializePreNative();
         super.onCreate();
-    }
+    }}
 }

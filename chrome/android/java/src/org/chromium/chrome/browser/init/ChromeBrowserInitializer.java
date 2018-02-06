@@ -153,6 +153,7 @@ public class ChromeBrowserInitializer {
      *              initialization tasks.
      */
     public void handlePreNativeStartup(final BrowserParts parts) {
+    try (TraceEvent te = TraceEvent.scoped("ChromeBrowserInitializer.handlePreNativeStartup")) {
         ThreadUtils.checkUiThread();
 
         ProcessInitializationHandler.getInstance().initializePreNative();
@@ -164,7 +165,7 @@ public class ChromeBrowserInitializer {
         parts.setContentViewAndLoadLibrary();
         postInflationStartup();
         parts.postInflationStartup();
-    }
+    }}
 
     /**
      * This is needed for device class manager which depends on commandline args that are
@@ -204,6 +205,7 @@ public class ChromeBrowserInitializer {
     }
 
     private void preInflationStartup() {
+    try (TraceEvent te = TraceEvent.scoped("ChromeBrowserInitializer.preInflationStartup")) {
         ThreadUtils.assertOnUiThread();
         if (mPreInflationStartupComplete) return;
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
@@ -222,9 +224,10 @@ public class ChromeBrowserInitializer {
                 createActivityStateListener());
 
         mPreInflationStartupComplete = true;
-    }
+    }}
 
     private void postInflationStartup() {
+    try (TraceEvent te = TraceEvent.scoped("ChromeBrowserInitializer.postInflationStartup")) {
         ThreadUtils.assertOnUiThread();
         if (mPostInflationStartupComplete) return;
 
@@ -234,7 +237,7 @@ public class ChromeBrowserInitializer {
         ResourceExtractor.get().startExtractingResources();
 
         mPostInflationStartupComplete = true;
-    }
+    }}
 
     /**
      * Execute startup tasks that require native libraries to be loaded. See {@link BrowserParts}

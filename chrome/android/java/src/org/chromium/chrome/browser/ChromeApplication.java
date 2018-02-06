@@ -15,6 +15,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
+import org.chromium.base.TracingInstrumentation;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.build.BuildHooks;
@@ -72,6 +73,8 @@ public class ChromeApplication extends BaseChromiumApplication {
         TraceEvent.begin("ChromeApplication.onCreate");
 
         super.onCreate();
+
+        TracingInstrumentation.install();
 
         TraceEvent.end("ChromeApplication.onCreate");
     }

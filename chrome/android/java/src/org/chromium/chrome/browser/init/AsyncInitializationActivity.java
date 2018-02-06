@@ -84,9 +84,15 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     private boolean mStartupDelayed;
     private boolean mFirstDrawComplete;
 
-    public AsyncInitializationActivity() {
-        mHandler = new Handler();
+    static {
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.<cinit>")) {
+        }
     }
+
+    public AsyncInitializationActivity() {
+    try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.ctor")) {
+        mHandler = new Handler();
+    }}
 
     @CallSuper
     @Override
@@ -258,15 +264,20 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     }
 
     private final void onCreateInternal(Bundle savedInstanceState) {
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onCreate:setIntent")) {
         setIntent(validateIntent(getIntent()));
+        }
 
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onCreate:maybeDispatchLaunchIntent")) {
         @LaunchIntentDispatcher.Action
         int dispatchAction = maybeDispatchLaunchIntent(getIntent());
         if (dispatchAction != LaunchIntentDispatcher.Action.CONTINUE) {
             abortLaunch();
             return;
         }
+        }
 
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onCreate:documentModeCheck")) {
         if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
             // Some Samsung devices load fonts from disk, crbug.com/691706.
             try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
@@ -280,22 +291,28 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
             finish();
             return;
         }
+        }
 
         Intent intent = getIntent();
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onCreate:isStartedUpCorrectly")) {
         if (!isStartedUpCorrectly(intent)) {
             abortLaunch();
             return;
         }
+        }
 
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onCreate:FRECheck")) {
         if (requiresFirstRunToBeCompleted(intent)
                 && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */,
-                           shouldPreferLightweightFre(intent))) {
+                            shouldPreferLightweightFre(intent))) {
             abortLaunch();
             return;
         }
+        }
 
         // Some Samsung devices load fonts from disk, crbug.com/691706.
-        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads();
+             TraceEvent te = TraceEvent.scoped("Activity.onCreate")) {
             super.onCreate(transformSavedInstanceStateForOnCreate(savedInstanceState));
         }
         mOnCreateTimestampMs = SystemClock.elapsedRealtime();
@@ -436,13 +453,15 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @CallSuper
     @Override
     public void onStart() {
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onStart")) {
         super.onStart();
         mNativeInitializationController.onStart();
-    }
+    }}
 
     @CallSuper
     @Override
     public void onResume() {
+        try (TraceEvent te = TraceEvent.scoped("AsyncInitializationActivity.onResume")) {
         super.onResume();
 
         // Start by setting the launch as cold or warm. It will be used in some resume handlers.
@@ -451,7 +470,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
 
         mNativeInitializationController.onResume();
         if (mLaunchBehindWorkaround != null) mLaunchBehindWorkaround.onResume();
-    }
+    }}
 
     @CallSuper
     @Override
