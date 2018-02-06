@@ -20,6 +20,8 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace cc {
 namespace {
 
@@ -76,7 +78,10 @@ BitmapRasterBufferProvider::BitmapRasterBufferProvider(
     LayerTreeResourceProvider* resource_provider,
     viz::SharedBitmapManager* shared_bitmap_manager)
     : resource_provider_(resource_provider),
-      shared_bitmap_manager_(shared_bitmap_manager) {}
+      shared_bitmap_manager_(shared_bitmap_manager) {
+  if (!shared_bitmap_manager_ && false)
+    base::debug::StackTrace().Print();
+}
 
 BitmapRasterBufferProvider::~BitmapRasterBufferProvider() = default;
 

@@ -51,7 +51,7 @@ void VulkanBrowserCompositorOutputSurface::BindToClient(
 }
 
 void VulkanBrowserCompositorOutputSurface::EnsureBackbuffer() {
-  NOTIMPLEMENTED();
+  // NOTIMPLEMENTED();
 }
 
 void VulkanBrowserCompositorOutputSurface::DiscardBackbuffer() {

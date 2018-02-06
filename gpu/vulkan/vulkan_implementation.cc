@@ -134,6 +134,8 @@ struct VulkanInstance {
     }
 
 #if DCHECK_IS_ON()
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__
+               << "debug_report_enabled=" << debug_report_enabled;
     // Register our error logging function.
     if (debug_report_enabled) {
       PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT =

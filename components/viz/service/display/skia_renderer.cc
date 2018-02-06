@@ -553,7 +553,7 @@ void SkiaRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   // |resource_provider_| can be NULL in resourceless software draws, which
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);
-  DCHECK(!IsSoftwareResource(quad->resource_id()));
+  // DCHECK(!IsSoftwareResource(quad->resource_id()));
   cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
                                                           quad->resource_id());
   if (!lock.sk_image())
