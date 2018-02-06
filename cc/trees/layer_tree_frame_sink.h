@@ -76,8 +76,10 @@ class CC_EXPORT LayerTreeFrameSink : public viz::ContextLostObserver {
       viz::SharedBitmapManager* shared_bitmap_manager);
 
   // Constructor for Vulkan-based resources.
-  explicit LayerTreeFrameSink(
-      scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider);
+  LayerTreeFrameSink(
+      scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider,
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      viz::SharedBitmapManager* shared_bitmap_manager);
 
   ~LayerTreeFrameSink() override;
 

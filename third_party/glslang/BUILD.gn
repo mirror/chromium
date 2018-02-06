@@ -24,6 +24,7 @@ config("glslang_local_config") {
       "-Wno-reorder",
       "-Wno-sign-compare",
       "-Wno-unused-variable",
+      "-Wno-implicit-fallthrough",
     ]
   }
 }

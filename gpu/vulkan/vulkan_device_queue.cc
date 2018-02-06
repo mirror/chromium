@@ -38,6 +38,7 @@ bool VulkanDeviceQueue::Initialize(uint32_t options) {
   if (VK_SUCCESS != result || device_count == 0)
     return false;
 
+  LOG(ERROR) << "\nEEE " << __func__ << "  device_count=" << device_count;
   std::vector<VkPhysicalDevice> devices(device_count);
   result =
       vkEnumeratePhysicalDevices(vk_instance_, &device_count, devices.data());
@@ -95,10 +96,12 @@ bool VulkanDeviceQueue::Initialize(uint32_t options) {
     }
   }
 
+  fprintf(stderr, "EEE queue_index=%d\n", queue_index);
   if (queue_index == -1)
     return false;
 
   vk_physical_device_ = devices[device_index];
+  fprintf(stderr, "EEE vk_physical_device_=%p\n", vk_physical_device_);
   vk_queue_index_ = queue_index;
 
   float queue_priority = 0.0f;

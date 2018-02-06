@@ -46,14 +46,21 @@ class VulkanWSISurface : public VulkanSurface {
     VkResult result = VK_SUCCESS;
 
 #if defined(VK_USE_PLATFORM_XLIB_KHR)
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     VkXlibSurfaceCreateInfoKHR surface_create_info = {};
     surface_create_info.sType = VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR;
     surface_create_info.dpy = gfx::GetXDisplay();
     surface_create_info.window = window_;
+    surface_create_info.flags = 0;
+    surface_create_info.pNext = nullptr;
+    auto vkCreateXlibSurfaceKHR = reinterpret_cast<PFN_vkCreateXlibSurfaceKHR>(
+        vkGetInstanceProcAddr(GetVulkanInstance(), "vkCreateXlibSurfaceKHR"));
     result = vkCreateXlibSurfaceKHR(GetVulkanInstance(), &surface_create_info,
                                     nullptr, &surface_);
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     if (VK_SUCCESS != result) {
       DLOG(ERROR) << "vkCreateXlibSurfaceKHR() failed: " << result;
+      LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
       return false;
     }
 #elif defined(VK_USE_PLATFORM_ANDROID_KHR)
@@ -74,22 +81,31 @@ class VulkanWSISurface : public VulkanSurface {
     DCHECK_NE(static_cast<VkSurfaceKHR>(VK_NULL_HANDLE), surface_);
     DCHECK(device_queue);
     device_queue_ = device_queue;
-
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__
+               << " phydevice=" << device_queue_->GetVulkanPhysicalDevice()
+               << " surface_=" << surface_;
+    auto vkGetPhysicalDeviceSurfaceFormatsKHR = reinterpret_cast<PFN_vkGetPhysicalDeviceSurfaceFormatsKHR>(
+        vkGetInstanceProcAddr(GetVulkanInstance(), "vkGetPhysicalDeviceSurfaceFormatsKHR"));
     // Get list of supported formats.
     uint32_t format_count = 0;
+#if 1
     result = vkGetPhysicalDeviceSurfaceFormatsKHR(
         device_queue_->GetVulkanPhysicalDevice(), surface_, &format_count,
         nullptr);
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     if (VK_SUCCESS != result) {
       DLOG(ERROR) << "vkGetPhysicalDeviceSurfaceFormatsKHR() failed: "
                   << result;
       return false;
     }
+#endif
 
     std::vector<VkSurfaceFormatKHR> formats(format_count);
     result = vkGetPhysicalDeviceSurfaceFormatsKHR(
         device_queue_->GetVulkanPhysicalDevice(), surface_, &format_count,
         formats.data());
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__
+               << " format_count=" << format_count;
     if (VK_SUCCESS != result) {
       DLOG(ERROR) << "vkGetPhysicalDeviceSurfaceFormatsKHR() failed: "
                   << result;
@@ -99,10 +115,12 @@ class VulkanWSISurface : public VulkanSurface {
     const VkFormat* preferred_formats = (format == FORMAT_RGBA_32)
                                             ? kPreferredVkFormats32
                                             : kPreferredVkFormats16;
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     unsigned int size = (format == FORMAT_RGBA_32)
                             ? arraysize(kPreferredVkFormats32)
                             : arraysize(kPreferredVkFormats16);
 
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     if (formats.size() == 1 && VK_FORMAT_UNDEFINED == formats[0].format) {
       surface_format_.format = preferred_formats[0];
       surface_format_.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
@@ -131,6 +149,7 @@ class VulkanWSISurface : public VulkanSurface {
     VkSurfaceCapabilitiesKHR surface_caps;
     result = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
         device_queue_->GetVulkanPhysicalDevice(), surface_, &surface_caps);
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     if (VK_SUCCESS != result) {
       DLOG(ERROR) << "vkGetPhysicalDeviceSurfaceCapabilitiesKHR() failed: "
                   << result;
@@ -143,11 +162,13 @@ class VulkanWSISurface : public VulkanSurface {
     size_ = gfx::Size(surface_caps.currentExtent.width,
                       surface_caps.currentExtent.height);
 
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
     // Create Swapchain.
     if (!swap_chain_.Initialize(device_queue_, surface_, surface_caps,
                                 surface_format_)) {
       return false;
     }
+    LOG(ERROR) << "\nEEE " << __func__ << " @ " << __LINE__;
 
     return true;
   }

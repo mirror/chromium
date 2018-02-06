@@ -58,7 +58,9 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
 ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
     scoped_refptr<VulkanContextProvider> vulkan_context_provider,
     InitParams* params)
-    : cc::LayerTreeFrameSink(std::move(vulkan_context_provider)),
+    : cc::LayerTreeFrameSink(std::move(vulkan_context_provider),
+                             params->gpu_memory_buffer_manager,
+                             params->shared_bitmap_manager),
       hit_test_data_provider_(std::move(params->hit_test_data_provider)),
       local_surface_id_provider_(std::move(params->local_surface_id_provider)),
       synthetic_begin_frame_source_(
