@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/tether/tether_service_factory.h"
 #include "chrome/browser/cryptauth/chrome_cryptauth_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -30,6 +31,8 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/proximity_auth/logging/logging.h"
+#include "components/user_manager/user.h"
+#include "components/user_manager/user_manager.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 
 namespace {
@@ -43,10 +46,21 @@ constexpr int64_t kMetricFalsePositiveSeconds = 2;
 
 // static
 TetherService* TetherService::Get(Profile* profile) {
-  if (IsFeatureFlagEnabled())
-    return TetherServiceFactory::GetForBrowserContext(profile);
+  if (!IsFeatureFlagEnabled())
+    return nullptr;
 
-  return nullptr;
+  const user_manager::User* current_user =
+      chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
+  const user_manager::User* primary_user =
+      user_manager::UserManager::Get()->GetPrimaryUser();
+  // Tether networks are only available for the primary user; thus, no
+  // TetherService object should be created for secondary users. If multiple
+  // instances were created for each user, inconsistencies could lead to browser
+  // crashes. See https://crbug.com/809357.
+  if (current_user->GetAccountId() != primary_user->GetAccountId())
+    return nullptr;
+
+  return TetherServiceFactory::GetForBrowserContext(profile);
 }
 
 // static
