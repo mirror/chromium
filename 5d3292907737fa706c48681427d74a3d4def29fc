@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71901788_aa6afcde",
+        "filename": "net/server/http_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-06T10:43:00Z",
+      "side": 1,
+      "message": "Annotations are only processed in static analysis of the code, therefore we only need to ensure that every write/send command has an annotation.\n\nIn current patchset, we are sure that every new data item that is given for sending has an annotation when \u0027SendRaw\u0027 is called, and every time \u0027DoWriteLoop\u0027 is called to send previous data or new data, an annotation provided by a \u0027SendRaw\u0027 call is passed to it. So the concern that un-annotated data is sent does not exist, and we don\u0027t need to make sure that the exact annotation that was passed for each piece of data is send to the socket along with it.\n\nPlease tell me if I am missing something.",
+      "parentUuid": "7ab7e58a_9d30c7a2",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "5d3292907737fa706c48681427d74a3d4def29fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cd4af9d_a45b02b3",
         "filename": "net/server/http_server.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5d3292907737fa706c48681427d74a3d4def29fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22664e63_311446c5",
+        "filename": "net/server/http_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-06T10:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cd4af9d_a45b02b3",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "5d3292907737fa706c48681427d74a3d4def29fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
