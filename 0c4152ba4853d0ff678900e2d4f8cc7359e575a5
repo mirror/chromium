@@ -22,6 +22,74 @@
       "revId": "0c4152ba4853d0ff678900e2d4f8cc7359e575a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7073dee7_0bdabb9c",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T18:40:32Z",
+      "side": 1,
+      "message": "nit: is_locked",
+      "revId": "0c4152ba4853d0ff678900e2d4f8cc7359e575a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c310047_942e858b",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T18:40:32Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "0c4152ba4853d0ff678900e2d4f8cc7359e575a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676b05ab_6835ddc9",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T18:40:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0c4152ba4853d0ff678900e2d4f8cc7359e575a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3d37c2_afb310e4",
+        "filename": "ash/metrics/user_metrics_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T18:40:32Z",
+      "side": 1,
+      "message": "It\u0027ll crash in next line, so you don\u0027t need this, unless you want to troubleshoot a crash that you can\u0027t reproduce.",
+      "revId": "0c4152ba4853d0ff678900e2d4f8cc7359e575a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
