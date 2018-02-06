@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "887260db_90918b2c",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-02-06T00:35:56Z",
+      "side": 1,
+      "message": "It seems like the should retain the existing cursor to match weston but the spec is not clear about this.",
+      "parentUuid": "322e4295_ef3b7c2d",
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "364eeeff_ccde1e8c",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 1
