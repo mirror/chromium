@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7239d391_1b94618c",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T19:58:41Z",
+      "side": 1,
+      "message": "It also contains stuff like the WatchTime and MediaCapabilities services.",
+      "revId": "a047839dda73970594786b141b56d80c82a49228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904c484b_3bfbd74c",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T19:58:41Z",
+      "side": 1,
+      "message": "Maybe say something about just seeing the top level README instead of rehashing this here and instead focus on the renderer/decoder/cdm which are specialized in mojo.",
+      "revId": "a047839dda73970594786b141b56d80c82a49228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa5382c_21408c67",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T19:58:41Z",
+      "side": 1,
+      "message": "Extra space.",
+      "revId": "a047839dda73970594786b141b56d80c82a49228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
