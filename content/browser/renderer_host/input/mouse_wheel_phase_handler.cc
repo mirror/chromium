@@ -132,9 +132,11 @@ void MouseWheelPhaseHandler::SendSyntheticWheelEventWithPhaseEnded(
       blink::WebInputEvent::DispatchType::kEventNonBlocking;
 
   if (should_route_event) {
-    host_->delegate()->GetInputEventRouter()->RouteMouseWheelEvent(
-        host_view_, &last_mouse_wheel_event_,
-        ui::LatencyInfo(ui::SourceEventType::WHEEL));
+    if (host_ && host_view_) {
+      host_->delegate()->GetInputEventRouter()->RouteMouseWheelEvent(
+          host_view_, &last_mouse_wheel_event_,
+          ui::LatencyInfo(ui::SourceEventType::WHEEL));
+    }
   } else {
     host_view_->ProcessMouseWheelEvent(
         last_mouse_wheel_event_, ui::LatencyInfo(ui::SourceEventType::WHEEL));
