@@ -9,6 +9,7 @@
 #include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"
+#include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
@@ -169,29 +170,40 @@ struct CORE_EXPORT NativeValueTraits<IDLUnsignedLongLong>
 };
 
 // Strings
-template <>
-struct CORE_EXPORT NativeValueTraits<IDLByteString>
-    : public NativeValueTraitsBase<IDLByteString> {
+template <V8StringResourceMode Mode>
+struct CORE_EXPORT NativeValueTraits<IDLByteStringBase<Mode>>
+    : public NativeValueTraitsBase<IDLByteStringBase<Mode>> {
+  // http://heycam.github.io/webidl/#es-ByteString
   static String NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
                             ExceptionState& exception_state) {
-    return ToByteString(isolate, value, exception_state);
+    V8StringResource<Mode> string_resource(value);
+    // 1. Let x be ToString(v)
+    if (!string_resource.Prepare(isolate, exception_state))
+      return String();
+    String x = string_resource;
+    // 2. If the value of any element of x is greater than 255, then throw a
+    //    TypeError.
+    if (!x.ContainsOnlyLatin1()) {
+      exception_state.ThrowTypeError("Value is not a valid ByteString.");
+      return String();
+    }
+
+    // 3. Return an IDL ByteString value whose length is the length of x, and
+    //    where the value of each element is the value of the corresponding
+    //    element of x.
+    //    Blink: A ByteString is simply a String with a range constrained per
+    //    the above, so this is the identity operation.
+    return x;
   }
 
   static String NullValue() { return String(); }
 };
 
-template <>
-struct CORE_EXPORT NativeValueTraits<IDLString>
-    : public NativeValueTraitsBase<IDLString> {
-  static String NativeValue(v8::Isolate* isolate,
-                            v8::Local<v8::Value> value,
-                            ExceptionState& exception_state) {
-    return NativeValue<V8StringResourceMode::kDefaultMode>(isolate, value,
-                                                           exception_state);
-  }
-
-  template <V8StringResourceMode Mode = kDefaultMode>
+template <V8StringResourceMode Mode>
+struct CORE_EXPORT NativeValueTraits<IDLStringBase<Mode>>
+    : public NativeValueTraitsBase<IDLStringBase<Mode>> {
+  // https://heycam.github.io/webidl/#es-DOMString
   static String NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
                             ExceptionState& exception_state) {
@@ -204,13 +216,125 @@ struct CORE_EXPORT NativeValueTraits<IDLString>
   static String NullValue() { return String(); }
 };
 
-template <>
-struct CORE_EXPORT NativeValueTraits<IDLUSVString>
-    : public NativeValueTraitsBase<IDLUSVString> {
+template <V8StringResourceMode Mode>
+struct CORE_EXPORT NativeValueTraits<IDLUSVStringBase<Mode>>
+    : public NativeValueTraitsBase<IDLUSVStringBase<Mode>> {
+ private:
+  static bool HasUnmatchedSurrogates(const String& string) {
+    // By definition, 8-bit strings are confined to the Latin-1 code page and
+    // have no surrogates, matched or otherwise.
+    if (string.IsEmpty() || string.Is8Bit())
+      return false;
+
+    const UChar* characters = string.Characters16();
+    const unsigned length = string.length();
+
+    for (unsigned i = 0; i < length; ++i) {
+      UChar c = characters[i];
+      if (U16_IS_SINGLE(c))
+        continue;
+      if (U16_IS_TRAIL(c))
+        return true;
+      DCHECK(U16_IS_LEAD(c));
+      if (i == length - 1)
+        return true;
+      UChar d = characters[i + 1];
+      if (!U16_IS_TRAIL(d))
+        return true;
+      ++i;
+    }
+    return false;
+  }
+
+  // Replace unmatched surrogates with REPLACEMENT CHARACTER U+FFFD.
+  static String ReplaceUnmatchedSurrogates(const String& string) {
+    // This roughly implements
+    // http://heycam.github.io/webidl/#dfn-obtain-unicode but since Blink
+    // strings are 16-bits internally, the output is simply re-encoded to
+    // UTF-16.
+
+    // The concept of surrogate pairs is explained at:
+    // http://www.unicode.org/versions/Unicode6.2.0/ch03.pdf#G2630
+
+    // Blink-specific optimization to avoid making an unnecessary copy.
+    if (!HasUnmatchedSurrogates(string))
+      return string;
+    DCHECK(!string.Is8Bit());
+
+    // 1. Let S be the DOMString value.
+    const UChar* s = string.Characters16();
+
+    // 2. Let n be the length of S.
+    const unsigned n = string.length();
+
+    // 3. Initialize i to 0.
+    unsigned i = 0;
+
+    // 4. Initialize U to be an empty sequence of Unicode characters.
+    StringBuilder u;
+    u.ReserveCapacity(n);
+
+    // 5. While i < n:
+    while (i < n) {
+      // 1. Let c be the code unit in S at index i.
+      UChar c = s[i];
+      // 2. Depending on the value of c:
+      if (U16_IS_SINGLE(c)) {
+        // c < 0xD800 or c > 0xDFFF
+        // Append to U the Unicode character with code point c.
+        u.Append(c);
+      } else if (U16_IS_TRAIL(c)) {
+        // 0xDC00 <= c <= 0xDFFF
+        // Append to U a U+FFFD REPLACEMENT CHARACTER.
+        u.Append(kReplacementCharacter);
+      } else {
+        // 0xD800 <= c <= 0xDBFF
+        DCHECK(U16_IS_LEAD(c));
+        if (i == n - 1) {
+          // 1. If i = n-1, then append to U a U+FFFD REPLACEMENT CHARACTER.
+          u.Append(kReplacementCharacter);
+        } else {
+          // 2. Otherwise, i < n-1:
+          DCHECK_LT(i, n - 1);
+          // ....1. Let d be the code unit in S at index i+1.
+          UChar d = s[i + 1];
+          if (U16_IS_TRAIL(d)) {
+            // 2. If 0xDC00 <= d <= 0xDFFF, then:
+            // ..1. Let a be c & 0x3FF.
+            // ..2. Let b be d & 0x3FF.
+            // ..3. Append to U the Unicode character with code point
+            //      2^16+2^10*a+b.
+            u.Append(U16_GET_SUPPLEMENTARY(c, d));
+            // Blink: This is equivalent to u.append(c); u.append(d);
+            ++i;
+          } else {
+            // 3. Otherwise, d < 0xDC00 or d > 0xDFFF. Append to U a U+FFFD
+            //    REPLACEMENT CHARACTER.
+            u.Append(kReplacementCharacter);
+          }
+        }
+      }
+      // 3. Set i to i+1.
+      ++i;
+    }
+
+    // 6. Return U.
+    DCHECK_EQ(u.length(), string.length());
+    return u.ToString();
+  }
+
+ public:
+  // http://heycam.github.io/webidl/#es-USVString
   static String NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
                             ExceptionState& exception_state) {
-    return ToUSVString(isolate, value, exception_state);
+    // 1. Let string be the result of converting V to a DOMString.
+    V8StringResource<Mode> string(value);
+    if (!string.Prepare(isolate, exception_state))
+      return String();
+    // 2. Return an IDL USVString value that is the result of converting string
+    //    to a sequence of Unicode scalar values.
+    return ReplaceUnmatchedSurrogates(string);
   }
 
   static String NullValue() { return String(); }
