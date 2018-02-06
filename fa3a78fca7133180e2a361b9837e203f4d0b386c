@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0529ca89_d7030706",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T17:08:26Z",
+      "side": 1,
+      "message": "Is this the same as composite.has_value()?",
+      "range": {
+        "startLine": 594,
+        "startChar": 10,
+        "endLine": 594,
+        "endChar": 19
+      },
+      "revId": "fa3a78fca7133180e2a361b9837e203f4d0b386c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
