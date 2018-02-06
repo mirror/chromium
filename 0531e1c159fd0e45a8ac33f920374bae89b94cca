@@ -86,6 +86,24 @@
       "revId": "0531e1c159fd0e45a8ac33f920374bae89b94cca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641a9c68_e78ae52f",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-02-06T18:24:57Z",
+      "side": 0,
+      "message": "Done, but I didn\u0027t touch the surrounding ones that have also been deleted. I think a presubmit check of some sort would be needed to make sure this normally happens.",
+      "parentUuid": "aaf4f284_d4d6c347",
+      "revId": "0531e1c159fd0e45a8ac33f920374bae89b94cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
