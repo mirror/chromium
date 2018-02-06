@@ -13,6 +13,7 @@ namespace media_router {
 enum MediaRouteProviderId {
   EXTENSION,
   WIRED_DISPLAY,
+  DIAL,
   UNKNOWN  // New values must be added above this value.
 };
 

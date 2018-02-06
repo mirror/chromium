@@ -114,6 +114,8 @@ class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
                            TestOnDialAppInfoAvailableWithAlreadyAvailableSinks);
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
                            TestFetchDialAppInfoWithCachedAppInfo);
+  FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
+                           TestFetchDialAppInfoWithDiscoveryOnlySink);
 
   // DialRegistry::Observer implementation
   void OnDialDeviceEvent(const DialRegistry::DeviceList& devices) override;

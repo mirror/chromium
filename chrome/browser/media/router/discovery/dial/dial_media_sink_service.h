@@ -32,6 +32,15 @@ class DialMediaSinkServiceImpl;
 using OnDialSinkAddedCallback =
     base::RepeatingCallback<void(const MediaSinkInternal&)>;
 
+// Invoked when available sinks for a sink query are updated.
+// |args 0|: media source of the sink query.
+// |args 1|: available sinks for current sink query.
+// |args 2|: valid origins. Empty if all origins are valid.
+using OnSinkQueryUpdatedCallback =
+    base::RepeatingCallback<void(const MediaSource::Id&,
+                                 const std::vector<MediaSinkInternal>&,
+                                 const std::vector<url::Origin>&)>;
+
 // Service to discover DIAL media sinks.  All public methods must be invoked on
 // the UI thread.  Delegates to DialMediaSinkServiceImpl by posting tasks to its
 // SequencedTaskRunner.
@@ -58,8 +67,20 @@ class DialMediaSinkService {
   // Marked virtual for tests.
   virtual void OnUserGesture();
 
-  virtual void RegisterMediaSinksObserver(MediaSinksObserver* observer);
-  virtual void UnregisterMediaSinksObserver(MediaSinksObserver* observer);
+  // Registers a |sink_query_updated_cb| with this class.
+  // Marked virtual for tests.
+  virtual void RegisterOnSinkQueryUpdatedCallback(
+      const OnSinkQueryUpdatedCallback& sink_query_updated_cb);
+  // Unregisters any existing |sink_query_updated_cb_| with this class.
+  // Marked virtual for tests.
+  virtual void UnregisterOnSinkQueryUpdatedCallback();
+
+  // Starts observing |media_source|. Invokes |sink_query_updated_cb_| when
+  // available sinks for |media_source| are updated. No op if already observing
+  // |media_source|.
+  virtual void StartObservingMediaSinks(const std::string& media_source);
+  // Stops observing |media_source|.
+  virtual void StopObservingMediaSinks(const std::string& media_source);
 
  private:
   friend class DialMediaSinkServiceTest;
@@ -90,13 +111,17 @@ class DialMediaSinkService {
   // Passed to |impl_| when |Start| is called.
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 
-  // Map of media sink observers, keyed by app name
-  base::flat_map<std::string,
-                 std::unique_ptr<base::ObserverList<MediaSinksObserver>>>
-      sink_observers_;
+  // Map of media source set, keyed by app name.
+  base::flat_map<std::string, base::flat_set<MediaSource::Id>>
+      registered_media_sources_;
+
+  // Invoked if available sinks for media sources in |registered_media_sources_|
+  // are updated.
+  OnSinkQueryUpdatedCallback sink_query_updated_cb_;
 
   // Map of cached available media sinks, keyed by app name
-  base::flat_map<std::string, std::vector<MediaSink>> cached_available_sinks_;
+  base::flat_map<std::string, std::vector<MediaSinkInternal>>
+      cached_available_sinks_;
 
   SEQUENCE_CHECKER(sequence_checker_);
   base::WeakPtrFactory<DialMediaSinkService> weak_ptr_factory_;

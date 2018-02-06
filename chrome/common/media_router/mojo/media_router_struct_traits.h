@@ -626,6 +626,8 @@ struct EnumTraits<media_router::mojom::MediaRouteProvider::Id,
         return media_router::mojom::MediaRouteProvider::Id::EXTENSION;
       case media_router::MediaRouteProviderId::WIRED_DISPLAY:
         return media_router::mojom::MediaRouteProvider::Id::WIRED_DISPLAY;
+      case media_router::MediaRouteProviderId::DIAL:
+        return media_router::mojom::MediaRouteProvider::Id::DIAL;
       case media_router::MediaRouteProviderId::UNKNOWN:
         break;
     }
@@ -642,6 +644,9 @@ struct EnumTraits<media_router::mojom::MediaRouteProvider::Id,
         return true;
       case media_router::mojom::MediaRouteProvider::Id::WIRED_DISPLAY:
         *provider_id = media_router::MediaRouteProviderId::WIRED_DISPLAY;
+        return true;
+      case media_router::mojom::MediaRouteProvider::Id::DIAL:
+        *provider_id = media_router::MediaRouteProviderId::DIAL;
         return true;
     }
     return false;
