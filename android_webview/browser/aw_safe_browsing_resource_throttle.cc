@@ -6,28 +6,12 @@
 
 #include <memory>
 
-#include "android_webview/browser/aw_contents_client_bridge.h"
 #include "android_webview/browser/aw_safe_browsing_whitelist_manager.h"
 #include "android_webview/browser/aw_url_checker_delegate_impl.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "net/url_request/url_request.h"
 
 namespace android_webview {
-namespace {
-
-// This is used as a user data key for net::URLRequest. Setting it indicates
-// that the request is cancelled because of SafeBrowsing. It could be used, for
-// example, to decide whether to override the error code with a
-// SafeBrowsing-specific error code.
-const void* const kCancelledBySafeBrowsingUserDataKey =
-    &kCancelledBySafeBrowsingUserDataKey;
-
-void SetCancelledBySafeBrowsing(net::URLRequest* request) {
-  request->SetUserData(kCancelledBySafeBrowsingUserDataKey,
-                       std::make_unique<base::SupportsUserData::Data>());
-}
-
-}  // namespace
 
 content::ResourceThrottle* MaybeCreateAwSafeBrowsingResourceThrottle(
     net::URLRequest* request,
@@ -43,10 +27,6 @@ content::ResourceThrottle* MaybeCreateAwSafeBrowsingResourceThrottle(
       std::move(ui_manager), whitelist_manager);
 }
 
-bool IsCancelledBySafeBrowsing(const net::URLRequest* request) {
-  return request->GetUserData(kCancelledBySafeBrowsingUserDataKey) != nullptr;
-}
-
 AwSafeBrowsingParallelResourceThrottle::AwSafeBrowsingParallelResourceThrottle(
     net::URLRequest* request,
     content::ResourceType resource_type,
@@ -58,15 +38,9 @@ AwSafeBrowsingParallelResourceThrottle::AwSafeBrowsingParallelResourceThrottle(
           resource_type,
           new AwUrlCheckerDelegateImpl(std::move(database_manager),
                                        std::move(ui_manager),
-                                       whitelist_manager)),
-      request_(request) {}
+                                       whitelist_manager)) {}
 
 AwSafeBrowsingParallelResourceThrottle::
     ~AwSafeBrowsingParallelResourceThrottle() = default;
-
-void AwSafeBrowsingParallelResourceThrottle::CancelResourceLoad() {
-  SetCancelledBySafeBrowsing(request_);
-  BaseParallelResourceThrottle::CancelResourceLoad();
-}
 
 }  // namespace android_webview
