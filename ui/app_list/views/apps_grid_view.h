@@ -525,6 +525,12 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Update number of columns and rows for apps within a folder.
   void UpdateColsAndRowsForFolder();
 
+  // Get the index offset of an AppLitItemView as a child in this view. This is
+  // used to correct the order of the item views after dragging or app list
+  // sync. As a result, a focus movement bug is resolved. (See
+  // https://crbug.com/791758)
+  size_t GetAppListItemViewIndexOffset();
+
   AppListModel* model_ = nullptr;         // Owned by AppListView.
   AppListItemList* item_list_ = nullptr;  // Not owned.
 
