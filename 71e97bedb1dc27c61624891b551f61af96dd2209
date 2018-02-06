@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cfc60c8_2faa98f1",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "Do you have a basis of this value, or it\u0027s just a random large value? Could you add a comment about that either cases?",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7d8502_9b64bbc1",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "nit: auto cert_fetcher \u003d std::make_unique\u003c...\u003e(...);",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bf9fdf_9ce43e88",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b314ad08_8b3ea6be",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "Do we ever get meaningful value in HTTP case? (URLRequestHTTPJob doesn\u0027t really seem to set request.expected_content_size_ ?)",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7b8b12_c7f6e051",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "nit: Can you move Start and Abort up over other callback methods to match the ordering",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08e1c1f_893c6705",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "Should this also just resets drainer_?",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20835583_64c9dc8c",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "nit: Add a lightweight comment\n\nnit: Given the class name this method should probably be placed top (above the GetCertChain one)?",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90acedd_dc39b3a6",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "nit: URLLoaderFactoryForMockLoader",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797b720b_6216f652",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:59:00Z",
+      "side": 1,
+      "message": "nit: given \u0027mock\u0027 tends to have a stronger definition in testing domain... let\u0027s rename ForwardCertificateCallback or something like that.",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
