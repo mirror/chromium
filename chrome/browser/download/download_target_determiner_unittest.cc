@@ -321,6 +321,10 @@ void DownloadTargetDeterminerTest::SetUp() {
   download_prefs_->SetDownloadPath(test_download_dir());
   delegate_.SetupDefaults();
   SetUpFileTypePolicies();
+#if defined(OS_ANDROID)
+  profile()->GetTestingPrefService()->SetBoolean(
+      prefs::kPromptForDownloadAndroidInitial, false);
+#endif
 }
 
 void DownloadTargetDeterminerTest::TearDown() {

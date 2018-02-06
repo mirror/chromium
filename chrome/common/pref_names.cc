@@ -1410,8 +1410,14 @@ const char kOpenPdfDownloadInSystemReader[] =
 #if defined(OS_ANDROID)
 // Boolean which specifies whether we should ask the user if we should download
 // a file (true) or just download it automatically, specifically for Android.
-// This is set to true as the prompt is intially shown to all Android users.
 const char kPromptForDownloadAndroid[] = "download.prompt_for_download_android";
+
+// Boolean which specifies whether we should display the download location
+// dialog to users the first time they are downloading with the ability
+// to change download location. This is initially set as true and flipped once
+// we display the dialog for the first time.
+const char kPromptForDownloadAndroidInitial[] =
+    "download.prompt_for_download_android_initial";
 #endif
 
 // String which specifies where to save html files to by default.

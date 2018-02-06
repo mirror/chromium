@@ -775,8 +775,7 @@ void ChromeDownloadManagerDelegate::RequestConfirmation(
 
     case DownloadConfirmationReason::PREFERENCE:
       if (download->GetWebContents()) {
-        location_dialog_bridge_->ShowDialog(download->GetWebContents(),
-                                            suggested_path, callback);
+        location_dialog_bridge_->ShowDialog(download, suggested_path, callback);
       } else {
         // For now, if there are no WebContents, continue anyways.
         callback.Run(DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,

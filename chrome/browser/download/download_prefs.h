@@ -116,6 +116,7 @@ class DownloadPrefs {
   BooleanPrefMember prompt_for_download_;
 #if defined(OS_ANDROID)
   BooleanPrefMember prompt_for_download_android_;
+  BooleanPrefMember prompt_for_download_android_initial_;
 #endif
 
   FilePathPrefMember download_path_;
