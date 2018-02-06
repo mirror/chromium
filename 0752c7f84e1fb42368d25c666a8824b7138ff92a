@@ -16,6 +16,24 @@
       "revId": "0752c7f84e1fb42368d25c666a8824b7138ff92a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a9a40d_0517f13e",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2018-02-06T23:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb2fd28_965e5ddb",
+      "revId": "0752c7f84e1fb42368d25c666a8824b7138ff92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
