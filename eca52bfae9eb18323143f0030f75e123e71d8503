@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60453bd2_a111637e",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T21:35:14Z",
+      "side": 1,
+      "message": "Actually this is all wrong, we can\u0027t be using static const for a function that takes a parameter... Reworked the functions so this is not caching static variable and also avoids querying devices too much.",
+      "parentUuid": "27dae4c3_dc747f09",
+      "range": {
+        "startLine": 214,
+        "startChar": 14,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "eca52bfae9eb18323143f0030f75e123e71d8503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a607a5_19cdaa5a",
         "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "86af27ce_0414037f",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T21:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a607a5_19cdaa5a",
+      "range": {
+        "startLine": 291,
+        "startChar": 72,
+        "endLine": 291,
+        "endChar": 77
+      },
+      "revId": "eca52bfae9eb18323143f0030f75e123e71d8503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7823f942_32b5ec5b",
         "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "eca52bfae9eb18323143f0030f75e123e71d8503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d73d80_8d4f9c03",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T21:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7823f942_32b5ec5b",
+      "revId": "eca52bfae9eb18323143f0030f75e123e71d8503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
