@@ -80,6 +80,9 @@ class NET_EXPORT_PRIVATE DnsSession
   // or have failed longer time ago.
   unsigned NextGoodServerIndex(unsigned server_index);
 
+  // Same as above, but for DNS over HTTPS servers.
+  unsigned NextGoodDnsOverHttpsServerIndex(unsigned server_index);
+
   // Record that server failed to respond (due to SRV_FAIL or timeout).
   void RecordServerFailure(unsigned server_index);
 
