@@ -67,6 +67,24 @@
       "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bab3e3_bd9d7033",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-06T19:43:41Z",
+      "side": 1,
+      "message": "I could do that my only concern is around how far up the chain it is returned.  Conceptually I am thinking of this design having a browser tab component and a lower level window component.  These two components could be in separate processes.  If that occurs, I would not want to pass this scoped object over a process boundary.\n\nI could pass the scoped object to the owning class (WindowTreeHost derivation in this case) since I would expect it to live in the same process as the window.  This would prevent other callers from unlocking but I don\u0027t think it makes unlocking simpler (caller has to remember to destroy the returned object when the window is destroyed instead of allowing the window itself to destroy it).\n\nWDYT?",
+      "parentUuid": "00886a2b_2bae0be7",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
