@@ -22,3 +22,13 @@ android_aar_prebuilt("rules_java") {
   testonly = true
   aar_path = "lib/rules.aar"
 }
+
+if (defined(android_extra_prebuilt_pathes)) {
+  foreach(target, android_extra_prebuilt_pathes) {
+    android_java_prebuilt(target[0]) {
+      testonly = true
+      jar_path = target[1]
+      jar_excluded_patterns = target[2]
+    }
+  }
+}
