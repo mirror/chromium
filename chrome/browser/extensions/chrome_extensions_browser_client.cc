@@ -280,11 +280,11 @@ ChromeExtensionsBrowserClient::GetExtensionSystemFactory() {
 }
 
 void ChromeExtensionsBrowserClient::RegisterExtensionFunctions(
-    ExtensionFunctionRegistry* registry) const {
+    ExtensionFunctionRegistry& registry) const {
   // Preferences.
-  registry->RegisterFunction<GetPreferenceFunction>();
-  registry->RegisterFunction<SetPreferenceFunction>();
-  registry->RegisterFunction<ClearPreferenceFunction>();
+  registry.RegisterFunction<GetPreferenceFunction>();
+  registry.RegisterFunction<SetPreferenceFunction>();
+  registry.RegisterFunction<ClearPreferenceFunction>();
 
   // Generated APIs from lower-level modules.
   api::GeneratedFunctionRegistry::RegisterAll(registry);

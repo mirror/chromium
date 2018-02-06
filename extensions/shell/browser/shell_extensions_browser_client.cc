@@ -188,7 +188,7 @@ ShellExtensionsBrowserClient::GetExtensionSystemFactory() {
 }
 
 void ShellExtensionsBrowserClient::RegisterExtensionFunctions(
-    ExtensionFunctionRegistry* registry) const {
+    ExtensionFunctionRegistry& registry) const {
   // Register core extension-system APIs.
   api::GeneratedFunctionRegistry::RegisterAll(registry);
 
