@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab7257e_6a91dcbe",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:54:09Z",
+      "side": 1,
+      "message": "nit: \"returns\"",
+      "range": {
+        "startLine": 65,
+        "startChar": 55,
+        "endLine": 65,
+        "endChar": 61
+      },
+      "revId": "8b47b3f74242758d2d542d9e0f70cb5f77e1429d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b33fd07_71f1408b",
+        "filename": "chrome/installer/zucchini/algorithm_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:54:09Z",
+      "side": 1,
+      "message": "why is this pass-by-reference?",
+      "range": {
+        "startLine": 19,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "8b47b3f74242758d2d542d9e0f70cb5f77e1429d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
