@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c47fa5f1_51c60dc5",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-02-06T14:53:39Z",
+      "side": 1,
+      "message": "Two ideas which you can take or leave.\n1) Add a kDefaultHostname (or kDefaultUrlPrefix) and then you can just concatenate here.\n2) Avoid the round-trip through URL:\n\nstd::string url(kDefaultUrl);\nurl.pop_back();\nreturn url + path;\n\nWDYT?",
+      "parentUuid": "012f5829_11443655",
+      "range": {
+        "startLine": 521,
+        "startChar": 0,
+        "endLine": 521,
+        "endChar": 60
+      },
+      "revId": "3534391046294af55595eb1bf5af5435f64a4142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8147e7b_6b67b8fa",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 2
