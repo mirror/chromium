@@ -406,7 +406,8 @@ void TaskQueueManager::NotifyWillProcessTask(ExecutingTask* executing_task,
     }
   }
 
-  executing_task->should_record_thread_time = ShouldRecordCPUTimeForTask();
+  executing_task->should_record_thread_time =
+      ShouldRecordCPUTimeForTask() && base::ThreadTicks::IsSupported();
   if (executing_task->should_record_thread_time)
     executing_task->task_start_thread_time = base::ThreadTicks::Now();
 }
