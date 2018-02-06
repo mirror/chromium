@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "base/bind.h"
-#include "base/lazy_instance.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h"
 #include "chrome/browser/chromeos/external_protocol_dialog.h"
@@ -19,6 +18,7 @@
 #include "components/arc/intent_helper/page_transition_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/referrer.h"
@@ -32,12 +32,6 @@ using content::WebContents;
 namespace arc {
 
 namespace {
-
-// TODO(yusukes|djacobo): Find a better way to detect a request loop and remove
-// the global variables.
-base::LazyInstance<GURL>::DestructorAtExit g_last_url =
-    LAZY_INSTANCE_INITIALIZER;
-ui::PageTransition g_last_page_transition;
 
 // Shows the Chrome OS' original external protocol dialog as a fallback.
 void ShowFallbackExternalProtocolDialog(int render_process_host_id,
@@ -74,13 +68,17 @@ void OpenUrlInChrome(int render_process_host_id,
   if (!web_contents)
     return;
 
-  // Use the PAGE_TRANSITION_FROM_API qualifier so that this nativation won't
-  // end up showing the disambig dialog.
+  // Use the PAGE_TRANSITION_FROM_API qualifier so that this navigation won't
+  // end up showing the disambig dialog. Decided not to use
+  // PAGE_TRANSITION_FROM_ARC since that could trick the browser into escaping
+  // to ARC without showing the picker and that's something that should only
+  // happen for navigations started from ARC, and so ChromeShellDelegate is the
+  // only part that can create/mark a new navigation with this flag.
   const ui::PageTransition page_transition_type = ui::PageTransitionFromInt(
       ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_FROM_API);
   constexpr bool kIsRendererInitiated = false;
   const content::OpenURLParams params(
-      // TODO(yusukes): Send a non-empty referrer.
+      // TODO(djacobo): Send a non-empty referrer.
       url, content::Referrer(), WindowOpenDisposition::CURRENT_TAB,
       page_transition_type, kIsRendererInitiated);
   web_contents->OpenURL(params);
@@ -154,13 +152,26 @@ GetActionResult GetAction(
   if (selected_app_index == handlers.size()) {
     // The user hasn't made the selection yet.
 
-    // If |handlers| has only one element and its package is "Chrome", open
-    // the fallback URL in the current tab without showing the dialog.
+    // If |handlers| has only one element and either of the following conditions
+    // is met, open the URL in Chrome or ARC without showing the picker UI.
+    // 1) its package is "Chrome", open the fallback URL in the current tab
+    // without showing the dialog.
+    // 2) its package is not "Chrome" but it has been marked as
+    // !always_ask_user, this means that we trust the current tab enough to be
+    // able to bypass the picker.
     if (handlers.size() == 1) {
-      if (GetActionInternal(original_url, always_ask_user, handlers[0],
-                            out_url_and_package) ==
-          GetActionResult::OPEN_URL_IN_CHROME) {
-        return GetActionResult::OPEN_URL_IN_CHROME;
+      const GetActionResult internal_result = GetActionInternal(
+          original_url, always_ask_user, handlers[0], out_url_and_package);
+
+      switch (internal_result) {
+        case GetActionResult::OPEN_URL_IN_CHROME:
+          return GetActionResult::OPEN_URL_IN_CHROME;
+        case GetActionResult::HANDLE_URL_IN_ARC:
+          return GetActionResult::HANDLE_URL_IN_ARC;
+        case GetActionResult::SHOW_CHROME_OS_DIALOG:
+        case GetActionResult::ASK_USER:
+          // Default option.
+          break;
       }
     }
 
@@ -272,23 +283,8 @@ void OnIntentPickerClosed(int render_process_host_id,
         arc_service_manager->arc_bridge_service()->intent_helper(), HandleUrl);
   }
 
-  if (!instance) {
+  if (!instance || selected_app_index == handlers.size()) {
     close_reason = ArcNavigationThrottle::CloseReason::ERROR;
-  } else if (close_reason == ArcNavigationThrottle::CloseReason::
-                                 ARC_APP_PREFERRED_PRESSED ||
-             close_reason ==
-                 ArcNavigationThrottle::CloseReason::ARC_APP_PRESSED ||
-             close_reason ==
-                 ArcNavigationThrottle::CloseReason::CHROME_PREFERRED_PRESSED ||
-             close_reason ==
-                 ArcNavigationThrottle::CloseReason::CHROME_PRESSED) {
-    if (selected_app_index == handlers.size()) {
-      close_reason = ArcNavigationThrottle::CloseReason::ERROR;
-    } else {
-      // The user has made a selection. Clear g_last_* variables.
-      g_last_url.Get() = GURL();
-      g_last_page_transition = ui::PageTransition();
-    }
   }
 
   switch (close_reason) {
@@ -426,26 +422,24 @@ void OnUrlHandlerList(int render_process_host_id,
 }
 
 // Returns true if the |url| is safe to be forwarded to ARC without showing the
-// disambig dialog when there is a preferred app on ARC for the |url|. Note that
-// this function almost always returns true (i.e. "safe") except for very rare
-// situations mentioned below.
-// TODO(yusukes|djacobo): Find a better way to detect a request loop and remove
-// these heuristics.
+// disambig dialog, the ONLY way to guarantee this is by making use of the
+// ui::PAGE_TRANSITION_FROM_ARC flag, any navigation coming from ARC via
+// ChromeShellDelegate MUST be marked as such.
+//
+// Mark as not "safe" (aka return false) on the contrary, most likely those
+// cases will require the user to pass thru the intent picker UI.
+// TODO(djacobo): Investigate if b/30125340 could still be reproducible under
+// this new approach.
 bool IsSafeToRedirectToArcWithoutUserConfirmation(
     const GURL& url,
     ui::PageTransition page_transition,
     const GURL& last_url,
     ui::PageTransition last_page_transition) {
-  // Return "safe" unless both transition flags are FROM_API because the only
-  // unsafe situation we know is infinite tab creation loop with FROM_API
-  // (b/30125340).
-  if (!(page_transition & ui::PAGE_TRANSITION_FROM_API) ||
-      !(last_page_transition & ui::PAGE_TRANSITION_FROM_API)) {
+  if (last_page_transition & ui::PAGE_TRANSITION_FROM_ARC)
     return true;
-  }
 
-  // Return "safe" unless both URLs are for the same app.
-  return url.scheme() != last_url.scheme();
+  // By default is not safe to escape to ARC.
+  return false;
 }
 
 }  // namespace
@@ -458,18 +452,29 @@ bool RunArcExternalProtocolDialog(const GURL& url,
   // This function is for external protocols that Chrome cannot handle.
   DCHECK(!url.SchemeIsHTTPOrHTTPS()) << url;
 
+  // Recover the last url and the related page transition info. This feature
+  // depends on the existence of a containing WebContents (aka tab).
+  WebContents* tab =
+      tab_util::GetWebContentsByID(render_process_host_id, routing_id);
+  DCHECK(tab);
+
+  // Let's use the last_committed_entry as reference, if not possible use the
+  // pending entry.
+  content::NavigationEntry* last_entry =
+      tab->GetController().GetLastCommittedEntry();
+  if (!last_entry)
+    last_entry = tab->GetController().GetVisibleEntry();
+  DCHECK(last_entry);
+
+  const GURL last_url = last_entry->GetURL();
+  const ui::PageTransition last_page_transition =
+      last_entry->GetTransitionType();
+
   const bool always_ask_user = !IsSafeToRedirectToArcWithoutUserConfirmation(
-      url, page_transition, g_last_url.Get(), g_last_page_transition);
+      url, page_transition, last_url, last_page_transition);
   LOG_IF(WARNING, always_ask_user)
       << "RunArcExternalProtocolDialog: repeatedly handling external protocol "
-      << "redirection to " << url
-      << " started from API: last_url=" << g_last_url.Get();
-
-  // This function is called only on the UI thread. Updating g_last_* variables
-  // without a lock is safe.
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  g_last_url.Get() = url;
-  g_last_page_transition = page_transition;
+      << "redirection to " << url << " started from ARC: last_url=" << last_url;
 
   // For external protocol navigation, always ignore the FROM_API qualifier.
   // We sometimes do need to forward a request with FROM_API to ARC, or

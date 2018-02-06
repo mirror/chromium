@@ -111,6 +111,9 @@ enum PageTransition {
   // Any of the core values above can be augmented by one or more qualifiers.
   // These qualifiers further define the transition.
 
+  // The transition originated from ARC.
+  PAGE_TRANSITION_FROM_ARC = 0x00400000,
+
   // A managed user attempted to visit a URL but was blocked.
   PAGE_TRANSITION_BLOCKED = 0x00800000,
 
