@@ -30,8 +30,6 @@ uint32_t LockFlags(gfx::BufferUsage usage) {
   return 0;
 }
 
-void NoOp() {}
-
 }  // namespace
 
 GpuMemoryBufferImplIOSurface::GpuMemoryBufferImplIOSurface(
@@ -92,7 +90,7 @@ base::Closure GpuMemoryBufferImplIOSurface::AllocateForTesting(
   handle->type = gfx::IO_SURFACE_BUFFER;
   handle->id = kBufferId;
   handle->mach_port.reset(IOSurfaceCreateMachPort(io_surface));
-  return base::Bind(&NoOp);
+  return base::DoNothing();
 }
 
 bool GpuMemoryBufferImplIOSurface::Map() {
