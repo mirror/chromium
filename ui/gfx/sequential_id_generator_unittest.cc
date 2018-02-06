@@ -44,4 +44,24 @@ TEST(SequentialIDGeneratorTest, MaybeRemoveNumbers) {
   EXPECT_FALSE(generator.HasGeneratedIDFor(42));
   generator.ReleaseNumber(42);
 }
+
+TEST(SequentialIDGeneratorTest, VerifyReferenceDiagnostics) {
+  const uint32_t kMinID = 0;
+  SequentialIDGenerator generator(kMinID);
+
+  generator.BeginTrackingReferences();
+  EXPECT_EQ(generator.GetUntrackedReferences().size(), 0)
+
+  EXPECT_EQ(0U, generator.GetGeneratedID(42));
+  EXPECT_EQ(1U, generator.GetGeneratedID(7));
+
+  generator.BeginTrackingReferences();
+  EXPECT_EQ(generator.GetUntrackedReferences().size(), 2);
+
+  generator.BeginTrackingReferences();
+  EXPECT_EQ(1U, generator.GetGeneratedID(7));
+  EXPECT_EQ(generator.GetUntrackedReferences().size(), 1);
+  EXPECT_EQ(generator.GetUntrackedReferences()[0], 42);
+}
+
 }  // namespace ui

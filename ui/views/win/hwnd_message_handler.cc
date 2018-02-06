@@ -2309,6 +2309,7 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
     // so use base::TimeTicks::Now().
     const base::TimeTicks event_time = base::TimeTicks::Now();
     TouchEvents touch_events;
+    id_generator_.BeginTrackingReferences();
     for (int i = 0; i < num_points; ++i) {
       POINT point;
       point.x = TOUCH_COORD_TO_PIXEL(input[i].x);
@@ -2349,12 +2350,21 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
 
         if (input[i].dwFlags & TOUCHEVENTF_UP) {
           touch_ids_.erase(input[i].dwID);
-          GenerateTouchEvent(ui::ET_TOUCH_RELEASED, touch_point, touch_id,
+          GenerateTouchEvent(ui::ET_TOUCH_RELEASED, gfx::Point(0, 0), i,
                              event_time, &touch_events);
           id_generator_.ReleaseNumber(input[i].dwID);
         }
       }
     }
+    // For any events that the id_generator_ didn't see in this message, add a
+    // release
+    for (auto i : id_generator_.GetUntrackedReferences()) {
+      touch_ids_.erase(input[i].dwID);
+      //?GenerateTouchEvent(ui::ET_TOUCH_RELEASED, touch_point, touch_id,
+      //?  event_time, &touch_events);
+      id_generator_.ReleaseNumber(input[i].dwID);
+    }
+
     // Handle the touch events asynchronously. We need this because touch
     // events on windows don't fire if we enter a modal loop in the context of
     // a touch event.
