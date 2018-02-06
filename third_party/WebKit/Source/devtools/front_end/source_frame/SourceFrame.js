@@ -43,7 +43,8 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
     this._lazyContent = lazyContent;
 
     this._pretty = false;
-    this._rawContent = '';
+    /** @type {?string} */
+    this._rawContent = null;
     /** @type {?Promise<string>} */
     this._formattedContentPromise = null;
     /** @type {?Formatter.FormatterSourceMapping} */
@@ -54,6 +55,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
     });
     this._shouldAutoPrettyPrint = false;
     this._prettyToggle.setVisible(false);
+    this._prettyToggle.setEnabled(false);
 
     this._textEditor = new SourceFrame.SourcesTextEditor(this);
     this._textEditor.show(this.element);
@@ -69,11 +71,24 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
     this._textEditor.addEventListener(
         SourceFrame.SourcesTextEditor.Events.SelectionChanged, this._updateSourcePosition, this);
     this._textEditor.addEventListener(UI.TextEditor.Events.TextChanged, event => {
+      if (!this._muteChangeEventsForPrettyPrint) {
+        this._pretty = false;
+        this._prettyToggle.setToggled(false);
+        this._formattedMap = null;
+        this._formattedContentPromise = null;
+        this._rawContent = null;
+        this._textEditor.setLineNumberFormatter(lineNumber => {
+          return String(lineNumber);
+        });
+      }
       if (!this._muteChangeEventsForSetContent)
         this.onTextChanged(event.data.oldRange, event.data.newRange);
     });
     /** @type {boolean} */
     this._muteChangeEventsForSetContent = false;
+
+    /** @type {boolean} */
+    this._muteChangeEventsForPrettyPrint = false;
 
     this._sourcePosition = new UI.ToolbarText();
 
@@ -104,15 +119,19 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
 
   /**
    * @param {boolean} value
+   * @param {string=} content
    */
-  async _setPretty(value) {
+  async _setPretty(value, content = this._textEditor.text()) {
     this._pretty = value;
     this._prettyToggle.setToggled(value);
     this._prettyToggle.setEnabled(false);
 
     var selection = this.selection();
-    if (this._pretty && this._rawContent) {
+    if (this._pretty) {
+      this._rawContent = /** @type {string} */ (content);
+      this._muteChangeEventsForPrettyPrint = true;
       this.setContent(await this._requestFormattedContent());
+      this._muteChangeEventsForPrettyPrint = false;
       var start = this._rawToPrettyLocation(selection.startLine, selection.startColumn);
       var end = this._rawToPrettyLocation(selection.endLine, selection.endColumn);
       this.setSelection(new TextUtils.TextRange(start[0], start[1], end[0], end[1]));
@@ -128,12 +147,34 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
       this._textEditor.setLineNumberFormatter(lineNumber => {
         return String(lineNumber);
       });
+      this._muteChangeEventsForPrettyPrint = true;
       this.setContent(this._rawContent);
+      this._muteChangeEventsForPrettyPrint = false;
       var start = this._prettyToRawLocation(selection.startLine, selection.startColumn);
       var end = this._prettyToRawLocation(selection.endLine, selection.endColumn);
       this.setSelection(new TextUtils.TextRange(start[0], start[1], end[0], end[1]));
     }
     this._prettyToggle.setEnabled(true);
+  }
+
+  /**
+   * @param {number} editorLineNumber
+   * @param {number=} editorColumnNumber
+   */
+  editorToRawLocation(editorLineNumber, editorColumnNumber = 0) {
+    if (!this._pretty || !this._formattedMap)
+      return [editorLineNumber, editorColumnNumber];
+    return this._prettyToRawLocation(editorLineNumber, editorColumnNumber);
+  }
+
+  /**
+   * @param {number} lineNumber
+   * @param {number=} columnNumber
+   */
+  rawToEditorLocation(lineNumber, columnNumber = 0) {
+    if (!this._pretty || !this._formattedMap)
+      return [lineNumber, columnNumber];
+    return this._rawToPrettyLocation(lineNumber, columnNumber);
   }
 
   /**
@@ -204,14 +245,14 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
   async _ensureContentLoaded() {
     if (!this._contentRequested) {
       this._contentRequested = true;
-      var content = await this._lazyContent();
-      this._rawContent = content || '';
+      var content = await this._lazyContent() || '';
       this._formattedContentPromise = null;
       this._formattedMap = null;
-      if (this._shouldAutoPrettyPrint && TextUtils.isMinified(this._rawContent))
-        await this._setPretty(true);
+      this._prettyToggle.setEnabled(true);
+      if (this._shouldAutoPrettyPrint && TextUtils.isMinified(content))
+        await this._setPretty(true, content);
       else
-        this.setContent(this._rawContent);
+        this.setContent(content);
     }
   }
 
@@ -223,7 +264,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
       return this._formattedContentPromise;
     var fulfill;
     this._formattedContentPromise = new Promise(x => fulfill = x);
-    new Formatter.ScriptFormatter(this._highlighterType, this._rawContent, (data, map) => {
+    new Formatter.ScriptFormatter(this._highlighterType, this._rawContent || '', (data, map) => {
       this._formattedMap = map;
       fulfill(data);
     });
@@ -249,8 +290,12 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
     if (!this.loaded || !this.isShowing())
       return;
 
-    this._textEditor.revealPosition(
-        this._positionToReveal.line, this._positionToReveal.column, this._positionToReveal.shouldHighlight);
+    var line = this._positionToReveal.line;
+    var column = this._positionToReveal.column || 0;
+    var shouldHighlight = this._positionToReveal.shouldHighlight;
+    if (this._pretty)
+      [line, column] = this._rawToPrettyLocation(line, column);
+    this._textEditor.revealPosition(line, column, shouldHighlight);
     this._positionToReveal = null;
   }
 
@@ -294,7 +339,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
 
   _innerSetSelectionIfNeeded() {
     if (this._selectionToSet && this.loaded && this.isShowing()) {
-      this._textEditor.setSelection(this._selectionToSet);
+      this._textEditor.setSelection(this._selectionToSet, true);
       this._selectionToSet = null;
     }
   }
@@ -609,7 +654,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
    * @override
    * @return {!Promise}
    */
-  populateLineGutterContextMenu(contextMenu, lineNumber) {
+  populateLineGutterContextMenu(contextMenu, editorLineNumber) {
     return Promise.resolve();
   }
 
@@ -617,7 +662,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
    * @override
    * @return {!Promise}
    */
-  populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber) {
+  populateTextAreaContextMenu(contextMenu, editorLineNumber, editorColumnNumber) {
     return Promise.resolve();
   }
 

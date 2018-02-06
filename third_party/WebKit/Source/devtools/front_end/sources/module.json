@@ -286,14 +286,6 @@
             "className": "Sources.SourcesPanel.DebuggerPausedDetailsRevealer"
         },
         {
-            "type": "@Sources.SourcesView.EditorAction",
-            "className": "Sources.InplaceFormatterEditorAction"
-        },
-        {
-            "type": "@Sources.SourcesView.EditorAction",
-            "className": "Sources.ScriptFormatterEditorAction"
-        },
-        {
             "type": "view",
             "location": "navigator-view",
             "id": "navigator-network",
@@ -737,8 +729,6 @@
         "TabbedEditorContainer.js",
         "WatchExpressionsSidebarPane.js",
         "ThreadsSidebarPane.js",
-        "ScriptFormatterEditorAction.js",
-        "InplaceFormatterEditorAction.js",
         "SourceFormatter.js",
         "OpenFileQuickOpen.js",
         "SourcesView.js",

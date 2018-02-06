@@ -640,17 +640,6 @@ SourcesTestRunner.checkUILocation = function(uiSourceCode, lineNumber, columnNum
       'Incorrect columnNumber, expected \'' + columnNumber + '\', but got \'' + location.columnNumber + '\'');
 };
 
-SourcesTestRunner.scriptFormatter = function() {
-  return self.runtime.allInstances(Sources.SourcesView.EditorAction).then(function(editorActions) {
-    for (var i = 0; i < editorActions.length; ++i) {
-      if (editorActions[i] instanceof Sources.ScriptFormatterEditorAction)
-        return editorActions[i];
-    }
-
-    return null;
-  });
-};
-
 SourcesTestRunner.waitForExecutionContextInTarget = function(target, callback) {
   var runtimeModel = target.model(SDK.RuntimeModel);
 

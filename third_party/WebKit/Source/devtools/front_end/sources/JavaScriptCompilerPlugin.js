@@ -94,6 +94,7 @@ Sources.JavaScriptCompilerPlugin = class {
 
     var exceptionDetails = result.exceptionDetails;
     var text = SDK.RuntimeModel.simpleTextFromException(exceptionDetails);
+    // todo: This mixes up the editor/uiSourceCode locations in a bad way.
     this._message = this._uiSourceCode.addLineMessage(
         Workspace.UISourceCode.Message.Level.Error, text, exceptionDetails.lineNumber, exceptionDetails.columnNumber);
     this._compilationFinishedForTest();

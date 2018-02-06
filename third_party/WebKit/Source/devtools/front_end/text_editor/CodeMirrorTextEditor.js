@@ -1152,15 +1152,16 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
   /**
    * @override
    * @param {!TextUtils.TextRange} textRange
+   * @param {boolean=} dontScroll
    */
-  setSelection(textRange) {
+  setSelection(textRange, dontScroll) {
     this._lastSelection = textRange;
     if (!this._editorSizeInSync) {
       this._selectionSetScheduled = true;
       return;
     }
     var pos = TextEditor.CodeMirrorUtils.toPos(textRange);
-    this._codeMirror.setSelection(pos.start, pos.end);
+    this._codeMirror.setSelection(pos.start, pos.end, {scroll: !dontScroll});
   }
 
   /**

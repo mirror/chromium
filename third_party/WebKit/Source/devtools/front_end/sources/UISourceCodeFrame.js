@@ -150,6 +150,7 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    * @param {string} highlighterType
    */
   setHighlighterType(highlighterType) {
+    this.setCanPrettyPrint(true, true);
     super.setHighlighterType(highlighterType);
     if (this.loaded)
       this._refreshPlugins();
@@ -189,6 +190,7 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    */
   onTextEditorContentSet() {
     super.onTextEditorContentSet();
+    this._rowMessageBuckets.clear();
     for (var message of this._allMessages())
       this._addMessageToSource(message);
     this._decorateAllTypes();
@@ -333,17 +335,19 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    * @override
    * @return {!Promise}
    */
-  populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber) {
+  populateTextAreaContextMenu(contextMenu, editorLineNumber, editorColumnNumber) {
     /**
      * @this {Sources.UISourceCodeFrame}
      */
     function appendItems() {
       contextMenu.appendApplicableItems(this._uiSourceCode);
-      contextMenu.appendApplicableItems(new Workspace.UILocation(this._uiSourceCode, lineNumber, columnNumber));
+      var location = this.editorToRawLocation(editorLineNumber, editorColumnNumber);
+      contextMenu.appendApplicableItems(new Workspace.UILocation(this._uiSourceCode, location[0], location[1]));
       contextMenu.appendApplicableItems(this);
     }
 
-    return super.populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber).then(appendItems.bind(this));
+    return super.populateTextAreaContextMenu(contextMenu, editorLineNumber, editorColumnNumber)
+        .then(appendItems.bind(this));
   }
 
   /**
@@ -384,16 +388,17 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
   _addMessageToSource(message) {
     if (!this.loaded)
       return;
-    var lineNumber = message.lineNumber();
-    if (lineNumber >= this.textEditor.linesCount)
-      lineNumber = this.textEditor.linesCount - 1;
-    if (lineNumber < 0)
-      lineNumber = 0;
+    var editorLocation = this.rawToEditorLocation(message.lineNumber(), message.columnNumber());
+    var editorLineNumber = editorLocation[0];
+    if (editorLineNumber >= this.textEditor.linesCount)
+      editorLineNumber = this.textEditor.linesCount - 1;
+    if (editorLineNumber < 0)
+      editorLineNumber = 0;
 
-    var messageBucket = this._rowMessageBuckets.get(lineNumber);
+    var messageBucket = this._rowMessageBuckets.get(editorLineNumber);
     if (!messageBucket) {
-      messageBucket = new Sources.UISourceCodeFrame.RowMessageBucket(this, this.textEditor, lineNumber);
-      this._rowMessageBuckets.set(lineNumber, messageBucket);
+      messageBucket = new Sources.UISourceCodeFrame.RowMessageBucket(this, this.textEditor, editorLineNumber);
+      this._rowMessageBuckets.set(editorLineNumber, messageBucket);
     }
     messageBucket.addMessage(message);
   }
@@ -413,19 +418,20 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
     if (!this.loaded)
       return;
 
-    var lineNumber = message.lineNumber();
-    if (lineNumber >= this.textEditor.linesCount)
-      lineNumber = this.textEditor.linesCount - 1;
-    if (lineNumber < 0)
-      lineNumber = 0;
+    var editorLocation = this.rawToEditorLocation(message.lineNumber(), message.columnNumber());
+    var editorLineNumber = editorLocation[0];
+    if (editorLineNumber >= this.textEditor.linesCount)
+      editorLineNumber = this.textEditor.linesCount - 1;
+    if (editorLineNumber < 0)
+      editorLineNumber = 0;
 
-    var messageBucket = this._rowMessageBuckets.get(lineNumber);
+    var messageBucket = this._rowMessageBuckets.get(editorLineNumber);
     if (!messageBucket)
       return;
     messageBucket.removeMessage(message);
     if (!messageBucket.uniqueMessagesCount()) {
       messageBucket.detachFromEditor();
-      this._rowMessageBuckets.delete(lineNumber);
+      this._rowMessageBuckets.delete(editorLineNumber);
     }
   }
 
@@ -593,12 +599,12 @@ Sources.UISourceCodeFrame.RowMessageBucket = class {
   /**
    * @param {!Sources.UISourceCodeFrame} sourceFrame
    * @param {!TextEditor.CodeMirrorTextEditor} textEditor
-   * @param {number} lineNumber
+   * @param {number} editorLineNumber
    */
-  constructor(sourceFrame, textEditor, lineNumber) {
+  constructor(sourceFrame, textEditor, editorLineNumber) {
     this._sourceFrame = sourceFrame;
     this.textEditor = textEditor;
-    this._lineHandle = textEditor.textEditorPositionHandle(lineNumber, 0);
+    this._lineHandle = textEditor.textEditorPositionHandle(editorLineNumber, 0);
     this._decoration = createElementWithClass('div', 'text-editor-line-decoration');
     this._decoration._messageBucket = this;
     this._wave = this._decoration.createChild('div', 'text-editor-line-decoration-wave');
@@ -614,20 +620,20 @@ Sources.UISourceCodeFrame.RowMessageBucket = class {
   }
 
   /**
-   * @param {number} lineNumber
+   * @param {number} editorLineNumber
    * @param {number} columnNumber
    */
-  _updateWavePosition(lineNumber, columnNumber) {
-    lineNumber = Math.min(lineNumber, this.textEditor.linesCount - 1);
-    var lineText = this.textEditor.line(lineNumber);
+  _updateWavePosition(editorLineNumber, columnNumber) {
+    editorLineNumber = Math.min(editorLineNumber, this.textEditor.linesCount - 1);
+    var lineText = this.textEditor.line(editorLineNumber);
     columnNumber = Math.min(columnNumber, lineText.length);
     var lineIndent = TextUtils.TextUtils.lineIndent(lineText).length;
     var startColumn = Math.max(columnNumber - 1, lineIndent);
     if (this._decorationStartColumn === startColumn)
       return;
     if (this._decorationStartColumn !== null)
-      this.textEditor.removeDecoration(this._decoration, lineNumber);
-    this.textEditor.addDecoration(this._decoration, lineNumber, startColumn);
+      this.textEditor.removeDecoration(this._decoration, editorLineNumber);
+    this.textEditor.addDecoration(this._decoration, editorLineNumber, startColumn);
     this._decorationStartColumn = startColumn;
   }
 
@@ -647,11 +653,13 @@ Sources.UISourceCodeFrame.RowMessageBucket = class {
     var position = this._lineHandle.resolve();
     if (!position)
       return;
-    var lineNumber = position.lineNumber;
-    if (this._level)
-      this.textEditor.toggleLineClass(lineNumber, Sources.UISourceCodeFrame._lineClassPerLevel[this._level], false);
+    var editorLineNumber = position.lineNumber;
+    if (this._level) {
+      this.textEditor.toggleLineClass(
+          editorLineNumber, Sources.UISourceCodeFrame._lineClassPerLevel[this._level], false);
+    }
     if (this._decorationStartColumn !== null) {
-      this.textEditor.removeDecoration(this._decoration, lineNumber);
+      this.textEditor.removeDecoration(this._decoration, editorLineNumber);
       this._decorationStartColumn = null;
     }
   }
@@ -705,27 +713,29 @@ Sources.UISourceCodeFrame.RowMessageBucket = class {
     if (!position)
       return;
 
-    var lineNumber = position.lineNumber;
+    var editorLineNumber = position.lineNumber;
     var columnNumber = Number.MAX_VALUE;
     var maxMessage = null;
     for (var i = 0; i < this._messages.length; ++i) {
       var message = this._messages[i].message();
-      columnNumber = Math.min(columnNumber, message.columnNumber());
+      var editorLocation = this._sourceFrame.rawToEditorLocation(editorLineNumber, message.columnNumber());
+      columnNumber = Math.min(columnNumber, editorLocation[1]);
       if (!maxMessage || Workspace.UISourceCode.Message.messageLevelComparator(maxMessage, message) < 0)
         maxMessage = message;
     }
-    this._updateWavePosition(lineNumber, columnNumber);
+    this._updateWavePosition(editorLineNumber, columnNumber);
 
     if (this._level === maxMessage.level())
       return;
     if (this._level) {
-      this.textEditor.toggleLineClass(lineNumber, Sources.UISourceCodeFrame._lineClassPerLevel[this._level], false);
+      this.textEditor.toggleLineClass(
+          editorLineNumber, Sources.UISourceCodeFrame._lineClassPerLevel[this._level], false);
       this._icon.type = '';
     }
     this._level = maxMessage.level();
     if (!this._level)
       return;
-    this.textEditor.toggleLineClass(lineNumber, Sources.UISourceCodeFrame._lineClassPerLevel[this._level], true);
+    this.textEditor.toggleLineClass(editorLineNumber, Sources.UISourceCodeFrame._lineClassPerLevel[this._level], true);
     this._icon.type = Sources.UISourceCodeFrame._iconClassPerLevel[this._level];
   }
 };

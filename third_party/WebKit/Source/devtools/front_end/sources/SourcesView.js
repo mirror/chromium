@@ -36,17 +36,7 @@ Sources.SourcesView = class extends UI.VBox {
     this._historyManager = new Sources.EditingLocationHistoryManager(this, this.currentSourceFrame.bind(this));
 
     this._toolbarContainerElement = this.element.createChild('div', 'sources-toolbar');
-    this._toolbarEditorActions = new UI.Toolbar('', this._toolbarContainerElement);
 
-    self.runtime.allInstances(Sources.SourcesView.EditorAction).then(appendButtonsForExtensions.bind(this));
-    /**
-     * @param {!Array.<!Sources.SourcesView.EditorAction>} actions
-     * @this {Sources.SourcesView}
-     */
-    function appendButtonsForExtensions(actions) {
-      for (var i = 0; i < actions.length; ++i)
-        this._toolbarEditorActions.appendToolbarItem(actions[i].button(this));
-    }
     this._scriptViewToolbar = new UI.Toolbar('', this._toolbarContainerElement);
     this._scriptViewToolbar.element.style.flex = 'auto';
     this._bottomToolbar = new UI.Toolbar('', this._toolbarContainerElement);
@@ -714,19 +704,6 @@ Sources.SourcesView = class extends UI.VBox {
 Sources.SourcesView.Events = {
   EditorClosed: Symbol('EditorClosed'),
   EditorSelected: Symbol('EditorSelected'),
-};
-
-/**
- * @interface
- */
-Sources.SourcesView.EditorAction = function() {};
-
-Sources.SourcesView.EditorAction.prototype = {
-  /**
-   * @param {!Sources.SourcesView} sourcesView
-   * @return {!UI.ToolbarButton}
-   */
-  button(sourcesView) {}
 };
 
 /**
