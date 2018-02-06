@@ -307,6 +307,8 @@ void UDPSocketWin::Close() {
   // Zero out any pending read/write callback state.
   read_callback_.Reset();
   recv_from_address_ = NULL;
+  local_address_.reset();
+  remote_address_.reset();
   write_callback_.Reset();
 
   base::TimeTicks start_time = base::TimeTicks::Now();
