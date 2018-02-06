@@ -198,6 +198,8 @@ blink_core_sources("html") {
     "WindowNameCollection.h",
     "canvas/CanvasAsyncBlobCreator.cpp",
     "canvas/CanvasAsyncBlobCreator.h",
+    "canvas/CanvasContextCreationAttributes.cpp",
+    "canvas/CanvasContextCreationAttributes.h",
     "canvas/CanvasDrawListener.cpp",
     "canvas/CanvasDrawListener.h",
     "canvas/CanvasFontCache.cpp",

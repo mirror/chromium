@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "modules/webgl/WebGLContextAttributeHelpers.h"
+#include "modules/xr/XRDevice.h"
 
 #include "core/frame/Settings.h"
 
@@ -18,6 +19,8 @@ WebGLContextAttributes ToWebGLContextAttributes(
   result.setPremultipliedAlpha(attrs.premultipliedAlpha());
   result.setPreserveDrawingBuffer(attrs.preserveDrawingBuffer());
   result.setFailIfMajorPerformanceCaveat(attrs.failIfMajorPerformanceCaveat());
+  result.setCompatibleXRDevice(
+      static_cast<XRDevice*>(attrs.compatibleXRDevice()));
   return result;
 }
 
