@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b830f19b_39767118",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-06T13:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b98a594_fbcc3295",
+      "revId": "1ce2137854901ab2094cf5d9ea39eff3175a6e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e39f99_9e7d542b",
         "filename": "media/audio/audio_output_controller.h",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b98176dc_14df2331",
+        "filename": "media/audio/audio_output_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-06T13:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e39f99_9e7d542b",
+      "revId": "1ce2137854901ab2094cf5d9ea39eff3175a6e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8694498_53694195",
         "filename": "media/audio/audio_output_controller.h",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "1ce2137854901ab2094cf5d9ea39eff3175a6e4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003af646_dd1d5ee7",
+        "filename": "media/audio/audio_output_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-02-06T13:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8694498_53694195",
+      "revId": "1ce2137854901ab2094cf5d9ea39eff3175a6e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
