@@ -1,0 +1,301 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44df7fb2_652465c4",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "There are generated constants for these, similar to Input::DispatchMouseEvent::ButtonEnum::None.",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebff7fb_e7e3cc1d",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "Commented code.",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c82abd1_7f6b07bc",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "Just say \"invalid pointerType\", since nobody will keep this string up-to-date if anything changes.",
+      "range": {
+        "startLine": 820,
+        "startChar": 11,
+        "endLine": 820,
+        "endChar": 74
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c23749_c56e811a",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9069834_e4730b0e",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "Please remove this comment.",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1488975d_93e70067",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "What is this todo about?",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe066ecb_b6be7ce9",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "Wrong error string.",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b080b4_f17ff118",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "Can\u0027t we use last known position instead? Take a look at dispatchTouchEvent for an example.",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04f912d_3faff275",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "Why is this manually constructed? Shouldn\u0027t this be a business of synthetic gesture instead?",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa12c06_c50efbb4",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "What is this one?",
+      "range": {
+        "startLine": 2664,
+        "startChar": 6,
+        "endLine": 2664,
+        "endChar": 11
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf9a813_bccfc94b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2671,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "source",
+      "range": {
+        "startLine": 2671,
+        "startChar": 24,
+        "endLine": 2671,
+        "endChar": 35
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147a664e_0fd4db3a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "event -\u003e action?",
+      "range": {
+        "startLine": 2672,
+        "startChar": 28,
+        "endLine": 2672,
+        "endChar": 33
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e99f3fc_c396dfd2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2677,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "What does this mean? How do I use it?",
+      "range": {
+        "startLine": 2677,
+        "startChar": 22,
+        "endLine": 2677,
+        "endChar": 30
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a314a1_5a2293fb",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2680,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "nit: please capitalize the first word.",
+      "range": {
+        "startLine": 2680,
+        "startChar": 8,
+        "endLine": 2680,
+        "endChar": 11
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2717d0f3_d0042fe2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2687,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T18:12:03Z",
+      "side": 1,
+      "message": "- nit: please capitalize the first word.\n- what\u0027s the default?",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
