@@ -496,7 +496,10 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
     ResourceRequest request(ImageSourceToKURL(element_->ImageSourceURL()));
     request.SetFetchCredentialsMode(
         network::mojom::FetchCredentialsMode::kOmit);
-    ImageResource* image_resource = ImageResource::Create(request);
+    // TODO(hajimehoshi): Replace ThreadTaskRunnerHandle::Get() with per-frame
+    // task runner.
+    ImageResource* image_resource =
+        ImageResource::Create(request, base::ThreadTaskRunnerHandle::Get());
     image_resource->SetStatus(ResourceStatus::kPending);
     image_resource->NotifyStartLoad();
     SetImageForImageDocument(image_resource);

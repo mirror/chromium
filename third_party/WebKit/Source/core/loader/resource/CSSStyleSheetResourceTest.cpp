@@ -35,6 +35,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLResponse.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -82,7 +83,8 @@ TEST_F(CSSStyleSheetResourceTest, DuplicateResourceNotCached) {
 
   // Emulate using <img> to do async stylesheet preloads.
 
-  Resource* image_resource = ImageResource::CreateForTest(image_url);
+  Resource* image_resource = ImageResource::CreateForTest(
+      image_url, scheduler::GetSingleThreadTaskRunnerForTesting());
   ASSERT_TRUE(image_resource);
   GetMemoryCache()->Add(image_resource);
   ASSERT_TRUE(GetMemoryCache()->Contains(image_resource));

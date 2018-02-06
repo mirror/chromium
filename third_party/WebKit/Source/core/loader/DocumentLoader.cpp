@@ -204,7 +204,10 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
     case Resource::kImage:
       if (frame_)
         frame_->MaybeAllowImagePlaceholder(params);
-      resource = ImageResource::Fetch(params, Fetcher());
+      // TODO(hajimehoshi): Replace ThreadTaskRunnerHandle::Get() with per-frame
+      // task runner.
+      resource = ImageResource::Fetch(params, Fetcher(),
+                                      base::ThreadTaskRunnerHandle::Get());
       break;
     case Resource::kScript:
       resource = ScriptResource::Fetch(params, Fetcher(), nullptr);
