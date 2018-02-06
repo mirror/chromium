@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ca706457_5a8a0de0",
+        "filename": "components/safe_browsing/android/remote_database_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T01:12:56Z",
+      "side": 1,
+      "message": "Done, to std::make_unique the new coolness",
+      "parentUuid": "6c76ed40_62ed10f4",
+      "range": {
+        "startLine": 208,
+        "startChar": 18,
+        "endLine": 208,
+        "endChar": 34
+      },
+      "revId": "800f507e4d7bd37b1ee1420ce774efe2537e4e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c6da3bd_6105cb44",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "800f507e4d7bd37b1ee1420ce774efe2537e4e14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d922c2ee_abf15ecd",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T01:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6da3bd_6105cb44",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 11
+      },
+      "revId": "800f507e4d7bd37b1ee1420ce774efe2537e4e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "cb9c32b8_7f1ef266",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T01:12:56Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "ab46c436_84c93ed7",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 19
+      },
+      "revId": "800f507e4d7bd37b1ee1420ce774efe2537e4e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90f92642_983432d0",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 1
@@ -106,6 +178,30 @@
       "writtenOn": "2018-02-06T00:27:20Z",
       "side": 1,
       "message": "Where do we re-own this?",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 236,
+        "endChar": 14
+      },
+      "revId": "800f507e4d7bd37b1ee1420ce774efe2537e4e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e2bb1a_0104e019",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T01:12:56Z",
+      "side": 1,
+      "message": "This is on line 113. Updated the comment a bit.",
+      "parentUuid": "90f92642_983432d0",
       "range": {
         "startLine": 235,
         "startChar": 25,
