@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "eec57f64_3fd68f79",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T18:26:15Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ab0fbc_bf85435c",
         "filename": "media/base/post_only_owner.h",
         "patchSetId": 10
@@ -42,6 +59,23 @@
         "endLine": 52,
         "endChar": 49
       },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fae01e_143f1f3f",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T18:26:15Z",
+      "side": 1,
+      "message": "Where would we use move assignment/construction?",
       "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
