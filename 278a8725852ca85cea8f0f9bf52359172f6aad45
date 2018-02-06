@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb722ff3_bcd5b130",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSSkew.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-02-06T21:18:05Z",
+      "side": 1,
+      "message": "If I understand this correctly, CSSSkew can only receive a CSSValueSkew function, which is why this switch statement only has one case?\n\nIf so, I think we can simplify this to:\n\n    DCHECK_EQ(value.FunctionType(), CSSValueSkew);\n    if (value.length() \u003d\u003d 1U) { ... }\n    if (value.length() \u003d\u003d 2U) { .... }\n    NOTREACHED();\n    return nullptr;",
+      "revId": "278a8725852ca85cea8f0f9bf52359172f6aad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
