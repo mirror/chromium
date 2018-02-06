@@ -293,6 +293,11 @@ void WebFrameWidgetImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
   UpdateLayerTreeBackgroundColor();
 }
 
+void WebFrameWidgetImpl::UpdateAllLifecyclePhasesAndComposite() {
+  if (layer_tree_view_)
+    layer_tree_view_->SynchronouslyCompositeNoRaster();
+}
+
 void WebFrameWidgetImpl::Paint(WebCanvas* canvas, const WebRect& rect) {
   // Out-of-process iframes require compositing.
   NOTREACHED();

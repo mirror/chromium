@@ -633,13 +633,13 @@ void LayerTreeHost::LayoutAndUpdateLayers() {
   UpdateLayers();
 }
 
-void LayerTreeHost::Composite(base::TimeTicks frame_begin_time) {
+void LayerTreeHost::Composite(base::TimeTicks frame_begin_time, bool raster) {
   DCHECK(IsSingleThreaded());
   // This function is only valid when not using the scheduler.
   DCHECK(!settings_.single_thread_proxy_scheduler);
   SingleThreadProxy* proxy = static_cast<SingleThreadProxy*>(proxy_.get());
 
-  proxy->CompositeImmediately(frame_begin_time);
+  proxy->CompositeImmediately(frame_begin_time, raster);
 }
 
 static int GetLayersUpdateTimeHistogramBucket(size_t numLayers) {

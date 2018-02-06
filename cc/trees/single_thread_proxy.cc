@@ -448,9 +448,10 @@ void SingleThreadProxy::OnDrawForLayerTreeFrameSink(
 
 void SingleThreadProxy::NeedsImplSideInvalidation(
     bool needs_first_draw_on_activation) {
-  DCHECK(scheduler_on_impl_thread_);
-  scheduler_on_impl_thread_->SetNeedsImplSideInvalidation(
-      needs_first_draw_on_activation);
+  if (scheduler_on_impl_thread_) {
+    scheduler_on_impl_thread_->SetNeedsImplSideInvalidation(
+        needs_first_draw_on_activation);
+  }
 }
 
 void SingleThreadProxy::NotifyImageDecodeRequestFinished() {
@@ -482,7 +483,8 @@ void SingleThreadProxy::RequestBeginMainFrameNotExpected(bool new_state) {
   }
 }
 
-void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time) {
+void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time,
+                                             bool raster) {
   TRACE_EVENT0("cc,benchmark", "SingleThreadProxy::CompositeImmediately");
   DCHECK(task_runner_provider_->IsMainThread());
 #if DCHECK_IS_ON()
@@ -529,8 +531,10 @@ void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time) {
     DebugScopedSetImplThread impl(task_runner_provider_);
     host_impl_->ActivateSyncTree();
     DCHECK(!host_impl_->active_tree()->needs_update_draw_properties());
-    host_impl_->PrepareTiles();
-    host_impl_->SynchronouslyInitializeAllTiles();
+    if (raster) {
+      host_impl_->PrepareTiles();
+      host_impl_->SynchronouslyInitializeAllTiles();
+    }
 
     // TODO(danakj): Don't do this last... we prepared the wrong things. D:
     host_impl_->Animate();
