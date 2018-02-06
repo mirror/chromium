@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99066db5_99911e80",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Please document this function in the context of this ListView.\n\nI thought categories are not children of the shortcut list views, or are we just showing a label? Are we scrolling all shortcuts from all categories in a single page?  ... These things need to be explained.",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5834555_4ced7cfa",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "I would also just inline these in the local scopes where they\u0027re used if they\u0027re not used in multiple places.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4f24f9_63e48cbf",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Document.",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0412aec2_572c3c6c",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "No need for this. Just use:\n\ngfx::Rect search_box_bounds(search_box_view_-\u003eGetPreferredSize());\n\nthen use `search_box_bounds` every where.",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 26
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c5b9ef_e6e9a5ee",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Init on declaration:\n\nviews::View* content_view \u003d \n    tabbed_pane_-\u003evisible() \n        ? tabbed_pane_-\u003evisible()\n        : search_results_container_;",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 45
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6a9077_88581dc1",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Nit: call this `search_box_used_height` to clarify.",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 23
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a16cd4e_31cfdc7a",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Nit: I would call this `found_items_list_view`.",
+      "range": {
+        "startLine": 190,
+        "startChar": 32,
+        "endLine": 190,
+        "endChar": 46
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd94bb8a_114ab08e",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "How about getting rid of this bool and instead use:\n\nsearch_results_container_-\u003eAddChildView(\n    found_items_list_view.has_children()\n        ? found_items_list_view\n        : search_no_result_view_.get());\n\n?",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 19
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd817f35_d98fd197",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "How about?\n    \n    const bool is_active \u003d sender-\u003eis_search_box_active();\n    sender-\u003eShowBackOrGoogleIcon(is_active);\n    search_results_container_-\u003eSetVisible(is_active);\n    tabbed_pane_-\u003eSetVisible(!is_active);\n    if (!is_active)\n      search_results_container_-\u003eRemoveAllChildViews(true);",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 3
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b435abf1_9848b2d5",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Please document. Also explain why these are owned by this view rather than being owned by the views hierarchy like the above ones.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f787ec2e_83129bca",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Nit: being",
+      "range": {
+        "startLine": 74,
+        "startChar": 39,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913efedb_b0e845a9",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "As discussed offline, we don\u0027t need these two maps, we can do with a single vector.",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fcf0c9_1c627bf6",
+        "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "I would just inline these in the local scopes where they\u0027re used. They\u0027re not used in multiple places.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b54f81_2bbe9ce9",
+        "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Use a translated string ID.",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14b03f5_2556a674",
+        "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Nit (optional): I suggest you use the correct color right away here instead of doing it in a follow up CL.",
+      "range": {
+        "startLine": 40,
+        "startChar": 62,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95060f0_0a983bf9",
+        "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T19:58:12Z",
+      "side": 1,
+      "message": "Is that used for virtual keyboard?",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "ca094bbbf587ba55571709dc0c6810abb3650b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
