@@ -294,6 +294,12 @@ ArchiveResource* MHTMLParser::ParseNextPart(
       DVLOG(1) << "Binary contents requires end of part";
       return nullptr;
     }
+    // The boundary is supposed to appear directly after a CRLF, and the CRLF
+    // is considered part of the boundary. Ignore the CRLF if present.
+    if (content.size() >= 2 && content[content.size() - 2] == '\r' &&
+        content[content.size() - 1] == '\n') {
+      content.resize(content.size() - 2);
+    }
     line_reader_.SetSeparator("\r\n");
     Vector<char> next_chars;
     if (line_reader_.Peek(next_chars, 2) != 2) {
