@@ -70,6 +70,30 @@
       "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d39be16_f60228ba",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-06T00:21:33Z",
+      "side": 1,
+      "message": "Using a common variable named \"deps\" in the template body is problematic. package() doesn\u0027t pull it in via its \"forward_variables_from\" directive. I can\u0027t explicitly bind \"deps\" in the template instantiation (e.g. \"deps \u003d deps\"), either - it complains that I\u0027m trying to overwrite the common variable.\n\nThis feels like a result of the hybrid of declarative and imperative execution styles that GN has going on...",
+      "parentUuid": "add6dd97_003644f6",
+      "range": {
+        "startLine": 190,
+        "startChar": 5,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "792dd2a0913aa1b746378a64de485b10b8d0dbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
