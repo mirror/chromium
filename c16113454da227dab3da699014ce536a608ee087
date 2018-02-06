@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afed8f37_7f167f63",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T23:43:54Z",
+      "side": 1,
+      "message": "nit: elim extra newline",
+      "revId": "c16113454da227dab3da699014ce536a608ee087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
