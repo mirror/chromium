@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "caa2e789_f9739379",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T17:29:54Z",
+      "side": 1,
+      "message": "Oh we do migrate them by having set new_activity_duration, sorry for the confusion.",
+      "parentUuid": "a44f9af3_55cdd22b",
+      "range": {
+        "startLine": 638,
+        "startChar": 12,
+        "endLine": 638,
+        "endChar": 38
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c2f8184_82db9724",
         "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
         "patchSetId": 2
