@@ -76,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "ecac7851_c4c3fa48",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:47:26Z",
+      "side": 1,
+      "message": "Yes. It may be good to mention this in the design doc. For a N-page document, print preview generates N single page PDFs to improve responsiveness when previewing, and the final N-page PDF.",
+      "parentUuid": "6ca3b891_0d65c60c",
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "636a63fa_35bbed98",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 21
@@ -133,6 +151,23 @@
         "endLine": 87,
         "endChar": 18
       },
+      "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e30ad8f_375dd054",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:47:26Z",
+      "side": 1,
+      "message": "I should mention content/renderer actually knows very little about printing.\n- content/renderer/gpu/gpu_benchmarking_extension.cc does some printing benchmarking. That code may not even be shipping.\n- content/renderer/pepper has code to make printing PDFs work.\n- content/renderer/render_view_impl.cc forwards to RenderFrameImpl::ScriptedPrint() in content/renderer/render_frame_impl.cc.\n- content/renderer/render_frame_impl.cc calls RenderFrameObserver::ScriptedPrint(). Effectively this forwards to PrintRenderFrameHelper.",
       "revId": "8bbecaebd343fe8ffb5a8db1e434a5ffbee95017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
