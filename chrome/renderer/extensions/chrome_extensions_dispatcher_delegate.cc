@@ -174,8 +174,6 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
   source_map->RegisterSource("automationNode", IDR_AUTOMATION_NODE_JS);
   source_map->RegisterSource("browserAction",
                              IDR_BROWSER_ACTION_CUSTOM_BINDINGS_JS);
-  source_map->RegisterSource("declarativeContent",
-                             IDR_DECLARATIVE_CONTENT_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("desktopCapture",
                              IDR_DESKTOP_CAPTURE_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("developerPrivate",
@@ -293,6 +291,8 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
   if (!base::FeatureList::IsEnabled(extensions::features::kNativeCrxBindings)) {
     source_map->RegisterSource("app", IDR_APP_CUSTOM_BINDINGS_JS);
     source_map->RegisterSource("tabs", IDR_TABS_CUSTOM_BINDINGS_JS);
+    source_map->RegisterSource("declarativeContent",
+                               IDR_DECLARATIVE_CONTENT_CUSTOM_BINDINGS_JS);
 
     // Custom types sources.
     source_map->RegisterSource("ChromeSetting", IDR_CHROME_SETTING_JS);
