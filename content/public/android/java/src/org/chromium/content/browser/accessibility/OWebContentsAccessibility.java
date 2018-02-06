@@ -9,10 +9,12 @@ import static android.view.accessibility.AccessibilityNodeInfo.EXTRA_DATA_TEXT_C
 import static android.view.accessibility.AccessibilityNodeInfo.EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.chromium.base.annotations.JNINamespace;
@@ -26,8 +28,9 @@ import java.util.Arrays;
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.O)
 public class OWebContentsAccessibility extends LollipopWebContentsAccessibility {
-    OWebContentsAccessibility(WebContents webContents) {
-        super(webContents);
+    OWebContentsAccessibility(Context context, ViewGroup containerView, WebContents webContents,
+            String productVersion) {
+        super(context, containerView, webContents, productVersion);
     }
 
     @Override
