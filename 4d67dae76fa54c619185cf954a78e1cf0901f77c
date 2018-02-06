@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a8802f0_ab9c187e",
+        "filename": "third_party/sqlite/amalgamation/rename_exports.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T22:41:31Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "83c6d51c_710129ae",
+      "revId": "4d67dae76fa54c619185cf954a78e1cf0901f77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "751d14c5_6beb8c5f",
         "filename": "third_party/sqlite/scripts/extract_sqlite_api.py",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "4d67dae76fa54c619185cf954a78e1cf0901f77c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10961d5f_3dfb0ce4",
+        "filename": "third_party/sqlite/scripts/extract_sqlite_api.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T22:41:31Z",
+      "side": 1,
+      "message": "Doh, sorry I forgot that!",
+      "parentUuid": "751d14c5_6beb8c5f",
+      "revId": "4d67dae76fa54c619185cf954a78e1cf0901f77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
