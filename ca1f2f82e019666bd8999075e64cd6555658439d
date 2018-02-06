@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93494083_b914ce24",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-06T09:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c227b7c_1a1a3bf6",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0465932d_23c844f0",
         "filename": "chrome/installer/mini_installer/BUILD.gn",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-06T09:01:13Z",
       "side": 1,
       "message": "nit: i prefer something like do_not_compress_archive, bypass_archive_compression, or skip_archive_compression",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8bea75_15c357b9",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-06T09:36:23Z",
+      "side": 1,
+      "message": "I choose skip_archive_compression.",
+      "parentUuid": "0465932d_23c844f0",
       "range": {
         "startLine": 19,
         "startChar": 2,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b33bfbf8_e8261078",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-06T09:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b715ad03_f37e72b4",
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ae36e19_b2a39621",
         "filename": "chrome/installer/mini_installer/mini_installer.cc",
         "patchSetId": 13
@@ -79,6 +145,24 @@
       "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f242349_85b9173e",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-06T09:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae36e19_b2a39621",
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
