@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a4c4c2_dabf1244",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-06T12:30:59Z",
+      "side": 1,
+      "message": "This would work great if notification setPriority and channel setImportance used the same constants to mean the same thing.\n\nHowever, priority ranges from -2 to 2, whereas channel importance goes from 0 to 5, so I think we risk bugs and unexpected behaviour on different platforms if we treat them as interchangeable.\n\nInstead, how about making this parameter just be about importance, and reinstate the setPriority method in ChromeNotificationBuilder, so that any code which creates a notification which needs a specific priority on older platforms must set both importance and priority explicitly.",
+      "revId": "26586fa9fc3179fca1fdcea5cf7675d9fbbe27bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040d43e3_dcb3fd20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderForO.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-06T12:30:59Z",
+      "side": 1,
+      "message": "These are now unused",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "26586fa9fc3179fca1fdcea5cf7675d9fbbe27bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c2ea17_a1dd4db8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-06T12:30:59Z",
+      "side": 1,
+      "message": "s/using notify/creating the channel\n\n(I know the Android docs say \u0027before notify\u0027 but I checked with the engineer and that\u0027s a bug, it should be \u0027before calling createNotificationChannel\u0027)\n\nActually though, this comment adds little value here, so I would get rid of it and instead add a note to the @param doc on ensureInitialized on line 58 that the importance parameter has no effect if the channel was already created.",
+      "revId": "26586fa9fc3179fca1fdcea5cf7675d9fbbe27bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
