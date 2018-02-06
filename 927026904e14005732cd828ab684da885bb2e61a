@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14088bcf_9251516f",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:29:24Z",
+      "side": 1,
+      "message": "Remember to update the %s used for the constants to %c when rebasing on top of your other CL.",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea763aac_788d6d1c",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:29:24Z",
+      "side": 1,
+      "message": "auto unguessable_token \u003d base::UnguessableToken::Create();",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ad0d2e_7522af39",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:29:24Z",
+      "side": 1,
+      "message": "nit: drop WTF::",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d882ce49_263443ab",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:29:24Z",
+      "side": 1,
+      "message": "nit: maybe copy the DCHECK() from line 124?",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
