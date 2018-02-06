@@ -91,6 +91,10 @@ class CORE_EXPORT InputMethodController final
   void DocumentAttached(Document*);
 
   PlainTextRange GetSelectionOffsets() const;
+
+
+  EphemeralRange GetWordAroundCaretRange() const;
+
   // Returns true if setting selection to specified offsets, otherwise false.
   bool SetEditableSelectionOffsets(const PlainTextRange&);
   void ExtendSelectionAndDelete(int before, int after);

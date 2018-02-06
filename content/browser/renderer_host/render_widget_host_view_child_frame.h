@@ -170,6 +170,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void SpeakSelection() override;
   bool IsSpeaking() const override;
   void StopSpeaking() override;
+  void GetTextForSuggestion(const base::Callback<void(const std::string&,
+      const gfx::Range&)>& callback) override;
 #endif  // defined(OS_MACOSX)
 
   InputEventAckState FilterInputEvent(

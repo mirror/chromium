@@ -16,6 +16,7 @@
 #include "third_party/skia/include/core/SkImageInfo.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/gfx/range/range.h"
 
 namespace gfx {
 class Point;
@@ -262,6 +263,11 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual bool IsSpeaking() const = 0;
   // Stops speaking, if it is currently in progress.
   virtual void StopSpeaking() = 0;
+
+  virtual void GetTextForSuggestion(
+      const base::Callback<void(const std::string&,
+                                const gfx::Range&)>& callback) = 0;
+
 #endif  // defined(OS_MACOSX)
 };
 

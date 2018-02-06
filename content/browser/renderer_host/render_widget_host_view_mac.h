@@ -293,6 +293,9 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void SpeakSelection() override;
   bool IsSpeaking() const override;
   void StopSpeaking() override;
+  void GetTextForSuggestion(const base::Callback<void(const std::string&,
+      const gfx::Range&)>& callback) override;
+
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;

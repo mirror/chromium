@@ -14,6 +14,7 @@
 #include "base/synchronization/lock.h"
 #include "content/common/content_export.h"
 #include "ui/gfx/geometry/point.h"
+#include "ui/gfx/range/range.h"
 
 namespace base {
 template <typename T>
@@ -96,6 +97,13 @@ class CONTENT_EXPORT TextInputClientMac {
   // GetStringFromRange.
   void GetStringFromRangeReply(NSAttributedString* string, NSPoint point);
 
+  // This is called on the IO thread when we get the renderer's reply for
+  // GetStringFromRange.
+  void GetStringForTextSuggestions(RenderWidgetHost* rwh,
+      void (^reply_handler)(std::string, gfx::Range));
+
+  void GetStringForTextSuggestionsReply(std::string text, gfx::Range range);
+
  private:
   friend struct base::DefaultSingletonTraits<TextInputClientMac>;
   TextInputClientMac();
@@ -123,6 +131,10 @@ class CONTENT_EXPORT TextInputClientMac {
   // The callback when received IPC TextInputClientReplyMsg_GotStringForRange.
   base::mac::ScopedBlock<void(^)(NSAttributedString*, NSPoint)>
       replyForRangeHandler_;
+
+  // The callback when received IPC GetStringForTextSuggestions.
+  base::mac::ScopedBlock<void(^)(std::string, gfx::Range)>
+      replyForTextSuggestionHandler_;
 
   DISALLOW_COPY_AND_ASSIGN(TextInputClientMac);
 };

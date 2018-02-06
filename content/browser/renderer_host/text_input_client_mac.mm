@@ -97,6 +97,24 @@ void TextInputClientMac::GetStringFromRangeReply(NSAttributedString* string,
   }
 }
 
+void TextInputClientMac::GetStringForTextSuggestions(RenderWidgetHost* rwh,
+    void (^reply_handler)(std::string, gfx::Range)) {
+  DCHECK(replyForTextSuggestionHandler_.get() == nil);
+  replyForTextSuggestionHandler_.reset(reply_handler, base::scoped_policy::RETAIN);
+/*  RenderWidgetHostImpl* rwhi = RenderWidgetHostImpl::From(rwh);
+  SendMessageToRenderWidget(rwhi, new TextInputClientMsg_StringForRange(
+                                      rwhi->GetRoutingID(), gfx::Range(range)));
+*/
+}
+
+void TextInputClientMac::GetStringForTextSuggestionsReply(std::string text,
+                                                          gfx::Range range) {
+  if (replyForTextSuggestionHandler_.get()) {
+    replyForTextSuggestionHandler_.get()(text, range);
+    replyForTextSuggestionHandler_.reset();
+  }
+}
+
 NSUInteger TextInputClientMac::GetCharacterIndexAtPoint(RenderWidgetHost* rwh,
     gfx::Point point) {
   RenderWidgetHostImpl* rwhi = RenderWidgetHostImpl::From(rwh);

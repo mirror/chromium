@@ -44,6 +44,7 @@
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
 #include "core/editing/state_machines/ForwardCodePointStateMachine.h"
+#include "core/editing/VisiblePosition.h"
 #include "core/events/CompositionEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/forms/HTMLInputElement.h"
@@ -941,6 +942,14 @@ PlainTextRange InputMethodController::GetSelectionOffsets() const {
   EphemeralRange range = FirstEphemeralRangeOf(
       GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
   return PlainTextRangeForEphemeralRange(range).second;
+}
+
+EphemeralRange InputMethodController::GetWordAroundCaretRange() const {
+  const VisibleSelection& selection =
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
+  const VisiblePosition& position = selection.VisibleBase();
+  VisiblePosition start = StartOfWord(position, kPreviousWordIfOnBoundary);
+  return EphemeralRange(start.DeepEquivalent(), position.DeepEquivalent());
 }
 
 EphemeralRange InputMethodController::EphemeralRangeForOffsets(

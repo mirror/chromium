@@ -1124,6 +1124,11 @@ void RenderWidgetHostViewMac::StopSpeaking() {
     [NSApp stopSpeaking:cocoa_view_];
 }
 
+void RenderWidgetHostViewMac::GetTextForSuggestion(const base::Callback<void(
+    const std::string&, const gfx::Range&)>& callback) {
+
+}
+
 //
 // RenderWidgetHostViewCocoa uses the stored selection text,
 // which implements NSServicesRequests protocol.

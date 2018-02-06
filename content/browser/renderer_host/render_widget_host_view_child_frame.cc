@@ -838,6 +838,10 @@ bool RenderWidgetHostViewChildFrame::IsSpeaking() const {
 }
 
 void RenderWidgetHostViewChildFrame::StopSpeaking() {}
+
+void RenderWidgetHostViewChildFrame::GetTextForSuggestion(
+    const base::Callback<void(const std::string&,
+                              const gfx::Range&)>& callback) {}
 #endif  // defined(OS_MACOSX)
 
 void RenderWidgetHostViewChildFrame::RegisterFrameSwappedCallback(

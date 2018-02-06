@@ -34,6 +34,7 @@
 #include "content/browser/renderer_host/render_view_host_delegate.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
+#include "content/browser/renderer_host/text_input_manager.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/color_chooser.h"
@@ -90,7 +91,6 @@ class SavePackage;
 class ScreenOrientationProvider;
 class SiteInstance;
 class TestWebContents;
-class TextInputManager;
 class WebContentsAudioMuter;
 class WebContentsDelegate;
 class WebContentsImpl;
@@ -130,7 +130,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                        public blink::mojom::ColorChooserFactory,
                                        public NotificationObserver,
                                        public NavigationControllerDelegate,
-                                       public NavigatorDelegate {
+                                       public NavigatorDelegate,
+                                       public TextInputManager::Observer {
  public:
   class FriendWrapper;
 
@@ -381,6 +382,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void SelectAll() override;
   void CollapseSelection() override;
   void Replace(const base::string16& word) override;
+  void ReplaceTextAtRange(const gfx::Range& range,
+                          const base::string16& word) override;
   void ReplaceMisspelling(const base::string16& word) override;
   void NotifyContextMenuClosed(
       const CustomContextMenuContext& context) override;
@@ -464,6 +467,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void SetAllowOtherViews(bool allow) override;
   bool GetAllowOtherViews() override;
   bool CompletedFirstVisuallyNonEmptyPaint() const override;
+  content::TextSuggestionInfo GetTextSuggestionInfo() override;
 #endif
 
   // Implementation of PageNavigator.
@@ -799,6 +803,10 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
       const EntryChangedDetails& change_details) override;
   void NotifyNavigationListPruned(const PrunedDetails& pruned_details) override;
 
+  // TextInputManager::Observer -----------------------------------------------
+  void OnTextSelectionChanged(TextInputManager* text_input_manager,
+                              RenderWidgetHostViewBase* updated_view) override;
+
   // Invoked before a form repost warning is shown.
   void NotifyBeforeFormRepostWarningShow() override;
 
@@ -1125,6 +1133,11 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
       RenderViewHostImpl* source,
       const ViewHostMsg_DateTimeDialogValue_Params& value);
 #endif
+
+#if defined(OS_MACOSX)
+  void OnGetTextForSuggestionReply();
+#endif
+
   void OnDomOperationResponse(RenderFrameHostImpl* source,
                               const std::string& json_string);
   void OnAppCacheAccessed(RenderViewHostImpl* source,
@@ -1513,6 +1526,12 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // Size set by a top-level frame with auto-resize enabled. This is needed by
   // out-of-process iframes for their visible viewport size.
   gfx::Size auto_resize_size_;
+
+#if defined(OS_ANDROID)
+  // Date time chooser opened by this tab.
+  // Only used in Android since all other platforms use a multi field UI.
+  std::unique_ptr<DateTimeChooserAndroid> date_time_chooser_;
+#endif
 
 #if defined(OS_ANDROID)
   // Date time chooser opened by this tab.

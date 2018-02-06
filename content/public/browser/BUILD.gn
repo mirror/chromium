@@ -373,6 +373,10 @@ jumbo_source_set("browser_sources") {
     sources += [ "arc_tracing_agent.h" ]
   }
 
+  if (is_mac) {
+    sources += [ "text_content_fetcher_mac.h" ]
+  }
+
   if (enable_webrtc) {
     sources += [
       "desktop_capture.cc",

@@ -1826,6 +1826,8 @@ jumbo_source_set("browser") {
     }
     if (is_mac) {
       sources += [
+        "text_content_fetcher_impl_mac.h",
+        "text_content_fetcher_impl_mac.mm",
         "media/capture/cursor_renderer_mac.h",
         "media/capture/cursor_renderer_mac.mm",
       ]
