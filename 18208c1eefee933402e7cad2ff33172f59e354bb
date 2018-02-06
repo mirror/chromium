@@ -46,6 +46,30 @@
       "revId": "18208c1eefee933402e7cad2ff33172f59e354bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80476290_a6e3380e",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-02-06T16:21:45Z",
+      "side": 1,
+      "message": "I specifically don\u0027t like sharing \u0027killProcess\u0027 part. It is appropriate for a very narrow case of AsyncInitializationActivity aborting itself to show FPE, but it might not be appropriate for other cases / activities. And since we\u0027re killing ourselves we won\u0027t even get crash reports or other signals that this is problematic.\n\nI would leave \u0027activity.finish()\u0027 here, but move \u0027killProcess\u0027 bit back to AsyncInitializationActivity. I.e. finishAndRemoveTask() would try harder, but won\u0027t kill the process.",
+      "parentUuid": "c4b985a5_6c8986b3",
+      "range": {
+        "startLine": 354,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 9
+      },
+      "revId": "18208c1eefee933402e7cad2ff33172f59e354bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
