@@ -11,7 +11,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "chromecast/browser/cast_content_window.h"
 #include "chromecast/browser/cast_web_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
@@ -25,6 +24,7 @@ class SiteInstance;
 
 namespace chromecast {
 
+class CastContentWindow;
 class CastWebContentsManager;
 class CastWindowManager;
 
@@ -37,16 +37,15 @@ class CastWebViewDefault : public CastWebView,
   // object.
   CastWebViewDefault(Delegate* delegate,
                      CastWebContentsManager* web_contents_manager,
+                     std::unique_ptr<CastContentWindow> window,
                      content::BrowserContext* browser_context,
                      scoped_refptr<content::SiteInstance> site_instance,
                      bool transparent,
-                     bool allow_media_access,
-                     bool is_headless,
-                     bool enable_touch_input);
+                     bool allow_media_access);
   ~CastWebViewDefault() override;
 
   // CastWebView implementation:
-  shell::CastContentWindow* window() const override;
+  CastContentWindow* window() const override;
   content::WebContents* web_contents() const override;
   void LoadUrl(GURL url) override;
   void ClosePage(const base::TimeDelta& shutdown_delay) override;
@@ -98,7 +97,7 @@ class CastWebViewDefault : public CastWebView,
   const scoped_refptr<content::SiteInstance> site_instance_;
   const bool transparent_;
   std::unique_ptr<content::WebContents> web_contents_;
-  std::unique_ptr<shell::CastContentWindow> window_;
+  std::unique_ptr<CastContentWindow> window_;
   bool did_start_navigation_;
   base::TimeDelta shutdown_delay_;
   bool allow_media_access_;

@@ -16,7 +16,6 @@ class WebContents;
 }  // namespace content
 
 namespace chromecast {
-namespace shell {
 
 class CastContentWindowAura : public CastContentWindow {
  public:
@@ -35,7 +34,6 @@ class CastContentWindowAura : public CastContentWindow {
   DISALLOW_COPY_AND_ASSIGN(CastContentWindowAura);
 };
 
-}  // namespace shell
 }  // namespace chromecast
 
 #endif  // CHROMECAST_BROWSER_CAST_CONTENT_WINDOW_AURA_H_
