@@ -74,9 +74,15 @@ class CORE_EXPORT InteractiveDetector
   TimeTicks GetFirstInvalidatingInputTime() const;
 
   // The duration between the hardware timestamp and being queued on the main
-  // thread for the first click, tap or key press.
+  // thread for the first click, tap, key press, cancellable touchstart, or
+  // pointer down followed by a pointer up.
   TimeDelta GetFirstInputDelay() const;
 
+  // The timestamp of the event whose delay is reported by GetFirstInputDelay().
+  TimeTicks GetFirstInputTimestamp() const;
+
+  // Process an input event, updating first_input_delay and
+  // first_input_timestamp if needed.
   void HandleForFirstInputDelay(const WebInputEvent&);
 
   virtual void Trace(Visitor*);
@@ -97,6 +103,7 @@ class CORE_EXPORT InteractiveDetector
     TimeTicks nav_start;
     TimeTicks first_invalidating_input;
     TimeDelta first_input_delay;
+    TimeTicks first_input_timestamp;
   } page_event_times_;
 
   // Stores sufficiently long quiet windows on main thread and network.
@@ -145,6 +152,9 @@ class CORE_EXPORT InteractiveDetector
   // for the previous pointer down. Only non-zero if we've received a pointer
   // down event, and haven't yet reported the first input delay.
   base::TimeDelta pending_pointerdown_delay_;
+  // The timestamp of a pending pointerdown event. Valid in the same cases as
+  // pending_pointerdown_delay_.
+  base::TimeTicks pending_pointerdown_timestamp_;
 
   DISALLOW_COPY_AND_ASSIGN(InteractiveDetector);
 };

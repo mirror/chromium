@@ -5,6 +5,7 @@
 #include "core/loader/InteractiveDetector.h"
 
 #include "core/dom/Document.h"
+#include "core/testing/DummyPageHolder.h"
 #include "core/testing/PageTestBase.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
@@ -42,19 +43,28 @@ static constexpr char kSupplementName[] = "InteractiveDetector";
 
 class InteractiveDetectorTest : public ::testing::Test {
  public:
-  InteractiveDetectorTest() : document_(Document::CreateForTest()) {
-    InteractiveDetector* detector = new InteractiveDetector(
-        *document_, new NetworkActivityCheckerForTest(document_));
-    Supplement<Document>::ProvideTo(*document_, kSupplementName, detector);
-    detector_ = detector;
+  InteractiveDetectorTest() {
+    platform_->AdvanceClockSeconds(1);
+    dummy_page_holder_ = DummyPageHolder::Create();
+
+    detector_ = new InteractiveDetector(
+        *GetDocument(), new NetworkActivityCheckerForTest(GetDocument()));
+    Supplement<Document>::ProvideTo(dummy_page_holder_->GetDocument(),
+                                    kSupplementName, detector_);
+  }
+
+  // Public because it's executed on a task queue.
+  void DummyTaskWithDuration(double duration_seconds) {
+    platform_->AdvanceClockSeconds(duration_seconds);
+    dummy_task_end_time_ = CurrentTimeTicksInSeconds();
   }
 
  protected:
-  void SetUp() override { platform_->AdvanceClockSeconds(1); }
-
-  Document* GetDocument() { return document_; }
+  Document* GetDocument() { return &dummy_page_holder_->GetDocument(); }
 
   InteractiveDetector* GetDetector() { return detector_; }
+
+  double GetDummyTaskEndTime() { return dummy_task_end_time_; }
 
   NetworkActivityCheckerForTest* GetNetworkActivityChecker() {
     // We know in this test context that network_activity_checker_ is an
@@ -121,12 +131,13 @@ class InteractiveDetectorTest : public ::testing::Test {
     return TimeTicksInSeconds(detector_->GetInteractiveTime());
   }
 
- protected:
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform_;
 
-  Persistent<Document> document_;
+ private:
   Persistent<InteractiveDetector> detector_;
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  double dummy_task_end_time_ = 0.0;
 };
 
 // Note: The tests currently assume kTimeToInteractiveWindowSeconds is 5
@@ -416,32 +427,9 @@ TEST_F(InteractiveDetectorTest, InvalidatingUserInputClampedAtNavStart) {
             t0);
 }
 
-class InteractiveDetectorTestWithDummyPage : public PageTestBase {
- public:
-  // Public because it's executed on a task queue.
-  void DummyTaskWithDuration(double duration_seconds) {
-    platform_->AdvanceClockSeconds(duration_seconds);
-    dummy_task_end_time_ = CurrentTimeTicksInSeconds();
-  }
-
- protected:
-  void SetUp() override {
-    platform_->AdvanceClockSeconds(1);
-    PageTestBase::SetUp();
-  }
-
-  double GetDummyTaskEndTime() { return dummy_task_end_time_; }
-
-  ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
-      platform_;
-
- private:
-  double dummy_task_end_time_ = 0.0;
-};
-
-TEST_F(InteractiveDetectorTestWithDummyPage, TaskLongerThan5sBlocksTTI) {
+TEST_F(InteractiveDetectorTest, TaskLongerThan5sBlocksTTI) {
   double t0 = CurrentTimeTicksInSeconds();
-  InteractiveDetector* detector = InteractiveDetector::From(GetDocument());
+  InteractiveDetector* detector = InteractiveDetector::From(*GetDocument());
   detector->SetNavigationStartTime(TimeTicksFromSeconds(t0));
   platform_->RunForPeriodSeconds(4.0);
 
@@ -453,9 +441,8 @@ TEST_F(InteractiveDetectorTestWithDummyPage, TaskLongerThan5sBlocksTTI) {
   // Post a task with 6 seconds duration.
   PostCrossThreadTask(
       *platform_->CurrentThread()->GetWebTaskRunner(), FROM_HERE,
-      CrossThreadBind(
-          &InteractiveDetectorTestWithDummyPage::DummyTaskWithDuration,
-          CrossThreadUnretained(this), 6.0));
+      CrossThreadBind(&InteractiveDetectorTest::DummyTaskWithDuration,
+                      CrossThreadUnretained(this), 6.0));
   platform_->RunUntilIdle();
 
   // We should be able to detect TTI 5s after the end of long task.
@@ -464,9 +451,9 @@ TEST_F(InteractiveDetectorTestWithDummyPage, TaskLongerThan5sBlocksTTI) {
             GetDummyTaskEndTime());
 }
 
-TEST_F(InteractiveDetectorTestWithDummyPage, LongTaskAfterTTIDoesNothing) {
+TEST_F(InteractiveDetectorTest, LongTaskAfterTTIDoesNothing) {
   double t0 = CurrentTimeTicksInSeconds();
-  InteractiveDetector* detector = InteractiveDetector::From(GetDocument());
+  InteractiveDetector* detector = InteractiveDetector::From(*GetDocument());
   detector->SetNavigationStartTime(TimeTicksFromSeconds(t0));
   platform_->RunForPeriodSeconds(4.0);
 
@@ -478,9 +465,8 @@ TEST_F(InteractiveDetectorTestWithDummyPage, LongTaskAfterTTIDoesNothing) {
   // Long task 1.
   PostCrossThreadTask(
       *platform_->CurrentThread()->GetWebTaskRunner(), FROM_HERE,
-      CrossThreadBind(
-          &InteractiveDetectorTestWithDummyPage::DummyTaskWithDuration,
-          CrossThreadUnretained(this), 0.1));
+      CrossThreadBind(&InteractiveDetectorTest::DummyTaskWithDuration,
+                      CrossThreadUnretained(this), 0.1));
   platform_->RunUntilIdle();
 
   double long_task_1_end_time = GetDummyTaskEndTime();
@@ -492,9 +478,8 @@ TEST_F(InteractiveDetectorTestWithDummyPage, LongTaskAfterTTIDoesNothing) {
   // Long task 2.
   PostCrossThreadTask(
       *platform_->CurrentThread()->GetWebTaskRunner(), FROM_HERE,
-      CrossThreadBind(
-          &InteractiveDetectorTestWithDummyPage::DummyTaskWithDuration,
-          CrossThreadUnretained(this), 0.1));
+      CrossThreadBind(&InteractiveDetectorTest::DummyTaskWithDuration,
+                      CrossThreadUnretained(this), 0.1));
 
   platform_->RunUntilIdle();
   // Wait 5 seconds to see if TTI time changes.
