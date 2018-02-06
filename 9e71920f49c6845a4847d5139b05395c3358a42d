@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c19c558_4f3fc0d1",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-06T18:52:01Z",
+      "side": 1,
+      "message": "Can we add a TransitionToState method?",
+      "revId": "9e71920f49c6845a4847d5139b05395c3358a42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95978733_fd46445f",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-06T18:52:01Z",
+      "side": 1,
+      "message": "enum class",
+      "revId": "9e71920f49c6845a4847d5139b05395c3358a42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58674c11_4cf4e956",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-06T18:52:01Z",
+      "side": 1,
+      "message": "Does pinch need to be wrapped in a scroll begin.",
+      "revId": "9e71920f49c6845a4847d5139b05395c3358a42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
