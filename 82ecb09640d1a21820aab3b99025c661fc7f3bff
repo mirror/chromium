@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "73bd023d_8802b5e7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:37:26Z",
+      "side": 1,
+      "message": "I, sorry. target.hasBrowserCapability() would be equivalent.",
+      "parentUuid": "171c94ae_fcbbab67",
+      "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34d29127_c7d9fdb2",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/InspectorView.js",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Thanks!\n\nIs there some sort of layering system that requires a level of indirection to do that? While the proposed change seems to work great, git presubmit complains:\n\nc:/src/temp/tmpobluc6/front_end/ui/InspectorView.js:371: ERROR - variable $$UndeclaredDependency_SDK$$ is undeclared\n    $$UndeclaredDependency_SDK$$.targetManager.mainTarget().pageAgent().bringToFront();\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nI don\u0027t suppose there are design documents or diagrams for the DevTools anywhere that I should\u0027ve read first? Beyond the immediate utility of the feature I\u0027m trying to add, my real goal here was to use this as an exercise in learning more about how the frontend and backend of DeveloperTools interact (before I try building a more ambitious feature), but this hasn\u0027t gone so well. :/",
       "parentUuid": "34d29127_c7d9fdb2",
+      "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fbdb7b_161e32fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/InspectorView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:37:26Z",
+      "side": 1,
+      "message": "Yeah, we are in UI module and this module does not have access to SDK. Could you move this into the main/ module? There is a patch in flight that it would conflict with, so depending on the timing it\u0027ll be main/ or inspector_main/ module.",
+      "parentUuid": "3afe4685_e52dd29d",
       "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
