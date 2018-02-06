@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "715c6793_da78d91c",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2018-02-06T18:09:06Z",
+      "side": 1,
+      "message": "nit: I think now that this should also capture kThrottled, but that should probably done when throttled is being used.",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 2
+      },
+      "revId": "4fbdaa1cd31a43c39b25350835856bcb4304a68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220c5695_46d16209",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2018-02-06T18:09:06Z",
+      "side": 1,
+      "message": "nit: Should we instead expose the lifecycle state here?\ni.e. SetPageLifecycleState(kFrozen);",
+      "range": {
+        "startLine": 1767,
+        "startChar": 24,
+        "endLine": 1767,
+        "endChar": 37
+      },
+      "revId": "4fbdaa1cd31a43c39b25350835856bcb4304a68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
