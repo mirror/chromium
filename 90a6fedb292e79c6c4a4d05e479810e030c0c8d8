@@ -253,6 +253,23 @@
     },
     {
       "key": {
+        "uuid": "54b1f876_d0e583f7",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-06T13:57:50Z",
+      "side": 1,
+      "message": "Slot allows user-defined destructor function to reset the value that is stored in the slot. The destructor will then be called again.\n\nInternally per-thread cleanup proceeds as follows:\n- the value is saved localy and replaced with nullptr\n- user-defined destructor is called for the saved value\n- if the value is not nullptr, the destructor is called again\n\nThreadLocalStorageCleanup is using TLSSlot() to reset the value",
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cc335b_cdaa34fe",
         "filename": "base/threading/thread_local_storage_unittest.cc",
         "patchSetId": 4
