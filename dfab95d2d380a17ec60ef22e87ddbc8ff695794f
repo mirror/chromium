@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddbf4465_20f01c69",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-02-06T20:38:25Z",
+      "side": 1,
+      "message": "Blink style suggests to use references to non-null pointers.\n\nOn the other hand, the code here already uses raw pointers, so I guess is ok.",
+      "revId": "dfab95d2d380a17ec60ef22e87ddbc8ff695794f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
