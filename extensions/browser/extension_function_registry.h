@@ -42,7 +42,7 @@ class ExtensionFunctionRegistry {
     extensions::functions::HistogramValue histogram_value_;
   };
 
-  static ExtensionFunctionRegistry* GetInstance();
+  static ExtensionFunctionRegistry& GetInstance();
   explicit ExtensionFunctionRegistry();
   virtual ~ExtensionFunctionRegistry();
 
