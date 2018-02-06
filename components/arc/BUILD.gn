@@ -52,6 +52,7 @@ static_library("arc") {
     "storage_manager/arc_storage_manager.h",
     "usb/usb_host_bridge.cc",
     "usb/usb_host_bridge.h",
+    "usb/usb_host_ui_delegate.h",
     "volume_mounter/arc_volume_mounter_bridge.cc",
     "volume_mounter/arc_volume_mounter_bridge.h",
   ]
