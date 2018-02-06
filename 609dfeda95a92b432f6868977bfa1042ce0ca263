@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "8ceba158_30282f4a",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-06T18:38:20Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s talk about this more before proceeding (I\u0027d like to make this sweeping change only once :-).  Maybe s/document/XSDB-protected-response/ and s/resource/XSDB-ignored-response/ ?\n\nYes, let\u0027s discuss in person today.  If we\u0027re going to move away from document vs resource, then the term \"XSDB\" doesn\u0027t make sense either.  :)  If it didn\u0027t have so much potential for confusion, updating Nick\u0027s suggestion to \"cross-origin resource protection\" (CORP) would have been amusing.  :)",
+      "parentUuid": "0a06d5ce_11016161",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a836e0_2a99eae0",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -765,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "6003913c_f59e09c7",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-06T18:38:20Z",
+      "side": 1,
+      "message": "\u003e Great point.  Thanks for bringing this up.  I\u0027ve added a html/css example here.\n\nFor my own understanding, are there cases XSDB would disrupt that example?  I was under the impression that Blink would only apply cross-origin CSS if it had a text/css MIME type (in which case we wouldn\u0027t block it), or if it had no MIME type (in which case, Nick and I suspect that Chrome\u0027s MIME sniffer would label this example as text/html and thus it wouldn\u0027t apply).\n\nWe can still discuss it, but I just want to verify whether it\u0027s a case XSDB would affect behavior or not.",
+      "parentUuid": "1cfe09fb_c8fad760",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aea956d_cb6f3361",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -776,6 +818,30 @@
       "writtenOn": "2018-02-05T17:04:48Z",
       "side": 1,
       "message": "I wonder if this could be abused as a cross-origin information leak. For example, if evil.com loads victim.com/resource as a \u003cscript\u003e, then it will be able to infer if XSDB kicked in based on the absence of a JS error. Since XSDB kicks in based on the C-T, the attacker might be able to distinguish between response with a MIME type that triggers XSDB (document) vs. one with a MIME ignored by XSDB (resource) even if the actual responses both trigger JS parsing errors (and thus would be indistinguishable without XSDB).\n\nOne plausible example is a URL which returns resources which the attacker cannot directly observe cross-origin, but which, under certain conditions (e.g. depending on whether the user is logged in), shows an HTML error page. It\u0027s not a very compelling scenario, but might be worth thinking about more and/or documenting somewhere.",
+      "range": {
+        "startLine": 281,
+        "startChar": 18,
+        "endLine": 282,
+        "endChar": 56
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7c5052_3c5e23b4",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-06T18:38:20Z",
+      "side": 1,
+      "message": "\u003e I wonder if this could be abused as a cross-origin information leak. For example, if evil.com loads victim.com/resource as a \u003cscript\u003e, then it will be able to infer if XSDB kicked in based on the absence of a JS error. Since XSDB kicks in based on the C-T, the attacker might be able to distinguish between response with a MIME type that triggers XSDB (document) vs. one with a MIME ignored by XSDB (resource) even if the actual responses both trigger JS parsing errors (and thus would be indistinguishable without XSDB).\n\u003e \n\u003e One plausible example is a URL which returns resources which the attacker cannot directly observe cross-origin, but which, under certain conditions (e.g. depending on whether the user is logged in), shows an HTML error page. It\u0027s not a very compelling scenario, but might be worth thinking about more and/or documenting somewhere.\n\nSure.  We should compare it to the status quo, where the syntax errors themselves can provide a data leak based on the content of the document, and not just the meta level of whether XSDB thought it was worth protecting.",
+      "parentUuid": "0aea956d_cb6f3361",
       "range": {
         "startLine": 281,
         "startChar": 18,
