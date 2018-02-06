@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f5cc34_104ea8e4",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "Nit: This pattern seems kinda awkward.  Can we just ensure the browser\u0027s toolbar model is a TestToolbarModel to begin with, then access it from here?\n\nOr at least maybe should we factor this out into a function callable from here and below?  I dunno.",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e617ee96_c426343b",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "Do we need this?  Seems like the model should be being kept up-to-date already by the toolbar/location bar, shouldn\u0027t it?",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74f5edf_d6345880",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "This seems partly redundant with the call in OmniboxEditModel::OnWillKillFocus() but I haven\u0027t thought through how to merge them (if it can be done; they aren\u0027t quite the same).",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a7af61_2e854035",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "FWIW, I think \"Show URL\" is dead, and so this comment could be simplified.",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c1f755_65fd0272",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "This may not be the comparison you want in the end, since if the editing URL changes but the display URL doesn\u0027t, this will erroneously return true.  (In practice, I suspect that won\u0027t matter, but this function doesn\u0027t know that.)\n\nWhat you might do is call GetCurrentDisplayedUrl() before and after updating things and return true iff that differs + you\u0027re in the right mode.",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f264a224_ae286001",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "Yeah, in the end we will likely end up with some kind of bool or enum on the model that says whether we\u0027re editing.\n\nThe cleanest route may be to combine this with the existing concept of \"user input in progress\" so we have some kind of three-state enum:\n\nenum InteractionMode {\n  kDisplay,\n  kInteractive,\n  kEditing,\n};\n\nThen we replace the existing \"user input in progress\" bool and accessor with a mode getter.\n\nThere is a small complication here where, with zerosuggest, the popup can be open without the user having typed anything; it\u0027s not clear to me if we want to consider that \"editing\" mode, consider it a fourth mode between kInteractive and kEditing, or just leave callers to check PopupIsOpen() separately.  (I guess what I\u0027m saying here is, maybe PopupIsOpen() should go away too and be merged into this enum?)  The answer to this matters for the implementation of ResetDisplayUrls() above.",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c37b0da_8be48d91",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "Nit: Use a temp to avoid repeating the call?",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb77e2dc_847167c9",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:09:46Z",
+      "side": 1,
+      "message": "Nit: I wonder if this could be confusing when the user is editing, since it might not return the \"current displayed URL\" (i.e. the user text).\n\nI don\u0027t know that I have a great suggestion for alternate names though.",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
