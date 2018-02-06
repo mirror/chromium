@@ -1161,6 +1161,8 @@ test("content_unittests") {
     check_includes = false
   }
 
+  enable_multidex = true
+
   defines = []
   sources = [
     "../browser/accessibility/browser_accessibility_mac_unittest.mm",
