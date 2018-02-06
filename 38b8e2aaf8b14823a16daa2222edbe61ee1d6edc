@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43160171_2ac2a8fd",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T06:12:26Z",
+      "side": 1,
+      "message": "nit: remove \u0027{\u0027 here and \u0027}\u0027 below",
+      "range": {
+        "startLine": 668,
+        "startChar": 50,
+        "endLine": 668,
+        "endChar": 51
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded6a0cb_89fdcbb3",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T06:12:26Z",
+      "side": 1,
+      "message": "Question: Can this be null today? The reason of this question is that we didn\u0027t have a null check before the Daniel\u0027s change.",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 21
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71973a88_0c29acd8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T06:12:26Z",
+      "side": 1,
+      "message": "If we enforce the SecurityOrigin not to be null for this method, how about changing this signature to take const SecurityOrigin\u0026 instead if a pointer?",
+      "range": {
+        "startLine": 216,
+        "startChar": 38,
+        "endLine": 216,
+        "endChar": 52
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e459f3_2aea9a41",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T06:12:26Z",
+      "side": 1,
+      "message": "can we remove this method now?",
+      "range": {
+        "startLine": 282,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5545af_e7454077",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T06:12:26Z",
+      "side": 1,
+      "message": "This setter method, member variable, and caller can be also removed?",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 3
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
