@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5270d4c_67f03296",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-02-06T20:37:26Z",
+      "side": 1,
+      "message": "Can this be constexpr?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "fb07c0634dd7908156ba447a3e96826dcadb2182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
