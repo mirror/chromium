@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dde96120_af817d15",
+        "filename": "components/autofill/core/common/form_field_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-02-06T04:14:48Z",
+      "side": 1,
+      "message": "I am not sure we really need to upload label_source to the password server, so I didn\u0027t add it to Serialize methods. Let me know if it is necessary.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 62
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
