@@ -85,6 +85,7 @@ enum UiElementName {
   kPermissionDialogBackplane,
   kHostedUi,
   kHostedUiBackplane,
+  kHostedUiCloseButton,
   kWebVrUrlToastTransientParent,
   kWebVrUrlToast,
   kExclusiveScreenToastTransientParent,
