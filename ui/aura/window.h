@@ -105,6 +105,10 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
          client::WindowType type = client::WINDOW_TYPE_UNKNOWN);
   ~Window() override;
 
+  bool IsAllocationPending() const { return allocation_pending_flag_; }
+  void SetAllocationPendingFlag() { allocation_pending_flag_ = true; }
+  void ClearAllocationPendingFlag() { allocation_pending_flag_ = false; }
+
   // Initializes the window. This creates the window's layer.
   void Init(ui::LayerType layer_type);
 
@@ -365,6 +369,12 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Gets the current viz::LocalSurfaceId.
   const viz::LocalSurfaceId& GetLocalSurfaceId() const;
 
+  // Sets the current viz::LocalSurfaceId, in cases where the child has
+  // allocated one. Also sets child sequence number component of the
+  // viz::LocalSurfaceId allocator.
+  void UpdateLocalSurfaceIdWithChildSequenceNumber(
+      const viz::LocalSurfaceId& local_surface_id);
+
   // Returns the FrameSinkId. In LOCAL mode, this returns a valid FrameSinkId
   // only if a LayerTreeFrameSink has been created. In MUS mode, this always
   // return a valid FrameSinkId.
@@ -504,6 +514,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
 
   // Updates the layer name based on the window's name and id.
   void UpdateLayerName();
+
+  bool allocation_pending_flag_ = false;
 
   // Window owns its corresponding WindowPort, but the ref is held as a raw
   // pointer in |port_| so that it can still be accessed during destruction.

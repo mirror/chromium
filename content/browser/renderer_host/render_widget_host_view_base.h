@@ -96,6 +96,42 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
  public:
   ~RenderWidgetHostViewBase() override;
 
+  class ScopedAllocationPendingLock {
+   public:
+    ScopedAllocationPendingLock(const RenderWidgetHostViewBase* view)
+        : view_(view), local_surface_id_(view->GetLocalSurfaceId()) {
+      // TODO: If you hit this DCHECK, it is because this is not ref counted
+      // and you are attempting to allow multiple locks in flight at the
+      // same time. You'll need to add ref counting.
+      DCHECK(!view->IsAllocationPending());
+      view->SetAllocationPendingFlag();
+    }
+
+    ScopedAllocationPendingLock(const ScopedAllocationPendingLock& other) =
+        delete;
+    ScopedAllocationPendingLock& operator=(
+        const ScopedAllocationPendingLock& other) = delete;
+    ScopedAllocationPendingLock(ScopedAllocationPendingLock&& other) = default;
+    ScopedAllocationPendingLock& operator=(
+        ScopedAllocationPendingLock&& other) = default;
+
+    ~ScopedAllocationPendingLock() {
+      DCHECK(view_->GetLocalSurfaceId() == local_surface_id_);
+      view_->ClearAllocationPendingFlag();
+    }
+
+   private:
+    const RenderWidgetHostViewBase* view_;
+    viz::LocalSurfaceId local_surface_id_;
+  };
+
+  virtual bool IsAllocationPending() const;
+  virtual void SetAllocationPendingFlag() const;
+  virtual void ClearAllocationPendingFlag() const;
+  ScopedAllocationPendingLock GetAllocationPendingLock() {
+    return ScopedAllocationPendingLock(this);
+  }
+
   float current_device_scale_factor() const {
     return current_device_scale_factor_;
   }
