@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e29401e_2ae09dd6",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary becasue an existing test directory chrome/test/data/public_offline_pages which is copied to the device when running the test is used for public directory.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d720b17_eb60baae",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "nit: comment may not be needed since the implementation is straightforward.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dac6b6_67ed54dd",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "Do we want to bail out here?",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381a5f2b_bdabb5f1",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "This comment is a bit scary. We can remove this comment once we pass this as a callback.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fba5241_b9999b21",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "nit: cache base::UTF16ToUTF8(offline_page.title)",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcecf24d_5e10bca8",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "Should this be new_file_path?",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1638021b_1c9ec695",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "Why not passing \"const base::FilePath\u0026 public_directory\"?",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50158fe_a76b88e7",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "It is a bit confusing to have 2 public methods for the sole purpose. I can think of 2 ways to make this better:\n\n1) Don\u0027t expose the static method. Your test code should call SavePageToDownloads to test. Your test code might need to set up something more.\n\n2) Make statuc method private and declare this class a friend of your test class.\n\nI suggest to rename the virtual method to PublishArchive. The static method could be renamed to something like PublishArchiveImpl, PublishArchiveHelper, or MoveAndRegisterArchive.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27867599_f1e408bb",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "We should avoid referring to a detailed class. Why not just passing a callback?",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d137c77_1ea204b6",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "nit: end with period",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471a7c08_8f4bbb17",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

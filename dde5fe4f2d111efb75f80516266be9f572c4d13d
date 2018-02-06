@@ -34,6 +34,24 @@
       "revId": "dde5fe4f2d111efb75f80516266be9f572c4d13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf7436cb_a1355ea1",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T21:51:32Z",
+      "side": 0,
+      "message": "Thanks for explanation. I think there is a way to get rid of the pending archive list altogether. I will deal with it later.",
+      "parentUuid": "55388064_0499ba5c",
+      "revId": "dde5fe4f2d111efb75f80516266be9f572c4d13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
