@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd7dd973_8e6aec53",
+        "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T06:32:40Z",
+      "side": 1,
+      "message": "nit: s/const Node*/const Node\u0026/",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 13
+      },
+      "revId": "6f51d032b4e8e90c234ebfab865df1830f52092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
