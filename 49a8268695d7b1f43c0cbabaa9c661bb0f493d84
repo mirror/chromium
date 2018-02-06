@@ -22,6 +22,30 @@
       "revId": "49a8268695d7b1f43c0cbabaa9c661bb0f493d84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad693ab_8ed89d57",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-02-06T22:09:44Z",
+      "side": 1,
+      "message": "Skipping main resource for now since we do not want to tag them, atleast not for the purpose of this CL. We might want to tag imports so removing that condition. Added a comment.",
+      "parentUuid": "11d697ae_0b31ffb1",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "49a8268695d7b1f43c0cbabaa9c661bb0f493d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
