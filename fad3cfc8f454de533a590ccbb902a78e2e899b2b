@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "40bbc36a_8b8c5e86",
+        "filename": "BUILD.gn",
+        "patchSetId": 82
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "i\u0027m not sure why this should be needed. i imagine the helper being a dep of //chrome since it\u0027s needed for a properly-functioning browser. can it instead be a win-only data dep on the //chrome target (see group(\"chrome\") in src/chrome/BUILD.gn)?",
+      "parentUuid": "4fd3b846_763d4ec3",
+      "range": {
+        "startLine": 580,
+        "startChar": 9,
+        "endLine": 580,
+        "endChar": 28
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23c1872_9b2945a8",
+        "filename": "chrome/install_static/install_util.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "this adds a dependency that we don\u0027t want in install_static. could you instead have the test take a dependency on //chrome/installer/setup:lib so that it can use the impl in setup_util.{cc,h}?",
+      "range": {
+        "startLine": 395,
+        "startChar": 8,
+        "endLine": 395,
+        "endChar": 23
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83e83988_c7364427",
         "filename": "chrome/install_static/install_util.h",
         "patchSetId": 82
@@ -42,6 +89,253 @@
         "endLine": 87,
         "endChar": 42
       },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a82536_a78685fe",
+        "filename": "chrome/install_static/install_util.h",
+        "patchSetId": 82
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "see comment in install_util.cc",
+      "parentUuid": "83e83988_c7364427",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 42
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30b07c9_61a4e59b",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 82
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "nit: remove bit about official only",
+      "range": {
+        "startLine": 615,
+        "startChar": 29,
+        "endLine": 615,
+        "endChar": 51
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c465605_89e5fb6c",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "HRESULTs are more easily readable as hex values. how about simplifying this to:\n ...; hr: 0x%08X)\neverywhere",
+      "range": {
+        "startLine": 60,
+        "startChar": 39,
+        "endLine": 60,
+        "endChar": 58
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15096e1b_e0d782f0",
+        "filename": "notification_helper/com_server_module.h",
+        "patchSetId": 82
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "how about WaitForZeroObjectCount since this is invoked when Module::DecrementObjectCount hits zero?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2790f426_8dfc44f2",
+        "filename": "notification_helper/com_server_module_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "nit: can you inline the calls and get rid of |hr|? for example:\n  ASSERT_HRESULT_SUCCEEDED(server_module.RegisterClassObjects());\nwill this provide a more clear log message in case of failure?",
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807d925a_4fa1c5e5",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "ASSERT_TRUE?",
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8956a4e2_bea1937b",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "is chrome.exe relevant here? should this comment instead say that the helper should be in the build output directory next to this test executable?",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb694ad9_6be0154d",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "nit: const method",
+      "range": {
+        "startLine": 105,
+        "startChar": 50,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d443b193_164acddb",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "nit: move initialization of this into the ctor\u0027s initializer list so that all members are initialized in one place.",
+      "range": {
+        "startLine": 114,
+        "startChar": 15,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef09654_1884a20d",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "nit: const member?",
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3588d3be_75e707d2",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "nit: move this above the other members since it\u0027s initialized first",
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1835d9_cf0e93d4",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:43:36Z",
+      "side": 1,
+      "message": "is there still any code generated in release builds for calls to this?",
       "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
