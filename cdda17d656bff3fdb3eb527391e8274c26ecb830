@@ -16,6 +16,24 @@
       "revId": "cdda17d656bff3fdb3eb527391e8274c26ecb830",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a4784d_74c53799",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-02-06T14:53:44Z",
+      "side": 1,
+      "message": "If we did that, we\u0027d still need some compile-time stuff for GetPageInfoAnchorView(). I guess we could have only one definition, but it\u0027d look like:\n\nviews::View* GetPageInfoAnchorView() {\n#if MAC \u0026\u0026 !MAC_VIEWS_BROWSER\n  return nullptr;\n#elif MAC\n  if (IsViewsBrowserCocoa())\n    return nullptr;\n#else\n  ... current body ...\n#endif\n}\n\nI think that\u0027s neater than having the special case in the Mac-side definition for IsViewsBrowserCocoa(), but it then becomes odd that there are two parallel GetPageInfoAnchor*() functions, one of which uses dynamic dispatch and the other of which uses compile-time goo, in order to avoid a layering violation in c/b/ui.\n\nI asked sky@ how he felt about this and he seemed very unhappy with adding views deps to c/b/ui itself, so I\u0027ll put up a new version doing the thing mentioned above.",
+      "parentUuid": "2682cbbe_a1c1e258",
+      "revId": "cdda17d656bff3fdb3eb527391e8274c26ecb830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
