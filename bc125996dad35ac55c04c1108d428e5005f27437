@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de762e4d_9f753bf1",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-06T22:50:41Z",
+      "side": 1,
+      "message": "Done\n\nThough we do not surface error code to users but we may add metrics later to report errors. I guess it\u0027s better to convert to strings.",
+      "parentUuid": "bc4b1a0a_94ecc046",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca7b3639_7b68747e",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T21:45:59Z",
       "side": 1,
       "message": "the comment above says that an empty path means that \"no compatible component is available to load\". if that\u0027s correct, should this be UNKNOWN_COMPONENT or something similar?",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ecfe3f_2b9134cb",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-06T22:50:41Z",
+      "side": 1,
+      "message": "So far the case I saw that triggers this path is when the downloaded component is not compatible with the platform (min_env_version is not matched, manifest is corrupted, etc.). In this case, component is already installed, but we refrain from mounting it due to compatibility check failure. I rather not call it INCOMPATIBLE_COMPONENT since corrupted manifest file could also lead to this error.",
+      "parentUuid": "ca7b3639_7b68747e",
       "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "532e3363_4dd3a912",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-06T22:50:41Z",
+      "side": 1,
+      "message": "Yes. It means we attempt to mount the image but failed (ImageLoaderClient.LoadComponentAtPath fails).",
+      "parentUuid": "28aa750a_8ceacf2d",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae52b512_749fe3d3",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-06T21:45:59Z",
       "side": 1,
       "message": "nit: add a comment asking people not to reorder these? it\u0027ll be hard to interpret logs otherwise",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a13a82_b712056e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-06T22:50:41Z",
+      "side": 1,
+      "message": "I converted to enum to string which could afford reordering here.",
+      "parentUuid": "ae52b512_749fe3d3",
       "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7570e0a3_27090aa5",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-06T22:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c27f064a_c7f760e8",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d36a099_94de97db",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f54d1ca_38423432",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-06T22:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d36a099_94de97db",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
