@@ -47,8 +47,9 @@ class NET_EXPORT NameConstraints {
   // subjectAltName extension or nullptr if the extension was not present.
   // Note that this method does not check hostname or IP address in commonName,
   // which is deprecated (crbug.com/308330).
-  bool IsPermittedCert(const der::Input& subject_rdn_sequence,
-                       const GeneralNames* subject_alt_names) const;
+  void IsPermittedCert(const der::Input& subject_rdn_sequence,
+                       const GeneralNames* subject_alt_names,
+                       CertErrors* errors) const;
 
   // Returns true if the ASCII hostname |name| is permitted.
   // |name| may be a wildcard hostname (starts with "*."). Eg, "*.bar.com"
