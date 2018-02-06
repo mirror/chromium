@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad6b2c31_4466769e",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T17:06:12Z",
+      "side": 1,
+      "message": "this looks like a copy, did you want auto\u0026 all_tabs?",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639c83cf_f9b91251",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T17:06:12Z",
+      "side": 1,
+      "message": "Forward iterators need to be default constructible. I don\u0027t see that constructor?\n\nhttp://en.cppreference.com/w/cpp/concept/ForwardIterator\n\nRagarding the default constructor:\n\nA value-initialized ForwardIterator behaves like the past-the-end iterator of some unspecified empty container: it compares equal to all value-initialized ForwardIterators of the same type.",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072b59e5_e8c662f3",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T17:06:12Z",
+      "side": 1,
+      "message": "operator* is supposed to return |reference| for forward iterators, but this is |pointer|:\n\nExpression\tReturn type\tEquivalent expression\ni++\t\tIt\t\tIt ip\u003di; ++i; return ip;\t\n*i++\t\treference",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
