@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f2c6914_2c52c11d",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T01:52:28Z",
+      "side": 1,
+      "message": "should we put this in a (non-arg) default_clang_base_path in clang.gni and then compare with the var here? in case we ever change this path and forget to change it here, we\u0027ll silently drop the define, which we won\u0027t notice for a while (the only effect is that we don\u0027t get full builds for rolls)",
+      "revId": "451684127f0a731a0304126a6a3dfa523d0ef444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
