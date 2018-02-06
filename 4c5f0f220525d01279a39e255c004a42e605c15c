@@ -447,6 +447,24 @@
     },
     {
       "key": {
+        "uuid": "b35091a0_8053645a",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T18:08:13Z",
+      "side": 1,
+      "message": "Assuming yes as Maksim gave his +1 - Resolving.",
+      "parentUuid": "fb1506f0_4bf8ae66",
+      "revId": "4c5f0f220525d01279a39e255c004a42e605c15c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37a10d27_fda793b1",
         "filename": "chromeos/network/onc/onc_parsed_certificates.h",
         "patchSetId": 2
