@@ -1,6 +1,7 @@
 include_rules = [
   "+components/captive_portal",
   "+components/wifi",
+  "+content/browser/frame_host",
 ]
 
 specific_include_rules = {
