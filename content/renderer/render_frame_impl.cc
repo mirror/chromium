@@ -1183,6 +1183,14 @@ void RenderFrame::ForEach(RenderFrameVisitor* visitor) {
 }
 
 // static
+void RenderFrame::OnSurfaceIdUpdated(int delegate_id,
+                                     viz::FrameSinkId frame_sink_id,
+                                     uint32_t parent_id,
+                                     base::UnguessableToken nonce) {
+  LOG(ERROR) << "RenderFrameImpl::OnSurfaceIdUpdated";
+}
+
+// static
 int RenderFrame::GetRoutingIdForWebFrame(blink::WebFrame* web_frame) {
   if (!web_frame)
     return MSG_ROUTING_NONE;

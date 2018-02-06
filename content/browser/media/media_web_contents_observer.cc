@@ -7,12 +7,15 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/browser/media/audible_metrics.h"
 #include "content/browser/media/audio_stream_monitor.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/media/media_player_delegate_messages.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_delegate.h"
 #include "ipc/ipc_message_macros.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
@@ -110,6 +113,9 @@ bool MediaWebContentsObserver::OnMessageReceived(
                         OnMediaPlaying)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                         OnMediaMutedStatusChanged)
+    IPC_MESSAGE_HANDLER(
+        MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId,
+        OnUpdatePictureInPictureSurfaceId)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
         OnMediaEffectivelyFullscreenChanged)
@@ -334,6 +340,22 @@ void MediaWebContentsObserver::OnMediaMutedStatusChanged(
     bool muted) {
   const MediaPlayerId id(render_frame_host, delegate_id);
   web_contents_impl()->MediaMutedStatusChanged(id, muted);
+}
+
+void MediaWebContentsObserver::OnUpdatePictureInPictureSurfaceId(
+    RenderFrameHost* render_frame_host,
+    int delegate_id,
+    uint32_t client_id,
+    uint32_t sink_id,
+    uint32_t parent_id,
+    uint64_t unguessable_high,
+    uint64_t unguessable_low) {
+  viz::FrameSinkId frame_sink_id = viz::FrameSinkId(client_id, sink_id);
+  base::UnguessableToken nonce =
+      base::UnguessableToken::Deserialize(unguessable_high, unguessable_low);
+
+  web_contents()->GetDelegate()->UpdatePictureInPictureSurfaceId(
+      frame_sink_id, parent_id, nonce);
 }
 
 void MediaWebContentsObserver::AddMediaPlayerEntry(

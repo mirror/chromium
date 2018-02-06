@@ -26,6 +26,10 @@
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
 #include "ui/accessibility/ax_modes.h"
 
+namespace base {
+class UnguessableToken;
+}
+
 namespace blink {
 class AssociatedInterfaceProvider;
 class AssociatedInterfaceRegistry;
@@ -46,6 +50,10 @@ class InterfaceProvider;
 
 namespace url {
 class Origin;
+}
+
+namespace viz {
+class FrameSinkId;
 }
 
 namespace content {
@@ -101,6 +109,11 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // this process or a WebRemoteFrame placeholder for a frame in a different
   // process.
   static int GetRoutingIdForWebFrame(blink::WebFrame* web_frame);
+
+  static void OnSurfaceIdUpdated(int delegate_id,
+                                 viz::FrameSinkId frame_sink_id,
+                                 uint32_t parent_id,
+                                 base::UnguessableToken nonce);
 
   // Returns the RenderView associated with this frame.
   virtual RenderView* GetRenderView() = 0;
