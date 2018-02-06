@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "d25a70ff_dcb64d49",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-02-06T03:38:42Z",
+      "side": 1,
+      "message": "That is similar to the solution from last patch (7), although I am using regular function instead of anonymous. I can change to anoymous if that is the preference?",
+      "parentUuid": "091faa9f_63ad05ef",
+      "revId": "6059e4b6da47ed4bdc30a50a4dcceddc0d7d41ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7935466a_a4a48fd3",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
