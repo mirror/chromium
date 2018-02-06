@@ -49,3 +49,7 @@ void SSLBlockingPageBase::SetSSLCertReporterForTesting(
 CertReportHelper* SSLBlockingPageBase::cert_report_helper() {
   return cert_report_helper_.get();
 }
+
+void SSLBlockingPageBase::SetOSReportedCaptivePortal() {
+  cert_report_helper_->SetOSReportedCaptivePortal();
+}

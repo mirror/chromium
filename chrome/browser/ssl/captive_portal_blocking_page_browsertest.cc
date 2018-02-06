@@ -81,7 +81,8 @@ class CaptivePortalBlockingPageForTesting : public CaptivePortalBlockingPage {
                                   login_url,
                                   std::move(ssl_cert_reporter),
                                   ssl_info,
-                                  callback),
+                                  callback,
+                                  false),
         is_wifi_(is_wifi),
         wifi_ssid_(wifi_ssid) {}
 
@@ -235,7 +236,7 @@ void CaptivePortalBlockingPageTest::TestCertReporting(
                    EXPECT_WIFI_SSID_NO, EXPECT_LOGIN_URL_NO,
                    std::move(ssl_cert_reporter));
 
-  EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+  EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
 
   content::WebContents* tab =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -245,9 +246,9 @@ void CaptivePortalBlockingPageTest::TestCertReporting(
     // Check that the mock reporter received a request to send a report.
     run_loop.Run();
     EXPECT_EQ(GURL(kBrokenSSL).host(),
-              reporter_callback.GetLatestHostnameReported());
+              reporter_callback.GetLastReport().hostname());
   } else {
-    EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+    EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
   }
 }
 

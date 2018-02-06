@@ -427,7 +427,8 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
       const CommonNameMismatchHandler::CheckUrlCallback& callback) override;
   void NavigateToSuggestedURL(const GURL& suggested_url) override;
   bool IsErrorOverridable() const override;
-  void ShowCaptivePortalInterstitial(const GURL& landing_url) override;
+  void ShowCaptivePortalInterstitial(const GURL& landing_url,
+                                     bool os_reports_captive_portal) override;
   void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
                                     bool is_enterprise_managed) override;
   void ShowSSLInterstitial(const GURL& support_url) override;
@@ -509,11 +510,12 @@ bool SSLErrorHandlerDelegateImpl::IsErrorOverridable() const {
 }
 
 void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
-    const GURL& landing_url) {
+    const GURL& landing_url,
+    bool os_reports_captive_portal) {
   // Show captive portal blocking page. The interstitial owns the blocking page.
   OnBlockingPageReady(new CaptivePortalBlockingPage(
       web_contents_, request_url_, landing_url, std::move(ssl_cert_reporter_),
-      ssl_info_, decision_callback_));
+      ssl_info_, decision_callback_, os_reports_captive_portal));
 }
 
 void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial(
@@ -735,7 +737,7 @@ void SSLErrorHandler::StartHandlingError() {
       (g_config.Pointer()->DoesOSReportCaptivePortalForTesting() ||
        delegate_->DoesOSReportCaptivePortal())) {
     RecordUMA(OS_REPORTS_CAPTIVE_PORTAL);
-    ShowCaptivePortalInterstitial(GURL());
+    ShowCaptivePortalInterstitial(GURL(), true);
     return;
   }
 
@@ -750,7 +752,7 @@ void SSLErrorHandler::StartHandlingError() {
       only_error_is_name_mismatch &&
       g_config.Pointer()->IsKnownCaptivePortalCertificate(ssl_info_)) {
     RecordUMA(CAPTIVE_PORTAL_CERT_FOUND);
-    ShowCaptivePortalInterstitial(GURL());
+    ShowCaptivePortalInterstitial(GURL(), false);
     return;
   }
 
@@ -830,12 +832,15 @@ void SSLErrorHandler::StartHandlingError() {
   ShowSSLInterstitial();
 }
 
-void SSLErrorHandler::ShowCaptivePortalInterstitial(const GURL& landing_url) {
+void SSLErrorHandler::ShowCaptivePortalInterstitial(
+    const GURL& landing_url,
+    bool os_reports_captive_portal) {
   // Show captive portal blocking page. The interstitial owns the blocking page.
   RecordUMA(delegate_->IsErrorOverridable()
                 ? SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE
                 : SHOW_CAPTIVE_PORTAL_INTERSTITIAL_NONOVERRIDABLE);
-  delegate_->ShowCaptivePortalInterstitial(landing_url);
+  delegate_->ShowCaptivePortalInterstitial(landing_url,
+                                           os_reports_captive_portal);
 
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this". It also destroys the timer.
@@ -886,7 +891,7 @@ void SSLErrorHandler::ShowDynamicInterstitial(
       return;
     case chrome_browser_ssl::DynamicInterstitial::
         INTERSTITIAL_PAGE_CAPTIVE_PORTAL:
-      delegate_->ShowCaptivePortalInterstitial(GURL());
+      delegate_->ShowCaptivePortalInterstitial(GURL(), false);
       return;
     case chrome_browser_ssl::DynamicInterstitial::
         INTERSTITIAL_PAGE_MITM_SOFTWARE:
@@ -925,7 +930,7 @@ void SSLErrorHandler::Observe(
   CaptivePortalService::Results* results =
       content::Details<CaptivePortalService::Results>(details).ptr();
   if (results->result == captive_portal::RESULT_BEHIND_CAPTIVE_PORTAL)
-    ShowCaptivePortalInterstitial(results->landing_url);
+    ShowCaptivePortalInterstitial(results->landing_url, false);
   else
     ShowSSLInterstitial();
 #else

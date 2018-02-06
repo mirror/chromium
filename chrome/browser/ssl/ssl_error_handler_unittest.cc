@@ -243,7 +243,8 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     bad_clock_interstitial_shown_ = true;
   }
 
-  void ShowCaptivePortalInterstitial(const GURL& landing_url) override {
+  void ShowCaptivePortalInterstitial(const GURL& landing_url,
+                                     bool os_reports_captive_portal) override {
     captive_portal_interstitial_shown_ = true;
   }
 

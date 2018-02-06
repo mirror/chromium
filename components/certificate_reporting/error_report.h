@@ -84,6 +84,8 @@ class ErrorReport {
   // Sets is_retry_upload field of the protobuf to |is_retry_upload|.
   void SetIsRetryUpload(bool is_retry_upload);
 
+  void SetOSReportsCaptivePortal();
+
   // Gets the hostname to which this report corresponds.
   const std::string& hostname() const;
 
@@ -95,6 +97,9 @@ class ErrorReport {
 
   // Returns true if the report has been retried.
   bool is_retry_upload() const;
+
+  // Returns true if the OS reports that the device is behind a captive portal.
+  bool os_reports_captive_portal() const;
 
  private:
   std::unique_ptr<CertLoggerRequest> cert_report_;

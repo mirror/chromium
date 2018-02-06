@@ -705,6 +705,12 @@ class SSLUITestBase : public InProcessBrowserTest {
         tab->GetInterstitialPage()->GetDelegateForTesting());
   }
 
+  virtual CaptivePortalBlockingPage* GetCaptivePortalBlockingPage(
+      WebContents* tab) {
+    return static_cast<CaptivePortalBlockingPage*>(
+        tab->GetInterstitialPage()->GetDelegateForTesting());
+  }
+
   // Helper function for testing invalid certificate chain reporting.
   void TestBrokenHTTPSReporting(
       certificate_reporting_test_utils::OptIn opt_in,
@@ -740,9 +746,9 @@ class SSLUITestBase : public InProcessBrowserTest {
     interstitial_page->SetSSLCertReporterForTesting(
         std::move(ssl_cert_reporter));
 
-    EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+    EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
     EXPECT_EQ(certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE,
-              reporter_callback.GetLatestChromeChannelReported());
+              reporter_callback.GetLastReport().chrome_channel());
 
     // Leave the interstitial (either by proceeding or going back)
     if (proceed == SSL_INTERSTITIAL_PROCEED) {
@@ -756,14 +762,14 @@ class SSLUITestBase : public InProcessBrowserTest {
       // Check that the mock reporter received a request to send a report.
       run_loop.Run();
       EXPECT_EQ(https_server_expired_.GetURL("/title1.html").host(),
-                reporter_callback.GetLatestHostnameReported());
+                reporter_callback.GetLastReport().hostname());
       EXPECT_NE(certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE,
-                reporter_callback.GetLatestChromeChannelReported());
+                reporter_callback.GetLastReport().chrome_channel());
     } else {
       base::RunLoop().RunUntilIdle();
-      EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+      EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
       EXPECT_EQ(certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE,
-                reporter_callback.GetLatestChromeChannelReported());
+                reporter_callback.GetLastReport().chrome_channel());
     }
   }
 
@@ -809,7 +815,7 @@ class SSLUITestBase : public InProcessBrowserTest {
     BadClockBlockingPage* clock_page = GetBadClockBlockingPage(tab);
     clock_page->SetSSLCertReporterForTesting(std::move(ssl_cert_reporter));
 
-    EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+    EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
     DontProceedThroughInterstitial(tab);
 
     if (expect_report ==
@@ -817,10 +823,62 @@ class SSLUITestBase : public InProcessBrowserTest {
       // Check that the mock reporter received a request to send a report.
       run_loop.Run();
       EXPECT_EQ(https_server_expired_.GetURL("/title1.html").host(),
-                reporter_callback.GetLatestHostnameReported());
+                reporter_callback.GetLastReport().hostname());
     } else {
       base::RunLoop().RunUntilIdle();
-      EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+      EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
+    }
+  }
+
+  void TestCaptivePortalReporting(
+      certificate_reporting_test_utils::OptIn opt_in,
+      certificate_reporting_test_utils::ExpectReport expect_report,
+      Browser* browser) {
+    ASSERT_TRUE(https_server_mismatched_.Start());
+
+    base::RunLoop run_loop;
+    certificate_reporting_test_utils::SSLCertReporterCallback reporter_callback(
+        &run_loop);
+
+    certificate_reporting_test_utils::SetCertReportingOptIn(browser, opt_in);
+
+    ui_test_utils::NavigateToURL(
+        browser, https_server_mismatched_.GetURL("/title1.html"));
+    WebContents* tab = browser->tab_strip_model()->GetActiveWebContents();
+    WaitForInterstitial(tab);
+
+    CheckAuthenticationBrokenState(tab, net::CERT_STATUS_COMMON_NAME_INVALID,
+                                   AuthState::SHOWING_INTERSTITIAL);
+
+    std::unique_ptr<SSLCertReporter> ssl_cert_reporter =
+        certificate_reporting_test_utils::CreateMockSSLCertReporter(
+            base::Bind(&certificate_reporting_test_utils::
+                           SSLCertReporterCallback::ReportSent,
+                       base::Unretained(&reporter_callback)),
+            expect_report);
+
+    ExpectCaptivePortalInterstitial(tab);
+    CaptivePortalBlockingPage* captive_portal_page =
+        GetCaptivePortalBlockingPage(tab);
+    captive_portal_page->SetSSLCertReporterForTesting(
+        std::move(ssl_cert_reporter));
+
+    EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
+    // Captive portal interstitials only have a "Connect" button that opens a
+    // new tab, so navigate to an empty page instead of clicking "Don't Proceed"
+    // to trigger a report.
+    ui_test_utils::NavigateToURL(browser, GURL("about:blank"));
+
+    if (expect_report ==
+        certificate_reporting_test_utils::CERT_REPORT_EXPECTED) {
+      run_loop.Run();
+      EXPECT_EQ(https_server_mismatched_.GetURL("/title1.html").host(),
+                reporter_callback.GetLastReport().hostname());
+      EXPECT_TRUE(
+          reporter_callback.GetLastReport().os_reports_captive_portal());
+    } else {
+      base::RunLoop().RunUntilIdle();
+      EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
     }
   }
 
@@ -977,6 +1035,19 @@ class SSLUITest : public SSLUITestBase,
           helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting());
     }
     return SSLUITestBase::GetBadClockBlockingPage(tab);
+  }
+
+  CaptivePortalBlockingPage* GetCaptivePortalBlockingPage(
+      WebContents* tab) override {
+    if (IsCommittedInterstitialTest()) {
+      SSLErrorTabHelper* helper = SSLErrorTabHelper::FromWebContents(tab);
+      if (!helper) {
+        return nullptr;
+      }
+      return static_cast<CaptivePortalBlockingPage*>(
+          helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting());
+    }
+    return SSLUITestBase::GetCaptivePortalBlockingPage(tab);
   }
 
   bool IsCommittedInterstitialTest() const { return GetParam(); }
@@ -2442,14 +2513,14 @@ IN_PROC_BROWSER_TEST_P(SSLUITestWithExtendedReporting,
   ASSERT_TRUE(interstitial_page);
   interstitial_page->SetSSLCertReporterForTesting(std::move(ssl_cert_reporter));
 
-  EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
+  EXPECT_EQ(std::string(), reporter_callback.GetLastReport().hostname());
 
   // Leave the interstitial by closing the tab.
   chrome::CloseWebContents(browser(), tab, false);
   // Check that the mock reporter received a request to send a report.
   run_loop.Run();
   EXPECT_EQ(https_server_expired_.GetURL("/title1.html").host(),
-            reporter_callback.GetLatestHostnameReported());
+            reporter_callback.GetLastReport().hostname());
 }
 
 // Test that if the user proceeds and the checkbox is checked, a report
@@ -2549,6 +2620,25 @@ IN_PROC_BROWSER_TEST_P(SSLUITestWithExtendedReporting,
   TestBadClockReporting(
       certificate_reporting_test_utils::EXTENDED_REPORTING_OPT_IN,
       expect_report, browser());
+}
+
+IN_PROC_BROWSER_TEST_P(SSLUITestWithExtendedReporting,
+                       TestCaptivePortalReporting_OSReported) {
+  certificate_reporting_test_utils::ExpectReport expect_report =
+      certificate_reporting_test_utils::GetReportExpectedFromFinch();
+
+  SSLErrorHandler::SetOSReportsCaptivePortalForTesting(true);
+  TestCaptivePortalReporting(
+      certificate_reporting_test_utils::EXTENDED_REPORTING_OPT_IN,
+      expect_report, browser());
+}
+
+IN_PROC_BROWSER_TEST_P(SSLUITestWithExtendedReporting,
+                       TestCaptivePortalReportingWithNoOptIn) {
+  SSLErrorHandler::SetOSReportsCaptivePortalForTesting(true);
+  TestCaptivePortalReporting(
+      certificate_reporting_test_utils::EXTENDED_REPORTING_DO_NOT_OPT_IN,
+      certificate_reporting_test_utils::CERT_REPORT_NOT_EXPECTED, browser());
 }
 
 // Visits a page that runs insecure content and tries to suppress the insecure

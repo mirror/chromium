@@ -166,4 +166,7 @@ message CertLoggerRequest {
   // True if the machine is enterprise managed. Currently only available for
   // Windows and ChromeOS clients.
   optional bool is_enterprise_managed = 13;
+
+  // True if the OS reports that the device is behind a captive portal.
+  optional bool os_reports_captive_portal = 14;
 };

@@ -78,6 +78,10 @@ class CertReportHelper {
   // Sends a report about an invalid certificate to the server.
   void FinishCertCollection();
 
+  // When called, the flag in cert reports that mean "captive portal reported
+  // by OS" will be set to true.
+  void SetOSReportedCaptivePortal();
+
  private:
   // Checks whether a checkbox should be shown on the page that allows
   // the user to opt in to Safe Browsing extended reporting.
@@ -110,6 +114,8 @@ class CertReportHelper {
   // taking an action on the interstitial is counted as not proceeding.
   certificate_reporting::ErrorReport::ProceedDecision user_action_ =
       certificate_reporting::ErrorReport::USER_DID_NOT_PROCEED;
+
+  bool os_reports_captive_portal_;
 
   DISALLOW_COPY_AND_ASSIGN(CertReportHelper);
 };

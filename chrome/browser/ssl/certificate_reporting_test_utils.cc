@@ -32,9 +32,7 @@ namespace certificate_reporting_test_utils {
 class MockSSLCertReporter : public SSLCertReporter {
  public:
   MockSSLCertReporter(
-      const base::Callback<
-          void(const std::string&,
-               const certificate_reporting::CertLoggerRequest_ChromeChannel)>&
+      const base::Callback<void(const certificate_reporting::ErrorReport&)>&
           report_sent_callback,
       ExpectReport expect_report)
       : report_sent_callback_(report_sent_callback),
@@ -55,13 +53,11 @@ class MockSSLCertReporter : public SSLCertReporter {
     reported_ = true;
     certificate_reporting::ErrorReport report;
     EXPECT_TRUE(report.InitializeFromString(serialized_report));
-    report_sent_callback_.Run(report.hostname(), report.chrome_channel());
+    report_sent_callback_.Run(report);
   }
 
  private:
-  const base::Callback<void(
-      const std::string&,
-      const certificate_reporting::CertLoggerRequest_ChromeChannel)>
+  const base::Callback<void(const certificate_reporting::ErrorReport&)>
       report_sent_callback_;
   const ExpectReport expect_report_;
   bool reported_;
@@ -70,28 +66,21 @@ class MockSSLCertReporter : public SSLCertReporter {
 };
 
 SSLCertReporterCallback::SSLCertReporterCallback(base::RunLoop* run_loop)
-    : run_loop_(run_loop),
-      chrome_channel_(
-          certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE) {}
+    : run_loop_(run_loop) {}
 
 SSLCertReporterCallback::~SSLCertReporterCallback() {}
 
 void SSLCertReporterCallback::ReportSent(
-    const std::string& hostname,
-    const certificate_reporting::CertLoggerRequest::ChromeChannel
-        chrome_channel) {
-  latest_hostname_reported_ = hostname;
-  chrome_channel_ = chrome_channel;
+    const certificate_reporting::ErrorReport& report) {
+  std::string serialized;
+  ASSERT_TRUE(report.Serialize(&serialized));
+  ASSERT_TRUE(last_report_.InitializeFromString(serialized));
   run_loop_->Quit();
 }
 
-const std::string& SSLCertReporterCallback::GetLatestHostnameReported() const {
-  return latest_hostname_reported_;
-}
-
-certificate_reporting::CertLoggerRequest::ChromeChannel
-SSLCertReporterCallback::GetLatestChromeChannelReported() const {
-  return chrome_channel_;
+const certificate_reporting::ErrorReport&
+SSLCertReporterCallback::GetLastReport() const {
+  return last_report_;
 }
 
 void SetCertReportingOptIn(Browser* browser, OptIn opt_in) {
@@ -100,9 +89,7 @@ void SetCertReportingOptIn(Browser* browser, OptIn opt_in) {
 }
 
 std::unique_ptr<SSLCertReporter> CreateMockSSLCertReporter(
-    const base::Callback<
-        void(const std::string&,
-             const certificate_reporting::CertLoggerRequest_ChromeChannel)>&
+    const base::Callback<void(const certificate_reporting::ErrorReport&)>&
         report_sent_callback,
     ExpectReport expect_report) {
   return std::unique_ptr<SSLCertReporter>(

@@ -45,6 +45,8 @@ class SSLBlockingPageBase
   void SetSSLCertReporterForTesting(
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter);
 
+  void SetOSReportedCaptivePortal();
+
  protected:
   CertReportHelper* cert_report_helper();
 

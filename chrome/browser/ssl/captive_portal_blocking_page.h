@@ -46,7 +46,8 @@ class CaptivePortalBlockingPage : public SSLBlockingPageBase {
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       const net::SSLInfo& ssl_info,
       const base::Callback<void(content::CertificateRequestResultType)>&
-          callback);
+          callback,
+      bool os_reports_captive_portal);
   ~CaptivePortalBlockingPage() override;
 
   // InterstitialPageDelegate method:
@@ -68,6 +69,7 @@ class CaptivePortalBlockingPage : public SSLBlockingPageBase {
   void OverrideEntry(content::NavigationEntry* entry) override;
   void OnProceed() override;
   void OnDontProceed() override;
+  void OnInterstitialClosing() override;
 
  private:
   // URL of the login page, opened when the user clicks the "Connect" button.
@@ -76,6 +78,7 @@ class CaptivePortalBlockingPage : public SSLBlockingPageBase {
   const GURL login_url_;
   const net::SSLInfo ssl_info_;
   base::Callback<void(content::CertificateRequestResultType)> callback_;
+  const bool os_reports_captive_portal_;
 
   DISALLOW_COPY_AND_ASSIGN(CaptivePortalBlockingPage);
 };
