@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74401e65_a07af493",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T23:39:47Z",
+      "side": 1,
+      "message": "I\u0027ve never used the MRUCache class, but I believe you can ditch using file_evicted_ and instead initialize cache_position_ to file_cache_-\u003eend() and check against that.",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18624d66_aaf361d8",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T23:39:47Z",
+      "side": 1,
+      "message": "The dangling \"1\" is odd formatting. Code review bug?",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a1661a_dc469edd",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T23:39:47Z",
+      "side": 1,
+      "message": "Was this a leftover value from testing?",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be07eaa3_bcbcfed2",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T23:39:47Z",
+      "side": 1,
+      "message": "I think this implementation will be simpler if you always have a FileCache, but just use maxint of handle eviction is disabled.",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
