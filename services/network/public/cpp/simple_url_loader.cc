@@ -211,6 +211,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   void SetRetryOptions(int max_retries, int retry_mode) override;
   int NetError() const override;
   const ResourceResponseHead* ResponseInfo() const override;
+  const GURL& FinalURL() const override;
 
   // Called by BodyHandler when the BodyHandler body handler is done. If |error|
   // is not net::OK, some error occurred reading or consuming the body. If it is
@@ -330,6 +331,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 
   // Per-request state. Always non-null, but re-created on redirect.
   std::unique_ptr<RequestState> request_state_;
+
+  GURL url_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -1008,6 +1011,7 @@ SimpleURLLoaderImpl::SimpleURLLoaderImpl(
       annotation_tag_(annotation_tag),
       client_binding_(this),
       request_state_(std::make_unique<RequestState>()),
+      url_(resource_request_->url),
       weak_ptr_factory_(this) {
   // Allow creation and use on different threads.
   DETACH_FROM_SEQUENCE(sequence_checker_);
@@ -1177,7 +1181,11 @@ int SimpleURLLoaderImpl::NetError() const {
   return request_state_->net_error;
 }
 
-const ResourceResponseHead* SimpleURLLoaderImpl::ResponseInfo() const {
+const GURL& SimpleURLLoaderImpl::FinalURL() const {
+  return url_;
+}
+
+const network::ResourceResponseHead* SimpleURLLoaderImpl::ResponseInfo() const {
   // Should only be called once the request is compelete.
   DCHECK(request_state_->finished);
   return request_state_->response_info.get();
@@ -1335,6 +1343,7 @@ void SimpleURLLoaderImpl::OnReceiveRedirect(
       return;
   }
 
+  url_ = redirect_info.new_url;
   url_loader_->FollowRedirect();
 }
 

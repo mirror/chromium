@@ -19,6 +19,7 @@ component("captive_portal") {
     "//base",
     "//components/data_use_measurement/core",
     "//net",
+    "//services/network/public/cpp",
     "//url",
   ]
 }

@@ -1,5 +1,7 @@
 include_rules = [
   "+components/data_use_measurement/core",
+  "+services/network/public/cpp/simple_url_loader.h",
+  "+services/network/public/interfaces/url_loader_factory.mojom.h",
   "+net",
   "+url",
 ]

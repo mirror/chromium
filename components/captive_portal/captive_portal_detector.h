@@ -19,6 +19,8 @@
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/simple_url_loader.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 class GURL;
 
@@ -50,6 +52,8 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
 
   explicit CaptivePortalDetector(
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
+  explicit CaptivePortalDetector(
+      network::mojom::URLLoaderFactory* loader_factory);
   ~CaptivePortalDetector() override;
 
   // Triggers a check for a captive portal. After completion, runs the
@@ -68,6 +72,8 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
   // net::URLFetcherDelegate:
   void OnURLFetchComplete(const net::URLFetcher* source) override;
 
+  void OnSimpleLoaderComplete(std::unique_ptr<std::string> response_body);
+
   // Takes a net::URLFetcher that has finished trying to retrieve the
   // test URL, and fills a Results struct based on its result.  If the
   // response is a 503 with a Retry-After header, |retry_after| field
@@ -75,6 +81,8 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
   // base::TimeDelta().
   void GetCaptivePortalResultFromResponse(const net::URLFetcher* url_fetcher,
                                           Results* results) const;
+
+  void GetCaptivePortalResultFromResponse(Results* results) const;
 
   // Returns the current time. Used only when determining time until a
   // Retry-After date.
@@ -99,6 +107,10 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
   DetectionCallback detection_callback_;
 
   std::unique_ptr<net::URLFetcher> url_fetcher_;
+
+  // TODO(jam): switch to using the shared one
+  network::mojom::URLLoaderFactory* loader_factory_ = nullptr;
+  std::unique_ptr<network::SimpleURLLoader> simple_loader_;
 
   // Test time used by unit tests.
   base::Time time_for_testing_;

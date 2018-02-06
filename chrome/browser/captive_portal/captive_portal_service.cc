@@ -18,6 +18,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/storage_partition.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 #if defined(OS_WIN)
@@ -177,7 +178,10 @@ CaptivePortalService::CaptivePortalService(Profile* profile,
                                            base::TickClock* clock_for_testing)
     : profile_(profile),
       state_(STATE_IDLE),
-      captive_portal_detector_(profile->GetRequestContext()),
+      // captive_portal_detector_(profile->GetRequestContext()),
+      captive_portal_detector_(
+          content::BrowserContext::GetDefaultStoragePartition(profile)
+              ->GetURLLoaderFactoryForBrowserProcess()),
       enabled_(false),
       last_detection_result_(captive_portal::RESULT_INTERNET_CONNECTED),
       num_checks_with_same_result_(0),

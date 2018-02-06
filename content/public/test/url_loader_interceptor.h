@@ -72,6 +72,7 @@ class URLLoaderInterceptor {
                             network::mojom::URLLoaderClient* client);
 
  private:
+  class BrowserProcessWrapper;
   class Interceptor;
   class SubresourceWrapper;
   class URLLoaderFactoryGetterWrapper;
@@ -81,6 +82,12 @@ class URLLoaderInterceptor {
       network::mojom::URLLoaderFactoryRequest request,
       int process_id,
       network::mojom::URLLoaderFactoryPtrInfo original_factory);
+
+  // Callback on UI thread whenever a
+  // StoragePartition::GetURLLoaderFactoryForBrowserProcess is called on an
+  // object that doesn't have a test factory set up.
+  network::mojom::URLLoaderFactoryPtr GetURLLoaderFactoryForBrowserProcess(
+      network::mojom::URLLoaderFactoryPtr original_factory);
 
   // Callback on IO thread whenever a URLLoaderFactoryGetter::GetNetworkContext
   // is called on an object that doesn't have a test factory set up.
@@ -101,6 +108,10 @@ class URLLoaderInterceptor {
   // StoragePartition. Only accessed on IO thread.
   std::set<std::unique_ptr<URLLoaderFactoryGetterWrapper>>
       url_loader_factory_getter_wrappers_;
+  // For intecepting non-frame requests from the browser process. There is one
+  // per StoragePartition.
+  std::set<std::unique_ptr<BrowserProcessWrapper>>
+      browser_process_interceptors_;
   // For intercepting subresources without network service in
   // ResourceMessageFilter.
   std::unique_ptr<Interceptor> rmf_interceptor_;

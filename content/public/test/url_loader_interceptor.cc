@@ -8,6 +8,7 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/http/http_util.h"
@@ -115,6 +116,35 @@ class URLLoaderInterceptor::URLLoaderFactoryGetterWrapper {
   URLLoaderFactoryGetter* url_loader_factory_getter_;
 };
 
+// This class intercepts calls to
+// StoragePartition::GetURLLoaderFactoryForBrowserProcess.
+class URLLoaderInterceptor::BrowserProcessWrapper {
+ public:
+  BrowserProcessWrapper(network::mojom::URLLoaderFactoryRequest factory_request,
+                        URLLoaderInterceptor* parent,
+                        network::mojom::URLLoaderFactoryPtr original_factory)
+      : interceptor_(
+            parent,
+            base::BindRepeating([]() { return 0; }),
+            base::BindRepeating(&BrowserProcessWrapper::GetOriginalFactory,
+                                base::Unretained(this))),
+        binding_(&interceptor_, std::move(factory_request)),
+        original_factory_(std::move(original_factory)) {}
+
+  ~BrowserProcessWrapper() {}
+
+ private:
+  network::mojom::URLLoaderFactory* GetOriginalFactory() {
+    return original_factory_.get();
+  }
+
+  Interceptor interceptor_;
+  mojo::Binding<network::mojom::URLLoaderFactory> binding_;
+  network::mojom::URLLoaderFactoryPtr original_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(BrowserProcessWrapper);
+};
+
 // This class is sent along a RenderFrame commit message as a subresource
 // loader so that it can intercept subresource requests.
 class URLLoaderInterceptor::SubresourceWrapper {
@@ -169,6 +199,14 @@ URLLoaderInterceptor::URLLoaderInterceptor(const InterceptCallback& callback,
         base::Unretained(this)));
   }
 
+  if (intercept_subresources_) {
+    StoragePartitionImpl::
+        SetGetURLLoaderFactoryForBrowserProcessCallbackForTesting(
+            base::BindRepeating(
+                &URLLoaderInterceptor::GetURLLoaderFactoryForBrowserProcess,
+                base::Unretained(this)));
+  }
+
   if (BrowserThread::IsThreadInitialized(BrowserThread::IO)) {
     base::RunLoop run_loop;
     BrowserThread::PostTask(
@@ -188,6 +226,12 @@ URLLoaderInterceptor::~URLLoaderInterceptor() {
       base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     RenderFrameHostImpl::SetNetworkFactoryForTesting(
         RenderFrameHostImpl::CreateNetworkFactoryCallback());
+  }
+
+  if (intercept_subresources_) {
+    StoragePartitionImpl::
+        SetGetURLLoaderFactoryForBrowserProcessCallbackForTesting(
+            StoragePartitionImpl::CreateNetworkFactoryCallback());
   }
 
   base::RunLoop run_loop;
@@ -217,6 +261,7 @@ void URLLoaderInterceptor::WriteResponse(
   client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));
 
   network::URLLoaderCompletionStatus status;
+  status.decoded_body_length = body.size();
   status.error_code = net::OK;
   client->OnComplete(status);
 }
@@ -236,6 +281,15 @@ void URLLoaderInterceptor::CreateURLLoaderFactoryForSubresources(
 
   subresource_wrappers_.emplace(std::make_unique<SubresourceWrapper>(
       std::move(request), process_id, this, std::move(original_factory)));
+}
+
+network::mojom::URLLoaderFactoryPtr
+URLLoaderInterceptor::GetURLLoaderFactoryForBrowserProcess(
+    network::mojom::URLLoaderFactoryPtr original_factory) {
+  network::mojom::URLLoaderFactoryPtr loader_factory;
+  browser_process_interceptors_.emplace(std::make_unique<BrowserProcessWrapper>(
+      mojo::MakeRequest(&loader_factory), this, std::move(original_factory)));
+  return loader_factory;
 }
 
 void URLLoaderInterceptor::GetNetworkFactoryCallback(
