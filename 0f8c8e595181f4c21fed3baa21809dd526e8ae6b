@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f6f99bd_92d464b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-06T14:00:59Z",
+      "side": 1,
+      "message": "We could also move this check into captureDelayed().",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "0f8c8e595181f4c21fed3baa21809dd526e8ae6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d162acd_1fe20888",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-06T14:00:59Z",
+      "side": 1,
+      "message": "Should we turn this into an assert again?",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "0f8c8e595181f4c21fed3baa21809dd526e8ae6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47ba20b_9580db62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-06T14:00:59Z",
+      "side": 1,
+      "message": "Ugh, that\u0027s why I hate callable :-/\n\nI think silently swallowing the exception isn\u0027t right though -- we could wrap the exception in a RuntimeException and throw that.",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 59
+      },
+      "revId": "0f8c8e595181f4c21fed3baa21809dd526e8ae6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
