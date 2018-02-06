@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b4da4f7_cc9e8653",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 0,
+      "message": "This comment shouldn\u0027t have been removed unless you\u0027re changing the line of code it refers to to address it.",
+      "revId": "0b609ebac014b1cad5afefe276aa3423e73a2784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "317b37eb_7ac34979",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 7

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "20a7a866_7ccfc155",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "This isn\u0027t MD2 yet (that\u0027s still being designed and won\u0027t look like this in any case), so let\u0027s not say \"MD2\" anywhere; I think the phrasing we\u0027ve been using so far is \"touchable chrome\".",
+      "parentUuid": "a7af073d_d3fdcc12",
+      "range": {
+        "startLine": 172,
+        "startChar": 47,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1796095e_c7e855bf",
         "filename": "chrome/browser/ui/layout_constants.cc",
         "patchSetId": 7

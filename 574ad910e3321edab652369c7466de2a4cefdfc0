@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e7fa6af_e2370e58",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "To the degree that we need these, you should add them in ui/gfx/color_palette.h .  (Fixing the existing ones there to be constexpr would be good too.)\n\nUse the existing naming scheme there.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836ebe65_1fe50706",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Are these actually MD colors?  They\u0027re not in the Chrome Birthday deck with the full-scale MD2 design.\n\nI feel like maybe these should be computed by tinting some of the other colors (either the incognito close button base color, or the non-incognito button colors of the same states).",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1de0f2f_2db35eec",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t use \"MD2\"/\"material design 2\" anywhere in the CL, for two reasons:\n\n(1) This isn\u0027t actually MD2; that\u0027s still being designed.\n(2) The name we\u0027re already using elsewhere in the code seems to be \"touch-optimized\", so be consistent with that.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a82a4c_2784642e",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Are you sure we really want to implement this color scheme only for this UI mode?  Implementing various layout elements in a particular UI mode I understand, but I feel like changing the color scheme is something that should apply across all modes, a la Harmony.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fca8881_ad3ebe78",
+        "filename": "chrome/browser/themes/theme_properties.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "I don\u0027t think we want these in the theme pack, at least in the OverwritableByUser section.  Maybe we want them in the non-overwritable section?  But I\u0027m not sure whether we need them (or at least all of them) in the theme pack at all.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e407383_dba6f0fd",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Declare this down below, where it\u0027s used",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ff1ac4_86f255c5",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Can inline below",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126ac748_99157c7d",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not sure this is a kind of \"padding\"; maybe this?:\n\n  // The distance between the edge of one tab and the same edge of an\n  // adjacent tab when tabs are stacked.\n  TAB_STACKED_DISTANCE,",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba0b891_60b30b55",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Seems like this and the next should be _PADDING",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edd8255_9050851b",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Typo: \"widht\"",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d508804_c438d4f1",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Either _ICON_WIDTH or _DEFAULT_ICON_WIDTH for parallel structure with next constant",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9a6456_aa388669",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: This was hard for me to understand (specifically, \"presenting alert indicator\" -- I didn\u0027t know what that was); maybe:\n\n  // Width of the alert indicator shown for a tab using media capture.\n  TAB_ALERT_INDICATOR_CAPTURE_ICON_WIDTH,",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bdbf5e_6fb0258e",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Probably isn\u0027t worth having this function anymore, since callers could just access the layout constant directly, and with no loss of clarity.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ec3447_d95c6e43",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t use kNamingStyle for things that aren\u0027t true compile-time constants (this is just a variable)",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d59e7a_e1be6cf1",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Seems like maybe we should be ensuring the close button has no left inset, instead of doing this.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ade8c9_7fbb0120",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Another variable-not-constant\n\nHonestly I\u0027d just inline this call below.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b9163a_bc212092",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "This whole piece of functionality needs to be redesigned.\n\nIconCapacity() was designed to be a fairly easy way to compute how many identically-sized icons could fit, so the functions which determined which icons to show (ShouldShowTabXXX()) could easily decide what to do.  If the icons are not going to be identically-sized, the concept of \"icon capacity\" doesn\u0027t really make sense; we basically just need to compute icon visibility directly, likely in Layout().  Otherwise, you basically have to compute whether each individual icon should be visible, just so other functions can compute whether each individual icon can be visible; this is not only redundant but very error-prone.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e228886_28400bff",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Nit: Prefer pre-increment/decrement to post-increment/decrement",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac73437_931f330c",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "It seems like none of this really has to do with the button color changing, and should instead happen in the close button class itself at construction?  See also comments there.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1db08c_f453e376",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "Assuming you stick with icons (see below), you want to use CreateVectorIconWithBadge() to create the relevant icons, which will allow superimposing one icon on another, and auto-cache internally.  Then none of this manual caching is necessary.\n\nTo handle the \"X\" being one of two colors, you could do one of two solutions:\n(1) Define two Xs, whose .icon files hardcode different colors\n(2) Extend CreateVectorIconWithBadge() to allow specifying the badge base color, which I think I wanted in the past (might allow us to remove hardcoded base colors from some existing icons being used as badges)",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7711fe57_f1009aa1",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "As an alternative to this, consider simply modifying how this button is painted.  Drawing a filled circle and overlaying with a vector icon (for the X glyph) would probably be pretty easy.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f291a0_dbb38883",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T03:33:11Z",
+      "side": 1,
+      "message": "I think maybe instead of here you want to modify browser_tab_strip_controller.cc:DetermineTabStripLayoutStacked().",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
