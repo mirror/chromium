@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af95329a_a9f98326",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-02-06T18:55:28Z",
+      "side": 1,
+      "message": "I assume 25% if everything is aligned?  That\u0027s pretty awesome!",
+      "revId": "5abd42d2e9754206b515d9aa7c296189a2d06c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
