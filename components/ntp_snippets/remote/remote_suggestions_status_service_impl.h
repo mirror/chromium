@@ -30,6 +30,7 @@ class RemoteSuggestionsStatusServiceImpl
   // RemoteSuggestionsStatusService implementation.
   void Init(const StatusChangeCallback& callback) override;
   void OnSignInStateChanged(bool has_signed_in) override;
+  void OnListVisibilityToggled(bool visible) override;
 
  private:
   // TODO(jkrcal): Rewrite the tests using the public API - observing status
@@ -40,6 +41,16 @@ class RemoteSuggestionsStatusServiceImpl
                            NoSigninNeeded);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
                            DisabledViaPref);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
+                           DisabledViaAdditionalPref);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
+                           EnabledAfterListFolded);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
+                           DisabledWhenListFoldedOnStart);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
+                           EnablingAfterFoldedStart);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
+                           EnablingAfterFoldedStartSignedIn);
 
   // Callback for the PrefChangeRegistrar.
   void OnSnippetsEnabledChanged();
@@ -60,8 +71,8 @@ class RemoteSuggestionsStatusServiceImpl
   // Name of a preference to be used as an additional toggle to guard the
   // remote suggestions provider.
   std::string additional_toggle_pref_;
-
   bool is_signed_in_;
+  bool list_visible_during_session_;
   PrefService* pref_service_;
 
   PrefChangeRegistrar pref_change_registrar_;
