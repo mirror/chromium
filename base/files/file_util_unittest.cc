@@ -326,6 +326,15 @@ void GetIsInheritable(FILE* stream, bool* is_inheritable) {
 #endif
 }
 
+base::FilePath GetLongNamePathInDirectory(
+    int max_length,
+    const base::FilePath::CharType* suffix,
+    const base::FilePath& dir) {
+  base::FilePath::StringType name(max_length, FILE_PATH_LITERAL('a'));
+  base::FilePath path = dir.Append(name + suffix).NormalizePathSeparators();
+  return path;
+}
+
 TEST_F(FileUtilTest, FileAndDirectorySize) {
   // Create three files of 20, 30 and 3 chars (utf8). ComputeDirectorySize
   // should return 53 bytes.
@@ -3227,6 +3236,46 @@ TEST_F(FileUtilTest, NonExistentContentUriTest) {
 }
 #endif
 
+TEST_F(FileUtilTest, TestBasicTruncation) {
+  int max_length = base::GetMaximumPathComponentLength(temp_dir_.GetPath());
+  ASSERT_NE(-1, max_length);
+
+  base::FilePath::StringType extension(FILE_PATH_LITERAL(".txt"));
+  base::FilePath path(GetLongNamePathInDirectory(
+      max_length, FILE_PATH_LITERAL(".txt"), temp_dir_.GetPath()));
+  base::FilePath truncated_path = path;
+
+// The file path will only be truncated o the platforms that have known
+// encoding. Otherwise no truncation will be performed.
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+  // The file name length is truncated to max_length.
+  EXPECT_TRUE(TruncateFilename(&truncated_path, max_length));
+  EXPECT_EQ(size_t(max_length), truncated_path.BaseName().value().size());
+#else
+  EXPECT_FALSE(TruncateFilename(&truncated_path, max_length));
+  EXPECT_EQ(truncated_path, path);
+  EXPECT_LT(size_t(max_length), truncated_path.BaseName().value().size());
+#endif
+  // But the extension is kept unchanged.
+  EXPECT_EQ(path.Extension(), truncated_path.Extension());
+}
+
+TEST_F(FileUtilTest, TestTruncationFail) {
+  int max_length = base::GetMaximumPathComponentLength(temp_dir_.GetPath());
+  ASSERT_NE(-1, max_length);
+
+  base::FilePath path(
+      (FILE_PATH_LITERAL("a.") + base::FilePath::StringType(max_length, 'b'))
+          .c_str());
+  path = temp_dir_.GetPath().Append(path);
+
+  base::FilePath truncated_path = path;
+
+  // We cannot truncate a path with very long extension. This will fail and no
+  // truncation will be performed on all platforms.
+  EXPECT_FALSE(TruncateFilename(&truncated_path, max_length));
+  EXPECT_EQ(truncated_path, path);
+}
 #if defined(OS_POSIX)
 
 TEST(ScopedFD, ScopedFDDoesClose) {
