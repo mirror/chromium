@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31de140d_15e51057",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-02-06T07:08:44Z",
+      "side": 1,
+      "message": "We may probably want to use this on final classes. Can we move C to a member?",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ab0fbc_bf85435c",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-02-06T07:08:44Z",
+      "side": 1,
+      "message": "static_cast?",
+      "range": {
+        "startLine": 52,
+        "startChar": 33,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834e8e1a_bab1c38d",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-02-06T07:08:44Z",
+      "side": 1,
+      "message": "Could you use Args\u0026\u0026... here, so that we can forward X\u0026 as-is rather than as X\u0026\u0026?",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 16
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7c7989_e9f5afb7",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-02-06T07:08:44Z",
+      "side": 1,
+      "message": "Just BindOnce(member, ptr_, std::forward\u003cArgs\u003e(args)...); works?",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 76
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
