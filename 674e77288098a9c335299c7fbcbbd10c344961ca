@@ -94,6 +94,30 @@
       "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6538b2c_7ffe88c6",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-06T11:09:42Z",
+      "side": 1,
+      "message": "I\u0027ll be honest I tried to spend ~30 mins thinking on this but can\u0027t reason on all the possible linearizations of accesses on 5 atomic words. I personally struggle to get right cases when there are just two of them, 5 is beyond my abilities :)\n\nTo be clear: I am *not* saying that what you are doing is wrong, I am just saying it\u0027s just too hard for me to reason about it and I have to give up after 30 min for a matter of pragmatism.\n\nIn summary: I have no objections in you doing this, given that this is maintenance cost that is going to be limited to you / your team. My personal preference, if this was something I had to maintain, would have been something slightly slower but easier to reason about, mainly for the sake of allowing another person other than you to be able to reason on all this.\n\nBut again, I am not an owner and you don\u0027t need my LGTM here. So, and as long as Pavel, is okay with it go ahead and best of luck on more OOO-relaxed architectures like arm.",
+      "parentUuid": "a5822f45_6eb304d1",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
