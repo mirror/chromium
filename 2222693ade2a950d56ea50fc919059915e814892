@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59607593_521e50df",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-02-06T23:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa526e70_74c8627d",
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a185e8a2_cefd6854",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "2222693ade2a950d56ea50fc919059915e814892",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20032219_78776cf4",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-02-06T23:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a185e8a2_cefd6854",
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f6843d58_4f0399a4",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-02-06T23:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a231c8a_1fc09c16",
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d8818a7_f62f0a5c",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
         "patchSetId": 5
@@ -64,6 +118,30 @@
       "writtenOn": "2018-02-06T04:31:10Z",
       "side": 1,
       "message": "I\u0027m a bit confused. Do we still need the global variables when you can get them using |tab|?",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 480,
+        "endChar": 63
+      },
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dab8c63_54e9b866",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-02-06T23:30:42Z",
+      "side": 1,
+      "message": "I think a better approach would be to try to retrieve the last committed entry or a transient/pending, uploading new version.",
+      "parentUuid": "3d8818a7_f62f0a5c",
       "range": {
         "startLine": 479,
         "startChar": 0,
