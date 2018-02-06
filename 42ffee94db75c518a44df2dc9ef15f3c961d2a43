@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22418072_d2d07de3",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-06T16:53:06Z",
+      "side": 1,
+      "message": "An inline text box isn\u0027t necessarily a line...\n\nAt a minimum could you not count it as a new line if it\nhas a previousOnLineId?\n\nIf you want to create an example with multiple\ninline text boxes on a line, translate a sentence including\nwords and numbers into arabic or hebrew. The arabic or hebrew\nwill be RTL and the numbers will be LTR, and each time there\u0027s\na transition you\u0027ll get a new inline text box.",
+      "revId": "42ffee94db75c518a44df2dc9ef15f3c961d2a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
