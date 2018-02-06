@@ -46,6 +46,30 @@
       "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d920ea4_76a29244",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T21:21:15Z",
+      "side": 1,
+      "message": "Your lambda has to have a capture list of [this] to call member functions.",
+      "parentUuid": "067e7406_d89264d6",
+      "range": {
+        "startLine": 1243,
+        "startChar": 2,
+        "endLine": 1248,
+        "endChar": 18
+      },
+      "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
