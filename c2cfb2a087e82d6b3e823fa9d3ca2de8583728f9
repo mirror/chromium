@@ -16,6 +16,24 @@
       "revId": "c2cfb2a087e82d6b3e823fa9d3ca2de8583728f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f067a5f_96c0c0ee",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-02-06T23:39:04Z",
+      "side": 1,
+      "message": "Okay. I was sure about the implication of those options. For the cross-thread message passing, which one should I use? I think it either `kTransfer` or `kSerialize` - does `kTransfer` do the structured cloning under the hood?\n\nbradnelson@ also mentioned the structured cloning of WASM modules has not been implemented yet, so I think I would hold on to this CL until that happens.\n\nWith that said, I would like to understand how this should work here and having feedback from all the stakeholders is certainly beneficial.",
+      "parentUuid": "9b26597c_dfcd255e",
+      "revId": "c2cfb2a087e82d6b3e823fa9d3ca2de8583728f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
