@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "d460da6d_bfcec158",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-06T04:36:58Z",
+      "side": 1,
+      "message": "Create a STATIC_ONLLY class or a namespace.",
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49cdf332_9b579bfd",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 3
