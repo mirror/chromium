@@ -22,7 +22,7 @@ namespace media {
 namespace {
 
 static bool MakeContextCurrent(gpu::CommandBufferStub* stub) {
-  return stub && stub->decoder()->MakeCurrent();
+  return stub && stub->decoder_context()->MakeCurrent();
 }
 
 }  // namespace
@@ -253,17 +253,17 @@ void D3D11VideoDecoderImpl::Reset(const base::Closure& closure) {
 }
 
 bool D3D11VideoDecoderImpl::NeedsBitstreamConversion() const {
-  // This is called from multiple threads.
+  NOTREACHED() << "Should not call NeedsBitstreamConversion on impl";
   return true;
 }
 
 bool D3D11VideoDecoderImpl::CanReadWithoutStalling() const {
-  // This is called from multiple threads.
+  NOTREACHED() << "Should not call CanReadWithoutStalling on impl";
   return false;
 }
 
 int D3D11VideoDecoderImpl::GetMaxDecodeRequests() const {
-  // This is called from multiple threads.
+  NOTREACHED() << "Should not call GetMaxDecodeRequests on impl";
   return 4;
 }
 
