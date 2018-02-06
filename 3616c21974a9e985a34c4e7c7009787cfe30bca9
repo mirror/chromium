@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a2fefc_f2fb0984",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-06T17:13:35Z",
+      "side": 1,
+      "message": "is the reason this doesn\u0027t go into updateLocationBarLayoutForExpansionAnimation because it needs the starting theme color?\n\nI know that we call that update method to reset values to the current state if animations are cancelled/ended, but I don\u0027t know if that is needed for this.",
+      "range": {
+        "startLine": 2115,
+        "startChar": 18,
+        "endLine": 2115,
+        "endChar": 26
+      },
+      "revId": "3616c21974a9e985a34c4e7c7009787cfe30bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
