@@ -37,6 +37,11 @@ class ThemeProperties {
     COLOR_TAB_TEXT,
     COLOR_BACKGROUND_TAB_TEXT,
     COLOR_BOOKMARK_TEXT,
+    COLOR_TAB_CLOSE_BUTTON_ICON_HOVER,
+    COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE,
+    COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE,
+    COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER,
+    COLOR_TAB_CLOSE_BUTTON_BACKGROUND_PRESSED,
     COLOR_NTP_BACKGROUND,
     COLOR_NTP_TEXT,
     COLOR_NTP_LINK,
@@ -119,6 +124,11 @@ class ThemeProperties {
     // NativeTheme::kColorId_ThrobberSpinningColor.
     COLOR_TAB_THROBBER_SPINNING,
     COLOR_TAB_THROBBER_WAITING,
+
+    // The colors used by the various alert indicator icons in the tab.
+    COLOR_TAB_ALERT_AUDIO,
+    COLOR_TAB_ALERT_RECORDING,
+    COLOR_TAB_ALERT_CAPTURING,
 
     // These colors don't have constant default values. They are derived from
     // the runtime value of other colors.

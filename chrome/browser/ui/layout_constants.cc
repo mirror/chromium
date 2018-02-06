@@ -11,6 +11,12 @@
 int GetLayoutConstant(LayoutConstant constant) {
   const bool hybrid = ui::MaterialDesignController::GetMode() ==
                       ui::MaterialDesignController::MATERIAL_HYBRID;
+  const bool touch_optimized_material =
+      ui::MaterialDesignController::IsTouchOptimizedUiEnabled();
+
+  constexpr int kTabHeight[] = {29, 33, 41};
+  const int mode = ui::MaterialDesignController::GetMode();
+
   switch (constant) {
     case LOCATION_BAR_BUBBLE_VERTICAL_PADDING:
       return hybrid ? 1 : 3;
@@ -27,22 +33,37 @@ int GetLayoutConstant(LayoutConstant constant) {
     case TABSTRIP_NEW_TAB_BUTTON_OVERLAP:
       return hybrid ? 6 : 5;
     case TAB_HEIGHT:
-      return hybrid ? 33 : 29;
+      return kTabHeight[mode];
     case TOOLBAR_ELEMENT_PADDING:
       return hybrid ? 8 : 0;
     case TOOLBAR_STANDARD_SPACING:
       return hybrid ? 8 : 4;
+    case TAB_TOUCH_WIDTH:
+      return touch_optimized_material ? 68 : 120;
+    case TAB_STACK_PADDING:
+      return touch_optimized_material ? 4 : 6;
+    case TAB_STANDARD_WIDTH:
+      return touch_optimized_material ? 245 : 193;
+    case TAB_PRE_TITLE_SPACING:
+      return touch_optimized_material ? 8 : 6;
+    case TAB_AFTER_TITLE_SPACING:
+      return touch_optimized_material ? 8 : 4;
+    case TAB_ALERT_INDICATOR_ICON_DEFAULT_WIDTH:
+      return touch_optimized_material ? 12 : 16;
+    case TAB_ALERT_INDICATOR_PRESENTING_ICON_WIDTH:
+      return 16;
   }
   NOTREACHED();
   return 0;
 }
 
 gfx::Insets GetLayoutInsets(LayoutInset inset) {
-  const bool hybrid = ui::MaterialDesignController::GetMode() ==
-                      ui::MaterialDesignController::MATERIAL_HYBRID;
+  const int mode = ui::MaterialDesignController::GetMode();
+  constexpr int kInsetTabHorizontal[] = {16, 18, 24};
+
   switch (inset) {
     case TAB:
-      return gfx::Insets(1, hybrid ? 18 : 16);
+      return gfx::Insets(1, kInsetTabHorizontal[mode]);
   }
   NOTREACHED();
   return gfx::Insets();
