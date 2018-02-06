@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5175f497_883d92bb",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T16:43:11Z",
+      "side": 1,
+      "message": "Good idea. I went with option one, but the selector that worked was :host(.accelerated).",
+      "parentUuid": "9bccc7b2_4669ce34",
+      "revId": "171158b7d7cd072b09c2a934dd9a59b4110dd7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd32520_a0a283cd",
         "filename": "chrome/browser/win/settings_app_monitor.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "171158b7d7cd072b09c2a934dd9a59b4110dd7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9221385c_b2bc9e1a",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd32520_a0a283cd",
+      "range": {
+        "startLine": 116,
+        "startChar": 33,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "171158b7d7cd072b09c2a934dd9a59b4110dd7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
