@@ -22,6 +22,30 @@
       "revId": "bcdd2dc30e23c0255989fc24a3b38adfa00281f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a90245_5bbfa189",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-02-06T20:35:01Z",
+      "side": 1,
+      "message": "Thank you, I followed advice.",
+      "parentUuid": "7abb667c_e0739a05",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "bcdd2dc30e23c0255989fc24a3b38adfa00281f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
