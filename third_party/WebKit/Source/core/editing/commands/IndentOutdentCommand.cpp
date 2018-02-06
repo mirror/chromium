@@ -293,8 +293,24 @@ void IndentOutdentCommand::OutdentParagraph(EditingState* editing_state) {
   if (Element* enclosing_block_flow = EnclosingBlock(
           visible_start_of_paragraph.DeepEquivalent().AnchorNode())) {
     if (enclosing_block_flow != enclosing_element) {
-      split_blockquote_node =
-          SplitTreeToNode(enclosing_block_flow, enclosing_element, true);
+      // We should check if the blockquotes are nested, as nested blockquotes
+      // may be at different indentations.
+      const Position& previousElement =
+          PreviousCandidate(visible_start_of_paragraph.DeepEquivalent());
+      HTMLElement* previousElementIsBlockquote = ToHTMLElement(
+          EnclosingNodeOfType(previousElement, &IsHTMLListOrBlockquoteElement));
+      const bool is_previous_block_quote_same =
+          previousElementIsBlockquote
+              ? (enclosing_element == previousElementIsBlockquote)
+              : true;
+      if (is_previous_block_quote_same) {
+        split_blockquote_node =
+            SplitTreeToNode(enclosing_block_flow, enclosing_element, true);
+      } else {
+        SplitTreeToNode(
+            visible_start_of_paragraph.DeepEquivalent().AnchorNode(),
+            enclosing_element, true);
+      }
     } else {
       // We split the blockquote at where we start outdenting.
       Node* highest_inline_node = HighestEnclosingNodeOfType(
