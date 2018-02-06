@@ -100,7 +100,11 @@ class MODULES_EXPORT WaitUntilObserver final
 
   void ConsumeWindowInteraction(TimerBase*);
 
-  void MaybeCompleteEvent();
+  void CompleteEvent(mojom::ServiceWorkerEventStatus);
+
+  bool IsDispatchFinished();
+
+  mojom::ServiceWorkerEventStatus GetEventStatus();
 
   Member<ExecutionContext> execution_context_;
   EventType type_;

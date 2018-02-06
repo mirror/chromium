@@ -128,7 +128,10 @@ void WaitUntilObserver::DidDispatchEvent(bool event_dispatch_failed) {
   event_dispatch_state_ = event_dispatch_failed
                               ? EventDispatchState::kFailed
                               : EventDispatchState::kDispatched;
-  MaybeCompleteEvent();
+  if (IsDispatchFinished()) {
+    CompleteEvent(GetEventStatus());
+    // return status;
+  }
 }
 
 void WaitUntilObserver::WaitUntil(ScriptState* script_state,
@@ -146,15 +149,15 @@ void WaitUntilObserver::WaitUntil(ScriptState* script_state,
                 script_state->GetIsolate())) {
           break;
         }
-        // didDispatchEvent() is called after both the event handler
-        // execution finished and microtasks queued by the event handler execution
-        // finished, it's hard to get the precise time point between the 2
-        // execution phases.
-        // So even in EventDispatchState::kDispatching state at this time point,
-        // running microtask indicates that event handler execution has actually
-        // finished, in such case if there aren't any outstanding extend lifetime
-        // promises, we should throw here.
-        FALLTHROUGH;
+      // Fall through:
+      // didDispatchEvent() is called after both the event handler
+      // execution finished and microtasks queued by the event handler execution
+      // finished, it's hard to get the precise time point between the 2
+      // execution phases.
+      // So even in EventDispatchState::kDispatching state at this time point,
+      // running microtask indicates that event handler execution has actually
+      // finished, in such case if there aren't any outstanding extend lifetime
+      // promises, we should throw here.
       case EventDispatchState::kDispatched:
       case EventDispatchState::kFailed:
         exception_state.ThrowDOMException(
@@ -214,39 +217,47 @@ void WaitUntilObserver::IncrementPendingPromiseCount() {
 void WaitUntilObserver::DecrementPendingPromiseCount() {
   DCHECK_GT(pending_promises_, 0);
   --pending_promises_;
-  MaybeCompleteEvent();
+  if (IsDispatchFinished())
+    CompleteEvent(GetEventStatus());
 }
 
-void WaitUntilObserver::MaybeCompleteEvent() {
+bool WaitUntilObserver::IsDispatchFinished() {
   if (!execution_context_)
-    return;
+    return false;
 
   switch (event_dispatch_state_) {
     case EventDispatchState::kInitial:
       NOTREACHED();
-      return;
+      return false;
     case EventDispatchState::kDispatching:
       // Still dispatching, do not complete the event.
-      return;
+      return false;
     case EventDispatchState::kDispatched:
       // Still waiting for a promise, do not complete the event.
       if (pending_promises_ != 0)
-        return;
+        return false;
       // Dispatch finished and there are no pending promises, complete the
       // event.
-      break;
+      return true;
     case EventDispatchState::kFailed:
       // Dispatch had some error, complete the event immediatelly.
-      break;
+      return true;
   }
+}
 
-  ServiceWorkerGlobalScopeClient* client =
-      ServiceWorkerGlobalScopeClient::From(execution_context_);
+mojom::ServiceWorkerEventStatus WaitUntilObserver::GetEventStatus() {
   mojom::ServiceWorkerEventStatus status =
       (event_dispatch_state_ == EventDispatchState::kFailed ||
        has_rejected_promise_)
           ? mojom::ServiceWorkerEventStatus::REJECTED
           : mojom::ServiceWorkerEventStatus::COMPLETED;
+  return status;
+}
+
+void WaitUntilObserver::CompleteEvent(mojom::ServiceWorkerEventStatus status) {
+  ServiceWorkerGlobalScopeClient* client =
+      ServiceWorkerGlobalScopeClient::From(execution_context_);
+
   switch (type_) {
     case kAbortPayment:
       client->DidHandleAbortPaymentEvent(event_id_, status,

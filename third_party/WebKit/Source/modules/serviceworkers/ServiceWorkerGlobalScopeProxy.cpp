@@ -372,7 +372,17 @@ void ServiceWorkerGlobalScopeProxy::DispatchInstallEvent(int event_id) {
   Event* event = InstallEvent::Create(
       EventTypeNames::install, ExtendableEventInit(), event_id, observer);
   WorkerGlobalScope()->SetIsInstalling(true);
+  // double event_dispatch_time = WTF::CurrentTime();
+
+  // TODO: this should either return status OR take it an output param
+  // mojom::ServiceWorkerEventStatus status =
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
+
+  // .......
+  // Figure out status based on scope's GetThread()->IsForciblyTerminated()
+  //  event_dispatch_state_ = GetThread()->IsForciblyTerminated() ?
+  //  EventDispatchState::kFailed : EventDispatchState::kDispatched
+  // Client()->DidHandleInstallEvent(event_id, status, event_dispatch_time);
 }
 
 void ServiceWorkerGlobalScopeProxy::DispatchNotificationClickEvent(
