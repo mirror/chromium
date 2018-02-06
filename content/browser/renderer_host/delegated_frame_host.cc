@@ -139,23 +139,35 @@ void DelegatedFrameHost::CopyFromCompositingSurface(
     const gfx::Size& output_size,
     const ReadbackRequestCallback& callback,
     const SkColorType preferred_color_type) {
-  // Only ARGB888 and RGB565 supported as of now.
-  bool format_support = ((preferred_color_type == kAlpha_8_SkColorType) ||
-                         (preferred_color_type == kRGB_565_SkColorType) ||
-                         (preferred_color_type == kN32_SkColorType));
-  DCHECK(format_support);
-  if (!CanCopyFromCompositingSurface()) {
-    callback.Run(SkBitmap(), content::READBACK_SURFACE_UNAVAILABLE);
-    return;
-  }
+  // TODO(crbug/759310): Only NavigationEntryScreenshotManager needs grayscale.
+  // Move that transformation to there; and then remove |preferred_color_type|
+  // from this API and the end-to-end code path.
+  DCHECK(preferred_color_type == kN32_SkColorType ||
+         preferred_color_type == kAlpha_8_SkColorType);
 
   std::unique_ptr<viz::CopyOutputRequest> request =
       std::make_unique<viz::CopyOutputRequest>(
-          viz::CopyOutputRequest::ResultFormat::RGBA_TEXTURE,
-          base::BindOnce(&CopyFromCompositingSurfaceHasResult, output_size,
+          viz::CopyOutputRequest::ResultFormat::RGBA_BITMAP,
+          base::BindOnce(&CopyFromCompositingSurfaceHasResult, gfx::Size(),
                          preferred_color_type, callback));
-  if (!src_subrect.IsEmpty())
+
+  if (src_subrect.IsEmpty()) {
+    if (current_frame_size_in_dip_.IsEmpty()) {
+      callback.Run(SkBitmap(), content::READBACK_SURFACE_UNAVAILABLE);
+      return;
+    }
+    request->set_area(gfx::Rect(current_frame_size_in_dip_));
+  } else {
     request->set_area(src_subrect);
+  }
+
+  if (!output_size.IsEmpty()) {
+    request->set_result_selection(gfx::Rect(output_size));
+    request->SetScaleRatio(
+        gfx::Vector2d(request->area().width(), request->area().height()),
+        gfx::Vector2d(output_size.width(), output_size.height()));
+  }
+
   RequestCopyOfOutput(std::move(request));
 }
 
@@ -163,21 +175,9 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceToVideoFrame(
     const gfx::Rect& src_subrect,
     scoped_refptr<media::VideoFrame> target,
     const base::Callback<void(const gfx::Rect&, bool)>& callback) {
-  if (!CanCopyFromCompositingSurface()) {
-    callback.Run(gfx::Rect(), false);
-    return;
-  }
-
-  std::unique_ptr<viz::CopyOutputRequest> request = std::make_unique<
-      viz::CopyOutputRequest>(
-      viz::CopyOutputRequest::ResultFormat::RGBA_TEXTURE,
-      base::BindOnce(
-          &DelegatedFrameHost::CopyFromCompositingSurfaceHasResultForVideo,
-          AsWeakPtr(),  // For caching the ReadbackYUVInterface on this class.
-          nullptr, std::move(target), callback));
-  if (!src_subrect.IsEmpty())
-    request->set_area(src_subrect);
-  RequestCopyOfOutput(std::move(request));
+  // TODO(crbug/754872): This is now a dead code path, and will be deleted soon.
+  NOTREACHED();
+  callback.Run(gfx::Rect(), false);
 }
 
 bool DelegatedFrameHost::CanCopyFromCompositingSurface() const {
