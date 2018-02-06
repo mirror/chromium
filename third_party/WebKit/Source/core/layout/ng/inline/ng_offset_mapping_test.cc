@@ -89,11 +89,9 @@ class NGOffsetMappingTest : public NGLayoutTest {
 
 class ParameterizedNGOffsetMappingTest
     : public ::testing::WithParamInterface<bool>,
-      private ScopedLayoutNGPaintFragmentsForTest,
       public NGOffsetMappingTest {
  public:
-  ParameterizedNGOffsetMappingTest()
-      : ScopedLayoutNGPaintFragmentsForTest(GetParam()) {}
+  ParameterizedNGOffsetMappingTest() {}
 };
 
 INSTANTIATE_TEST_CASE_P(All,
