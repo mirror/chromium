@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0ec1b41_33760b71",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T07:43:12Z",
+      "side": 1,
+      "message": "Nit: it shouldn\u0027t be necessary to use make_pair with emplace.",
+      "revId": "6fd507cacda245b9024c36727da1b8516d76d2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
