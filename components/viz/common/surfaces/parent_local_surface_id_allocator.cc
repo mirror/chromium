@@ -7,17 +7,19 @@
 #include <stdint.h>
 
 #include "base/rand_util.h"
-#include "base/unguessable_token.h"
 
 namespace viz {
 
-ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator() : next_id_(1u) {}
-
-ParentLocalSurfaceIdAllocator::~ParentLocalSurfaceIdAllocator() {}
+LocalSurfaceId ParentLocalSurfaceIdAllocator::UpdateChildSequenceNumber(
+    uint32_t child_sequence_number) {
+  child_sequence_number_ = child_sequence_number;
+  return LocalSurfaceId(current_parent_id_, child_sequence_number_, nonce_);
+}
 
 LocalSurfaceId ParentLocalSurfaceIdAllocator::GenerateId() {
-  LocalSurfaceId id(next_id_, base::UnguessableToken::Create());
-  next_id_++;
+  current_parent_id_++;
+  nonce_ = base::UnguessableToken::Create();
+  LocalSurfaceId id(current_parent_id_, child_sequence_number_, nonce_);
   return id;
 }
 
