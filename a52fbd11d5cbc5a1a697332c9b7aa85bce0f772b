@@ -22,6 +22,30 @@
       "revId": "a52fbd11d5cbc5a1a697332c9b7aa85bce0f772b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715f2dfd_8ae70ea3",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupUnitTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-06T17:14:26Z",
+      "side": 1,
+      "message": "Done + removed unneeded constructor.",
+      "parentUuid": "f7f2a525_d30317ad",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 87
+      },
+      "revId": "a52fbd11d5cbc5a1a697332c9b7aa85bce0f772b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
