@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d83781f6_d0c71327",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:47:31Z",
+      "side": 1,
+      "message": "s/most slowest/slowest/",
+      "range": {
+        "startLine": 9,
+        "startChar": 126,
+        "endLine": 9,
+        "endChar": 138
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9116fbaf_17a3b618",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:47:31Z",
+      "side": 1,
+      "message": "By default: component builds ...",
+      "range": {
+        "startLine": 18,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669b768a_deadabe4",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:47:31Z",
+      "side": 1,
+      "message": "Does this ifdef also need to change? If not the comment needs to be updated to not be about compression?",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 41
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb5d7d9_52d52215",
+        "filename": "chrome/tools/build/win/create_installer_archive.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:47:31Z",
+      "side": 1,
+      "message": "Remove this part since it should be encoded in options.skip_compress now (i.e. developers should now be able to set skip_compress_archive \u003d false in component builds if they so desire)",
+      "range": {
+        "startLine": 273,
+        "startChar": 5,
+        "endLine": 273,
+        "endChar": 36
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a7cc16_71d237c0",
+        "filename": "chrome/tools/build/win/create_installer_archive.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:47:31Z",
+      "side": 1,
+      "message": "Update",
+      "range": {
+        "startLine": 617,
+        "startChar": 65,
+        "endLine": 619,
+        "endChar": 72
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e3d17c_2c434674",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 14
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:47:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be used on every win trybot that isn\u0027t on main waterfall?",
+      "range": {
+        "startLine": 2096,
+        "startChar": 44,
+        "endLine": 2096,
+        "endChar": 76
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
