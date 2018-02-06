@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "80565df2_2984a712",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T08:53:21Z",
+      "side": 1,
+      "message": "Your comments sound right to me. The shadow page is mostly for loading interception (when off-thread fetch path is not used).  How we should plumb SW object and its signaling with worker threads are unresolved in the current code, but if nothing has changed around the part since I took a closer look last time...",
+      "parentUuid": "0cf339e0_69dfea35",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48e19ecb_ffa9cd02",
         "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
         "patchSetId": 3
