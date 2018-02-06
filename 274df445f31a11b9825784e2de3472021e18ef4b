@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac29093_2149c4ce",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T20:59:50Z",
+      "side": 1,
+      "message": "I can send out a follow up CL to remove the return value of GenerateImageURLFromTransientURL as well. I don\u0027t think it belongs on this CL and will add churn that isn\u0027t needed.",
+      "revId": "274df445f31a11b9825784e2de3472021e18ef4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d64cfb_76b64781",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4755,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T20:59:50Z",
+      "side": 1,
+      "message": "Oops, forgot to remove this line. Will remove it on the next iteration of upload.",
+      "revId": "274df445f31a11b9825784e2de3472021e18ef4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "efedcade_fca0347b",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T20:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "171c3950_440bfa2d",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76a9fef1_528b6694",
         "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
         "patchSetId": 3
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "efdb7b97_cefba920",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T20:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a9fef1_528b6694",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 3
+      },
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26f71e46_9a703aae",
         "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
         "patchSetId": 3
@@ -108,6 +156,24 @@
       "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2bc4db_d3fae1ca",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T20:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26f71e46_9a703aae",
+      "revId": "2327b236ae2acc1b1761c1f2c276dd26a9cec47d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
