@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
 #include "net/base/escape.h"

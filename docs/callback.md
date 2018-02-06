@@ -164,6 +164,32 @@ void Foo::RunCallback() {
 }
 ```
 
+### Creating a Callback That Does Nothing
+
+Sometimes you need a callback that does nothing when run (e.g. test code that
+doesn't care to be notified about certain types of events).  It may be tempting
+to pass a default-constructed callback of the right type:
+
+```cpp
+using MyCallback = base::OnceCallback<void(bool arg)>;
+void MyFunction(MyCallback callback) {
+  std::move(callback).Run(true);  // Uh oh...
+}
+...
+MyFunction(MyCallback());  // ...this will crash when Run()!
+```
+
+Default-constructed callbacks are null, and thus cannot be Run().  Instead, use
+`base::DoNothing()`:
+
+```cpp
+...
+MyFunction(base::DoNothing());  // Can be Run(), will no-op
+```
+
+`base::DoNothing()` can be passed for any type of callback (single-shot or
+repeating) that returns void.
+
 ### Passing Unbound Input Parameters
 
 Unbound parameters are specified at the time a callback is `Run()`. They are

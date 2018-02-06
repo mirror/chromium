@@ -17,12 +17,6 @@
 namespace extensions {
 namespace lock_screen_data {
 
-namespace {
-
-void EmptyWriteOperationCallback(OperationResult result) {}
-
-}  // namespace
-
 LockScreenValueStoreMigratorImpl::LockScreenValueStoreMigratorImpl(
     content::BrowserContext* context,
     ValueStoreCache* source_store_cache,
@@ -178,10 +172,8 @@ void LockScreenValueStoreMigratorImpl::OnTargetItemWritten(
     return;
 
   // Make best effort attempt to delete new item if the item migration failed.
-  if (result != OperationResult::kSuccess) {
-    migration_items_[extension_id].current_target->Delete(
-        base::Bind(&EmptyWriteOperationCallback));
-  }
+  if (result != OperationResult::kSuccess)
+    migration_items_[extension_id].current_target->Delete(base::DoNothing());
 
   migration_items_[extension_id].current_source->Delete(
       base::Bind(&LockScreenValueStoreMigratorImpl::OnCurrentItemMigrated,

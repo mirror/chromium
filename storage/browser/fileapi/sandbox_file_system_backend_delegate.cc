@@ -270,7 +270,7 @@ void SandboxFileSystemBackendDelegate::OpenFileSystem(
                            quota_manager_proxy_,
                            storage::QuotaClient::kFileSystem, origin_url,
                            FileSystemTypeToQuotaStorageType(type))
-          : base::BindOnce(&base::DoNothing);
+          : base::DoNothing();
 
   base::File::Error* error_ptr = new base::File::Error;
   file_task_runner_->PostTaskAndReply(

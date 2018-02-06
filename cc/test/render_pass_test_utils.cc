@@ -116,9 +116,6 @@ void AddRenderPassQuad(viz::RenderPass* to_pass,
                gfx::RectF(), false);
 }
 
-static void EmptyReleaseCallback(const gpu::SyncToken& sync_token,
-                                 bool lost_resource) {}
-
 void AddOneOfEveryQuadType(viz::RenderPass* to_pass,
                            LayerTreeResourceProvider* resource_provider,
                            viz::RenderPassId child_pass_id,
@@ -167,7 +164,7 @@ void AddOneOfEveryQuadType(viz::RenderPass* to_pass,
   gpu::Mailbox gpu_mailbox;
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
   std::unique_ptr<viz::SingleReleaseCallback> callback =
-      viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
+      viz::SingleReleaseCallback::Create(base::DoNothing());
   auto transfer_resource = viz::TransferableResource::MakeGL(
       gpu_mailbox, GL_LINEAR, target, kSyncTokenForMailboxTextureQuad);
   viz::ResourceId resource8 =
@@ -322,7 +319,7 @@ void AddOneOfEveryQuadTypeInDisplayResourceProvider(
   gpu::Mailbox gpu_mailbox;
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
   std::unique_ptr<viz::SingleReleaseCallback> callback =
-      viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
+      viz::SingleReleaseCallback::Create(base::DoNothing());
   auto transfer_resource = viz::TransferableResource::MakeGL(
       gpu_mailbox, GL_LINEAR, target, kSyncTokenForMailboxTextureQuad);
   viz::ResourceId resource8 = child_resource_provider->ImportResource(

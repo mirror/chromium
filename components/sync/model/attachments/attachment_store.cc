@@ -18,11 +18,6 @@
 
 namespace syncer {
 
-namespace {
-
-void NoOpDropCallback(const AttachmentStore::Result& result) {}
-}
-
 AttachmentStore::AttachmentStore(
     const scoped_refptr<AttachmentStoreFrontend>& frontend,
     Component component)
@@ -127,8 +122,7 @@ void AttachmentStoreForSync::SetModelTypeReference(
 }
 
 void AttachmentStoreForSync::DropSyncReference(const AttachmentIdList& ids) {
-  frontend()->DropReference(sync_component_, ids,
-                            base::Bind(&NoOpDropCallback));
+  frontend()->DropReference(sync_component_, ids, base::DoNothing());
 }
 
 void AttachmentStoreForSync::ReadMetadataForSync(

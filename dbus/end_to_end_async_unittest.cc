@@ -438,7 +438,7 @@ TEST_F(EndToEndAsyncTest, CancelPendingCalls) {
   // This results in cancelling the pending method call.
   bus_->RemoveObjectProxy(test_service_->service_name(),
                           ObjectPath("/org/chromium/TestObject"),
-                          base::Bind(&base::DoNothing));
+                          base::DoNothing());
 
   // We shouldn't receive any responses. Wait for a while just to make sure.
   run_loop_.reset(new base::RunLoop);
@@ -541,9 +541,7 @@ TEST_F(EndToEndAsyncTest, EmptyResponseCallback) {
 
   // Call the method with an empty callback.
   const int timeout_ms = ObjectProxy::TIMEOUT_USE_DEFAULT;
-  object_proxy_->CallMethod(&method_call,
-                            timeout_ms,
-                            ObjectProxy::EmptyResponseCallback());
+  object_proxy_->CallMethod(&method_call, timeout_ms, base::DoNothing());
   // Post a delayed task to quit the message loop.
   run_loop_.reset(new base::RunLoop);
   message_loop_.task_runner()->PostDelayedTask(

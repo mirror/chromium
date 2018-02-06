@@ -192,8 +192,7 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
     version_->SetStatus(ServiceWorkerVersion::INSTALLING);
 
     // Make the registration findable via storage functions.
-    context()->storage()->LazyInitializeForTest(
-        base::BindOnce(&base::DoNothing));
+    context()->storage()->LazyInitializeForTest(base::DoNothing());
     base::RunLoop().RunUntilIdle();
     bool called = false;
     ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;

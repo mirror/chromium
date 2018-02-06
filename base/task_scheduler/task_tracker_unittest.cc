@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -575,16 +576,16 @@ TEST_P(TaskSchedulerTaskTrackerTest,
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingDelayedTask) {
-  const Task delayed_task(FROM_HERE, BindOnce(&DoNothing),
-                          TaskTraits(GetParam()), TimeDelta::FromDays(1));
+  const Task delayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
+                          TimeDelta::FromDays(1));
   tracker_.WillPostTask(delayed_task);
   // FlushForTesting() should return even if the delayed task didn't run.
   tracker_.FlushForTesting();
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncForTestingPendingDelayedTask) {
-  const Task delayed_task(FROM_HERE, BindOnce(&DoNothing),
-                          TaskTraits(GetParam()), TimeDelta::FromDays(1));
+  const Task delayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
+                          TimeDelta::FromDays(1));
   tracker_.WillPostTask(delayed_task);
   // FlushAsyncForTesting() should callback even if the delayed task didn't run.
   bool called_back = false;
@@ -595,7 +596,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncForTestingPendingDelayedTask) {
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -610,7 +611,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncForTestingPendingUndelayedTask) {
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -628,7 +629,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncForTestingPendingUndelayedTask) {
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -638,7 +639,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
   // Simulate posting another undelayed task.
-  Task other_undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task other_undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                             TimeDelta());
   tracker_.WillPostTask(other_undelayed_task);
 
@@ -655,7 +656,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlushAsyncForTesting) {
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -668,7 +669,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlushAsyncForTesting) {
   EXPECT_FALSE(event.IsSignaled());
 
   // Simulate posting another undelayed task.
-  Task other_undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task other_undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                             TimeDelta());
   tracker_.WillPostTask(other_undelayed_task);
 
@@ -688,10 +689,10 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlushAsyncForTesting) {
 
 TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
   // Simulate posting a delayed and an undelayed task.
-  Task delayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task delayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                     TimeDelta::FromDays(1));
   tracker_.WillPostTask(delayed_task);
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -717,10 +718,10 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
 
 TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlushAsyncForTesting) {
   // Simulate posting a delayed and an undelayed task.
-  Task delayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task delayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                     TimeDelta::FromDays(1));
   tracker_.WillPostTask(delayed_task);
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -752,7 +753,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdown) {
     return;
 
   // Simulate posting a task.
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -770,7 +771,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdownAsync) {
     return;
 
   // Simulate posting a task.
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -792,7 +793,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
     return;
 
   // Simulate posting a task.
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -815,7 +816,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlushAsyncForTesting) {
     return;
 
   // Simulate posting a task.
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -838,7 +839,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlushAsyncForTesting) {
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, DoublePendingFlushAsyncForTestingFails) {
-  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+  Task undelayed_task(FROM_HERE, DoNothing(), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
@@ -1037,9 +1038,9 @@ TEST_F(TaskSchedulerTaskTrackerTest, LoadWillPostAndRunDuringShutdown) {
 // Verify that RunNextTask() returns the sequence from which it ran a task when
 // it can be rescheduled.
 TEST_F(TaskSchedulerTaskTrackerTest, RunNextTaskReturnsSequenceToReschedule) {
-  Task task_1(FROM_HERE, BindOnce(&DoNothing), TaskTraits(), TimeDelta());
+  Task task_1(FROM_HERE, DoNothing(), TaskTraits(), TimeDelta());
   EXPECT_TRUE(tracker_.WillPostTask(task_1));
-  Task task_2(FROM_HERE, BindOnce(&DoNothing), TaskTraits(), TimeDelta());
+  Task task_2(FROM_HERE, DoNothing(), TaskTraits(), TimeDelta());
   EXPECT_TRUE(tracker_.WillPostTask(task_2));
 
   scoped_refptr<Sequence> sequence =
@@ -1065,8 +1066,8 @@ TEST_F(TaskSchedulerTaskTrackerTest,
   std::vector<scoped_refptr<Sequence>> scheduled_sequences;
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer;
   for (int i = 0; i < kMaxNumDispatchedBackgroundSequences; ++i) {
-    Task task(FROM_HERE, BindOnce(&DoNothing),
-              TaskTraits(TaskPriority::BACKGROUND), TimeDelta());
+    Task task(FROM_HERE, DoNothing(), TaskTraits(TaskPriority::BACKGROUND),
+              TimeDelta());
     EXPECT_TRUE(tracker.WillPostTask(task));
     scoped_refptr<Sequence> sequence =
         test::CreateSequenceWithTask(std::move(task));
@@ -1301,7 +1302,7 @@ TEST(TaskSchedulerTaskTrackerHistogramTest, TaskLatency) {
                 "UserBlockingTaskPriority_MayBlock"}};
 
   for (const auto& test : tests) {
-    Task task(FROM_HERE, Bind(&DoNothing), test.traits, TimeDelta());
+    Task task(FROM_HERE, DoNothing(), test.traits, TimeDelta());
     ASSERT_TRUE(tracker.WillPostTask(task));
 
     HistogramTester tester;

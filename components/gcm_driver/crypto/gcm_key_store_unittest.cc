@@ -289,7 +289,7 @@ TEST_F(GCMKeyStoreTest, CreateAndRemoveKeys) {
   EXPECT_TRUE(read_pair.has_type());
 
   gcm_key_store()->RemoveKeys(kFakeAppId, kFakeAuthorizedEntity,
-                              base::Bind(&base::DoNothing));
+                              base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 
@@ -326,7 +326,7 @@ TEST_F(GCMKeyStoreTest, CreateGetAndRemoveKeysSynchronously) {
 
   // Continue synchronously, without running RunUntilIdle first.
   gcm_key_store()->RemoveKeys(kFakeAppId, kFakeAuthorizedEntity,
-                              base::Bind(&base::DoNothing));
+                              base::DoNothing());
 
   // Continue synchronously, without running RunUntilIdle first.
   KeyPair pair_after_remove;
@@ -418,7 +418,7 @@ TEST_F(GCMKeyStoreTest, RemoveKeysWildcardAuthorizedEntity) {
   EXPECT_TRUE(read_pair3.has_type());
 
   gcm_key_store()->RemoveKeys(kFakeAppId, "*" /* authorized_entity */,
-                              base::Bind(&base::DoNothing));
+                              base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 

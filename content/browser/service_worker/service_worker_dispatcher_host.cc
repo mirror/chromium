@@ -462,7 +462,7 @@ void ServiceWorkerDispatcherHost::OnTerminateWorker(int handle_id) {
                                     bad_message::SWDH_TERMINATE_BAD_HANDLE);
     return;
   }
-  handle->version()->StopWorker(base::BindOnce(&base::DoNothing));
+  handle->version()->StopWorker(base::DoNothing());
 }
 
 }  // namespace content

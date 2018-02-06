@@ -568,9 +568,9 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(std::move(params), CreateProviderInfoGetter(),
-                base::BindOnce(&SaveStatusAndCall, &status,
-                               base::BindOnce(&base::DoNothing)));
+  worker->Start(
+      std::move(params), CreateProviderInfoGetter(),
+      base::BindOnce(&SaveStatusAndCall, &status, base::DoNothing::Once<>()));
   worker->Detach();
   base::RunLoop().RunUntilIdle();
 
@@ -602,9 +602,9 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(std::move(params), CreateProviderInfoGetter(),
-                base::BindOnce(&SaveStatusAndCall, &status,
-                               base::BindOnce(&base::DoNothing)));
+  worker->Start(
+      std::move(params), CreateProviderInfoGetter(),
+      base::BindOnce(&SaveStatusAndCall, &status, base::DoNothing::Once<>()));
   base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2u, events_.size());
@@ -643,9 +643,9 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
 
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(std::move(params), CreateProviderInfoGetter(),
-                base::BindOnce(&SaveStatusAndCall, &status,
-                               base::BindOnce(&base::DoNothing)));
+  worker->Start(
+      std::move(params), CreateProviderInfoGetter(),
+      base::BindOnce(&SaveStatusAndCall, &status, base::DoNothing::Once<>()));
   worker->Stop();
   base::RunLoop().RunUntilIdle();
 
@@ -719,9 +719,9 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
   params->pause_after_download = true;
-  worker->Start(std::move(params), CreateProviderInfoGetter(),
-                base::BindOnce(&SaveStatusAndCall, &status,
-                               base::BindOnce(&base::DoNothing)));
+  worker->Start(
+      std::move(params), CreateProviderInfoGetter(),
+      base::BindOnce(&SaveStatusAndCall, &status, base::DoNothing::Once<>()));
   base::RunLoop().RunUntilIdle();
 
   // Make the worker stopping and attempt to send a resume after download
@@ -750,9 +750,9 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(std::move(params), CreateProviderInfoGetter(),
-                base::BindOnce(&SaveStatusAndCall, &status,
-                               base::BindOnce(&base::DoNothing)));
+  worker->Start(
+      std::move(params), CreateProviderInfoGetter(),
+      base::BindOnce(&SaveStatusAndCall, &status, base::DoNothing::Once<>()));
   base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2u, events_.size());

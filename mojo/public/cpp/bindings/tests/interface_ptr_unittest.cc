@@ -742,11 +742,11 @@ TEST_P(InterfacePtrTest, FlushForTesting) {
 
   MathCalculatorUI calculator_ui(std::move(calc));
 
-  calculator_ui.Add(2.0, base::Bind(&base::DoNothing));
+  calculator_ui.Add(2.0, base::DoNothing());
   calculator_ui.GetInterfacePtr().FlushForTesting();
   EXPECT_EQ(2.0, calculator_ui.GetOutput());
 
-  calculator_ui.Multiply(5.0, base::Bind(&base::DoNothing));
+  calculator_ui.Multiply(5.0, base::DoNothing());
   calculator_ui.GetInterfacePtr().FlushForTesting();
 
   EXPECT_EQ(10.0, calculator_ui.GetOutput());

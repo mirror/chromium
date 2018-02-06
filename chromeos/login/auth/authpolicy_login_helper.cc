@@ -40,12 +40,6 @@ base::ScopedFD GetDataReadPipe(const std::string& data) {
   return pipe_read_end;
 }
 
-void AuthCallbackDoNothing(
-    authpolicy::ErrorType /* error */,
-    const authpolicy::ActiveDirectoryAccountInfo& /* account_info */) {
-  // Do nothing.
-}
-
 bool ParseDomainAndOU(const std::string& distinguished_name,
                       authpolicy::JoinDomainRequest* request) {
   std::string machine_domain;
@@ -82,8 +76,7 @@ void AuthPolicyLoginHelper::TryAuthenticateUser(const std::string& username,
   request.set_user_principal_name(username);
   request.set_account_id(object_guid);
   chromeos::DBusThreadManager::Get()->GetAuthPolicyClient()->AuthenticateUser(
-      request, GetDataReadPipe(password).get(),
-      base::BindOnce(&AuthCallbackDoNothing));
+      request, GetDataReadPipe(password).get(), base::DoNothing());
 }
 
 // static

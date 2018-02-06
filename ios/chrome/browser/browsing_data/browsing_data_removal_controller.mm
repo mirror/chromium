@@ -40,11 +40,6 @@
 #error "This file requires ARC support."
 #endif
 
-namespace {
-// Empty callback used by DeleteAllCreatedBetweenAsync below.
-void DoNothing(uint32_t n) {}
-}
-
 @interface BrowsingDataRemovalController ()
 // Removes browsing data that is created by web views associated with
 // |browserState|. |mask| is obtained from
@@ -403,7 +398,7 @@ removeWKWebViewCreatedBrowsingDataFromBrowserState:
           channelIdService->GetChannelIDStore()->DeleteAll(callback);
           DCHECK(requestContext->cookie_store());
           requestContext->cookie_store()->DeleteAllCreatedBetweenAsync(
-              base::Time(), base::Time(), base::Bind(&DoNothing));
+              base::Time(), base::Time(), base::DoNothing());
         }));
   }
 }
