@@ -36,6 +36,7 @@
 
 using chrome_test_util::GetOriginalBrowserState;
 using chrome_test_util::OmniboxText;
+using chrome_test_util::TapWebViewElementWithId;
 
 namespace {
 
@@ -190,7 +191,7 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
   [ChromeEarlGrey loadURL:URL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"Failed to tap \"link\"");
 
   [ChromeEarlGrey waitForMainTabCount:2];
 
@@ -221,7 +222,7 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
   [ChromeEarlGrey loadURL:URL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"Failed to tap \"link\"");
 
   [ChromeEarlGrey waitForMainTabCount:2];
 
@@ -262,7 +263,7 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
   [ChromeEarlGrey loadURL:URL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"Failed to tap \"link\"");
 
   [ChromeEarlGrey waitForMainTabCount:2];
 
@@ -302,7 +303,7 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
   [ChromeEarlGrey loadURL:URL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"Failed to tap \"link\"");
 
   [ChromeEarlGrey waitForMainTabCount:2];
 
@@ -327,7 +328,7 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
   web::test::SetUpSimpleHttpServer(responses);
 
   [ChromeEarlGrey loadURL:URL];
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"Failed to tap \"link\"");
 
   [[EarlGrey selectElementWithMatcher:OmniboxText(destURL.GetContent())]
       assertWithMatcher:grey_notNil()];

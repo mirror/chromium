@@ -7,11 +7,14 @@
 
 #include <string>
 
+#include "base/compiler_specific.h"
+
 namespace chrome_test_util {
 
 // Attempts to tap the element with |element_id| in the current WebState
-// using a JavaScript click() event.
-bool TapWebViewElementWithId(const std::string& element_id);
+// using a JavaScript click() event. Returns a bool indicating if the tap
+// was successful.
+bool TapWebViewElementWithId(const std::string& element_id) WARN_UNUSED_RESULT;
 
 // Attemps to submit form with |form_id| in the current WebState.
 void SubmitWebViewFormWithId(const std::string& form_id);
