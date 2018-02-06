@@ -63,9 +63,9 @@ Document* StyleSheetCandidate::ImportedDocument() const {
 }
 
 bool StyleSheetCandidate::IsAlternate() const {
-  if (!IsElement())
+  if (!this->Sheet()->IsCSSStyleSheet())
     return false;
-  return ToElement(GetNode()).getAttribute(relAttr).Contains("alternate");
+  return ToCSSStyleSheet(this->Sheet())->Alternate();
 }
 
 bool StyleSheetCandidate::IsEnabledViaScript() const {
