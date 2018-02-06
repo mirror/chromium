@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a899c557_59b4b8b5",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T18:57:17Z",
+      "side": 1,
+      "message": "Few questions I guess..\n\n1. Why doesn\u0027t the caller of this destroy its CompositorFarmeSink first instead?\n2. How does this relate to the renderer doing the same thing?\n3. For renderer we\u0027d said we\u0027d keep the CFS alive and just recreate contexts and put them on the old CFS and give it back to the compositor. Do we wanna try similar here?",
+      "revId": "daecd2a506948a7f0f0b26fa46ebf3bbee3ddcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
