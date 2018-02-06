@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f840c9_4c007a88",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T20:32:23Z",
+      "side": 1,
+      "message": "I\u0027m having a bit of trouble following this test. I could see an explanation of the form:\n\n// Frame 0 - No visible damage, but invalidated because no history.\n// Frame 1 - No visible damage, but invalidated because no history.\n// Frame 2 - No visible damage, not invalidated because |damaged_frame_limit_| frames of history.\n// Frame 3 - Visible damage, invalidated as a result.\n// Frame 4 - Visible damage, invalidated as a result.\n// Frame 5 - Visible damage, invalidated as a result.\n// Frame 6 - No visible damage, but invalidated because of recent damage in the last |damaged_frame_limit_| frames.\n\nIs this accurate?\n\nThe two \"2\"s below seem related to |damaged_frame_limit_|, are they not? And the \"frame \u003e\u003d 3 \u0026\u0026 frame \u003c (damaged_frame_limit_ + 3\" seems like \"frame \u003e\u003d |damaged_frame_limit_| \u0026\u0026 frame \u003c damaged_frame_limit_ * 2\"?",
+      "revId": "46ff1000208a608bb275f5e8f20bc877ea40e1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3aeee7_5fabde08",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T20:32:23Z",
+      "side": 1,
+      "message": "return here?",
+      "revId": "46ff1000208a608bb275f5e8f20bc877ea40e1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a021ea_93cad0e6",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T20:32:23Z",
+      "side": 1,
+      "message": "Isn\u0027t this inverted? Isn\u0027t it the number of frames that need to not have damage, before the early damage check is tried?",
+      "revId": "46ff1000208a608bb275f5e8f20bc877ea40e1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
