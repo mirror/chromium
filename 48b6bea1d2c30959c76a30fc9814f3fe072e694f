@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba6720ef_6ac712c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-02-06T20:22:28Z",
+      "side": 1,
+      "message": "You\u0027re right, fixed. Left the Bug: tag in there so gitwatcher can parse.",
+      "parentUuid": "19febc05_59fa259c",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0f8cf16_9f7036d3",
         "filename": "chromecast/browser/cast_web_contents_manager.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "96823901_a81ef0a8",
+        "filename": "chromecast/browser/cast_web_contents_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-02-06T20:22:28Z",
+      "side": 1,
+      "message": "Partially adopted this suggestion... I created a struct that captures the configuration of the CastWebView, but left pieces of the plumbing separate.",
+      "parentUuid": "d0f8cf16_9f7036d3",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bd09e56_1f65f559",
         "filename": "chromecast/browser/devtools/remote_debugging_server.cc",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2018-02-05T21:02:35Z",
       "side": 1,
       "message": "Would we want to add a LOG message such as:\nLOG(INFO) \u003c\u003c \"Disabling dev console for \" \u003c\u003c web_contents()-\u003eGetVisibleURL();",
+      "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020c77bb_514d60f7",
+        "filename": "chromecast/browser/devtools/remote_debugging_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-02-06T20:22:28Z",
+      "side": 1,
+      "message": "Nah, since the WebContents is going away anyway, I don\u0027t think this is useful here.",
+      "parentUuid": "5bd09e56_1f65f559",
       "revId": "48b6bea1d2c30959c76a30fc9814f3fe072e694f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
