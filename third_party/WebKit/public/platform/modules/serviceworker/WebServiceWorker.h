@@ -77,7 +77,7 @@ class WebServiceWorker {
                                    const WebSecurityOrigin&,
                                    WebVector<MessagePortChannel>) = 0;
 
-  virtual void Terminate() {}
+  virtual void TerminateForTesting() {}
 };
 }
 
