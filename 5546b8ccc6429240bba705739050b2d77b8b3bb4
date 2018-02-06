@@ -22,6 +22,30 @@
       "revId": "5546b8ccc6429240bba705739050b2d77b8b3bb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077afad1_102a347a",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2018-02-06T09:15:01Z",
+      "side": 1,
+      "message": "Oops- added in patchset 2.",
+      "parentUuid": "085b5123_31216280",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "5546b8ccc6429240bba705739050b2d77b8b3bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
