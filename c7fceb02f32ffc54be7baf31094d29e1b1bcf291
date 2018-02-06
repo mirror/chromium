@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f322d480_64f569fa",
+        "filename": "components/data_use_measurement/content/service_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T15:54:47Z",
+      "side": 1,
+      "message": "Note that SimpleURLLoader was just moved to services/network/public/cpp (And is now in the network namespace).",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 57
+      },
+      "revId": "c7fceb02f32ffc54be7baf31094d29e1b1bcf291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e106623_aa0cf322",
+        "filename": "components/data_use_measurement/content/service_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T15:54:47Z",
+      "side": 1,
+      "message": "If it should never be used, should we even have it?",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "c7fceb02f32ffc54be7baf31094d29e1b1bcf291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b10a20_f12a0537",
+        "filename": "components/data_use_measurement/content/service_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T15:54:47Z",
+      "side": 1,
+      "message": "I\u0027d suggest not having this constructor (Or, more accurately, making it private), just because only having the other one is easier to validate that no one\u0027s using SimpleURLLoader\u0027s directly.",
+      "range": {
+        "startLine": 38,
+        "startChar": 45,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "c7fceb02f32ffc54be7baf31094d29e1b1bcf291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
