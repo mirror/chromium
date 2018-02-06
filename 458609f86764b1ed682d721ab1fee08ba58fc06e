@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8860d857_ad9ff469",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "FYI, carlosk@ is changing this part as well, you might run into collision when merging.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e29401e_2ae09dd6",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 6
@@ -13,6 +30,46 @@
       "writtenOn": "2018-02-06T21:51:32Z",
       "side": 1,
       "message": "I don\u0027t think this is necessary becasue an existing test directory chrome/test/data/public_offline_pages which is copied to the device when running the test is used for public directory.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5612116d_4617cb27",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "nit: probably not in this CL. but would it be better if we rename this to stub_* for consistency?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 38
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57e8707_9e81218d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "Q: since SavepageToDownloads is posting task to a background thread, will deletion of the |archiver| before that operation is done affect anything? I see it\u0027s posting a task and wait for reply but both seem ok (static method and a method in OPMTaskified)...",
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +110,23 @@
     },
     {
       "key": {
+        "uuid": "cc71cd92_f0ab882a",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "nit: will a forward declaration do the job? if not we might need to add the #include for archive manager as well.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "381a5f2b_bdabb5f1",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 6
@@ -64,6 +138,75 @@
       "writtenOn": "2018-02-06T21:51:32Z",
       "side": 1,
       "message": "This comment is a bit scary. We can remove this comment once we pass this as a callback.",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cfd4ba_7df84b75",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "nit: i think using \u0027the\u0027 here might be better, since public directory is not one of the arguments?",
+      "range": {
+        "startLine": 204,
+        "startChar": 40,
+        "endLine": 204,
+        "endChar": 41
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02e8ecb_acd7829e",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "is there a reason why not const \u0026?",
+      "range": {
+        "startLine": 205,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 42
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f3e154_97c294ea",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "nit: i guess this is not needed anymore",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 15
+      },
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +258,29 @@
       "writtenOn": "2018-02-06T21:51:32Z",
       "side": 1,
       "message": "Why not passing \"const base::FilePath\u0026 public_directory\"?",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b90d45_028241d4",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "I think maybe PostTaskAndReplyWithResult can be used in order to remove the archive_results and those base::Unretained/Owned ownership related code.",
+      "range": {
+        "startLine": 73,
+        "startChar": 42,
+        "endLine": 73,
+        "endChar": 43
+      },
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -183,6 +349,29 @@
       "writtenOn": "2018-02-06T21:51:32Z",
       "side": 1,
       "message": "ditto",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a302efd5_99e88b31",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 31804,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-02-06T23:21:01Z",
+      "side": 1,
+      "message": "I dont\u0027 see any related change with offline_pages/core/background/request_notifier.h in this CL, can you please make sure this the right enum to be changed?",
+      "range": {
+        "startLine": 31803,
+        "startChar": 2,
+        "endLine": 31804,
+        "endChar": 3
+      },
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
