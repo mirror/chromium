@@ -33,25 +33,6 @@ class RemoteSuggestionsStatusServiceImpl
   void OnListVisibilityToggled(bool visible) override;
 
  private:
-  // TODO(jkrcal): Rewrite the tests using the public API - observing status
-  // changes instead of calling private GetStatusFromDeps() directly.
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           SigninNeededIfSpecifiedByParam);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           NoSigninNeeded);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           DisabledViaPref);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           DisabledViaAdditionalPref);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           EnabledAfterListFolded);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           DisabledWhenListFoldedOnStart);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           EnablingAfterFoldedStart);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsStatusServiceImplTest,
-                           EnablingAfterFoldedStartSignedIn);
-
   // Callback for the PrefChangeRegistrar.
   void OnSnippetsEnabledChanged();
 
