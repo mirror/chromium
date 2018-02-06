@@ -91,9 +91,11 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
   void OnBeforeUnloadACK(FrameTreeNode* frame_tree_node,
                          bool proceed,
                          const base::TimeTicks& proceed_time) override;
-  void OnBeginNavigation(FrameTreeNode* frame_tree_node,
-                         const CommonNavigationParams& common_params,
-                         mojom::BeginNavigationParamsPtr begin_params) override;
+  void OnBeginNavigation(
+      FrameTreeNode* frame_tree_node,
+      const CommonNavigationParams& common_params,
+      mojom::BeginNavigationParamsPtr begin_params,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) override;
   void RestartNavigationAsCrossDocument(
       std::unique_ptr<NavigationRequest> navigation_request) override;
   void OnAbortNavigation(FrameTreeNode* frame_tree_node) override;

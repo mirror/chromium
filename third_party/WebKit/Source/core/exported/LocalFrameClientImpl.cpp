@@ -532,7 +532,8 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
     WebTriggeringEventInfo triggering_event_info,
     HTMLFormElement* form,
     ContentSecurityPolicyDisposition
-        should_check_main_world_content_security_policy) {
+        should_check_main_world_content_security_policy,
+    network::mojom::blink::URLLoaderFactoryPtr blob_url_loader_factory) {
   if (!web_frame_->Client())
     return kNavigationPolicyIgnore;
 
@@ -559,6 +560,8 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
               kCheckContentSecurityPolicy
           ? kWebContentSecurityPolicyDispositionCheck
           : kWebContentSecurityPolicyDispositionDoNotCheck;
+  navigation_info.blob_url_loader_factory =
+      blob_url_loader_factory.PassInterface().PassHandle();
 
   // Can be null.
   LocalFrame* local_parent_frame = GetLocalParentFrame(web_frame_);

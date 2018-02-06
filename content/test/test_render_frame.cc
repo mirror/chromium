@@ -81,8 +81,10 @@ class MockFrameHost : public mojom::FrameHost {
     last_commit_params_ = std::move(params);
   }
 
-  void BeginNavigation(const CommonNavigationParams& common_params,
-                       mojom::BeginNavigationParamsPtr begin_params) override {}
+  void BeginNavigation(
+      const CommonNavigationParams& common_params,
+      mojom::BeginNavigationParamsPtr begin_params,
+      network::mojom::URLLoaderFactoryPtr blob_url_loader_factory) override {}
 
   void SubresourceResponseStarted(const GURL& url,
                                   const GURL& referrer,
