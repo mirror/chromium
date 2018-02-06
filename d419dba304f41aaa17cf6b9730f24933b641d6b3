@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d5a9278_2f9b7b99",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-02-06T23:05:41Z",
+      "side": 1,
+      "message": "What guarantees that |media_source| represents a DIAL app at all - should there be some validation of the input?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e07be25_a9826e92",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-02-06T23:05:41Z",
+      "side": 1,
+      "message": "It seems like the results for all media sources that match a given app name will be identical.\n\nMaybe this class doesn\u0027t need to worry about keeping track of all the media sources passed in and can just invoke the sinks observer with dial:\u003cappname\u003e?\n\nWhat do you think as well Derek?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003f0fd0_7c753a13",
+        "filename": "chrome/browser/media/router/providers/dial/dial_media_route_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-02-06T23:05:41Z",
+      "side": 1,
+      "message": "Typo in OnAvailableSinksUpdated",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
