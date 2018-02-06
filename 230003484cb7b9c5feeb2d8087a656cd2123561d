@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95dda332_56d3a33e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 106441,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-02-06T21:41:07Z",
+      "side": 0,
+      "message": "Mark this \u003cobsolete\u003e instead of deleting.",
+      "range": {
+        "startLine": 106435,
+        "startChar": 0,
+        "endLine": 106441,
+        "endChar": 21
+      },
+      "revId": "230003484cb7b9c5feeb2d8087a656cd2123561d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
