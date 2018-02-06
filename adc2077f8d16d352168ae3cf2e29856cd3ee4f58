@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cae7cd1d_24c53c42",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-06T17:37:32Z",
+      "side": 1,
+      "message": "Thanks fixed. Sorry, that\u0027s my fault, I misunderstood and actually was wondering how it supposed to work as in my version we\u0027re not guaranteed to get 0 in Acquire_Load.\n\nBtw, I\u0027m not sure that reducing the bus traffic will help much here, as we\u0027re already on the slow path recording a sample. But having just a single line seem to be a fair price for perf gain.",
+      "parentUuid": "50a3342f_3c76dbc3",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 3
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de73a389_f2b97ef9",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 1
