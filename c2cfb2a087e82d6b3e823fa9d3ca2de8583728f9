@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b26597c_dfcd255e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T23:28:04Z",
+      "side": 1,
+      "message": "AFAIK, we\u0027re using kSerialize to mean \"write to disk\", so  the format is optimized for backward compatibility and for the storage needs of IndexedDB. This will be fairly heavyweight, and there might be a more efficient way of serializing between threads.",
+      "revId": "c2cfb2a087e82d6b3e823fa9d3ca2de8583728f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
