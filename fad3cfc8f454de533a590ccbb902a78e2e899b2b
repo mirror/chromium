@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "04e2f28c_09eab2d3",
+        "filename": "BUILD.gn",
+        "patchSetId": 82
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-06T23:15:36Z",
+      "side": 1,
+      "message": "Mark resolved for now.",
+      "parentUuid": "698c8227_0a04046d",
+      "range": {
+        "startLine": 580,
+        "startChar": 9,
+        "endLine": 580,
+        "endChar": 28
+      },
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b23c1872_9b2945a8",
         "filename": "chrome/install_static/install_util.cc",
         "patchSetId": 82
@@ -663,6 +687,24 @@
       "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cd9523_fdfae128",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-06T23:15:36Z",
+      "side": 1,
+      "message": "I see. Thanks for the detailed explanation. Done.",
+      "parentUuid": "8a315d6d_31a77976",
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

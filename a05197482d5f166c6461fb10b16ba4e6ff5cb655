@@ -310,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "6dbee426_70879236",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-02-06T23:15:36Z",
+      "side": 1,
+      "message": "Okay, changed to path.size()\n\nLet us mark it resolved.",
+      "parentUuid": "fc9d406e_aa0ca2e3",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a21d7d3_3440e992",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
