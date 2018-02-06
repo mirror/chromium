@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b63346bb_a41e42f7",
+        "filename": "third_party/WebKit/LayoutTests/virtual/mojo-blob-urls/external/wpt/FileAPI/url/cross-global-revoke.sub-expected.txt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-06T18:18:20Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something, there is no other way to override the non-virtual -expected.txt files (which exist because these tests aren\u0027t actually passing without these changes).",
+      "parentUuid": "ff0e970a_85677091",
+      "revId": "d1fab45c1b4d0197b5a67f69b1c5312f87628090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4eb7ce9_a23ac9f4",
         "filename": "third_party/WebKit/LayoutTests/virtual/mojo-blob-urls/external/wpt/FileAPI/url/url-with-fetch.any-expected.txt",
         "patchSetId": 16
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "fe0f06c6_a2f2eb42",
+        "filename": "third_party/WebKit/Source/core/fetch/FetchManager.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-06T18:18:20Z",
+      "side": 1,
+      "message": "Done (although it\u0027s kind of sad how verbose that makes the code... base::MakeRefCounted\u003cbase::RefCountedData\u003cnetwork::mojom::blink::URLLoaderFactoryPtr\u003e( doesn\u0027t even fit on one line... I guess it\u0027s good though for RefCountedData to be sort of ugly though, since it\u0027s not great to have to use it)",
+      "parentUuid": "c861a65a_a513a3bb",
+      "revId": "d1fab45c1b4d0197b5a67f69b1c5312f87628090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "407bf9d4_3b6641dc",
         "filename": "third_party/WebKit/Source/core/fetch/FetchRequestData.h",
         "patchSetId": 16
@@ -84,6 +120,24 @@
       "revId": "d1fab45c1b4d0197b5a67f69b1c5312f87628090",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c92e27c_e0e9ee35",
+        "filename": "third_party/WebKit/Source/core/fetch/FetchRequestData.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-06T18:18:20Z",
+      "side": 1,
+      "message": "Done (here and in ResourceLoaderOptions etc)\nI\u0027d been going back and forth between trying to keep this generic and making it specificly about blob URLs, but it\u0027s probably indeed clearest to just be explicit everywhere that this is used for blob URLs.",
+      "parentUuid": "407bf9d4_3b6641dc",
+      "revId": "d1fab45c1b4d0197b5a67f69b1c5312f87628090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
