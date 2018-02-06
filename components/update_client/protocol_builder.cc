@@ -202,6 +202,7 @@ std::string BuildActionRunEventElement(bool succeeded,
 }
 
 std::string BuildProtocolRequest(
+    const std::string& session_id,
     const std::string& prod_id,
     const std::string& browser_version,
     const std::string& channel,
@@ -221,6 +222,12 @@ std::string BuildProtocolRequest(
 
   // Constant information for this updater.
   base::StringAppendF(&request, "dedup=\"cr\" acceptformat=\"crx2,crx3\" ");
+
+  // Sesssion id.
+  DCHECK(!session_id.empty());
+  DCHECK(!base::StartsWith(session_id, "{", base::CompareCase::SENSITIVE));
+  DCHECK(!base::EndsWith(session_id, "}", base::CompareCase::SENSITIVE));
+  base::StringAppendF(&request, "sessionid=\"{%s}\" ", session_id.c_str());
 
   // Chrome version and platform information.
   base::StringAppendF(
@@ -296,6 +303,7 @@ std::string BuildProtocolRequest(
 
 std::string BuildUpdateCheckRequest(
     const Configurator& config,
+    const std::string& session_id,
     const std::vector<std::string>& ids_checked,
     const IdToComponentPtrMap& components,
     PersistedData* metadata,
@@ -386,7 +394,7 @@ std::string BuildUpdateCheckRequest(
 
   // Include the updater state in the update check request.
   return BuildProtocolRequest(
-      config.GetProdId(), config.GetBrowserVersion().GetString(),
+      session_id, config.GetProdId(), config.GetBrowserVersion().GetString(),
       config.GetChannel(), config.GetLang(), config.GetOSLongName(),
       config.GetDownloadPreference(), app_elements, additional_attributes,
       updater_state_attributes);
@@ -405,10 +413,11 @@ std::string BuildEventPingRequest(const Configurator& config,
   app.append("</app>");
 
   // The ping request does not include any updater state.
-  return BuildProtocolRequest(
-      config.GetProdId(), config.GetBrowserVersion().GetString(),
-      config.GetChannel(), config.GetLang(), config.GetOSLongName(),
-      config.GetDownloadPreference(), app, "", nullptr);
+  return BuildProtocolRequest(component.session_id(), config.GetProdId(),
+                              config.GetBrowserVersion().GetString(),
+                              config.GetChannel(), config.GetLang(),
+                              config.GetOSLongName(),
+                              config.GetDownloadPreference(), app, "", nullptr);
 }
 
 }  // namespace update_client
