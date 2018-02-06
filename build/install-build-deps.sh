@@ -160,6 +160,7 @@ dev_list="\
   git-core
   git-svn
   gperf
+  libappindicator3-dev
   libasound2-dev
   libbrlapi-dev
   libav-tools
@@ -168,6 +169,7 @@ dev_list="\
   libcap-dev
   libcups2-dev
   libcurl4-gnutls-dev
+  libdbusmenu-glib-dev
   libdrm-dev
   libelf-dev
   libffi-dev
@@ -227,12 +229,14 @@ chromeos_lib_list="libpulse0 libbz2-1.0"
 
 # Full list of required run-time libraries
 lib_list="\
+  libappindicator3-1
+  libasound2
   libatk1.0-0
   libc6
-  libasound2
   libcairo2
   libcap2
   libcups2
+  libdbusmenu-glib4
   libexpat1
   libffi6
   libfontconfig1

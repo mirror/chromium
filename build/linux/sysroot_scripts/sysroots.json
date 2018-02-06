@@ -1,7 +1,7 @@
 {
     "stretch_amd64": {
-        "Revision": "2202c161310ffde63729f29d27fe7bb24a0bc540",
-        "Sha1Sum": "eb7e2d2c563b6a6f6e32b967d5585a6d33636d35",
+        "Revision": "99bd7e8955a60ee0c24ddeedde61acab36525695",
+        "Sha1Sum": "2b59e8bf6fe279cc723f63689959f21fac315b51",
         "SysrootDir": "debian_stretch_amd64-sysroot",
         "Tarball": "debian_stretch_amd64_sysroot.tar.xz"
     },
