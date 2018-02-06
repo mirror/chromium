@@ -16,6 +16,24 @@
       "revId": "f4c02992dc3c980cee7f9c2fd049e1b1dd66b505",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dbf4f7_77713cec",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/HotModeSpellCheckRequester.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T07:27:00Z",
+      "side": 0,
+      "message": "AbsoluteElementBoundingBoxRect() can be significantly more expensive than AbsoluteBoundingBoxFloatRect(), since the former has to traverse the entire subtree.\n\nI don\u0027t think this heuristic is a very important one that has to be fixed by an expensive approach.\n\nHow about just removing it, and then see if there\u0027s any spellchecker performance regression due to over-aggressive checking? If so, we add the heuristic back.",
+      "parentUuid": "b6f2e985_14ade7f9",
+      "revId": "f4c02992dc3c980cee7f9c2fd049e1b1dd66b505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
