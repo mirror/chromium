@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.chrome.browser;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -21,6 +21,7 @@ import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 
 import org.chromium.base.TraceEvent;
+import org.chromium.content_public.browser.ContentViewCore;
 import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.SmartClipProvider;
 import org.chromium.content_public.browser.WebContents;
@@ -31,9 +32,8 @@ import org.chromium.ui.base.EventForwarder;
  * The containing view for {@link ContentViewCore} that exists in the Android UI hierarchy and
  * exposes the various {@link View} functionality to it.
  */
-public class ContentView extends FrameLayout
-        implements ContentViewCore.InternalAccessDelegate, SmartClipProvider {
-
+public class ContentView
+        extends FrameLayout implements ContentViewCore.InternalAccessDelegate, SmartClipProvider {
     private static final String TAG = "cr.ContentView";
 
     // Default value to signal that the ContentView's size need not be overridden.
