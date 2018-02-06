@@ -261,4 +261,30 @@ TEST_F(CRWWebViewScrollViewProxyTest, SetClipsToBoundsBeforeSettingScrollView) {
   [mockScrollView_ verify];
 }
 
+// Tests that frame changes are communicated to observers.
+TEST_F(CRWWebViewScrollViewProxyTest, FrameDidChange) {
+  UIScrollView* scroll_view = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  [webViewScrollViewProxy_ setScrollView:scroll_view];
+  id mock_delegate = [OCMockObject
+      niceMockForProtocol:@protocol(CRWWebViewScrollViewProxyObserver)];
+  [webViewScrollViewProxy_ addObserver:mock_delegate];
+  [[mock_delegate expect]
+      webViewScrollViewFrameDidChange:webViewScrollViewProxy_];
+  scroll_view.frame = CGRectMake(1, 2, 3, 4);
+  [mock_delegate verify];
+}
+
+// Tests that contentInset changes are communicated to observers.
+TEST_F(CRWWebViewScrollViewProxyTest, ContentInsetDidChange) {
+  UIScrollView* scroll_view = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  [webViewScrollViewProxy_ setScrollView:scroll_view];
+  id mock_delegate = [OCMockObject
+      niceMockForProtocol:@protocol(CRWWebViewScrollViewProxyObserver)];
+  [webViewScrollViewProxy_ addObserver:mock_delegate];
+  [[mock_delegate expect]
+      webViewScrollViewDidResetContentInset:webViewScrollViewProxy_];
+  scroll_view.contentInset = UIEdgeInsetsMake(0, 1, 2, 3);
+  [mock_delegate verify];
+}
+
 }  // namespace
