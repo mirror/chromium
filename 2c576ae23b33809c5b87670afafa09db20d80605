@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "801d7b01_6d83ca7c",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-02-06T14:48:45Z",
+      "side": 1,
+      "message": "This is kind of repetitive.\n\nI hate to suggest this, but I\u0027m contemplating the idea of a macro - something like this:\n\n#if defined(OS_MACOSX)\n#define POLYCHROME_FORWARD(funcall) \\\n  if (views_mode_controller::IsViewsBrowserCocoa()) { \\\n    return funcall; \\\n  }\n#else\n#define POLYCHROME_FORWARD(funcall)\n#endif\n\nThen each function would open with like:\n\nPOLYCHROME_FORWARD(UserManager::ShowCocoa(profile_path_to_focus, user_manager_action))\n\nthakis@: do you think this idea is horrible?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 11
+      },
+      "revId": "2c576ae23b33809c5b87670afafa09db20d80605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fbf4bf_46091dcd",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-02-06T14:48:45Z",
+      "side": 1,
+      "message": "these two can just be one line - i.e. it\u0027s perfectly legal to do:\n\nreturn x();\n\nwhere x is void, in a function that returns void also.",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 15
+      },
+      "revId": "2c576ae23b33809c5b87670afafa09db20d80605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
