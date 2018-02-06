@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a60c1046_1a9ce401",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-02-06T22:15:31Z",
+      "side": 1,
+      "message": "If |task_runner_| rejects |reply_|, it won\u0027t be deleted on the origin sequence.\n\nReasons that can cause |task_runner_| to reject |reply_|:\n- |task_runner_| is a MessageLoopTaskRunner associated with a deleted MessageLoop.\n- |task_runner_| is a non-BLOCK_SHUTDOWN TaskScheduler TaskRunner and shutdown has started.\n\nWould it make sense to say that the reply must support being deleted on the origin TaskRunner *or* on the destination TaskRunner? It\u0027s already the case for the \"task\" https://cs.chromium.org/chromium/src/base/threading/post_task_and_reply_impl.cc?l\u003d92\u0026rcl\u003daaa4f05acbe305485aaf19a2d715a58185560d23 .",
+      "revId": "9a82f804f626551baea4236085422ec237eaa922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
