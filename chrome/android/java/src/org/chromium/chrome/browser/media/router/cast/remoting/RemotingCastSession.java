@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.media.router.cast.CastMessageHandler;
 import org.chromium.chrome.browser.media.router.cast.CastSession;
 import org.chromium.chrome.browser.media.router.cast.CastSessionInfo;
 import org.chromium.chrome.browser.media.router.cast.ChromeCastSessionManager;
+import org.chromium.chrome.browser.media.router.cast.MediaController;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 import org.chromium.chrome.browser.media.ui.MediaNotificationInfo;
 import org.chromium.chrome.browser.media.ui.MediaNotificationListener;
@@ -183,4 +184,9 @@ public class RemotingCastSession implements MediaNotificationListener, CastSessi
 
     @Override
     public void onMediaSessionAction(int action) {}
+
+    @Override
+    public MediaController getMediaController() {
+        return mMediaPlayerWrapper;
+    }
 }

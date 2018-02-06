@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 /**
  * The interface for talking to the GMS core. We need to isolate this
  * interface from its implementation so that we can mock it with out
@@ -124,4 +126,10 @@ public interface CastSession {
      * Updates the session info when it changes and broadcast the change.
      */
     void updateSessionStatus();
+
+    /**
+     * Returns a controller for the media content.
+     */
+    @Nullable
+    MediaController getMediaController();
 }
