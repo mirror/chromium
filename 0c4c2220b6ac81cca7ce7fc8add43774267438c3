@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a86ed6ca_23fb214d",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "I filed a bug and linked here.",
+      "parentUuid": "c5f97d3e_b87db98e",
+      "range": {
+        "startLine": 454,
+        "startChar": 2,
+        "endLine": 455,
+        "endChar": 39
+      },
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7167002c_78ed4882",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 19
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7e1c178f_edecd3c1",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "I switched to a const*, so this is unnecessary.",
+      "parentUuid": "7167002c_78ed4882",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d341d348_f817c302",
         "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
         "patchSetId": 19
@@ -56,6 +98,24 @@
       "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e23492b_10544f9e",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d341d348_f817c302",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "81e3d129_73447a5f",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2996,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "I agree that this should be fixed -- but let\u0027s do this separately from this CL. It\u0027s not even clear to me that all the conditions are necessary.",
+      "parentUuid": "3fdcb6b3_5486d894",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33bcdd8c_49db8443",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 19
@@ -108,6 +186,24 @@
       "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ec2f33_84d39693",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bcdd8c_49db8443",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "017d8f1b_bb315ddb",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "Yes, that\u0027s exactly the reason we need to distinguish. I considered using negative values for no size, but I think having the boolean is more readable (WebSize supports negative values for empty, but gfx::Size doesn\u0027t, so the conversions aren\u0027t nice).",
+      "parentUuid": "cfa0ea22_bd400fcc",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "765f8e42_caf0da95",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 19
@@ -142,6 +256,24 @@
       "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3934bfad_1d7f7078",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-06T18:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "765f8e42_caf0da95",
+      "revId": "0c4c2220b6ac81cca7ce7fc8add43774267438c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
