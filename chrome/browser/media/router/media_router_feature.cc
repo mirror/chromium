@@ -4,12 +4,18 @@
 
 #include "chrome/browser/media/router/media_router_feature.h"
 
-#include "base/feature_list.h"
-#include "build/build_config.h"
+#include <string>
+
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_context.h"
+
+#if !defined(OS_ANDROID)
+#include "base/command_line.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/common/extensions/extension_constants.h"
 #include "extensions/features/features.h"
 #include "ui/base/ui_features.h"
+#endif  // !defined(OS_ANDROID)
 
 #if defined(OS_ANDROID) || BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/common/pref_names.h"
@@ -31,21 +37,13 @@ const base::Feature kEnableCastDiscovery{"EnableCastDiscovery",
 // Controls if local media casting is enabled.
 const base::Feature kEnableCastLocalMedia{"EnableCastLocalMedia",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
-#endif
-
-#if defined(OS_ANDROID) || BUILDFLAG(ENABLE_EXTENSIONS)
-namespace {
-const PrefService::Preference* GetMediaRouterPref(
-    content::BrowserContext* context) {
-  return user_prefs::UserPrefs::Get(context)->FindPreference(
-      prefs::kEnableMediaRouter);
-}
-}  // namespace
-#endif  // defined(OS_ANDROID) || BUILDFLAG(ENABLE_EXTENSIONS)
+#endif  // !defined(OS_ANDROID)
 
 bool MediaRouterEnabled(content::BrowserContext* context) {
 #if defined(OS_ANDROID) || BUILDFLAG(ENABLE_EXTENSIONS)
-  const PrefService::Preference* pref = GetMediaRouterPref(context);
+  const PrefService::Preference* pref =
+      user_prefs::UserPrefs::Get(context)->FindPreference(
+          prefs::kEnableMediaRouter);
   // Only use the pref value if it set from a mandatory policy.
   if (pref->IsManaged() && !pref->IsDefaultValue()) {
     bool allowed = false;
@@ -86,6 +84,36 @@ bool PresentationReceiverWindowEnabled() {
   return true;
 #endif
 }
-#endif
+
+extensions::ExtensionId GetMediaRouterExtensionId() {
+  const std::string& switch_value =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kLoadMediaRouterComponentExtension);
+  // This flag used to be boolean, so we also check for legacy 0/1 values.
+  if (switch_value == "internal") {
+    return extension_misc::kMediaRouterInternalExtensionId;
+  } else if (switch_value == "external" || switch_value == "1") {
+    return extension_misc::kMediaRouterStableExtensionId;
+  } else if (switch_value == "none" || switch_value == "0") {
+    return "";
+  } else {  // Default
+#if defined(GOOGLE_CHROME_BUILD)
+    return extension_misc::kMediaRouterStableExtensionId;
+#else
+    return extension_misc::kMediaRouterInternalExtensionId;
+#endif  // defined(GOOGLE_CHROME_BUILD)
+  }
+}
+
+bool IsMediaRouterExternalComponent(
+    const extensions::ExtensionId& extension_id) {
+  return extension_id == extension_misc::kMediaRouterStableExtensionId;
+}
+
+bool IsMediaRouterInternalComponent(
+    const extensions::ExtensionId& extension_id) {
+  return extension_id == extension_misc::kMediaRouterInternalExtensionId;
+}
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace media_router

@@ -4,6 +4,9 @@
 
 #include "chrome/browser/extensions/external_component_loader.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/command_line.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -45,10 +48,12 @@ void ExternalComponentLoader::StartLoading() {
   }
 #endif
 
-  if (media_router::MediaRouterEnabled(profile_) &&
-      FeatureSwitch::load_media_router_component_extension()->IsEnabled()) {
-    AddExternalExtension(extension_misc::kMediaRouterStableExtensionId,
-                         prefs.get());
+  if (media_router::MediaRouterEnabled(profile_)) {
+    const extensions::ExtensionId& extension_id =
+        media_router::GetMediaRouterComponentExtensionId();
+    if (media_router::IsMediaRouterExternalComponent(extension_id)) {
+      AddExternalExtension(extension_id, prefs.get());
+    }
   }
 
   LoadFinished(std::move(prefs));

@@ -848,9 +848,13 @@ const char kLeftToRightUrlsDescription[] =
     "normal Bidi algorithm.)";
 
 const char kLoadMediaRouterComponentExtensionName[] =
-    "Load Media Router Component Extension";
-const char kLoadMediaRouterComponentExtensionDescription[] =
-    "Loads the Media Router component extension at startup.";
+    "Media Router Component Extension";
+const char kLoadMediaRouterComponentExtensionInternal[] =
+    "Load the internal Media Router component extension on startup.";
+const char kLoadMediaRouterComponentExtensionExternal[] =
+    "Load the external Media Router component extension on startup.";
+const char kLoadMediaRouterComponentExtensionNone[] =
+    "Do not load any Media Router component extension on startup.";
 
 const char kManualPasswordGenerationName[] = "Manual password generation.";
 const char kManualPasswordGenerationDescription[] =

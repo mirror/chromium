@@ -5,7 +5,12 @@
 #ifndef CHROME_BROWSER_MEDIA_ROUTER_MEDIA_ROUTER_FEATURE_H_
 #define CHROME_BROWSER_MEDIA_ROUTER_MEDIA_ROUTER_FEATURE_H_
 
+#include "build/build_config.h"
+
+#if !defined(OS_ANDROID)
 #include "base/feature_list.h"
+#include "extensions/common/extension_id.h"
+#endif  // !defined(OS_ANDROID)
 
 namespace content {
 class BrowserContext;
@@ -36,7 +41,16 @@ bool CastLocalMediaEnabled();
 // TODO(crbug.com/802332): Remove this when mac_views_browser=1 by default.
 bool PresentationReceiverWindowEnabled();
 
-#endif
+// Returns the extension ID of the Media Router component extension to load, or
+// the empty string if no extension is to be loaded.
+extensions::ExtensionId GetMediaRouterComponentExtensionId();
+
+// Returns true if |extension_id| matches the external or internal component
+// extension ID, respectively.
+bool IsMediaRouterExternalComponent(const extensions::ExtensionId extension_id);
+bool IsMediaRouterInternalComponent(const extensions::ExtensionId extension_id);
+
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace media_router
 

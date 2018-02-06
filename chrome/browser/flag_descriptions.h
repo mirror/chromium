@@ -531,7 +531,9 @@ extern const char kLeftToRightUrlsName[];
 extern const char kLeftToRightUrlsDescription[];
 
 extern const char kLoadMediaRouterComponentExtensionName[];
-extern const char kLoadMediaRouterComponentExtensionDescription[];
+extern const char kLoadMediaRouterComponentExtensionInternal[];
+extern const char kLoadMediaRouterComponentExtensionExternal[];
+extern const char kLoadMediaRouterComponentExtensionNone[];
 
 extern const char kManualPasswordGenerationName[];
 extern const char kManualPasswordGenerationDescription[];
