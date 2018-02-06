@@ -71,7 +71,7 @@ public class ChromeCastSessionManagerTest {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 if (success)
-                    mManager.onSessionStarted(session);
+                    mManager.onSessionStarted(session, null);
                 else
                     mManager.onSessionStartFailed();
 
@@ -202,7 +202,7 @@ public class ChromeCastSessionManagerTest {
 
         // Simulate the completion of the slow request.
         // Make sure the 2nd request was not launched.
-        mManager.onSessionStarted(mAltSession);
+        mManager.onSessionStarted(mAltSession, null);
         verify(mRequest, never()).start(any());
     }
 }

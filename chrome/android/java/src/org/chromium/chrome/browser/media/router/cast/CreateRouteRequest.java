@@ -249,7 +249,7 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
                 break;
         }
 
-        ChromeCastSessionManager.get().onSessionStarted(session);
+        ChromeCastSessionManager.get().onSessionStarted(session, mPresentationId);
 
         terminate();
     }

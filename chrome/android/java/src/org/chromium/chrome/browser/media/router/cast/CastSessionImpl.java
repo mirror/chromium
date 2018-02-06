@@ -481,4 +481,10 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
 
         if (mMediaPlayer != null && !isApiClientInvalid()) mMediaPlayer.requestStatus(mApiClient);
     }
+
+    @Override
+    public MediaController getMediaController() {
+        // Media controller is not used with the CastSessionImpl.
+        return null;
+    }
 }

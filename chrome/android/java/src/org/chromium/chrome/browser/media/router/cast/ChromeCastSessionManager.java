@@ -12,6 +12,8 @@ import com.google.android.gms.cast.CastStatusCodes;
 
 import org.chromium.base.Log;
 
+import javax.annotation.Nullable;
+
 /**
  * Manages the lifetime of the active CastSessions and broadcasts state changes to observers.
  */
@@ -121,6 +123,8 @@ public class ChromeCastSessionManager {
     // Whether we are currently in the process of launching a session.
     private boolean mSessionLaunching = false;
 
+    private String mCurrentPresentationId = null;
+
     public static ChromeCastSessionManager get() {
         if (sInstance == null) sInstance = new ChromeCastSessionManager();
 
@@ -140,11 +144,12 @@ public class ChromeCastSessionManager {
      * Called after a session successfully launched and was created.
      * @param session the newly created session.
      */
-    public void onSessionStarted(CastSession session) {
+    public void onSessionStarted(CastSession session, String presentationId) {
         assert mSession == null;
 
         mSession = session;
         mSessionLaunching = false;
+        mCurrentPresentationId = presentationId;
         mCurrentSessionListener.onSessionStarted(session);
     }
 
@@ -207,6 +212,7 @@ public class ChromeCastSessionManager {
     public void onSessionEnded() {
         mCurrentSessionListener.onSessionEnded();
 
+        mCurrentPresentationId = null;
         mSession = null;
         mCurrentSessionListener = null;
         mListener = null;
@@ -226,5 +232,17 @@ public class ChromeCastSessionManager {
         mListener = null;
 
         mSessionLaunching = false;
+    }
+
+    /**
+     * Returns a controller for the session's media content.
+     * Returns null if |presentationId| doesn't match the current session's presentation ID,
+     * or if the session does not support media controllers
+     */
+    @Nullable
+    public MediaController getMediaControllerForPresentationId(String presentationId) {
+        if (presentationId != mCurrentPresentationId) return null;
+
+        return mSession.getMediaController();
     }
 }
