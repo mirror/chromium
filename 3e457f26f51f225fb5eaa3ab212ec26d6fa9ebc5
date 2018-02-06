@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "622fc7e7_e2aa84ea",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-02-06T20:59:36Z",
+      "side": 1,
+      "message": "Correct. I should have been more precise. Updated the comment.",
+      "parentUuid": "344678ad_485575ee",
+      "range": {
+        "startLine": 72,
+        "startChar": 45,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "3e457f26f51f225fb5eaa3ab212ec26d6fa9ebc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f902eeb_3d457a27",
         "filename": "third_party/WebKit/public/platform/WebTouchEvent.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "3e457f26f51f225fb5eaa3ab212ec26d6fa9ebc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fa81a7_6b10f47a",
+        "filename": "third_party/WebKit/public/platform/WebTouchEvent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-02-06T20:59:36Z",
+      "side": 1,
+      "message": "You are right. I forgot about that memset thing. I removed the false initializer to make it similar to the other fields.",
+      "parentUuid": "1f902eeb_3d457a27",
+      "revId": "3e457f26f51f225fb5eaa3ab212ec26d6fa9ebc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
