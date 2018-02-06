@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff638c54_d49a8556",
+        "filename": "components/variations/hashing.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T18:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4231122_d3b8910a",
+      "range": {
+        "startLine": 5,
+        "startChar": 30,
+        "endLine": 5,
+        "endChar": 45
+      },
+      "revId": "ee03d8ac43f2e010b17fb7163eba1ac0c725c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b90c63b_2e278589",
         "filename": "components/variations/hashing_unittest.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "ee03d8ac43f2e010b17fb7163eba1ac0c725c913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3761779f_def2949c",
+        "filename": "components/variations/hashing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T18:47:57Z",
+      "side": 1,
+      "message": "I tried using --similarity\u003d1 (1%) and it didn\u0027t match it. I think vast majority of this file is different due to git cl formatting.",
+      "parentUuid": "3b90c63b_2e278589",
+      "range": {
+        "startLine": 5,
+        "startChar": 42,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "ee03d8ac43f2e010b17fb7163eba1ac0c725c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
