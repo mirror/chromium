@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bf66ddd_b35095e0",
+        "filename": "ash/message_center/message_center_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "nit: capitalize the alpha characters in hex numbers (for consistency)",
+      "range": {
+        "startLine": 23,
+        "startChar": 50,
+        "endLine": 23,
+        "endChar": 68
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9197360a_f37eb4d1",
+        "filename": "ash/message_center/message_center_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "nit:  // namespace",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be3c466_bca07fbe",
+        "filename": "ash/message_center/message_center_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "I guess it doesn\u0027t matter too much, by why add another view instead of just adding a layer to |this| and a solid color background painter? Is this more performant somehow?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 53
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45a6b27_23ca2710",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "can you please get rid of this class and replace with a factory function?",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49eb1eca_bff27c06",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "you can use SetPreferredSize for this",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997339ae_a06ef97c",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "why did this change order? seems like it shouldn\u0027t matter",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 31
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1112d6_25d2efbe",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T14:24:10Z",
+      "side": 1,
+      "message": "in BubbleDialogDelegateView::UpdateColorsFromTheme() it seems like it sets no Background if the layer doesn\u0027t fill the bounds opaquely, so why is this necessary?",
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
