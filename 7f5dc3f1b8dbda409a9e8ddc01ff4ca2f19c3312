@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b83f218b_a12bef20",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-06T14:23:44Z",
+      "side": 1,
+      "message": "This feels wrong.  What _UITemporaryLayout{Height|Width} are added?  Why?",
+      "revId": "7f5dc3f1b8dbda409a9e8ddc01ff4ca2f19c3312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
