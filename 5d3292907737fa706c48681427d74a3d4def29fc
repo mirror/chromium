@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cd8a9cbd_3e0f90f8",
+        "filename": "net/server/http_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-02-06T13:04:55Z",
+      "side": 1,
+      "message": "For the live report, the plan is only to add URLRequest annotations to net-internals.\nSockets will only be reported in static analysis.",
+      "parentUuid": "5facff7a_7c35371f",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "5d3292907737fa706c48681427d74a3d4def29fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cd4af9d_a45b02b3",
         "filename": "net/server/http_server.h",
         "patchSetId": 3
