@@ -23,11 +23,11 @@
 #include "jni/MediaResourceGetter_jni.h"
 #include "media/base/android/media_url_interceptor.h"
 #include "net/base/auth.h"
-#include "net/cookies/cookie_store.h"
 #include "net/http/http_auth.h"
 #include "net/http/http_transaction_factory.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
 #include "url/gurl.h"
 
 using base::android::ConvertUTF8ToJavaString;
@@ -41,6 +41,15 @@ static void ReturnResultOnUIThread(
     const std::string& result) {
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(std::move(callback), result));
+}
+
+void GetAllCookiesCallback(
+    base::OnceCallback<void(const std::string&)> callback,
+    const std::vector<net::CanonicalCookie>& cookies) {
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback),
+                     net::CanonicalCookie::BuildCookieLine(cookies)));
 }
 
 static void RequestPlaformPathFromFileSystemURL(
@@ -156,17 +165,25 @@ class MediaResourceGetterTask
   // Render frame id, used to check tab specific cookie policy.
   int render_frame_id_;
 
+  // The cookie service at the client end of the mojo pipe.
+  network::mojom::CookieManager* cookie_manager_;
+
   DISALLOW_COPY_AND_ASSIGN(MediaResourceGetterTask);
 };
 
 MediaResourceGetterTask::MediaResourceGetterTask(
-    BrowserContext* browser_context, int render_process_id, int render_frame_id)
-    : context_getter_(BrowserContext::GetDefaultStoragePartition(
-          browser_context)->GetURLRequestContext()),
+    BrowserContext* browser_context,
+    int render_process_id,
+    int render_frame_id)
+    : context_getter_(
+          BrowserContext::GetDefaultStoragePartition(browser_context)
+              ->GetURLRequestContext()),
       resource_context_(browser_context->GetResourceContext()),
       render_process_id_(render_process_id),
-      render_frame_id_(render_frame_id) {
-}
+      render_frame_id_(render_frame_id),
+      cookie_manager_(
+          BrowserContext::GetDefaultStoragePartition(browser_context)
+              ->GetCookieManagerForBrowserProcess()) {}
 
 MediaResourceGetterTask::~MediaResourceGetterTask() {}
 
@@ -205,16 +222,21 @@ void MediaResourceGetterTask::RequestCookies(
     return;
   }
 
-  net::CookieStore* cookie_store =
-      context_getter_->GetURLRequestContext()->cookie_store();
-  if (!cookie_store) {
+  if (!cookie_manager_) {
     std::move(callback).Run(std::string());
     return;
   }
 
-  cookie_store->GetAllCookiesForURLAsync(
-      url, base::BindOnce(&MediaResourceGetterTask::CheckPolicyForCookies, this,
-                          url, site_for_cookies, std::move(callback)));
+  net::CookieOptions cookie_options;
+  cookie_options.set_include_httponly();
+  cookie_options.set_same_site_cookie_mode(
+      net::CookieOptions::SameSiteCookieMode::INCLUDE_STRICT_AND_LAX);
+  cookie_options.set_do_not_update_access_time();
+
+  cookie_manager_->GetCookieList(
+      url, cookie_options,
+      base::BindOnce(&MediaResourceGetterTask::CheckPolicyForCookies, this, url,
+                     site_for_cookies, std::move(callback)));
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
@@ -230,13 +252,16 @@ void MediaResourceGetterTask::CheckPolicyForCookies(
   if (GetContentClient()->browser()->AllowGetCookie(
           url, site_for_cookies, cookie_list, resource_context_,
           render_process_id_, render_frame_id_)) {
-    net::CookieStore* cookie_store =
-        context_getter_->GetURLRequestContext()->cookie_store();
-    net::CookieOptions options;
-    options.set_include_httponly();
-    cookie_store->GetCookiesWithOptionsAsync(url, options, std::move(callback));
-  } else {
-    std::move(callback).Run(std::string());
+    if (!cookie_manager_) {
+      std::move(callback).Run(std::string());
+      return;
+    }
+
+    net::CookieOptions cookie_options;
+    cookie_options.set_include_httponly();
+    cookie_manager_->GetCookieList(
+        url, cookie_options,
+        base::BindOnce(&GetAllCookiesCallback, std::move(callback)));
   }
 }
 
