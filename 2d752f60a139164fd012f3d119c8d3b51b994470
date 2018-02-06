@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3e839849_fef67cba",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T18:51:34Z",
+      "side": 1,
+      "message": "Oops, I meant what if T is not moveable, then would it just fallback to the inplace one? unique_ptr is a bad example its moveable.",
+      "parentUuid": "f40a0ef8_f1a64462",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a625fd47_1c72e15a",
         "filename": "base/no_destructor.h",
         "patchSetId": 5
