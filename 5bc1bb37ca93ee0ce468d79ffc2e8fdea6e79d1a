@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa15706c_2d1a48fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/node_main/nodeConnectionsPanel.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-06T02:21:24Z",
+      "side": 1,
+      "message": "This is always true now, can cleanup.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "5bc1bb37ca93ee0ce468d79ffc2e8fdea6e79d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
