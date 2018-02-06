@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb1d1f6_c9a97dc6",
+        "filename": "chrome/renderer/safe_browsing/threat_dom_details_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T08:44:44Z",
+      "side": 0,
+      "message": "lolz",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 21
+      },
+      "revId": "3503377ca66909bdccd6a9d3c7514f2de3789452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

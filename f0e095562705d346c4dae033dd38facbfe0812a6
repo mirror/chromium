@@ -589,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "06846a96_14c697f8",
+        "filename": "components/safe_browsing/renderer/threat_dom_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T08:44:44Z",
+      "side": 1,
+      "message": "I don\u0027t see it.",
+      "parentUuid": "44ac5267_21eb5119",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 35
+      },
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd6353e_2862205f",
         "filename": "components/safe_browsing/renderer/threat_dom_details.h",
         "patchSetId": 3
