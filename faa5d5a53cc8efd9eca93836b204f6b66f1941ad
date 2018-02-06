@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997c24a1_9c5b021b",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_privacy.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T02:24:38Z",
+      "side": 1,
+      "message": "nittiest of nits: s/what/which",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "faa5d5a53cc8efd9eca93836b204f6b66f1941ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
