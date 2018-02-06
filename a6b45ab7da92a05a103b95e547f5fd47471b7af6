@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a7fc0aa_b55acc9c",
+        "filename": "chrome/browser/client_hints/client_hints.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-02-06T23:34:23Z",
+      "side": 1,
+      "message": "Any reason to call GetOrigin here. It seems like stripping out those bits of info is unnecessary?",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "a6b45ab7da92a05a103b95e547f5fd47471b7af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
