@@ -176,6 +176,16 @@ GURL BuildDocumentUrl(const std::string& authority,
       net::EscapeQueryParamValue(document_id, false /* use_plus */).c_str()));
 }
 
+GURL BuildDocumentUrl(const std::string& authority,
+                      const std::string& document_id,
+                      base::FilePath& path) {
+  return GURL(base::StringPrintf(
+      "content://%s/document/%s/%s",
+      net::EscapeQueryParamValue(authority, false /* use_plus */).c_str(),
+      net::EscapeQueryParamValue(document_id, false /* use_plus */).c_str(),
+      path.value().c_str()));
+}
+
 std::vector<base::FilePath::StringType> GetExtensionsForArcMimeType(
     const std::string& mime_type) {
   // net::GetExtensionsForMimeType() returns unwanted extensions like

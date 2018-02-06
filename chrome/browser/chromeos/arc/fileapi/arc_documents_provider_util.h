@@ -63,6 +63,10 @@ bool ParseDocumentsProviderUrl(const storage::FileSystemURL& url,
 GURL BuildDocumentUrl(const std::string& authority,
                       const std::string& document_id);
 
+GURL BuildDocumentUrl(const std::string& authority,
+                      const std::string& document_id,
+                      base::FilePath& path);
+
 // Similar to net::GetExtensionsForMimeType(), but this covers more MIME types
 // used in Android.
 // Returns an empty vector if the MIME type is not known.
