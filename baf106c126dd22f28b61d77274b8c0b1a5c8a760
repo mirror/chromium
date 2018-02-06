@@ -141,6 +141,30 @@
       "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822ec561_e0ff6f36",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-06T23:35:21Z",
+      "side": 1,
+      "message": "ah, I assumed that it was easier to modify LoadFlags because then there\u0027s less places to plumb new booleans from the renderer to the network service or RDH. More specifically, I was thinking of other flags we\u0027d have to add to ResourceRequest as we finish converting the code to work with the network service and scaling that.\n\nHowever if LoadFlags is moving in the other direction, i.e. it\u0027s becoming smaller, then I\u0027ll defer to Matt as a net/ owner.",
+      "parentUuid": "69bb4831_36efa28d",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
