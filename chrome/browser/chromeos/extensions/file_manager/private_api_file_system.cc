@@ -806,6 +806,8 @@ bool FileManagerPrivateInternalResolveIsolatedEntriesFunction::RunAsync() {
   for (size_t i = 0; i < params->urls.size(); ++i) {
     const FileSystemURL file_system_url =
         file_system_context->CrackURL(GURL(params->urls[i]));
+    LOG_IF(ERROR, (!external_backend->CanHandleType(file_system_url.type())))
+        << file_system_url.type();
     DCHECK(external_backend->CanHandleType(file_system_url.type()));
     FileDefinition file_definition;
     const bool result =

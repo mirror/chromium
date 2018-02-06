@@ -31,14 +31,14 @@ typedef GalleryBrowserTestBase<IN_GUEST_MODE> GalleryBrowserTestInGuestMode;
 
 // http://crbug.com/804413
 IN_PROC_BROWSER_TEST_F(GalleryBrowserTest,
-                       DISABLED_OpenSingleImageOnDownloads) {
+                       OpenSingleImageOnDownloads) {
   set_test_case_name("openSingleImageOnDownloads");
   StartTest();
 }
 
 // http://crbug.com/804413
 IN_PROC_BROWSER_TEST_F(GalleryBrowserTestInGuestMode,
-                       DISABLED_OpenSingleImageOnDownloads) {
+                       OpenSingleImageOnDownloads) {
   set_test_case_name("openSingleImageOnDownloads");
   StartTest();
 }
