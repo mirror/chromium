@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "059a1ad0_a11097d8",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "Not sure what this part means.  If number + expiration are not *both* found, it\u0027s not enough to save the card, right?",
+      "range": {
+        "startLine": 121,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 37
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea63896_62ed60f1",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "Discussed offline: How about this:\n\n// Submitted card has valid card number and expiration date.\nHAS_CARD_NUMBER_AND_EXPIRATION_DATE,\n// Submitted card has a valid card number but an invalid or missing expiration date.\nHAS_CARD_NUMBER_ONLY,\n// Submitted card has a valid expiration date but an invalid or missing card number.\nHAS_EXPIRATION_DATE_ONLY,",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 4
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740a813d_13febcb8",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "Prefer to use positive logic where possible for better readability.  The new enum names should help with this, so it\u0027ll be more like \"if (candidate_credit_card.IsValidCardNumber()) { log HAS_CARD_NUMBER_ONLY }\"",
+      "range": {
+        "startLine": 327,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 9
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be731db_a444d973",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2446,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "Change these based on the result of the new enum",
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8d35ba_6c8661ed",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6119,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "This doesn\u0027t provide much more information than the histogram name already does.  How about adding:\n\", specifically if it had a valid card number and/or expiration date.\"",
+      "range": {
+        "startLine": 6119,
+        "startChar": 11,
+        "endLine": 6119,
+        "endChar": 63
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

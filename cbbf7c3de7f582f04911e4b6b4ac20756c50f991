@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "4c0b5788_5e0de425",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "No you\u0027re good; what you changed it to is exactly what I was asking for here--it just tracks the state of the card regardless of what Upstream\u0027s going to do.",
+      "parentUuid": "eca813e5_617ecc70",
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db88549_5400f734",
         "filename": "components/autofill/core/browser/form_data_importer.cc",
         "patchSetId": 1
@@ -225,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "736d2264_5d107548",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "Technically not done, but with the new version I don\u0027t think a flag is necessary. :) It\u0027s a simple metrics log and doesn\u0027t let the code advance any further than it used to.",
+      "parentUuid": "23a5eee0_7974016d",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "724533b2_2146f1aa",
         "filename": "components/autofill/core/browser/form_data_importer.cc",
         "patchSetId": 1
@@ -269,6 +311,30 @@
       "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f01e61c_c6cd400d",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T02:40:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98d12e04_2a1284b1",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 58
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
