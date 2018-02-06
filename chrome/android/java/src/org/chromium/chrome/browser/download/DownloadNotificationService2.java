@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.StrictModeContext;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
@@ -79,7 +80,6 @@ public class DownloadNotificationService2 {
     final List<ContentId> mDownloadsInProgress = new ArrayList<ContentId>();
 
     private NotificationManager mNotificationManager;
-    private SharedPreferences mSharedPrefs;
     private Bitmap mDownloadSuccessLargeIcon;
     private DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper;
     private DownloadForegroundServiceManager mDownloadForegroundServiceManager;
@@ -101,7 +101,6 @@ public class DownloadNotificationService2 {
         mNotificationManager =
                 (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
                         Context.NOTIFICATION_SERVICE);
-        mSharedPrefs = ContextUtils.getAppSharedPreferences();
         mDownloadSharedPreferenceHelper = DownloadSharedPreferenceHelper.getInstance();
         mDownloadForegroundServiceManager = new DownloadForegroundServiceManager();
     }
@@ -504,6 +503,7 @@ public class DownloadNotificationService2 {
      * already in progress, do nothing.
      */
     void resumeAllPendingDownloads() {
+        Log.e("joy", "resumeAllPendingDownloads");
         Context context = ContextUtils.getApplicationContext();
 
         // Limit the number of auto resumption attempts in case Chrome falls into a vicious cycle.
@@ -535,6 +535,7 @@ public class DownloadNotificationService2 {
 
     @VisibleForTesting
     void resumeDownload(Intent intent) {
+        Log.e("joy", "resumeDownload intent: " + intent);
         DownloadBroadcastManager.startDownloadBroadcastManager(
                 ContextUtils.getApplicationContext(), intent);
     }
@@ -569,12 +570,14 @@ public class DownloadNotificationService2 {
     }
 
     static int getNewNotificationIdFor(int oldNotificationId) {
+        Log.e("joy", "getNewNotificationIdFor " + oldNotificationId);
         int newNotificationId = getNextNotificationId();
         DownloadSharedPreferenceHelper downloadSharedPreferenceHelper =
                 DownloadSharedPreferenceHelper.getInstance();
         List<DownloadSharedPreferenceEntry> entries = downloadSharedPreferenceHelper.getEntries();
         for (DownloadSharedPreferenceEntry entry : entries) {
             if (entry.notificationId == oldNotificationId) {
+                Log.e("joy", "updating shared preferences");
                 DownloadSharedPreferenceEntry newEntry = new DownloadSharedPreferenceEntry(entry.id,
                         newNotificationId, entry.isOffTheRecord, entry.canDownloadWhileMetered,
                         entry.fileName, entry.isAutoResumable, entry.isTransient);
@@ -582,6 +585,7 @@ public class DownloadNotificationService2 {
                 break;
             }
         }
+        Log.e("joy", "newNotificationId " + newNotificationId);
         return newNotificationId;
     }
 
@@ -614,16 +618,18 @@ public class DownloadNotificationService2 {
     }
 
     void onForegroundServiceRestarted(int pinnedNotificationId) {
-        updateNotificationsForShutdown();
-        resumeAllPendingDownloads();
-
+        Log.e("joy", "onForegroundServiceRestarted");
         // In API < 24, notifications pinned to the foreground will get killed with the service.
         // Fix this by relaunching the notification that was pinned to the service as the service
         // dies, if there is one.
         relaunchPinnedNotification(pinnedNotificationId);
+
+        updateNotificationsForShutdown();
+        resumeAllPendingDownloads();
     }
 
     void onForegroundServiceTaskRemoved() {
+        Log.e("joy", "onForegroundServiceTaskRemoved");
         // If we've lost all Activities, cancel the off the record downloads.
         if (ApplicationStatus.isEveryActivityDestroyed()) {
             cancelOffTheRecordDownloads();
@@ -631,6 +637,7 @@ public class DownloadNotificationService2 {
     }
 
     void onForegroundServiceDestroyed() {
+        Log.e("joy", "onForegroundServiceDestroyed");
         updateNotificationsForShutdown();
         rescheduleDownloads();
     }
@@ -641,6 +648,7 @@ public class DownloadNotificationService2 {
      * @param pinnedNotificationId Id of the notification pinned to the service when it died.
      */
     private void relaunchPinnedNotification(int pinnedNotificationId) {
+        Log.e("joy", "relaunchPinnedNotification " + pinnedNotificationId);
         // If there was no notification pinned to the service, no correction is necessary.
         if (pinnedNotificationId == INVALID_NOTIFICATION_ID) return;
 
@@ -654,20 +662,26 @@ public class DownloadNotificationService2 {
                         new DownloadSharedPreferenceEntry(entry.id, getNextNotificationId(),
                                 entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.fileName,
                                 entry.isAutoResumable, entry.isTransient);
-                mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(updatedEntry);
+                mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(
+                        updatedEntry, true);
+
+                Log.e("joy",
+                        "getting new notificationId newNotificationId: "
+                                + updatedEntry.notificationId);
 
                 // Right now this only happens in the paused case, so re-build and re-launch the
                 // paused notification, with the updated notification id..
-                notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
-                        entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
-                        null /* icon */, true /* hasUserGesture */, true /* forceRebuild */,
-                        PendingState.NOT_PENDING);
+                notifyDownloadPaused(updatedEntry.id, updatedEntry.fileName, true /* isResumable */,
+                        updatedEntry.isAutoResumable, updatedEntry.isOffTheRecord,
+                        updatedEntry.isTransient, null /* icon */, true /* hasUserGesture */,
+                        true /* forceRebuild */, PendingState.NOT_PENDING);
                 return;
             }
         }
     }
 
     private void updateNotificationsForShutdown() {
+        Log.e("joy", "updateNotificationsForShutdown");
         cancelOffTheRecordDownloads();
         List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
         for (DownloadSharedPreferenceEntry entry : entries) {
@@ -675,12 +689,14 @@ public class DownloadNotificationService2 {
             // Move all regular downloads to pending.  Don't propagate the pause because
             // if native is still working and it triggers an update, then the service will be
             // restarted.
+            Log.e("joy", "moving this download to pending: " + entry.id);
             notifyDownloadPaused(entry.id, entry.fileName, true, true, false, entry.isTransient,
                     null, false, false, PendingState.PENDING_NETWORK);
         }
     }
 
     private void cancelOffTheRecordDownloads() {
+        Log.e("joy", "cancelOffTheRecordDownloads");
         boolean cancelActualDownload =
                 BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                         .isStartupSuccessfullyCompleted()

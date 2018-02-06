@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.download;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -399,15 +400,25 @@ public class DownloadManagerService
      * @param type Type of the information.
      * @param downloadInfo Information to be saved.
      */
-    static void storeDownloadInfo(
-            SharedPreferences sharedPrefs, String type, Set<String> downloadInfo) {
+    @SuppressLint({"ApplySharedPref", "CommitPrefEdits"})
+    static void storeDownloadInfo(SharedPreferences sharedPrefs, String type,
+            Set<String> downloadInfo, boolean forceCommit) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         if (downloadInfo.isEmpty()) {
             editor.remove(type);
         } else {
             editor.putStringSet(type, downloadInfo);
         }
-        editor.apply();
+
+        if (forceCommit) {
+            // Write synchronously because it might be used on restart and needs to stay up-to-date.
+            if (!editor.commit()) {
+                Log.e("joy", "failed to commit DownloadInfo");
+                Log.e(TAG, "Failed to write DownloadInfo " + type);
+            }
+        } else {
+            editor.apply();
+        }
     }
 
     /**
@@ -1336,7 +1347,7 @@ public class DownloadManagerService
         for (int i = 0; i < mUmaEntries.size(); ++i) {
             entries.add(mUmaEntries.get(i).getSharedPreferenceString());
         }
-        storeDownloadInfo(mSharedPrefs, DOWNLOAD_UMA_ENTRY, entries);
+        storeDownloadInfo(mSharedPrefs, DOWNLOAD_UMA_ENTRY, entries, false /* forceCommit */);
     }
 
     /**

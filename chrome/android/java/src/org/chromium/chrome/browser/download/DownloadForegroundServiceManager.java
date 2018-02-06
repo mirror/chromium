@@ -66,6 +66,9 @@ public class DownloadForegroundServiceManager {
 
     public void updateDownloadStatus(Context context, DownloadStatus downloadStatus,
             int notificationId, Notification notification) {
+        Log.e("joy",
+                "updateDownloadStatus notificationId: " + notificationId
+                        + ", downloadStatus: " + downloadStatus);
         mDownloadUpdateQueue.put(notificationId,
                 new DownloadUpdate(notificationId, notification, downloadStatus, context));
         processDownloadUpdateQueue(false /* not isProcessingPending */);
@@ -207,6 +210,7 @@ public class DownloadForegroundServiceManager {
 
     @VisibleForTesting
     void startOrUpdateForegroundService(int notificationId, Notification notification) {
+        Log.e("joy", "startOrUpdateForegroundService notificationId: " + notificationId);
         if (mBoundService != null && notificationId != INVALID_NOTIFICATION_ID
                 && notification != null) {
             // If there was an originally pinned notification, get its id and notification.
@@ -227,6 +231,7 @@ public class DownloadForegroundServiceManager {
 
     @VisibleForTesting
     void stopAndUnbindService(DownloadStatus downloadStatus) {
+        Log.e("joy", "stopAndUnbindService downloadStatus: " + downloadStatus);
         Preconditions.checkNotNull(mBoundService);
         mIsServiceBound = false;
 
