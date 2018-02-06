@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0b5620f8_fe69319a",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T07:15:22Z",
+      "side": 1,
+      "message": "nit: remove \u0027{\u0027 here and \u0027}\u0027 below.",
+      "range": {
+        "startLine": 168,
+        "startChar": 79,
+        "endLine": 168,
+        "endChar": 80
+      },
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3027d6f3_465723cd",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T07:15:22Z",
+      "side": 1,
+      "message": "style nit: this inner \u0027{\u0027 and \u0027}\u0027 is not needed.",
+      "range": {
+        "startLine": 188,
+        "startChar": 79,
+        "endLine": 188,
+        "endChar": 80
+      },
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71205df7_b7d3ab93",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 13
@@ -36,6 +82,52 @@
       "writtenOn": "2018-02-05T21:50:20Z",
       "side": 1,
       "message": "I missed this in Ananta\u0027s CL (https://codereview.chromium.org/2580753002/), but deleting this directly carries some risks (since we\u0027ve seen lots of places where people delete a pending entry while NavigateToPendingEntry is still on the stack).\n\nCan we call DiscardPendingEntry here instead, to let it take care of the details (including lines 499-500) and ensure that no one is calling this during NavigateToPendingEntry?",
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64aa0dc_fc061800",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T07:15:22Z",
+      "side": 1,
+      "message": "This comment isn\u0027t consistent with comments for ShouldTreatNavigationAsReload() around line 134. It says clicking a link to the same page is also converted here.",
+      "range": {
+        "startLine": 2033,
+        "startChar": 13,
+        "endLine": 2033,
+        "endChar": 29
+      },
+      "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881d73a4_b0275c56",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-02-06T07:15:22Z",
+      "side": 1,
+      "message": "Any chance to merge these other parameter checks and ShouldTreatNavigationAsReload() function, by passing these parameters to ShouldTreatNavigationAsReload(), or make ShouldTreatNavigationAsReload() a private member method with no parameter?\n\nThis change moves some of existing parameters into the function, but it\u0027s still in a mixed state to have two separated code places to make a decision. It\u0027s a little hard to track for people who are not an expert on this file, like me.",
+      "range": {
+        "startLine": 2034,
+        "startChar": 6,
+        "endLine": 2044,
+        "endChar": 42
+      },
       "revId": "52c776e7eeddc58d1c69763ac59ea581480a47a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
