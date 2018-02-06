@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f58f3b_e16cfbcf",
+        "filename": "docs/cipd.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-06T15:59:10Z",
+      "side": 1,
+      "message": "The docs are super! The only thing that\u0027s lacking is this point I think. Would be good to say:\n * how to get permission, \n * how to check permission,\n * how to make sure what you upload is accessible to everyone\n * how to make a package that is accessible only to googlers.",
+      "revId": "1add781dac066ad72afc73616312bebec65e4441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9588ab48_e55a303a",
+        "filename": "docs/cipd.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-06T15:59:10Z",
+      "side": 1,
+      "message": "nit: thought this blank line looked odd",
+      "revId": "1add781dac066ad72afc73616312bebec65e4441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
