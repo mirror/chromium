@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d733563b_ab14a0fc",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "Maybe now move the |response_callback| documentation away and replace \"There is also a separate |response_callback| in |params|, see the DispatchFetchEventParams documentation.\"",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4438b2ea_2a49e321",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "Would expand this as: \"The client being controlled, used for FetchEvent#clientId.\"",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aafc8da_d305bd84",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "Given the  DispatchFetchEventParams documentation I think this can just be // Used for service worker navigation preload, to create FetchEvent#preloadResponse.",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76214f0d_c885dd81",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "I\u0027d just simplify this as // Parameters used for dispatching a FetchEvent.\n\n(The mojom files ideally can be separate from the implementation details).",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98711d91_8e657938",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "We could document these like this:\n\n// FetchEvent#request.",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0723003f_6ba7280c",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "// FetchEvent#clientId.",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2c0ac4_535bae92",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "// FetchEvent#preloadResponse.",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679be351_228091c0",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "// Called once the promise to respondWith() settles, or when the event handler ran without calling respondWith().",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f6793e_d9b61f94",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "This comment might be worthwhile:\n\n// The web-exposed client id, used for FetchEvent#clientId (i.e., ServiceWorkerProviderHost::client_uuid and not ServiceWorkerProviderHost::provider_id).",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a4bf9b_f25b6baa",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "nit: prefer `const network::ResourceRequest\u0026` so the reader knows the type",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88825a17_c9cf4009",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "Since we already consumed some of the |params| in line 1647 and 1659, I think we should instead pass just |params-\u003erequest| and |params-\u003eclientId| here, instead |params|.",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef69b409_86325dbe",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 1,
+      "message": "Q: Does std::move(fetch_callback_ptr) work instead?",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

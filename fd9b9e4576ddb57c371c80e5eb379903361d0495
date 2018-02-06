@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beaa531d_19fff693",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-features\u003dNetworkService/external/wpt/service-workers/service-worker/fetch-event.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:32:44Z",
+      "side": 0,
+      "message": "Cool, do we pass this assertion now? That\u0027s great if so, I didn\u0027t know it was related to clientId.",
+      "range": {
+        "startLine": 17,
+        "startChar": 219,
+        "endLine": 17,
+        "endChar": 220
+      },
+      "revId": "fd9b9e4576ddb57c371c80e5eb379903361d0495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
