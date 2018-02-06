@@ -350,6 +350,17 @@ public class ApiCompatibilityUtils {
         } else {
             activity.finish();
         }
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // On L FinishAndRemoveTaskWithRetry can sometimes fail. Callers of this method may
+            // assume that the Activity is definitely finished, so make sure. See
+            // https://crbug.com/781396.
+            if (!activity.isFinishing()) {
+                activity.finish();
+                if (!activity.isFinishing()) Process.killProcess(Process.myPid());
+            }
+        }
     }
 
     /**

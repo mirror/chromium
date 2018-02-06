@@ -29,6 +29,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -62,6 +63,12 @@ public class Preferences extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ensureActivityNotExported();
+
+        if (FirstRunFlowSequencer.launch(this, getIntent(), false, false)) {
+            super.onCreate(null);
+            ApiCompatibilityUtils.finishAndRemoveTask(this);
+            return;
+        }
 
         // The browser process must be started here because this Activity may be started explicitly
         // from Android notifications, when Android is restoring Preferences after Chrome was
