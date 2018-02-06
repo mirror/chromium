@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d590013_07e44c3a",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "What about:\n```\n// The PictureInPictureController is keeping the state and implementing the logic\n// around the Picture-in-Picture feature. It is meant to be used as well by the\n// Picture-in-Picture API and internally (eg. media controls). All consumers inside\n// Blink should use this class to access Picture-in-Picture.\n// A PictureInPictureController instance is associated to a Document. It is supplement\n// and therefore can be lazy-initiated. Callers should consider whether they want\n// to instantiate an object when they make a call.\n```",
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fd251d_7e8205cb",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 7
+      },
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc10fd1_cd90982d",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "I think you could even drop this comment as the method name is self explanatory but up to you :)",
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bc8e7e_030a0ecb",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "drop this as it will get out dated",
+      "range": {
+        "startLine": 42,
+        "startChar": 49,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbf32c2_4cb25710",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "a given video",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9256bbf7_48417ee9",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "drop \"or not\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 54,
+        "endLine": 76,
+        "endChar": 61
+      },
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65cbcb7_36e6d1f1",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T14:44:16Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 7
+      },
+      "revId": "b4c385ecc738e95c17c0d2221a6787ca4d9c1f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
