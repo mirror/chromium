@@ -54,10 +54,6 @@ interface HTMLElement : Element {
     [ImplementedAs=offsetWidthForBinding] readonly attribute long offsetWidth;
     [ImplementedAs=offsetHeightForBinding] readonly attribute long offsetHeight;
 
-    // CSS Object Model (CSSOM)
-    // https://drafts.csswg.org/cssom/#the-elementcssinlinestyle-interface
-    [SameObject, PerWorldBindings, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
-
     // Non-standard APIs
     [CEReactions, CustomElementCallbacks, RaisesException=Setter, MeasureAs=HTMLElementInnerText] attribute [TreatNullAs=NullString] DOMString innerText;
     [CEReactions, CustomElementCallbacks, RaisesException=Setter, MeasureAs=HTMLElementOuterText] attribute [TreatNullAs=NullString] DOMString outerText;
@@ -65,3 +61,4 @@ interface HTMLElement : Element {
 
 HTMLElement implements GlobalEventHandlers;
 HTMLElement implements NoncedElement;
+HTMLElement implements ElementCSSInlineStyle;
