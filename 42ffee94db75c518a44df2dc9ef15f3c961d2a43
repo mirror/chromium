@@ -16,6 +16,24 @@
       "revId": "42ffee94db75c518a44df2dc9ef15f3c961d2a43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb3f596_91aa8d80",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-02-06T17:58:32Z",
+      "side": 1,
+      "message": "|lines| and |line| isn\u0027t necessarily a good name here. They are just nodes I want to offset into given a selection from Blink (i.e. anchor/focus nodes and offsets). \n\nThe three interpretations of offsets here are\n\ngiven a node and an offset:\n- the offset is a child offset i.e. node.children[offset]\n- the offset is a DOM-like text offset (i.e. textNode.textContent[offset])\n- the node is not a text node, but we still want node.textContent[offset]\nThe last one is the really problematic one. The selection stuff in Blink offsets into visible text. I approximate this by looking at all of the text in inline text boxes.\n\nThe problem right now is that Blink returns all three of these types of offsets and there\u0027s no way to know whatwhich is being used.\n\nThe specific case is when there\u0027s a text field node (e.g. content editable), we\u0027re returning a text offset, but in non-editable DOM, we\u0027re returning child offsets.\n\nDoes this make sense?",
+      "parentUuid": "22418072_d2d07de3",
+      "revId": "42ffee94db75c518a44df2dc9ef15f3c961d2a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
