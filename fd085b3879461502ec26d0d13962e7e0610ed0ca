@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "6d6f7355_0f55fe3a",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T18:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740900d3_239d148c",
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd7823d_3280ad92",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 2
@@ -158,6 +176,24 @@
       "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba38e04f_e5bd6c95",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T18:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dd7823d_3280ad92",
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

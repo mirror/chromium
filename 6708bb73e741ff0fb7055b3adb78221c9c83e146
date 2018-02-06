@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7508042d_f5255b97",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T18:01:02Z",
+      "side": 1,
+      "message": "I took this from the previous implementation, but technically this is not true. The power state function (which calls into IOBluetoothPreferenceSetControllerPowerState in production code) is not BLE specific. In test code we currently do depend on BLE APIs, but here we have a dedicated check anyway. Given this, does it make sense to keep this check around?",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 75
+      },
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c3afff_263cd170",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T18:01:02Z",
+      "side": 1,
+      "message": "This test (and ..._DestroyWithPending) currently fails on Android with the following message: \n\n[ RUN      ] BluetoothTest.TogglePowerFakeAdapter_Twice\n[FATAL:weak_ptr.cc(26)] Check failed: sequence_checker_.CalledOnValidSequence(). WeakPtrs must be checked on the same sequenced thread.\n\nI suspect this is because of the usage of base::PostTask in BluetoothAdapter::SetPowered(). Reading ScopedTaskEnvironment\u0027s documentation [1] it seems like this can be fixed by constructing BluetoothTestBase\u0027s scoped_task_environment_ with ExecutionMode::QUEUED, but I\u0027m not quite sure whether this is the way to go here and if base::PostTask is suitable for BluetoothAdapter::SetPowered in the first place. What do you think?\n\n\n[1] https://codesearch.chromium.org/chromium/src/base/test/scoped_task_environment.h?l\u003d33-36\u0026rcl\u003d9862bfdde21a4039a9e2502cb67aea9d775f7edc",
+      "range": {
+        "startLine": 729,
+        "startChar": 22,
+        "endLine": 729,
+        "endChar": 50
+      },
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
