@@ -16,6 +16,24 @@
       "revId": "a8f9989e1aa489270835e6b1b47b8a2c26dcf833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dc32ce_09a4d170",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-06T21:23:21Z",
+      "side": 1,
+      "message": "It does for the ephemeron iterations to determine (during fixed point) where we need to trace.\n\nSo unless we rebuild Trace to rely on IsAlive, it does need the return value. I tried relying on IsAlive during Trace which did not look nice (IsAlive followed by Trace).",
+      "parentUuid": "be18833d_d359a5bb",
+      "revId": "a8f9989e1aa489270835e6b1b47b8a2c26dcf833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

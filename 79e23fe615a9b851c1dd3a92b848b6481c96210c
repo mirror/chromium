@@ -16,6 +16,24 @@
       "revId": "79e23fe615a9b851c1dd3a92b848b6481c96210c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225b08a9_e43229da",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-06T21:23:21Z",
+      "side": 0,
+      "message": "IIUC, the point is that we should not be tracing and modifying mark bits (which trace could do). \n\nWe will *always* need to check liveness for weak processing.",
+      "parentUuid": "f96e4bda_2d30d7b8",
+      "revId": "79e23fe615a9b851c1dd3a92b848b6481c96210c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
