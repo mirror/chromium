@@ -95,7 +95,7 @@ UPowerObject::UPowerObject(
 UPowerObject::~UPowerObject() {
   properties_.reset();  // before the proxy is deleted.
   dbus_->RemoveObjectProxy(kUPowerServiceName, proxy_->object_path(),
-                           base::Bind(&base::DoNothing));
+                           base::DoNothing());
 }
 
 std::vector<dbus::ObjectPath> UPowerObject::EnumerateDevices() {
@@ -261,7 +261,7 @@ BatteryObject::BatteryObject(
 BatteryObject::~BatteryObject() {
   properties_.reset();  // before the proxy is deleted.
   dbus_->RemoveObjectProxy(kUPowerServiceName, proxy_->object_path(),
-                           base::Bind(&base::DoNothing));
+                           base::DoNothing());
 }
 
 bool BatteryObject::IsValid() const {
