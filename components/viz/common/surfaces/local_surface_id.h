@@ -83,6 +83,10 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
   friend struct mojo::StructTraits<mojom::LocalSurfaceIdDataView,
                                    LocalSurfaceId>;
 
+  // This function is used to extract either |high_| or |low_| string
+  // part of UnguessableToken in case of not verbose logging level
+  std::string ExtractPart(int, int, const std::string&) const;
+
   friend bool operator<(const LocalSurfaceId& lhs, const LocalSurfaceId& rhs);
 
   uint32_t parent_sequence_number_;
