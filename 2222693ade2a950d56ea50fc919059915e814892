@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa526e70_74c8627d",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-06T04:31:10Z",
+      "side": 1,
+      "message": "..and either of the following conditions is met, open the URL in Chrome or ARC without showing the UI\n\n?",
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a185e8a2_cefd6854",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-06T04:31:10Z",
+      "side": 1,
+      "message": "const",
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a231c8a_1fc09c16",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-06T04:31:10Z",
+      "side": 1,
+      "message": "Maybe switch-case is cleaner.",
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8818a7_f62f0a5c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-06T04:31:10Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. Do we still need the global variables when you can get them using |tab|?",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 480,
+        "endChar": 63
+      },
+      "revId": "2222693ade2a950d56ea50fc919059915e814892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b2f025_04b17c71",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-06T04:31:10Z",
+      "side": 0,
+      "message": "Thanks :)",
+      "revId": "d59d694cd460c08892a2ca1825104ae5260e70ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3690f0_6de84ff7",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-02-06T04:31:10Z",
+      "side": 0,
+      "message": "IIRC, this is not for meeting the security requirement, but for detecting and stopping potential infinite loops (Chrome sends the URL to ARC, ARC sends back a URL to Chrome, Chrome sends a similar URL to ARC, ...)  I guess the new code does not stop the loop.",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "d59d694cd460c08892a2ca1825104ae5260e70ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
