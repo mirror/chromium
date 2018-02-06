@@ -460,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "ee1f7ddf_f6aa40fd",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "To make what you are doing here clear and understandable, you need to add some comments to explain.",
+      "parentUuid": "43a820ed_7478bf89",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1044,
+        "endChar": 64
+      },
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "545363e7_f8b73d6f",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 7
@@ -489,6 +513,24 @@
       "side": 1,
       "message": "The priority order matters.\nIf close button width is 16 and favicon \u0026 alert icon width are 12.\nThen an available width of 24px for an active tab will only show 1 icon.\nBut an available width of 24px for an inactive tab will show 2 icons. Not sure how this can be done in an alternative way.",
       "parentUuid": "545363e7_f8b73d6f",
+      "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7be800_cc9fc4b2",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Let\u0027s discuss offline how to make this better.",
+      "parentUuid": "34d185e5_d71ccaa3",
       "revId": "8ff9c7a482969fba536b6c9cfd178aefd656ce8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

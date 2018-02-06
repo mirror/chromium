@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b7e9f35_e5a3599b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "I thought we agreed we won\u0027t be calling this MD2 and we\u0027d just stick to Touchable Chrome or something?",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78c7483_fa77ed82",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Nit: If these colors are touchable-chrome specific, I would move them next to the other touchable colors below.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 36
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e7fa6af_e2370e58",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -70,6 +116,52 @@
     },
     {
       "key": {
+        "uuid": "ca0d53c6_3e8807ad",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Nit: This comment is not clear in this context, since we are returning the colors immediately without accessing the theme pack. So either remove the comment, or further improve it to explain what you actually mean.",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 39
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9cbacb_e717e195",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Do we get here in non-touch optimized mode?",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 48
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fca8881_ad3ebe78",
         "filename": "chrome/browser/themes/theme_properties.h",
         "patchSetId": 12
@@ -81,6 +173,29 @@
       "writtenOn": "2018-02-06T03:33:11Z",
       "side": 1,
       "message": "I don\u0027t think we want these in the theme pack, at least in the OverwritableByUser section.  Maybe we want them in the non-overwritable section?  But I\u0027m not sure whether we need them (or at least all of them) in the theme pack at all.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4d2531_8a1add5f",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Some duplication here. You can remove these entirely, and just use `const int mode` that you have below.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +219,29 @@
     },
     {
       "key": {
+        "uuid": "cba63d02_616aec44",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Can you please move this to the `case TAB_HEIGHT:`? There\u0027s no need for it to be here always.\n\nBy the way I would do the same thing for all other IDs (even if it involves repeated values for touchable and normal modes). This way we only need our `mode` variable`.",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15ff1ac4_86f255c5",
         "filename": "chrome/browser/ui/layout_constants.cc",
         "patchSetId": 12
@@ -121,6 +259,29 @@
     },
     {
       "key": {
+        "uuid": "996527a8_1ac4d599",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Nit: `kTabHorizontalInset` sounds better and more natural.\n\nAlso this can be defined inside the `case TAB:` block.",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "126ac748_99157c7d",
         "filename": "chrome/browser/ui/layout_constants.h",
         "patchSetId": 12
@@ -132,6 +293,29 @@
       "writtenOn": "2018-02-06T03:33:11Z",
       "side": 1,
       "message": "Nit: I\u0027m not sure this is a kind of \"padding\"; maybe this?:\n\n  // The distance between the edge of one tab and the same edge of an\n  // adjacent tab when tabs are stacked.\n  TAB_STACKED_DISTANCE,",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371e0669_35dc4340",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Nit: This makes it sound like two different things. Maybe:\n\n\"excluding the overlap (which is the endcap width on one side).\"\n\n?",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 10
+      },
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +509,29 @@
     },
     {
       "key": {
+        "uuid": "854409e0_8711a615",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Move this declaration to where you initialize it in line 1171.",
+      "range": {
+        "startLine": 1158,
+        "startChar": 56,
+        "endLine": 1158,
+        "endChar": 75
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a1db08c_f453e376",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 12
@@ -342,6 +549,52 @@
     },
     {
       "key": {
+        "uuid": "56fbf6ee_8afc8fa7",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "This effectively accesses the map twice (once for ContainsKey() and once for at()) using the same key. Why not:\n\nauto iter \u003d cache-\u003efind(key);\nif (iter !\u003d cache-\u003eend())\n  return iter-\u003esecond;\n\n?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a12d80_5fa42ee5",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Multiple accesses again.\n\nstd::vector\u003cgfx::ImageSkia\u003e\u0026 cached_images \u003d (*cache)[key];\n// Then use cached_images every where.\ncached_images.emaplace_back(...);\n\nreturn cached_images;",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7711fe57_f1009aa1",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 12
@@ -353,6 +606,29 @@
       "writtenOn": "2018-02-06T03:33:11Z",
       "side": 1,
       "message": "As an alternative to this, consider simply modifying how this button is painted.  Drawing a filled circle and overlaying with a vector icon (for the X glyph) would probably be pretty easy.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ad60f8_b21f9543",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T03:41:51Z",
+      "side": 1,
+      "message": "Nit: Document this.",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 23
+      },
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
