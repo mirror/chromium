@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0c8965a_65012e7f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T02:44:37Z",
+      "side": 1,
+      "message": "I don\u0027t think ndb will.",
+      "parentUuid": "0ea788cf_7317df3a",
+      "revId": "24d0599c5d0973f395a9052b77d9a29f26a500bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "beac6e5e_d62751f2",
         "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T01:33:29Z",
       "side": 1,
       "message": "We should now make this local to this file, and not fire an event on TargetManager.",
+      "revId": "24d0599c5d0973f395a9052b77d9a29f26a500bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34db73d_f52e4f87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector_main/InspectorMain.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T02:44:37Z",
+      "side": 1,
+      "message": "Ouch, that was rather mechanical. Fixing.",
+      "parentUuid": "beac6e5e_d62751f2",
       "revId": "24d0599c5d0973f395a9052b77d9a29f26a500bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
