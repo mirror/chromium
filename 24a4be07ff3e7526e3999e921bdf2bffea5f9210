@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f7cda0c_0d5c5d69",
+        "filename": "ash/system/status_area_widget_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T00:27:18Z",
+      "side": 1,
+      "message": "Yeah, I didn\u0027t use WidgetDelegateView because this apparently needs to inherit from views::AccessiblePaneView. It wasn\u0027t clear to me if it was safe to change that.",
+      "parentUuid": "d7b83ee7_250f7453",
+      "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b68a13_b40128cf",
         "filename": "ash/system/status_area_widget_delegate.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d1e7e408_0c5b8f9e",
+        "filename": "ash/system/status_area_widget_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T00:27:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7b68a13_b40128cf",
+      "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39218c82_24496043",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fb36c4_9dc970cd",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T00:27:18Z",
+      "side": 1,
+      "message": "Discussed offline, I\u0027ll leave it, it was useful for debugging some tests where the global counter was getting out of sync.",
+      "parentUuid": "39218c82_24496043",
+      "revId": "24a4be07ff3e7526e3999e921bdf2bffea5f9210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
