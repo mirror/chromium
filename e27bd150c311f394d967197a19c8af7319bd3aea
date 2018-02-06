@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15e28938_58e6e50a",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T00:20:02Z",
+      "side": 1,
+      "message": "Yes. We have a state machine in the existing UI, but it doesn\u0027t quite have all the information here (because there are more events). Could make a new one that covers all cases.",
+      "parentUuid": "2051e626_373ead85",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a7c7de6_0a3aec7c",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-05T20:06:21Z",
       "side": 1,
       "message": "Is this TODO migrated from the old UI?",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 257,
+        "endChar": 72
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b21855_6e02c766",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T00:20:02Z",
+      "side": 1,
+      "message": "No. Should I add it there as well? It was not really possible until the local printing change I landed near the end of last year.",
+      "parentUuid": "8a7c7de6_0a3aec7c",
       "range": {
         "startLine": 256,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "459df9fa_012b5506",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T00:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a89483_ecc075d8",
+      "range": {
+        "startLine": 258,
+        "startChar": 35,
+        "endLine": 258,
+        "endChar": 54
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eace1d0f_f36075a0",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ec2cca5c_e9befe1a",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T00:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eace1d0f_f36075a0",
+      "range": {
+        "startLine": 275,
+        "startChar": 4,
+        "endLine": 275,
+        "endChar": 18
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea7104d_abf16725",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20df5183_ab22a17e",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T00:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea7104d_abf16725",
+      "range": {
+        "startLine": 449,
+        "startChar": 10,
+        "endLine": 449,
+        "endChar": 13
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
