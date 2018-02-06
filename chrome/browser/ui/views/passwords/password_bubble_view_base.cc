@@ -60,10 +60,8 @@ void PasswordBubbleViewBase::ShowBubble(content::WebContents* web_contents,
       views::BubbleDialogDelegateView::CreateBubble(g_manage_passwords_bubble_);
 
   if (anchor_view) {
-    ManagePasswordsIconViews* const icon =
-        browser_view->GetLocationBarView()->manage_passwords_icon_view();
-    bubble_widget->AddObserver(icon);
-    icon->SetHighlighted();
+    bubble_widget->AddObserver(
+        browser_view->GetLocationBarView()->manage_passwords_icon_view());
   }
 
   // Adjust for fullscreen after creation as it relies on the content size.

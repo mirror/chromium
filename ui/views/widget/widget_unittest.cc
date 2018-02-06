@@ -635,13 +635,13 @@ class WidgetObserverTest : public WidgetTest, public WidgetObserver {
  public:
   WidgetObserverTest()
       : active_(nullptr),
+        last_observed_widget_(nullptr),
         widget_closed_(nullptr),
         widget_activated_(nullptr),
         widget_shown_(nullptr),
         widget_hidden_(nullptr),
         widget_bounds_changed_(nullptr),
-        widget_to_close_on_hide_(nullptr) {
-  }
+        widget_to_close_on_hide_(nullptr) {}
 
   ~WidgetObserverTest() override {}
 
@@ -651,6 +651,10 @@ class WidgetObserverTest : public WidgetTest, public WidgetObserver {
   }
 
   // Overridden from WidgetObserver:
+  void OnWidgetObserving(Widget* widget) override {
+    last_observed_widget_ = widget;
+  }
+
   void OnWidgetDestroying(Widget* widget) override {
     if (active_ == widget)
       active_ = nullptr;
@@ -691,6 +695,7 @@ class WidgetObserverTest : public WidgetTest, public WidgetObserver {
 
   void reset() {
     active_ = nullptr;
+    last_observed_widget_ = nullptr;
     widget_closed_ = nullptr;
     widget_activated_ = nullptr;
     widget_deactivated_ = nullptr;
@@ -706,6 +711,7 @@ class WidgetObserverTest : public WidgetTest, public WidgetObserver {
   }
 
   const Widget* active() const { return active_; }
+  const Widget* last_observed_widget() const { return last_observed_widget_; }
   const Widget* widget_closed() const { return widget_closed_; }
   const Widget* widget_activated() const { return widget_activated_; }
   const Widget* widget_deactivated() const { return widget_deactivated_; }
@@ -715,6 +721,7 @@ class WidgetObserverTest : public WidgetTest, public WidgetObserver {
 
  private:
   Widget* active_;
+  Widget* last_observed_widget_;
 
   Widget* widget_closed_;
   Widget* widget_activated_;
@@ -753,6 +760,18 @@ TEST_F(WidgetObserverTest, MAYBE_ActivationChange) {
   EXPECT_EQ(toplevel1.get(), widget_deactivated());
   EXPECT_EQ(toplevel2.get(), widget_activated());
   EXPECT_EQ(toplevel2.get(), active());
+}
+
+TEST_F(WidgetObserverTest, WidgetReportsSelfAsObservedWidget) {
+  Widget widget;
+  Widget::InitParams params = CreateParams(Widget::InitParams::TYPE_POPUP);
+  params.ownership = Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  widget.Init(params);
+
+  EXPECT_TRUE(last_observed_widget() == nullptr);
+  widget.AddObserver(this);
+  EXPECT_TRUE(last_observed_widget() == &widget);
+  widget.RemoveObserver(this);
 }
 
 namespace {
