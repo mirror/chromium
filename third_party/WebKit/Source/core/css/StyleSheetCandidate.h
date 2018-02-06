@@ -41,7 +41,7 @@ class StyleSheetCandidate {
   STACK_ALLOCATED();
 
  public:
-  enum Type { kHTMLLink, kHTMLStyle, kSVGStyle, kPi, kInvalid };
+  enum Type { kConstructed, kHTMLLink, kHTMLStyle, kSVGStyle, kPi, kInvalid };
 
   StyleSheetCandidate(Node& node) : node_(node), type_(TypeOf(node)) {}
 
