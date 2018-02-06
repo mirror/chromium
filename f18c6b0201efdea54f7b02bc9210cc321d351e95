@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d369fa36_6c195c0b",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-06T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df6580af_7bc02555",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b015d0de_7f8782b5",
         "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168f3567_729663b5",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-06T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b015d0de_7f8782b5",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e196618_4b968a62",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-06T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "144b796b_a09e8c47",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3e00569_472010d2",
         "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba38a38_1df65406",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-06T10:22:11Z",
+      "side": 1,
+      "message": "whoops, I didn\u0027t mean to add this now. It should be edited after constructed stylesheet can be applied.",
+      "parentUuid": "b3e00569_472010d2",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
