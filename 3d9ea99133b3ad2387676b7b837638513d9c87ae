@@ -34,6 +34,24 @@
       "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a48eb2c_b6e52888",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T13:29:08Z",
+      "side": 1,
+      "message": "Would you mind tacking on a comment like,\n\n/* zlib conventionally calls adler32(0, NULL, 0) before any other calls \n * to adler32(), so this is a good early (and infrequent) place to cache \n * CPU features for those later more interesting adler32() calls.\n */\n?",
+      "parentUuid": "34892be7_aedf1e83",
+      "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
