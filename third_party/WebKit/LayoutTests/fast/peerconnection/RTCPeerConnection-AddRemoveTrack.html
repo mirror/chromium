@@ -109,20 +109,46 @@ promise_test(function() {
   return createStreams({audio:true, video:false}, 1)
     .then(function(streams) {
       let stream = streams[0];
-      let track = stream.getAudioTracks()[0];
+      let track = stream.getTracks()[0];
       let sender = pc.addTrack(track);
       assert_equals(sender.track, track);
       assert_array_equals(pc.getSenders(), [ sender ]);
       assert_array_equals(pc.getLocalStreams(), []);
       // This is a NO-OP because there already is a sender for this track.
-      pc.addStream(stream);
+      // It throws an exception when there are no additional tracks to be added.
+      try {
+        pc.addStream(stream);
+        assert_unreached('Expected exception to be thrown.');
+      } catch (e) {
+        assert_equals(e.name, 'SyntaxError');
+      }
       // The sender is not associated with the stream, so |addStream| has no
       // effect in this case. Otherwise it would already have been part of
       // getLocalStreams().
       assert_array_equals(pc.getLocalStreams(), []);
       assert_array_equals(pc.getSenders(), [ sender ]);
     });
-}, 'addTrack() before addStream() works.');
+}, 'addStream() throws SyntaxError if all tracks are already added.');
+
+promise_test(function() {
+  let pc = new RTCPeerConnection();
+  return createStreams({audio:true, video:true}, 1)
+    .then(function(streams) {
+      let stream = streams[0];
+      let track = stream.getTracks()[0];
+      let sender = pc.addTrack(track);
+      assert_equals(sender.track, track);
+      assert_array_equals(pc.getSenders(), [ sender ]);
+      assert_array_equals(pc.getLocalStreams(), []);
+      // This should add the remaining track, creating a sender associated with
+      // the stream.
+      pc.addStream(stream);
+      assert_array_equals(pc.getLocalStreams(), [ stream ]);
+      assert_equals(pc.getSenders().length, 2);
+      assert_true(pc.getSenders().find(
+          s => { return s.track == stream.getTracks()[1]; }) != null);
+    });
+}, 'addStream() after addTrack() works if there are more tracks to be added.');
 
 /**
  * Helper functions.

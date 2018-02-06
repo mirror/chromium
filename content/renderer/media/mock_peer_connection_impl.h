@@ -17,9 +17,14 @@
 
 namespace content {
 
+class FakeRtpSender;
 class MockPeerConnectionDependencyFactory;
 class MockStreamCollection;
 
+// TODO(hbos): The use of fakes and mocks is the wrong approach for testing of
+// this. It introduces complexity, is error prone (not testing the right thing
+// and bugs in the mocks). This class is a maintenance burden and should be
+// removed. https://crbug.com/788659
 class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
  public:
   explicit MockPeerConnectionImpl(MockPeerConnectionDependencyFactory* factory,
@@ -36,16 +41,12 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
       webrtc::MediaStreamInterface* local_stream) override;
   rtc::scoped_refptr<webrtc::RtpSenderInterface> AddTrack(
       webrtc::MediaStreamTrackInterface* track,
-      std::vector<webrtc::MediaStreamInterface*> streams) override {
-    NOTIMPLEMENTED();
-    return nullptr;
-  }
-  bool RemoveTrack(webrtc::RtpSenderInterface* sender) override {
-    NOTIMPLEMENTED();
-    return false;
-  }
+      std::vector<webrtc::MediaStreamInterface*> streams) override;
+  bool RemoveTrack(webrtc::RtpSenderInterface* sender) override;
   rtc::scoped_refptr<webrtc::DtmfSenderInterface>
       CreateDtmfSender(webrtc::AudioTrackInterface* track) override;
+  std::vector<rtc::scoped_refptr<webrtc::RtpSenderInterface>> GetSenders()
+      const override;
   std::vector<rtc::scoped_refptr<webrtc::RtpReceiverInterface>> GetReceivers()
       const override;
   rtc::scoped_refptr<webrtc::DataChannelInterface>
@@ -157,6 +158,7 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
   std::string stream_label_;
   rtc::scoped_refptr<MockStreamCollection> local_streams_;
   rtc::scoped_refptr<MockStreamCollection> remote_streams_;
+  std::vector<rtc::scoped_refptr<FakeRtpSender>> senders_;
   std::unique_ptr<webrtc::SessionDescriptionInterface> local_desc_;
   std::unique_ptr<webrtc::SessionDescriptionInterface> remote_desc_;
   std::unique_ptr<webrtc::SessionDescriptionInterface>
@@ -174,6 +176,27 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
   rtc::scoped_refptr<webrtc::RTCStatsReport> stats_report_;
 
   DISALLOW_COPY_AND_ASSIGN(MockPeerConnectionImpl);
+};
+
+class FakeRtpSender : public webrtc::RtpSenderInterface {
+ public:
+  FakeRtpSender(rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track);
+  ~FakeRtpSender() override;
+
+  bool SetTrack(webrtc::MediaStreamTrackInterface* track) override;
+  rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track() const override;
+  uint32_t ssrc() const override;
+  cricket::MediaType media_type() const override;
+  std::string id() const override;
+  std::vector<std::string> stream_ids() const override;
+  webrtc::RtpParameters GetParameters() const override;
+  webrtc::RTCError SetParameters(
+      const webrtc::RtpParameters& parameters) override;
+  rtc::scoped_refptr<webrtc::DtmfSenderInterface> GetDtmfSender()
+      const override;
+
+ private:
+  rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track_;
 };
 
 class FakeRtpReceiver : public webrtc::RtpReceiverInterface {
