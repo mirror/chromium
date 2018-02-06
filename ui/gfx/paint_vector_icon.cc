@@ -562,6 +562,10 @@ void PaintVectorIcon(Canvas* canvas,
                      SkColor color,
                      const base::TimeDelta& elapsed_time) {
   DCHECK(!icon.is_empty());
+  if (icon.path)
+    DCHECK_EQ(END, icon.path[icon.path_size - 2].command) << icon.name;
+  if (icon.path_1x)
+    DCHECK_EQ(END, icon.path_1x[icon.path_1x_size - 1].command) << icon.name;
   const PathElement* path =
       (canvas->image_scale() == 1.f && icon.path_1x) ? icon.path_1x : icon.path;
   PaintPath(canvas, path, dip_size, color, elapsed_time);
