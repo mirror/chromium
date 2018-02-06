@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8db757ec_43eedcad",
+        "filename": "chrome/common/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Reverted to per-file DEPS.",
+      "parentUuid": "c775295d_58bdcea1",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bab3ff72_515c1dc7",
         "filename": "chrome/common/thread_profiler.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c0cbad_039c14f8",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3ff72_515c1dc7",
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0b8ce9be_48dbe3c6",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "This is assigning to a sequence local storage slot, so the storage is per-thread. Renamed the variable to make this obvious.",
+      "parentUuid": "8ca21f6f_30e0173c",
+      "range": {
+        "startLine": 82,
+        "startChar": 57,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3d09139_c2ba7918",
         "filename": "chrome/common/thread_profiler.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f2ca2a_2ebc5573",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Added a DCHECK within SetParentProfileCollector.",
+      "parentUuid": "b3d09139_c2ba7918",
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "0fe8363b_acdd2d05",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4145888_1620edd2",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "231d6b4e_de178a92",
         "filename": "chrome/common/thread_profiler.h",
         "patchSetId": 1
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1f8aa139_57029c0e",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "231d6b4e_de178a92",
+      "range": {
+        "startLine": 34,
+        "startChar": 48,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53711b22_9da97c81",
         "filename": "chrome/common/thread_profiler.h",
         "patchSetId": 1
@@ -142,6 +274,24 @@
       "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c21c2d9_3bb4edfa",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53711b22_9da97c81",
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +315,30 @@
       "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1345b2_945e8d84",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-02-06T22:30:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe8ebeab_b4e9e547",
+      "range": {
+        "startLine": 565,
+        "startChar": 1,
+        "endLine": 565,
+        "endChar": 0
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
