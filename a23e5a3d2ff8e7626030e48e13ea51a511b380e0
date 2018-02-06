@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7142d618_ff5aa7e5",
+        "filename": "components/toolbar/vector_icons/vector_icons.cc.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "Does this one need a prefix for \"toolbar::\"?\n\n(More generally, it\u0027s not clear if the ID should *always* have a prefix, or only sometimes. It might be clearer if there was always a namespace. WDYT?)",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675c4ef7_72c93609",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e18b386_fcd905f8",
         "filename": "components/vector_icons/cc_macros.h",
         "patchSetId": 2
@@ -19,6 +53,98 @@
         "endLine": 5,
         "endChar": 12
       },
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894383ac_0628c4a3",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "I\u0027m OK with either header guards or some kind of assert. (I\u0027m not sure if you can assert that a macro isn\u0027t defined?)",
+      "parentUuid": "4e18b386_fcd905f8",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 12
+      },
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9fb14c2_8db142ae",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "This might be less confusing if it was called VECTOR_ICON_NAMESPACE or NAMESPACES",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121f04f4_829dc739",
+        "filename": "components/vector_icons/forward_arrow.icon",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "Q: Why do these assets change in this CL?",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c05a59_3bcfe95f",
+        "filename": "ui/gfx/vector_icon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "nit: Document this (like why we\u0027re using it)",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0304f330_fce59ef7",
+        "filename": "ui/gfx/vector_icon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 1,
+      "message": "Did you mean to commit this?",
       "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9715a385_b4c9d042",
+        "filename": "ui/views/vector_icons/vector_icons.cc.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T22:19:45Z",
+      "side": 0,
+      "message": "It\u0027s nice to see all this copy/pasted boilerplate going away.",
+      "revId": "076f8e1b34687bb11ec7b32d08feb45a7cb67fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
