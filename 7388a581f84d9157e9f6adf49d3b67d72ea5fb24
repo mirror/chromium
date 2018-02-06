@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dc3e2f4e_c1b0b5cd",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:09:35Z",
+      "side": 1,
+      "message": "Still curious about the plans here.",
+      "parentUuid": "79eff863_416c981c",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96c71633_d8ffd2d3",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 18
@@ -136,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "448bf147_a83f47bd",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:09:35Z",
+      "side": 1,
+      "message": "Can you mention the fact that they are non-NULL in the comments? Or can they be changed from const pointers to const references?",
+      "parentUuid": "cd4aa523_52dffbc3",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d63b306_1a423324",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 18
@@ -165,6 +201,24 @@
       "side": 1,
       "message": "Yes, it is one observer at a time. I can delete this comment. It registers one observer and return existing storages\u0027 info.",
       "parentUuid": "8d63b306_1a423324",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4c0b19_535f980d",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:09:35Z",
+      "side": 1,
+      "message": "Similar to a comment on a previous comment, this method doesn\u0027t actually return anything. The comment should say something about |callback|.",
+      "parentUuid": "e32fafa4_3040b022",
       "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
