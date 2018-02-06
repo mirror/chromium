@@ -111,6 +111,7 @@ BEGIN
     VK_NUMPAD8,     IDC_SELECT_TAB_7,           VIRTKEY, CONTROL
     "E",            IDC_SHOW_APP_MENU,          VIRTKEY, ALT
     "F",            IDC_SHOW_APP_MENU,          VIRTKEY, ALT
+    "B",            IDC_SHOW_BOOKMARK_MENU,     VIRTKEY, ALT
     "M",            IDC_SHOW_AVATAR_MENU,       VIRTKEY, CONTROL, SHIFT
     "B",            IDC_SHOW_BOOKMARK_BAR,      VIRTKEY, CONTROL, SHIFT
     "O",            IDC_SHOW_BOOKMARK_MANAGER,  VIRTKEY, CONTROL, SHIFT

@@ -150,6 +150,11 @@ void AppMenuButton::RemoveMenuListener(views::MenuListener* listener) {
   menu_listeners_.RemoveObserver(listener);
 }
 
+void AppMenuButton::OpenBookmarkMenu() {
+  ShowMenu(false);
+  menu_->OpenBookmarkMenu();
+}
+
 gfx::Size AppMenuButton::CalculatePreferredSize() const {
   gfx::Rect rect(gfx::Size(kIconSize, kIconSize));
   rect.Inset(gfx::Insets(-ToolbarButton::kInteriorPadding));

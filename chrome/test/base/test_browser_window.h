@@ -85,6 +85,7 @@ class TestBrowserWindow : public BrowserWindow {
   void FocusInactivePopupForAccessibility() override {}
   void RotatePaneFocus(bool forwards) override {}
   void ShowAppMenu() override {}
+  void ShowBookmarkMenu() override {}
   content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
       const content::NativeWebKeyboardEvent& event) override;
   void HandleKeyboardEvent(

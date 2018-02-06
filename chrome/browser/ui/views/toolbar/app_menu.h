@@ -51,6 +51,9 @@ class AppMenu : public views::MenuDelegate,
   // Closes the menu if it is open, otherwise does nothing.
   void CloseMenu();
 
+  // Opens the Bookmark menu, assuming the menu is already open.
+  void OpenBookmarkMenu();
+
   // Whether the menu is currently visible to the user.
   bool IsShowing();
 

@@ -561,6 +561,10 @@ void BrowserWindowCocoa::ShowAppMenu() {
   // No-op. Mac doesn't support showing the menus via alt keys.
 }
 
+void BrowserWindowCocoa::ShowBookmarkMenu() {
+  // No-op. Mac doesn't support showing the menus via alt keys.
+}
+
 content::KeyboardEventProcessingResult
 BrowserWindowCocoa::PreHandleKeyboardEvent(
     const NativeWebKeyboardEvent& event) {

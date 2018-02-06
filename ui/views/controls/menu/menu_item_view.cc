@@ -384,6 +384,13 @@ void MenuItemView::SetSelected(bool selected) {
   SchedulePaint();
 }
 
+void MenuItemView::SelectAndOpenSubmenu() {
+  GetMenuController()->SetSelection(
+      this, MenuController::SELECTION_UPDATE_IMMEDIATELY |
+                MenuController::SELECTION_OPEN_SUBMENU |
+                MenuController::SELECTION_EXIT_ALL_ON_ESCAPE);
+}
+
 void MenuItemView::SetTooltip(const base::string16& tooltip, int item_id) {
   MenuItemView* item = GetMenuItemByID(item_id);
   DCHECK(item);

@@ -295,6 +295,9 @@ class BrowserWindow : public ui::BaseWindow {
   // Shows the app menu (for accessibility).
   virtual void ShowAppMenu() = 0;
 
+  // Shows the Bookmarks submenu.
+  virtual void ShowBookmarkMenu() = 0;
+
   // Allows the BrowserWindow object to handle the specified keyboard event
   // before sending it to the renderer.
   virtual content::KeyboardEventProcessingResult PreHandleKeyboardEvent(

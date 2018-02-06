@@ -122,6 +122,7 @@ class BrowserWindowCocoa
       const base::Callback<void(bool)>& callback) override;
   void UserChangedTheme() override;
   void ShowAppMenu() override;
+  void ShowBookmarkMenu() override;
   content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
       const content::NativeWebKeyboardEvent& event) override;
   void HandleKeyboardEvent(
