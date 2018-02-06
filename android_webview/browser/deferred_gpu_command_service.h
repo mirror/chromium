@@ -21,6 +21,7 @@
 
 namespace gpu {
 struct GpuFeatureInfo;
+struct GpuPreferences;
 class SyncPointManager;
 }
 
@@ -44,7 +45,6 @@ class DeferredGpuCommandService
     : public gpu::InProcessCommandBuffer::Service,
       public base::RefCountedThreadSafe<DeferredGpuCommandService> {
  public:
-  static void SetInstance();
   static DeferredGpuCommandService* GetInstance();
 
   void ScheduleTask(const base::Closure& task) override;
@@ -74,8 +74,12 @@ class DeferredGpuCommandService
   friend class ScopedAllowGL;
   static void RequestProcessGL(bool for_idle);
 
-  DeferredGpuCommandService(const gpu::GPUInfo& gpu_info,
+  DeferredGpuCommandService(const gpu::GpuPreferences& gpu_preferences,
+                            const gpu::GPUInfo& gpu_info,
                             const gpu::GpuFeatureInfo& gpu_feature_info);
+
+  static DeferredGpuCommandService* CreateDeferredGpuCommandService();
+
   size_t IdleQueueSize();
 
   base::Lock tasks_lock_;
