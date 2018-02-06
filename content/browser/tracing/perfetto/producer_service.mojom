@@ -1,0 +1,7 @@
+module perfetto.mojom;
+
+import "remote_producer.mojom";
+
+interface ProducerService {
+  ConnectToChromeTracingProducer(ProducerClient producer_client);
+};

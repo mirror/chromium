@@ -1,0 +1,7 @@
+module perfetto.mojom;
+
+interface Producer {
+  NotifySharedMemoryUpdate(array<uint32> changed_pages);
+};
+
+
