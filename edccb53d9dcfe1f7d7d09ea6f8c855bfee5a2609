@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb686e5_888853fb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-06T23:54:21Z",
+      "side": 1,
+      "message": "This is always true when isTextInputType() returns true - so it\u0027s not needed.",
+      "range": {
+        "startLine": 254,
+        "startChar": 15,
+        "endLine": 254,
+        "endChar": 40
+      },
+      "revId": "edccb53d9dcfe1f7d7d09ea6f8c855bfee5a2609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ace6329_1d067013",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-06T23:54:21Z",
+      "side": 1,
+      "message": "We don\u0027t need to restart input for virtual keyboard when we\u0027re hiding anyways. Can you stick to the structure of\n\nif (hide) {\n  hideKeyboard();\n} else {\n  if (needsRestart) restartInput();\n  if (showIfNeeded \u0026\u0026 focusedNodeAllowsSoftKeyboard()) {\n    // There is no API for us to get notified of user\u0027s dismissal of keyboard.\n    // Therefore, we should try to show keyboard even when text input type hasn\u0027t\n    // changed.\n    showSoftKeyboard();\n  }\n}\n\nassuming showSoftKeyboard() doesn\u0027t do anything when physical keyboard is attached, and we don\u0027t want to show soft keyboard when inputmode\u003d\"none\" when physical keyboard is not attached.\n\nIs there any test case that this fixed?",
+      "range": {
+        "startLine": 464,
+        "startChar": 12,
+        "endLine": 464,
+        "endChar": 45
+      },
+      "revId": "edccb53d9dcfe1f7d7d09ea6f8c855bfee5a2609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
