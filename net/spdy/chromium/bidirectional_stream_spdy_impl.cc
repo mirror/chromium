@@ -292,7 +292,7 @@ int BidirectionalStreamSpdyImpl::SendRequestHeadersHelper() {
   CreateSpdyHeadersFromHttpRequest(
       http_request_info, http_request_info.extra_headers, true, &headers);
   written_end_of_stream_ = request_info_->end_stream_on_headers;
-  return stream_->SendRequestHeaders(std::move(headers),
+  return stream_->SendRequestHeaders(std::move(headers), false,
                                      request_info_->end_stream_on_headers
                                          ? NO_MORE_DATA_TO_SEND
                                          : MORE_DATA_TO_SEND);

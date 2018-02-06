@@ -278,7 +278,7 @@ int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
       base::Bind(&SpdyHeaderBlockNetLogCallback, &headers));
   DispatchRequestHeadersCallback(headers);
   result = stream_->SendRequestHeaders(
-      std::move(headers),
+      std::move(headers), can_send_early_,
       HasUploadData() ? MORE_DATA_TO_SEND : NO_MORE_DATA_TO_SEND);
 
   if (result == ERR_IO_PENDING) {

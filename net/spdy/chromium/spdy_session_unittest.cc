@@ -536,8 +536,10 @@ TEST_F(SpdySessionTest, GoAwayWithActiveStreams) {
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
   SpdyHeaderBlock headers2(headers.Clone());
 
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -597,7 +599,8 @@ TEST_F(SpdySessionTest, GoAwayWithActiveAndCreatedStream) {
   test::StreamDelegateDoNothing delegate1(spdy_stream1);
   spdy_stream1->SetDelegate(&delegate1);
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   EXPECT_EQ(0u, spdy_stream1->stream_id());
 
@@ -667,8 +670,10 @@ TEST_F(SpdySessionTest, GoAwayTwice) {
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
   SpdyHeaderBlock headers2(headers.Clone());
 
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -736,8 +741,10 @@ TEST_F(SpdySessionTest, GoAwayWithActiveStreamsThenClose) {
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
   SpdyHeaderBlock headers2(headers.Clone());
 
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -816,7 +823,8 @@ TEST_F(SpdySessionTest, GoAwayWhileDraining) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -857,7 +865,8 @@ TEST_F(SpdySessionTest, CreateStreamAfterGoAway) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -917,7 +926,8 @@ TEST_F(SpdySessionTest, HeadersAfterGoAway) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -968,7 +978,8 @@ TEST_F(SpdySessionTest, NetworkChangeWithActiveStreams) {
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
 
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -1130,7 +1141,8 @@ TEST_F(SpdySessionTest, PingAndWriteLoop) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   // Shift time so that a ping will be sent out.
   g_time_delta = base::TimeDelta::FromSeconds(11);
@@ -1225,7 +1237,7 @@ TEST_F(SpdySessionTest, StreamIdSpaceExhausted) {
 
   // Activate stream 1. One ID remains available.
   stream1->SendRequestHeaders(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl),
-                              NO_MORE_DATA_TO_SEND);
+                              false, NO_MORE_DATA_TO_SEND);
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(kLastStreamId - 2u, stream1->stream_id());
@@ -1235,7 +1247,7 @@ TEST_F(SpdySessionTest, StreamIdSpaceExhausted) {
 
   // Activate stream 2. ID space is exhausted.
   stream2->SendRequestHeaders(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl),
-                              NO_MORE_DATA_TO_SEND);
+                              false, NO_MORE_DATA_TO_SEND);
   base::RunLoop().RunUntilIdle();
 
   // Active streams remain active.
@@ -1343,7 +1355,7 @@ TEST_F(SpdySessionTest, MaxConcurrentStreamsZero) {
   test::StreamDelegateDoNothing delegate(stream);
   stream->SetDelegate(&delegate);
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  stream->SendRequestHeaders(std::move(headers), false, NO_MORE_DATA_TO_SEND);
 
   EXPECT_THAT(delegate.WaitForClose(), IsOk());
   EXPECT_EQ("hello!", delegate.TakeReceivedData());
@@ -1454,7 +1466,8 @@ TEST_F(SpdySessionTest, CancelPushAfterSessionGoesAway) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -1554,7 +1567,8 @@ TEST_F(SpdySessionTest, CancelPushAfterExpired) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   task_runner->RunUntilIdle();
 
@@ -1663,7 +1677,8 @@ TEST_F(SpdySessionTest, ClaimPushedStreamBeforeExpires) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   task_runner->RunUntilIdle();
 
@@ -1752,7 +1767,8 @@ TEST_F(SpdySessionTest, CancelPushBeforeClaimed) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -2201,7 +2217,8 @@ TEST_F(SpdySessionTest, HeadersCompressionHistograms) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   // Write request headers & capture resulting histogram update.
   base::HistogramTester histogram_tester;
@@ -2273,12 +2290,12 @@ TEST_F(SpdySessionTest, OutOfOrderHeaders) {
 
   SpdyHeaderBlock headers_lowest(
       spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream_lowest->SendRequestHeaders(std::move(headers_lowest),
+  spdy_stream_lowest->SendRequestHeaders(std::move(headers_lowest), false,
                                          NO_MORE_DATA_TO_SEND);
 
   SpdyHeaderBlock headers_highest(
       spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream_highest->SendRequestHeaders(std::move(headers_highest),
+  spdy_stream_highest->SendRequestHeaders(std::move(headers_highest), false,
                                           NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
@@ -2332,10 +2349,12 @@ TEST_F(SpdySessionTest, CancelStream) {
   spdy_stream2->SetDelegate(&delegate2);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   SpdyHeaderBlock headers2(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   EXPECT_EQ(0u, spdy_stream1->stream_id());
 
@@ -2395,10 +2414,12 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoCreatedSelfClosingStreams) {
   spdy_stream2->SetDelegate(&delegate2);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   SpdyHeaderBlock headers2(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Ensure that the streams have not yet been activated and assigned an id.
   EXPECT_EQ(0u, spdy_stream1->stream_id());
@@ -2451,10 +2472,12 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoCreatedMutuallyClosingStreams) {
   spdy_stream2->SetDelegate(&delegate2);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   SpdyHeaderBlock headers2(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Ensure that the streams have not yet been activated and assigned an id.
   EXPECT_EQ(0u, spdy_stream1->stream_id());
@@ -2517,10 +2540,12 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoActivatedSelfClosingStreams) {
   spdy_stream2->SetDelegate(&delegate2);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   SpdyHeaderBlock headers2(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Ensure that the streams have not yet been activated and assigned an id.
   EXPECT_EQ(0u, spdy_stream1->stream_id());
@@ -2592,10 +2617,12 @@ TEST_F(SpdySessionTest, CloseSessionWithTwoActivatedMutuallyClosingStreams) {
   spdy_stream2->SetDelegate(&delegate2);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   SpdyHeaderBlock headers2(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  spdy_stream2->SendRequestHeaders(std::move(headers2), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Ensure that the streams have not yet been activated and assigned an id.
   EXPECT_EQ(0u, spdy_stream1->stream_id());
@@ -2678,7 +2705,8 @@ TEST_F(SpdySessionTest, CloseActivatedStreamThatClosesSession) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   EXPECT_EQ(0u, spdy_stream->stream_id());
 
@@ -2820,7 +2848,8 @@ TEST_F(SpdySessionTest, CloseTwoStalledCreateStream) {
   EXPECT_EQ(2u, pending_create_stream_queue_size(LOWEST));
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated and then closed.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -2843,7 +2872,7 @@ TEST_F(SpdySessionTest, CloseTwoStalledCreateStream) {
   test::StreamDelegateDoNothing delegate2(stream2);
   stream2->SetDelegate(&delegate2);
   SpdyHeaderBlock headers2(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  stream2->SendRequestHeaders(std::move(headers2), NO_MORE_DATA_TO_SEND);
+  stream2->SendRequestHeaders(std::move(headers2), false, NO_MORE_DATA_TO_SEND);
 
   // Run until 2nd stream is activated and then closed.
   EXPECT_EQ(0u, delegate2.stream_id());
@@ -2866,7 +2895,7 @@ TEST_F(SpdySessionTest, CloseTwoStalledCreateStream) {
   test::StreamDelegateDoNothing delegate3(stream3);
   stream3->SetDelegate(&delegate3);
   SpdyHeaderBlock headers3(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  stream3->SendRequestHeaders(std::move(headers3), NO_MORE_DATA_TO_SEND);
+  stream3->SendRequestHeaders(std::move(headers3), false, NO_MORE_DATA_TO_SEND);
 
   // Run until 2nd stream is activated and then closed.
   EXPECT_EQ(0u, delegate3.stream_id());
@@ -3018,7 +3047,8 @@ TEST_F(SpdySessionTest, ReadDataWithoutYielding) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Set up the TaskObserver to verify SpdySession::DoReadLoop doesn't
   // post a task.
@@ -3080,7 +3110,8 @@ TEST_F(SpdySessionTest, TestYieldingSlowReads) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Set up the TaskObserver to verify that SpdySession::DoReadLoop posts a
   // task.
@@ -3150,7 +3181,8 @@ TEST_F(SpdySessionTest, TestYieldingSlowSynchronousReads) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st read.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -3228,7 +3260,8 @@ TEST_F(SpdySessionTest, TestYieldingDuringReadData) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Set up the TaskObserver to verify SpdySession::DoReadLoop posts a task.
   SpdySessionTestTaskObserver observer("spdy_session.cc", "DoReadLoop");
@@ -3332,7 +3365,8 @@ TEST_F(SpdySessionTest, TestYieldingDuringAsyncReadData) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Set up the TaskObserver to monitor SpdySession::DoReadLoop
   // posting of tasks.
@@ -3396,7 +3430,8 @@ TEST_F(SpdySessionTest, GoAwayWhileInDoReadLoop) {
   EXPECT_EQ(0u, spdy_stream1->stream_id());
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers1), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st read.
   EXPECT_EQ(0u, spdy_stream1->stream_id());
@@ -3618,8 +3653,9 @@ TEST_F(SpdySessionTest, CloseSessionOnIdleWhenPoolStalled) {
   spdy_stream1->SetDelegate(&delegate1);
 
   SpdyHeaderBlock headers1(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  EXPECT_EQ(ERR_IO_PENDING, spdy_stream1->SendRequestHeaders(
-                                std::move(headers1), NO_MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING,
+            spdy_stream1->SendRequestHeaders(std::move(headers1), false,
+                                             NO_MORE_DATA_TO_SEND));
 
   base::RunLoop().RunUntilIdle();
 
@@ -3748,7 +3784,8 @@ TEST_F(SpdySessionTest, CreateStreamOnStreamReset) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   EXPECT_EQ(0u, spdy_stream->stream_id());
 
@@ -4025,8 +4062,9 @@ TEST_F(SpdySessionTest, StreamFlowControlTooMuchData) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  EXPECT_EQ(ERR_IO_PENDING, spdy_stream->SendRequestHeaders(
-                                std::move(headers), NO_MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING,
+            spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                            NO_MORE_DATA_TO_SEND));
 
   // Request and response.
   base::RunLoop().RunUntilIdle();
@@ -4160,8 +4198,9 @@ TEST_F(SpdySessionTest, StreamFlowControlTooMuchDataTwoDataFrames) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  EXPECT_EQ(ERR_IO_PENDING, spdy_stream->SendRequestHeaders(
-                                std::move(headers), NO_MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING,
+            spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                            NO_MORE_DATA_TO_SEND));
 
   // Request and response.
   base::RunLoop().RunUntilIdle();
@@ -4251,8 +4290,8 @@ TEST_F(SpdySessionTest, SessionFlowControlNoReceiveLeaks) {
 
   SpdyHeaderBlock headers(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kMsgDataSize));
-  EXPECT_EQ(ERR_IO_PENDING,
-            stream->SendRequestHeaders(std::move(headers), MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream->SendRequestHeaders(
+                                std::move(headers), false, MORE_DATA_TO_SEND));
 
   const int32_t initial_window_size = kDefaultInitialWindowSize;
   EXPECT_EQ(initial_window_size, session_recv_window_size());
@@ -4316,8 +4355,8 @@ TEST_F(SpdySessionTest, SessionFlowControlNoSendLeaks) {
 
   SpdyHeaderBlock headers(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kMsgDataSize));
-  EXPECT_EQ(ERR_IO_PENDING,
-            stream->SendRequestHeaders(std::move(headers), MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream->SendRequestHeaders(
+                                std::move(headers), false, MORE_DATA_TO_SEND));
 
   const int32_t initial_window_size = kDefaultInitialWindowSize;
   EXPECT_EQ(initial_window_size, session_send_window_size());
@@ -4398,8 +4437,8 @@ TEST_F(SpdySessionTest, SessionFlowControlEndToEnd) {
 
   SpdyHeaderBlock headers(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kMsgDataSize));
-  EXPECT_EQ(ERR_IO_PENDING,
-            stream->SendRequestHeaders(std::move(headers), MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream->SendRequestHeaders(
+                                std::move(headers), false, MORE_DATA_TO_SEND));
 
   const int32_t initial_window_size = kDefaultInitialWindowSize;
   EXPECT_EQ(initial_window_size, session_send_window_size());
@@ -4493,8 +4532,8 @@ void SpdySessionTest::RunResumeAfterUnstallTest(
 
   SpdyHeaderBlock headers(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING,
-            stream->SendRequestHeaders(std::move(headers), MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream->SendRequestHeaders(
+                                std::move(headers), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream->GetUrlFromHeaders().spec());
 
   stall_function.Run(stream.get());
@@ -4630,8 +4669,8 @@ TEST_F(SpdySessionTest, ResumeByPriorityAfterSendWindowSizeIncrease) {
 
   SpdyHeaderBlock headers1(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(std::move(headers1),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(
+                                std::move(headers1), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream1->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -4640,8 +4679,8 @@ TEST_F(SpdySessionTest, ResumeByPriorityAfterSendWindowSizeIncrease) {
 
   SpdyHeaderBlock headers2(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(std::move(headers2),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(
+                                std::move(headers2), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream2->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -4734,8 +4773,8 @@ TEST_F(SpdySessionTest, ResumeSessionWithStalledStream) {
 
   SpdyHeaderBlock headers1(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(std::move(headers1),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(
+                                std::move(headers1), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream1->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -4744,8 +4783,8 @@ TEST_F(SpdySessionTest, ResumeSessionWithStalledStream) {
 
   SpdyHeaderBlock headers2(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(std::move(headers2),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(
+                                std::move(headers2), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream2->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -4886,8 +4925,8 @@ TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedStreams) {
 
   SpdyHeaderBlock headers1(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(std::move(headers1),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(
+                                std::move(headers1), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream1->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -4896,8 +4935,8 @@ TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedStreams) {
 
   SpdyHeaderBlock headers2(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(std::move(headers2),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(
+                                std::move(headers2), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream2->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -4906,8 +4945,8 @@ TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedStreams) {
 
   SpdyHeaderBlock headers3(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream3->SendRequestHeaders(std::move(headers3),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream3->SendRequestHeaders(
+                                std::move(headers3), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream3->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -5011,8 +5050,8 @@ TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedSession) {
 
   SpdyHeaderBlock headers1(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(std::move(headers1),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream1->SendRequestHeaders(
+                                std::move(headers1), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream1->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -5021,8 +5060,8 @@ TEST_F(SpdySessionTest, SendWindowSizeIncreaseWithDeletedSession) {
 
   SpdyHeaderBlock headers2(
       spdy_util_.ConstructPostHeaderBlock(kDefaultUrl, kBodyDataSize));
-  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(std::move(headers2),
-                                                        MORE_DATA_TO_SEND));
+  EXPECT_EQ(ERR_IO_PENDING, stream2->SendRequestHeaders(
+                                std::move(headers2), false, MORE_DATA_TO_SEND));
   EXPECT_EQ(kDefaultUrl, stream2->GetUrlFromHeaders().spec());
 
   base::RunLoop().RunUntilIdle();
@@ -5089,7 +5128,8 @@ TEST_F(SpdySessionTest, GoAwayOnSessionFlowControlError) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   // Write request.
   base::RunLoop().RunUntilIdle();
@@ -5158,7 +5198,8 @@ TEST_F(SpdySessionTest, PushedStreamShouldNotCountToClientConcurrencyLimit) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -5242,7 +5283,8 @@ TEST_F(SpdySessionTest, RejectPushedStreamExceedingConcurrencyLimit) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -5332,7 +5374,8 @@ TEST_F(SpdySessionTest, TrustedSpdyProxy) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated.
   EXPECT_EQ(0u, delegate.stream_id());
@@ -5411,7 +5454,8 @@ TEST_F(SpdySessionTest, TrustedSpdyProxyNotSet) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated.
   EXPECT_EQ(0u, delegate.stream_id());
@@ -5482,7 +5526,8 @@ TEST_F(SpdySessionTest, IgnoreReservedRemoteStreamsCount) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -5571,7 +5616,8 @@ TEST_F(SpdySessionTest, CancelReservedStreamOnHeadersReceived) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Run until 1st stream is activated.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -5675,7 +5721,8 @@ TEST_F(SpdySessionTest, GetPushedStream) {
   EXPECT_EQ(0u, num_active_pushed_streams());
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   // Activate first request.
   EXPECT_EQ(0u, delegate1.stream_id());
@@ -5963,7 +6010,8 @@ TEST_P(SpdySessionReadIfReadyTest, ReadIfReady) {
   spdy_stream->SetDelegate(&delegate);
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
-  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream->SendRequestHeaders(std::move(headers), false,
+                                  NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -6260,7 +6308,8 @@ TEST_F(AltSvcFrameTest, ProcessAltSvcFrameOnActiveStream) {
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(request_origin));
 
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
@@ -6314,7 +6363,8 @@ TEST_F(AltSvcFrameTest, DoNotProcessAltSvcFrameOnStreamWithInsecureOrigin) {
 
   SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(request_origin));
 
-  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_stream1->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();
 
