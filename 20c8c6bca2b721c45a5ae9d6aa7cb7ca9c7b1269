@@ -45,6 +45,40 @@
       "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8190d32f_dd30455b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2018-02-06T19:48:28Z",
+      "side": 1,
+      "message": "DummyPageHolder automatically creates an InteractiveDetector on dummy_page_holder_-\u003eGetDocument(), and I found (empirically, I cannot decipher this behavior from the source code of ProvideTo) that this line does not overwrite the auto created supplement. Let\u0027s delete this line now since this is essentially a no-op. \n\nAs the code stands now, InteractiveDetector::From(GetDocument()) is not the same interacitve detector returned by GetDetector(). The first one is the auto created Interactive Detector, while the second one is the one constructed in this test (which tried to be a supplement on the dummy page holder document but failed.) \n\nAll the tests pass right now because we never mix the two interactive detectors in the same test case. Almost all the test cases exclusively use GetDetector(), while the last two test cases exclusive use the detector obtained using InteractiveDetector::From. But this is not ideal; it will be very easy in the future to mix these two up and confuse ourselves. \n\nI\u0027d change the last two tests to also use GetDetector(), and add a comment in the constructor describing the situation with two interactive detectors and state that if possible we should never use InteractiveDetector::From in the tests. If you want you can land this the way it is now, and I can do these cleanup fixes in a follow up CL.",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2445864_4f58a29c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 59159,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2018-02-06T19:48:28Z",
+      "side": 1,
+      "message": "nit: Use a URL shortener (https://goo.gl/ works)",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
