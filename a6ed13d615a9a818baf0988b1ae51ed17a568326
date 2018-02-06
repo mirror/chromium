@@ -70,6 +70,30 @@
       "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bed2906_898f1a51",
+        "filename": "components/prefs/pref_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-06T10:05:16Z",
+      "side": 0,
+      "message": "\u003e FWIW, I\u0027m also a prefs owner but am unsure about this one too... Seems to be from mnissler, 7 years ago @ https://codereview.chromium.org/6347014.\n\u003e \n\u003e I don\u0027t see why it\u0027s required today (these will be cleared just the same by the natural destructor, if the order matters this can be encoded in the order of members which are destroyed from last to first).\n\nYeah, order of destruction is the only thing I could imagine it had something to do with.\n\n\u003e I agree however that this cleanup would be better off in a separate CL than this one which improves refcounting scheme and shouldn\u0027t be mixed with destruction order changes.\n\n+1",
+      "parentUuid": "b1f34b05_5856560b",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 65
+      },
+      "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
