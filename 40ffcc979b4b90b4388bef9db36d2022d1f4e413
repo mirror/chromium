@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3880edf_b38d7d84",
+        "filename": "DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-02-06T09:51:54Z",
+      "side": 0,
+      "message": "should that script be removed too then?",
+      "range": {
+        "startLine": 1231,
+        "startChar": 55,
+        "endLine": 1231,
+        "endChar": 77
+      },
+      "revId": "40ffcc979b4b90b4388bef9db36d2022d1f4e413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
