@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73dbc685_d24d349f",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:30:06Z",
+      "side": 1,
+      "message": "Just:\n\nsize_t erased \u003d compositor_map_.erase(iter);\nDCHECK_EQ(1U, erased);",
+      "revId": "b8b59dc89f985ab303916758b52588a5c407e1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63f98f3_ee40f030",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:30:06Z",
+      "side": 1,
+      "message": "Should this become a continue now?",
+      "revId": "b8b59dc89f985ab303916758b52588a5c407e1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3bea1c_9b87e2f9",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:30:06Z",
+      "side": 1,
+      "message": "Should requests that have been fulfilled be removed from |requests_|? When print previewing N pages, there will be N+1 requests, right?\n\nAlso, Fullfill -\u003e Fulfill.",
+      "revId": "b8b59dc89f985ab303916758b52588a5c407e1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8190c899_073a1fd1",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:30:06Z",
+      "side": 1,
+      "message": "Can this be std::make_unique?",
+      "range": {
+        "startLine": 156,
+        "startChar": 25,
+        "endLine": 156,
+        "endChar": 28
+      },
+      "revId": "b8b59dc89f985ab303916758b52588a5c407e1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9187a501_eccdab77",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T23:30:06Z",
+      "side": 1,
+      "message": "Is this change necessary so the compositor can store the data for a page request, separately from the data for the document request?",
+      "revId": "b8b59dc89f985ab303916758b52588a5c407e1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
