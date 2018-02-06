@@ -180,7 +180,7 @@ void ZoomBubbleView::ShowBubble(content::WebContents* web_contents,
 
   views::Widget* zoom_bubble_widget =
       views::BubbleDialogDelegateView::CreateBubble(zoom_bubble_);
-  if (anchor_view) {
+  if (zoom_bubble_widget && anchor_view) {
     zoom_bubble_widget->AddObserver(
         browser_view->GetLocationBarView()->zoom_view());
   }

@@ -284,7 +284,7 @@ void ToolbarView::ShowBookmarkBubble(
     bool already_bookmarked,
     bookmarks::BookmarkBubbleObserver* observer) {
   views::View* anchor_view = location_bar();
-  StarView* star_view = location_bar()->star_view();
+  BubbleIconView* const star_view = location_bar()->star_view();
   if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
     if (star_view && star_view->visible())
       anchor_view = star_view;
@@ -297,10 +297,8 @@ void ToolbarView::ShowBookmarkBubble(
   views::Widget* bubble_widget = BookmarkBubbleView::ShowBubble(
       anchor_view, gfx::Rect(), nullptr, observer, std::move(delegate),
       browser_->profile(), url, already_bookmarked);
-  if (bubble_widget && star_view) {
-    star_view->SetHighlighted();
+  if (bubble_widget && star_view)
     bubble_widget->AddObserver(star_view);
-  }
 }
 
 void ToolbarView::ShowTranslateBubble(

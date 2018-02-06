@@ -18,6 +18,9 @@ class Widget;
 // Observers can listen to various events on the Widgets.
 class VIEWS_EXPORT WidgetObserver {
  public:
+  // Called when this is added as an observer of a Widget.
+  virtual void OnWidgetObserving(Widget* widget) {}
+
   // The closing notification is sent immediately in response to (i.e. in the
   // same call stack as) a request to close the Widget (via Close() or
   // CloseNow()).

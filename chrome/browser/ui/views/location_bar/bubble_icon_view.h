@@ -14,7 +14,6 @@
 #include "ui/views/widget/widget_observer.h"
 
 class CommandUpdater;
-class LocationBarBubbleDelegateView;
 
 namespace gfx {
 struct VectorIcon;
@@ -30,9 +29,6 @@ class BubbleIconView : public views::InkDropHostView,
                        public views::WidgetObserver {
  public:
   void Init();
-
-  // Invoked when a bubble for this icon is created.
-  void OnBubbleCreated(LocationBarBubbleDelegateView* bubble);
 
   // Returns the bubble instance for the icon.
   virtual views::BubbleDialogDelegateView* GetBubble() const = 0;
@@ -89,6 +85,7 @@ class BubbleIconView : public views::InkDropHostView,
   void OnGestureEvent(ui::GestureEvent* event) override;
 
   // views::WidgetObserver:
+  void OnWidgetObserving(views::Widget* widget) override;
   void OnWidgetDestroying(views::Widget* widget) override;
   void OnWidgetVisibilityChanged(views::Widget* widget, bool visible) override;
 

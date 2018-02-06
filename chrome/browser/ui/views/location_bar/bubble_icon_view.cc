@@ -54,12 +54,6 @@ void BubbleIconView::SetTooltipText(const base::string16& tooltip) {
   image_->SetTooltipText(tooltip);
 }
 
-void BubbleIconView::OnBubbleCreated(LocationBarBubbleDelegateView* bubble) {
-  // This observer is removed when the bubble's widget is destroyed, by
-  // |OnWidgetDestroying|.
-  bubble->GetWidget()->AddObserver(this);
-}
-
 void BubbleIconView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   image_->GetAccessibleNodeData(node_data);
   node_data->role = ax::mojom::Role::kButton;
@@ -187,6 +181,10 @@ void BubbleIconView::OnGestureEvent(ui::GestureEvent* event) {
   }
 }
 
+void BubbleIconView::OnWidgetObserving(views::Widget* widget) {
+  OnWidgetVisibilityChanged(widget, widget->IsVisible());
+}
+
 void BubbleIconView::OnWidgetDestroying(views::Widget* widget) {
   widget->RemoveObserver(this);
 }
@@ -194,6 +192,9 @@ void BubbleIconView::OnWidgetDestroying(views::Widget* widget) {
 void BubbleIconView::OnWidgetVisibilityChanged(views::Widget* widget,
                                                bool visible) {
   // |widget| is a bubble that has just got shown / hidden.
+  if (visible && !GetInkDrop()->IsHighlightFadingInOrVisible())
+    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+
   if (!visible)
     AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr /* event */);
 }
