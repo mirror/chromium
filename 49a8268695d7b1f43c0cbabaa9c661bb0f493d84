@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d697ae_0b31ffb1",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T16:05:04Z",
+      "side": 1,
+      "message": "Can you comment why we skip main frames and imports. Why do we skip imports?",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "49a8268695d7b1f43c0cbabaa9c661bb0f493d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
