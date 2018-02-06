@@ -58,6 +58,7 @@ class CORE_EXPORT ScriptedAnimationController
   typedef int CallbackId;
   CallbackId RegisterCallback(FrameRequestCallbackCollection::FrameCallback*);
   void CancelCallback(CallbackId);
+
   // Returns true if any callback is currently registered.
   bool HasCallback() const;
 

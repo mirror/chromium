@@ -1417,6 +1417,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void RecordUkmOutliveTimeAfterShutdown(int outlive_time_count);
 
+  bool CurrentFrameHadRAF() const { return current_frame_had_raf_; }
+  bool NextFrameHasPendingRAF() const { return next_frame_has_pending_raf_; }
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1809,6 +1812,12 @@ class CORE_EXPORT Document : public ContainerNode,
   bool needs_to_record_ukm_outlive_time_;
 
   Member<Policy> policy_;
+
+  // Tracks whether the current frame executed requestAnimationFrame scripts as
+  // part of Document::ServiceScheduledAnimations. Used for animation metrics;
+  // see cc::CompositorTimingHistory::DidDraw.
+  bool current_frame_had_raf_;
+  bool next_frame_has_pending_raf_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

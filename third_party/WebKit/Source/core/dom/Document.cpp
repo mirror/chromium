@@ -670,7 +670,9 @@ Document::Document(const DocumentInit& initializer,
       engagement_level_(mojom::blink::EngagementLevel::NONE),
       secure_context_state_(SecureContextState::kUnknown),
       ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()),
-      needs_to_record_ukm_outlive_time_(false) {
+      needs_to_record_ukm_outlive_time_(false),
+      current_frame_had_raf_(false),
+      next_frame_has_pending_raf_(false) {
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -6653,8 +6655,12 @@ void Document::ServiceScriptedAnimations(
     double monotonic_animation_start_time) {
   if (!scripted_animation_controller_)
     return;
+  current_frame_had_raf_ =
+      scripted_animation_controller_->HasRegisteredCallbacks();
   scripted_animation_controller_->ServiceScriptedAnimations(
       monotonic_animation_start_time);
+  next_frame_has_pending_raf_ =
+      scripted_animation_controller_->HasRegisteredCallbacks();
 }
 
 ScriptedIdleTaskController& Document::EnsureScriptedIdleTaskController() {
