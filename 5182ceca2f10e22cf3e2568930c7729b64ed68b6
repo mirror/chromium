@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73174698_82837f93",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T04:21:23Z",
+      "side": 1,
+      "message": "That\u0027s my assumption. We can probably put this in a block:\n\nif (!ServiceWorkerUtils::IsServicificationEnabled()) { ...",
+      "parentUuid": "fd0bcc73_2da9c512",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed711279_728f060c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
