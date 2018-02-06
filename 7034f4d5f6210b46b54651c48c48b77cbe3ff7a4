@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c5728b8_7924111e",
+        "filename": "ui/base/platform_hook/platform_hook_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T05:58:58Z",
+      "side": 1,
+      "message": "Nit: std::move() if passing by value",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 51
+      },
+      "revId": "7034f4d5f6210b46b54651c48c48b77cbe3ff7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1525a09f_3561c6d0",
+        "filename": "ui/base/platform_hook/platform_hook_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T05:58:58Z",
+      "side": 1,
+      "message": "Ditto: std::move() here",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "7034f4d5f6210b46b54651c48c48b77cbe3ff7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3d1f0d_23168234",
+        "filename": "ui/base/platform_hook/platform_hook_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T05:58:58Z",
+      "side": 1,
+      "message": "DPLOG_IF, as this log error isn\u0027t actionable for end users. Ditto to using the D-version of the log macro below.",
+      "revId": "7034f4d5f6210b46b54651c48c48b77cbe3ff7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e93e72_71dee865",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T05:58:58Z",
+      "side": 1,
+      "message": "It might be useful to mention in the CL description why it\u0027s useful to highlight this fact in the ui::Event.",
+      "revId": "7034f4d5f6210b46b54651c48c48b77cbe3ff7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0691f202_ac64ac59",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T05:58:58Z",
+      "side": 1,
+      "message": "Does this need an explicit reset() call? If it\u0027s important for some ordering reason, it\u0027s usually useful to call that out in a comment; otherwise, I\u0027d just omit this call.",
+      "revId": "7034f4d5f6210b46b54651c48c48b77cbe3ff7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
