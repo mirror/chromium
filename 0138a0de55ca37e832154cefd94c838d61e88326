@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f344a7_ee4247da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-06T03:47:52Z",
+      "side": 1,
+      "message": "To my test, it is okay to remove this because offset is zero by default.",
+      "revId": "0138a0de55ca37e832154cefd94c838d61e88326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
