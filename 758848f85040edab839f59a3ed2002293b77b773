@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0592090_7a881b22",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T22:55:48Z",
+      "side": 1,
+      "message": "This is not a right check. We proabably need to add another one.",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "482add8f_2c257b76",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 4
