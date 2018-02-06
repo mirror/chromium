@@ -7,6 +7,7 @@
 #include "base/feature_list.h"
 #include "components/cbor/cbor_reader.h"
 #include "content/browser/loader/merkle_integrity_source_stream.h"
+#include "content/browser/loader/signed_exchange_consts.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/system/string_data_pipe_producer.h"
 #include "net/base/io_buffer.h"
@@ -21,16 +22,6 @@ namespace content {
 namespace {
 
 constexpr size_t kBufferSizeForRead = 65536;
-
-// Field names defined in the application/http-exchange+cbor content type:
-// https://wicg.github.io/webpackage/draft-yasskin-http-origin-signed-responses.html#rfc.section.5
-constexpr char kHtxg[] = "htxg";
-constexpr char kRequest[] = "request";
-constexpr char kResponse[] = "response";
-constexpr char kPayload[] = "payload";
-constexpr char kUrlKey[] = ":url";
-constexpr char kMethodKey[] = ":method";
-constexpr char kStatusKey[] = ":status";
 
 constexpr char kMiHeader[] = "MI";
 
