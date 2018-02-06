@@ -52,6 +52,24 @@
       "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc502a25_d8ac88cf",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T00:17:21Z",
+      "side": 1,
+      "message": "If that happens, then the client needs to be reset again. I think we\u0027re trying to be future proof here, however we won\u0027t be using this feature initially. I\u0027m fine with switching back to a Binding\u003c\u003e.",
+      "parentUuid": "c65f17b5_daa24f61",
+      "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
