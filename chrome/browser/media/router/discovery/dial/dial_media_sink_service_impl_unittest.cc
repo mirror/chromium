@@ -364,4 +364,17 @@ TEST_F(DialMediaSinkServiceImplTest, TestFetchDialAppInfoWithCachedAppInfo) {
   media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
 }
 
+TEST_F(DialMediaSinkServiceImplTest,
+       TestFetchDialAppInfoWithDiscoveryOnlySink) {
+  MediaSinkInternal dial_sink = CreateDialSink(1);
+  media_router::DialSinkExtraData extra_data = dial_sink.dial_data();
+  extra_data.model_name = "Eureka Dongle";
+  dial_sink.set_dial_data(extra_data);
+
+  EXPECT_CALL(*mock_app_discovery_service_, FetchDialAppInfo(_, _, _)).Times(0);
+  media_sink_service_->current_sinks_.insert_or_assign(dial_sink.sink().id(),
+                                                       dial_sink);
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+}
+
 }  // namespace media_router

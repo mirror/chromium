@@ -72,52 +72,58 @@ void DialMediaSinkService::OnUserGesture() {
                                 base::Unretained(impl_.get())));
 }
 
-void DialMediaSinkService::RegisterMediaSinksObserver(
-    MediaSinksObserver* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(observer);
-  if (!IsDialMediaSource(observer->source()))
-    return;
+void DialMediaSinkService::RegisterOnSinkQueryUpdatedCallback(
+    const OnSinkQueryUpdatedCallback& sink_query_updated_cb) {
+  DCHECK(!sink_query_updated_cb_);
+  sink_query_updated_cb_ = sink_query_updated_cb;
+}
 
-  std::string app_name = AppNameFromDialMediaSource(observer->source());
-  auto& observers = sink_observers_[app_name];
-  if (!observers) {
-    // Register first observer for |app_name|.
-    observers = std::make_unique<base::ObserverList<MediaSinksObserver>>();
-    observers->AddObserver(observer);
+void DialMediaSinkService::UnregisterOnSinkQueryUpdatedCallback() {
+  sink_query_updated_cb_.Reset();
+}
+
+void DialMediaSinkService::StartObservingMediaSinks(
+    const std::string& media_source) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  std::string app_name = AppNameFromDialMediaSource(MediaSource(media_source));
+  auto media_sources_it = registered_media_sources_.find(app_name);
+  if (media_sources_it == registered_media_sources_.end()) {
     impl_->task_runner()->PostTask(
         FROM_HERE,
         base::BindOnce(
             &DialMediaSinkServiceImpl::StartMonitoringAvailableSinksForApp,
             base::Unretained(impl_.get()), app_name));
-  } else {
-    if (observers->HasObserver(observer))
-      return;
+    registered_media_sources_[app_name].insert(media_source);
+    return;
+  }
 
-    observers->AddObserver(observer);
-    observer->OnSinksUpdated(cached_available_sinks_[app_name],
-                             GetOrigins(app_name));
+  auto& media_sources = media_sources_it->second;
+  auto media_source_it = media_sources.find(media_source);
+  // No op if already observing media source.
+  if (media_source_it != media_sources.end())
+    return;
+
+  media_sources.insert(media_source);
+  if (sink_query_updated_cb_) {
+    sink_query_updated_cb_.Run(media_source, cached_available_sinks_[app_name],
+                               GetOrigins(app_name));
   }
 }
 
-void DialMediaSinkService::UnregisterMediaSinksObserver(
-    MediaSinksObserver* observer) {
+void DialMediaSinkService::StopObservingMediaSinks(
+    const std::string& media_source) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!IsDialMediaSource(observer->source()))
+  std::string app_name = AppNameFromDialMediaSource(MediaSource(media_source));
+  auto media_sources_it = registered_media_sources_.find(app_name);
+  if (media_sources_it == registered_media_sources_.end())
     return;
-
-  std::string app_name = AppNameFromDialMediaSource(observer->source());
-  auto& observers = sink_observers_[app_name];
-  if (!observers || !observers->HasObserver(observer))
-    return;
-
-  observers->RemoveObserver(observer);
 
   impl_->task_runner()->PostTask(
       FROM_HERE,
       base::BindOnce(
           &DialMediaSinkServiceImpl::StopMonitoringAvailableSinksForApp,
           base::Unretained(impl_.get()), app_name));
+  media_sources_it->second.erase(media_source);
 }
 
 std::unique_ptr<DialMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
@@ -153,19 +159,14 @@ void DialMediaSinkService::RunSinksDiscoveredCallback(
 void DialMediaSinkService::RunAvailableSinksUpdatedCallback(
     const std::string& app_name,
     std::vector<MediaSinkInternal> available_sinks) {
-  auto& observers = sink_observers_[app_name];
-  if (!observers)
+  if (!sink_query_updated_cb_)
     return;
 
   const std::vector<url::Origin>& origins = GetOrigins(app_name);
-  std::vector<MediaSink> sinks;
-  for (const auto& sink_internal : available_sinks)
-    sinks.push_back(sink_internal.sink());
+  for (auto& media_source : registered_media_sources_[app_name])
+    sink_query_updated_cb_.Run(media_source, available_sinks, origins);
 
-  for (auto& observer : *observers)
-    observer.OnSinksUpdated(sinks, origins);
-
-  cached_available_sinks_[app_name] = sinks;
+  cached_available_sinks_[app_name] = available_sinks;
 }
 
 std::vector<url::Origin> DialMediaSinkService::GetOrigins(

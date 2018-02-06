@@ -195,6 +195,10 @@ void MediaRouterMojoImpl::CreateRoute(
 
   MediaRouterMetrics::RecordMediaSinkType(sink->icon_type());
   MediaRouteProviderId provider_id = sink->provider_id();
+  // TODO(https://crbug.com/808720): Remove this when in-browser DIAL MRP is
+  // fully implemented.
+  if (provider_id == MediaRouteProviderId::DIAL)
+    provider_id = MediaRouteProviderId::EXTENSION;
   int tab_id = SessionTabHelper::IdForTab(web_contents);
   std::string presentation_id = MediaRouterBase::CreatePresentationId();
   auto callback = base::BindOnce(
@@ -600,8 +604,10 @@ bool MediaRouterMojoImpl::RegisterMediaSinksObserver(
   // no need to call MRPs.
   if (is_new_query) {
     for (const auto& provider : media_route_providers_) {
-      if (sink_availability_.IsAvailableForProvider(provider.first))
+      if (sink_availability_.IsAvailableForProvider(provider.first) ||
+          provider.first == MediaRouteProviderId::DIAL) {
         provider.second->StartObservingMediaSinks(source_id);
+      }
     }
   }
   return true;
@@ -625,8 +631,10 @@ void MediaRouterMojoImpl::UnregisterMediaSinksObserver(
     // Only ask MRPs to stop observing media sinks if there are sinks available.
     // Otherwise, the MRPs would have discarded the queries already.
     for (const auto& provider : media_route_providers_) {
-      if (sink_availability_.IsAvailableForProvider(provider.first))
+      if (sink_availability_.IsAvailableForProvider(provider.first) ||
+          provider.first == MediaRouteProviderId::DIAL) {
         provider.second->StopObservingMediaSinks(source_id);
+      }
     }
     sinks_queries_.erase(source_id);
   }
@@ -917,6 +925,11 @@ base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForRoute(
 base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForSink(
     const MediaSink::Id& sink_id) {
   const MediaSink* sink = GetSinkById(sink_id);
+  // TODO(https://crbug.com/808720): Remove this when in-browser DIAL MRP is
+  // fully implemented.
+  if (sink && sink->provider_id() == MediaRouteProviderId::DIAL)
+    return MediaRouteProviderId::EXTENSION;
+
   return sink ? base::make_optional<MediaRouteProviderId>(sink->provider_id())
               : base::nullopt;
 }

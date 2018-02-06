@@ -180,6 +180,8 @@ void MediaRouterDesktop::InitializeMediaRouteProviders() {
   InitializeExtensionMediaRouteProviderProxy();
   if (base::FeatureList::IsEnabled(features::kLocalScreenCasting))
     InitializeWiredDisplayMediaRouteProvider();
+  if (DialSinkQueryEnabled())
+    InitializeDialMediaRouteProvider();
 }
 
 void MediaRouterDesktop::InitializeExtensionMediaRouteProviderProxy() {
@@ -201,6 +203,21 @@ void MediaRouterDesktop::InitializeWiredDisplayMediaRouteProvider() {
   RegisterMediaRouteProvider(
       MediaRouteProviderId::WIRED_DISPLAY,
       std::move(wired_display_provider_ptr),
+      base::BindOnce([](const std::string& instance_id,
+                        mojom::MediaRouteProviderConfigPtr config) {}));
+}
+
+void MediaRouterDesktop::InitializeDialMediaRouteProvider() {
+  mojom::MediaRouterPtr media_router_ptr;
+  MediaRouterMojoImpl::BindToMojoRequest(mojo::MakeRequest(&media_router_ptr));
+  mojom::MediaRouteProviderPtr dial_provider_ptr;
+  if (!media_sink_service_)
+    media_sink_service_ = DualMediaSinkService::GetInstance();
+  dial_provider_ = std::make_unique<DialMediaRouteProvider>(
+      mojo::MakeRequest(&dial_provider_ptr), std::move(media_router_ptr),
+      media_sink_service_->dial_media_sink_service());
+  RegisterMediaRouteProvider(
+      MediaRouteProviderId::DIAL, std::move(dial_provider_ptr),
       base::BindOnce([](const std::string& instance_id,
                         mojom::MediaRouteProviderConfigPtr config) {}));
 }

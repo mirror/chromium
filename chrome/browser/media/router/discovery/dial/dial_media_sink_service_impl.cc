@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/media/router/discovery/dial/dial_device_data.h"
 #include "chrome/browser/profiles/profile.h"
@@ -17,6 +18,25 @@
 using content::BrowserThread;
 
 namespace media_router {
+
+namespace {
+
+// Returns true if DIAL (SSDP) was only used to discover this sink, and it is
+// not expected to support other DIAL features (app discovery, activity
+// discovery, etc.)
+// |model_name|: device model name.
+bool IsDiscoveryOnly(const std::string& model_name) {
+  std::string lower_model_name = base::ToLowerASCII(model_name);
+  if (lower_model_name.find("eureka dongle") != std::string::npos)
+    return true;
+  if (lower_model_name.find("chromecast audio") != std::string::npos)
+    return true;
+  if (lower_model_name.find("chromecast ultra") != std::string::npos)
+    return true;
+  return false;
+}
+
+}  // namespace
 
 DialMediaSinkServiceImpl::DialMediaSinkServiceImpl(
     std::unique_ptr<service_manager::Connector> connector,
@@ -156,7 +176,7 @@ void DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable(
       MediaSinkInternal::ProcessDeviceUUID(description_data.unique_id);
   std::string sink_id = base::StringPrintf("dial:<%s>", processed_uuid.c_str());
   MediaSink sink(sink_id, description_data.friendly_name, SinkIconType::GENERIC,
-                 MediaRouteProviderId::EXTENSION);
+                 MediaRouteProviderId::DIAL);
   DialSinkExtraData extra_data;
   extra_data.app_url = description_data.app_url;
   extra_data.model_name = description_data.model_name;
@@ -224,6 +244,13 @@ void DialMediaSinkServiceImpl::MaybeNotifySinkObservers(
 void DialMediaSinkServiceImpl::FetchAppInfoForSink(
     const MediaSinkInternal& dial_sink,
     const std::string& app_name) {
+  std::string model_name = dial_sink.dial_data().model_name;
+  if (IsDiscoveryOnly(model_name)) {
+    DVLOG(2) << "Model name does not support DIAL app availability: "
+             << model_name;
+    return;
+  }
+
   std::string sink_id = dial_sink.sink().id();
   SinkAppStatus app_status = GetAppStatus(sink_id, app_name);
   if (app_status != SinkAppStatus::kUnknown)
