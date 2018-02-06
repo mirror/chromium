@@ -278,9 +278,7 @@ static void SetSelectionStateIfNeeded(LayoutObject* layout_object,
   DCHECK_NE(state, SelectionState::kNone) << layout_object;
   if (layout_object->GetSelectionState() == state)
     return;
-  // TODO(yoichio): Once we make LayoutObject::SetSelectionState() tribial, use
-  // it directly.
-  layout_object->LayoutObject::SetSelectionState(state);
+  layout_object->SetSelectionState(state);
 
   // Set containing block SelectionState kContain for CSS ::selection style.
   // See LayoutObject::InvalidatePaintForSelection().
@@ -366,9 +364,7 @@ static OldSelectedLayoutObjects ResetOldSelectedLayoutObjects(
       continue;
     if (old_state != SelectionState::kContain)
       old_selected_objects.insert(layout_object, old_state);
-    // TODO(yoichio): Once we make LayoutObject::SetSelectionState() trivial,
-    // use it directly.
-    layout_object->LayoutObject::SetSelectionState(SelectionState::kNone);
+    layout_object->SetSelectionState(SelectionState::kNone);
 
     // Reset containing block SelectionState for CSS ::selection style.
     // See LayoutObject::InvalidatePaintForSelection().
@@ -377,7 +373,7 @@ static OldSelectedLayoutObjects ResetOldSelectedLayoutObjects(
          containing_block = containing_block->ContainingBlock()) {
       if (containing_block_set.Contains(containing_block))
         break;
-      containing_block->LayoutObject::SetSelectionState(SelectionState::kNone);
+      containing_block->SetSelectionState(SelectionState::kNone);
       containing_block_set.insert(containing_block);
     }
   }
