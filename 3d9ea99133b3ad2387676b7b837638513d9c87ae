@@ -16,6 +16,24 @@
       "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34892be7_aedf1e83",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-06T13:18:35Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think I\u0027ve ever understood what we\u0027re doing here.  This is kind of a strange place to do this, right?  \n\nYes, a bit strange, and typically when I see such things in code, my coder\u0027s antennae begin to twitch.  However, it makes sense ...\n\n\u003e Can we leave a comment in here to explain why we don\u0027t do it up there where we actually call adler32_simd_()?\n\nif you subtract my code change, we\u0027re left with their comments:\n\n   /* in case user likes doing a byte at a time, keep it fast */\n   if (len \u003d\u003d 1) { ...\n   /* initial Adler-32 value (deferred check for len \u003d\u003d 1 speed) */\n   if (buf \u003d\u003d Z_NULL) ...\n\nThese comments perhaps explain this odd arrangement.  Seems something to do with deferring the NULL test for speed in the len \u003d 1 case.  Also notice that they do not say \"NULL test\" - they specifically say \"initial Adler-32 value\".\n\n\u003e Is it, we know that some other code path calls adler32() frequently, but\n\u003e calls adler32(buf\u003dNULL, len\u003d0) always first and less frequently, so that\u0027s a\n\u003e good time to make sure we call x86_check_features()?\n\nExactly. \"zlib.h\" states that the \"initial Adler-32 value\" should be obtained by calling adler32(0, NULL, 0) first.  After that, you can call adler32 as often as you like.  Seems to be by-design.\n\nI figure the zlib coders were probably smart enough IMHO to a-priori know that the result of adler32(0, NULL, 0) was always 1.  They could have used that constant everywhere in the code base, yet instead they require that users call adler32(0, NULL, 0).  Perhaps they recognized that adler32(0, NULL, 0) might have side-effects, and allowed for it?  In our case, x86_check_features() is a side-effect we want, so these infrequent adler32(0, NULL, 0) calls appear to be the right place to do it.\n\n\u003e There\u0027s another \"fun\" option here, which is to call the optimized routine via a global function pointer, which you first point to a routine that does\n\u003e   1) cpu detection\n\u003e   2) overwrite the global pointer to point the best routine\n\u003e   3) tail call into the real routine\n\u003e \n\u003e Things get a little annoying with threads, but you can still make it work, especially because it\u0027s idempotent.\n\nYes possible, possibly annoying with threads, might need thread safe statics, etc.  Would require a separate bug, and some more thought.  Doable maybe, but seems like a patch for another day.  I have enough \"fun\" on plate :)",
+      "parentUuid": "a72996bf_ed2b86d3",
+      "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
