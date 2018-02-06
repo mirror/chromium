@@ -22,6 +22,7 @@ LayoutWorkletGlobalScopeProxy* LayoutWorkletGlobalScopeProxy::From(
 
 LayoutWorkletGlobalScopeProxy::LayoutWorkletGlobalScopeProxy(
     LocalFrame* frame,
+    PendingLayoutRegistry* pending_layout_registry,
     size_t global_scope_number) {
   DCHECK(IsMainThread());
   Document* document = frame->GetDocument();
@@ -35,9 +36,9 @@ LayoutWorkletGlobalScopeProxy::LayoutWorkletGlobalScopeProxy(
       document->IsSecureContext(), nullptr /* worker_clients */,
       document->AddressSpace(), OriginTrialContext::GetTokens(document).get(),
       nullptr /* worker_settings */, kV8CacheOptionsDefault);
-  global_scope_ =
-      LayoutWorkletGlobalScope::Create(frame, std::move(creation_params),
-                                       *reporting_proxy_, global_scope_number);
+  global_scope_ = LayoutWorkletGlobalScope::Create(
+      frame, std::move(creation_params), *reporting_proxy_,
+      pending_layout_registry, global_scope_number);
 }
 
 void LayoutWorkletGlobalScopeProxy::FetchAndInvokeScript(

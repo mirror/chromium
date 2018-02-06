@@ -52,6 +52,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutReplaced.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/layout/custom/LayoutWorklet.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "core/svg/SVGSVGElement.h"
@@ -545,6 +546,15 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
 
     AdjustStyleForDisplay(style, layout_parent_style,
                           element ? &element->GetDocument() : nullptr);
+
+    if (style.IsDisplayLayoutCustomBox()) {
+      LayoutWorklet* worklet =
+          LayoutWorklet::From(*element->GetDocument().domWindow());
+      style.SetDisplayLayoutState(worklet->GetDocumentDefinitionMap()->Contains(
+                                      style.DisplayLayoutCustomName())
+                                      ? EDisplayLayoutState::kBlock
+                                      : EDisplayLayoutState::kUnloaded);
+    }
 
     // Paint containment forces a block formatting context, so we must coerce
     // from inline.  https://drafts.csswg.org/css-containment/#containment-paint
