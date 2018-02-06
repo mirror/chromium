@@ -11,6 +11,8 @@ component("public") {
     "download_danger_type.h",
     "download_interrupt_reason_values.h",
     "download_interrupt_reasons.h",
+    "download_item.h",
+    "download_item_delegate.h",
     "download_save_info.cc",
     "download_save_info.h",
     "download_source.h",
@@ -22,8 +24,17 @@ component("public") {
     "//base",
     "//components/download/internal/common:internal",
     "//crypto",
+    "//ui/base",
   ]
 
   allow_circular_includes_from =
       [ "//components/download/internal/common:internal" ]
+}
+
+if (is_android) {
+  java_cpp_enum("components_download_java_enums_srcjar") {
+    sources = [
+      "download_item.h",
+    ]
+  }
 }

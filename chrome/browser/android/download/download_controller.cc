@@ -46,7 +46,7 @@ using base::android::ScopedJavaLocalRef;
 using content::BrowserContext;
 using content::BrowserThread;
 using content::ContextMenuParams;
-using content::DownloadItem;
+using download::DownloadItem;
 using content::DownloadManager;
 using content::WebContents;
 
@@ -468,7 +468,7 @@ void DownloadController::StartContextMenuDownload(
 }
 
 bool DownloadController::IsInterruptedDownloadAutoResumable(
-    content::DownloadItem* download_item) {
+    download::DownloadItem* download_item) {
   if (!download_item->GetURL().SchemeIsHTTPOrHTTPS())
     return false;
 

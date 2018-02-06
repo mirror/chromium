@@ -27,7 +27,7 @@
 #include "content/public/browser/browser_thread.h"
 
 using content::BrowserThread;
-using content::DownloadItem;
+using download::DownloadItem;
 using content::DownloadManager;
 
 namespace drive {
@@ -189,7 +189,7 @@ void DownloadHandler::ObserveIncognitoDownloadManager(
 
 void DownloadHandler::SubstituteDriveDownloadPath(
     const base::FilePath& drive_path,
-    content::DownloadItem* download,
+    download::DownloadItem* download,
     const SubstituteDriveDownloadPathCallback& callback) {
   DVLOG(1) << "SubstituteDriveDownloadPath " << drive_path.value();
 
