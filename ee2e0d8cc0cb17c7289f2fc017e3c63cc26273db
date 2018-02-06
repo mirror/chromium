@@ -16,6 +16,24 @@
       "revId": "ee2e0d8cc0cb17c7289f2fc017e3c63cc26273db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a9dbe3_a054d175",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-02-06T02:46:31Z",
+      "side": 1,
+      "message": "Added comment, thanks.\n\nSorry, on 2 broken clankium tot builders use is_debug\u003dtrue as common build config.\nhttps://logs.chromium.org/v/?s\u003dchrome%2Fbb%2Finternal.client.clank_tot%2Fclang-clankium-tot-builder%2F55970%2F%2B%2Frecipes%2Fsteps%2Fgenerate_build_files%2F0%2Fstdout\nhttps://logs.chromium.org/v/?s\u003dchrome%2Fbb%2Finternal.client.clank_tot%2Finstrumentation-mako-clankium-tot%2F20029%2F%2B%2Frecipes%2Fsteps%2Fgenerate_build_files%2F0%2Fstdout\n\nI removed is_component_build instead. component build uses less memory than non-component build, it is safe.",
+      "parentUuid": "b7f0485e_c5134922",
+      "revId": "ee2e0d8cc0cb17c7289f2fc017e3c63cc26273db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
