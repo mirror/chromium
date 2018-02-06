@@ -10,15 +10,21 @@ import android.app.Instrumentation;
 import android.app.Instrumentation.ActivityMonitor;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.DrawableRes;
 import android.support.customtabs.browseractions.BrowserActionItem;
 import android.support.customtabs.browseractions.BrowserActionsIntent;
+import android.support.customtabs.browseractions.BrowserServiceFileProvider;
+import android.support.customtabs.browseractions.BrowserServiceImageReadTask;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.util.Pair;
@@ -263,6 +269,41 @@ public class BrowserActionActivityTest {
         Assert.assertNotNull(contextMenuItems.get(3).getDrawable(context));
         Assert.assertNull(contextMenuItems.get(4).getDrawable(context));
         Assert.assertNull(contextMenuItems.get(5).getDrawable(context));
+    }
+
+    @Test
+    @SmallTest
+    public void testCustomIconShownFromProviderCorrectly() throws Exception {
+        List<BrowserActionItem> items = createCustomItemsWithProvider();
+        startBrowserActionActivity(mTestPage, items, 0);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(0);
+
+        List < Pair < Integer, List<ContextMenuItem>>> menus = mItems;
+        List<ContextMenuItem> contextMenuItems = menus.get(0).second;
+        ContentResolver resolver = InstrumentationRegistry.getTargetContext().getContentResolver();
+
+        Assert.assertTrue(contextMenuItems.get(5) instanceof BrowserActionsCustomContextMenuItem);
+        BrowserActionsCustomContextMenuItem customItems =
+                (BrowserActionsCustomContextMenuItem) contextMenuItems.get(5);
+        CallbackHelper imageShownCallback = new CallbackHelper();
+        customItems.setIconListener(new BrowserActionsCustomContextMenuItem.IconListener() {
+            @Override
+            public void onIconShown(final Bitmap bitmap) {
+                Assert.assertNotNull(bitmap);
+                imageShownCallback.notifyCalled();
+            }
+        });
+        BrowserServiceImageReadTask task = new BrowserServiceImageReadTask(resolver) {
+            @Override
+            protected void onBitmapFileReady(Bitmap bitmap) {
+                customItems.getIconListener().onIconShown(bitmap);
+            }
+
+            @Override
+            protected void handlePreLoadingFallback() {}
+        };
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, customItems.getIconUri());
+        imageShownCallback.waitForCallback(0);
     }
 
     @Test
@@ -683,10 +724,18 @@ public class BrowserActionActivityTest {
         intent.putExtra(BrowserActionsIntent.EXTRA_APP_ID, pendingIntent);
 
         ArrayList<Bundle> customItemBundles = new ArrayList<>();
+        List<Uri> uris = new ArrayList<>();
         for (BrowserActionItem item : items) {
             Bundle customItemBundle = new Bundle();
             customItemBundle.putString(BrowserActionsIntent.KEY_TITLE, item.getTitle());
-            customItemBundle.putInt(BrowserActionsIntent.KEY_ICON_ID, item.getIconId());
+            if (item.getIconId() != 0) {
+                customItemBundle.putInt(BrowserActionsIntent.KEY_ICON_ID, item.getIconId());
+            }
+            if (item.getIconUri() != null) {
+                Uri uri = item.getIconUri();
+                customItemBundle.putParcelable(BrowserActionsIntent.KEY_ICON_URI, uri);
+                uris.add(uri);
+            }
             customItemBundle.putParcelable(BrowserActionsIntent.KEY_ACTION, item.getAction());
             customItemBundles.add(customItemBundle);
         }
@@ -695,6 +744,10 @@ public class BrowserActionActivityTest {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         intent.setClass(context, BrowserActionActivity.class);
+        if (!uris.isEmpty()) {
+            BrowserServiceFileProvider.grantReadPermission(
+                    intent, uris, InstrumentationRegistry.getContext());
+        }
         // Android Test Rule auto adds {@link Intent.FLAG_ACTIVITY_NEW_TASK} which violates {@link
         // BrowserActionsIntent} policy. Add an extra to skip Intent.FLAG_ACTIVITY_NEW_TASK check
         // for test.
@@ -724,6 +777,19 @@ public class BrowserActionActivityTest {
         items.add(item2);
         items.add(item3);
         items.add(item4);
+        return items;
+    }
+
+    private List<BrowserActionItem> createCustomItemsWithProvider() {
+        List<BrowserActionItem> items = new ArrayList<>();
+        PendingIntent action1 = createCustomItemAction(mTestPage);
+        Context context = InstrumentationRegistry.getTargetContext();
+        Bitmap bm = BitmapFactory.decodeResource(
+                context.getResources(), CUSTOM_ITEM_ICON_BITMAP_DRAWABLE_ID);
+
+        Uri uri = BrowserServiceFileProvider.generateUri(context, bm, CUSTOM_ITEM_TITLE_1, 1);
+        BrowserActionItem item = new BrowserActionItem(CUSTOM_ITEM_TITLE_1, action1, uri);
+        items.add(item);
         return items;
     }
 }

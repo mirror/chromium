@@ -5,10 +5,13 @@
 package org.chromium.chrome.browser.browseractions;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.customtabs.browseractions.BrowserActionItem;
 
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.contextmenu.ContextMenuItem;
 
 /**
@@ -19,17 +22,26 @@ public class BrowserActionsCustomContextMenuItem implements ContextMenuItem {
     private final int mMenuId;
     private final String mTitle;
     private final Drawable mIcon;
+    private final Uri mIconUri;
+    private IconListener mListener;
+
+    @VisibleForTesting
+    interface IconListener {
+        void onIconShown(Bitmap bm);
+    }
 
     /**
      * Constructor to build a custom context menu item from {@link BrowserActionItem}.
      * @param id The {@link IdRes} of the custom context menu item.
      * @param title The title of the custom context menu item.
      * @param icon The icon of the custom context menu item.
+     * @param iconUri The {@link Uri} used to access the icon of the custom context menu item.
      */
-    BrowserActionsCustomContextMenuItem(@IdRes int id, String title, Drawable icon) {
+    BrowserActionsCustomContextMenuItem(@IdRes int id, String title, Drawable icon, Uri iconUri) {
         mMenuId = id;
         mTitle = title;
         mIcon = icon;
+        mIconUri = iconUri;
     }
 
     @Override
@@ -45,5 +57,19 @@ public class BrowserActionsCustomContextMenuItem implements ContextMenuItem {
     @Override
     public Drawable getDrawable(Context context) {
         return mIcon;
+    }
+
+    public Uri getIconUri() {
+        return mIconUri;
+    }
+
+    @VisibleForTesting
+    void setIconListener(IconListener listener) {
+        mListener = listener;
+    }
+
+    @VisibleForTesting
+    IconListener getIconListener() {
+        return mListener;
     }
 }
