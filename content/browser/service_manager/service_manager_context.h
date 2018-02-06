@@ -29,6 +29,8 @@ class CONTENT_EXPORT ServiceManagerContext {
   ServiceManagerContext();
   ~ServiceManagerContext();
 
+  void RegisterDelayedServices();
+
   // Returns a service_manager::Connector that can be used on the IO thread.
   static service_manager::Connector* GetConnectorForIOThread();
 
