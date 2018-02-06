@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c33e76_5aefccda",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "I think this is now WTF::CurrentTime().",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 325,
+        "endChar": 68
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0354c811_b683ca07",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "GetWebView()?",
+      "range": {
+        "startLine": 325,
+        "startChar": 12,
+        "endLine": 325,
+        "endChar": 19
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b4cba9_63340c80",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "It probably worth to add another test that verify the case that flackr@ mentioned:\nsetInterval(function() {\n  rAF(drawSomething);\n}, 1000);",
+      "range": {
+        "startLine": 1310,
+        "startChar": 16,
+        "endLine": 1310,
+        "endChar": 34
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4e13f2_93152baa",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 6659,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "%s/this/HasCallback.",
+      "range": {
+        "startLine": 6659,
+        "startChar": 38,
+        "endLine": 6659,
+        "endChar": 60
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feec0d25_49e1e88e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 6663,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "%s/this/HasCallback.",
+      "range": {
+        "startLine": 6663,
+        "startChar": 38,
+        "endLine": 6663,
+        "endChar": 60
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ff983d_05d9efb3",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationControllerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "Oh, looks like the HasCallback function was landed without a unit test, nice to have test coverage here.",
+      "range": {
+        "startLine": 186,
+        "startChar": 40,
+        "endLine": 186,
+        "endChar": 66
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a37108_29a6ceae",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationControllerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T20:11:34Z",
+      "side": 1,
+      "message": "%s/this/HasCallback.",
+      "range": {
+        "startLine": 190,
+        "startChar": 27,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "64c45115133f8f42454623d372bd9335d557d3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
