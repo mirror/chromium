@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0bf70da_ad9e3bd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 85
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "Non-Google developers won\u0027t be able to access this. Put the full publicly accessible link to the design doc in the 734095 bug description and refer to the bug from here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 48,
+        "endLine": 31,
+        "endChar": 76
+      },
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0285451c_49d7c3c8",
         "filename": "notification_helper/BUILD.gn",
         "patchSetId": 85
@@ -13,6 +36,144 @@
       "writtenOn": "2018-02-06T20:51:19Z",
       "side": 1,
       "message": "this is no longer used in non-win contexts, is it? can you get rid of the conditional here?",
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9399e422_bcc74931",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 85
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "Consistency: We should either use ::Microsoft everywhere or no where. The majority here seems to not use ::\u0027s and there\u0027s really not a large chance of colliding with these namespaces, so I would vote no ::.",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 26
+      },
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8613d65_6b70127e",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 85
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "This needs an\nif (FAILED(hr)) {\n  Perform failure case here.\n}",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 29
+      },
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9528874a_79ae2dec",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 85
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "No init. We don\u0027t want a \"\u003d 0\" to slip through this. If the code ends up not being initialized, we\u0027ll also get a compiler warning.",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9448fba5_48dcc2eb",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 85
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "// PID was not reused since the PID\u0027s match.",
+      "range": {
+        "startLine": 46,
+        "startChar": 22,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c68fe14_2a89261a",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 85
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "arraysize(buffer)",
+      "range": {
+        "startLine": 23,
+        "startChar": 24,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02983289_39dd23f4",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 85
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "Remove: The #else section is empty and thus the #else is no longer needed.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 5
+      },
       "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

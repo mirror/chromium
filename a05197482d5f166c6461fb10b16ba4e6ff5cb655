@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "fc9d406e_aa0ca2e3",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 66
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-02-06T21:35:07Z",
+      "side": 1,
+      "message": "Going back to the spirit of this, for robustness you want to supply lengths that are hard bound to the variable you provide. \n\npath.size() satisfies this requirement. \nkGuidLengthFull does not.\n\nThe following patterns demonstrate why this is preferable:\n SOMESTRUCT foo;\n foo.count_bytes \u003d sizeof(foo);        // Robust, always correct.\n foo.count_bytes \u003d sizeof(SOMESTRUCT); // Breaks if foo is changed to a different type.\n\n constexpr int kSize \u003d 256;\n wchar_t foo[kSize];\n ConsumesArray(foo, arraysize(foo));   // Robust, always correct.\n ConsumesArray(foo, kSize);            // Breaks if foo is no longer kSize.",
+      "parentUuid": "455ad5cc_bbb4bdb4",
+      "range": {
+        "startLine": 867,
+        "startChar": 59,
+        "endLine": 867,
+        "endChar": 68
+      },
+      "revId": "a05197482d5f166c6461fb10b16ba4e6ff5cb655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a21d7d3_3440e992",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 66
