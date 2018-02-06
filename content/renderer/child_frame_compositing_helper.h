@@ -52,8 +52,9 @@ class CONTENT_EXPORT ChildFrameCompositingHelper {
                            const gfx::Size& frame_size_in_dip);
   void SetFallbackSurfaceId(const viz::SurfaceId& surface_id,
                             const gfx::Size& frame_size_in_dip);
-  void UpdateVisibility(bool);
-  void ChildFrameGone();
+  void UpdateVisibility(bool visible);
+  void ChildFrameGone(const gfx::Size& frame_size_in_dip,
+                      float device_scale_factor);
 
   const viz::SurfaceId& surface_id() const { return last_primary_surface_id_; }
 
