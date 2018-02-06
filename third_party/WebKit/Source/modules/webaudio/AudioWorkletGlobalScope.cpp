@@ -154,8 +154,11 @@ AudioWorkletProcessor* AudioWorkletGlobalScope::CreateProcessor(
   processor_creation_params_ = std::make_unique<ProcessorCreationParams>(
       name, std::move(message_port_channel));
 
+  SerializedScriptValue::DeserializeOptions deserialize_options;
+  deserialize_options.read_wasm_from_stream = true;
+
   v8::Local<v8::Value> argv[] = {
-    ToV8(node_options->Deserialize(isolate),
+    ToV8(node_options->Deserialize(isolate, deserialize_options),
          script_state->GetContext()->Global(),
          isolate)
   };
