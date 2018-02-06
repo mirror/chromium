@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc03b6a_828b4aac",
+        "filename": "ui/chromeos/ksv/views/bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T00:07:22Z",
+      "side": 1,
+      "message": "Should use SkColorSetARGBMacro",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 63
+      },
+      "revId": "6dce73bca829291b515620312f89e63867197cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce13d562_16b08818",
+        "filename": "ui/chromeos/ksv/views/bubble_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T00:07:22Z",
+      "side": 1,
+      "message": "nit: #include \u003cvector\u003e",
+      "revId": "6dce73bca829291b515620312f89e63867197cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
