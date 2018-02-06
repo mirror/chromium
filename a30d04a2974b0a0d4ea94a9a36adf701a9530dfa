@@ -87,6 +87,24 @@
       "revId": "a30d04a2974b0a0d4ea94a9a36adf701a9530dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04dccf42_f0e1f864",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-06T18:17:32Z",
+      "side": 1,
+      "message": "I originally moved this because the original had it [1], but I tested it a bit more and it seems\nto work without. Done.\n[1] https://cs.chromium.org/chromium/src/ash/wm/overview/scoped_transform_overview_window.cc?rcl\u003d37bccb7a59afe71a24ae6ba6f0424f8407c632f8\u0026l\u003d664",
+      "parentUuid": "9780c788_6f82f739",
+      "revId": "a30d04a2974b0a0d4ea94a9a36adf701a9530dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
