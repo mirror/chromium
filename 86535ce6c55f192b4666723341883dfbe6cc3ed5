@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3410d999_3ac00064",
+        "filename": "chromeos/network/network_sms_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-06T09:05:58Z",
+      "side": 1,
+      "message": "Note: Pulled from the callee. On error, callback used to be ignored, but now it is called with nullopt. Ditto for below.",
+      "revId": "86535ce6c55f192b4666723341883dfbe6cc3ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
