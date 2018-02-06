@@ -180,7 +180,8 @@ const std::string Converter::kMfNameLookupTable[] = {
     "-webkit-transform-3d",
     "scan",
     "shape",
-    "INVALID_NAME"};
+    "INVALID_NAME",
+    "immersive"};
 
 const std::string Converter::kImportLookupTable[] = {
     "",  // This is just to fill the zeroth spot. It should not be used.
