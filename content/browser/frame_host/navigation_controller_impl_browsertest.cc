@@ -3840,7 +3840,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
       NavigationEntryImpl::FromNavigationEntry(
           NavigationControllerImpl::CreateNavigationEntry(
               main_url_a, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
-              std::string(), controller.GetBrowserContext()));
+              std::string(), controller.GetBrowserContext(), nullptr));
   EXPECT_EQ(0U, restored_entry->root_node()->children.size());
   restored_entry->SetPageState(entry2->GetPageState());
 
@@ -3910,7 +3910,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
       NavigationEntryImpl::FromNavigationEntry(
           NavigationControllerImpl::CreateNavigationEntry(
               main_url, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
-              std::string(), controller.GetBrowserContext()));
+              std::string(), controller.GetBrowserContext(), nullptr));
   restored_entry->SetPageState(PageState::CreateFromURL(main_url));
   EXPECT_EQ(0U, restored_entry->root_node()->children.size());
 
@@ -4893,7 +4893,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerOopifBrowserTest,
       NavigationEntryImpl::FromNavigationEntry(
           NavigationControllerImpl::CreateNavigationEntry(
               main_url_a, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
-              std::string(), controller.GetBrowserContext()));
+              std::string(), controller.GetBrowserContext(), nullptr));
   EXPECT_EQ(0U, restored_entry->root_node()->children.size());
   restored_entry->SetPageState(entry2->GetPageState());
 

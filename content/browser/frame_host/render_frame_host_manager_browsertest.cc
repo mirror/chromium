@@ -2564,7 +2564,8 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
       NavigationEntryImpl::FromNavigationEntry(
           NavigationControllerImpl::CreateNavigationEntry(
               url1, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
-              std::string(), shell()->web_contents()->GetBrowserContext()));
+              std::string(), shell()->web_contents()->GetBrowserContext(),
+              nullptr));
   prev_entry = shell()->web_contents()->GetController().GetEntryAtIndex(0);
   cloned_entry->SetPageState(prev_entry->GetPageState());
   const std::vector<base::FilePath>& cloned_files =

@@ -29,6 +29,7 @@
 #include "content/common/navigation_params.h"
 #include "content/common/page_messages.h"
 #include "content/common/view_messages.h"
+#include "content/common/wrapper_shared_url_loader_factory.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/global_request_id.h"
@@ -581,7 +582,8 @@ void NavigatorImpl::RequestOpenURL(
     bool should_replace_current_entry,
     bool user_gesture,
     blink::WebTriggeringEventInfo triggering_event_info,
-    const base::Optional<std::string>& suggested_filename) {
+    const base::Optional<std::string>& suggested_filename,
+    scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) {
   // Note: This can be called for subframes (even when OOPIFs are not possible)
   // if the disposition calls for a different window.
 
@@ -652,6 +654,8 @@ void NavigatorImpl::RequestOpenURL(
     params.is_renderer_initiated = false;
   }
 
+  params.blob_url_loader_factory = std::move(blob_url_loader_factory);
+
   GetContentClient()->browser()->OverrideNavigationParams(
       current_site_instance, &params.transition, &params.is_renderer_initiated,
       &params.referrer);
@@ -672,7 +676,8 @@ void NavigatorImpl::RequestTransferURL(
     const std::string& method,
     scoped_refptr<network::ResourceRequestBody> post_body,
     const std::string& extra_headers,
-    const base::Optional<std::string>& suggested_filename) {
+    const base::Optional<std::string>& suggested_filename,
+    scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) {
   // |method != "POST"| should imply absence of |post_body|.
   if (method != "POST" && post_body) {
     NOTREACHED();
@@ -745,18 +750,20 @@ void NavigatorImpl::RequestTransferURL(
           controller_->CreateNavigationEntry(
               GURL(url::kAboutBlankURL), referrer_to_use, page_transition,
               is_renderer_initiated, extra_headers,
-              controller_->GetBrowserContext()));
+              controller_->GetBrowserContext(), nullptr));
     }
     entry->AddOrUpdateFrameEntry(
         node, -1, -1, nullptr,
         static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
-        referrer_to_use, redirect_chain, PageState(), method, -1);
+        referrer_to_use, redirect_chain, PageState(), method, -1,
+        blob_url_loader_factory);
   } else {
     // Main frame case.
     entry = NavigationEntryImpl::FromNavigationEntry(
         controller_->CreateNavigationEntry(
             dest_url, referrer_to_use, page_transition, is_renderer_initiated,
-            extra_headers, controller_->GetBrowserContext()));
+            extra_headers, controller_->GetBrowserContext(),
+            blob_url_loader_factory));
     entry->root_node()->frame_entry->set_source_site_instance(
         static_cast<SiteInstanceImpl*>(source_site_instance));
     entry->root_node()->frame_entry->set_method(method);
@@ -785,7 +792,8 @@ void NavigatorImpl::RequestTransferURL(
     frame_entry = new FrameNavigationEntry(
         node->unique_name(), -1, -1, nullptr,
         static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
-        referrer_to_use, redirect_chain, PageState(), method, -1);
+        referrer_to_use, redirect_chain, PageState(), method, -1,
+        blob_url_loader_factory);
   }
   NavigateToEntry(node, *frame_entry, *entry.get(), ReloadType::NONE, false,
                   false, false, post_body);
@@ -1166,7 +1174,7 @@ void NavigatorImpl::DidStartMainFrameNavigation(
             controller_->CreateNavigationEntry(
                 url, content::Referrer(), ui::PAGE_TRANSITION_LINK,
                 true /* is_renderer_initiated */, std::string(),
-                controller_->GetBrowserContext()));
+                controller_->GetBrowserContext(), nullptr));
     entry->set_site_instance(site_instance);
     // TODO(creis): If there's a pending entry already, find a safe way to
     // update it instead of replacing it and copying over things like this.

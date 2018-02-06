@@ -55,7 +55,7 @@ class NavigationEntryTest : public testing::Test {
     entry2_.reset(new NavigationEntryImpl(
         instance_, GURL("test:url"),
         Referrer(GURL("from"), blink::kWebReferrerPolicyDefault),
-        ASCIIToUTF16("title"), ui::PAGE_TRANSITION_TYPED, false));
+        ASCIIToUTF16("title"), ui::PAGE_TRANSITION_TYPED, false, nullptr));
   }
 
   void TearDown() override {}
