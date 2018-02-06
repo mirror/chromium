@@ -37,6 +37,11 @@ class RemoteSuggestionsStatusService {
   // state considering the initialisation configuration and the preferences,
   // and notify via the registered callback if appropriate.
   virtual void OnSignInStateChanged(bool has_signed_in) = 0;
+
+  // To be called when the user is showing or hiding the list of articles.
+  // It will compute the new state, which might stay the same, update the
+  // preferences and notify the registered callback if appropriate.
+  virtual void OnListVisibilityToggled(bool visible) = 0;
 };
 
 }  // namespace ntp_snippets
