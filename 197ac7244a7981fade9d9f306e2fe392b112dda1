@@ -166,6 +166,30 @@
       "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022ee4dd_0b546114",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2018-02-06T08:20:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3a0e60f_eab65fb7",
+      "range": {
+        "startLine": 1386,
+        "startChar": 0,
+        "endLine": 1388,
+        "endChar": 77
+      },
+      "revId": "197ac7244a7981fade9d9f306e2fe392b112dda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
