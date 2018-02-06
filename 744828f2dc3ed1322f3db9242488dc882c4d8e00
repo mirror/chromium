@@ -111,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "cc664a9c_c1ea92ee",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "If we reset the info every time we have used that, it could simply \"saving when it has not been saved\"",
+      "parentUuid": "e5bd9baa_093bf437",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf31fe1c_e468084d",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 10
@@ -131,6 +149,30 @@
       "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bdb697_a707e8c2",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf31fe1c_e468084d",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 69
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "4c81450e_698bf39b",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "Compile error for this: error: binding value of type \u0027const gfx::Rect\u0027 to reference to type \u0027gfx::Rect\u0027 drops \u0027const\u0027 qualifier",
+      "parentUuid": "2d1fa790_b947be5f",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03379025_e5b098ef",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 10
@@ -174,6 +240,24 @@
     },
     {
       "key": {
+        "uuid": "b486413a_8550eda0",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "added DCHECK. I thought it shouldn\u0027t change...",
+      "parentUuid": "03379025_e5b098ef",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2452fde_1f7e495b",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 10
@@ -185,6 +269,24 @@
       "writtenOn": "2018-02-06T22:57:32Z",
       "side": 1,
       "message": "Shouldn\u0027t we clear the persistent info after we restore them in SetBoundsInScreen() above?",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55073d9b_8eec4e27",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "Seems clearing here could simply the logic on saving. We also don\u0027t need to reset on the case of shortcut moving window.",
+      "parentUuid": "f2452fde_1f7e495b",
       "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -214,6 +316,30 @@
     },
     {
       "key": {
+        "uuid": "4f43ab71_ba976a5c",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "ack, done. I suppose we still keep this test case?",
+      "parentUuid": "7223ffd5_9434527c",
+      "range": {
+        "startLine": 248,
+        "startChar": 10,
+        "endLine": 248,
+        "endChar": 24
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a28f8cd_0cd19894",
         "filename": "ash/display/persistent_window_controller_unittest.cc",
         "patchSetId": 10
@@ -225,6 +351,30 @@
       "writtenOn": "2018-02-06T22:57:32Z",
       "side": 1,
       "message": "Shouldn\u0027t this be true?",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 14
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc48ab1_ef16ebcc",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-06T23:43:29Z",
+      "side": 1,
+      "message": "I would just delete this line for now... It is really a thing for keyboard shortcut CL\u0027s consideration.",
+      "parentUuid": "5a28f8cd_0cd19894",
       "range": {
         "startLine": 254,
         "startChar": 2,
