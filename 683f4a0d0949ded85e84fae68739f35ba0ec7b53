@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cd2a244_36932c41",
+        "filename": "chrome/browser/extensions/api/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T20:17:18Z",
+      "side": 1,
+      "message": "Pull this into a helper function in UDPSocketUnitTest that returns std::unique_ptr\u003cUDPSocket\u003e?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 43
+      },
+      "revId": "683f4a0d0949ded85e84fae68739f35ba0ec7b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41accc6d_1f12903b",
+        "filename": "extensions/browser/api/socket/socket_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T20:17:18Z",
+      "side": 1,
+      "message": "Make |socket_| a network::mojom::UDPSocketPtrInfo instead and you won\u0027t need to do anything to pass ownership across threads.",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 62
+      },
+      "revId": "683f4a0d0949ded85e84fae68739f35ba0ec7b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd8bff1_a6a73194",
+        "filename": "extensions/browser/api/socket/udp_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T20:17:18Z",
+      "side": 1,
+      "message": "What happens if the received packet is larger than |count|?",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 61
+      },
+      "revId": "683f4a0d0949ded85e84fae68739f35ba0ec7b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccfc452_338ddad8",
+        "filename": "extensions/browser/api/socket/udp_socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T20:17:18Z",
+      "side": 1,
+      "message": "Use base::Optional instead?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "683f4a0d0949ded85e84fae68739f35ba0ec7b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d601b7eb_c514d388",
+        "filename": "extensions/browser/api/sockets_udp/sockets_udp_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T20:17:18Z",
+      "side": 1,
+      "message": "Same here, if the ResumableUDPSocket constructor took a network::mojom::UDPSocketPtrInfo and only bound it internally then you could avoid having to explicitly pass ownership between threads here.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 60
+      },
+      "revId": "683f4a0d0949ded85e84fae68739f35ba0ec7b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c20a64_db4f73e6",
+        "filename": "extensions/browser/api/sockets_udp/sockets_udp_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T20:17:18Z",
+      "side": 1,
+      "message": "AsyncWorkCompleted();",
+      "revId": "683f4a0d0949ded85e84fae68739f35ba0ec7b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
