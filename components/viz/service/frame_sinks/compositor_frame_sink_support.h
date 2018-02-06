@@ -108,6 +108,12 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   void RequestCopyOfSurface(
       std::unique_ptr<CopyOutputRequest> request) override;
 
+  // Permits submitted CompositorFrames to contain CopyOutputRequests, for
+  // special-case testing purposes only.
+  void set_allow_copy_output_requests_for_testing() {
+    allow_copy_output_requests_ = true;
+  }
+
   Surface* GetCurrentSurfaceForTesting();
 
  private:
@@ -179,6 +185,12 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   const bool is_root_;
   const bool needs_sync_tokens_;
+
+  // By default, this is equivalent to |is_root_|, but may be overridden for
+  // testing. Generally, for non-roots, there must not be any CopyOutputRequests
+  // contained within submitted CompositorFrames. Otherwise, unprivileged
+  // clients would be able to capture content for which they are not authorized.
+  bool allow_copy_output_requests_;
 
   // A callback that will be run at the start of the destructor if set.
   base::OnceClosure destruction_callback_;
