@@ -502,9 +502,8 @@ ProcessExitResult RunSetup(const Configuration& configuration,
 
   // Append the command line param for chrome archive file.
   if (!cmd_line.append(L" --") ||
-#if defined(COMPONENT_BUILD)
-      // For faster developer turnaround, the component build generates
-      // uncompressed archives.
+#if defined(SKIP_COMPRESS)
+      // Archive compression may be bypassed for faster developer turnaround.
       !cmd_line.append(kCmdUncompressedArchive) ||
 #else
       !cmd_line.append(kCmdInstallArchive) ||
