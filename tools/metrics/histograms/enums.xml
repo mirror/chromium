@@ -12503,6 +12503,8 @@ Called by update_net_error_codes.py.-->
   <int value="414" label="WebDriverOverridesIncompatiblePolicies"/>
   <int value="415" label="DeviceKerberosEncryptionTypes"/>
   <int value="416" label="DeviceUserPolicyLoopbackProcessingMode"/>
+  <int value="417" label="PasswordProtectionEmailDomains"/>
+  <int value="418" label="SafeBrowsingWhitelistDomains"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
