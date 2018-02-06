@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d2657f4_1a18ab63",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T18:37:31Z",
+      "side": 1,
+      "message": "should this take an \"in_place\" type argument to allow the caller to differentiate if T is convertible from an argument but also constructible from it? eg std::optional does this",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
