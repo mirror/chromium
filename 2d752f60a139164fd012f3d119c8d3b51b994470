@@ -16,6 +16,24 @@
       "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6cafef_bbc1724a",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T18:45:54Z",
+      "side": 1,
+      "message": "In my mind, we logically want to transparently forward arguments to the greatest extend possible for base::NoDestructor. Adding an in_place argument would make that a bit more awkward.\n\nDoes the in_place placeholder prevent certain types of errors?",
+      "parentUuid": "0d2657f4_1a18ab63",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
