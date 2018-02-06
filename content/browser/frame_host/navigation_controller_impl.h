@@ -39,6 +39,15 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
       BrowserContext* browser_context);
   ~NavigationControllerImpl() override;
 
+  CONTENT_EXPORT static std::unique_ptr<NavigationEntry> CreateNavigationEntry(
+      const GURL& url,
+      const Referrer& referrer,
+      ui::PageTransition transition,
+      bool is_renderer_initiated,
+      const std::string& extra_headers,
+      BrowserContext* browser_context,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory);
+
   // NavigationController implementation:
   WebContents* GetWebContents() const override;
   BrowserContext* GetBrowserContext() const override;

@@ -15,6 +15,7 @@
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/referrer.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "services/network/public/cpp/resource_request_body.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
@@ -250,6 +251,9 @@ struct NavigateParams {
   // attribute, |suggested_filename| will contain the (possibly empty) value of
   // that attribute.
   base::Optional<std::string> suggested_filename;
+
+  // Optional URLLoaderFactory to facilitate blob URL loading.
+  scoped_refptr<content::SharedURLLoaderFactory> blob_url_loader_factory;
 
  private:
   NavigateParams();
