@@ -33,6 +33,24 @@
       "revId": "9d912cb19db258b5786e3d125248c5f226922bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34ed898_08fba9fb",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2018-02-06T01:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a30abd0_b145adf7",
+      "revId": "9d912cb19db258b5786e3d125248c5f226922bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
