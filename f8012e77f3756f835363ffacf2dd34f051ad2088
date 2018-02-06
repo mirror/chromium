@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b31d765_c5c59db9",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T01:16:32Z",
+      "side": 1,
+      "message": "Nice.  I like default arguments for cases like this.  Done.",
+      "parentUuid": "8b8b2d54_0ab4d698",
+      "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c5e616_b7936f0e",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5cca95fd_6030aec5",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T01:16:32Z",
+      "side": 1,
+      "message": "Moot.",
+      "parentUuid": "18c5e616_b7936f0e",
+      "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a9864b_4271665d",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9871b43f_0a617b15",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-02-06T01:16:32Z",
+      "side": 1,
+      "message": "Seems to work, with no const\u003c-\u003econstexpr changes necessary.  Let\u0027s see if the trybots agree.",
+      "parentUuid": "19a9864b_4271665d",
+      "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
