@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10ea39ff_276343e9",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T17:09:56Z",
+      "side": 1,
+      "message": "nit: new line, or remove new line below, to be consistent",
+      "revId": "cc747982c7b0f0c89a12c1770e7531e3b29eb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0cd12e_c787e055",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-02-06T17:09:56Z",
+      "side": 1,
+      "message": "so what\u0027s our strategy to apply new animation? Do we abort the current animation (for moving), wait until it finishes, or start from current value?",
+      "revId": "cc747982c7b0f0c89a12c1770e7531e3b29eb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
