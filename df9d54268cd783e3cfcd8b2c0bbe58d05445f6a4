@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0090c5ae_22bf401a",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-06T00:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e35ef4_2fcd6f65",
+      "range": {
+        "startLine": 837,
+        "startChar": 2,
+        "endLine": 837,
+        "endChar": 61
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef215cc6_76a05581",
         "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5f68e0b9_eb39290b",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-06T00:01:11Z",
+      "side": 1,
+      "message": "\u003e (ditto, see below) why not overlay? The keyboard UI could arguably be called an overlay.\n\nI got rid of the \"overlay\" concept. The on-screen keyboard had the user focus while it is displaying, so I think \"ActiveWindow\" makes sense here. A local constant could work too if you prefer (this would remove the dependency on shadow_types.h)",
+      "parentUuid": "ef215cc6_76a05581",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 52
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6639682_65c1f433",
         "filename": "ui/wm/core/shadow.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-05T15:25:40Z",
       "side": 1,
       "message": "nit: init in header",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff27f6ee_c68dc06d",
+        "filename": "ui/wm/core/shadow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-06T00:01:11Z",
+      "side": 1,
+      "message": "\u003e nit: init in header\n\nDone. I moved rounded_corner_radius_ as well - (IMO its entire comment is implicit from just putting an `\u003d 2` next to the data member in the .h)",
+      "parentUuid": "e6639682_65c1f433",
       "range": {
         "startLine": 28,
         "startChar": 23,
@@ -110,6 +182,54 @@
         "startChar": 14,
         "endLine": 23,
         "endChar": 43
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b026af_64de0680",
+        "filename": "ui/wm/core/shadow_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-06T00:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0229a684_b2fe3ba0",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcbc3474_c1d63ee2",
+        "filename": "ui/wm/core/shadow_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-06T00:01:11Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not really sure I understand the semantics of these. What qualifies as an \"info bubble\" or an \"overlay\"? i.e. why is the chromevox thing an overlay and not an info bubble? It really seems like we are applying shadows on a case-by-case basis and the name change here just creates confusion. I\u0027m fine with changing this from enum to int constants, but to me the old names make more sense because they don\u0027t attempt to classify arbitrary windows into functional categories that they don\u0027t quite fit into.\n\nYeah, I agree. Except, the old names also felt arbitrary to me.. E.g. the elevation for new bubbles is 16. I didn\u0027t want to call it \u0027medium-large\u0027. kShadowElevation16 would have been more descriptive, but then these are no better than magic numbers. So I think semantic names are more readable. But you\u0027re right that the classifications are too broad. I\u0027ve gone deeper into the usage sites to pick more meaningful names, and localized some where it seemed to make sense (a lot of this code is unfamiliar to me though..)",
+      "parentUuid": "40e203c6_9ac8b7bc",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 42
       },
       "revId": "df9d54268cd783e3cfcd8b2c0bbe58d05445f6a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
