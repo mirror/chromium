@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76191435_1f9aab91",
+        "filename": "chrome/browser/chromeos/dbus/finch_features_service_provider_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-06T00:26:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482481ba_b62fedc4",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 59
+      },
+      "revId": "9683b45c40f5e63f16ecae0df94ae5ab51b9d1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d71a070_85408a45",
         "filename": "chrome/browser/chromeos/virtual_machines/virtual_machines_util.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b306d40e_20f8d440",
+        "filename": "chrome/browser/chromeos/virtual_machines/virtual_machines_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-06T00:26:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d71a070_85408a45",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "9683b45c40f5e63f16ecae0df94ae5ab51b9d1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c9dd5a6_cf7cc0b7",
         "filename": "chrome/browser/chromeos/virtual_machines/virtual_machines_util.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "9683b45c40f5e63f16ecae0df94ae5ab51b9d1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65b841b_5a96f3db",
+        "filename": "chrome/browser/chromeos/virtual_machines/virtual_machines_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-06T00:26:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c9dd5a6_cf7cc0b7",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "9683b45c40f5e63f16ecae0df94ae5ab51b9d1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
