@@ -416,6 +416,11 @@ void WebPagePopupImpl::UpdateLifecycle(LifecycleUpdate requested_update) {
       *page_, *page_->DeprecatedLocalMainFrame(), requested_update);
 }
 
+void WebPagePopupImpl::UpdateAllLifecyclePhasesAndComposite() {
+  if (layer_tree_view_)
+    layer_tree_view_->SynchronouslyCompositeNoRaster();
+}
+
 void WebPagePopupImpl::Paint(WebCanvas* canvas, const WebRect& rect) {
   if (!closing_) {
     PageWidgetDelegate::Paint(*page_, canvas, rect,
