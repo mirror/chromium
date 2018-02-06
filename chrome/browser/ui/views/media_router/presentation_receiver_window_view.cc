@@ -35,7 +35,81 @@
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/widget/widget.h"
 
+#if defined(OS_CHROMEOS)
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/interfaces/window_state_type.mojom.h"
+#include "ui/aura/window.h"
+#include "ui/aura/window_observer.h"
+#include "ui/gfx/native_widget_types.h"
+#endif
+
 using content::WebContents;
+
+#if defined(OS_CHROMEOS)
+class PresentationReceiverWindowView::AuraWindowObserver final
+    : public aura::WindowObserver {
+ public:
+  explicit AuraWindowObserver(PresentationReceiverWindowView* parent);
+  ~AuraWindowObserver() final;
+
+ private:
+  // aura::WindowObserver overrides.
+  void OnWindowPropertyChanged(aura::Window* window,
+                               const void* key,
+                               intptr_t old) final;
+  void OnWindowDestroying(aura::Window* window) final;
+
+  PresentationReceiverWindowView* const parent_;
+};
+
+PresentationReceiverWindowView::AuraWindowObserver::AuraWindowObserver(
+    PresentationReceiverWindowView* parent)
+    : parent_(parent) {
+  DCHECK(parent);
+  DCHECK(parent->GetWidget());
+  DCHECK(parent->GetWidget()->GetNativeWindow());
+  parent_->GetWidget()->GetNativeWindow()->AddObserver(this);
+}
+
+PresentationReceiverWindowView::AuraWindowObserver::~AuraWindowObserver() =
+    default;
+
+void PresentationReceiverWindowView::AuraWindowObserver::
+    OnWindowPropertyChanged(aura::Window* window,
+                            const void* key,
+                            intptr_t old) {
+  DCHECK(parent_->GetWidget());
+  DCHECK(window == parent_->GetWidget()->GetNativeWindow());
+  if (key == ash::kWindowStateTypeKey) {
+    ash::mojom::WindowStateType new_state =
+        window->GetProperty(ash::kWindowStateTypeKey);
+    ash::mojom::WindowStateType old_state(
+        static_cast<ash::mojom::WindowStateType>(old));
+
+    // Toggle fullscreen when the user toggles fullscreen without going through
+    // FullscreenController::ToggleBrowserFullscreenMode(). This is the case if
+    // the user uses a hardware window state toggle button.
+    if (new_state != ash::mojom::WindowStateType::FULLSCREEN &&
+        new_state != ash::mojom::WindowStateType::PINNED &&
+        new_state != ash::mojom::WindowStateType::TRUSTED_PINNED &&
+        new_state != ash::mojom::WindowStateType::MINIMIZED &&
+        old_state == ash::mojom::WindowStateType::FULLSCREEN) {
+      parent_->ExitFullscreen();
+    } else if (new_state == ash::mojom::WindowStateType::FULLSCREEN &&
+               old_state != ash::mojom::WindowStateType::PINNED &&
+               old_state != ash::mojom::WindowStateType::TRUSTED_PINNED) {
+      parent_->EnterFullscreen();
+    }
+  }
+}
+
+void PresentationReceiverWindowView::AuraWindowObserver::OnWindowDestroying(
+    aura::Window* window) {
+  DCHECK(parent_->GetWidget());
+  DCHECK(window == parent_->GetWidget()->GetNativeWindow());
+  parent_->GetWidget()->GetNativeWindow()->RemoveObserver(this);
+}
+#endif
 
 PresentationReceiverWindowView::PresentationReceiverWindowView(
     PresentationReceiverWindowFrame* frame,
@@ -107,6 +181,10 @@ void PresentationReceiverWindowView::Init() {
   box->SetFlexForView(web_view, 1);
 
   location_bar_view_->Init();
+
+#if defined(OS_CHROMEOS)
+  window_observer_ = std::make_unique<AuraWindowObserver>(this);
+#endif
 }
 
 void PresentationReceiverWindowView::Close() {
@@ -209,8 +287,7 @@ bool PresentationReceiverWindowView::IsFullscreen() const {
 void PresentationReceiverWindowView::EnterFullscreen(
     const GURL& url,
     ExclusiveAccessBubbleType bubble_type) {
-  location_bar_view_->SetVisible(false);
-  frame_->SetFullscreen(true);
+  EnterFullscreen();
   UpdateExclusiveAccessExitBubbleContent(url, bubble_type,
                                          ExclusiveAccessBubbleHideCallback());
 }
@@ -307,4 +384,9 @@ bool PresentationReceiverWindowView::GetAcceleratorForCommandId(
     return false;
   *accelerator = fullscreen_accelerator_;
   return true;
+}
+
+void PresentationReceiverWindowView::EnterFullscreen() {
+  location_bar_view_->SetVisible(false);
+  frame_->SetFullscreen(true);
 }
