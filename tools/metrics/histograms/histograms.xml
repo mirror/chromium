@@ -56037,10 +56037,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="OfflinePages.SavedPageCount" units="pages">
+  <obsolete>
+    Deprecated as of 2/2018. Replaced by OfflinePages.SavedPageCountUponQuery.
+  </obsolete>
   <owner>jianli@chromium.org</owner>
   <summary>
     Number of saved pages restored from the offline pages metadata store when it
     is logged.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.SavedPageCountUponQuery" units="pages">
+  <owner>carlosk@chromium.org</owner>
+  <summary>
+    Total number of saved offline pages recorded when they are all queried from
+    the store. This value is more meaningful when filtered by unique users as
+    that eliminates multiple reports from the same Chrome instance.
   </summary>
 </histogram>
 

@@ -105,6 +105,13 @@ void ReportPageHistogramAfterSuccessfulSaving(
       offline_page.file_size / 1024, 1, 10000, 50);
 }
 
+void ReportSavedPagesCount(const MultipleOfflinePageItemCallback& callback,
+                           const MultipleOfflinePageItemResult& all_items) {
+  UMA_HISTOGRAM_COUNTS("OfflinePages.SavedPageCountUponQuery",
+                       all_items.size());
+  callback.Run(all_items);
+}
+
 }  // namespace
 
 // static
@@ -238,7 +245,8 @@ void OfflinePageModelTaskified::DeleteCachedPagesByURLPredicate(
 
 void OfflinePageModelTaskified::GetAllPages(
     const MultipleOfflinePageItemCallback& callback) {
-  auto task = GetPagesTask::CreateTaskMatchingAllPages(store_.get(), callback);
+  auto task = GetPagesTask::CreateTaskMatchingAllPages(
+      store_.get(), base::BindRepeating(&ReportSavedPagesCount, callback));
   task_queue_.AddTask(std::move(task));
 }
 
