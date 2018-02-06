@@ -132,6 +132,8 @@ This file contains the strings for ash.
       <!-- TODO(zork): Only include these in Aura builds -->
       <message name="IDS_ASH_SHELF_APP_LIST_LAUNCHER_TITLE" desc="The title used for the Ash Launcher in the Shelf (not mentioning 'Apps' since this is a general launcher).">
         Launcher
+
+        Test
       </message>
       <message name="IDS_ASH_SHELF_APP_LIST_LAUNCHER_SYNCING_TITLE" desc="The title used for the Ash Launcher in the Shelf to indicate loading/syncinc apps.">
         Launcher (syncing apps...)
@@ -305,10 +307,6 @@ This file contains the strings for ash.
 
       <message name="IDS_ASH_STATUS_TRAY_UPDATE" desc="The label used in the tray popup to notify that the user should restart to get system updates.">
         Restart to update
-      </message>
-
-      <message name="IDS_ASH_STATUS_TRAY_UPDATE_FLASH" desc="The label used in the tray popup to notify that the user should restart to update Adobe Flash Player.">
-        Restart to update Adobe Flash Player
       </message>
 
       <message name="IDS_ASH_STATUS_TRAY_RESTART_AND_POWERWASH_TO_UPDATE" desc="The label used in the tray popup to notify that the user should restart and powerwash the device to get system updates.">

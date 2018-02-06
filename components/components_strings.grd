@@ -218,6 +218,8 @@
       <!-- Generic terms -->
       <message name="IDS_CANCEL" desc="Used for Cancel on buttons">
         Cancel
+
+        test
       </message>
       <message name="IDS_CLOSE" desc="A generic term for Close on buttons and menus.">
         Close

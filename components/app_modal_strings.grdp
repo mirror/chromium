@@ -5,6 +5,8 @@
   <if expr="not use_titlecase">
     <message name="IDS_JAVASCRIPT_MESSAGEBOX_TITLE" desc="Title for JavaScript prompt and confirm originating from a webpage">
       From <ph name="SITE">$1<ex>http://www.google.com</ex></ph>
+
+      test
     </message>
     <message name="IDS_JAVASCRIPT_MESSAGEBOX_TITLE_IFRAME" desc="Title for JavaScript prompt and confirm originating from an iframe inside the webpage">
       From an embedded page at <ph name="SITE">$1<ex>http://www.google.com</ex></ph>

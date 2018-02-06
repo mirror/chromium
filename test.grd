@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<grit latest_public_release="1" current_release="1">
+  <release seq="1">
+    <messages>
+      <message name="IDS_TEST_STRING1">
+        Test string 1
+      </message>
+      <message name="IDS_TEST_STRING2">
+        Test string 2
+      </message>
+      <message name="IDS_TEST_STRING_NON_TRANSLATEABLE" translateable="false">
+        This is a non translateable string
+      </message>
+    </messages>
+  </release>
+</grit>
