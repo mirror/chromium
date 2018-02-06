@@ -751,7 +751,7 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
           node, -1, -1, nullptr,
           static_cast<SiteInstanceImpl*>(params.source_site_instance.get()),
           params.url, params.referrer, params.redirect_chain, PageState(),
-          "GET", -1);
+          "GET", -1, nullptr /* blob_url_loader_factory */);
     }
   }
 
@@ -1132,7 +1132,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
         rfh->frame_tree_node()->unique_name(), params.item_sequence_number,
         params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
         params.url, params.referrer, params.redirects, params.page_state,
-        params.method, params.post_id);
+        params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
     new_entry = GetLastCommittedEntry()->CloneAndReplace(
         frame_entry, true, rfh->frame_tree_node(),
@@ -1412,7 +1412,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
       rfh->frame_tree_node(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id);
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
   // The redirected to page should not inherit the favicon from the previous
   // page.
@@ -1480,7 +1480,7 @@ void NavigationControllerImpl::RendererDidNavigateToSamePage(
       rfh->frame_tree_node(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id);
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
   DiscardNonCommittedEntries();
 }
@@ -1511,7 +1511,7 @@ void NavigationControllerImpl::RendererDidNavigateNewSubframe(
       rfh->frame_tree_node()->unique_name(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id));
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */));
 
   std::unique_ptr<NavigationEntryImpl> new_entry =
       GetLastCommittedEntry()->CloneAndReplace(
@@ -1581,7 +1581,7 @@ bool NavigationControllerImpl::RendererDidNavigateAutoSubframe(
       rfh->frame_tree_node(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id);
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
   return send_commit_notification;
 }

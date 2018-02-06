@@ -672,7 +672,8 @@ void NavigatorImpl::RequestTransferURL(
     const std::string& method,
     scoped_refptr<network::ResourceRequestBody> post_body,
     const std::string& extra_headers,
-    const base::Optional<std::string>& suggested_filename) {
+    const base::Optional<std::string>& suggested_filename,
+    scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) {
   // |method != "POST"| should imply absence of |post_body|.
   if (method != "POST" && post_body) {
     NOTREACHED();
@@ -750,7 +751,8 @@ void NavigatorImpl::RequestTransferURL(
     entry->AddOrUpdateFrameEntry(
         node, -1, -1, nullptr,
         static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
-        referrer_to_use, redirect_chain, PageState(), method, -1);
+        referrer_to_use, redirect_chain, PageState(), method, -1,
+        blob_url_loader_factory);
   } else {
     // Main frame case.
     entry = NavigationEntryImpl::FromNavigationEntry(
@@ -785,7 +787,8 @@ void NavigatorImpl::RequestTransferURL(
     frame_entry = new FrameNavigationEntry(
         node->unique_name(), -1, -1, nullptr,
         static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
-        referrer_to_use, redirect_chain, PageState(), method, -1);
+        referrer_to_use, redirect_chain, PageState(), method, -1,
+        blob_url_loader_factory);
   }
   NavigateToEntry(node, *frame_entry, *entry.get(), ReloadType::NONE, false,
                   false, false, post_body);

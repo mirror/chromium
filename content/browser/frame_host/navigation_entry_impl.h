@@ -233,7 +233,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
       const std::vector<GURL>& redirect_chain,
       const PageState& page_state,
       const std::string& method,
-      int64_t post_id);
+      int64_t post_id,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory);
 
   // Returns the FrameNavigationEntry corresponding to |frame_tree_node|, if
   // there is one in this NavigationEntry.
