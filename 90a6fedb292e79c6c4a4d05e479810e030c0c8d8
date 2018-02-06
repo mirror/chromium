@@ -205,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "ea36a799_7a8cad83",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-06T10:36:44Z",
+      "side": 1,
+      "message": "How do you suggest passing the non-static Slot into the static ThreadLocalStorageCleanup while keeping the signature?",
+      "parentUuid": "9aab1770_d082dd64",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cc335b_cdaa34fe",
         "filename": "base/threading/thread_local_storage_unittest.cc",
         "patchSetId": 4
