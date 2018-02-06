@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include "base/stl_util.h"
+#include "chrome/browser/ui/browser_list.h"
 
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
@@ -177,6 +179,14 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
   content::WebContents* web_contents = tab_metrics.web_contents;
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   if (!browser)
+    return;
+
+  if (browser->tab_strip_model()->closing_all())
+    return;
+
+  const BrowserList::BrowserSet& closing_browsers =
+      BrowserList::GetInstance()->currently_closing_browsers();
+  if (base::ContainsKey(closing_browsers, browser))
     return;
 
   // UKM recording is disabled in OTR.
