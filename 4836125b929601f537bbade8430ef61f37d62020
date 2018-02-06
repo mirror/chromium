@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22a15969_e901ff5a",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-02-06T18:06:36Z",
+      "side": 1,
+      "message": "base::span\u003cconst uint8_t\u003e? (base::span is pretty amazing. It\u0027s like StringPiece for chunks of arrays. I hope to fix SignatureVerifier to take these soon.",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 155,
+        "endChar": 45
+      },
+      "revId": "4836125b929601f537bbade8430ef61f37d62020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955d6854_998897e7",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-02-06T18:06:36Z",
+      "side": 1,
+      "message": "Could you add a TODO and file a bug that this is missing the digitalSignature key usage bit check? We should not ship any more code that is missing this sort of thing.\n\n(I\u0027ll add a helper function that puts together ExtractSPKIFromDERCert, this check, and VerifyInit. Seems silly to do them separately.)",
+      "revId": "4836125b929601f537bbade8430ef61f37d62020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56763f9d_2e287776",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-02-06T18:06:36Z",
+      "side": 1,
+      "message": "If you rebase, you\u0027ll find this API has changed a bit to be somewhat more sensible. :-)",
+      "revId": "4836125b929601f537bbade8430ef61f37d62020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6890b2c6_d2e6bf6e",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-02-06T18:06:36Z",
+      "side": 1,
+      "message": "Unnecessary optimization: probably we could save a mallocs by doing:\n\n  base::Optional\u003c...\u003e cbor_val \u003d ...;\n  ...\n  if (!cbor_message)\n    return base::nullopt;\n\n  std::vector\u003cuint8_t\u003e message;\n  message.reserve(arraysize(kMessageHeader) + cbor_message-\u003esize());\n  message.insert(message.end(), std::begin(kMessageHeader), \n  std::end(kMessageHeader));\n  message.insert(message.end(), cbor_message-\u003ebegin(), cbor_message-\u003eend());",
+      "revId": "4836125b929601f537bbade8430ef61f37d62020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
