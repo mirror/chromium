@@ -59,10 +59,10 @@ public class ChromiumMultiDexInstaller {
     // Privileged processes need ot have all of their dependencies in the MainDex for
     // performance reasons.
     private static boolean shouldInstallMultiDex(Context context) {
-        if (ContextUtils.isIsolatedProcess()) {
+        String currentProcessName = ContextUtils.getProcessName();
+        if (currentProcessName == null) {
             return false;
         }
-        String currentProcessName = ContextUtils.getProcessName();
         PackageManager packageManager = context.getPackageManager();
         try {
             ApplicationInfo appInfo = packageManager.getApplicationInfo(context.getPackageName(),

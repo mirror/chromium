@@ -4,6 +4,7 @@
 
 package org.chromium.base;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -16,8 +17,6 @@ import android.preference.PreferenceManager;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-
-import java.lang.reflect.Method;
 
 /**
  * This class provides Android application context related utility methods.
@@ -157,30 +156,49 @@ public class ContextUtils {
      * @return Whether the process is isolated.
      */
     public static boolean isIsolatedProcess() {
-        // Could be tested by trying to list a directory and seeing if it throws.
-        // Reflection is faster though.
         try {
-            Method isIsolatedMethod = Process.class.getMethod("isIsolated");
-            return (Boolean) isIsolatedMethod.invoke(null);
+            return (Boolean) Process.class.getMethod("isIsolated").invoke(null);
         } catch (Exception e) { // No multi-catch below API level 19 for reflection exceptions.
-            throw new RuntimeException(e);
+            // If the private API doesn't exists, do an IO operations to see if we're isolated.
+            // Note that getFilesDir() attempts to create the directory, and list() returns an
+            // empty list for an empty directory and null for IOException.
+            return sApplicationContext.getFilesDir().list() == null;
         }
     }
 
-    /** @return The name of the current process. E.g. "org.chromium.chrome:isolated_process0" */
+    /** @return The name of the current process. E.g. "org.chromium.chrome:privileged_process0".
+     *      Returns null for isolated processes. */
     public static String getProcessName() {
-        // Could be obtained by looping through results of ActivityManager.getRunningAppProcesses(),
-        // but avoiding IPC is much faster.
-        try {
-            Class<?> activityThreadClazz = Class.forName("android.app.ActivityThread");
-            Method currentProcessName = activityThreadClazz.getMethod("currentProcessName");
-            return (String) currentProcessName.invoke(null);
-        } catch (Exception e) { // No multi-catch below API level 19 for reflection exceptions.
-            throw new RuntimeException(e);
+        // Isolated processes cannot call getRunningAppProcesses().
+        if (isIsolatedProcess()) {
+            return null;
         }
+        try {
+            // An even more convenient ActivityThread.currentProcessName() exists, but was found not
+            // to on at least one older device: https://crbug.com/808419
+            // Switched to getProcessName() and added fall-back logic.
+            Class<?> activityThreadClazz = Class.forName("android.app.ActivityThread");
+            Object activityThread =
+                    activityThreadClazz.getMethod("currentActivityThread").invoke(null);
+            return (String) activityThreadClazz.getMethod("getProcessName").invoke(activityThread);
+        } catch (Exception e) { // No multi-catch below API level 19 for reflection exceptions.
+            int myPid = Process.myPid();
+            ActivityManager activityManager =
+                    (ActivityManager) sApplicationContext.getSystemService(
+                            Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningAppProcessInfo processInfo :
+                    activityManager.getRunningAppProcesses()) {
+                if (processInfo.pid == myPid) {
+                    return processInfo.processName;
+                }
+            }
+        }
+        // Isolated processes not allowed to call getRunningAppProcesses.
+        return null;
     }
 
     public static boolean isMainProcess() {
-        return !getProcessName().contains(":");
+        String name = getProcessName();
+        return name != null && !name.contains(":");
     }
 }
