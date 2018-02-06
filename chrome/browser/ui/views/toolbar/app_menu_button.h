@@ -64,6 +64,9 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
   // Removes a menu listener.
   void RemoveMenuListener(views::MenuListener* listener);
 
+  // Opens the app menu and opens the bookmarks submenu directly.
+  void OpenBookmarkMenu();
+
   // views::MenuButton:
   gfx::Size CalculatePreferredSize() const override;
   void Layout() override;

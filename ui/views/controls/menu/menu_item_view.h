@@ -250,6 +250,9 @@ class VIEWS_EXPORT MenuItemView : public View {
   // Returns true if the item is selected.
   bool IsSelected() const { return selected_; }
 
+  // Selects this menu and opens is submenu immediately.
+  void SelectAndOpenSubmenu();
+
   // Sets the |tooltip| for a menu item view with |item_id| identifier.
   void SetTooltip(const base::string16& tooltip, int item_id);
 

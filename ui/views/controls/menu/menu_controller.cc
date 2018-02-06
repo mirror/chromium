@@ -1196,6 +1196,9 @@ void MenuController::SetSelection(MenuItemView* menu_item,
   else if (pending_item_changed)
     StartShowTimer();
 
+  if (selection_types & SELECTION_EXIT_ALL_ON_ESCAPE)
+    exit_all_on_escape_ = true;
+
   // Notify an accessibility focus event on all menu items except for the root.
   if (menu_item &&
       (MenuDepth(menu_item) != 1 ||
@@ -1350,6 +1353,10 @@ void MenuController::OnKeyDown(ui::KeyboardCode key_code) {
       break;
 
     case ui::VKEY_ESCAPE:
+      if (exit_all_on_escape_) {
+        Cancel(EXIT_ALL);
+        break;
+      }
       if (!state_.item->GetParentMenuItem() ||
           (!state_.item->GetParentMenuItem()->GetParentMenuItem() &&
            (!state_.item->SubmenuIsShowing()))) {

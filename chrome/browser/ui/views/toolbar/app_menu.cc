@@ -827,6 +827,10 @@ void AppMenu::CloseMenu() {
     menu_runner_->Cancel();
 }
 
+void AppMenu::OpenBookmarkMenu() {
+  bookmark_menu_->SelectAndOpenSubmenu();
+}
+
 bool AppMenu::IsShowing() {
   return menu_runner_.get() && menu_runner_->IsRunning();
 }
