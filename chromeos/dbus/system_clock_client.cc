@@ -71,7 +71,7 @@ class SystemClockClientImpl : public SystemClockClient {
     writer.AppendInt64(time_in_seconds);
     system_clock_proxy_->CallMethod(&method_call,
                                     dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-                                    dbus::ObjectProxy::EmptyResponseCallback());
+                                    base::DoNothing());
   }
 
   bool CanSetTime() override { return can_set_time_; }

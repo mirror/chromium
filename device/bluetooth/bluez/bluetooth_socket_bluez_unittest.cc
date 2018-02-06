@@ -36,13 +36,6 @@ using device::BluetoothSocket;
 using device::BluetoothSocketThread;
 using device::BluetoothUUID;
 
-namespace {
-
-void DoNothingDBusErrorCallback(const std::string& error_name,
-                                const std::string& error_message) {}
-
-}  // namespace
-
 namespace bluez {
 
 class BluetoothSocketBlueZTest : public testing::Test {
@@ -93,8 +86,7 @@ class BluetoothSocketBlueZTest : public testing::Test {
     ASSERT_TRUE(adapter_->IsPresent());
 
     // Turn on the adapter.
-    adapter_->SetPowered(true, base::Bind(&base::DoNothing),
-                         base::Bind(&base::DoNothing));
+    adapter_->SetPowered(true, base::DoNothing(), base::DoNothing());
     ASSERT_TRUE(adapter_->IsPowered());
   }
 
@@ -359,7 +351,7 @@ TEST_F(BluetoothSocketBlueZTest, Listen) {
     fake_bluetooth_device_client->ConnectProfile(
         static_cast<BluetoothDeviceBlueZ*>(device)->object_path(),
         bluez::FakeBluetoothProfileManagerClient::kRfcommUuid,
-        base::Bind(&base::DoNothing), base::Bind(&DoNothingDBusErrorCallback));
+        base::DoNothing(), base::DoNothing());
     run_loop.RunUntilIdle();
   }
   {
@@ -414,7 +406,7 @@ TEST_F(BluetoothSocketBlueZTest, Listen) {
     fake_bluetooth_device_client->ConnectProfile(
         static_cast<BluetoothDeviceBlueZ*>(device)->object_path(),
         bluez::FakeBluetoothProfileManagerClient::kRfcommUuid,
-        base::Bind(&base::DoNothing), base::Bind(&DoNothingDBusErrorCallback));
+        base::DoNothing(), base::DoNothing());
     run_loop2.Run();
   }
 
