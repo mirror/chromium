@@ -52,6 +52,10 @@
       #pagelength {
         font-size: 0.81rem;
       }
+
+      paper-input-container {
+        --layout-horizontal: { display: block };
+      }
     </style>
     <paper-input-container id="pageselector" no-label-float>
       <input id="input" is="iron-input" value="{{pageNo}}" slot="input"
