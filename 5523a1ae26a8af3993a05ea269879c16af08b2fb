@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53ac3480_d7d5b8cf",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-06T23:13:36Z",
+      "side": 1,
+      "message": "Today it doesn\u0027t happen but only because nobody is fast enough to save a new page while Download Home is opening... But technically it can. It is hard to build an interface that obtains a copy of all the data and then starts to call Observer only for changes that come after. It is only possible to do if there is something like GetAllItemsAndStartObserving(observer), with the initial load of items coming as a callback on the observer... only then the making a snapshot and subsequent changes may be properly serialized... Otherwise, extra PostTask in some codepath may cause the initial copy and stream of notifications to become unsynchronized.\n\nI\u0027ll send a patch for DownloadHistoryAdapter to you soon, with a check.",
+      "parentUuid": "faa130fc_b0f718e4",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "5523a1ae26a8af3993a05ea269879c16af08b2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab86ee85_fa91894b",
         "filename": "components/offline_items_collection/core/offline_content_provider.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-06T20:01:49Z",
       "side": 1,
       "message": "Similar to above comment, can this actually happen?",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "5523a1ae26a8af3993a05ea269879c16af08b2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b46f6b7_51370473",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-06T23:13:36Z",
+      "side": 1,
+      "message": "Theoretically yes, so this also has to be checked for...",
+      "parentUuid": "ab86ee85_fa91894b",
       "range": {
         "startLine": 47,
         "startChar": 47,
