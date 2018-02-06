@@ -83,6 +83,8 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
   friend struct mojo::StructTraits<mojom::LocalSurfaceIdDataView,
                                    LocalSurfaceId>;
 
+  std::string ToShortString(uint64_t, uint64_t) const;
+
   friend bool operator<(const LocalSurfaceId& lhs, const LocalSurfaceId& rhs);
 
   uint32_t parent_sequence_number_;
