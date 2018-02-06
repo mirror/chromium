@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "92c7c954_410785f1",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-06T01:52:08Z",
+      "side": 1,
+      "message": "May be we can rewrite this to imply that if there was no DRP, then this request would not have happened. So, return 0.\n\nRight now, it feels it\u0027s tracking state across method calls (which obviously it\u0027s not doing).",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "aff64a01ae31a9fcd0fdba0a772aac75e2607a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe6aec4_52f6b344",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-06T01:52:08Z",
+      "side": 1,
+      "message": "It\u0027s unusal that this logic belongs here. It makes it difficult to explain what this method is doing. It\u0027s returning the header bytes except if it believes that they were already counted for? \n\nMay be rename it to EstimateOriginalHeaderBytesNoDRP? I do not have concrete suggestions.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 13
+      },
+      "revId": "aff64a01ae31a9fcd0fdba0a772aac75e2607a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74eb247b_24d15a9d",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_util.cc",
         "patchSetId": 3
