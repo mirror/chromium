@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f05ac6db_0be4a931",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-06T11:02:18Z",
+      "side": 1,
+      "message": "Not part of this CL, but in general all base::Unretained need a comment explaining why it is safe.",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "ef208de3062fa1711deca5739d4b40a88de9caff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3f1b74_0a56a8d3",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-06T11:02:18Z",
+      "side": 1,
+      "message": "Add a comment explaining why base::Unretained is safe in this case.\nApplies to other calls, even if not part of this CL.",
+      "range": {
+        "startLine": 284,
+        "startChar": 27,
+        "endLine": 284,
+        "endChar": 37
+      },
+      "revId": "ef208de3062fa1711deca5739d4b40a88de9caff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2af12d_4a01371f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-06T11:02:18Z",
+      "side": 1,
+      "message": "nit: consider using base::flat_set.",
+      "range": {
+        "startLine": 315,
+        "startChar": 7,
+        "endLine": 315,
+        "endChar": 10
+      },
+      "revId": "ef208de3062fa1711deca5739d4b40a88de9caff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7c8785_a3467a73",
+        "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-02-06T11:02:18Z",
+      "side": 1,
+      "message": "Should you have a SequenceChecker or similar for this and other methods in this object?",
+      "range": {
+        "startLine": 163,
+        "startChar": 1,
+        "endLine": 163,
+        "endChar": 2
+      },
+      "revId": "ef208de3062fa1711deca5739d4b40a88de9caff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
