@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41c36358_ea518966",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "1be8fa75_5caa4a3b",
+      "range": {
+        "startLine": 24,
+        "startChar": 61,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e79e05f_5e3a3e53",
         "filename": "ash/public/cpp/menu_utils.h",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc103b6a_d84e37c5",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e79e05f_5e3a3e53",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e110d465_a132ef4b",
+        "filename": "ash/public/cpp/menu_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e461b7c1_4a079831",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "007bded2_39907de5",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 10
@@ -76,6 +142,24 @@
       "writtenOn": "2018-02-05T20:51:20Z",
       "side": 1,
       "message": "Can this be replaced by the new util function, PopulateMenuFromMojoMenuItems?",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb62663_0849daa3",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "This ShelfContextMenuModel is actually holding menu items with a tree hierarchy, by storing submenu items in their direct parent.\n\nThe general SimpleMenuModel doesn\u0027t hold submenu items in this way. Instead, all submenu items are held somewhere \"global\". I haven\u0027t come up with any good solution to treat these two cases in a same way. Or is it ok to not keep this menu tree structure?",
+      "parentUuid": "007bded2_39907de5",
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -146,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "370cd149_f2ab955a",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5152a1e3_522159ce",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b486b27_9366acfd",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
         "patchSetId": 10
@@ -160,6 +262,24 @@
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892ad89a_ee39a4ea",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b486b27_9366acfd",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "4c496a3e_903ba8ca",
+        "filename": "ui/app_list/test/app_list_test_view_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d81b5fb5_4a250494",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85854e06_4d67ff67",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 10
@@ -194,6 +332,24 @@
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e302bc_518a8aff",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85854e06_4d67ff67",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "d0160379_77ba6055",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cda400c_e1e5ce8a",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 25
+      },
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c96f090_3bd8c57b",
         "filename": "ui/app_list/views/app_list_item_view.h",
         "patchSetId": 10
@@ -234,6 +414,24 @@
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849f99d6_4cf91012",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c96f090_3bd8c57b",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "8f4dc1bf_21994995",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7150614a_2f9a5773",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191bc39c_cdf36c6e",
         "filename": "ui/app_list/views/app_list_item_view.h",
         "patchSetId": 10
@@ -271,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "360e0787_dae2bd85",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191bc39c_cdf36c6e",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0047813d_c55b9913",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 10
@@ -285,6 +519,24 @@
       "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5965a2b0_871520f7",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T05:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0047813d_c55b9913",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
