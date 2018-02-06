@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c775295d_58bdcea1",
+        "filename": "chrome/common/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of allowing chrome/common to depend on any arbitrary code in components/metrics. There\u0027s a bunch of stuff there that doesn\u0027t make sense to use from non-browser process.",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab3ff72_515c1dc7",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "Nit: Seems like it would be more concise and efficient to just structure this as a series of if statements w/ return values?",
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca21f6f_30e0173c",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "Does this mean there can only be a single child thread profiler? If so, this should be documented in the function comment.",
+      "range": {
+        "startLine": 82,
+        "startChar": 57,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d09139_c2ba7918",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "Should we have a dcheck that we\u0027re not called twice?",
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4145888_1620edd2",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "Nit: Remove extra space.",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231d6b4e_de178a92",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "By \"on the thread\", do you mean the child thread? If so, mention this.",
+      "range": {
+        "startLine": 34,
+        "startChar": 48,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53711b22_9da97c81",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "Nit: Add a comment",
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8ebeab_b4e9e547",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:47:24Z",
+      "side": 1,
+      "message": "Nit: Add empty line after this.",
+      "range": {
+        "startLine": 565,
+        "startChar": 1,
+        "endLine": 565,
+        "endChar": 0
+      },
+      "revId": "e8152ebfb09f684cafa5fa0b918a712832e5642c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
