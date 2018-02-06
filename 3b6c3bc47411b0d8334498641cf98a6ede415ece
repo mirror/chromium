@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319babc0_b43a2339",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "This isn\u0027t quite how I interpreted the mocks. In flipping through the slide deck, I thought this checkbox would always be present. Perhaps with checked-by-default moving to unchecked if the user unchecks the box then triggers another dialog. Is there another discussion about behavior when the prompt is re-shown after the user unchecks this box?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdd90a5_355d3c50",
+        "filename": "chrome/android/java/res/layout/download_location_dialog.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "Should this have the same tint applied as the ic_folder icon so that they\u0027re guaranteed to be the same color?",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 45
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae03911_9b531a03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "What does this line do?",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd344d9_6b56536b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "nit: Use fileName here?",
+      "range": {
+        "startLine": 112,
+        "startChar": 58,
+        "endLine": 112,
+        "endChar": 93
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3600856_7cf0fb05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "What would cause the ListView to be null?",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c06515d_a1ca3b6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "super nit on the name: *Util makes me think of a class full of static utility methods that are used by multiple other classes to perform common operations. This class seems more like a DownloadDirectoryList... or something like that.",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 81
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27992665_eaabcb25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "Did anything change in this code moved from DownloadHistoryAdapter (does it need fine-grained review)?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95486c0f_38fb1986",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "nit: Per our expert UX string writer, this should probably be a right single quotation mark (U+2019) rather than a neutral apostrophe (U+0027) (I can forward an email if you\u0027d like). I think the easiest way to do that is to type this string into a Google Doc and copy + paste.\n\nRight single quotation mark: http://www.fileformat.info/info/unicode/char/2019/index.htm\nNeutral apostrophe: http://www.fileformat.info/info/unicode/char/27/index.htm",
+      "range": {
+        "startLine": 1190,
+        "startChar": 11,
+        "endLine": 1190,
+        "endChar": 12
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e2385f_bfd350bb",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T17:20:01Z",
+      "side": 1,
+      "message": "We should be able to reuse a string here rather than introducing a new one, e.g. IDS_DUPLICATE_DOWNLOAD_INFOBAR_DOWNLOAD_BUTTON",
+      "range": {
+        "startLine": 1193,
+        "startChar": 8,
+        "endLine": 1193,
+        "endChar": 16
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
