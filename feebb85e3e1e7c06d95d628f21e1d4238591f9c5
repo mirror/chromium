@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a66853_336160e5",
+        "filename": "components/offline_items_collection/core/pending_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T01:14:52Z",
+      "side": 1,
+      "message": "Good, this should keep the enums in sync between Java and C++",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 80
+      },
+      "revId": "feebb85e3e1e7c06d95d628f21e1d4238591f9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
