@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6848118_bf28ea7a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-02-06T16:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a31a09_54a6587a",
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a784d64_4d84a25d",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-05T18:51:20Z",
       "side": 1,
       "message": "This might be a naive question but is there any chance we can re-use the jump-svg-image? Also, that image seems to be used for both side, I guess we can use the same technique here?",
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dfe2c1_0aadd60f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-02-06T16:10:04Z",
+      "side": 1,
+      "message": "We can probably use the same technique to only have one svg instead of a left and right arrow. Do you think that would be beneficial (each is about 190 bytes)? Also, the jump image is three arrows and the spec calls for two here, so not sure it would work.",
+      "parentUuid": "7a784d64_4d84a25d",
       "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "56f6aab0_821e4d43",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlScrubbingMessageElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-02-06T16:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523e6265_5c277d91",
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9480817_7e1647e5",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlScrubbingMessageElement.h",
         "patchSetId": 1
@@ -73,6 +127,30 @@
       "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14df994a_e1299c54",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlScrubbingMessageElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-02-06T16:10:04Z",
+      "side": 1,
+      "message": "Discussed offline and leaving as a MediaControlDivElement since we make use of DoesFit/IsWanted",
+      "parentUuid": "e9480817_7e1647e5",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "e77d6f1bc3cf69958c0c514329dc55d6529170cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
