@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9265e189_949562b1",
+        "filename": "chrome/common/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:53:26Z",
+      "side": 1,
+      "message": "Sort.",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "0a71203af409e1dc3d8e096b76c69eb82d33f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254d6792_cba72670",
+        "filename": "chrome/common/thread_profiler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:53:26Z",
+      "side": 1,
+      "message": "empty()?",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "0a71203af409e1dc3d8e096b76c69eb82d33f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ec2e1f_499af48f",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:53:26Z",
+      "side": 1,
+      "message": "There is no SetMainThreadTaskRunner?",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "0a71203af409e1dc3d8e096b76c69eb82d33f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51dd05c2_87fb2819",
+        "filename": "chrome/common/thread_profiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-06T23:53:26Z",
+      "side": 1,
+      "message": "Is there a reason this needs to be static? Don\u0027t callers have access to the instance?",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 52
+      },
+      "revId": "0a71203af409e1dc3d8e096b76c69eb82d33f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
