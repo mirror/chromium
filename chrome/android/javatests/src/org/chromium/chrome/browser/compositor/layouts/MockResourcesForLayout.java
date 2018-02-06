@@ -68,6 +68,7 @@ public class MockResourcesForLayout extends MockResources {
         mFloats.put(org.chromium.chrome.R.dimen.contextual_search_bar_banner_padding, 12.f);
         mFloats.put(org.chromium.chrome.R.dimen.contextual_search_end_button_width, 41.f);
         mFloats.put(org.chromium.chrome.R.dimen.toolbar_height_no_shadow, 56.f);
+        mIntegers.put(R.color.modern_light_grey, 0xFFF1F3F4);
     }
 
     @Override
