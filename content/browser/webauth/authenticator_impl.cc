@@ -340,6 +340,7 @@ void AuthenticatorImpl::OnRegisterResponse(
           webauth::mojom::AttestationConveyancePreference::NONE) {
         response_data->EraseAttestationStatement();
       }
+
       std::move(make_credential_response_callback_)
           .Run(webauth::mojom::AuthenticatorStatus::SUCCESS,
                CreateMakeCredentialResponse(std::move(client_data_),
