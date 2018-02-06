@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9ecbfa1_aeb10e7f",
+        "filename": "ash/public/cpp/vector_icons/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T17:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bf4453d_f1797326",
+      "revId": "e7fe435657751b69f6dc88335fb0a2f1eb294206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e2310dd_aeaa612a",
         "filename": "ash/public/cpp/vector_icons/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T16:46:38Z",
       "side": 1,
       "message": "Is this needed? If so, document why an ash build target depends on \"chrome\" config.",
+      "revId": "e7fe435657751b69f6dc88335fb0a2f1eb294206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ef1477_aa18940f",
+        "filename": "ash/public/cpp/vector_icons/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T17:38:31Z",
+      "side": 1,
+      "message": "not needed, just copy-pasted from ash/resources/vector_icons",
+      "parentUuid": "8e2310dd_aeaa612a",
       "revId": "e7fe435657751b69f6dc88335fb0a2f1eb294206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
