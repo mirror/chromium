@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a610a1a_517a4266",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T15:24:53Z",
+      "side": 0,
+      "message": "i\u0027m not sure what the convention is, but it might be worth leaving a comment here to explain the cause of the \u0027hole\u0027 in the enum sequence. maybe something like:\n// kVibrateWithoutUserGesture \u003d 1966,  Removed. As of M60, vibrate always requires a gesture.",
+      "revId": "5e4bfc34f885d3b4954b71a92366023f972a2d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
