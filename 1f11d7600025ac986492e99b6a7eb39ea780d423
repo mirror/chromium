@@ -16,6 +16,24 @@
       "revId": "1f11d7600025ac986492e99b6a7eb39ea780d423",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4340f0fb_51c81b33",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-06T22:41:36Z",
+      "side": 1,
+      "message": "Unfortunately the BrowserFrame is intentionally hidden before closing even starts:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/frame/browser_view.cc?type\u003dcs\u0026q\u003dbrowser_view%5C.cc+%22frame_-%3Ehide%22\u0026sq\u003dpackage:chromium\u0026l\u003d1880\n\nBut even so, if there are other reasons the active WebContents could be hidden, we probably still don\u0027t want to consider it backgrounded as something unexpected is happening.",
+      "parentUuid": "53574d2e_d9d506a4",
+      "revId": "1f11d7600025ac986492e99b6a7eb39ea780d423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
