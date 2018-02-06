@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bf0fd5b_a6f7eba0",
+        "filename": "extensions/browser/api/socket/socket_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T22:56:03Z",
+      "side": 1,
+      "message": "This can be a network::mojom::UDPSocketPtrInfo as well.",
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd1317a_ae197fb3",
+        "filename": "extensions/browser/api/socket/socket_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T22:56:03Z",
+      "side": 1,
+      "message": "Why not change the argument type of the constructor?",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 50
+      },
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a632bb2_09c6ddfe",
+        "filename": "extensions/browser/api/socket/udp_socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T22:56:03Z",
+      "side": 1,
+      "message": "BindOnce",
+      "range": {
+        "startLine": 344,
+        "startChar": 32,
+        "endLine": 344,
+        "endChar": 45
+      },
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288a956e_bccc9643",
+        "filename": "extensions/browser/api/sockets_udp/sockets_udp_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T22:56:03Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ce9488_dbcd3fae",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-06T22:56:03Z",
+      "side": 1,
+      "message": "This cast should be implicit.",
+      "range": {
+        "startLine": 309,
+        "startChar": 39,
+        "endLine": 309,
+        "endChar": 58
+      },
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
