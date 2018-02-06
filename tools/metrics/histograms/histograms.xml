@@ -84815,6 +84815,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Sqlite.Vfs" units="bytes">
+  <obsolete>
+    Removed 2018/02/06.
+  </obsolete>
   <owner>shess@chromium.org</owner>
   <summary>
     Buffer sizes passed to browser-process SQLite VFS functions.
@@ -84822,6 +84825,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Sqlite.Vfs_Events" enum="SqliteVfsEvents">
+  <obsolete>
+    Removed 2018/02/06.
+  </obsolete>
   <owner>shess@chromium.org</owner>
   <summary>
     I/O operations measured by browser-process SQLite VFS wrapper.
@@ -111912,6 +111918,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="SqliteVfsOperations" separator="_">
+  <obsolete>
+    Removed 2018-02-06.
+  </obsolete>
   <owner>shess@chromium.org</owner>
   <suffix name="Fetch" label="fetch"/>
   <suffix name="Read" label="read"/>
