@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "257dfc98_660b8355",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoderTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T13:19:42Z",
+      "side": 1,
+      "message": "more like \"a workaround\" right?  The image _is_ malformed, right?",
+      "range": {
+        "startLine": 1009,
+        "startChar": 34,
+        "endLine": 1009,
+        "endChar": 53
+      },
+      "revId": "61d53e9aeac69742973f9ae28f2c193126e212d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
