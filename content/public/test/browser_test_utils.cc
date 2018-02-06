@@ -1904,17 +1904,35 @@ void MainThreadFrameObserver::Wait() {
   run_loop_.reset(nullptr);
 }
 
+void MainThreadFrameObserver::OnRenderFrameMetadata(
+    const cc::RenderFrameMetadata& metadata) {
+  last_render_frame_metadata_ = metadata;
+  QuitOnUIThread();
+}
+
+void MainThreadFrameObserver::OnWaitForNextFrameForTestsACK() {
+  QuitOnUIThread();
+}
+
+void MainThreadFrameObserver::QuitOnUIThread() {
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&MainThreadFrameObserver::Quit, base::Unretained(this)));
+}
+
 void MainThreadFrameObserver::Quit() {
   if (run_loop_)
     run_loop_->Quit();
 }
 
 bool MainThreadFrameObserver::OnMessageReceived(const IPC::Message& msg) {
-  if (msg.type() == ViewHostMsg_WaitForNextFrameForTests_ACK::ID &&
-      msg.routing_id() == routing_id_) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&MainThreadFrameObserver::Quit, base::Unretained(this)));
+  if (msg.routing_id() == routing_id_) {
+    IPC_BEGIN_MESSAGE_MAP(MainThreadFrameObserver, msg)
+      IPC_MESSAGE_HANDLER(ViewHostMsg_WaitForNextFrameForTests_ACK,
+                          OnWaitForNextFrameForTestsACK)
+      IPC_MESSAGE_HANDLER(ViewHostMsg_OnRenderFrameSubmitted,
+                          OnRenderFrameMetadata)
+    IPC_END_MESSAGE_MAP();
   }
   return true;
 }
