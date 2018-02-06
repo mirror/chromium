@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7131eb4_cf8e425f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-02-06T20:30:16Z",
+      "side": 1,
+      "message": "I think VisualRect should also includeLayoutBox::ComputeVisualEffectOverflowOutsets()?",
+      "revId": "10a2f79874d513c8add74367231dabe7563bdfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
