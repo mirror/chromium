@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef19313c_134980a0",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_box_fragment_painter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-02-06T00:39:12Z",
+      "side": 1,
+      "message": "I think this will do the right thing in all writing modes.",
+      "revId": "08712560fa3308f6966ac4fd2271aa9d852c76ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
