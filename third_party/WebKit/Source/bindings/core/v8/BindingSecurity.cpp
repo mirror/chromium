@@ -240,8 +240,18 @@ bool BindingSecurity::ShouldAllowAccessTo(
     ExceptionState& exception_state) {
   if (!target)
     return false;
-  return CanAccessWindow(accessing_window, target->GetDocument().domWindow(),
-                         exception_state);
+  bool result = CanAccessWindow(
+      accessing_window, target->GetDocument().domWindow(), exception_state);
+  if (exception_state.HadException()) {
+    if (!strcmp(exception_state.PropertyName(), "getSVGDocument")) {
+      UseCounter(accessing_window->GetFrame(),
+                 WebFeature::kGetSVGDocumentDidThrow);
+    } else if (!strcmp(exception_state.PropertyName(), "contentDocument")) {
+      UseCounter(accessing_window->GetFrame(),
+                 WebFeature::kContentDocumentDidThrow);
+    }
+  }
+  return result;
 }
 
 bool BindingSecurity::ShouldAllowAccessTo(
