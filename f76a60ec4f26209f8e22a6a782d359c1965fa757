@@ -16,6 +16,24 @@
       "revId": "f76a60ec4f26209f8e22a6a782d359c1965fa757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41219012_fb3faff1",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T04:53:17Z",
+      "side": 1,
+      "message": "Nothing escapes from your review. I already rolled this back in my subsequent patch. I\u0027ll be conservative and leave only kFrontendNode here.",
+      "parentUuid": "7c8eba87_06a4d60f",
+      "revId": "f76a60ec4f26209f8e22a6a782d359c1965fa757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
