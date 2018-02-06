@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "60b911ee_2363e3c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-06T15:19:33Z",
+      "side": 1,
+      "message": "nit: sentinel",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "a5074b3e76724c983071475dda6925fe2a9a7201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f1483c6_839d370e",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
