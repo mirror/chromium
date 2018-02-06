@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "96df2738_a7af8e51",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T05:46:26Z",
+      "side": 1,
+      "message": "Right, I think this matches my thinking.\n\nMore specifically, I think XSDB would be able to watch a request from service worker -\u003e network and the response from network -\u003e service worker (i.e., the service worker does a fetch() request and gets a response). The page \u003c-\u003e service worker communication will not be watched by XSDB.",
+      "parentUuid": "053ef807_36805771",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37be0450_e505f6f1",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 13
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "falken@ - could you please double-check my responses below?  Did I mess anything up?\n\n\u003e I\u0027m trying to reason about what this (kCORS) case means, since we know here that IsValidCorsHeaderSet is false. When we get a kCORS response from a serviceworker, what is the expected state of the access-control-allow-origin header -- and\n\nI don\u0027t really know what kCORS means here.  I assume that it means that a service worker has cached a responses performed with CORS (if CORS allowed the response, then the service worker could have seen and could have cached a full response;  otherwise the service worker would have seen and cache an error maybe?).\n\nI am pretty confident that in this case the response doesn\u0027t come from the network, but from the service worker.\n\n\u003e do the renderer-side CORS checks still apply?\n\nI think they don\u0027t apply anymore - see ResourceLoader::DetermineCORSStatus which stops doing CORS checks and returns CORSStatus::kServiceWorkerSuccessful after determining that the response came not from the network, but from a service worker (with network::mojom::FetchResponseType::kCORS).\n\nI think this is okay.  Renderer\u0027s + XSDB\u0027s CORS checks will still apply to the initial network -\u003e service_worker response.",
       "parentUuid": "07367f23_196678f2",
+      "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2afe649_bb3fef82",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T05:46:26Z",
+      "side": 1,
+      "message": "Good point. It might be possible that the response type is never kCORS here, because the Access Control Allow Origin Header is not present.\n\nI\u0027d expect if the response came from Cache Storage, it still would contain the original headers.\n\nIt looks like fetch-response-taint.https.html is our main test for this. It\u0027s a bit hard to navigate that test. The second to last test looks like it\u0027s testing CORS responses with various request modes and request origins:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-response-taint.https.html?l\u003d189\u0026rcl\u003d880379154e507eecff550d10feb1d8b8cc7e6ea2\n\nIf fetch-response-taint.https.html passes with this patch and we never hit kCORS response type here, it likely that case is not possible here.",
+      "parentUuid": "39be3824_af2d5138",
       "revId": "d5a63e7d19bd09dfb831981048c1e71ebc6b0635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
