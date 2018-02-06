@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40b2a921_22385935",
+        "filename": "device/fido/ctap_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: kCoseEs256",
+      "range": {
+        "startLine": 97,
+        "startChar": 45,
+        "endLine": 97,
+        "endChar": 55
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d222167b_76ef3901",
+        "filename": "device/fido/ctap_get_assertion_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: just\n\n  return !user_verification_required_ \u0026\u0026 allow_list_ \u0026\u0026 !allow_list_-\u003eempty();",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f567f4_88eaa310",
+        "filename": "device/fido/ctap_get_assertion_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: add\n\nregistered_keys.reserve(allow_list_-\u003esize())\n\nbefore the loop",
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a93dd64_917b8933",
+        "filename": "device/fido/ctap_get_assertion_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: U2f, also below",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9755206a_c23e4bcc",
+        "filename": "device/fido/ctap_make_credential_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: replace this with std::any_of",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ef2790_6585f5af",
+        "filename": "device/fido/ctap_make_credential_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: also add a reserve() before the loop",
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81f4ac3_3f2c07e9",
+        "filename": "device/fido/ctap_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "nit: CtapRequestParam, as mentioned in the other CL",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25855e6_e3f0825d",
+        "filename": "device/fido/ctap_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "could you add a comment that these methods are only implemented by CTAPMakeCredentialRequestParam and CTAPGetAssertionRequestParam?",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcaddbc6_adb353f1",
+        "filename": "device/fido/u2f_register_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "do we need this class given that we already have CTAPMakeCredentialRequestParam?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0305929_eebc9252",
+        "filename": "device/fido/u2f_sign_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T10:08:04Z",
+      "side": 1,
+      "message": "Same with this, do we need this class, given that we already have CTAPGetAssertionRequestParam?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
