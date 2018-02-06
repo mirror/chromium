@@ -22,6 +22,30 @@
       "revId": "fbee052106cd2a208f23c701aaf5be2549b6672a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8829186f_5aa6cd6c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-06T18:08:05Z",
+      "side": 1,
+      "message": "Only control task queue (shutdown will be called by SchedulerHelper) and virtual time control task queues are not in task_runners_.",
+      "parentUuid": "0388b9aa_2ee24487",
+      "range": {
+        "startLine": 328,
+        "startChar": 38,
+        "endLine": 328,
+        "endChar": 55
+      },
+      "revId": "fbee052106cd2a208f23c701aaf5be2549b6672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
