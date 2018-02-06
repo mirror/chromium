@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd7e268b_424117f3",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-06T01:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0792296_f0c500b8",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 35
+      },
+      "revId": "32a3df5871c7f6285d9a51f28eb56ef3a89b5f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f933b85_c174dfa9",
         "filename": "components/offline_items_collection/core/offline_content_provider.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "32a3df5871c7f6285d9a51f28eb56ef3a89b5f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913019df_0c61240d",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-06T01:50:47Z",
+      "side": 1,
+      "message": "Right, I completely agree this is the desired behavior. The stream of notifications should just go through w/o GetAllItems. Removing this comment. Also updated comments in OfflineContentAggregator.\n\nHowever, the current DownloadUIAdapter has to behave this way. It is okay for now since the UI notifications are served by separate DownloadNotifyingObserver which is much simpler and just does call-through.\n\nI will simplify the DownloadUIAdapter in subsequent patches, to make it use observers as documented here. This won\u0027t touch OfflineContentAggregator anymore, but will affect RecentTabDelegate a lot. It is a bit complex to do in this CL, which is already big.",
+      "parentUuid": "1f933b85_c174dfa9",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "32a3df5871c7f6285d9a51f28eb56ef3a89b5f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
