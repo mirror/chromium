@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e635314b_7e322dd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T22:46:23Z",
+      "side": 1,
+      "message": "nit: Should be \"Outdent command on nested blockquotes gives wrong result\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "1e2cff6a2118045c5eb16f57ee8b0bbf04a56a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d08810_003b3e25",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent/nested_blockquotes_on_partial_selection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T22:46:23Z",
+      "side": 1,
+      "message": "nit: could you fix the indentation?",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "1e2cff6a2118045c5eb16f57ee8b0bbf04a56a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21949a09_8c7fac41",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T22:46:23Z",
+      "side": 1,
+      "message": "nit: previous_element",
+      "range": {
+        "startLine": 298,
+        "startChar": 22,
+        "endLine": 298,
+        "endChar": 37
+      },
+      "revId": "1e2cff6a2118045c5eb16f57ee8b0bbf04a56a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f78d11_3a7ba43a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T22:46:23Z",
+      "side": 1,
+      "message": "nit: previous_element_is_blockquote",
+      "range": {
+        "startLine": 300,
+        "startChar": 25,
+        "endLine": 300,
+        "endChar": 52
+      },
+      "revId": "1e2cff6a2118045c5eb16f57ee8b0bbf04a56a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9c08e2_a984c8ae",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T22:46:23Z",
+      "side": 1,
+      "message": "nit: blockquote",
+      "range": {
+        "startLine": 302,
+        "startChar": 29,
+        "endLine": 302,
+        "endChar": 40
+      },
+      "revId": "1e2cff6a2118045c5eb16f57ee8b0bbf04a56a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
