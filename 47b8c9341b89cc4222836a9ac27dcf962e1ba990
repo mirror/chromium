@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "235cf0f4_c831be8e",
+        "filename": "tools/clang/blink_gc_plugin/Config.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T18:46:33Z",
+      "side": 1,
+      "message": "this warns:\n\n/Users/thakis/src/chrome/src/tools/clang/blink_gc_plugin/Config.cpp:32:20: warning: \u0027extern\u0027 variable has an initializer [-Wextern-initializer]\nextern const char* kIgnoredTraceWrapperNames[] \u003d {\n                   ^\n\nJust remove the `extern`, it\u0027s already in the .h and doesn\u0027t do anything here",
+      "revId": "47b8c9341b89cc4222836a9ac27dcf962e1ba990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe61f3b_2c1e9f6b",
+        "filename": "tools/clang/blink_gc_plugin/Config.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T18:46:33Z",
+      "side": 1,
+      "message": "this warns:\n\n/Users/thakis/src/chrome/src/tools/clang/blink_gc_plugin/Config.cpp:64:21: warning: comparison of integers of different signs: \u0027int\u0027 and \u0027unsigned long\u0027 [-Wsign-compare]\n  for (int i \u003d 0; i \u003c (sizeof(kIgnoredTraceWrapperNames) /\n                  ~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings generated.\n\n\nmake i size_t.",
+      "revId": "47b8c9341b89cc4222836a9ac27dcf962e1ba990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
