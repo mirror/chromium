@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3f57225c_f1b39b76",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "nit: provides options to start the pipeline with or without a renderer",
+      "range": {
+        "startLine": 85,
+        "startChar": 15,
+        "endLine": 85,
+        "endChar": 74
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cc9a51_3e0625b8",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "Just name this kStartSuspended? It\u0027s odd that \"AudioAndVideo\" applies to audio-only and video-only as well.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75282706_017ffda3",
         "filename": "media/base/pipeline.h",
         "patchSetId": 3
@@ -13,6 +59,63 @@
       "writtenOn": "2018-02-06T18:02:38Z",
       "side": 1,
       "message": "Another option here would be pass in something like an optional ShouldAbortCB \u003d base::OnceCallback\u003cbool(PipelineMetadata)\u003e with the understanding that it will be called from an arbitrary thread.\n\nThis compartmentalizes the logic a bit, but is also confusing since we can\u0027t remove the existing RenderClient::ReportMetadata which is always delivered on the render thread.",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65a1730_efe9405c",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "nit: It looks better to put the |start_type| as the first or third parameter, similar to what you did in RendererWrapper. Basically, |start_type| is an input, |client| and |seek_cb| are kinda like outputs.",
+      "range": {
+        "startLine": 110,
+        "startChar": 21,
+        "endLine": 110,
+        "endChar": 41
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135f6868_ee24e18c",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "nit: It\u0027s odd that both IsRunning() and IsSuspended() can return true. Maybe IsRunning() should be HasStarted()?",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7378b6a_f5918b32",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "FYI, I am not a fan of the SerialRunner. IMHO, this makes the code harder to read, and less flexible. For example, if we were using regular callback/task chain, we don\u0027t need the special treatment of AttemptSuspendedStart(). We can just have a OnMetadataReported(), as the result for ReportMetadata. Then you can check the |start_type| and decide what to do.\n\nIt\u0027s actually doable with SerialRunner, e.g. do the check in InitializeRenderer, and update CompleteSeek, but that\u0027ll require more refactoring I guess.",
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +209,41 @@
       "side": 1,
       "message": "\"else if ... suspended_cb_\" -- state| isn\u0027t modified in the upper if block.  how could the lower if() execute if the upper one also does?  or, is the lower if supposed to check |state_| now?\n\nfor all calls to OnPipelineStatus that I see, |state| is only ever PLAYING or SUSPENDED.  In both cases, it ends up being set as a function of |old_state| and IsSuspended().\n\nas in, if |old_state| is STARTING, then we don\u0027t need |state|. \n |waiting_for_seek_| will be false, and |state| would be PLAYING.\n\notherwise, in the |state| \u003d\u003d PLAYING case, i don\u0027t see how we should ever be IsSuspended() when this callback arrives.  We won\u0027t reach @205 while a suspend is in progress (we\u0027d be in SUSPENDING rather than SUSPENDED in that case), and similarly for @237.\n\nso, IsSuspended \u003d\u003e |state_| \u003d\u003d STARTING or SUSPENDING, i think.  anything else would be bad.\n\ni didn\u0027t check |waiting_for_seek_| carefully, so maybe that one does require |state| to get right.\n\nall of this is with the caveat that i\u0027m not terribly familiar with the pipeline state machine.  so, maybe, i\u0027m just writing a pleasant story about how i imagine the pipeline works.  :)",
       "parentUuid": "3bf3aaa7_bff3a5e8",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8203d320_039676b6",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "I didn\u0027t read the full comment. But I agree this code does feel harder to read...",
+      "parentUuid": "6c7912ca_5b927865",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ad5e1c_56c5af55",
+        "filename": "media/filters/pipeline_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-06T20:49:17Z",
+      "side": 1,
+      "message": "Any idea how WMPI will decide what |start_type| to pass in here? Is it based on some policy, or base::Feature?",
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
