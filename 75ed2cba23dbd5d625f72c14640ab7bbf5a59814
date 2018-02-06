@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a0969d1_0e8cba8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T19:38:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f466e90_09a56fd3",
+      "range": {
+        "startLine": 151,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 7
+      },
+      "revId": "75ed2cba23dbd5d625f72c14640ab7bbf5a59814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f5e379_57674367",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "75ed2cba23dbd5d625f72c14640ab7bbf5a59814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7e5ffe_0155b657",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T19:38:11Z",
+      "side": 1,
+      "message": "Done, I think. Let me know if it\u0027s not what you had in mind.",
+      "parentUuid": "43f5e379_57674367",
+      "range": {
+        "startLine": 229,
+        "startChar": 40,
+        "endLine": 229,
+        "endChar": 73
+      },
+      "revId": "75ed2cba23dbd5d625f72c14640ab7bbf5a59814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
