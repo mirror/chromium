@@ -3368,29 +3368,17 @@ IN_PROC_BROWSER_TEST_F(PolicyStatisticsCollectorTest, Startup) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   std::string text;
-  ASSERT_TRUE(content::ExecuteScriptAndExtractString(
-      contents,
-      "var nodes = document.querySelectorAll('body > pre');"
-      "var result = '';"
-      "for (var i = 0; i < nodes.length; ++i) {"
-      "  var text = nodes[i].innerHTML;"
-      "  if (text.indexOf('Histogram: Enterprise.Policies') === 0) {"
-      "    result = text;"
-      "    break;"
-      "  }"
-      "}"
-      "domAutomationController.send(result);",
-      &text));
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(contents, R"(
+var nodes = document.querySelectorAll('body > div#Enterprise\.Policies');
+domAutomationController.send(nodes[0].innerHTML);
+)", &text));
   ASSERT_FALSE(text.empty());
-  const std::string kExpectedLabel =
-      "Histogram: Enterprise.Policies recorded 3 samples";
-  EXPECT_EQ(kExpectedLabel, text.substr(0, kExpectedLabel.size()));
   // HomepageLocation has policy ID 1.
-  EXPECT_NE(std::string::npos, text.find("<br>1   ---"));
+  EXPECT_NE(std::string::npos, text.find("\n|          1 |"));
   // ShowHomeButton has policy ID 35.
-  EXPECT_NE(std::string::npos, text.find("<br>35  ---"));
+  EXPECT_NE(std::string::npos, text.find("\n|         35 |"));
   // BookmarkBarEnabled has policy ID 82.
-  EXPECT_NE(std::string::npos, text.find("<br>82  ---"));
+  EXPECT_NE(std::string::npos, text.find("\n|         82 |"));
 }
 
 class MediaStreamDevicesControllerBrowserTest
