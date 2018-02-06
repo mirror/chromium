@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f466e90_09a56fd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-06T18:40:17Z",
+      "side": 1,
+      "message": "nit: too many",
+      "range": {
+        "startLine": 151,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 7
+      },
+      "revId": "75ed2cba23dbd5d625f72c14640ab7bbf5a59814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f5e379_57674367",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-06T18:40:17Z",
+      "side": 1,
+      "message": "nit: maybe add some parens to make this easier to look at.",
+      "range": {
+        "startLine": 229,
+        "startChar": 40,
+        "endLine": 229,
+        "endChar": 73
+      },
+      "revId": "75ed2cba23dbd5d625f72c14640ab7bbf5a59814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
