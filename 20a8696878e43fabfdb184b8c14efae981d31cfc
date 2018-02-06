@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1329d75a_5c049a28",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-06T20:19:31Z",
+      "side": 1,
+      "message": "Right, I didn\u0027t feel like using a function starting with \"Unsafe\", but didn\u0027t find other alternatives.\n\nThe passed in ContentToProxyIdMap is generated during painting the main frame -- where the content is embedded. Since the actual content is remote, we can only record the render frame proxy routing id for the content. Since this is done in a renderer, we can not convert directly here.\n\nBefore sending to compositor service, we need to know which actual render frame this content will be rendered. So we need to map the render frame proxy id to render frame (host) id (along with its render frame process id to be globally unique). \n\nIn this way, when the actual content is rendered from a render frame in another process. It will be able to be associated the actual content to its embedder/holder.",
+      "parentUuid": "8817d42e_f203599f",
+      "revId": "20a8696878e43fabfdb184b8c14efae981d31cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebd9d953_b11e2005",
         "filename": "components/printing/browser/print_composite_client.h",
         "patchSetId": 46
@@ -39,6 +57,30 @@
       "revId": "20a8696878e43fabfdb184b8c14efae981d31cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de35d3e5_5273bea8",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-06T20:19:31Z",
+      "side": 1,
+      "message": "Changed it, hope now it is clearer.",
+      "parentUuid": "ebd9d953_b11e2005",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "20a8696878e43fabfdb184b8c14efae981d31cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
