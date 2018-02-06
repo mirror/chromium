@@ -11,9 +11,11 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/callback_helpers.h"
 #include "base/containers/circular_deque.h"
 #include "base/containers/flat_map.h"
 #include "base/containers/linked_list.h"
+#include "base/containers/mru_cache.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
@@ -134,7 +136,7 @@ class LEVELDB_EXPORT RetrierProvider {
       MethodID method) const = 0;
 };
 
-class Semaphore;
+using FileCache = base::MRUCache<const void*, base::ScopedClosureRunner>;
 
 class LEVELDB_EXPORT ChromiumEnv : public leveldb::Env,
                                    public UMALogger,
@@ -240,7 +242,7 @@ class LEVELDB_EXPORT ChromiumEnv : public leveldb::Env,
   using BGQueue = base::circular_deque<BGItem>;
   BGQueue queue_;
   LockTable locks_;
-  std::unique_ptr<Semaphore> file_semaphore_;
+  std::unique_ptr<FileCache> file_cache_;
 };
 
 // Tracks databases open via OpenDatabase() method and exposes them to
