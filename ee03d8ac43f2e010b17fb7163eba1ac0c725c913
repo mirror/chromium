@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4231122_d3b8910a",
+        "filename": "components/variations/hashing.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-06T18:24:20Z",
+      "side": 1,
+      "message": "nit: Please update this name",
+      "range": {
+        "startLine": 5,
+        "startChar": 30,
+        "endLine": 5,
+        "endChar": 45
+      },
+      "revId": "ee03d8ac43f2e010b17fb7163eba1ac0c725c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b90c63b_2e278589",
+        "filename": "components/variations/hashing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-06T18:24:20Z",
+      "side": 1,
+      "message": "nit: Does uploading this CL with a lower similarity index cause git to detect this file as also being a rename?",
+      "range": {
+        "startLine": 5,
+        "startChar": 42,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "ee03d8ac43f2e010b17fb7163eba1ac0c725c913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
