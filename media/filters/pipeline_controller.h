@@ -78,7 +78,8 @@ class MEDIA_EXPORT PipelineController {
   void Start(Demuxer* demuxer,
              Pipeline::Client* client,
              bool is_streaming,
-             bool is_static);
+             bool is_static,
+             Pipeline::StartType start_type);
 
   // Request a seek to |time|. If |time_updated| is true, then the eventual
   // |seeked_cb| callback will also have |time_updated| set to true; it
