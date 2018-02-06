@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ccbec4f_66651b63",
+        "filename": "chrome/browser/ui/tabs/tab_activity_simulator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-06T04:16:07Z",
+      "side": 1,
+      "message": "I changed these EXPECTs to CHECKs to avoid including gtest in a helper class. If these fail, the test itself is probably wrong.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 7
+      },
+      "revId": "935366c5845ec6f4118081995a352e7a28ae5d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eac149d_aa2bd1f4",
+        "filename": "chrome/browser/ui/tabs/tab_activity_simulator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-06T04:16:07Z",
+      "side": 1,
+      "message": "Moving this into the class\u0027s scope since it\u0027s a fairly generic name. See discussion in https://chromium-review.googlesource.com/c/chromium/src/+/846591/12/chrome/browser/ui/tabs/tab_ukm_test_helper.h#45",
+      "revId": "935366c5845ec6f4118081995a352e7a28ae5d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
