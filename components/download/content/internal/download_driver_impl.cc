@@ -21,19 +21,19 @@ namespace download {
 
 namespace {
 
-// Converts a content::DownloadItem::DownloadState to DriverEntry::State.
+// Converts a download::DownloadItem::DownloadState to DriverEntry::State.
 DriverEntry::State ToDriverEntryState(
-    content::DownloadItem::DownloadState state) {
+    download::DownloadItem::DownloadState state) {
   switch (state) {
-    case content::DownloadItem::IN_PROGRESS:
+    case download::DownloadItem::IN_PROGRESS:
       return DriverEntry::State::IN_PROGRESS;
-    case content::DownloadItem::COMPLETE:
+    case download::DownloadItem::COMPLETE:
       return DriverEntry::State::COMPLETE;
-    case content::DownloadItem::CANCELLED:
+    case download::DownloadItem::CANCELLED:
       return DriverEntry::State::CANCELLED;
-    case content::DownloadItem::INTERRUPTED:
+    case download::DownloadItem::INTERRUPTED:
       return DriverEntry::State::INTERRUPTED;
-    case content::DownloadItem::MAX_DOWNLOAD_STATE:
+    case download::DownloadItem::MAX_DOWNLOAD_STATE:
       return DriverEntry::State::UNKNOWN;
     default:
       NOTREACHED();
@@ -70,7 +70,7 @@ void LogDownloadInterruptReason(download::DownloadInterruptReason reason) {
 
 // static
 DriverEntry DownloadDriverImpl::CreateDriverEntry(
-    const content::DownloadItem* item) {
+    const download::DownloadItem* item) {
   DCHECK(item);
   DriverEntry entry;
   entry.guid = item->GetGuid();
@@ -80,7 +80,7 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
   entry.bytes_downloaded = item->GetReceivedBytes();
   entry.expected_total_size = item->GetTotalBytes();
   entry.current_file_path =
-      item->GetState() == content::DownloadItem::DownloadState::COMPLETE
+      item->GetState() == download::DownloadItem::DownloadState::COMPLETE
           ? item->GetTargetFilePath()
           : item->GetFullPath();
   entry.completion_time = item->GetEndTime();
@@ -186,7 +186,7 @@ void DownloadDriverImpl::Remove(const std::string& guid) {
 void DownloadDriverImpl::DoRemoveDownload(const std::string& guid) {
   if (!download_manager_)
     return;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  download::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
   // Cancels the download and removes the persisted records in content layer.
   if (item) {
     item->Remove();
@@ -196,7 +196,7 @@ void DownloadDriverImpl::DoRemoveDownload(const std::string& guid) {
 void DownloadDriverImpl::Pause(const std::string& guid) {
   if (!download_manager_)
     return;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  download::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
   if (item)
     item->Pause();
 }
@@ -204,7 +204,7 @@ void DownloadDriverImpl::Pause(const std::string& guid) {
 void DownloadDriverImpl::Resume(const std::string& guid) {
   if (!download_manager_)
     return;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  download::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
   if (item)
     item->Resume();
 }
@@ -212,7 +212,7 @@ void DownloadDriverImpl::Resume(const std::string& guid) {
 base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   if (!download_manager_)
     return base::nullopt;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  download::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
   if (item)
     return CreateDriverEntry(item);
   return base::nullopt;
@@ -223,7 +223,7 @@ std::set<std::string> DownloadDriverImpl::GetActiveDownloads() {
   if (!download_manager_)
     return guids;
 
-  std::vector<content::DownloadItem*> items;
+  std::vector<download::DownloadItem*> items;
   download_manager_->GetAllDownloads(&items);
 
   for (auto* item : items) {
@@ -241,13 +241,13 @@ size_t DownloadDriverImpl::EstimateMemoryUsage() const {
 }
 
 void DownloadDriverImpl::OnDownloadUpdated(content::DownloadManager* manager,
-                                           content::DownloadItem* item) {
+                                           download::DownloadItem* item) {
   DCHECK(client_);
   // Blocks the observer call if we asked to remove the download.
   if (guid_to_remove_.find(item->GetGuid()) != guid_to_remove_.end())
     return;
 
-  using DownloadState = content::DownloadItem::DownloadState;
+  using DownloadState = download::DownloadItem::DownloadState;
   DownloadState state = item->GetState();
   download::DownloadInterruptReason reason = item->GetLastReason();
   DriverEntry entry = CreateDriverEntry(item);
@@ -264,13 +264,13 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadManager* manager,
 }
 
 void DownloadDriverImpl::OnDownloadRemoved(content::DownloadManager* manager,
-                                           content::DownloadItem* download) {
+                                           download::DownloadItem* download) {
   guid_to_remove_.erase(download->GetGuid());
   // |download| is about to be deleted.
 }
 
 void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,
-                                           content::DownloadItem* item) {
+                                           download::DownloadItem* item) {
   if (guid_to_remove_.find(item->GetGuid()) != guid_to_remove_.end()) {
     // Client has removed the download before content persistence layer created
     // the record, remove the download immediately.

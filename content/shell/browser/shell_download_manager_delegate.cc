@@ -60,7 +60,7 @@ void ShellDownloadManagerDelegate::Shutdown() {
 }
 
 bool ShellDownloadManagerDelegate::DetermineDownloadTarget(
-    DownloadItem* download,
+    download::DownloadItem* download,
     const DownloadTargetCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // This assignment needs to be here because even at the call to
@@ -72,7 +72,7 @@ bool ShellDownloadManagerDelegate::DetermineDownloadTarget(
 
   if (!download->GetForcedFilePath().empty()) {
     callback.Run(download->GetForcedFilePath(),
-                 DownloadItem::TARGET_DISPOSITION_OVERWRITE,
+                 download::DownloadItem::TARGET_DISPOSITION_OVERWRITE,
                  download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
                  download->GetForcedFilePath(),
                  download::DOWNLOAD_INTERRUPT_REASON_NONE);
@@ -97,14 +97,14 @@ bool ShellDownloadManagerDelegate::DetermineDownloadTarget(
 }
 
 bool ShellDownloadManagerDelegate::ShouldOpenDownload(
-      DownloadItem* item,
-      const DownloadOpenDelayedCallback& callback) {
+    download::DownloadItem* item,
+    const DownloadOpenDelayedCallback& callback) {
   return true;
 }
 
 void ShellDownloadManagerDelegate::GetNextId(
     const DownloadIdCallback& callback) {
-  static uint32_t next_id = DownloadItem::kInvalidId + 1;
+  static uint32_t next_id = download::DownloadItem::kInvalidId + 1;
   callback.Run(next_id++);
 }
 
@@ -138,7 +138,8 @@ void ShellDownloadManagerDelegate::OnDownloadPathGenerated(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (suppress_prompting_) {
     // Testing exit.
-    callback.Run(suggested_path, DownloadItem::TARGET_DISPOSITION_OVERWRITE,
+    callback.Run(suggested_path,
+                 download::DownloadItem::TARGET_DISPOSITION_OVERWRITE,
                  download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
                  suggested_path.AddExtension(FILE_PATH_LITERAL(".crdownload")),
                  download::DOWNLOAD_INTERRUPT_REASON_NONE);
@@ -153,8 +154,8 @@ void ShellDownloadManagerDelegate::ChooseDownloadPath(
     const DownloadTargetCallback& callback,
     const base::FilePath& suggested_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DownloadItem* item = download_manager_->GetDownload(download_id);
-  if (!item || (item->GetState() != DownloadItem::IN_PROGRESS))
+  download::DownloadItem* item = download_manager_->GetDownload(download_id);
+  if (!item || (item->GetState() != download::DownloadItem::IN_PROGRESS))
     return;
 
   base::FilePath result;
@@ -184,7 +185,7 @@ void ShellDownloadManagerDelegate::ChooseDownloadPath(
   NOTIMPLEMENTED();
 #endif
 
-  callback.Run(result, DownloadItem::TARGET_DISPOSITION_PROMPT,
+  callback.Run(result, download::DownloadItem::TARGET_DISPOSITION_PROMPT,
                download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS, result,
                download::DOWNLOAD_INTERRUPT_REASON_NONE);
 }

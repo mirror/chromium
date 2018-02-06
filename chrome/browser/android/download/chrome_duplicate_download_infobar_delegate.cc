@@ -43,7 +43,7 @@ ChromeDuplicateDownloadInfoBarDelegate::
 // static
 void ChromeDuplicateDownloadInfoBarDelegate::Create(
     InfoBarService* infobar_service,
-    content::DownloadItem* download_item,
+    download::DownloadItem* download_item,
     const base::FilePath& file_path,
     const DownloadTargetDeterminerDelegate::ConfirmationCallback& callback) {
   infobar_service->AddInfoBar(DuplicateDownloadInfoBar::CreateInfoBar(
@@ -52,13 +52,13 @@ void ChromeDuplicateDownloadInfoBarDelegate::Create(
 }
 
 void ChromeDuplicateDownloadInfoBarDelegate::OnDownloadDestroyed(
-    content::DownloadItem* download_item) {
+    download::DownloadItem* download_item) {
   DCHECK_EQ(download_item, download_item_);
   download_item_ = nullptr;
 }
 
 ChromeDuplicateDownloadInfoBarDelegate::ChromeDuplicateDownloadInfoBarDelegate(
-    content::DownloadItem* download_item,
+    download::DownloadItem* download_item,
     const base::FilePath& file_path,
     const DownloadTargetDeterminerDelegate::ConfirmationCallback&
         file_selected_callback)

@@ -26,7 +26,7 @@ namespace download {
 // fly and query new ones from download driver, instead of caching the states.
 struct DriverEntry {
   // States of the download. Mostly maps to
-  // content::DownloadItem::DownloadState.
+  // download::DownloadItem::DownloadState.
   enum class State {
     IN_PROGRESS = 0,
     COMPLETE = 1,

@@ -18,8 +18,8 @@
 #include "chrome/browser/download/download_core_service.h"
 #include "chrome/browser/download/download_core_service_factory.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "components/download/public/common/download_item.h"
 #include "content/public/browser/browser_context.h"
-#include "content/public/browser/download_item.h"
 #include "jni/DownloadInfo_jni.h"
 #include "jni/DownloadItem_jni.h"
 #include "jni/DownloadManagerService_jni.h"
@@ -39,13 +39,13 @@ constexpr int64_t kUnknownRemainingTime = -1;
 int kDefaultAutoResumptionLimit = 5;
 const char kAutoResumptionLimitParamName[] = "AutoResumptionLimit";
 
-bool ShouldShowDownloadItem(content::DownloadItem* item) {
+bool ShouldShowDownloadItem(download::DownloadItem* item) {
   return !item->IsTemporary() && !item->IsTransient();
 }
 
 ScopedJavaLocalRef<jobject> JNI_DownloadManagerService_CreateJavaDownloadItem(
     JNIEnv* env,
-    content::DownloadItem* item) {
+    download::DownloadItem* item) {
   DCHECK(!item->IsTransient());
   return Java_DownloadItem_createDownloadItem(
       env, DownloadManagerService::CreateJavaDownloadInfo(env, item),
@@ -56,7 +56,7 @@ ScopedJavaLocalRef<jobject> JNI_DownloadManagerService_CreateJavaDownloadItem(
 
 // static
 void DownloadManagerService::OnDownloadCanceled(
-    content::DownloadItem* download,
+    download::DownloadItem* download,
     DownloadController::DownloadCancelReason reason) {
   if (download->IsTransient()) {
     LOG(WARNING) << "Transient download should not have user interaction!";
@@ -81,7 +81,8 @@ DownloadManagerService* DownloadManagerService::GetInstance() {
 
 // static
 ScopedJavaLocalRef<jobject> DownloadManagerService::CreateJavaDownloadInfo(
-    JNIEnv* env, content::DownloadItem* item) {
+    JNIEnv* env,
+    download::DownloadItem* item) {
   bool user_initiated =
       (item->GetTransitionType() & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR) ||
       PageTransitionCoreTypeIs(item->GetTransitionType(),
@@ -204,7 +205,7 @@ void DownloadManagerService::GetAllDownloadsInternal(bool is_off_the_record) {
       Java_DownloadManagerService_createDownloadItemList(env, java_ref_);
 
   for (size_t i = 0; i < all_items.size(); i++) {
-    content::DownloadItem* item = all_items[i];
+    download::DownloadItem* item = all_items[i];
     if (!ShouldShowDownloadItem(item))
       continue;
 
@@ -244,7 +245,7 @@ void DownloadManagerService::UpdateLastAccessTime(
   if (!manager)
     return;
 
-  content::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
+  download::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
   if (item)
     item->SetLastAccessTime(base::Time::Now());
 }
@@ -294,7 +295,8 @@ void DownloadManagerService::OnHistoryQueryComplete() {
 }
 
 void DownloadManagerService::OnDownloadCreated(
-    content::DownloadManager* manager, content::DownloadItem* item) {
+    content::DownloadManager* manager,
+    download::DownloadItem* item) {
   if (item->IsTransient())
     return;
 
@@ -305,7 +307,8 @@ void DownloadManagerService::OnDownloadCreated(
 }
 
 void DownloadManagerService::OnDownloadUpdated(
-    content::DownloadManager* manager, content::DownloadItem* item) {
+    content::DownloadManager* manager,
+    download::DownloadItem* item) {
   if (java_ref_.is_null())
     return;
 
@@ -319,7 +322,8 @@ void DownloadManagerService::OnDownloadUpdated(
 }
 
 void DownloadManagerService::OnDownloadRemoved(
-    content::DownloadManager* manager, content::DownloadItem* item) {
+    content::DownloadManager* manager,
+    download::DownloadItem* item) {
   if (java_ref_.is_null() || item->IsTransient())
     return;
 
@@ -336,7 +340,7 @@ void DownloadManagerService::ResumeDownloadInternal(
     OnResumptionFailed(download_guid);
     return;
   }
-  content::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
+  download::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
   if (!item) {
     OnResumptionFailed(download_guid);
     return;
@@ -356,7 +360,7 @@ void DownloadManagerService::CancelDownloadInternal(
   content::DownloadManager* manager = GetDownloadManager(is_off_the_record);
   if (!manager)
     return;
-  content::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
+  download::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
   if (item) {
     // Remove the observer first to avoid item->Cancel() causing re-entrance
     // issue.
@@ -370,7 +374,7 @@ void DownloadManagerService::PauseDownloadInternal(
   content::DownloadManager* manager = GetDownloadManager(is_off_the_record);
   if (!manager)
     return;
-  content::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
+  download::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
   if (item) {
     item->Pause();
     item->RemoveObserver(DownloadControllerBase::Get());
@@ -382,7 +386,7 @@ void DownloadManagerService::RemoveDownloadInternal(
   content::DownloadManager* manager = GetDownloadManager(is_off_the_record);
   if (!manager)
     return;
-  content::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
+  download::DownloadItem* item = manager->GetDownloadByGuid(download_guid);
   if (item)
     item->Remove();
 }

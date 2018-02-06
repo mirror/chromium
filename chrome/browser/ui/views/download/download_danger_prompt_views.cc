@@ -13,10 +13,11 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "components/download/public/common/download_danger_type.h"
+#include "components/download/public/common/download_item.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/download_item.h"
+#include "content/public/browser/content_download_item_delegate.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_features.h"
@@ -40,10 +41,10 @@ const int kMessageWidth = 320;
 // class rather than a TabModalConfirmDialog so that we can use custom
 // formatting on the text in the body of the dialog.
 class DownloadDangerPromptViews : public DownloadDangerPrompt,
-                                  public content::DownloadItem::Observer,
+                                  public download::DownloadItem::Observer,
                                   public views::DialogDelegate {
  public:
-  DownloadDangerPromptViews(content::DownloadItem* item,
+  DownloadDangerPromptViews(download::DownloadItem* item,
                             bool show_context,
                             const OnDone& done);
   ~DownloadDangerPromptViews() override;
@@ -63,8 +64,8 @@ class DownloadDangerPromptViews : public DownloadDangerPrompt,
   views::Widget* GetWidget() override;
   const views::Widget* GetWidget() const override;
 
-  // content::DownloadItem::Observer:
-  void OnDownloadUpdated(content::DownloadItem* download) override;
+  // download::DownloadItem::Observer:
+  void OnDownloadUpdated(download::DownloadItem* download) override;
 
  private:
   base::string16 GetAcceptButtonTitle() const;
@@ -72,7 +73,7 @@ class DownloadDangerPromptViews : public DownloadDangerPrompt,
   base::string16 GetMessageBody() const;
   void RunDone(Action action);
 
-  content::DownloadItem* download_;
+  download::DownloadItem* download_;
   // If show_context_ is true, this is a download confirmation dialog by
   // download API, otherwise it is download recovery dialog from a regular
   // download.
@@ -85,7 +86,7 @@ class DownloadDangerPromptViews : public DownloadDangerPrompt,
 };
 
 DownloadDangerPromptViews::DownloadDangerPromptViews(
-    content::DownloadItem* item,
+    download::DownloadItem* item,
     bool show_context,
     const OnDone& done)
     : download_(item),
@@ -118,10 +119,9 @@ DownloadDangerPromptViews::DownloadDangerPromptViews(
   // ExperienceSampling: A malicious download warning is being shown to the
   // user, so we start a new SamplingEvent and track it.
   sampling_event_.reset(new ExperienceSamplingEvent(
-      ExperienceSamplingEvent::kDownloadDangerPrompt,
-      item->GetURL(),
+      ExperienceSamplingEvent::kDownloadDangerPrompt, item->GetURL(),
       item->GetReferrerUrl(),
-      item->GetBrowserContext()));
+      content::ContentDownloadItemDelegate::GetBrowserContext(item)));
   chrome::RecordDialogCreation(
       chrome::DialogIdentifier::DOWNLOAD_DANGER_PROMPT);
 }
@@ -234,9 +234,9 @@ const views::Widget* DownloadDangerPromptViews::GetWidget() const {
   return contents_view_->GetWidget();
 }
 
-// content::DownloadItem::Observer:
+// download::DownloadItem::Observer:
 void DownloadDangerPromptViews::OnDownloadUpdated(
-    content::DownloadItem* download) {
+    download::DownloadItem* download) {
   // If the download is nolonger dangerous (accepted externally) or the download
   // is in a terminal state, then the download danger prompt is no longer
   // necessary.
@@ -320,7 +320,8 @@ void DownloadDangerPromptViews::RunDone(Action action) {
       const bool accept = action == DownloadDangerPrompt::ACCEPT;
       RecordDownloadDangerPrompt(accept, *download_);
       if (!download_->GetURL().is_empty() &&
-          !download_->GetBrowserContext()->IsOffTheRecord()) {
+          content::ContentDownloadItemDelegate::GetBrowserContext(download_)
+              ->IsOffTheRecord()) {
         ClientSafeBrowsingReportRequest::ReportType report_type
             = show_context_ ?
                 ClientSafeBrowsingReportRequest::DANGEROUS_DOWNLOAD_BY_API :
@@ -340,7 +341,7 @@ void DownloadDangerPromptViews::RunDone(Action action) {
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 // static
 DownloadDangerPrompt* DownloadDangerPrompt::Create(
-    content::DownloadItem* item,
+    download::DownloadItem* item,
     content::WebContents* web_contents,
     bool show_context,
     const OnDone& done) {
@@ -351,7 +352,7 @@ DownloadDangerPrompt* DownloadDangerPrompt::Create(
 
 // static
 DownloadDangerPrompt* DownloadDangerPrompt::CreateDownloadDangerPromptViews(
-    content::DownloadItem* item,
+    download::DownloadItem* item,
     content::WebContents* web_contents,
     bool show_context,
     const OnDone& done) {

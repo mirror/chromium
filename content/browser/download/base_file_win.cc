@@ -16,7 +16,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
-#include "content/browser/download/download_interrupt_reasons_utils.h"
+#include "content/browser/download/download_interrupt_reasons_impl.h"
 #include "content/browser/download/download_stats.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/log/net_log_event_type.h"

@@ -8,7 +8,7 @@
 
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
-#include "content/public/browser/download_item.h"
+#include "components/download/public/common/download_item.h"
 #include "net/base/mime_util.h"
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/window.h"
@@ -28,11 +28,11 @@
 #include "chrome/browser/chromeos/drive/download_handler.h"
 #endif
 
-void DragDownloadItem(const content::DownloadItem* download,
+void DragDownloadItem(const download::DownloadItem* download,
                       gfx::Image* icon,
                       gfx::NativeView view) {
   DCHECK(download);
-  DCHECK_EQ(content::DownloadItem::COMPLETE, download->GetState());
+  DCHECK_EQ(download::DownloadItem::COMPLETE, download->GetState());
 
   aura::Window* root_window = view->GetRootWindow();
   if (!root_window || !aura::client::GetDragDropClient(root_window))

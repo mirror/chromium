@@ -21,6 +21,15 @@ void MockDownloadItem::RemoveObserver(Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
+void MockDownloadItem::SetDelegate(
+    std::unique_ptr<download::DownloadItemDelegate> delegate) {
+  delegate_ = std::move(delegate);
+}
+
+download::DownloadItemDelegate* MockDownloadItem::GetDelegate() const {
+  return delegate_.get();
+}
+
 void MockDownloadItem::NotifyObserversDownloadOpened() {
   for (auto& observer : observers_)
     observer.OnDownloadOpened(this);

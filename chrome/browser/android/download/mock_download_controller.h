@@ -25,7 +25,7 @@ class MockDownloadController : public DownloadControllerBase {
   ~MockDownloadController() override;
 
   // DownloadControllerBase implementation.
-  void OnDownloadStarted(content::DownloadItem* download_item) override;
+  void OnDownloadStarted(download::DownloadItem* download_item) override;
   void StartContextMenuDownload(
       const content::ContextMenuParams& params,
       content::WebContents* web_contents,
@@ -37,7 +37,7 @@ class MockDownloadController : public DownloadControllerBase {
   void CreateAndroidDownload(
       const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
       const DownloadInfo& info) override;
-  void AboutToResumeDownload(content::DownloadItem* download_item) override;
+  void AboutToResumeDownload(download::DownloadItem* download_item) override;
 
  private:
   bool approve_file_access_request_;
