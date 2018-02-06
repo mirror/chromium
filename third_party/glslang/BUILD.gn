@@ -24,6 +24,9 @@ config("glslang_local_config") {
       "-Wno-reorder",
       "-Wno-sign-compare",
       "-Wno-unused-variable",
+
+      # TODO(thakis): Consider enabling this, https://crbug.com/807632
+      "-Wno-implicit-fallthrough",
     ]
   }
 }
