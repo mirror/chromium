@@ -88,6 +88,24 @@
       "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1e025b_f4c629bf",
+        "filename": "ash/magnifier/docked_magnifier_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T02:25:47Z",
+      "side": 1,
+      "message": "Done. I switched back to Binding\u003c\u003e for now.\n\n\u003e is there any high level documentation for how ash expects to interact with other parts of the system going forward?\n\nI\u0027m not aware of such document. sky@ or jamescook@ might know if there\u0027s one.",
+      "parentUuid": "93c3fa8b_29412859",
+      "revId": "81d7769a52a659e3d062aad23f539ef4a7d27207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
