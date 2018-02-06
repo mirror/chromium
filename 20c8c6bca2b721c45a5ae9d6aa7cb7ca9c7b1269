@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "551f0d9a_eba0bba6",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T20:02:08Z",
+      "side": 1,
+      "message": "could we just couple this with the existing OnFirstInputDelayInPage callback? the 2 events should arrive together so it seems reasonable for clients to handle both in that same callback.",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "674dc519_6516f16f",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
         "patchSetId": 5
