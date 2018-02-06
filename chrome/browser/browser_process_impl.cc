@@ -1350,8 +1350,7 @@ void BrowserProcessImpl::ApplyMetricsReportingPolicy() {
       FROM_HERE,
       base::BindOnce(
           base::IgnoreResult(&GoogleUpdateSettings::SetCollectStatsConsent),
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
-              local_state())));
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()));
 }
 #endif
 
