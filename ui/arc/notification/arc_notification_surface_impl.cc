@@ -30,7 +30,11 @@ class CustomWindowDelegate : public aura::WindowDelegate {
   void OnBoundsChanged(const gfx::Rect& old_bounds,
                        const gfx::Rect& new_bounds) override {}
   gfx::NativeCursor GetCursor(const gfx::Point& point) override {
-    return notification_surface_->GetCursor(point);
+    views::Widget* widget = views::Widget::GetTopLevelWidgetForNativeView(
+        notification_surface_->host_window());
+    // Exo explicitly update the cursor on widget, so just use the one
+    // set on the cursor.
+    return widget->GetNativeWindow()->GetCursor(point /* not used */);
   }
   int GetNonClientComponent(const gfx::Point& point) const override {
     return HTNOWHERE;
