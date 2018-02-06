@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6ce6fb4_08833842",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-06T14:13:11Z",
+      "side": 1,
+      "message": "Not for this CL, but now that we have navigationId, we can do a better tracking, and remove the WebContents filtering IIRC.",
+      "revId": "0f8c8e595181f4c21fed3baa21809dd526e8ae6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daa3a6a_55f543e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-06T14:13:11Z",
+      "side": 1,
+      "message": "This comment is no longer accurate, isn\u0027t it?",
+      "revId": "0f8c8e595181f4c21fed3baa21809dd526e8ae6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f6f99bd_92d464b7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 7
