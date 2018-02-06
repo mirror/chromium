@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6938cf10_d11037a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3732a95_a4ca62bc",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86fb53cc_786453ea",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-05T23:22:45Z",
       "side": 1,
       "message": "I think it was important to not trigger observers or something like this. Or not to put this target into _targets.",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1866d6_b723ee42",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:07:51Z",
+      "side": 1,
+      "message": "Why?",
+      "parentUuid": "86fb53cc_786453ea",
       "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c33025b4_af79e9cd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6450c985_24628956",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa402b1a_b390863b",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5561f1e7_acb0119c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa402b1a_b390863b",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fe5fce_e61a2678",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2879d81f_1a9aa446",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fe5fce_e61a2678",
+      "revId": "81e3cb8dc4d8df3916c69ea175df3fafe7469c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
