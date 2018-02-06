@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af1b4b5_110d35ab",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T22:56:09Z",
+      "side": 1,
+      "message": "We should post this right?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 35
+      },
+      "revId": "571c55352b8fa358f87bcfda0037df9e78a3d944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a84b6b_a33b9d2c",
+        "filename": "components/download/internal/background_service/config.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T22:56:09Z",
+      "side": 1,
+      "message": "This seems a little high.  30 seconds?",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 36
+      },
+      "revId": "571c55352b8fa358f87bcfda0037df9e78a3d944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a31a70_eadf3de2",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T22:56:09Z",
+      "side": 1,
+      "message": "The rule for upload is - if we fail at all we have to stop because we can\u0027t technically upload twice?  I\u0027m not 100% sure on this though.  If we fail during the upload before we complete, can we try again?  Not sure.",
+      "range": {
+        "startLine": 932,
+        "startChar": 10,
+        "endLine": 932,
+        "endChar": 33
+      },
+      "revId": "571c55352b8fa358f87bcfda0037df9e78a3d944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ff67bc_6718801a",
+        "filename": "components/download/internal/background_service/controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T22:56:09Z",
+      "side": 1,
+      "message": "The problem with starting again is something has to clean up the failed download entry in the DownloadManager.  It has a guid we\u0027re reusing so it\u0027s better to not try to remove/recreate it in case we crash and the persistence layers have data about the old download.  I think augmenting DownloadItem to be able to restart makes more sense (if that\u0027s what we want).  Resume *should* automatically do that (assuming we have the upload data).",
+      "range": {
+        "startLine": 964,
+        "startChar": 6,
+        "endLine": 964,
+        "endChar": 36
+      },
+      "revId": "571c55352b8fa358f87bcfda0037df9e78a3d944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e2b226_94738bb4",
+        "filename": "components/download/internal/background_service/test/test_device_status_listener.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T22:56:09Z",
+      "side": 1,
+      "message": "Why? :D",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "571c55352b8fa358f87bcfda0037df9e78a3d944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
