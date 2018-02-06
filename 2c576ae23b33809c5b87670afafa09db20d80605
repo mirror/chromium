@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e90a145d_c5b4247d",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-02-06T18:05:24Z",
+      "side": 1,
+      "message": "Considered something like this but didn\u0027t think it met the bar, but the two of you know better :)",
+      "parentUuid": "801d7b01_6d83ca7c",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 11
+      },
+      "revId": "2c576ae23b33809c5b87670afafa09db20d80605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59fbf4bf_46091dcd",
         "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2c576ae23b33809c5b87670afafa09db20d80605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d7e22e_e54adf4b",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-02-06T18:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59fbf4bf_46091dcd",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 15
+      },
+      "revId": "2c576ae23b33809c5b87670afafa09db20d80605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
