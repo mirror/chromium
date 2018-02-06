@@ -79,6 +79,11 @@ TEST_F(PowerEventObserverTest, LockBeforeSuspend) {
   // lock screen animations have completed.
   BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
   observer_->OnLockAnimationsComplete();
+  ui::Compositor* compositor =
+      Shell::GetPrimaryRootWindow()->GetHost()->compositor();
+  observer_->OnCompositingStarted(compositor, base::TimeTicks());
+  EXPECT_EQ(1, client->GetNumPendingSuspendReadinessCallbacks());
+  observer_->OnCompositingEnded(compositor);
   EXPECT_EQ(0, client->GetNumPendingSuspendReadinessCallbacks());
 
   // If the system is already locked, no callback should be requested.
@@ -87,11 +92,15 @@ TEST_F(PowerEventObserverTest, LockBeforeSuspend) {
   BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
   observer_->OnLockAnimationsComplete();
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
+  // TODO: Make this work if this completes before suspend.
+  observer_->OnCompositingStarted(compositor, base::TimeTicks());
+  observer_->OnCompositingEnded(compositor);
   EXPECT_EQ(0, client->GetNumPendingSuspendReadinessCallbacks());
 
   // It also shouldn't request a callback if it isn't instructed to lock the
   // screen.
   observer_->SuspendDone(base::TimeDelta());
+  UnblockUserSession();
   SetShouldLockScreenAutomatically(false);
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
   EXPECT_EQ(0, client->GetNumPendingSuspendReadinessCallbacks());
@@ -118,6 +127,12 @@ TEST_F(PowerEventObserverTest, SetInvisibleBeforeSuspend) {
   EXPECT_EQ(1, GetNumVisibleCompositors());
 
   observer_->OnLockAnimationsComplete();
+
+  ui::Compositor* compositor =
+      Shell::GetPrimaryRootWindow()->GetHost()->compositor();
+  observer_->OnCompositingStarted(compositor, base::TimeTicks());
+  EXPECT_EQ(1, GetNumVisibleCompositors());
+  observer_->OnCompositingEnded(compositor);
   EXPECT_EQ(0, GetNumVisibleCompositors());
 
   observer_->SuspendDone(base::TimeDelta());
@@ -168,6 +183,21 @@ TEST_F(PowerEventObserverTest, DelayResuspendForLockAnimations) {
   EXPECT_EQ(2, client->GetNumPendingSuspendReadinessCallbacks());
 
   observer_->OnLockAnimationsComplete();
+  EXPECT_EQ(2, client->GetNumPendingSuspendReadinessCallbacks());
+  EXPECT_EQ(1, GetNumVisibleCompositors());
+
+  ui::Compositor* compositor =
+      Shell::GetPrimaryRootWindow()->GetHost()->compositor();
+  observer_->OnCompositingEnded(compositor);
+  EXPECT_EQ(2, client->GetNumPendingSuspendReadinessCallbacks());
+  EXPECT_EQ(1, GetNumVisibleCompositors());
+
+  observer_->OnCompositingStarted(compositor, base::TimeTicks());
+  EXPECT_EQ(2, client->GetNumPendingSuspendReadinessCallbacks());
+  EXPECT_EQ(1, GetNumVisibleCompositors());
+
+  observer_->OnCompositingEnded(compositor);
+
   EXPECT_EQ(1, client->GetNumPendingSuspendReadinessCallbacks());
   EXPECT_EQ(0, GetNumVisibleCompositors());
 }
