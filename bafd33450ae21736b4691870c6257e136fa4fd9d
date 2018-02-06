@@ -117,6 +117,30 @@
       "revId": "bafd33450ae21736b4691870c6257e136fa4fd9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad4c056_7e513e08",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-02-06T00:31:54Z",
+      "side": 1,
+      "message": "Right, hence my comment wrt to external fragmentation (it\u0027s not quite as bad as it seems since sizes get rounded up to multiple of 256 bytes, though). Sparse stuff, though, for SimpleCache is packed in a single file (which is kinda seek-heavy to open), without any child entry cleverness, so things with ranges aren\u0027t interesting with it.",
+      "parentUuid": "90c03eb7_3af263ec",
+      "range": {
+        "startLine": 597,
+        "startChar": 34,
+        "endLine": 597,
+        "endChar": 43
+      },
+      "revId": "bafd33450ae21736b4691870c6257e136fa4fd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
