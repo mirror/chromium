@@ -90,7 +90,8 @@ class PdfPrinterHandler : public PrinterHandler,
  private:
   void PostPrintToPdfTask();
   void OnGotUniqueFileName(const base::FilePath& path);
-  void OnDirectoryCreated(const base::FilePath& path);
+  void OnDirectoryCreated(const base::FilePath& filename,
+                          base::FilePath directory);
 
   Profile* const profile_;
   printing::StickySettings* const sticky_settings_;

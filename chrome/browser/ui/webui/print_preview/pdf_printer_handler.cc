@@ -134,9 +134,13 @@ base::FilePath GetUniquePath(const base::FilePath& path) {
   return unique_path;
 }
 
-void CreateDirectoryIfNeeded(const base::FilePath& path) {
-  if (!base::DirectoryExists(path))
-    base::CreateDirectory(path);
+base::FilePath CreateDirectoryIfNeeded(const base::FilePath& path,
+                                       const base::FilePath& default_path) {
+  if (base::DirectoryExists(path))
+    return path;
+  if (!base::DirectoryExists(default_path))
+    base::CreateDirectory(default_path);
+  return default_path;
 }
 
 }  // namespace
@@ -317,6 +321,7 @@ void PdfPrinterHandler::SelectFile(const base::FilePath& default_filename,
   // Get save location from Download Preferences.
   DownloadPrefs* download_prefs = DownloadPrefs::FromBrowserContext(profile_);
   base::FilePath path = download_prefs->SaveFilePath();
+  base::FilePath default_path = download_prefs->DownloadPath();
   sticky_settings_->SaveInPrefs(profile_->GetPrefs());
 
   // Handle the no prompting case. Like the dialog prompt, this function
@@ -332,17 +337,16 @@ void PdfPrinterHandler::SelectFile(const base::FilePath& default_filename,
 
   // If the directory is empty there is no reason to create it.
   if (path.empty()) {
-    OnDirectoryCreated(default_filename);
+    OnDirectoryCreated(default_filename, path);
     return;
   }
 
   // Create the directory to save in if it does not exist.
-  base::PostTaskWithTraitsAndReply(
+  base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&CreateDirectoryIfNeeded, path),
-      base::Bind(&PdfPrinterHandler::OnDirectoryCreated,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 path.Append(default_filename)));
+      base::BindOnce(&CreateDirectoryIfNeeded, path, default_path),
+      base::BindOnce(&PdfPrinterHandler::OnDirectoryCreated,
+                     weak_ptr_factory_.GetWeakPtr(), default_filename));
 }
 
 void PdfPrinterHandler::PostPrintToPdfTask() {
@@ -358,7 +362,10 @@ void PdfPrinterHandler::OnGotUniqueFileName(const base::FilePath& path) {
   FileSelected(path, 0, nullptr);
 }
 
-void PdfPrinterHandler::OnDirectoryCreated(const base::FilePath& path) {
+void PdfPrinterHandler::OnDirectoryCreated(const base::FilePath& filename,
+                                           base::FilePath directory) {
+  base::FilePath path = directory.Append(filename);
+
   // Prompts the user to select the file.
   ui::SelectFileDialog::FileTypeInfo file_type_info;
   file_type_info.extensions.resize(1);
