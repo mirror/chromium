@@ -94,6 +94,30 @@
       "revId": "00cee9b4345bd6044647cd1e00245b62693ae2c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6943a923_c7354777",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T22:56:51Z",
+      "side": 1,
+      "message": "I think your latest proposal is easier to understand. Having said that, I\u0027d still take a look at  https://www.polymer-project.org/1.0/docs/devguide/observers#change-callbacks?\n\nThese observers only fire when the value changes. Maybe you could also do something as follows?\n\n// Inside |propperties|\nplayStoreEnabled: {\n  type: Boolean,\n  computed: \u0027computePlayStoreEnabled_(androidAppsInfo.playStoreEnabled)\u0027,\n  observer: \u0027onPlayStoreEnabledChanged_\u0027,\n},\n\n...\ncomputePlayStoreEnabled_: function() {\n  return androidAppsInfo.playStoreEnabled;\n},\n\nonPlayStoreEnabledChanged_: function(current, previous) {\n  // use current and previous to achieve desired logic.\n  ...\n},",
+      "parentUuid": "68df0516_11793db7",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "00cee9b4345bd6044647cd1e00245b62693ae2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
