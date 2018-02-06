@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1ba94a1_c74f7782",
+        "filename": "ui/events/event.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-06T19:01:45Z",
+      "side": 1,
+      "message": "IsFromPlatformHook",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973faa58_1c4d7572",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-06T19:01:45Z",
+      "side": 1,
+      "message": "\u0027platform hook\u0027 probably does not make a lot of sense in non-Windows. Maybe call it \u0027EF_LOW_LEVEL\u0027 or \u0027EF_PRE_PLATFORM_HANDLED\u0027 (or something like that to reflect that this is a key-event chrome received before the platform had a chance to handle the event).",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88e5886_13ad6673",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-06T19:01:45Z",
+      "side": 1,
+      "message": "I would say create this on-demand here (and maybe destroyed in UnlockKeys below).",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00886a2b_2bae0be7",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-06T19:01:45Z",
+      "side": 1,
+      "message": "Would it be possible to return a Scoped object from here, so that (1) only the caller can unlock, and (2) it becomes difficult for the caller to forget to unlock. e.g.\n\n ScopedKeyboardLock LockKeys(std::vector\u003c...\u003e keys);\n\nWhen the returned object is destroyed, it automatically unlocks.",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
