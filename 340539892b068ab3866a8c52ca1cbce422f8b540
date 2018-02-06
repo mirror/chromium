@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b68f7f7e_2808a881",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T01:34:07Z",
+      "side": 1,
+      "message": "We should be able to just inline the conversion:\n\ncertificate_importer_-\u003eImportCertificates(\n    chromeos::onc::OncParsedCertificates(certificates_onc),\n    onc_source_, ...);\n\nI think that would actually be more clear.",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9a4b24_186d36dc",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T01:34:07Z",
+      "side": 1,
+      "message": "Here too.",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb113a2_a4f96139",
+        "filename": "chromeos/network/onc/onc_certificate_importer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T01:34:07Z",
+      "side": 1,
+      "message": "Unless I am mistaken, this doesn\u0027t actually do a \"move\", it has to create a copy, so we should remove the std::move.",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaae4f8_83fe3ae8",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T01:34:07Z",
+      "side": 1,
+      "message": "if (!trust_list)\n  return false;",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45704c42_b5ea6574",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T01:34:07Z",
+      "side": 1,
+      "message": "Avoid DCHECK mirroring logic. Use VLOG or LOG(WARNING) inside the if() instead.",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0980cd_7f74a736",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-06T01:34:07Z",
+      "side": 1,
+      "message": "For ServerOrAuthorityCertificate and ClientCertificate having copy/assignment operators makes sense, but do we need/want to use them here? Can we use unique pointers instead?",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
