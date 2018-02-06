@@ -28,7 +28,9 @@ struct PdfMetafileSkiaData;
 // TODO(thestig): Rename to MetafileSkia.
 class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
  public:
-  explicit PdfMetafileSkia(SkiaDocumentType type);
+  // Default constructor is used for pdf document only.
+  PdfMetafileSkia();
+  PdfMetafileSkia(SkiaDocumentType type, int document_cookie);
   ~PdfMetafileSkia() override;
 
   // Metafile methods.
@@ -75,6 +77,7 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
   cc::PaintCanvas* GetVectorCanvasForNewPage(const gfx::Size& page_size,
                                              const gfx::Rect& content_area,
                                              const float& scale_factor);
+  int GetDocumentCookie() const;
 
  private:
   std::unique_ptr<PdfMetafileSkiaData> data_;
