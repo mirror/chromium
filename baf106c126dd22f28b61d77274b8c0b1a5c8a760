@@ -123,6 +123,24 @@
       "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d55247_707bb836",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T23:32:12Z",
+      "side": 1,
+      "message": "These should only be for subresource requests, so browser process (navigations) should never use this.\n\nWhile I\u0027d love us to restrict as much as we can, I\u0027m very skeptical we will be able to curtail content scripts. I do think that ideally they should behave exactly like the rest of the scripts in the document, however the fact that we changed them to explicitly have initiator origin (which is the main reason we need this fix) makes me think that potentially other solution might be needed here if we want to lock things down.\n\nPer RenderFrame is going to be really nice, but that state will live on the Network Service side in general anyway, so the restriction can easily be implemented there once (if) we have the proper state propagated some day.",
+      "parentUuid": "ecf28dee_725e30d1",
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
