@@ -81,6 +81,48 @@
       "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bb4831_36efa28d",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T22:20:25Z",
+      "side": 1,
+      "message": "That earlier approach looks good to me.\n\nThe goal is to turn LoadFlags into CacheFlags, handle them all at the HttpCache::Transaction layer, and either get rid of the rest, or move them into individual setters.  At the moment, the flags are present all the way down to the socket layer, but sockets really should not know or care about most of these.",
+      "parentUuid": "fec2b0a1_4bcfc8e5",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf28dee_725e30d1",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-06T22:20:25Z",
+      "side": 1,
+      "message": "We are worse off, if we ever think about tightening up on this - two things that will need a security check are inherently more likely to break than one thing.\n\nWe do have the ability to restrict what requests from the renderer can do, and renderers no longer make navigation requests.  So it would be trivial to block requests without an initiator from being sent from the renderer, and instead only let the browser process send them.  If there\u0027s cause to make such a change, there\u0027s a fair chance this path would be overlooked.\n\nWe also have the ability to restrict requests on a per-RenderFrame basis, so if only certain render frames needed the ability to set null initiators, we could just gives those renderers permissions to do so, when their URLLoaderFactories are created.",
+      "parentUuid": "cd80a439_5c361d0b",
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
