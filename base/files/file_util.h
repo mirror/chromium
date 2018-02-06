@@ -460,6 +460,13 @@ BASE_EXPORT bool GetFileSystemType(const FilePath& path, FileSystemType* type);
 BASE_EXPORT bool GetShmemTempDir(bool executable, FilePath* path);
 #endif
 
+// Truncates path->BaseName() to make path->BaseName().value().size() <= limit.
+// - It keeps the extension as is. Only truncates the body part.
+// - It secures the base filename length to be more than or equals to
+//   kTruncatedNameLengthLowerbound.
+// If it was unable to shorten the name, returns false.
+BASE_EXPORT bool TruncateFilename(base::FilePath* path, size_t limit);
+
 // Internal --------------------------------------------------------------------
 
 namespace internal {

@@ -33,6 +33,10 @@ namespace {
 // Also used by code that cleans up said files.
 static const int kMaxUniqueFiles = 100;
 
+// The lower bound for file name truncation. If the truncation results in a name
+// shorter than this limit, we give up automatic truncation and prompt the user.
+const size_t kTruncatedNameLengthLowerbound = 5;
+
 }  // namespace
 
 int64_t ComputeDirectorySize(const FilePath& root_path) {
@@ -258,6 +262,42 @@ int GetUniquePathNumber(const FilePath& path,
 
   return -1;
 }
+
+bool TruncateFilename(base::FilePath* path, size_t limit) {
+  base::FilePath basename(path->BaseName());
+  // It is already short enough.
+  if (basename.value().size() <= limit)
+    return true;
+
+  base::FilePath dir(path->DirName());
+  base::FilePath::StringType ext(basename.Extension());
+  base::FilePath::StringType name(basename.RemoveExtension().value());
+
+  // Impossible to satisfy the limit.
+  if (limit < kTruncatedNameLengthLowerbound + ext.size())
+    return false;
+  limit -= ext.size();
+
+  // Encoding specific truncation logic.
+  base::FilePath::StringType truncated;
+#if defined(OS_CHROMEOS) || defined(OS_MACOSX)
+  // UTF-8.
+  base::TruncateUTF8ToByteSize(name, limit, &truncated);
+#elif defined(OS_WIN)
+  // UTF-16.
+  DCHECK(name.size() > limit);
+  truncated = name.substr(0, CBU16_IS_TRAIL(name[limit]) ? limit - 1 : limit);
+#else
+// We cannot generally assume that the file name encoding is in UTF-8 (see
+// the comment for FilePath::AsUTF8Unsafe), hence no safe way to truncate.
+#endif
+
+  if (truncated.size() < kTruncatedNameLengthLowerbound)
+    return false;
+  *path = dir.Append(truncated + ext);
+  return true;
+}
+
 #endif  // !defined(OS_NACL_NONSFI)
 
 }  // namespace base
