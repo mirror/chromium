@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83a0098b_cf085885",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "091182eb_284185a6",
+      "revId": "bba5be689296afda5e57958b29a7c4702ce428f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683c32b7_1c447494",
         "filename": "chrome/browser/resources/welcome/welcome_win10.js",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "bba5be689296afda5e57958b29a7c4702ce428f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8141052a_d897c67b",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683c32b7_1c447494",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "bba5be689296afda5e57958b29a7c4702ce428f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
