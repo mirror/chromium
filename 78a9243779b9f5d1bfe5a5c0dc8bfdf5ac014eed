@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9918e889_2416e716",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-06T16:30:20Z",
+      "side": 1,
+      "message": "nit: Use \"5 * NSEC_PER_SEC\"",
+      "range": {
+        "startLine": 558,
+        "startChar": 39,
+        "endLine": 558,
+        "endChar": 61
+      },
+      "revId": "78a9243779b9f5d1bfe5a5c0dc8bfdf5ac014eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a94059c_e37ab35a",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-06T16:30:20Z",
+      "side": 1,
+      "message": "sizeof(data_)",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "78a9243779b9f5d1bfe5a5c0dc8bfdf5ac014eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
