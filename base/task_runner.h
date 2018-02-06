@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/memory/ref_counted.h"
+#include "base/promise/promise.h"
 #include "base/time/time.h"
 
 namespace base {
@@ -62,6 +63,23 @@ class BASE_EXPORT TaskRunner
   //
   // Equivalent to PostDelayedTask(from_here, task, 0).
   bool PostTask(const Location& from_here, OnceClosure task);
+
+  template <typename T>
+  using ResolveType = typename internal::PromiseCallbackTraits<T>::ResolveType;
+
+  template <typename T>
+  using RejectType = typename internal::PromiseCallbackTraits<T>::RejectType;
+
+  // TODO(alexclarke): Refactor to replace PostTask with this.
+  template <typename T>
+  Promise<ResolveType<T>, RejectType<T>> PostPromise(
+      const Location& from_here,
+      base::OnceCallback<T()> task) {
+    Promise<ResolveType<T>, RejectType<T>> promise;
+    PostTask(from_here, BindOnce(&internal::PostTaskPromiseHelper<T>::Run,
+                                 std::move(task), promise.abstract_promise_));
+    return promise;
+  }
 
   // Like PostTask, but tries to run the posted task only after |delay_ms|
   // has passed. Implementations should use a tick clock, rather than wall-
