@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c30daa66_688daf0c",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-02-06T14:31:23Z",
+      "side": 1,
+      "message": "CheckAccess() was taking this and calling a method on it without checking nullness. IIRC, we didn\u0027t get any crash around there, but still not sure if it really never happened.\n\nI\u0027m fine with having this guard here while assuming this wouldn\u0027t have any downside considering that we didn\u0027t get crashes.",
+      "parentUuid": "ded6a0cb_89fdcbb3",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 21
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71973a88_0c29acd8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 7
