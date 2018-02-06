@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5099a581_c66554f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-06T00:30:27Z",
+      "side": 1,
+      "message": "I am not entirely sure if they are exactly in sync because I\u0027m noticing unique fields between DownloadInfo and OfflineItem.\n\nI will not be adding the comment for now.",
+      "parentUuid": "f28cef0c_8b502186",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb05c146_ebbb5ee0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "51022e3e_c5767656",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-06T00:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6b1181_3341a508",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f019884b_1f70a755",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
         "patchSetId": 1
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5fe6dfd9_f2afc29c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-06T00:30:27Z",
+      "side": 1,
+      "message": "I\u0027ll be deleting this method and making PendingState shared as suggested by other comments.\n\nThanks for pointing this out though. I\u0027m not quite sure what the best practice is. I was debating between (a) what I have here with the default to satisfy the compiler and (b) having a default with an \"assert false\" and a return statement outside the switch case. In retrospect, the latter is probably safer.",
+      "parentUuid": "f019884b_1f70a755",
+      "range": {
+        "startLine": 684,
+        "startChar": 12,
+        "endLine": 684,
+        "endChar": 19
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51130195_d86cfa81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
         "patchSetId": 1
@@ -115,6 +187,30 @@
       "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc262ea9_3c9ba232",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-06T00:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51130195_d86cfa81",
+      "range": {
+        "startLine": 669,
+        "startChar": 4,
+        "endLine": 687,
+        "endChar": 5
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "a76d0511_e5d1564a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageNotificationBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-06T00:30:27Z",
+      "side": 1,
+      "message": "Cathy explained it a lot better than I could. I saw it used in java files that use an int for OfflineItemState and thought it clarifies what the int represents.",
+      "parentUuid": "11d4312e_7f0c53f8",
+      "range": {
+        "startLine": 117,
+        "startChar": 45,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "034d2781_58c3e1ea",
         "filename": "components/offline_items_collection/core/offline_item.h",
         "patchSetId": 1
@@ -185,6 +305,30 @@
       "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1513587d_46d36013",
+        "filename": "components/offline_items_collection/core/offline_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-02-06T00:30:27Z",
+      "side": 1,
+      "message": "Done\n\nMoved PendingState to its own file.",
+      "parentUuid": "034d2781_58c3e1ea",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 2
+      },
+      "revId": "abebc5583f8339573b3fe81f25b31f7c244fcbe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
