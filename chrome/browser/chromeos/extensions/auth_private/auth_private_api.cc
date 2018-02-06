@@ -1,0 +1,49 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/chromeos/extensions/auth_private/auth_private_api.h"
+
+#include <memory>
+#include <utility>
+
+#include "base/lazy_instance.h"
+#include "chrome/browser/chromeos/login/lock/screen_locker.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/common/extensions/api/auth_private.h"
+#include "components/user_manager/user_manager.h"
+
+ExtensionFunction::ResponseAction AuthPrivateGetLoginStatusFunction::Run() {
+  DVLOG(1) << "AuthPrivateGetLoginStatusFunction";
+
+  auto result = std::make_unique<base::DictionaryValue>();
+  const user_manager::UserManager* user_manager =
+      user_manager::UserManager::Get();
+  const bool is_logged_in = user_manager && user_manager->IsUserLoggedIn();
+  const bool is_screen_locked =
+      !!chromeos::ScreenLocker::default_screen_locker();
+
+  result->SetBoolean("isLoggedIn", user_manager->IsUserLoggedIn());
+  result->SetBoolean("isScreenLocked", is_screen_locked);
+
+  DVLOG(1) << "AuthPrivateGetLoginStatusFunction isLoggedIn=" << is_logged_in
+           << ", isScreenLocked=" << is_screen_locked;
+
+  return RespondNow(OneArgument(std::move(result)));
+}
+
+static base::LazyInstance<
+    extensions::BrowserContextKeyedAPIFactory<AuthPrivateAPI>>::DestructorAtExit
+    g_factory = LAZY_INSTANCE_INITIALIZER;
+
+// static
+extensions::BrowserContextKeyedAPIFactory<AuthPrivateAPI>*
+AuthPrivateAPI::GetFactoryInstance() {
+  return g_factory.Pointer();
+}
+
+template <>
+KeyedService* extensions::BrowserContextKeyedAPIFactory<AuthPrivateAPI>::
+    BuildServiceInstanceFor(content::BrowserContext* context) const {
+  return new AuthPrivateAPI();
+}
