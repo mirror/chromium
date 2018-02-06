@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d5c1ce_7c0f0b32",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-02-06T22:13:14Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem necessary - ActivityThread.getProcessName exists since donut, long before isolated processes did, so normally that should work even for isolated processes. Check this in the catch block instead?",
+      "revId": "a731d9d85107bd496b18253ba6b737d9ccd94a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
