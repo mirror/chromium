@@ -16,6 +16,24 @@
       "revId": "e44644435d8316516249aa508628c64d201b3933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b4947a_6feb6e2a",
+        "filename": "components/printing/renderer/print_render_frame_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T20:36:24Z",
+      "side": 1,
+      "message": "Neither of those are used with metrics. The one above is for errors to show the user, and the one below is for internal state.",
+      "parentUuid": "5a11aab4_16391730",
+      "revId": "e44644435d8316516249aa508628c64d201b3933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

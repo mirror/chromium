@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "252d7948_a9c62ec2",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T20:36:24Z",
+      "side": 1,
+      "message": "I added more comments here. The PreviewPageRendered() description in the header says \"for modifiable content\" now, so I added a DCHECK() in PreviewPageRendered() to check the same thing.",
+      "parentUuid": "eccb62a7_0b017c5d",
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b0090d_a323b1be",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
