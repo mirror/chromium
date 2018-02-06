@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed2b46d9_48958c2f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-06T23:24:47Z",
+      "side": 1,
+      "message": "it\u0027s a bit weird to have a cocoa include here.. but I think it\u0027s fine. we could move ShowPageInfoBubbleViews somewhere, but a nice place didn\u0027t stand out to me.",
+      "revId": "686ca1e0b35ac8c31e4554dbee5dce8e7030d6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
