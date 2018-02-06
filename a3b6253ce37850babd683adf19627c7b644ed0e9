@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d05e329c_359cba51",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T23:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059a1ad0_a11097d8",
+      "range": {
+        "startLine": 121,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 37
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea63896_62ed60f1",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1cc223e3_24b7ce58",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T23:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea63896_62ed60f1",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 4
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740a813d_13febcb8",
         "filename": "components/autofill/core/browser/form_data_importer.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7504c5e2_7e5a2e13",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T23:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740a813d_13febcb8",
+      "range": {
+        "startLine": 327,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 9
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +180,30 @@
       "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef36653_8fab3573",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6119,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T23:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8d35ba_6c8661ed",
+      "range": {
+        "startLine": 6119,
+        "startChar": 11,
+        "endLine": 6119,
+        "endChar": 63
+      },
+      "revId": "a3b6253ce37850babd683adf19627c7b644ed0e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
