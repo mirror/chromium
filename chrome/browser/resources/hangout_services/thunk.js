@@ -184,6 +184,16 @@ chrome.runtime.onMessageExternal.addListener(function(
       chrome.webrtcAudioPrivate.setAudioExperiments(
           requestInfo, origin, experiments, doSendResponse);
       return true;
+    } else if (method == 'startEventLogging') {
+      var maxLogSizeBytes = message['maxLogSizeBytes'] || false;
+      if (!maxLogSizeBytes) {
+        doSendResponse('', 'Missing required field - maxLogSizeBytes.');
+        return false;  // TODO: !!! Or should it still be true?
+      }
+      var metadata = message['metadata'] || '';
+      chrome.webrtcLoggingPrivate.startEventLogging(
+          requestInfo, origin, maxLogSizeBytes, metadata, doSendResponse);
+      return true;  // TODO: !!! What's the meaning of true/false in this func?
     }
 
     throw new Error('Unknown method: ' + method);
