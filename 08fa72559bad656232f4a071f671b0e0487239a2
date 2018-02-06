@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32d6cdd3_0974c6ce",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-06T17:40:33Z",
+      "side": 1,
+      "message": "If you use the support for Deprecation messages in Deprecation.cpp then you\u0027ll be guaranteed that your console message will get output at most once per hosting frame.  It\u0027s important to avoid unbounded console messages - especially at the \u0027error\u0027 level (eg. imagine a site that, for some reasons, keeps adding and removing an iframe element).",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
