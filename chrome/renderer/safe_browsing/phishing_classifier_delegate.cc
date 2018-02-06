@@ -15,12 +15,14 @@
 #include "chrome/renderer/safe_browsing/feature_extractor_clock.h"
 #include "chrome/renderer/safe_browsing/phishing_classifier.h"
 #include "chrome/renderer/safe_browsing/scorer.h"
-#include "components/safe_browsing/common/safebrowsing_messages.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/proto/csd.pb.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/renderer/navigation_state.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -45,29 +47,7 @@ static base::LazyInstance<PhishingClassifierDelegates>::DestructorAtExit
 static base::LazyInstance<std::unique_ptr<const safe_browsing::Scorer>>::
     DestructorAtExit g_phishing_scorer = LAZY_INSTANCE_INITIALIZER;
 
-// static
-PhishingClassifierFilter* PhishingClassifierFilter::Create() {
-  // Private constructor and public static Create() method to facilitate
-  // stubbing out this class for binary-size reduction purposes.
-  return new PhishingClassifierFilter();
-}
-
-PhishingClassifierFilter::PhishingClassifierFilter()
-    : RenderThreadObserver() {}
-
-PhishingClassifierFilter::~PhishingClassifierFilter() {}
-
-bool PhishingClassifierFilter::OnControlMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PhishingClassifierFilter, message)
-    IPC_MESSAGE_HANDLER(SafeBrowsingMsg_SetPhishingModel, OnSetPhishingModel)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
-void PhishingClassifierFilter::OnSetPhishingModel(const std::string& model) {
+void PhishingClassifierDelegate::SetPhishingModel(const std::string& model) {
   safe_browsing::Scorer* scorer = NULL;
   // An empty model string means we should disable client-side phishing
   // detection.
@@ -83,6 +63,11 @@ void PhishingClassifierFilter::OnSetPhishingModel(const std::string& model) {
     (*i)->SetPhishingScorer(scorer);
   }
   g_phishing_scorer.Get().reset(scorer);
+}
+
+void PhishingClassifierDelegate::PhishingDetectorRequest(
+    mojom::PhishingDetectorRequest request) {
+  phishing_detector_bindings_.AddBinding(this, std::move(request));
 }
 
 // static
@@ -111,6 +96,11 @@ PhishingClassifierDelegate::PhishingClassifierDelegate(
 
   if (g_phishing_scorer.Get().get())
     SetPhishingScorer(g_phishing_scorer.Get().get());
+
+  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+  registry->AddInterface(
+      base::BindRepeating(&PhishingClassifierDelegate::PhishingDetectorRequest,
+                          base::Unretained(this)));
 }
 
 PhishingClassifierDelegate::~PhishingClassifierDelegate() {
@@ -135,7 +125,7 @@ void PhishingClassifierDelegate::SetPhishingScorer(
   MaybeStartClassification();
 }
 
-void PhishingClassifierDelegate::OnStartPhishingDetection(const GURL& url) {
+void PhishingClassifierDelegate::StartPhishingDetection(const GURL& url) {
   last_url_received_from_browser_ = StripRef(url);
   // Start classifying the current page if all conditions are met.
   // See MaybeStartClassification() for details.
@@ -198,17 +188,6 @@ void PhishingClassifierDelegate::CancelPendingClassification(
   have_page_text_ = false;
 }
 
-bool PhishingClassifierDelegate::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PhishingClassifierDelegate, message)
-    IPC_MESSAGE_HANDLER(SafeBrowsingMsg_StartPhishingDetection,
-                        OnStartPhishingDetection)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
 void PhishingClassifierDelegate::ClassificationDone(
     const ClientPhishingRequest& verdict) {
   // We no longer need the page text.
@@ -217,8 +196,10 @@ void PhishingClassifierDelegate::ClassificationDone(
            << " score = " << verdict.client_score();
   if (verdict.client_score() != PhishingClassifier::kInvalidScore) {
     DCHECK_EQ(last_url_sent_to_classifier_.spec(), verdict.url());
-    RenderThread::Get()->Send(new SafeBrowsingHostMsg_PhishingDetectionDone(
-        routing_id(), verdict.SerializeAsString()));
+    safe_browsing::mojom::PhishingDetectorClientPtr phishing_detector;
+    RenderThread::Get()->GetConnector()->BindInterface(
+        content::mojom::kBrowserServiceName, &phishing_detector);
+    phishing_detector->PhishingDetectionDone(verdict.SerializeAsString());
   }
 }
 

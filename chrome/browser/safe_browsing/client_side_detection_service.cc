@@ -24,8 +24,8 @@
 #include "chrome/common/safe_browsing/client_model.pb.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/prefs/pref_service.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
-#include "components/safe_browsing/common/safebrowsing_messages.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -245,7 +245,9 @@ void ClientSideDetectionService::SendModelToProcess(
     DVLOG(2) << "Disabling client-side phishing detection for "
              << "RenderProcessHost @" << process;
   }
-  process->Send(new SafeBrowsingMsg_SetPhishingModel(model));
+  safe_browsing::mojom::PhishingDetectorPtr detector;
+  content::BindInterface(process, &detector);
+  detector->SetPhishingModel(model);
 }
 
 void ClientSideDetectionService::SendModelToRenderers() {
