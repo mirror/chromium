@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "960f109f_9dcb8d41",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-06T12:31:29Z",
+      "side": 1,
+      "message": "It seems gmock style is to not add empty line between mock and move-only args function calling that mock [1], I\u0027ve seen same style used in chromium.\nI added a line after.\n\n[1] https://g3doc.corp.google.com/third_party/gmock/g3doc/guide.md#mocking-methods-that-use-move-only-types",
+      "parentUuid": "6a91bd82_c7bd329e",
+      "revId": "a26423e28dde54f1bc0fa35fa8d9f2f1ae905580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96a03ccc_80764b49",
         "filename": "media/audio/audio_debug_recording_session_impl.cc",
         "patchSetId": 29
@@ -33,6 +51,24 @@
       "revId": "a26423e28dde54f1bc0fa35fa8d9f2f1ae905580",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c08dfe_a1d2953c",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-02-06T12:31:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96a03ccc_80764b49",
+      "revId": "a26423e28dde54f1bc0fa35fa8d9f2f1ae905580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
