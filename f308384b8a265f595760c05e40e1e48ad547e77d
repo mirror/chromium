@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8614d262_f68d94af",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T15:24:17Z",
+      "side": 1,
+      "message": "optional: maybe \"Use a \u003ca...\u003ebrowser_action\u003c/a\u003e\"?  (i.e., add \"a\")",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "f308384b8a265f595760c05e40e1e48ad547e77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad51ce8a_142eccaf",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T15:24:17Z",
+      "side": 1,
+      "message": "nit: maybe ellipses here, too?",
+      "revId": "f308384b8a265f595760c05e40e1e48ad547e77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7ae4f0_3c3ceb1c",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T15:24:17Z",
+      "side": 1,
+      "message": "nit: indentation off",
+      "revId": "f308384b8a265f595760c05e40e1e48ad547e77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b60b8a8_96a8936f",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T15:24:17Z",
+      "side": 1,
+      "message": "sendRequest is deprecated, and the mappy extension on the whole needs some help.  Is there another extension we can reference, or could we just change this snippet so that it doesn\u0027t come from mappy?  (or, if you\u0027re ambitious, we could update the mappy sample - which would be good, but I don\u0027t necessarily want to block this patch on that)",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 27
+      },
+      "revId": "f308384b8a265f595760c05e40e1e48ad547e77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a78f5a_a4488d6c",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T15:24:17Z",
+      "side": 1,
+      "message": "I don\u0027t know that \"big colorful images\" are still the recommended ux.  Maybe just remove this line?",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 74
+      },
+      "revId": "f308384b8a265f595760c05e40e1e48ad547e77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5393d081_cbe3f49a",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T15:24:17Z",
+      "side": 1,
+      "message": "nit: single-quotes in JS",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 325,
+        "endChar": 64
+      },
+      "revId": "f308384b8a265f595760c05e40e1e48ad547e77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
