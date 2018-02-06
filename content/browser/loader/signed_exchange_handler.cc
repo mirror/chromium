@@ -4,15 +4,29 @@
 
 #include "content/browser/loader/signed_exchange_handler.h"
 
+#include "base/base64.h"
 #include "base/feature_list.h"
 #include "components/cbor/cbor_reader.h"
 #include "content/browser/loader/merkle_integrity_source_stream.h"
+#include "content/browser/loader/resource_requester_info.h"
+#include "content/browser/loader/signed_exchange_cert_fetcher.h"
+#include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/system/string_data_pipe_producer.h"
+#include "net/base/hash_value.h"
 #include "net/base/io_buffer.h"
+#include "net/cert/cert_verifier.h"
+#include "net/cert/ct_verifier.h"
+#include "net/cert/x509_certificate.h"
 #include "net/filter/source_stream.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+#include "net/http/transport_security_state.h"
+#include "net/url_request/url_request_context.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
@@ -68,11 +82,19 @@ class BufferSourceStream : public net::SourceStream {
 
 SignedExchangeHandler::SignedExchangeHandler(
     std::unique_ptr<net::SourceStream> body,
-    ExchangeHeadersCallback headers_callback)
+    ExchangeHeadersCallback headers_callback,
+    network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_for_browser,
+    net::URLRequestContext* request_context)
     : headers_callback_(std::move(headers_callback)),
       source_(std::move(body)),
+      request_context_(request_context),
+      net_log_(net::NetLogWithSource::Make(
+          request_context_->net_log(),
+          net::NetLogSourceType::CERT_VERIFIER_JOB)),
       weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
+  url_loader_factory_for_browser_ptr_.Bind(
+      std::move(url_loader_factory_for_browser));
 
   // Triggering the first read (asynchronously) for CBOR parsing.
   read_buf_ = base::MakeRefCounted<net::IOBufferWithSize>(kBufferSizeForRead);
@@ -238,12 +260,18 @@ bool SignedExchangeHandler::RunHeadersCallback() {
     return false;
   }
   auto payload_stream = std::make_unique<BufferSourceStream>(payload_bytes);
-  auto mi_stream = std::make_unique<MerkleIntegritySourceStream>(
+  mi_stream_ = std::make_unique<MerkleIntegritySourceStream>(
       mi_header_value, std::move(payload_stream));
 
-  std::move(headers_callback_)
-      .Run(net::OK, request_url_, request_method_, response_head_,
-           std::move(mi_stream), ssl_info_);
+  DCHECK(url_loader_factory_for_browser_ptr_.get());
+  cert_fetcher_ = SignedExchangeCertFetcher::CreateAndStart(
+      base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          url_loader_factory_for_browser_ptr_.get()),
+      GURL("http://127.0.0.1:8000/loading/htxg/resources/example.com.cert_msg"),
+      false,
+      base::BindOnce(&SignedExchangeHandler::OnCertRecieved,
+                     base::Unretained(this)));
+
   return true;
 }
 
@@ -252,6 +280,90 @@ void SignedExchangeHandler::RunErrorCallback(net::Error error) {
   std::move(headers_callback_)
       .Run(error, GURL(), std::string(), network::ResourceResponseHead(),
            nullptr, base::nullopt);
+}
+
+void SignedExchangeHandler::OnCertRecieved(
+    scoped_refptr<net::X509Certificate> cert) {
+  if (!cert) {
+    LOG(ERROR) << "SignedExchangeHandler::OnCertRecieved null ";
+    std::move(headers_callback_)
+        .Run(net::OK, request_url_, request_method_, response_head_,
+             std::move(mi_stream_), base::Optional<net::SSLInfo>());
+    return;
+  }
+  unverified_cert_ = cert;
+  {
+    const net::SHA256HashValue fingerprint =
+        net::X509Certificate::CalculateFingerprint256(cert->cert_buffer());
+    std::string base64_str;
+    base::Base64Encode(
+        base::StringPiece(reinterpret_cast<const char*>(fingerprint.data),
+                          sizeof(fingerprint.data)),
+        &base64_str);
+    LOG(ERROR) << "base64_str " << base64_str;
+  }
+
+  cert_verify_result_ = base::MakeUnique<net::CertVerifyResult>();
+
+  const int return_value = request_context_->cert_verifier()->Verify(
+      net::CertVerifier::RequestParams(unverified_cert_, "example.com",
+                                       0 /* flag */, "",
+                                       net::CertificateList()),
+      net::SSLConfigService::GetCRLSet().get(), cert_verify_result_.get(),
+      base::BindRepeating(&SignedExchangeHandler::OnCertVerifyComplete,
+                          base::Unretained(this)),
+      &cert_verifier_request_, net_log_);
+  if (return_value != net::ERR_IO_PENDING)
+    OnCertVerifyComplete(return_value);
+}
+
+void SignedExchangeHandler::OnCertVerifyComplete(int result) {
+  LOG(ERROR) << "SignedExchangeHandler::OnVerifyComplete result: " << result;
+  net::SSLInfo ssl_info;
+  ssl_info.cert = cert_verify_result_->verified_cert;
+  ssl_info.unverified_cert = unverified_cert_;
+  ssl_info.cert_status = cert_verify_result_->cert_status;
+  ssl_info.is_issued_by_known_root =
+      cert_verify_result_->is_issued_by_known_root;
+  ssl_info.public_key_hashes = cert_verify_result_->public_key_hashes;
+  ssl_info.ocsp_result = cert_verify_result_->ocsp_result;
+  ssl_info.is_fatal_cert_error =
+      net::IsCertStatusError(cert_verify_result_->cert_status) &&
+      !net::IsCertStatusMinorError(cert_verify_result_->cert_status);
+
+  LOG(ERROR) << "cert_transparency_verifier()->Verify --- ";
+  net::SignedCertificateTimestampAndStatusList scts;
+  request_context_->cert_transparency_verifier()->Verify(
+      "example.com", cert_verify_result_->verified_cert.get(),
+      "" /* stapled_ocsp_response, */, "" /* sct_list_from_tls_extension */,
+      &scts, net_log_);
+  LOG(ERROR) << "cert_transparency_verifier()->Verify done --- ";
+  LOG(ERROR) << " scts.size(): " << scts.size();
+
+  net::SCTList verified_scts =
+      net::ct::SCTsMatchingStatus(scts, net::ct::SCT_STATUS_OK);
+  net::ct::CTPolicyCompliance policy_compliance =
+      request_context_->ct_policy_enforcer()->CheckCompliance(
+          cert_verify_result_->verified_cert.get(), verified_scts, net_log_);
+  LOG(ERROR) << " policy_compliance: " << static_cast<int>(policy_compliance);
+
+  net::TransportSecurityState::CTRequirementsStatus ct_requirement_status =
+      request_context_->transport_security_state()->CheckCTRequirements(
+          net::HostPortPair("example.com", 443),
+          cert_verify_result_->is_issued_by_known_root,
+          cert_verify_result_->public_key_hashes,
+          cert_verify_result_->verified_cert.get(), unverified_cert_.get(),
+          scts, net::TransportSecurityState::ENABLE_EXPECT_CT_REPORTS,
+          policy_compliance);
+  LOG(ERROR) << " ct_requirement_status: "
+             << static_cast<int>(ct_requirement_status);
+
+  // TODO: Update ssl_info.cert by cheking policy_compliance and
+  // ct_requirement_status. See: SSLClientSocketImpl::VerifyCT()
+
+  std::move(headers_callback_)
+      .Run(net::OK, request_url_, request_method_, response_head_,
+           std::move(mi_stream_), ssl_info);
 }
 
 }  // namespace content

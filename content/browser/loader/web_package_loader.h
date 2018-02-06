@@ -6,12 +6,18 @@
 #define CONTENT_BROWSER_LOADER_WEB_PACKAGE_LOADER_H_
 
 #include "base/optional.h"
+#include "content/public/common/resource_type.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/ssl/ssl_info.h"
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/cpp/net_adapters.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
+
+namespace net {
+class URLRequestContext;
+}  // namespace net
 
 namespace net {
 class SourceStream;
@@ -30,9 +36,12 @@ class SourceStreamToDataPipe;
 class WebPackageLoader final : public network::mojom::URLLoaderClient,
                                public network::mojom::URLLoader {
  public:
-  WebPackageLoader(const network::ResourceResponseHead& original_response,
-                   network::mojom::URLLoaderClientPtr forwarding_client,
-                   network::mojom::URLLoaderClientEndpointsPtr endpoints);
+  WebPackageLoader(
+      const network::ResourceResponseHead& original_response,
+      network::mojom::URLLoaderClientPtr forwarding_client,
+      network::mojom::URLLoaderClientEndpointsPtr endpoints,
+      network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_for_browser,
+      net::URLRequestContext* request_context);
   ~WebPackageLoader() override;
 
   // network::mojom::URLLoaderClient implementation
@@ -65,6 +74,7 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
   void ConnectToClient(network::mojom::URLLoaderClientPtr client);
 
  private:
+  class CertFetcher;
   class ResponseTimingInfo;
 
   // Called from |signed_exchange_handler_| when it finds an origin-signed HTTP
@@ -102,6 +112,9 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
 
   // Kept around until ProceedWithResponse is called.
   mojo::ScopedDataPipeConsumerHandle pending_body_consumer_;
+
+  network::mojom::URLLoaderFactoryPtrInfo url_loader_factory_for_browser_;
+  net::URLRequestContext* request_context_;
 
   base::WeakPtrFactory<WebPackageLoader> weak_factory_;
 
