@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12d236ff_da952d45",
+        "filename": "chrome/browser/extensions/extension_view_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T20:56:11Z",
+      "side": 1,
+      "message": "include some words in the comment too (is this supposed to mean \"remove this once that bug is fixed\" or \"this will be here forever, see bug for why\" for example?), also elsewhere. and maybe link to some specific comment on the bug, it wasn\u0027t clear to me what exactly i should look at. hm, maybe add the relevant paragraph as a md file in docs/ and refer to that instead?",
+      "revId": "e329801779581b8b6c33d9dda63757d3f77c1676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc80456_5862df84",
+        "filename": "chrome/browser/ui/views/proximity_auth/proximity_auth_error_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T20:56:11Z",
+      "side": 1,
+      "message": "as in \"still needs to be implemented\" or \"this will never be reached\"?",
+      "revId": "e329801779581b8b6c33d9dda63757d3f77c1676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

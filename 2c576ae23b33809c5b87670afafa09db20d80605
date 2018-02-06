@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a7944e1d_e832975b",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T20:56:11Z",
+      "side": 1,
+      "message": "Meh, I think as-is is less magical, which I like.",
+      "parentUuid": "e90a145d_c5b4247d",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 11
+      },
+      "revId": "2c576ae23b33809c5b87670afafa09db20d80605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59fbf4bf_46091dcd",
         "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
         "patchSetId": 4
