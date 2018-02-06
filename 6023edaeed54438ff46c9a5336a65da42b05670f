@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f2384b_58e22c6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "Summary line should denote what this patch changes instead of\ndescribing the issue.\n\nDescription also describe changes about this patch.",
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf885d6_e7851c62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "there",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d8d094_5fea8663",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent/nested_blockquotes_on_partial_selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "Just \u0027outdent\u0027.\n\nNote: second parameter, which is bool, of |document.execCommand()| is ignored. We should specify |false|.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aead9c1b_e1c3cba6",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent/nested_blockquotes_on_partial_selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "Just one space.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eeaccc_f639cf80",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent/nested_blockquotes_on_partial_selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "Just \u0027outdent\u0027.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7281ca59_7fdad57b",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent/nested_blockquotes_on_partial_selection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "Just one space.",
+      "range": {
+        "startLine": 75,
+        "startChar": 19,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19163321_0f993822",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "HTMLElement* const",
+      "range": {
+        "startLine": 300,
+        "startChar": 6,
+        "endLine": 300,
+        "endChar": 18
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f8e2b3_e3cbea89",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "We could write:\nconst bool is_previous_block_quote_name \u003d\n !previousElementIsBlockquote || enclosing_element \u003d\u003d previousElementIsBlockquote",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 21
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d038dd6d_5ccaeed8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T07:52:24Z",
+      "side": 1,
+      "message": "const bool split_ancestor \u003d true;\nSplitTreeToNode(..., split_ancestor);",
+      "range": {
+        "startLine": 312,
+        "startChar": 31,
+        "endLine": 312,
+        "endChar": 35
+      },
+      "revId": "6023edaeed54438ff46c9a5336a65da42b05670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
