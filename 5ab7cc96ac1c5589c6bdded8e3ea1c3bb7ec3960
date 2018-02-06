@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f41d6423_bf88f123",
+        "filename": "ash/system/tray_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-06T22:24:32Z",
+      "side": 1,
+      "message": "Removing the flag check doesn\u0027t fix it.\n\nI do have the right icon now, though, so I\u0027ll remove the flag check entirely since it\u0027ll be ready to go once it works.",
+      "parentUuid": "a8647b07_7c2825d0",
+      "revId": "5ab7cc96ac1c5589c6bdded8e3ea1c3bb7ec3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e28e1b9f_4414092d",
         "filename": "ash/system/tray_accessibility.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5ab7cc96ac1c5589c6bdded8e3ea1c3bb7ec3960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67e3d01_70a5dfc1",
+        "filename": "ash/system/tray_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-06T22:24:32Z",
+      "side": 1,
+      "message": "We are calculating the \"new state\" here based on the old state. Then we set the new state below.",
+      "parentUuid": "e28e1b9f_4414092d",
+      "revId": "5ab7cc96ac1c5589c6bdded8e3ea1c3bb7ec3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
