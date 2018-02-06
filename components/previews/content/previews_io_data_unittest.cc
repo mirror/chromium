@@ -739,7 +739,8 @@ TEST_F(PreviewsIODataTest, NoScriptDisallowedByDefault) {
 TEST_F(PreviewsIODataTest, NoScriptAllowedByFeature) {
   InitializeUIService();
   base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(features::kNoScriptPreviews);
+  scoped_feature_list.InitWithFeatures(
+      {features::kPreviews, features::kNoScriptPreviews}, {});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_2G);
@@ -761,7 +762,9 @@ TEST_F(PreviewsIODataTest, NoScriptAllowedByFeatureWithWhitelist) {
   InitializeUIService();
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitWithFeatures(
-      {features::kNoScriptPreviews, features::kOptimizationHints}, {});
+      {features::kPreviews, features::kNoScriptPreviews,
+       features::kOptimizationHints},
+      {});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_2G);
