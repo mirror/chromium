@@ -241,6 +241,7 @@ void ServiceWorkerDispatcherHost::OnPostMessageToWorker(
     bad_message::ReceivedBadMessage(this, bad_message::SWDH_POST_MESSAGE);
     return;
   }
+  DCHECK_EQ(provider_id, handle->provider_id());
 
   ServiceWorkerProviderHost* sender_provider_host =
       GetContext()->GetProviderHost(render_process_id_, provider_id);
