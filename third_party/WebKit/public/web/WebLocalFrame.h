@@ -515,6 +515,7 @@ class WebLocalFrame : public WebFrame {
   virtual WebString SelectionAsText() const = 0;
   virtual WebString SelectionAsMarkup() const = 0;
 
+  virtual int SelectionId() const = 0;
   // Expands the selection to a word around the caret and returns
   // true. Does nothing and returns false if there is no caret or
   // there is ranged selection.

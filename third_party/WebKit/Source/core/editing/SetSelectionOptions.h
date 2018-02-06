@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/editing/TextGranularity.h"
 #include "platform/wtf/Allocator.h"
+#include "public/platform/WebSelectionSourceType.h"
 
 namespace blink {
 
@@ -37,6 +38,7 @@ class CORE_EXPORT SetSelectionOptions final {
   bool ShouldShowHandle() const { return should_show_handle_; }
   bool ShouldShrinkNextTap() const { return should_shrink_next_tap_; }
   bool IsDirectional() const { return is_directional_; }
+  WebSelectionSourceType GetSourceType() const { return source_type_; }
 
  private:
   CursorAlignOnScroll cursor_align_on_scroll_ = CursorAlignOnScroll::kIfNeeded;
@@ -49,6 +51,7 @@ class CORE_EXPORT SetSelectionOptions final {
   bool should_show_handle_ = false;
   bool should_shrink_next_tap_ = false;
   bool is_directional_ = false;
+  WebSelectionSourceType source_type_ = kSelectionSourceOther;
 };
 
 // This class is used for building |SelectionData| object.
@@ -69,6 +72,7 @@ class CORE_EXPORT SetSelectionOptions::Builder final {
   Builder& SetShouldClearTypingStyle(bool);
   Builder& SetShouldCloseTyping(bool);
   Builder& SetShouldShowHandle(bool);
+  Builder& SetSourceType(WebSelectionSourceType);
   Builder& SetShouldShrinkNextTap(bool);
   Builder& SetIsDirectional(bool);
 
