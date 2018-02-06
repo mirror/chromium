@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f928249_4d0fcbcd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-06T18:59:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14978ac1_83c6c1b2",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "3d73e27fee69cd8fa0d988ec926055efeddaafed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b0e59e7_ae156d34",
         "filename": "chrome/browser/client_hints/client_hints.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "3d73e27fee69cd8fa0d988ec926055efeddaafed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37b2b20_c0ae6989",
+        "filename": "chrome/browser/client_hints/client_hints.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-02-06T18:59:33Z",
+      "side": 1,
+      "message": "It\u0027s the URL of the document as well as the main frame request.\n\nAdded a comment to explain it better. Let me know if it\u0027s still unclear.",
+      "parentUuid": "5b0e59e7_ae156d34",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "3d73e27fee69cd8fa0d988ec926055efeddaafed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
