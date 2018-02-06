@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc4b1a0a_94ecc046",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T21:45:59Z",
+      "side": 1,
+      "message": "nit: add space after \u0027:\u0027\n\n(i was going to suggest adding a function to convert error codes to strings, but i don\u0027t know if it\u0027s worth bloating the binary with the strings when developers already have access to the source)",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7b3639_7b68747e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T21:45:59Z",
+      "side": 1,
+      "message": "the comment above says that an empty path means that \"no compatible component is available to load\". if that\u0027s correct, should this be UNKNOWN_COMPONENT or something similar?",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28aa750a_8ceacf2d",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T21:45:59Z",
+      "side": 1,
+      "message": "does a failure in CrOSComponentManager::FinishLoad always mean that it was specifically mounting that failed, or could there be other causes?",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae52b512_749fe3d3",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T21:45:59Z",
+      "side": 1,
+      "message": "nit: add a comment asking people not to reorder these? it\u0027ll be hard to interpret logs otherwise",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27f064a_c7f760e8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T21:45:59Z",
+      "side": 1,
+      "message": "nit: UNKNOWN_COMPONENT?",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d36a099_94de97db",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T21:45:59Z",
+      "side": 1,
+      "message": "nit: maybe make GENERIC_ERROR be the second entry in case you need to add more later",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
