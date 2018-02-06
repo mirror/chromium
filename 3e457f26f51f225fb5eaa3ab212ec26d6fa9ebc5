@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344678ad_485575ee",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-06T20:26:55Z",
+      "side": 1,
+      "message": "I don\u0027t understand the 2nd part of this comment.  Sounds like maybe you\u0027re saying that if it WAS hovering then it may also cause scrolling (which is clearly wrong)?",
+      "range": {
+        "startLine": 72,
+        "startChar": 45,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "3e457f26f51f225fb5eaa3ab212ec26d6fa9ebc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f902eeb_3d457a27",
+        "filename": "third_party/WebKit/public/platform/WebTouchEvent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-06T20:26:55Z",
+      "side": 1,
+      "message": "It\u0027s weird to initialize hovering but not the other fields.  We haven\u0027t historically needed 0-value-initializers due to the memset in WebInputEvent::WebInputEvent but I see dtapuska has a TODO to remove that - so what\u0027s the plan for fields like touch_start_or_first_touch_move?  Regardless I think \u0027hovering\u0027 should be consistent with the other fields (but feel free to false-initialize all of them).",
+      "revId": "3e457f26f51f225fb5eaa3ab212ec26d6fa9ebc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
