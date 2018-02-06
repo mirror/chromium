@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7025077c_94d6fd62",
+        "filename": "device/fido/device_response_converter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "Just for consistency same here.\n\nThis could be\n\nauto code \u003d static_cast\u003cCtapDeviceResponseCode\u003e(buffer[0]);\nreturn base::ContainsValue(GetCtapResponseCodeList(), code)\n       ? code\n       : CtapDeviceResponseCode::kCtap2ErrInvalidCBOR;",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7f91ea_2b8763a7",
+        "filename": "device/fido/fido_hid_message.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "this seems wrong, what exactly is an error here? Looking at the spec the BCNT for lock is 1. Also I don\u0027t think a value smaller than the max should result in an error.\nWould the following condition make sense?\n\n  if (data.size() !\u003d 1 || data[0] \u003e kHidMaxLockSeconds)\n    return nullptr;",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad9a46d_0814cb11",
+        "filename": "device/fido/fido_hid_message.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "nit: this is not needed, please remove. Removing the default clause will also make the compiler remind us to update this switch statement in case we ever add another value to the DeviceCommand enum.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b589a784_75145ddd",
+        "filename": "device/fido/fido_hid_message.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "nit: missing trailing period, also applies below.",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62b39f6_481e6467",
+        "filename": "device/fido/fido_hid_message_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "nit: this is not really a list anymore. maybe make this a base::circular_deque instead as well?",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 33
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3e97d5_c09f6b48",
+        "filename": "device/fido/fido_hid_message_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "nit: this can be simplified to\n\n  EXPECT_EQ(buf, orig_list.front());",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 75
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16594f1_dc704fb4",
+        "filename": "device/fido/u2f_hid_device.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "nit: remove empty line",
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

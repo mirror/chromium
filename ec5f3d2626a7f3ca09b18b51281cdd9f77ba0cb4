@@ -742,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "73a3db20_28b4c75d",
+        "filename": "device/u2f/u2f_hid_packet.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T09:38:13Z",
+      "side": 1,
+      "message": "Oh, I see. I imagine that is because implementations are free to choose what std::array\u003cT\u003e::iterator actually looks like. Clang probably just implements that as a pointer to T, which is a perfectly valid random access iterator, but would force you to use auto* according to our styleguide.\n\nWhen compiling in debug mode in windows they probably wrap the pointer into some object that does bounds checking. This is why deduction to auto* fails, since you are not dealing with raw pointers anymore.\n\nWe probably should file a bug against the clang-style plugin to allow `auto` in this context. For now though, I think you can simplify this quite a bit using base::ContainsValue from base/stl_util.h. The following replaces lines 35 through 45:\n\nauto command \u003d static_cast\u003cCtapHidDeviceCommand\u003e(serialized[index++] \u0026 0x7f);\nif (!base::ContainsValue(GetCtapHidDeviceCommandList(), command))\n  return nullptr;\n\nThen in line 60 you can use `command` instead of `*command`.",
+      "parentUuid": "55c97734_721b1631",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "ec5f3d2626a7f3ca09b18b51281cdd9f77ba0cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15231fe1_b78a84d6",
         "filename": "device/u2f/u2f_hid_packet.h",
         "patchSetId": 8
