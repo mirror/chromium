@@ -94,6 +94,30 @@
       "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9054c0_6a7e1c7e",
+        "filename": "components/prefs/pref_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-02-06T10:34:49Z",
+      "side": 0,
+      "message": "Needless to say I don\u0027t recall any details from 7 years ago either.\n\nI could hypothesize though that if someone holds on to an invalid PrefService pointer (that seems plausible as something happening accidentally, in particular in the earlier days), bare pointers within the destructed PrefService might also still be pointing at memory that happens to be intact in a UAF condition.\n\nAnyhow, I\u0027d agree that this doesn\u0027t seem useful any longer.",
+      "parentUuid": "4bed2906_898f1a51",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 65
+      },
+      "revId": "a6ed13d615a9a818baf0988b1ae51ed17a568326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
