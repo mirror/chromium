@@ -22,7 +22,7 @@ void MenuConfig::Init() {
   always_use_icon_to_label_padding = true;
   align_arrow_and_shortcut = true;
   offset_context_menus = true;
-  corner_radius = 2;
+  corner_radius = 20;
 
   // In Ash, the border is provided by the shadow.
   use_outer_border = false;

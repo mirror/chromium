@@ -101,6 +101,7 @@ MenuItemView::MenuItemView(MenuDelegate* delegate)
       has_mnemonics_(false),
       show_mnemonics_(false),
       has_icons_(false),
+      use_touchable_layout_(false),
       icon_view_(NULL),
       top_margin_(-1),
       bottom_margin_(-1),
@@ -342,8 +343,10 @@ MenuItemView* MenuItemView::AppendMenuItemImpl(
 
 SubmenuView* MenuItemView::CreateSubmenu() {
   if (!submenu_) {
+    LOG(ERROR) << "Create Submenu. This may be a good time to see if we have "
+                  "our bool set.";
     submenu_ = new SubmenuView(this);
-
+    submenu_->set_use_touchable_layout(use_touchable_layout_);
     // Initialize the submenu indicator icon (arrow).
     submenu_arrow_image_view_ = new ImageView();
     AddChildView(submenu_arrow_image_view_);
@@ -623,6 +626,7 @@ MenuItemView::MenuItemView(MenuItemView* parent,
       has_mnemonics_(false),
       show_mnemonics_(false),
       has_icons_(false),
+      use_touchable_layout_(false),
       icon_view_(NULL),
       top_margin_(-1),
       bottom_margin_(-1),
@@ -814,12 +818,11 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
   if (render_selection) {
     gfx::Rect item_bounds(0, 0, width(), height());
     AdjustBoundsForRTLUI(&item_bounds);
-
+    ui::NativeTheme::ExtraParams params;
+    params.menu_item.corner_radius = 20;
     native_theme->Paint(canvas->sk_canvas(),
                         ui::NativeTheme::kMenuItemBackground,
-                        ui::NativeTheme::kHovered,
-                        item_bounds,
-                        ui::NativeTheme::ExtraParams());
+                        ui::NativeTheme::kHovered, item_bounds, params);
   }
 
   const int top_margin = GetTopMargin();

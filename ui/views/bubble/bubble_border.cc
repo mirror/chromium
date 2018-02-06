@@ -38,7 +38,7 @@ BorderImages::BorderImages(const int border_image_ids[],
       arrow_thickness(arrow_interior_thickness),
       arrow_interior_thickness(arrow_interior_thickness),
       arrow_width(2 * arrow_interior_thickness),
-      corner_radius(corner_radius) {
+      corner_radius(20 /*corner_radius*/) {
   if (!border_image_ids)
     return;
 
@@ -78,6 +78,7 @@ const int kLargeShadowBlur = 6;
 const SkColor kLargeShadowColor = SkColorSetA(SK_ColorBLACK, 0x1A);
 
 bool UseMaterialDesign() {
+  return true;
   return ui::MaterialDesignController::IsSecondaryUiMaterial();
 }
 
@@ -161,7 +162,8 @@ BorderImages* GetBorderImages(BubbleBorder::Shadow shadow) {
       set = new BorderImages(kBigShadowImages, kBigShadowArrows, 23, 9, 2);
       break;
     case BubbleBorder::SMALL_SHADOW:
-      set = new BorderImages(kSmallShadowImages, kSmallShadowArrows, 5, 6, 2);
+      LOG(ERROR) << "SMALL SHADOW!!-----------------";
+      set = new BorderImages(kSmallShadowImages, kSmallShadowArrows, 5, 6, 20);
       break;
     case BubbleBorder::NO_ASSETS:
       set = new BorderImages(nullptr, nullptr, 17, 8, 2);
@@ -190,6 +192,8 @@ BubbleBorder::BubbleBorder(Arrow arrow, Shadow shadow, SkColor color)
   DCHECK(shadow_ < SHADOW_COUNT);
   if (UseMaterialDesign()) {
     // Harmony bubbles don't use arrows.
+    images_ = GetBorderImages(shadow_);
+    return;  // hack
     alignment_ = ALIGN_EDGE_TO_ANCHOR_EDGE;
     arrow_paint_type_ = PAINT_NONE;
   } else {
@@ -306,12 +310,12 @@ int BubbleBorder::GetBorderThickness() const {
 }
 
 int BubbleBorder::GetBorderCornerRadius() const {
-  return UseMaterialDesign() ? 2 : images_->corner_radius;
+  return UseMaterialDesign() ? 20 : images_->corner_radius;
 }
 
 int BubbleBorder::GetArrowOffset(const gfx::Size& border_size) const {
-  if (UseMaterialDesign())
-    return 0;
+  // if (UseMaterialDesign())
+  //  return 0;
 
   const int edge_length = is_arrow_on_horizontal(arrow_) ?
       border_size.width() : border_size.height();
@@ -335,7 +339,7 @@ bool BubbleBorder::GetArrowPath(const gfx::Rect& view_bounds,
 
 void BubbleBorder::SetBorderInteriorThickness(int border_interior_thickness) {
   // TODO(estade): remove this function.
-  DCHECK(!UseMaterialDesign());
+  // DCHECK(!UseMaterialDesign());
   images_->border_interior_thickness = border_interior_thickness;
   if (!has_arrow(arrow_) || arrow_paint_type_ != PAINT_NORMAL)
     images_->border_thickness = border_interior_thickness;
@@ -441,7 +445,7 @@ gfx::Rect BubbleBorder::GetArrowRect(const gfx::Rect& bounds) const {
 
   gfx::Point origin;
   int offset = GetArrowOffset(bounds.size());
-  const int half_length = images_->arrow_width / 2;
+  const int half_length = 6;  // images_->arrow_width / 2;
   const gfx::Insets insets = GetInsets();
 
   if (is_arrow_on_horizontal(arrow_)) {
@@ -449,7 +453,7 @@ gfx::Rect BubbleBorder::GetArrowRect(const gfx::Rect& bounds) const {
         offset : bounds.width() - offset);
     origin.Offset(-half_length, 0);
     if (is_arrow_on_top(arrow_))
-      origin.set_y(insets.top() - images_->arrow_thickness);
+      origin.set_y(insets.top() - 6);  // images_->arrow_thickness);
     else
       origin.set_y(bounds.height() - insets.bottom());
   } else {
@@ -457,14 +461,15 @@ gfx::Rect BubbleBorder::GetArrowRect(const gfx::Rect& bounds) const {
         offset : bounds.height() - offset);
     origin.Offset(0, -half_length);
     if (is_arrow_on_left(arrow_))
-      origin.set_x(insets.left() - images_->arrow_thickness);
+      origin.set_x(insets.left() - 6);  // images_->arrow_thickness);
     else
       origin.set_x(bounds.width() - insets.right());
   }
 
-  if (shadow_ != NO_ASSETS)
+  if (shadow_ != NO_ASSETS || UseMaterialDesign())
     return gfx::Rect(origin, GetArrowImage()->size());
-
+  if (!images_)
+    return gfx::Rect(origin, GetArrowImage()->size());
   // With no assets, return the size enclosing the path filled in DrawArrow().
   DCHECK_EQ(2 * images_->arrow_interior_thickness, images_->arrow_width);
   int width = images_->arrow_width;
@@ -476,7 +481,7 @@ gfx::Rect BubbleBorder::GetArrowRect(const gfx::Rect& bounds) const {
 
 void BubbleBorder::GetArrowPathFromArrowBounds(const gfx::Rect& arrow_bounds,
                                                SkPath* path) const {
-  DCHECK(!UseMaterialDesign());
+  // DCHECK(!UseMaterialDesign());
   const bool horizontal = is_arrow_on_horizontal(arrow_);
   const int thickness = images_->arrow_interior_thickness;
   float tip_x = horizontal ? arrow_bounds.CenterPoint().x() :
@@ -502,7 +507,7 @@ void BubbleBorder::GetArrowPathFromArrowBounds(const gfx::Rect& arrow_bounds,
 
 void BubbleBorder::DrawArrow(gfx::Canvas* canvas,
                              const gfx::Rect& arrow_bounds) const {
-  DCHECK(!UseMaterialDesign());
+  // DCHECK(!UseMaterialDesign());
   canvas->DrawImageInt(*GetArrowImage(), arrow_bounds.x(), arrow_bounds.y());
   SkPath path;
   GetArrowPathFromArrowBounds(arrow_bounds, &path);
@@ -548,6 +553,11 @@ void BubbleBorder::PaintMd(const View& view, gfx::Canvas* canvas) {
       SkFloatToScalar(kBorderStrokeThicknessPx / canvas->image_scale());
   r_rect.inset(-one_pixel, -one_pixel);
   canvas->sk_canvas()->drawRRect(r_rect, flags);
+
+  const gfx::Rect arrow_bounds = GetArrowRect(view.GetLocalBounds());
+  if (arrow_bounds.IsEmpty())
+    return;
+  DrawArrow(canvas, arrow_bounds);
 }
 
 void BubbleBorder::PaintNoAssets(const View& view, gfx::Canvas* canvas) {

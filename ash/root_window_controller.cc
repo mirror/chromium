@@ -645,8 +645,12 @@ void RootWindowController::ShowContextMenu(const gfx::Point& location_in_screen,
   if (!wallpaper_widget_controller())
     return;
 
+  int run_types = views::MenuRunner::CONTEXT_MENU;
+  // if feature enabled.
+  run_types |= views::MenuRunner::USE_TOUCHABLE_LAYOUT;
+
   menu_runner_ = std::make_unique<views::MenuRunner>(
-      menu_model_.get(), views::MenuRunner::CONTEXT_MENU,
+      menu_model_.get(), run_types,
       base::Bind(&RootWindowController::OnMenuClosed, base::Unretained(this)));
   menu_runner_->RunMenuAt(wallpaper_widget_controller()->widget(), nullptr,
                           gfx::Rect(location_in_screen, gfx::Size()),

@@ -31,6 +31,11 @@ class MenuScrollViewContainer : public View {
   // Offsets the Arrow from the default location.
   void SetBubbleArrowOffset(int offset);
 
+  // Makes the MenuScrollViewContainer use the touchable layout.
+  void set_use_touchable_layout(bool use_touchable_layout) {
+    use_touchable_layout_ = use_touchable_layout;
+  }
+
   // View overrides.
   gfx::Size CalculatePreferredSize() const override;
   void Layout() override;
@@ -68,6 +73,8 @@ class MenuScrollViewContainer : public View {
 
   // Weak reference to the currently set border.
   BubbleBorder* bubble_border_;
+
+  bool use_touchable_layout_;
 
   DISALLOW_COPY_AND_ASSIGN(MenuScrollViewContainer);
 };

@@ -35,6 +35,13 @@ class ExtensionLauncherContextMenu : public LauncherContextMenu {
   extensions::LaunchType GetLaunchType() const;
   void SetLaunchType(extensions::LaunchType launch_type);
 
+  // Helpers to add context menu options.
+  void AddOpenOptions();
+  void AddPinOption();
+  void AddCloseOption();
+  // void AddUninstallOptions();
+  // void AddAppInfoOption();
+
   std::unique_ptr<extensions::ContextMenuMatcher> extension_items_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionLauncherContextMenu);
