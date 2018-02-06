@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cefb14a8_8b79dcc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-06T18:20:42Z",
+      "side": 1,
+      "message": "nit: paper-icon-button-light",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "a2c91ec125ed4a86dbe1663da811452e013205ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
