@@ -1108,6 +1108,8 @@ inline Address NormalPageArena::AllocateObject(size_t allocation_size,
     DCHECK(!(reinterpret_cast<uintptr_t>(result) & kAllocationMask));
 
     SET_MEMORY_ACCESSIBLE(result, allocation_size - sizeof(HeapObjectHeader));
+    NormalPage* page = reinterpret_cast<NormalPage*>(PageFromObject(header_address));
+    page->object_start_bit_map()->SetBit(header_address);
 #if DCHECK_IS_ON()
     DCHECK(FindPageFromAddress(header_address + allocation_size - 1));
 #endif
