@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "346a2d3a_2e874059",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35fc86ef_a47543a6",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49621745_1d8f0e77",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ea47d4_79332d54",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "The switch statement has captured all the members in enum ButtonId. The default case should not happen. Adding a NOTREACHED for the default.",
+      "parentUuid": "49621745_1d8f0e77",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "badcb7d4_954ee629",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Thanks for the comment. I\u0027ve updated the comment. Please let me know if this makes sense",
+      "parentUuid": "387828c1_ebf0e595",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e4b574_337fc787",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
         "patchSetId": 9
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "4fab01b1_5e9549ac",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "This class does not own the widget, instead when the widget is about to be destroyed, OnDialogClosed will get called and delete itself. I\u0027ve updated the comment in .h file.",
+      "parentUuid": "1e146c03_0671f944",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2525357b_505b4d58",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
         "patchSetId": 9
@@ -135,6 +207,24 @@
       "writtenOn": "2018-02-03T02:14:56Z",
       "side": 1,
       "message": "Is this destroyed? Should we set dialog_widget_ to nullptr?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6774bf41_7231bba4",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "This will destroy the widget, but before the pointer becomes invalid, this class will destroy itself. I think the flow looks like this:\nwidget_-\u003eClose() -----\u003e WebDialogView::WindowClosing----\u003eGaiaDialogDelegate::OnDialogClosed",
+      "parentUuid": "2525357b_505b4d58",
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "bb8f657e_c566e2fd",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f6f079_331bd9df",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cef6322e_18a452b0",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
         "patchSetId": 9
@@ -172,6 +280,24 @@
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff43832_c1cdd968",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef6322e_18a452b0",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "2663d992_75b029be",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c12c997_d55f129d",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d03d3593_b3359999",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
         "patchSetId": 9
@@ -209,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "5088dff9_cca62e57",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03d3593_b3359999",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8844f0d3_63886d5e",
         "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.h",
         "patchSetId": 9
@@ -220,6 +382,24 @@
       "writtenOn": "2018-02-03T02:14:56Z",
       "side": 1,
       "message": "Is comment necessary?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe35237_6ee7f1c2",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "This is somehow added by \"git cl format\". And I got presubmit warnings if I remove the comment.",
+      "parentUuid": "8844f0d3_63886d5e",
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -243,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "8027f394_0ed5adea",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "This function returns the user list that shows in the login screen, and I think that the caller function is not supposed to change the list?",
+      "parentUuid": "33b47a3e_8a95d9d3",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4933dec_ddce5d01",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 9
@@ -260,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "eea541a6_dc68defe",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4933dec_ddce5d01",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "629b8678_ccd0d932",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 9
@@ -271,6 +487,24 @@
       "writtenOn": "2018-02-03T02:14:56Z",
       "side": 1,
       "message": "How does ownership work here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7657cf_e3280b86",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "LoginDisplayHostViews does not own |dialog_|, the life cycle of |dialog_| is managed by the widget which is created by dialog_-\u003eShow();  I\u0027ve updated comments in gaia_dialog_delegate.h",
+      "parentUuid": "629b8678_ccd0d932",
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -294,6 +528,24 @@
     },
     {
       "key": {
+        "uuid": "dd625090_81554507",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Yes, it will request to destroy the widget which host the dialog view, and the widget will clean up the GaiaDialogDelegate before deleting. I\u0027ve updated comments in gaia_dialog_delegate.h",
+      "parentUuid": "2816cd40_95a1835e",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7709b08a_2de73f6b",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
@@ -305,6 +557,24 @@
       "writtenOn": "2018-02-03T02:14:56Z",
       "side": 1,
       "message": "Is null check not necessary here?",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9cad79_3b7516ec",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "LoginDisplayHost::default_host() should always exist in GaiaScreenHandler because it\u0027s initialized before we are trying to load the webui.\n\nFor WebUI login: WebUI is loaded here: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/ui/login_display_host_webui.h?rcl\u003d240f42317fa851c7d277a97d9c1da4576ebcf40e\u0026l\u003d158\n\nFor views login: WebUI is loaded here: LoginDisplayHostViews::UpdateGaiaDialogVisibility { \n  ....\n  dialog_-\u003eShow();\n}",
+      "parentUuid": "7709b08a_2de73f6b",
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -328,6 +598,24 @@
     },
     {
       "key": {
+        "uuid": "fb955503_fcd38d16",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "6c8b60d7_f4ea84e3",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a47f68bf_3a9a8edc",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
@@ -345,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "0bd27549_63c453d3",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a47f68bf_3a9a8edc",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1967f4e5_2af745fc",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.h",
         "patchSetId": 9
@@ -359,6 +665,24 @@
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368e72ac_27c1cc0b",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-02-06T00:28:24Z",
+      "side": 1,
+      "message": "Changed to myself.",
+      "parentUuid": "1967f4e5_2af745fc",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
