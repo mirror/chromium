@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86977154_2fc3296e",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-06T18:33:29Z",
+      "side": 1,
+      "message": "Whoops, yes, s/enum/union (fixed).\n\nThey\u0027re actually equivalent, but I\u0027ve switched it to {nullopt} just to avoid confusion. (Reason they\u0027re equivalent is that empty list means \u0027there is no keyframe-specific composite\u0027, whilst null entries in a list means \u0027this entry has no keyframe-specific composite\u0027. Since the contents of the list cycle, [] \u003d\u003d [null] here.)",
+      "parentUuid": "9b9f2d9c_f9de216c",
+      "revId": "fa3a78fca7133180e2a361b9837e203f4d0b386c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0529ca89_d7030706",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 6
