@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e86f4489_449c9126",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T20:15:15Z",
+      "side": 1,
+      "message": "This common code is trying to use RasterInterface, but I guess that is client-specific. It now causes a GN loop error:\n\nThe target:\n  //components/viz/common:common\nis including a file from the target:\n  //gpu/command_buffer/client:raster_interface\n\nIt\u0027s usually best to depend directly on the destination target.\nIn some cases, the destination target is considered a subcomponent\nof an intermediate target. In this case, the intermediate target\nshould depend publicly on the destination to forward the ability\nto include headers.\n\nDependency chain (there may also be others):\n  //components/viz/common:common --\u003e\n  //gpu/command_buffer/client:raster --\u003e\n  //gpu:raster --\u003e\n  //gpu/command_buffer/client:raster_sources --[private]--\u003e\n  //gpu/command_buffer/client:raster_interface\n\nBut in general viz deps on gpu, not vice versa, so should I move this to viz client/ or should I make gpu stop deping on viz common or both?\n\n+enne",
+      "revId": "d038ed714fd802553255cc1b13c9e89c6d0e8afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
