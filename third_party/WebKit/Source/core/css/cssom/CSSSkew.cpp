@@ -63,13 +63,7 @@ CSSSkew* CSSSkew::FromCSSValue(const CSSFunctionValue& value) {
         return CSSSkew::Create(CSSNumericValue::FromCSSValue(x_value),
                                CSSNumericValue::FromCSSValue(y_value));
       }
-      NOTREACHED();
-      return nullptr;
-    case CSSValueSkewY:
-      DCHECK_EQ(value.length(), 1U);
-      return CSSSkew::Create(
-          CSSUnitValue::Create(0, CSSPrimitiveValue::UnitType::kDegrees),
-          CSSNumericValue::FromCSSValue(x_value));
+      FALLTHROUGH;
     default:
       NOTREACHED();
       return nullptr;
