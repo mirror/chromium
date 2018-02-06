@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6da36d6a_a4715e3c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query-order.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-06T00:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb685f56_1af64a6c",
+      "revId": "afb6e5e5417d7d1eed8e1adcbb0ebd0fd217319b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bed269a_53087dd6",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query-order.html",
         "patchSetId": 7
