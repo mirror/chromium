@@ -21,9 +21,8 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ActivityContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
-import org.chromium.content.browser.ContentView;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewRenderView;
+import org.chromium.content_public.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
@@ -60,7 +59,7 @@ class CastWebContentsSurfaceHelper {
     private ContentViewRenderView mContentViewRenderView;
     private WindowAndroid mWindow;
     private ContentViewCore mContentViewCore;
-    private ContentView mContentView;
+    private CastContentView mContentView;
 
     // TODO(vincentli) interrupt touch event from Fragment's root view when it's false.
     private boolean mTouchInputEnabled = false;
@@ -201,7 +200,7 @@ class CastWebContentsSurfaceHelper {
 
         // TODO(derekjchow): productVersion
         mContentViewCore = ContentViewCore.create(getActivity().getApplicationContext(), "");
-        mContentView = ContentView.createContentView(
+        mContentView = CastContentView.createContentView(
                 getActivity().getApplicationContext(), mContentViewCore);
         mContentViewCore.initialize(ViewAndroidDelegate.createBasicDelegate(mContentView),
                 mContentView, webContents, mWindow);

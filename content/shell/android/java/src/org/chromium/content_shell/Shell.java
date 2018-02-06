@@ -29,11 +29,10 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ActivityContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
-import org.chromium.content.browser.ContentView;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewCoreImpl;
 import org.chromium.content.browser.ContentViewRenderView;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
+import org.chromium.content_public.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.SelectionPopupController;
@@ -300,7 +299,7 @@ public class Shell extends LinearLayout {
     private void initFromNativeTabContents(WebContents webContents) {
         Context context = getContext();
         mContentViewCore = (ContentViewCoreImpl) ContentViewCore.create(context, "");
-        ContentView cv = ContentView.createContentView(context, mContentViewCore);
+        ShellContentView cv = ShellContentView.createContentView(context, mContentViewCore);
         mViewAndroidDelegate = new ShellViewAndroidDelegate(cv);
         mContentViewCore.initialize(mViewAndroidDelegate, cv, webContents, mWindow);
         mWebContents = mContentViewCore.getWebContents();

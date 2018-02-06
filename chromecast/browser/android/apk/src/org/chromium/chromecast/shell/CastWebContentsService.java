@@ -13,8 +13,7 @@ import android.widget.Toast;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.ContentView;
-import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content_public.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
@@ -35,7 +34,7 @@ public class CastWebContentsService extends Service {
     private CastAudioManager mAudioManager;
     private WindowAndroid mWindow;
     private ContentViewCore mContentViewCore;
-    private ContentView mContentView;
+    private CastContentView mContentView;
 
     protected void handleIntent(Intent intent) {
         intent.setExtrasClassLoader(WebContents.class.getClassLoader());
@@ -104,7 +103,7 @@ public class CastWebContentsService extends Service {
 
         // TODO(derekjchow): productVersion
         mContentViewCore = ContentViewCore.create(this, "");
-        mContentView = ContentView.createContentView(this, mContentViewCore);
+        mContentView = CastContentView.createContentView(this, mContentViewCore);
         mContentViewCore.initialize(ViewAndroidDelegate.createBasicDelegate(mContentView),
                 mContentView, webContents, mWindow);
         // Enable display of current webContents.
