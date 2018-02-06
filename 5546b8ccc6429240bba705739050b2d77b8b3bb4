@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "085b5123_31216280",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-06T08:43:58Z",
+      "side": 1,
+      "message": "Forgot to git-add this file?",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "5546b8ccc6429240bba705739050b2d77b8b3bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
