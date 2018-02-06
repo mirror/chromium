@@ -52,6 +52,24 @@
       "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8996dbb8_c753e3b5",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-06T15:20:32Z",
+      "side": 1,
+      "message": "No mind at all: done.",
+      "parentUuid": "4a48eb2c_b6e52888",
+      "revId": "3d9ea99133b3ad2387676b7b837638513d9c87ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
