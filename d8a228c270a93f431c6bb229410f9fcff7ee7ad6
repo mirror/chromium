@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58573c5_879614ea",
+        "filename": "testing/buildbot/filters/fuchsia.base_unittests.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-06T20:44:02Z",
+      "side": 1,
+      "message": "Interesting; suspect that this is a dup of 801353, above.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 47
+      },
+      "revId": "d8a228c270a93f431c6bb229410f9fcff7ee7ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aaf6352_51097f53",
+        "filename": "testing/buildbot/filters/fuchsia.net_unittests.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-06T20:44:02Z",
+      "side": 1,
+      "message": "Thanks... have kept meaning to get around to filtering this one out. :-/",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "d8a228c270a93f431c6bb229410f9fcff7ee7ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
