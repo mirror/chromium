@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8680c3_2a4c85bd",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-06T01:52:23Z",
+      "side": 1,
+      "message": "Could you declare type reference than pointer?",
+      "revId": "ae1f197ec1eb35b8e7ce54910bf9c9b7d5629087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
