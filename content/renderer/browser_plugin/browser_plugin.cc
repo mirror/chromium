@@ -303,7 +303,8 @@ void BrowserPlugin::OnAdvanceFocus(int browser_plugin_instance_id,
 
 void BrowserPlugin::OnGuestGone(int browser_plugin_instance_id) {
   guest_crashed_ = true;
-  compositing_helper_->ChildFrameGone();
+  compositing_helper_->ChildFrameGone(frame_rect().size(),
+                                      screen_info().device_scale_factor);
 }
 
 void BrowserPlugin::OnGuestReady(int browser_plugin_instance_id,
@@ -402,6 +403,12 @@ void BrowserPlugin::UpdateGuestFocusState(blink::WebFocusType focus_type) {
 
 void BrowserPlugin::ScreenInfoChanged(const ScreenInfo& screen_info) {
   pending_resize_params_.screen_info = screen_info;
+  if (guest_crashed_) {
+    // Update the sad page to match the current ScreenInfo.
+    compositing_helper_->ChildFrameGone(frame_rect().size(),
+                                        screen_info.device_scale_factor);
+    return;
+  }
   WasResized();
 }
 
@@ -524,6 +531,12 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
 
   pending_resize_params_.frame_rect = frame_rect;
   pending_resize_params_.screen_info = embedding_render_widget_->screen_info();
+  if (guest_crashed_) {
+    // Update the sad page to match the current ScreenInfo.
+    compositing_helper_->ChildFrameGone(frame_rect.size(),
+                                        screen_info().device_scale_factor);
+    return;
+  }
   WasResized();
 }
 
