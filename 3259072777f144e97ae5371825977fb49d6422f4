@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f4c547_938893dc",
+        "filename": "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-02-06T22:48:23Z",
+      "side": 1,
+      "message": "Please add unit test coverage for these new types.",
+      "range": {
+        "startLine": 320,
+        "startChar": 29,
+        "endLine": 320,
+        "endChar": 35
+      },
+      "revId": "3259072777f144e97ae5371825977fb49d6422f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
