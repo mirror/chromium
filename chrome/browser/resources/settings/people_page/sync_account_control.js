@@ -78,6 +78,15 @@ Polymer({
   },
 
   /**
+   * @param {string} image
+   * @return {!string}
+   * @private
+   */
+  getAccountImageSrc_: function(image) {
+    return image || 'chrome://theme/IDR_PROFILE_AVATAR_PLACEHOLDER_LARGE';
+  },
+
+  /**
    * @param {!Array<!settings.StoredAccount>} accounts
    * @private
    */
