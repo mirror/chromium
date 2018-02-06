@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05d3546c_fde4998b",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "Done\nAdded comment",
+      "parentUuid": "7cfc60c8_2faa98f1",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7d8502_9b64bbc1",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T07:59:00Z",
       "side": 1,
       "message": "nit: auto cert_fetcher \u003d std::make_unique\u003c...\u003e(...);",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce262ecc_915ca6b9",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "The constructor is private. So we can\u0027t use make_unique.",
+      "parentUuid": "6f7d8502_9b64bbc1",
       "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4d71ebc2_b0691e9a",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98bf9fdf_9ce43e88",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b314ad08_8b3ea6be",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-06T07:59:00Z",
       "side": 1,
       "message": "Do we ever get meaningful value in HTTP case? (URLRequestHTTPJob doesn\u0027t really seem to set request.expected_content_size_ ?)",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d392cf_ffd1145b",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "URLRequestJob::NotifyHeadersComplete parse the \"content-length\" header and setexpected_content_size_.\nPopulateResourceResponse() in url_loader.cc set the size to response-\u003ehead.content_length.",
+      "parentUuid": "b314ad08_8b3ea6be",
       "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5d8084cb_48daeda6",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d7b8b12_c7f6e051",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c08e1c1f_893c6705",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-06T07:59:00Z",
       "side": 1,
       "message": "Should this also just resets drainer_?",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3521703_3be2baeb",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "No.\nIf we delete the |drainer_| while OnDataAvailable() is called, DataPipeDrainer::ReadData() will touch the deleted |source_|.\n\nvoid DataPipeDrainer::ReadData() {\n  ...\n  if (rv \u003d\u003d MOJO_RESULT_OK) {\n    client_-\u003eOnDataAvailable(buffer, num_bytes);\n    source_-\u003eEndReadData(num_bytes);\n  } ...\n}",
+      "parentUuid": "c08e1c1f_893c6705",
       "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7bf989fd_04878227",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20835583_64c9dc8c",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e90acedd_dc39b3a6",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e5980985_4c0a6a57",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e90acedd_dc39b3a6",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "797b720b_6216f652",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd974b1_4f41eb88",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-06T09:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "797b720b_6216f652",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
