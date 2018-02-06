@@ -29,7 +29,6 @@
 #include "net/tools/quic/test_tools/quic_client_peer.h"
 
 using std::string;
-using testing::_;
 
 namespace net {
 namespace test {
