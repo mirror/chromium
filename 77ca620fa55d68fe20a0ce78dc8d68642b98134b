@@ -73,6 +73,24 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf3aaa7_bff3a5e8",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T18:05:25Z",
+      "side": 1,
+      "message": "Hmm, |state| seems to be the entire mechanism of action for this code :) So I\u0027m not sure what you mean. Can you elaborate? Also, an \"else if\" will prevent the suspended_cb_ from firing, which we do want so that WMPI is aware of the final state.",
+      "parentUuid": "5fe4050d_9014aa1f",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
