@@ -175,7 +175,8 @@ HonorEditingBoundaryAtOrBeforeTemplate(
 
   // Return empty position if |pos| is not somewhere inside the editable
   // region containing this position
-  if (highest_root && !pos.AnchorNode()->IsDescendantOf(highest_root))
+  if (highest_root &&
+      !highest_root->contains(pos.GetPosition().ComputeContainerNode()))
     return PositionWithAffinityTemplate<Strategy>();
 
   // Return |pos| itself if the two are from the very same editable region, or
@@ -243,8 +244,17 @@ HonorEditingBoundaryAtOrAfterTemplate(
 
   // Return empty position if |pos| is not somewhere inside the editable
   // region containing this position
-  if (highest_root && !pos.AnchorNode()->IsDescendantOf(highest_root))
-    return PositionWithAffinityTemplate<Strategy>();
+  if (highest_root &&
+      !highest_root->contains(pos.GetPosition().ComputeContainerNode())) {
+    if (anchor > pos.GetPosition()) {
+      //  editing/selection/move-left-right.html reaches here.
+      return PositionWithAffinityTemplate<Strategy>();
+    }
+    // selection/mouse/doubleclick-inline-first-last-contenteditable.html
+    // reaches here.
+    return PositionWithAffinityTemplate<Strategy>(
+        PositionTemplate<Strategy>::LastPositionInNode(*highest_root));
+  }
 
   // Return |pos| itself if the two are from the very same editable region, or
   // both are non-editable

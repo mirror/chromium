@@ -210,6 +210,19 @@ class GranularityAdjuster final {
     return passed_end.GetPosition();
   }
 
+  static EphemeralRange AdjustStartAndEnd(const Position& position1,
+                                          const Position& position2) {
+    if (position1 <= position2)
+      return EphemeralRange(position1, position2);
+    return EphemeralRange(position2, position1);
+  }
+
+  static EphemeralRangeInFlatTree AdjustStartAndEnd(
+      const PositionInFlatTree& start,
+      const PositionInFlatTree& end) {
+    return EphemeralRangeInFlatTree(start, end);
+  }
+
   template <typename Strategy>
   static SelectionTemplate<Strategy> AdjustSelection(
       const SelectionTemplate<Strategy>& canonicalized_selection,
@@ -234,8 +247,11 @@ class GranularityAdjuster final {
     const PositionTemplate<Strategy> expanded_end =
         new_end.IsNotNull() ? new_end : end;
 
-    const EphemeralRangeTemplate<Strategy> expanded_range(expanded_start,
-                                                          expanded_end);
+    // Granularity expansion works on flat tree, |expanded_start| can be
+    // after |expanded_end| in DOM tree.
+    const EphemeralRangeTemplate<Strategy> expanded_range =
+        AdjustStartAndEnd(expanded_start, expanded_end);
+
     typename SelectionTemplate<Strategy>::Builder builder;
     return canonicalized_selection.IsBaseFirst()
                ? builder.SetAsForwardSelection(expanded_range).Build()
@@ -265,8 +281,11 @@ PositionInFlatTree ComputeEndRespectingGranularity(
     const PositionInFlatTree& start,
     const PositionInFlatTreeWithAffinity& end,
     TextGranularity granularity) {
-  return GranularityAdjuster::ComputeEndRespectingGranularityAlgorithm(
-      start, end, granularity);
+  const auto& result =
+      GranularityAdjuster::ComputeEndRespectingGranularityAlgorithm(
+          start, end, granularity);
+  DCHECK(result.IsNotNull()) << end;
+  return result;
 }
 
 SelectionInDOMTree SelectionAdjuster::AdjustSelectionRespectingGranularity(
