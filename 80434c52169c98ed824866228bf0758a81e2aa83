@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fe64e5df_76ede95f",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T22:38:59Z",
+      "side": 1,
+      "message": "As suggested, do not elide in vertical mode. The bug was caused by that sometime bold text is narrow than the normal text, so calculating the size for normal and bold text and cache the larger one fixes the bug.",
+      "parentUuid": "65a08e22_1c35ff05",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0807511_ed0ad85d",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 1
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "Secondary UI MD will be the default eventually. I imagine in that case the KSV PM/UX folks would want to paint the highlight and just make the tabs *not* take up all the extra height in vertical mode, right? I\u0027m thinking MDTabStrip shouldn\u0027t use CROSS_AXIS_ALIGNMENT_STRETCH in the vertical alignment.",
       "parentUuid": "a010b8ef_6607d307",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c0ce787_21b41dda",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T22:38:59Z",
+      "side": 1,
+      "message": "As discussed on chat, we make the following changes (uploaded images to the bug for demo):\n1. MdTab in vertical \u0026\u0026 border style (image: MdTab_vertical_border.png): Do not stretch for all available space. Do not draw and animate the right blue line (the under-line in horizontal mode)\n2. MdTab in vertical \u0026\u0026 hightlight style (image: MdTab_vertical_highlight.png): Do not stretch for all available space. And it is the same style as the non-Md tab in 4.\n3. normal Tab in vertical \u0026\u0026 border style (image: Tab_vertical_border.png): do not elide.\n4. normal Tab in vertical \u0026\u0026 highlight style (image: Tab_vertical_highlight.png): do not elide.",
+      "parentUuid": "4af9f288_e5d3d522",
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
