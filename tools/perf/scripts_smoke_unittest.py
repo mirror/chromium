@@ -46,6 +46,7 @@ class ScriptsSmokeTest(unittest.TestCase):
 
   def testRunRecordWprList(self):
     return_code, stdout = self.RunPerfScript('record_wpr --list-benchmarks')
+    self.assertEquals(1, 0, stdout)
     # TODO(nednguyen): Remove this once we figure out why importing
     # small_profile_extender fails on Android dbg.
     # crbug.com/561668
