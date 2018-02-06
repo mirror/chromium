@@ -16,6 +16,7 @@ schema_sources = [
   "accessibility_features.json",
   "accessibility_private.json",
   "activity_log_private.json",
+  "auth_private.idl",
   "autofill_private.idl",
   "automation.idl",
   "automation_internal.idl",

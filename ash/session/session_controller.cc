@@ -606,9 +606,6 @@ void SessionController::OnSigninScreenPrefServiceInitialized(
   DCHECK(!signin_screen_prefs_);
   signin_screen_prefs_ = std::move(pref_service);
 
-  // The signin profile should be initialized before any user profile.
-  DCHECK(!last_active_user_prefs_);
-
   for (auto& observer : observers_)
     observer.OnSigninScreenPrefServiceInitialized(signin_screen_prefs_.get());
 }
