@@ -835,7 +835,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Deletes and clears any queued packets.
   void ClearQueuedPackets();
 
-  // Closes the connection if the sent packet manager are tracking too many
+  // Closes the connection if the sent packet manager is tracking too many
   // outstanding packets.
   void CloseIfTooManyOutstandingSentPackets();
 
