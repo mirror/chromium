@@ -91,6 +91,24 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7912ca_5b927865",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T19:08:02Z",
+      "side": 1,
+      "message": "\"else if ... suspended_cb_\" -- state| isn\u0027t modified in the upper if block.  how could the lower if() execute if the upper one also does?  or, is the lower if supposed to check |state_| now?\n\nfor all calls to OnPipelineStatus that I see, |state| is only ever PLAYING or SUSPENDED.  In both cases, it ends up being set as a function of |old_state| and IsSuspended().\n\nas in, if |old_state| is STARTING, then we don\u0027t need |state|. \n |waiting_for_seek_| will be false, and |state| would be PLAYING.\n\notherwise, in the |state| \u003d\u003d PLAYING case, i don\u0027t see how we should ever be IsSuspended() when this callback arrives.  We won\u0027t reach @205 while a suspend is in progress (we\u0027d be in SUSPENDING rather than SUSPENDED in that case), and similarly for @237.\n\nso, IsSuspended \u003d\u003e |state_| \u003d\u003d STARTING or SUSPENDING, i think.  anything else would be bad.\n\ni didn\u0027t check |waiting_for_seek_| carefully, so maybe that one does require |state| to get right.\n\nall of this is with the caveat that i\u0027m not terribly familiar with the pipeline state machine.  so, maybe, i\u0027m just writing a pleasant story about how i imagine the pipeline works.  :)",
+      "parentUuid": "3bf3aaa7_bff3a5e8",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
