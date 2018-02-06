@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf121182_4921b57e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "Use this to early exit?",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5eec26_d104e8c4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "nit: new line.",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9333d7d_1ec69f6d",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
         "patchSetId": 43
@@ -13,6 +47,57 @@
       "writtenOn": "2018-02-06T00:07:07Z",
       "side": 1,
       "message": "I just threw this here to put it somewhere. Preferences on where it should go? (Separate file?)",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae13cf4d_7fafbe55",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "I think you need a name for parameters",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c57a131_55d58039",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "Maybe do this in the constructor instead?",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862fd273_744b80cd",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 2893,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "Move this back down after the delegate_-\u003eResizeDueToAutoResize call.",
       "revId": "29c78738d6805a86211f7f7254280eee9d736762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +167,57 @@
         "endLine": 152,
         "endChar": 40
       },
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af623b65_40c1540c",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "I think you need to do the same thing for mus.",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c0a49c_6a8dd575",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "nit: UpdateLocalSurfaceIdWithChildSequenceNumber?",
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b6b573_23d8f41e",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:21:27Z",
+      "side": 1,
+      "message": "This can be deleted now.",
       "revId": "29c78738d6805a86211f7f7254280eee9d736762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
