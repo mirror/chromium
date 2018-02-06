@@ -406,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "6b103ac6_e7a34fae",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-06T00:41:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bbe35237_6ee7f1c2",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b47a3e_8a95d9d3",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
         "patchSetId": 9
@@ -575,6 +593,24 @@
       "side": 1,
       "message": "LoginDisplayHost::default_host() should always exist in GaiaScreenHandler because it\u0027s initialized before we are trying to load the webui.\n\nFor WebUI login: WebUI is loaded here: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/ui/login_display_host_webui.h?rcl\u003d240f42317fa851c7d277a97d9c1da4576ebcf40e\u0026l\u003d158\n\nFor views login: WebUI is loaded here: LoginDisplayHostViews::UpdateGaiaDialogVisibility { \n  ....\n  dialog_-\u003eShow();\n}",
       "parentUuid": "7709b08a_2de73f6b",
+      "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8333f7e7_77e42f62",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-06T00:41:48Z",
+      "side": 1,
+      "message": "And this is true even in tests, is that right?\n\nFor instance:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/898385#message-76c73bba8a340ef5b6e911086c782081342de943",
+      "parentUuid": "fc9cad79_3b7516ec",
       "revId": "079bfbc716f3e067d9648b5d5bb653906c5a1251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcad84ec_b0483f8b",
+        "filename": "chrome/browser/chromeos/login/ui/gaia_dialog_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-06T00:41:48Z",
+      "side": 1,
+      "message": "Maybe move this comment to before the allocation of WebDialogView?",
+      "revId": "d891a9c2bb54d2aeb76bff8936485da7c7d5a576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
