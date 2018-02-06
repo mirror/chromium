@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "2c963d82_9fd9e8f4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-02-06T01:42:26Z",
+      "side": 1,
+      "message": "I have uploaded a new patch, please review that. IMHO this won\u0027t cause problem. The only reason we could early out here is that we hit a devtool break point + we are in the middle of life cycle. At this moment, it is only possible for putting a break point in the paint() function in paint worklet.\n\nWe have to make some compromise here. If we are debugging the paint() function which hits break point in the middle of life cycle, there is no way we could do style recal or update. So the solution in this CL is basically saying if we hit the special case, then disable anything that would cause style recal or update.",
+      "parentUuid": "eda9e0fd_8063089e",
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc47c18_00821e25",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
         "patchSetId": 3
