@@ -609,6 +609,10 @@ message ActiveTimePeriod {
   // The active duration during the above time period.
   // The unit is milli-second.
   optional int32 active_duration = 2;
+
+  // Email address of the active user. Present only if the user type is managed
+  // and affiliated.
+  optional string user_email = 3;
 }
 
 // Details about a network interface.
