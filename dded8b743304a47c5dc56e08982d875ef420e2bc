@@ -177,6 +177,24 @@
       "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36ed9b9a_f9b89c11",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-06T12:13:29Z",
+      "side": 1,
+      "message": "This is really great, thanks for going the extra mile!\n\nFor context, I am being such a stickler for actionable messages because the feedback we heard from developers regarding the CM API in the past was that implementing the API was more painful than it could have been due calls failing with near-zero-information error messages.",
+      "parentUuid": "c63ebf9b_bf3f25eb",
+      "revId": "dded8b743304a47c5dc56e08982d875ef420e2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
