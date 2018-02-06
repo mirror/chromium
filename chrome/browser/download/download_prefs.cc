@@ -158,6 +158,8 @@ DownloadPrefs::DownloadPrefs(Profile* profile) : profile_(profile) {
   prompt_for_download_.Init(prefs::kPromptForDownload, prefs);
 #if defined(OS_ANDROID)
   prompt_for_download_android_.Init(prefs::kPromptForDownloadAndroid, prefs);
+  prompt_for_download_android_initial_.Init(
+      prefs::kPromptForDownloadAndroidInitial, prefs);
 #endif
   download_path_.Init(prefs::kDownloadDefaultDirectory, prefs);
   save_file_path_.Init(prefs::kSaveFileDefaultDirectory, prefs);
@@ -229,6 +231,7 @@ void DownloadPrefs::RegisterProfilePrefs(
 #endif
 #if defined(OS_ANDROID)
   registry->RegisterBooleanPref(prefs::kPromptForDownloadAndroid, false);
+  registry->RegisterBooleanPref(prefs::kPromptForDownloadAndroidInitial, true);
 #endif
 }
 
@@ -310,7 +313,10 @@ bool DownloadPrefs::PromptForDownload() const {
 
 // Return the Android prompt for download only.
 #if defined(OS_ANDROID)
-  return *prompt_for_download_android_;
+  // Either the user indicated they want to see the prompt
+  // |prompt_for_download_android_| or they haven't been
+  // shown it yet |prompt_for_download_android_initial_|.
+  return *prompt_for_download_android_ || *prompt_for_download_android_initial_;
 #endif
 
   return *prompt_for_download_;
