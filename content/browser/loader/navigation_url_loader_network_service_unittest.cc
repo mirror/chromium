@@ -137,7 +137,7 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
             true /* is_main_frame */, false /* parent_is_main_frame */,
             false /* are_ancestors_secure */, -1 /* frame_tree_node_id */,
             false /* is_for_guests_only */, false /* report_raw_headers */,
-            false /* is_prerenering */));
+            false /* is_prerenering */, nullptr /* blob_url_loader_factory */));
     std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers;
     most_recent_resource_request_ = base::nullopt;
     handlers.push_back(std::make_unique<TestURLLoaderRequestHandler>(

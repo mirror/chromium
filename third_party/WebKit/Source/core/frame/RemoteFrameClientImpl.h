@@ -30,7 +30,8 @@ class RemoteFrameClientImpl final : public RemoteFrameClient {
 
   // RemoteFrameClient overrides:
   void Navigate(const ResourceRequest&,
-                bool should_replace_current_entry) override;
+                bool should_replace_current_entry,
+                network::mojom::blink::URLLoaderFactoryPtr) override;
   void Reload(FrameLoadType, ClientRedirectPolicy) override;
   unsigned BackForwardLength() override;
   void ForwardPostMessage(MessageEvent*,

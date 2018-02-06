@@ -665,8 +665,10 @@ void RenderFrameProxy::ForwardPostMessage(
   Send(new FrameHostMsg_RouteMessageEvent(routing_id_, params));
 }
 
-void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
-                                bool should_replace_current_entry) {
+void RenderFrameProxy::Navigate(
+    const blink::WebURLRequest& request,
+    bool should_replace_current_entry,
+    mojo::ScopedMessagePipeHandle url_loader_factory) {
   FrameHostMsg_OpenURL_Params params;
   params.url = request.Url();
   params.uses_post = request.HttpMethod().Utf8() == "POST";
@@ -683,6 +685,7 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
       request.GetSuggestedFilename().has_value()
           ? base::Optional<std::string>(request.GetSuggestedFilename()->Utf8())
           : base::nullopt;
+  params.blob_url_loader_factory = url_loader_factory.release();
 
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }

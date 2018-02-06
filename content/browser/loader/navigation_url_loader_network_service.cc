@@ -406,10 +406,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     // Requests to Blob scheme won't get redirected to/from other schemes
     // or be intercepted, so we just let it go here.
-    if (request_info->begin_params->blob_url_loader_factory.is_valid()) {
+    if (request_info->blob_url_loader_factory) {
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-          base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
-              std::move(request_info->begin_params->blob_url_loader_factory)),
+          SharedURLLoaderFactory::Create(
+              std::move(request_info->blob_url_loader_factory)),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_, navigation_ui_data_.get()),
           0 /* routing_id */, 0 /* request_id? */,

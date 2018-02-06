@@ -315,6 +315,9 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   RequestNavigationParams request_params_;
   const bool browser_initiated_;
 
+  // If sets, overrides what might be specified in begin_params_.
+  scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory_;
+
   NavigationState state_;
 
   std::unique_ptr<NavigationURLLoader> loader_;
