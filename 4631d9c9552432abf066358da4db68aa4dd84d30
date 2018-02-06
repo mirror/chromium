@@ -200,6 +200,30 @@
       "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a186c23_586bcbff",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-06T21:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea843595_a5bef3d1",
+      "range": {
+        "startLine": 11149,
+        "startChar": 6,
+        "endLine": 11149,
+        "endChar": 112
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
