@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "50a3342f_3c76dbc3",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-06T11:25:24Z",
+      "side": 1,
+      "message": "Hmm sorry for beaing unclear what I meant is:\n\nwhile (base::subtle::Acquire_Load(\u0026g_operations_in_flight)) {\n  while (base::subtle::NoBarrier_Load(\u0026g_operations_in_flight)) {\n  }\n}\n\nYou need the acquire load for an \"authoritative\" load that has acquire semantic on the memory you access below. The only deal of this variant is that once you end up in a locked state, depending on the cpu architecture and how the cache coherency is implemented, you might reduce cache traffic with the internal non-barriered load, and repeat the outer barriered one only when there are good chances to pass the check.",
+      "parentUuid": "691fc809_6c63ed34",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 3
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de73a389_f2b97ef9",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 1
