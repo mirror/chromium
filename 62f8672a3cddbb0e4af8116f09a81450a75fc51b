@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e91c44a2_0d070fe1",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-06T06:13:55Z",
+      "side": 1,
+      "message": "Perfect, assign the TODO to her. :)",
+      "parentUuid": "b3a89a69_b18029de",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453a04df_a7fe676a",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 4
@@ -66,6 +84,41 @@
       "side": 1,
       "message": "Good idea! I just had a go and it seems non-trivial - mind if I do it as a follow-up so that Meredith can start working on the solution for the consistency issue you mention in your other comment, in parallel?",
       "parentUuid": "453a04df_a7fe676a",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a7dbeb_01fbd641",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-06T06:13:55Z",
+      "side": 1,
+      "message": "Sure, add a comment for that too, maybe if you can summarize why it\u0027s\nnot easy - but this is still a good step.",
+      "parentUuid": "c9a02acd_5b853335",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb2bbb4_852e1f8b",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-06T06:13:55Z",
+      "side": 1,
+      "message": "FWIW, it looks like ComputeAccessibilityTree ends up calling\ndocument-\u003eView()-\u003eUpdateLifecycleToCompositingCleanPlusScrolling(),\nso it may be more efficient to just call that here, because then\nthe second call will be a no-op.",
       "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
