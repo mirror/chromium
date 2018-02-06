@@ -20,7 +20,7 @@ namespace base {
 // const std::string& GetLineSeparator() {
 //  // Forwards to std::string(size_t, char, const Allocator&) constructor.
 //   static const base::NoDestructor<std::string> s(5, '-');
-//   return s;
+//   return *s;
 // }
 //
 // More complex initialization with a lambda:
@@ -51,6 +51,14 @@ class NoDestructor {
   explicit NoDestructor(Args&&... args) {
     new (get()) T(std::forward<Args>(args)...);
   }
+
+  // Allows copy and move construction of the contained type, to allow
+  // construction from an initializer list, e.g. for std::vector.
+  explicit NoDestructor(const T& x) { new (get()) T(x); }
+  explicit NoDestructor(T&& x) { new (get()) T(std::move(x)); }
+
+  NoDestructor(const NoDestructor&) = delete;
+  NoDestructor(NoDestructor&&) = delete;
 
   ~NoDestructor() = default;
 
