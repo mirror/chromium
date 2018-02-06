@@ -22,6 +22,30 @@
       "revId": "3616c21974a9e985a34c4e7c7009787cfe30bca9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581c45a6_066a7f6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-06T17:35:22Z",
+      "side": 1,
+      "message": "That\u0027s one reason; though we can always cache the start/end colors for the animation. I\u0027d also like to keep individual animations isolated instead of adding them to giant monoliths. The animation set that this eventually gets added to is affected by location bar events and will stop/start accordingly. The only missing piece is the current progress (we could actually write this so it\u0027s not a piece of outside state). I can make this part of the location bar update if you prefer though.",
+      "parentUuid": "c5a2fefc_f2fb0984",
+      "range": {
+        "startLine": 2115,
+        "startChar": 18,
+        "endLine": 2115,
+        "endChar": 26
+      },
+      "revId": "3616c21974a9e985a34c4e7c7009787cfe30bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
