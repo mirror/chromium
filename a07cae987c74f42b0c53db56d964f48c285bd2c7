@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee6f8a7a_7f0b7da1",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "Don\u0027t need this: It\u0027s a const member of the class, and DCHECKed in the ctor.",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2da7b05_332935b7",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "This used to be emplace(), did you mean to change it to insert()? (Note: Both return the same result pair, so you can keep the DCHECK() simplification here if you use emplace().)",
+      "range": {
+        "startLine": 196,
+        "startChar": 48,
+        "endLine": 196,
+        "endChar": 55
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d341ac_5c22cc0a",
+        "filename": "chrome/browser/media/single_client_video_capture_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "nit: Don\u0027t pass by const-ref. Pass by value and use std::move() to avoid unnecessary copies.",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 66
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcbb18fa_209d6e12",
         "filename": "content/public/browser/video_capture_device_launcher.h",
         "patchSetId": 10

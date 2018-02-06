@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d56c78e_de120b8d",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "nit: Please move to line 47, since this is only used inside the FakeDeviceLauncher class.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcad682_4ec32020",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "style nit: For OnceCallbacks, I think the owners prefer people use:\n\n  std::move(after_launch_cb_).Run(...);\n\n(It avoids unnecessary copies of the closure too.)",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 43
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b27cd50_6dbf74f1",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "nit: std::move(receiver)",
+      "range": {
+        "startLine": 234,
+        "startChar": 22,
+        "endLine": 234,
+        "endChar": 31
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db1f508_03ac98a3",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "You should put this first, before the \"protected:\" members, since the thread bundle is being used by them. That way, the automatic destruction ordering will be safe. Meaning:\n\n private:\n  content::TestBrowserThreadBundle threads_;\n\n protected:\n  ... consumer_\n  ... frame_receiver_;\n  ... launched_device_;\n\n private:\n  ... weak_factory_;",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 44
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93fc60a7_4e2a197c",
         "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
         "patchSetId": 9
@@ -13,6 +105,70 @@
       "writtenOn": "2018-02-02T19:55:25Z",
       "side": 1,
       "message": "This is equivalent to the RunUnitIdle() we had before and has the same issue of depending on assumptions on how the implementation handles threading internally. Neither the test nor other clients should depend on such an assumption. Otherwise things will break in unexpected ways if we change how the implementation handles threading internally in the future.\n\nIMHO, the solution using RunLoop was good.",
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a458e2dd_9f6f5077",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "There are pros and cons to each approach:\n\nRunAllPendingInMessageLoop() infers that before this is called, all tasks relevant to this part of the test should be run; and all tasks posted as a result should not be relevant. This is mainly used to synchronize the test to what the impl should be doing.\n\nRunUntilIdle() infers that all pending tasks, including those spawned as a result, are all relevant to this part of the test and must finish before the test continues.\n\nIn unit tests, generally RunUntilIdle() is safe and more robust, as Christian mentioned; because we\u0027re not running a full browser that could have an infinitely-generated set of tasks. However, in browser tests, RunAllPendingInMessageLoop() is much preferred or else a test may run much longer, or even forever and timeout.",
+      "parentUuid": "93fc60a7_4e2a197c",
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa3846b_9559fe3b",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "nit: You could save LOC here and a few other places by combining things into a loop:\n\n  for (int buffer_id \u003d 0; buffer_id \u003c\u003d 1; ++buffer_id) {\n    EXPECT_CALL(*consumer_, OnBufferCreatedCall(buffer_id)).Times(1);\n    frame_receiver_-\u003eOnNewBufferHandle(\n        buffer_id, std::make_unique\u003cStubBufferHandleProvider\u003e());\n    content::RunAllPendingInMessageLoop();\n  }",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 40
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfe1f91_9ed6842e",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:54:16Z",
+      "side": 1,
+      "message": "bike shedding: Up to you, but I find using braces simpler than explicitly calling VerifyAndClearExpectations():\n\n  {\n    EXPECT_CALL(...);\n    frame_receiver_-\u003eDoSomething();\n    RunAllPending();\n  }",
+      "range": {
+        "startLine": 310,
+        "startChar": 2,
+        "endLine": 310,
+        "endChar": 61
+      },
       "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
