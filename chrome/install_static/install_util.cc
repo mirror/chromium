@@ -5,6 +5,7 @@
 #include "chrome/install_static/install_util.h"
 
 #include <assert.h>
+#include <objbase.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -379,6 +380,24 @@ const wchar_t* GetAppGuid() {
 
 const CLSID& GetToastActivatorClsid() {
   return InstallDetails::Get().toast_activator_clsid();
+}
+
+std::wstring GetToastActivatorRegistryPath() {
+  // CLSID has a string format of "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}",
+  // which contains 38 characters.
+  constexpr int kGuidLength = 38;
+
+  // Include space for the string terminator.
+  constexpr int kGuidLengthFull = kGuidLength + 1;
+
+  std::wstring path(kGuidLengthFull, 0);
+
+  if (::StringFromGUID2(install_static::GetToastActivatorClsid(), &path[0],
+                        kGuidLengthFull) != kGuidLengthFull) {
+    return std::wstring();
+  }
+  path.resize(kGuidLength);  // Trim off the string terminator.
+  return L"Software\\Classes\\CLSID\\" + path;
 }
 
 std::wstring GetBaseAppName() {
