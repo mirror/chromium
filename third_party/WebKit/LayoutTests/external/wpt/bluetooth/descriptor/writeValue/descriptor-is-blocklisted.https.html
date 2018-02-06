@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
+<script>
+'use strict';
+const test_desc = 'Attempt to call writeValue on a blocked descriptor must ' +
+    'generate a SecurityError';
+const expected = new DOMException(
+    'writeValue() called on blocklisted object marked exclude-writes. ' +
+    'https://goo.gl/4NeimX',
+    'SecurityError');
+
+bluetooth_test(() => getBlocklistExcludeWritesDescriptor()
+    .then(({descriptor}) => assert_promise_rejects_with_message(
+        descriptor.writeValue(new Uint8Array(1 /* length */)),
+        expected)),
+    test_desc);
+</script>
