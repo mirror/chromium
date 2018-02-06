@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "8ed2a50f_a7dca891",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlActionContainer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T00:29:19Z",
+      "side": 1,
+      "message": "I don\u0027t think we do a cross fade, just a hard #setVisibility() to switch: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java?type\u003dcs\u0026q\u003dupdateMicButtonVisibility\u0026sq\u003dpackage:chromium\u0026l\u003d2530",
+      "parentUuid": "de456966_c08c5ec7",
+      "range": {
+        "startLine": 18,
+        "startChar": 40,
+        "endLine": 18,
+        "endChar": 51
+      },
+      "revId": "eec03d73e0c00889de2c29c59999f9a821f3aa3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b06d1561_dbda27df",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlActionContainer.java",
         "patchSetId": 10
