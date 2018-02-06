@@ -546,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "a4418cc8_825c6d1a",
+        "filename": "chrome/browser/conflicts/module_list_filter_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T23:36:07Z",
+      "side": 1,
+      "message": "Don\u0027t worry I\u0027m showing it who\u0027s boss!",
+      "parentUuid": "ce32074f_3087f154",
+      "revId": "bfdecb3115118026edf1885825f07615fb1fc307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "410fb0ce_390729b7",
         "filename": "chrome/browser/conflicts/module_list_manager_win.h",
         "patchSetId": 2

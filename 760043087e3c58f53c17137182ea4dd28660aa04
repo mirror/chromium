@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77565a25_5732468c",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T23:36:07Z",
+      "side": 1,
+      "message": "Sure. It fits with the change to ProblematicPrograms where the blacklist_action is a unique_ptr now.",
+      "parentUuid": "2d99c6f0_a4c7e7fd",
+      "revId": "760043087e3c58f53c17137182ea4dd28660aa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "809198cc_15b354fd",
         "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "760043087e3c58f53c17137182ea4dd28660aa04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f066b8a_c972ee4e",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-02-06T23:36:07Z",
+      "side": 1,
+      "message": "I went with making BlacklistAction a unique_ptr.",
+      "parentUuid": "809198cc_15b354fd",
+      "range": {
+        "startLine": 70,
+        "startChar": 42,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "760043087e3c58f53c17137182ea4dd28660aa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
