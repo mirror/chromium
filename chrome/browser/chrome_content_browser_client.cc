@@ -286,6 +286,9 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
+#if defined(ENABLE_CROS_ASSISTANT)
+#include "chromeos/services/assistant/public/interfaces/assistant.mojom.h"
+#endif
 #include "components/user_manager/user_manager.h"
 #include "services/service_manager/public/mojom/interface_provider_spec.mojom.h"
 #elif defined(OS_LINUX)
@@ -3246,6 +3249,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 #if defined(OS_CHROMEOS)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMash))
     mash_service_registry::RegisterOutOfProcessServices(services);
+#endif
+
+#if defined(ENABLE_CROS_ASSISTANT)
+  (*services)[chromeos::assistant::mojom::kAssistantServiceName] =
+      base::ASCIIToUTF16("Assistant Service");
 #endif
 }
 

@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "content/public/utility/content_utility_client.h"
 
-class MashServiceFactory;
+class ChromeOsServiceFactory;
 class UtilityMessageHandler;
 
 class ChromeContentUtilityClient : public content::ContentUtilityClient {
@@ -45,7 +45,7 @@ class ChromeContentUtilityClient : public content::ContentUtilityClient {
 
 #if defined(OS_CHROMEOS)
   // Must be owned by utility main thread.
-  std::unique_ptr<MashServiceFactory> mash_service_factory_;
+  std::unique_ptr<ChromeOsServiceFactory> chromeos_service_factory_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeContentUtilityClient);

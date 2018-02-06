@@ -6,6 +6,7 @@ import("//build/config/crypto.gni")
 import("//build/config/features.gni")
 import("//build/config/sysroot.gni")
 import("//chrome/common/features.gni")
+import("//chromeos/assistant/assistant.gni")
 import("//extensions/features/features.gni")
 import("//printing/features/features.gni")
 import("//services/service_manager/public/service_manifest.gni")
@@ -144,8 +145,8 @@ static_library("utility") {
 
   if (is_chromeos) {
     sources += [
-      "mash_service_factory.cc",
-      "mash_service_factory.h",
+      "chromeos_service_factory.cc",
+      "chromeos_service_factory.h",
     ]
     deps += [
       "//ash",
@@ -159,6 +160,10 @@ static_library("utility") {
       "//services/ui:lib",
       "//services/ui/public/interfaces",
     ]
+    if (enable_cros_assistant) {
+      defines += [ "ENABLE_CROS_ASSISTANT" ]
+      deps += [ "//chromeos/services/assistant:lib" ]
+    }
   }
 
   if (use_nss_certs) {

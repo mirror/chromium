@@ -4,6 +4,10 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
+        "assistant_connector": [ "chromeos::assistant::mojom::AssistantConnector" ]
+      },
+      "requires": {
+        "identity": [ "identity_manager" ]
       }
     }
   }

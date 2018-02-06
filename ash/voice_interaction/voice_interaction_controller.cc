@@ -3,14 +3,31 @@
 // found in the LICENSE file.
 
 #include "ash/voice_interaction/voice_interaction_controller.h"
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
+#include "base/bind.h"
+#include "base/optional.h"
+#include "components/signin/core/account_id/account_id.h"
+#include "services/service_manager/public/cpp/connector.h"
 
+#include <string>
 #include <utility>
 
 namespace ash {
 
-VoiceInteractionController::VoiceInteractionController() : binding_(this) {}
+VoiceInteractionController::VoiceInteractionController(
+    service_manager::Connector* connector)
+    : binding_(this) {
+  Shell::Get()->session_controller()->AddObserver(this);
+#if defined(ENABLE_CROS_ASSISTANT)
+  connector->BindInterface(chromeos::assistant::mojom::kAssistantServiceName,
+                           &assistant_connector_);
+#endif
+}
 
-VoiceInteractionController::~VoiceInteractionController() = default;
+VoiceInteractionController::~VoiceInteractionController() {
+  Shell::Get()->session_controller()->RemoveObserver(this);
+}
 
 void VoiceInteractionController::BindRequest(
     mojom::VoiceInteractionControllerRequest request) {
@@ -56,6 +73,18 @@ void VoiceInteractionController::NotifyFeatureAllowed(
   allowed_state_ = state;
   for (auto& observer : observers_)
     observer.OnAssistantFeatureAllowedChanged(state);
+}
+
+void VoiceInteractionController::OnActiveUserSessionChanged(
+    const AccountId& account_id) {
+#if defined(ENABLE_CROS_ASSISTANT)
+  if (account_id.GetAccountType() != AccountType::GOOGLE) {
+    assistant_connector_->OnActiveUserChanged(base::Optional<std::string>());
+    return;
+  }
+  assistant_connector_->OnActiveUserChanged(
+      base::Optional<std::string>(account_id.GetGaiaId()));
+#endif
 }
 
 }  // namespace ash

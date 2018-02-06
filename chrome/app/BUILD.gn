@@ -4,6 +4,7 @@
 
 import("//build/config/ui.gni")
 import("//chrome/common/features.gni")
+import("//chromeos/assistant/assistant.gni")
 import("//components/nacl/features.gni")
 import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
@@ -449,6 +450,9 @@ service_manifest("chrome_content_packaged_services_manifest_overlay") {
       "//ash/touch_hud/mus:manifest",
       "//components/font_service:manifest",
     ]
+    if (enable_cros_assistant) {
+      packaged_services += [ "//chromeos/services/assistant:manifest" ]
+    }
   }
 }
 

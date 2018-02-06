@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/utility/mash_service_factory.h"
+#include "chrome/utility/chromeos_service_factory.h"
 
 #include <memory>
 
@@ -12,6 +12,10 @@
 #include "ash/window_manager_service.h"
 #include "base/bind.h"
 #include "build/build_config.h"
+#if defined(ENABLE_CROS_ASSISTANT)
+#include "chromeos/services/assistant/public/interfaces/assistant.mojom.h"
+#include "chromeos/services/assistant/service.h"
+#endif
 #include "components/font_service/font_service_app.h"
 #include "components/font_service/public/interfaces/constants.mojom.h"
 #include "mash/quick_launch/public/interfaces/constants.mojom.h"
@@ -24,7 +28,7 @@ namespace {
 
 using ServiceFactoryFunction = std::unique_ptr<service_manager::Service>();
 
-void RegisterMashService(
+void RegisterChromeOsService(
     content::ContentUtilityClient::StaticServiceMap* services,
     const std::string& name,
     ServiceFactoryFunction factory_function) {
@@ -83,22 +87,34 @@ std::unique_ptr<service_manager::Service> CreateFontService() {
   return std::make_unique<font_service::FontServiceApp>();
 }
 
+#if defined(ENABLE_CROS_ASSISTANT)
+std::unique_ptr<service_manager::Service> CreateAssistantService() {
+  return std::make_unique<chromeos::assistant::Service>();
+}
+#endif
+
 }  // namespace
 
-MashServiceFactory::MashServiceFactory()
+ChromeOsServiceFactory::ChromeOsServiceFactory()
     : cursors_(std::make_unique<ui::ImageCursorsSet>()) {}
 
-MashServiceFactory::~MashServiceFactory() = default;
+ChromeOsServiceFactory::~ChromeOsServiceFactory() = default;
 
-void MashServiceFactory::RegisterOutOfProcessServices(
+void ChromeOsServiceFactory::RegisterOutOfProcessServices(
     content::ContentUtilityClient::StaticServiceMap* services) {
   RegisterUiService(services, cursors_.get());
-  RegisterMashService(services, mash::quick_launch::mojom::kServiceName,
-                      &CreateQuickLaunch);
-  RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);
-  RegisterMashService(services, "accessibility_autoclick",
-                      &CreateAccessibilityAutoclick);
-  RegisterMashService(services, "touch_hud", &CreateTouchHud);
-  RegisterMashService(services, font_service::mojom::kServiceName,
-                      &CreateFontService);
+  RegisterChromeOsService(services, mash::quick_launch::mojom::kServiceName,
+                          &CreateQuickLaunch);
+  RegisterChromeOsService(services, ash::mojom::kServiceName,
+                          &CreateAshService);
+  RegisterChromeOsService(services, "accessibility_autoclick",
+                          &CreateAccessibilityAutoclick);
+  RegisterChromeOsService(services, "touch_hud", &CreateTouchHud);
+  RegisterChromeOsService(services, font_service::mojom::kServiceName,
+                          &CreateFontService);
+#if defined(ENABLE_CROS_ASSISTANT)
+  RegisterChromeOsService(services,
+                          chromeos::assistant::mojom::kAssistantServiceName,
+                          &CreateAssistantService);
+#endif
 }
