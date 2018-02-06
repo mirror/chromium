@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df6580af_7bc02555",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-06T10:11:20Z",
+      "side": 1,
+      "message": "\"WithNonActiveFlag\" -\u003e \"WithoutRuntimeFlag\"?\n\nIs \"active flag\" meaning something else?",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b015d0de_7f8782b5",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-06T10:11:20Z",
+      "side": 1,
+      "message": "You should check this first, if this fails, other tests could fail, but in that case the test aborts earlier in tests above, which may look a weird failure.",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144b796b_a09e8c47",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-06T10:11:20Z",
+      "side": 1,
+      "message": "Same as line 46.",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e00569_472010d2",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-06T10:11:20Z",
+      "side": 1,
+      "message": "Is this still okay?  kConstructed doesn\u0027t have corresponding style element.\n\nCould you also check other Is*() functions are working as expected?",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
