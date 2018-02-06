@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "747ef40c_4855b347",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T00:48:38Z",
+      "side": 0,
+      "message": "This test should stay, but change to get rid of anything talking about the experiment being off.",
+      "revId": "dd8fede07314ec38cc940d71bbb9cd691fa16815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69f8229_2eff2dbd",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T00:48:38Z",
+      "side": 0,
+      "message": "\"Returns |true| if sufficient address or credit card data was found. Exposed for testing.\"\nshould not be deleted",
+      "range": {
+        "startLine": 68,
+        "startChar": 72,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "dd8fede07314ec38cc940d71bbb9cd691fa16815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f20887_db6a1f0a",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T00:48:38Z",
+      "side": 0,
+      "message": "\"Success is defined as having a new card to import, or having merged with an existing card.\"\nshould not be deleted",
+      "range": {
+        "startLine": 95,
+        "startChar": 47,
+        "endLine": 96,
+        "endChar": 64
+      },
+      "revId": "dd8fede07314ec38cc940d71bbb9cd691fa16815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4607c938_e9f3eb34",
+        "filename": "components/autofill/core/browser/form_data_importer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T00:48:38Z",
+      "side": 0,
+      "message": "Should actually keep this test, just remove references to the experiment being off, just like the _FullCard test below.",
+      "revId": "dd8fede07314ec38cc940d71bbb9cd691fa16815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
