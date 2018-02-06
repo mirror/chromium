@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b9d5c1d_a99d8901",
+        "filename": "sql/recovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T01:14:40Z",
+      "side": 1,
+      "message": "chrome_ here too.",
+      "revId": "38c7e4011f5f08e53f666d7d23b827ec112360b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1b3879_8d71e34b",
+        "filename": "third_party/sqlite/src/src/main.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 3055,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T01:14:40Z",
+      "side": 1,
+      "message": "I don\u0027t see where DEFAULT_ENABLE_RECOVER is ever defined when building any part of Chrome.",
+      "range": {
+        "startLine": 3055,
+        "startChar": 7,
+        "endLine": 3055,
+        "endChar": 29
+      },
+      "revId": "38c7e4011f5f08e53f666d7d23b827ec112360b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
