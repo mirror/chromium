@@ -34,6 +34,24 @@
       "revId": "1d7288fb6d92313e118524e3a62e3eb5754fa040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae358a4b_a4f8b5f1",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-06T02:23:40Z",
+      "side": 1,
+      "message": "Changed, thanks. droger, can you confirm this is correct now, and if so also hit cq+2 please?",
+      "parentUuid": "72bfdb72_14d96db8",
+      "revId": "1d7288fb6d92313e118524e3a62e3eb5754fa040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
