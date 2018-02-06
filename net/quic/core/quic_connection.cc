@@ -2569,6 +2569,7 @@ bool QuicConnection::SendConnectivityProbingPacket(
       packet_generator_.SerializeConnectivityProbingPacket());
   DCHECK_EQ(IsRetransmittable(*probing_packet), NO_RETRANSMITTABLE_DATA);
 
+  const QuicTime packet_send_time = clock_->Now();
   WriteResult result = probing_writer->WritePacket(
       probing_packet->encrypted_buffer, probing_packet->encrypted_length,
       self_address().host(), peer_address, per_packet_options_);
@@ -2583,7 +2584,7 @@ bool QuicConnection::SendConnectivityProbingPacket(
   // write the same as a packet loss.
   sent_packet_manager_.OnPacketSent(
       probing_packet.get(), probing_packet->original_packet_number,
-      clock_->Now(), probing_packet->transmission_type,
+      packet_send_time, probing_packet->transmission_type,
       NO_RETRANSMITTABLE_DATA);
 
   if (result.status == WRITE_STATUS_BLOCKED) {
