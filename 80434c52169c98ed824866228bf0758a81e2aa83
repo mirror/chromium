@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "65a08e22_1c35ff05",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T17:54:45Z",
+      "side": 1,
+      "message": "Side-tab should not elide the tab titles, unless we want some global maximum width of the vertical tabstrip and then elide titles longer than that. It\u0027s unfortunate that the titles are cut off in the vertical border style, it\u0027s probably some logic error with the padding and layout. You don\u0027t need to make the unused styles perfect, but any fixes there are appreciated.\n\nTab titles might need to calculate their preferred width using bold fonts, in order to avoid clipping, otherwise the normal font preferred width isn\u0027t wide enough for bold text, and we don\u0027t want to make the tabstrip wider when the text gets bolded. We had a similar problem with views::LabelButton in the past, but now those don\u0027t switch to bold fonts when focused.",
+      "parentUuid": "9e63b943_4ce35632",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0807511_ed0ad85d",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 1
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "For the MdTabStrip, it sets SetDefaultFlex(1), which will make the MdTabs take even space of available MdTabStrip height. E.g. if there are two MdTabs, each MdTab will take half of the height. If we highlight the MdTab, it is a huge blob. I uploaded an image (MdTabStrip_vertical.png) to the bug.",
       "parentUuid": "3dc2ad3d_aba4188a",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4af9f288_e5d3d522",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T17:54:45Z",
+      "side": 1,
+      "message": "Secondary UI MD will be the default eventually. I imagine in that case the KSV PM/UX folks would want to paint the highlight and just make the tabs *not* take up all the extra height in vertical mode, right? I\u0027m thinking MDTabStrip shouldn\u0027t use CROSS_AXIS_ALIGNMENT_STRETCH in the vertical alignment.",
+      "parentUuid": "a010b8ef_6607d307",
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

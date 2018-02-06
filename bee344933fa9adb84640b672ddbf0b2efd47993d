@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "125657a1_5177caa5",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T17:54:45Z",
+      "side": 1,
+      "message": "I think this might need to perform Layout() (padding and size changes)",
+      "revId": "bee344933fa9adb84640b672ddbf0b2efd47993d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b553bfa7_d95ed3a4",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T17:54:45Z",
+      "side": 1,
+      "message": "q: Should this just be a ctor arg, not a setter?",
+      "revId": "bee344933fa9adb84640b672ddbf0b2efd47993d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
