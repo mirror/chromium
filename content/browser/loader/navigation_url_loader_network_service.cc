@@ -410,8 +410,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     if (request_info->common_params.url.SchemeIsBlob() &&
         request_info->begin_params->blob_url_loader_factory.is_valid()) {
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-          base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
-              std::move(request_info->begin_params->blob_url_loader_factory)),
+          SharedURLLoaderFactory::Create(
+              std::move(request_info->blob_url_loader_factory)),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_, navigation_ui_data_.get()),
           0 /* routing_id */, 0 /* request_id? */,

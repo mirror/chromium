@@ -77,7 +77,8 @@ void RemoteFrame::Navigate(const FrameLoadRequest& passed_request) {
   frame_request.GetResourceRequest().SetHasUserGesture(
       Frame::HasTransientUserActivation(this));
   Client()->Navigate(frame_request.GetResourceRequest(),
-                     frame_request.ReplacesCurrentItem());
+                     frame_request.ReplacesCurrentItem(),
+                     frame_request.GetBlobURLLoaderFactory());
 }
 
 void RemoteFrame::Reload(FrameLoadType frame_load_type,
