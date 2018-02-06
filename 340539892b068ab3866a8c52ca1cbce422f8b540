@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f1d66cc_bc6a39e1",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T08:38:27Z",
+      "side": 1,
+      "message": "Done (but with make_unique as we\u0027re now using unique_ptrs for this).",
+      "parentUuid": "b68f7f7e_2808a881",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9a4b24_186d36dc",
         "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f287c99d_69870685",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T08:38:27Z",
+      "side": 1,
+      "message": "Done (but with make_unique as we\u0027re now using unique_ptrs for this).",
+      "parentUuid": "cd9a4b24_186d36dc",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cb113a2_a4f96139",
         "filename": "chromeos/network/onc/onc_certificate_importer_impl.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-06T01:34:07Z",
       "side": 1,
       "message": "Unless I am mistaken, this doesn\u0027t actually do a \"move\", it has to create a copy, so we should remove the std::move.",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019645f5_7f61e601",
+        "filename": "chromeos/network/onc/onc_certificate_importer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T08:38:27Z",
+      "side": 1,
+      "message": "As this is a OnceCallback and we use BindOnce, it is possible to move the vector into the OnceCallback object (it will then be moved into the callback).\nWe actually _have_ to use std::move, because ScopedCERTCertificateList is a vector of unique_ptrs[1], so it doesn\u0027t compile without the move (deleted copy constructor).\n\n[1] https://cs.chromium.org/chromium/src/net/cert/scoped_nss_types.h?type\u003dcs\u0026q\u003dScopedCERTCertificateList\u0026sq\u003dpackage:chromium\u0026l\u003d24",
+      "parentUuid": "0cb113a2_a4f96139",
       "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b6459e17_dbab3c25",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T08:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baaae4f8_83fe3ae8",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45704c42_b5ea6574",
         "filename": "chromeos/network/onc/onc_parsed_certificates.cc",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "79c836aa_eda453a9",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T08:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45704c42_b5ea6574",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc0980cd_7f74a736",
         "filename": "chromeos/network/onc/onc_parsed_certificates.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f090e5f2_ef5d140a",
+        "filename": "chromeos/network/onc/onc_parsed_certificates.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T08:38:27Z",
+      "side": 1,
+      "message": "Good idea, removed these, added DISALLOW_COPY_AND_ASSIGN.",
+      "parentUuid": "bc0980cd_7f74a736",
+      "revId": "340539892b068ab3866a8c52ca1cbce422f8b540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
