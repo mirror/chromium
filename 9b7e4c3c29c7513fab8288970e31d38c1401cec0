@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef1bd7ef_c27911d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T01:25:24Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for pushing me to do the right thing!",
+      "parentUuid": "bcfeb6c5_9b608d87",
+      "revId": "9b7e4c3c29c7513fab8288970e31d38c1401cec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff4b13da_5b04fc3a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T00:23:55Z",
       "side": 1,
       "message": "I think you can comma delimit bugs.",
+      "revId": "9b7e4c3c29c7513fab8288970e31d38c1401cec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce39c01_c3489069",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T01:25:24Z",
+      "side": 1,
+      "message": "Thank you very much for pointing this out!\n\nFWIW, when I first looked this up, I got to https://www.mediawiki.org/wiki/Gerrit/Commit_message_guidelines and I confused that for official documentation. For future me and anyone else who happens to see this -- https://dev.chromium.org/developers/contributing-code/-bug-syntax states that bugs can be comma-separated and mentions Gerrit (so it\u0027s not a leftover from the Rietveld days)",
+      "parentUuid": "ff4b13da_5b04fc3a",
       "revId": "9b7e4c3c29c7513fab8288970e31d38c1401cec0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
