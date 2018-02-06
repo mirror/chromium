@@ -111,6 +111,17 @@ class TextFinder::DeferredScopeStringMatches
   const WebFindOptions options_;
 };
 
+static void ScrollToVisible(Range* match) {
+  Node* first_node = match->FirstNode();
+  first_node->GetLayoutObject()->ScrollRectToVisible(
+      LayoutRect(match->BoundingBox()),
+      WebScrollIntoViewParams(ScrollAlignment::kAlignCenterIfNeeded,
+                              ScrollAlignment::kAlignCenterIfNeeded,
+                              kUserScroll));
+  first_node->GetDocument().SetSequentialFocusNavigationStartingPoint(
+      first_node);
+}
+
 bool TextFinder::Find(int identifier,
                       const WebString& search_text,
                       const WebFindOptions& options,
@@ -148,9 +159,8 @@ bool TextFinder::Find(int identifier,
       (options.medial_capital_as_word_start ? kTreatMedialCapitalAsWordStart
                                             : 0) |
       (options.find_next ? 0 : kStartInSelection);
-  active_match_ =
-      OwnerFrame().GetFrame()->GetEditor().FindStringAndScrollToVisible(
-          search_text, active_match_.Get(), find_options);
+  active_match_ = OwnerFrame().GetFrame()->GetEditor().FindRangeOfString(
+      search_text, EphemeralRangeInFlatTree(active_match_.Get()), find_options);
 
   if (!active_match_) {
     // If we're finding next the next active match might not be in the current
@@ -160,6 +170,8 @@ bool TextFinder::Find(int identifier,
 
     OwnerFrame().GetFrameView()->InvalidatePaintForTickmarks();
     return false;
+  } else {
+    ScrollToVisible(active_match_);
   }
 
   // If the user is browsing a page with autosizing, adjust the zoom to the
