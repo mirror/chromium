@@ -714,4 +714,9 @@ INSTANTIATE_TEST_CASE_P(
     testing::Values(TestConfig::kDefault,
                     TestConfig::kYieldBetweenContentScriptRunsEnabled));
 
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptSameSiteCookies) {
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  ASSERT_TRUE(RunExtensionTest("content_scripts/request_cookies")) << message_;
+}
+
 }  // namespace extensions
