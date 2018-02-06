@@ -157,6 +157,30 @@
     },
     {
       "key": {
+        "uuid": "f9fc9676_f5635a46",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-06T07:24:47Z",
+      "side": 1,
+      "message": "Part of test semantics is that ThreadLocalStorageCleanup (the destructor) resets the slot value (see below). It is then verified that the destructor is called correct number of times.",
+      "parentUuid": "1c6a8732_29700304",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cc335b_cdaa34fe",
         "filename": "base/threading/thread_local_storage_unittest.cc",
         "patchSetId": 4
