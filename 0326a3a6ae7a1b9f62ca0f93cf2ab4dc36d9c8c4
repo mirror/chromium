@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10e205dd_90922295",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f5cc34_104ea8e4",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e617ee96_c426343b",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T00:09:46Z",
       "side": 1,
       "message": "Do we need this?  Seems like the model should be being kept up-to-date already by the toolbar/location bar, shouldn\u0027t it?",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8295f113_f38c5293",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "I thought the same thing -- but found that this line was recently added here: https://chromium-review.googlesource.com/c/chromium/src/+/797750\n\napparently to fix a crash. We can look into removing it, but that seems like a separate CL essentially.",
+      "parentUuid": "e617ee96_c426343b",
       "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fc7426ca_9d783099",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Indeed I bet that we can remove one of them. I added a TODO on the one I addded.",
+      "parentUuid": "b74f5edf_d6345880",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07a7af61_2e854035",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95975922_f77d46e5",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a7af61_2e854035",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e455af1a_e75f6a5e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c1f755_65fd0272",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f264a224_ae286001",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f201c3f_3ac5d4fc",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Thanks for this insight! I will be referring to this once we move to the next step.",
+      "parentUuid": "f264a224_ae286001",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "45152cba_1d14defc",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c37b0da_8be48d91",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb77e2dc_847167c9",
         "filename": "components/omnibox/browser/omnibox_edit_model.h",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44f7b24_6f537e97",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-06T19:52:42Z",
+      "side": 1,
+      "message": "Done. I changed it to GetCurrentPermanentURLText, and updated the comment. I also made it return by value instead of reference btw, since I noticed it was easy to create a subtle bug where there member variable referred to changes unexpectedly.",
+      "parentUuid": "fb77e2dc_847167c9",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
