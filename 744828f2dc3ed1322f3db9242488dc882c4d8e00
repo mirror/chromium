@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9abb071b_4a943063",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Nit: Add space after `,`",
+      "range": {
+        "startLine": 10,
+        "startChar": 61,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9134d56d_86326ffe",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Creating this too early while you may not need it. See below...",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 43
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883d9ace_5670c5d0",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Calling this twice. See below...",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c25562_4d5e6f57",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "This line is duplicated in two places. See below...",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 59
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bd9baa_093bf437",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Here\u0027s a suggestion to how to make this simpler and more readable:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nconst auto current_display \u003d screen-\u003eGetDisplayNearestWindow(window);\nbool has_persistent_info \u003d false;\nbool persistent_id_valid \u003d false;\nif (window_state-\u003epersistent_window_info()) {\n  has_persistent_info \u003d true;\n  const int64_t persistent_display_id \u003d \n      window_state-\u003epersistent_window_info()-\u003edisplay_id;\n  persistent_id_valid \u003d \n      current_display.id() !\u003d persistent_display_id \u0026\u0026\n      GetDisplayManager()-\u003eIsDisplayIdValid(persistent_display_id);\n}\n\nconst bool should_save \u003d !has_persistent_info || persistent_id_valid;\nif (should_save) {\n  window_state-\u003eSetPersistentWindowInfo(\n      PersistentWindowInfo(window-\u003eGetBoundsInScreen(),\n                           current_display.id(),\n                           current_display.bounds()));\n}\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nOr you can simply do this:\n\nconst auto current_display \u003d screen-\u003eGetDisplayNearestWindow(window);\nconst bool has_persistent_info \u003d window_state-\u003epersistent_window_info();\nconst bool should_save \u003d \n    !has_persistent_info || \n    (current_display.id() !\u003d window_state-\u003epersistent_window_info()-\u003edisplay_id \u0026\u0026\n     GetDisplayManager()-\u003eIsDisplayIdValid(\n         window_state-\u003epersistent_window_info()-\u003edisplay_id));\nif (should_save) {\n  // Same as before ...\n}\n\n\nSomething like this.",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf31fe1c_e468084d",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "I would split this:\n\nif (persistent_display_id \u003d\u003d screen-\u003eGetDisplayNearestWindow(window).id())\n  continue;\n\nconst auto\u0026 display \u003d\n    GetDisplayManager()-\u003eGetDisplayForId(persistent_display_id);\nif (!display.is_valid())\n  continue;\n\n// Now continue using `display` here.",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 69
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1fa790_b947be5f",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Nit: ref",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03379025_e5b098ef",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Do we need to check if the sizes still match?",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2452fde_1f7e495b",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we clear the persistent info after we restore them in SetBoundsInScreen() above?",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7223ffd5_9434527c",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "It won\u0027t be stale anymore because we will be clearing after we restore. and OnWillChange...() we store the updated info because the IDs are not the same.",
+      "range": {
+        "startLine": 248,
+        "startChar": 10,
+        "endLine": 248,
+        "endChar": 24
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a28f8cd_0cd19894",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T22:57:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be true?",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 14
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
