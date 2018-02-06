@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fba92cc8_03fc59fd",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-06T17:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "803968a4_a6906984",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c38bd1_0473f1d7",
         "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b0f82e_ee8bbe29",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-06T17:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c38bd1_0473f1d7",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4cc6ff6b_ec55a136",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-06T17:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "734634e4_3b9970f9",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0268963_5eb9e6cd",
         "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21411c8d_60a9aa87",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-06T17:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0268963_5eb9e6cd",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "33a5e824_4d4df504",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-06T17:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3793887_8156d6e6",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30dbdb84_3284edb2",
         "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2743eb44_2234efef",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-02-06T17:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30dbdb84_3284edb2",
+      "revId": "0c052bd41566c0ab3fb25fcdb20adbcf740e4876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
