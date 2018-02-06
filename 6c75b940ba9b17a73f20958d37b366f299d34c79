@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f899ee0_bf1a6cd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T00:22:49Z",
+      "side": 1,
+      "message": "self-nit: Remove this extraneous blank line.",
+      "revId": "6c75b940ba9b17a73f20958d37b366f299d34c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535ae46d_b0405396",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-06T00:22:49Z",
+      "side": 1,
+      "message": "self-nit: Remove this blank line too.",
+      "revId": "6c75b940ba9b17a73f20958d37b366f299d34c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
