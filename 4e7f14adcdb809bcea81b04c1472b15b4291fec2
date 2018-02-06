@@ -104,6 +104,29 @@
     },
     {
       "key": {
+        "uuid": "727e92d3_654e803e",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-06T00:24:04Z",
+      "side": 1,
+      "message": "nit: please add {} for larger if blocks",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749edfc1_479d762c",
         "filename": "ui/aura/local/window_port_local.cc",
         "patchSetId": 42

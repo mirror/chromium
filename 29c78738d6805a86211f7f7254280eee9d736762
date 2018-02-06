@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "ecdaf149_55c6d7af",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 2059,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-06T00:24:04Z",
+      "side": 1,
+      "message": "This can currently be hit in non-auto-resize cases, we should pass in the ID only in the autoresize case (when this is called from ResizeForAutoResize).",
+      "range": {
+        "startLine": 2059,
+        "startChar": 16,
+        "endLine": 2059,
+        "endChar": 40
+      },
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8f4106_123d145d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-06T00:24:04Z",
+      "side": 1,
+      "message": "need to check the flag here as well.",
+      "range": {
+        "startLine": 2069,
+        "startChar": 11,
+        "endLine": 2069,
+        "endChar": 49
+      },
+      "revId": "29c78738d6805a86211f7f7254280eee9d736762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d5eec26_d104e8c4",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
         "patchSetId": 43
