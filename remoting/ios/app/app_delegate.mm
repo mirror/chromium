@@ -14,6 +14,7 @@
 #import "remoting/ios/app/help_view_controller.h"
 #import "remoting/ios/app/remoting_theme.h"
 #import "remoting/ios/app/remoting_view_controller.h"
+#import "remoting/ios/app/update_monitor.h"
 #import "remoting/ios/app/user_status_presenter.h"
 #import "remoting/ios/app/view_utils.h"
 #import "remoting/ios/app/web_view_controller.h"
@@ -46,6 +47,7 @@
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
   [self launchRootViewController];
   [RemotingTheme applyColorSchemes];
+  [UpdateMonitor.instance start];
 
   return YES;
 }
