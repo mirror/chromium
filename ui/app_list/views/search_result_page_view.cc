@@ -345,4 +345,14 @@ gfx::Rect SearchResultPageView::GetSearchBoxBounds() const {
   return rect;
 }
 
+views::View* SearchResultPageView::GetFirstFocusableView() {
+  return GetFocusManager()->GetNextFocusableView(this, GetWidget(), false,
+                                                 false);
+}
+
+views::View* SearchResultPageView::GetLastFocusableView() {
+  return GetFocusManager()->GetNextFocusableView(this, GetWidget(), true,
+                                                 false);
+}
+
 }  // namespace app_list
