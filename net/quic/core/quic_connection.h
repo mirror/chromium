@@ -350,6 +350,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Called by the Session when a max pacing rate for the connection is needed.
   virtual void SetMaxPacingRate(QuicBandwidth max_pacing_rate);
 
+  // Allows the client to adjust network parameters based on external
+  // information.
+  void AdjustNetworkParameters(QuicBandwidth bandwidth, QuicTime::Delta rtt);
+
   // Returns the max pacing rate for the connection.
   QuicBandwidth MaxPacingRate() const;
 
