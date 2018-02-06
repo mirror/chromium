@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83c6d51c_710129ae",
+        "filename": "third_party/sqlite/amalgamation/rename_exports.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T22:06:44Z",
+      "side": 1,
+      "message": "Nice job adding sorting.",
+      "revId": "4d67dae76fa54c619185cf954a78e1cf0901f77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751d14c5_6beb8c5f",
+        "filename": "third_party/sqlite/scripts/extract_sqlite_api.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T22:06:44Z",
+      "side": 1,
+      "message": "You also need the header guard, i.e.:\n\n#ifndef THIRD_PARTY_SQLITE_AMALGAMATION_RENAME_EXPORTS_H_",
+      "revId": "4d67dae76fa54c619185cf954a78e1cf0901f77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
