@@ -16,6 +16,24 @@
       "revId": "51ef9300a5c71a7751ce17440dcfefec4a5a623b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be045ea2_0b74db34",
+        "filename": "services/identity/public/cpp/account_state_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-06T09:47:07Z",
+      "side": 1,
+      "message": "I\u0027ll just land this since it\u0027s ready to go and do a second one when I get a free moment. CL count padding FTW!",
+      "parentUuid": "058b0135_40309fe4",
+      "revId": "51ef9300a5c71a7751ce17440dcfefec4a5a623b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
